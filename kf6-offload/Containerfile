@@ -1,0 +1,30 @@
+# Offload build environment for the KF6 genbindings campaign.
+# 5k3105 hub: IW-098 (KSyntaxHighlighting) / WN-053 (decision) / WN-056 (binary size).
+#
+# ONE image, THREE jobs (the WN-053 "one Containerfile" design — kills version skew):
+#   1. run miqt genbindings against the KF6 + Qt6 headers  (OOM step #1, offloaded)
+#   2. cgo-build dimension against the freshly generated bindings (OOM step #2)
+#   3. serve as the runtime base of the image shipped back (carries its own Qt6/KF6,
+#      so the host-6.9-vs-katebuild-6.26 skew is irrelevant — WN-004)
+#
+# Arch base = current KF6 (matches the katebuild distrobox, ~6.26). Everything —
+# qt6, kf6, and the binding — is generated + built against THIS image's versions,
+# so qt6 and kf6/ksyntaxhighlighting are always consistent.
+FROM archlinux:latest
+
+RUN pacman -Syu --noconfirm \
+      base-devel git go clang llvm pkgconf \
+      qt6-base qt6-webengine qt6-svg \
+      ksyntaxhighlighting \
+      # Phase 2 (IW-099) — harmless to have present for Phase 1:
+      kparts ktexteditor \
+  && pacman -Scc --noconfirm
+
+ENV CGO_ENABLED=1
+WORKDIR /work
+
+# Build commands live in README.md (kept out of the image so this stays a pure env).
+# Quick sanity at build time: the KF6 dev headers + pkg-config the module needs.
+RUN test -d /usr/include/KF6/KSyntaxHighlighting/ksyntaxhighlighting \
+ && pkg-config --exists KF6SyntaxHighlighting \
+ && echo "KF6SyntaxHighlighting cflags: $(pkg-config --cflags KF6SyntaxHighlighting)"

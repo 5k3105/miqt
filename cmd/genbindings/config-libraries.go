@@ -702,4 +702,58 @@ func ProcessLibraries(clangBin, outDir, extraLibsDir string) {
 		outDir,
 		ClangMatchSameHeaderDefinitionOnly,
 	)
+
+	// KDE Frameworks 6 — KSyntaxHighlighting (themes + tokenizer).
+	// Phase 1 of the bind-Kate's-editor-stack campaign (5k3105 hub IW-098 / WN-053).
+	// Depends on QtCore/QtGui types already registered by the "qt6" package above
+	// (QColor, QTextCharFormat, and QSyntaxHighlighter — the base of the bundled
+	// SyntaxHighlighter), so this MUST run after qt6. Tight allowlist: the theme +
+	// tokenizer surface only (drop DefinitionDownloader=network, WildcardMatcher=util,
+	// the *_export.h shim). AbstractHighlighter = the override path (webview→HTML);
+	// SyntaxHighlighter = the QSyntaxHighlighter subclass (native QTextDocument attach).
+	generate(
+		"kf6/ksyntaxhighlighting",
+		[]string{
+			"/usr/include/KF6/KSyntaxHighlighting/ksyntaxhighlighting",
+		},
+		OnlyHeaders(
+			"repository.h",
+			"definition.h",
+			"theme.h",
+			"format.h",
+			"state.h",
+			"foldingregion.h",
+			"abstracthighlighter.h",
+			"syntaxhighlighter.h",
+		),
+		clangBin,
+		"--std=c++17 "+pkgConfigCflags("KF6SyntaxHighlighting"),
+		outDir,
+		ClangMatchSameHeaderDefinitionOnly,
+	)
+
+	// KDE Frameworks 6 — KWidgetsAddons (self-contained KF6 widget library).
+	// Batched with KSyntaxHighlighting so ONE regen yields both (5k3105 hub IW-102 /
+	// WN-055). These are QWidget/QAction subclasses depending only on QtWidgets/QtGui
+	// (already registered by "qt6"), so no extra KF deps — safe to generate. Tight
+	// allowlist: the high-value controls only (KMessageWidget = native info/warn bar;
+	// KMultiTabBar = collapsible sidebar tool-view tabs; + KActionMenu/KColorButton/
+	// KPasswordLineEdit). KMessageBox/KPageWidget left out for now (size — WN-056).
+	generate(
+		"kf6/kwidgetsaddons",
+		[]string{
+			"/usr/include/KF6/KWidgetsAddons",
+		},
+		OnlyHeaders(
+			"kmessagewidget.h",
+			"kmultitabbar.h",
+			"kactionmenu.h",
+			"kcolorbutton.h",
+			"kpasswordlineedit.h",
+		),
+		clangBin,
+		"--std=c++17 "+pkgConfigCflags("KF6WidgetsAddons"),
+		outDir,
+		ClangMatchSameHeaderDefinitionOnly,
+	)
 }

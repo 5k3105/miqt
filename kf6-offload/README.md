@@ -6,7 +6,7 @@ libraries via genbindings. **The module config is already applied** in
 `ProcessLibraries`): `kf6/ksyntaxhighlighting` + `kf6/kwidgetsaddons`.
 
 Run this **on a machine with RAM to spare** (the regen + cgo link OOM-kill a Steam Deck). All KF6
-dev packages must be present (Arch: `ksyntaxhighlighting kwidgetsaddons qt6-base`; the included
+dev packages must be present (Arch package names: `syntax-highlighting kwidgetsaddons qt6-base`; the included
 `Containerfile` provides them).
 
 ## 1. Build the env image

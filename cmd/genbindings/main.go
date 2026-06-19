@@ -48,6 +48,14 @@ func findHeadersInDir(srcDir string, allowHeader func(string) bool) []string {
 		if !strings.HasSuffix(includeFile.Name(), `.h`) {
 			continue
 		}
+		if strings.HasSuffix(includeFile.Name(), `_platform.h`) {
+			// Qt's *_platform.h headers (qscreen_platform.h, qwindow_platform.h,
+			// qguiapplication_platform.h, ...) expose the QNativeInterface::* platform-native
+			// handles — raw external C types (wl_output*, wl_display*, xcb_connection_t*,
+			// Display*, HWND, ...) that miqt cannot bind and the upstream bindings never emit.
+			// Skip globally (depends on the Qt build's enabled platforms, e.g. aqt has Wayland).
+			continue
+		}
 		fullPath := filepath.Join(srcDir, includeFile.Name())
 		if !allowHeader(fullPath) {
 			continue

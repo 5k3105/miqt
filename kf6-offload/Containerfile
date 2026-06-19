@@ -14,10 +14,17 @@ FROM archlinux:latest
 
 RUN pacman -Syu --noconfirm \
       base-devel git go clang llvm pkgconf \
-      qt6-base qt6-webengine qt6-svg \
+      qt6-base \
       syntax-highlighting kwidgetsaddons \
       kcoreaddons kxmlgui kparts ktexteditor \
   && pacman -Scc --noconfirm
+
+# The upstream genbindings config uses Debian multiarch include paths
+# (/usr/include/x86_64-linux-gnu/qt6/...). Arch puts Qt6 at /usr/include/qt6, so symlink the
+# Debian path onto it — the qt6 generate() blocks then find their headers unchanged. (Qt5 and
+# the uninstalled Qt6 submodules are skipped gracefully by the generator.)
+RUN mkdir -p /usr/include/x86_64-linux-gnu \
+ && ln -sf /usr/include/qt6 /usr/include/x86_64-linux-gnu/qt6
 
 ENV CGO_ENABLED=1
 WORKDIR /work

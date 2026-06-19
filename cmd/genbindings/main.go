@@ -33,7 +33,11 @@ func importPathForQtPackage(packageName string) string {
 func findHeadersInDir(srcDir string, allowHeader func(string) bool) []string {
 	content, err := os.ReadDir(srcDir)
 	if err != nil {
-		panic(err)
+		// Missing dir = the module's dev package isn't installed in this environment.
+		// Skip gracefully (the upstream config targets a full Qt5+Qt6 Debian env; we run
+		// a trimmed Qt6+KF6 subset). The caller skips a package with zero headers.
+		log.Printf("skipping missing header dir %q: %v", srcDir, err)
+		return nil
 	}
 
 	var ret []string
@@ -89,8 +93,11 @@ func cleanGeneratedFilesInDir(dirpath string) {
 func pkgConfigCflags(packageName string) string {
 	stdout, err := exec.Command(`pkg-config`, `--cflags`, packageName).Output()
 	if err != nil {
-		log.Printf("pkg-config(%q): %v", packageName, string(err.(*exec.ExitError).Stderr))
-		panic(err)
+		// Package not installed = skip its module(s). Returns empty cflags; the package
+		// then finds no headers (missing srcDir) and generate() skips it. Lets a trimmed
+		// Qt6+KF6 environment run the full (Qt5+Qt6) upstream config without crashing.
+		log.Printf("pkg-config(%q) unavailable, its module(s) will be skipped", packageName)
+		return ""
 	}
 
 	return string(stdout)
@@ -142,6 +149,13 @@ func generate(packageName string, srcDirs []string, allowHeaderFn func(string) b
 	}
 
 	log.Printf("Found %d header files to process.", len(includeFiles))
+
+	if len(includeFiles) == 0 {
+		// No headers (dev package not installed) → skip BEFORE cleaning, so this package's
+		// existing generated files are preserved untouched.
+		log.Printf("Package %q: no headers found, skipping (dependency not installed in this env).", packageName)
+		return
+	}
 
 	cflags := strings.Fields(cflagsCombined)
 

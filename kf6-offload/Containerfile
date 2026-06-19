@@ -14,7 +14,7 @@ ENV DEBIAN_FRONTEND=noninteractive
 
 # Base toolchain + build deps + Qt runtime libs (for aqt's Qt to load).
 RUN apt-get update && apt-get install -qyy \
-      build-essential git wget curl ca-certificates pkg-config gnupg lsb-release software-properties-common \
+      build-essential git wget curl ca-certificates pkg-config gnupg lsb-release \
       cmake ninja-build python3-pip python3-venv \
       libgl1 libglx0 libegl1 libfontconfig1 libfreetype6 libglib2.0-0t64 libxkbcommon0 libdbus-1-3 \
   && apt-get clean

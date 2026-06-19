@@ -47,11 +47,13 @@ ENV LD_LIBRARY_PATH=/6.11.1/gcc_64/lib
 RUN git clone --depth 1 -b $KF_VER https://invent.kde.org/frameworks/extra-cmake-modules.git /tmp/ecm \
   && cmake -S /tmp/ecm -B /tmp/ecm/b -G Ninja -DCMAKE_INSTALL_PREFIX=/usr -DBUILD_TESTING=OFF \
   && cmake --build /tmp/ecm/b && cmake --install /tmp/ecm/b && rm -rf /tmp/ecm
+# -DBUILD_PYTHON_BINDINGS=OFF: KF6 frameworks try find_package(Shiboken6) (Qt-for-Python) for
+# their Python bindings, which we don't want and isn't installed. We only need the C++ libs/headers.
 RUN git clone --depth 1 -b $KF_VER https://invent.kde.org/frameworks/syntax-highlighting.git /tmp/ksh \
-  && cmake -S /tmp/ksh -B /tmp/ksh/b -G Ninja -DCMAKE_INSTALL_PREFIX=/usr -DBUILD_TESTING=OFF \
+  && cmake -S /tmp/ksh -B /tmp/ksh/b -G Ninja -DCMAKE_INSTALL_PREFIX=/usr -DBUILD_TESTING=OFF -DBUILD_PYTHON_BINDINGS=OFF \
   && cmake --build /tmp/ksh/b && cmake --install /tmp/ksh/b && rm -rf /tmp/ksh
 RUN git clone --depth 1 -b $KF_VER https://invent.kde.org/frameworks/kwidgetsaddons.git /tmp/kwa \
-  && cmake -S /tmp/kwa -B /tmp/kwa/b -G Ninja -DCMAKE_INSTALL_PREFIX=/usr -DBUILD_TESTING=OFF \
+  && cmake -S /tmp/kwa -B /tmp/kwa/b -G Ninja -DCMAKE_INSTALL_PREFIX=/usr -DBUILD_TESTING=OFF -DBUILD_PYTHON_BINDINGS=OFF \
   && cmake --build /tmp/kwa/b && cmake --install /tmp/kwa/b && rm -rf /tmp/kwa
 
 # genbindings' config uses Debian multiarch qt6 paths; aqt installs to /6.11.1/gcc_64 — symlink so

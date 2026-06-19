@@ -530,6 +530,15 @@ func AllowType(p CppParameter, isReturnType bool) error {
 		return ErrTooComplex
 	}
 
+	// The whole QRhi* family (Qt Rendering Hardware Interface) is a private/unstable module
+	// defined in QtGui/rhi/qrhi.h (not scanned), so QRhiCommandBuffer/QRhiTexture/QRhiRenderBuffer/
+	// QRhiRenderTarget/... are unbound and leak as raw C types (e.g. Qt 6.7+ qrhiwidget.h). None are
+	// bindable; generalize the maintainer's bare "QRhi" block to the entire prefix. (QRhiWidget the
+	// widget still binds — only its QRhi-typed methods drop.)
+	if strings.HasPrefix(p.ParameterType, "QRhi") {
+		return ErrTooComplex
+	}
+
 	if !AllowClass(p.ParameterType) {
 		return ErrTooComplex // This whole class type has been blocked, not only as a parameter/return type
 	}
@@ -711,7 +720,6 @@ func AllowType(p CppParameter, isReturnType bool) error {
 		"QTransform::Affine",              // Qt 6 qtransform.h - public method returning private type
 		"QAbstractAudioBuffer",            // Qt 5 Multimedia, this is a private/internal type only
 		"QAbstractVideoBuffer",            // Works in Qt 5, but in Qt 6 Multimedia this type is used in qvideoframe.h but is not defined anywhere (it was later added in Qt 6.8)
-		"QRhi",                            // Qt 6 unstable types, used in Multimedia
 		"QPostEventList",                  // Qt QCoreApplication: private headers required
 		"QMetaCallEvent",                  // ..
 		"QPostEvent",                      // ..

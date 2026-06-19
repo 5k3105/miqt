@@ -117,6 +117,17 @@ func qualifyTypeString(t string, prefixes []string) string {
 // qualifyClassTypes rewrites bare nested/sibling/inherited type names in a single class's
 // method/ctor signatures to their fully-qualified registered names. Idempotent.
 func qualifyClassTypes(c *CppClass) {
+	ownScopes := qualifyEnclosingScopes(c.ClassName)
+
+	// Qualify scope-minimal BASE class names first (e.g. KSyntaxHighlighting::SyntaxHighlighter
+	// inherits bare "AbstractHighlighter" -> "KSyntaxHighlighting::AbstractHighlighter"), so
+	// inheritance resolution (DirectInheritClassInfo -> KnownClassnames) finds the base and the
+	// subclass actually inherits its methods, instead of "skipping unknown base class". Must
+	// happen before AllInheritsClassInfo() below so the base's scopes feed the prefix set too.
+	for i := range c.DirectInherits {
+		c.DirectInherits[i] = qualifyTypeString(c.DirectInherits[i], ownScopes)
+	}
+
 	// Candidate scope prefixes: this class's own enclosing scopes + each base class's.
 	seen := map[string]struct{}{}
 	var prefixes []string

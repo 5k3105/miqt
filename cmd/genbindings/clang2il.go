@@ -216,8 +216,15 @@ func processClassType(node *AstNode, addNamePrefix string) (CppClass, error) {
 			}
 
 			if typ, ok := base["type"].(map[string]interface{}); ok {
-				if qualType, ok := typ["qualType"].(string); ok && AllowClass(qualType) {
-					ret.DirectInherits = append(ret.DirectInherits, qualType)
+				if qualType, ok := typ["qualType"].(string); ok {
+					if AllowClass(qualType) {
+						ret.DirectInherits = append(ret.DirectInherits, qualType)
+					} else {
+						// Blocked base (e.g. QStringConverterBase): don't emit inheritance from it,
+						// but remember it so the qualification pass can still reach member types
+						// defined in it (e.g. QStringConverterBase::Flags used bare in a subclass).
+						ret.ScopeOnlyInherits = append(ret.ScopeOnlyInherits, qualType)
+					}
 				}
 			}
 		}

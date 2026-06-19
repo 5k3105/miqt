@@ -406,9 +406,14 @@ type CppClass struct {
 	Abstract       bool
 	Ctors          []CppMethod // only use the parameters
 	DirectInherits []string    // other class names. This only includes direct inheritance - use AllInherits() to find recursive inheritance
-	Methods        []CppMethod
-	Props          []CppProperty
-	CanDelete      bool
+	// ScopeOnlyInherits holds public base classes that are BLOCKED by AllowClass (so we must not
+	// emit inheritance from them) but are still needed as scope prefixes when qualifying bare
+	// member type names — e.g. QStringConverter : QStringConverterBase, where the Flags typedef
+	// lives in the blocked base. Used only by the type-qualification pass, never by the emit.
+	ScopeOnlyInherits []string
+	Methods           []CppMethod
+	Props             []CppProperty
+	CanDelete         bool
 
 	ChildTypedefs  []CppTypedef
 	ChildClassdefs []CppClass

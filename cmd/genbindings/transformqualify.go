@@ -140,9 +140,28 @@ func qualifyClassTypes(c *CppClass) {
 		}
 	}
 	addScopes(c.ClassName)
-	for _, b := range c.AllInheritsClassInfo() {
-		addScopes(b.Class.ClassName)
+	// Walk the full base graph for scope prefixes, following BOTH real inheritance (DirectInherits)
+	// AND scope-only (blocked) bases, transitively via the registry. AllInheritsClassInfo only
+	// follows DirectInherits and only returns registered classes, so it misses blocked bases like
+	// QStringConverterBase whose member types (Flags) are referenced bare by subclasses.
+	visited := map[string]struct{}{}
+	var collectBases func(cl *CppClass)
+	collectBases = func(cl *CppClass) {
+		bases := make([]string, 0, len(cl.DirectInherits)+len(cl.ScopeOnlyInherits))
+		bases = append(bases, cl.DirectInherits...)
+		bases = append(bases, cl.ScopeOnlyInherits...)
+		for _, b := range bases {
+			if _, dup := visited[b]; dup {
+				continue
+			}
+			visited[b] = struct{}{}
+			addScopes(b)
+			if info, ok := KnownClassnames[b]; ok {
+				collectBases(&info.Class)
+			}
+		}
 	}
+	collectBases(c)
 
 	qualify := func(p *CppParameter) {
 		p.ParameterType = qualifyTypeString(p.ParameterType, prefixes)

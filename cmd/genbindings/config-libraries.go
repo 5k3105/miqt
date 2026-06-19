@@ -702,4 +702,40 @@ func ProcessLibraries(clangBin, outDir, extraLibsDir string) {
 		outDir,
 		ClangMatchSameHeaderDefinitionOnly,
 	)
+
+	// KDE Frameworks 6 — KSyntaxHighlighting (themes + tokenizer). 5k3105 hub IW-098 / WN-053.
+	// After the qt6 block so QColor/QTextCharFormat/QSyntaxHighlighter are registered. KF6 ships
+	// NO pkg-config .pc for this lib (KDE = CMake) → Qt6 cflags + manual -I (incl. the parent for
+	// ksyntaxhighlighting_version.h). Headers are at the CapitalCase subdir on Arch.
+	generate(
+		"kf6/ksyntaxhighlighting",
+		[]string{
+			"/usr/include/KF6/KSyntaxHighlighting/KSyntaxHighlighting",
+		},
+		OnlyHeaders(
+			"repository.h", "definition.h", "theme.h", "format.h",
+			"state.h", "foldingregion.h", "abstracthighlighter.h", "syntaxhighlighter.h",
+		),
+		clangBin,
+		"--std=c++17 -I/usr/include/KF6 -I/usr/include/KF6/KSyntaxHighlighting -I/usr/include/KF6/KSyntaxHighlighting/KSyntaxHighlighting "+pkgConfigCflags("Qt6Widgets"),
+		outDir,
+		ClangMatchSameHeaderDefinitionOnly,
+	)
+
+	// KDE Frameworks 6 — KWidgetsAddons (self-contained KF6 widget library). IW-102 / WN-055.
+	// QWidget/QAction subclasses, QtWidgets-only. No .pc; headers directly in KWidgetsAddons/.
+	generate(
+		"kf6/kwidgetsaddons",
+		[]string{
+			"/usr/include/KF6/KWidgetsAddons",
+		},
+		OnlyHeaders(
+			"kmessagewidget.h", "kmultitabbar.h", "kactionmenu.h",
+			"kcolorbutton.h", "kpasswordlineedit.h",
+		),
+		clangBin,
+		"--std=c++17 -I/usr/include/KF6 -I/usr/include/KF6/KWidgetsAddons "+pkgConfigCflags("Qt6Widgets"),
+		outDir,
+		ClangMatchSameHeaderDefinitionOnly,
+	)
 }

@@ -33,7 +33,10 @@ func importPathForQtPackage(packageName string) string {
 func findHeadersInDir(srcDir string, allowHeader func(string) bool) []string {
 	content, err := os.ReadDir(srcDir)
 	if err != nil {
-		panic(err)
+		// Missing dir = the module's dev package isn't installed in this (trimmed Qt6+KF6)
+		// env. Skip gracefully; the caller skips a package with zero headers.
+		log.Printf("skipping missing header dir %q: %v", srcDir, err)
+		return nil
 	}
 
 	var ret []string
@@ -89,8 +92,10 @@ func cleanGeneratedFilesInDir(dirpath string) {
 func pkgConfigCflags(packageName string) string {
 	stdout, err := exec.Command(`pkg-config`, `--cflags`, packageName).Output()
 	if err != nil {
-		log.Printf("pkg-config(%q): %v", packageName, string(err.(*exec.ExitError).Stderr))
-		panic(err)
+		// Package not installed = skip its module(s). Empty cflags → the package finds no
+		// headers and generate() skips it. Lets a trimmed env run the full upstream config.
+		log.Printf("pkg-config(%q) unavailable, its module(s) will be skipped", packageName)
+		return ""
 	}
 
 	return string(stdout)
@@ -116,6 +121,11 @@ func parseHeaders(includeFiles []string, clangBin string, cflags []string, match
 
 		go func(i int, includeFile string) {
 			defer func() {
+				if r := recover(); r != nil {
+					// A header that won't parse standalone (e.g. Qt's internal q20*/q23* C++-compat
+					// shims) — skip it instead of crashing; result[i] stays an empty header.
+					log.Printf("skipping unparseable header %q: %v", includeFile, r)
+				}
 				wg.Done()
 				<-ch
 			}()
@@ -135,6 +145,12 @@ func generate(packageName string, srcDirs []string, allowHeaderFn func(string) b
 	var includeFiles []string
 	for _, srcDir := range srcDirs {
 		if strings.HasSuffix(srcDir, `.h`) {
+			// Single .h path (vendored extra-lib) — skip if absent so the package is skipped
+			// instead of clang panicking on a missing file.
+			if _, err := os.Stat(srcDir); err != nil {
+				log.Printf("skipping missing header file %q: %v", srcDir, err)
+				continue
+			}
 			includeFiles = append(includeFiles, srcDir) // single .h
 		} else {
 			includeFiles = append(includeFiles, findHeadersInDir(srcDir, allowHeaderFn)...)
@@ -142,6 +158,13 @@ func generate(packageName string, srcDirs []string, allowHeaderFn func(string) b
 	}
 
 	log.Printf("Found %d header files to process.", len(includeFiles))
+
+	if len(includeFiles) == 0 {
+		// No headers (dev package not installed) → skip BEFORE cleaning, preserving any
+		// existing generated files for this package.
+		log.Printf("Package %q: no headers found, skipping (dependency not installed in this env).", packageName)
+		return
+	}
 
 	cflags := strings.Fields(cflagsCombined)
 
@@ -177,6 +200,15 @@ func generate(packageName string, srcDirs []string, allowHeaderFn func(string) b
 	//
 
 	for _, parsed := range processHeaders {
+		func(parsed *CppParsedHeader) {
+			defer func() {
+				if r := recover(); r != nil {
+					// Best-effort: a header whose emit panics (an unsupported construct on a Qt
+					// newer than this config targets) is skipped, not fatal — its gen_* files
+					// just aren't (re)written this run.
+					log.Printf("skipping header %q during emit: %v", parsed.Filename, r)
+				}
+			}()
 
 		log.Printf("Processing %q...", parsed.Filename)
 
@@ -199,7 +231,7 @@ func generate(packageName string, srcDirs []string, allowHeaderFn func(string) b
 		// Breakout if there is nothing bindable
 		if parsed.Empty() {
 			log.Printf("Nothing in this header was bindable.")
-			continue
+			return // (inside the per-header closure) = continue to next header
 		}
 
 		// Emit 3 code files from the intermediate format
@@ -262,7 +294,7 @@ func generate(packageName string, srcDirs []string, allowHeaderFn func(string) b
 		}
 
 		// Done
-
+		}(parsed)
 	}
 
 	log.Printf("Processing %d file(s) completed", len(includeFiles))

@@ -1,0 +1,29 @@
+# Offload build env for the KF6 genbindings campaign — on the v0.14.0 base (Qt 6.11 support).
+# 5k3105 hub: IW-098 (KSyntaxHighlighting) / IW-102 (KWidgetsAddons) / WN-053 / WN-056.
+#
+# miqt v0.14.0 ("Support Qt 6.11", #322) handles modern Qt's nested enums correctly, so we use
+# Arch's NATIVE clang here (no Clang-18 download needed — the older base required that only
+# because its generator predated Qt 6.11). Arch = current Qt 6.11 + KF6, all consistent.
+FROM archlinux:latest
+
+RUN pacman -Syu --noconfirm \
+      base-devel git go clang pkgconf \
+      qt6-base \
+      syntax-highlighting kwidgetsaddons \
+      kcoreaddons kxmlgui kparts ktexteditor \
+  && pacman -Scc --noconfirm
+
+# v0.14.0's genbindings config uses Debian multiarch include paths
+# (/usr/include/x86_64-linux-gnu/qt6/...). Arch puts Qt6 at /usr/include/qt6, so symlink the
+# Debian path onto it. (Qt5 + uninstalled Qt6 submodules are skipped gracefully by the patched
+# generator — see the skip patches in cmd/genbindings.)
+RUN mkdir -p /usr/include/x86_64-linux-gnu \
+ && ln -sf /usr/include/qt6 /usr/include/x86_64-linux-gnu/qt6
+
+ENV CGO_ENABLED=1
+WORKDIR /work
+
+# Sanity: Phase-1 KF6 headers present (no .pc files for these — check headers) + clang works.
+RUN test -f /usr/include/KF6/KSyntaxHighlighting/KSyntaxHighlighting/repository.h \
+ && test -f /usr/include/KF6/KWidgetsAddons/kmessagewidget.h \
+ && clang --version | head -1

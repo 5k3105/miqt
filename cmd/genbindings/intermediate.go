@@ -643,7 +643,13 @@ func (c *CppClass) DirectInheritClassInfo() []lookupResultClass {
 					}
 				}
 			} else {
-				panic("Class " + c.ClassName + " inherits from unknown class " + inh)
+				// Unknown base class — e.g. a newer-Qt class (QTouchEventSequence, Qt 6.9
+				// test support) not in our parse set on a Qt newer than this config targets.
+				// Skip this base rather than crashing the whole regen; the class is still
+				// bound without it. (The KF6 classes we target inherit only core types that
+				// ARE bound, so they're unaffected.)
+				log.Printf("class %q: skipping unknown base class %q", c.ClassName, inh)
+				continue
 			}
 		}
 

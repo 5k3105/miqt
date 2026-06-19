@@ -200,6 +200,13 @@ func generate(packageName string, srcDirs []string, allowHeaderFn func(string) b
 		addKnownTypes(packageName, parsed)
 	}
 
+	// Registries are now complete for this package. Qualify bare nested/sibling/inherited
+	// type names in the REGISTERED class copies, so inherited virtual methods (emitted from
+	// the base class via KnownClassnames, e.g. QBitmap's virtualbase metric inherited from
+	// QPaintDevice) get qualified param/return types — the per-header pass below only mutates
+	// parsed.Classes, which doesn't carry inherited methods.
+	astTransformQualifyRegistry()
+
 	//
 	// PASS 2
 	//

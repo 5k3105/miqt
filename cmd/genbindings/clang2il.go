@@ -227,6 +227,12 @@ func processClassType(node *AstNode, addNamePrefix string) (CppClass, error) {
 
 	// Parse all methods
 
+	// IW-100: clang only AST-dumps *used* implicit special members, so an aggregate/value-struct
+	// (e.g. QTextLayout::FormatRange) whose default ctor is never used in the headers ends up with
+	// only a copy ctor — leaving no NewX() and forcing a null-handle copy-ctor crash (mappu/miqt#327).
+	// Track ctor shape here so we can synthesize the missing default ctor after the loop.
+	var sawUserDeclaredCtor, sawDefaultCtor, sawImplicitCtor bool
+
 nextMethod:
 	for _, node := range node.Inner {
 		kind := node.Kind
@@ -312,9 +318,15 @@ nextMethod:
 			if isImplicit, ok := node.Fields["isImplicit"].(bool); ok && isImplicit {
 				// This is an implicit ctor. Therefore the class is constructable
 				// even if we're currently in a `private:` block.
+				sawImplicitCtor = true
 
-			} else if visibility != VsPublic {
-				continue // Skip private/protected
+			} else {
+				// A user-declared ctor (always AST-dumped, unlike unused implicit ones)
+				// suppresses the implicit default ctor — so we must NOT synthesize one below.
+				sawUserDeclaredCtor = true
+				if visibility != VsPublic {
+					continue // Skip private/protected
+				}
 			}
 
 			// Check if this is `= delete`
@@ -337,6 +349,10 @@ nextMethod:
 			// Always set IsStatic for constructors, since they can be called without
 			// an existing class instance
 			mm.IsStatic = true
+
+			if len(mm.Parameters) == 0 {
+				sawDefaultCtor = true // a zero-arg ctor already exists; don't synthesize a duplicate
+			}
 
 			if !AllowCtor(ret.ClassName, mm) {
 				continue
@@ -520,6 +536,18 @@ nextMethod:
 		default:
 			log.Printf("==> NOT IMPLEMENTED %q\n", kind)
 		}
+	}
+
+	// IW-100: synthesize the missing implicit default ctor (mappu/miqt#327). Safe ONLY when no
+	// user-declared ctor exists (which would suppress the default and is always AST-dumped) and
+	// no zero-arg ctor was already seen, but the class IS constructable (an implicit ctor exists).
+	// Clone an existing ctor with empty params → a valid `new ClassName()`; prepend so it becomes
+	// NewClassName() (the natural no-arg form).
+	if sawImplicitCtor && !sawUserDeclaredCtor && !sawDefaultCtor && len(ret.Ctors) > 0 {
+		def := ret.Ctors[0]
+		def.Parameters = nil
+		ret.Ctors = append([]CppMethod{def}, ret.Ctors...)
+		log.Printf("Synthesized default ctor for %q (clang did not dump its unused implicit default)", ret.ClassName)
 	}
 
 	return ret, nil // done

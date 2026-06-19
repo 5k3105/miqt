@@ -29,6 +29,7 @@ RUN curl -fSL -o /tmp/clang18.tar.xz \
  && mkdir -p /opt/clang18 \
  && tar --no-same-owner -xf /tmp/clang18.tar.xz -C /opt/clang18 --strip-components=1 \
  && rm /tmp/clang18.tar.xz \
+ && ln -sf /usr/lib/libtinfo.so.6 /usr/lib/libtinfo.so.5 \
  && /opt/clang18/bin/clang --version
 
 # Wrapper so genbindings can just use `-clang clang18`: the Ubuntu-built Clang 18 won't

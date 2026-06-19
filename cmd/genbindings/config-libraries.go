@@ -729,7 +729,10 @@ func ProcessLibraries(clangBin, outDir, extraLibsDir string) {
 			"syntaxhighlighter.h",
 		),
 		clangBin,
-		"--std=c++17 "+pkgConfigCflags("KF6SyntaxHighlighting"),
+		// KF6 KSyntaxHighlighting ships NO pkg-config .pc file (KDE is CMake-based), so we
+		// can't use pkgConfigCflags for it. Feed clang the Qt6 cflags (headers include
+		// <QObject> etc.) + manual KF6 include paths.
+		"--std=c++17 -I/usr/include/KF6 -I/usr/include/KF6/KSyntaxHighlighting/KSyntaxHighlighting "+pkgConfigCflags("Qt6Widgets"),
 		outDir,
 		ClangMatchSameHeaderDefinitionOnly,
 	)
@@ -754,7 +757,9 @@ func ProcessLibraries(clangBin, outDir, extraLibsDir string) {
 			"kpasswordlineedit.h",
 		),
 		clangBin,
-		"--std=c++17 "+pkgConfigCflags("KF6WidgetsAddons"),
+		// No .pc file (see KSyntaxHighlighting note). Headers are directly in
+		// /usr/include/KF6/KWidgetsAddons.
+		"--std=c++17 -I/usr/include/KF6 -I/usr/include/KF6/KWidgetsAddons "+pkgConfigCflags("Qt6Widgets"),
 		outDir,
 		ClangMatchSameHeaderDefinitionOnly,
 	)

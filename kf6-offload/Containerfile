@@ -23,7 +23,8 @@ ENV CGO_ENABLED=1
 WORKDIR /work
 
 # Build commands live in README.md (kept out of the image so this stays a pure env).
-# Quick sanity at build time: pkg-config resolves the Phase-1 KF6 libs (robust — no
-# hardcoded header paths, which vary in case between KF6 libs).
-RUN pkg-config --exists KF6SyntaxHighlighting KF6WidgetsAddons \
- && echo "KF6 cflags OK: $(pkg-config --cflags KF6SyntaxHighlighting KF6WidgetsAddons)"
+# Quick sanity: the Phase-1 KF6 headers are present. (KSyntaxHighlighting/KWidgetsAddons ship
+# NO pkg-config .pc files — KDE is CMake-based — so check headers, not pkg-config.)
+RUN test -f /usr/include/KF6/KSyntaxHighlighting/KSyntaxHighlighting/repository.h \
+ && test -f /usr/include/KF6/KWidgetsAddons/kmessagewidget.h \
+ && echo "KF6 Phase-1 headers present."

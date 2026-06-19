@@ -218,8 +218,9 @@ func generate(packageName string, srcDirs []string, allowHeaderFn func(string) b
 		log.Printf("Processing %q...", parsed.Filename)
 
 		// More AST transforms on our IL
-		astTransformTypedefs(parsed)
-		astTransformBlocklist(parsed) // Must happen after typedef transformation
+		astTransformQualifyTypes(parsed) // resolve bare nested/sibling/inherited type names (registries now complete)
+		astTransformTypedefs(parsed)     // (qualified QFlags typedefs now resolve, e.g. -> int)
+		astTransformBlocklist(parsed)    // Must happen after typedef transformation
 
 		{
 			// Save the IL file for debug inspection

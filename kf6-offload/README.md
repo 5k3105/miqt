@@ -13,8 +13,12 @@ Run on a machine with RAM to spare (the regen + cgo link OOM-kill a Steam Deck).
 #    Arch's Clang 22 produces broken nested-enum bindings even on v0.14.0)
 podman build -t miqt-kf6 -f kf6-offload/Containerfile .
 
-# 2. regen ALL bindings with Clang 18 (clean Qt 6.11 qt6 + kf6/*); skips Qt5 + uninstalled submodules
+# 2. regen ALL bindings with Clang 18 (clean Qt 6.11 qt6 + kf6/*); skips Qt5 + uninstalled submodules.
+#    NOTE the `rm -rf cachedir`: genbindings caches the clang AST per header path, NOT per clang
+#    version (cachedir/ is gitignored, persists across runs/branches). Without clearing it, a
+#    previous Clang-22 run's AST is reused and Clang 18 never actually re-parses.
 podman run --rm -v "$PWD":/work -w /work miqt-kf6 bash -lc '
+  rm -rf cmd/genbindings/cachedir &&
   cd cmd/genbindings &&
   go build -o /tmp/genbindings . &&
   /tmp/genbindings -clang clang18 -outdir ../../

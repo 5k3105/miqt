@@ -8,8 +8,10 @@
 # against the SAME aqt Qt 6.11, so Qt / KF6 / toolchain are all consistent.
 FROM debian:13
 
-# KF6 framework tag to build (override with --build-arg KF_VER=... if a tag doesn't exist / build fails).
-ARG KF_VER=v6.10.0
+# KF6 framework tag to build. v6.26.0 = the version the Deck runs with Qt 6.11 (so the bindings
+# match the runtime), and recent enough to build cleanly against Qt 6.11 (older tags like v6.10.0
+# define their own operator""_sv which now collides with Qt 6.11's native one).
+ARG KF_VER=v6.26.0
 ENV DEBIAN_FRONTEND=noninteractive
 
 # Base toolchain + build deps + Qt runtime libs (for aqt's Qt to load).

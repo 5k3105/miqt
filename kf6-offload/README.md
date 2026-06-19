@@ -18,7 +18,9 @@ podman build -t miqt-kf6 -f kf6-offload/Containerfile .
 #    submodules. The AST cache is now TOOLCHAIN-KEYED (astCacheKey = hash of clang version + cflags),
 #    so it auto-invalidates when clang/Qt change — the `rm -rf cachedir && mkdir` is just hygiene
 #    now (recreate the dir if you do clear it; the emit step writes IL files there without mkdir).
-podman run --rm -v "$PWD":/work -w /work miqt-kf6 bash -lc '
+# bash -c (NOT -lc): a login shell re-sources /etc/profile and resets PATH, dropping Go (it's
+# from a tarball at /usr/local/go/bin). bash -c inherits the container's ENV PATH, which has it.
+podman run --rm -v "$PWD":/work -w /work miqt-kf6 bash -c '
   rm -rf cmd/genbindings/cachedir && mkdir -p cmd/genbindings/cachedir &&
   cd cmd/genbindings &&
   go build -o /tmp/genbindings . &&

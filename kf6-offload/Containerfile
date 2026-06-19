@@ -33,6 +33,9 @@ RUN wget -O /tmp/llvm.sh https://apt.llvm.org/llvm.sh && chmod +x /tmp/llvm.sh &
 RUN wget -q https://go.dev/dl/go1.26.3.linux-amd64.tar.gz -O /tmp/go.tgz \
   && tar -C /usr/local -xzf /tmp/go.tgz && rm /tmp/go.tgz
 ENV PATH=/usr/local/go/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+# Also put Go on the PATH for login shells (bash -lc re-sources /etc/profile, which would
+# otherwise reset PATH and drop /usr/local/go/bin).
+RUN echo 'export PATH=$PATH:/usr/local/go/bin' > /etc/profile.d/go.sh
 
 # Qt 6.11.1 via aqtinstall → /6.11.1/gcc_64 (the maintainer's exact method).
 RUN python3 -m venv /aqt && /aqt/bin/pip3 install aqtinstall \

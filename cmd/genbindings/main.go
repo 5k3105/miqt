@@ -206,6 +206,10 @@ func generate(packageName string, srcDirs []string, allowHeaderFn func(string) b
 	// QPaintDevice) get qualified param/return types — the per-header pass below only mutates
 	// parsed.Classes, which doesn't carry inherited methods.
 	astTransformQualifyRegistry()
+	// Also qualify the underlying types of registered typedefs, so a typedef chain spelled with
+	// bare sibling names (QByteArrayView::const_pointer -> value_type -> storage_type -> char)
+	// resolves fully in astTransformTypedefs instead of emitting a raw `value_type`/`const_pointer`.
+	astTransformQualifyTypedefRegistry()
 
 	//
 	// PASS 2

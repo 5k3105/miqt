@@ -10,8 +10,9 @@ import "strings"
 // (relative to the enclosing namespace/class), but genbindings keys KnownClassnames/KnownEnums/
 // KnownTypedefs on the FULLY-QUALIFIED name. Without this pass, every namespace-sibling / inherited
 // / nested type reference misses the registry lookup and is emitted as a raw, undefined C type
-// (e.g. `const Definition* def`, `Options options`). The maintainer's bindings avoided it only
-// because his clang happened to spell types qualified; this makes genbindings independent of that.
+// (e.g. `const Definition* def`, `Options options`, `value_type* data`). The maintainer's bindings
+// avoided it only because his clang happened to spell types qualified; this makes genbindings
+// independent of that.
 //
 // It tries, for a bare name X used in class C, the prefixes: C's own enclosing scopes (C::, then each
 // shorter scope down toward global) AND every (recursive) base class's enclosing scopes — first
@@ -35,6 +36,25 @@ func astTransformQualifyRegistry() {
 	for name, lr := range KnownClassnames {
 		qualifyClassTypes(&lr.Class)
 		KnownClassnames[name] = lr
+	}
+}
+
+// astTransformQualifyTypedefRegistry qualifies bare nested type references in the UNDERLYING
+// type of each registered typedef, against the typedef's own enclosing scope. Needed because a
+// member typedef's underlying type is often spelled with bare sibling names — e.g.
+// QByteArrayView::const_pointer = `const value_type *`, QByteArrayView::value_type = storage_type.
+// applyTypedefs resolves a method type by CHAINING through KnownTypedefs underlying types, so if
+// those underlying names stay bare the chain breaks at the first hop and a raw `value_type` /
+// `const_pointer` is emitted. Qualifying each link (const_pointer -> QByteArrayView::value_type ->
+// QByteArrayView::storage_type -> char) lets the whole chain resolve. Must run after PASS-1
+// (registry complete) and before PASS-2 astTransformTypedefs.
+func astTransformQualifyTypedefRegistry() {
+	for alias, lr := range KnownTypedefs {
+		prefixes := qualifyEnclosingScopes(alias) // e.g. ["QByteArrayView::value_type", "QByteArrayView"]
+		ut := lr.Typedef.UnderlyingType
+		ut.ParameterType = qualifyTypeString(ut.ParameterType, prefixes)
+		lr.Typedef.UnderlyingType = ut
+		KnownTypedefs[alias] = lr
 	}
 }
 
@@ -65,6 +85,35 @@ func qualifyEnclosingScopes(qual string) []string {
 	return out
 }
 
+// qualifyTypeString rewrites a bare nested/sibling/inherited type name to its fully-qualified
+// registered name, trying each scope prefix in order (first match wins). It also reaches into a
+// single-arg container's inner type (QList<X>, QVector<X>, QSet<X>, QFlags<X>, ...) so e.g.
+// QList<Definition> -> QList<KSyntaxHighlighting::Definition>. Multi-arg containers (QMap/QPair,
+// inner has a comma) are left alone to avoid format risk. Idempotent: already-qualified or
+// pointer/decorated strings are returned unchanged.
+func qualifyTypeString(t string, prefixes []string) string {
+	t = strings.TrimSpace(t)
+	if i := strings.IndexByte(t, '<'); i >= 0 && strings.HasSuffix(t, ">") {
+		inner := t[i+1 : len(t)-1]
+		if strings.ContainsRune(inner, ',') {
+			return t // multi-arg container — leave as-is
+		}
+		return t[:i] + "<" + qualifyTypeString(inner, prefixes) + ">"
+	}
+	if t == "" || strings.ContainsAny(t, ":*&() ,") { // already-qualified / pointer / decorated — skip
+		return t
+	}
+	if qualifyTypeIsKnown(t) {
+		return t
+	}
+	for _, pre := range prefixes {
+		if cand := pre + "::" + t; qualifyTypeIsKnown(cand) {
+			return cand
+		}
+	}
+	return t
+}
+
 // qualifyClassTypes rewrites bare nested/sibling/inherited type names in a single class's
 // method/ctor signatures to their fully-qualified registered names. Idempotent.
 func qualifyClassTypes(c *CppClass) {
@@ -84,40 +133,9 @@ func qualifyClassTypes(c *CppClass) {
 		addScopes(b.Class.ClassName)
 	}
 
-	// qualifyOne resolves a single bare identifier against the scope prefixes.
-	qualifyOne := func(t string) string {
-		if t == "" || qualifyTypeIsKnown(t) {
-			return t
-		}
-		for _, pre := range prefixes {
-			if cand := pre + "::" + t; qualifyTypeIsKnown(cand) {
-				return cand
-			}
-		}
-		return t
-	}
-	// qualifyTypeStr also reaches into a single-arg container's inner type (QList<X>,
-	// QVector<X>, QSet<X>, QFlags<X>, ...) so e.g. QList<Definition> -> QList<KSyntaxHighlighting::Definition>.
-	// Multi-arg containers (QMap/QPair, inner has a comma) are left alone to avoid format risk.
-	var qualifyTypeStr func(string) string
-	qualifyTypeStr = func(t string) string {
-		t = strings.TrimSpace(t)
-		if i := strings.IndexByte(t, '<'); i >= 0 && strings.HasSuffix(t, ">") {
-			inner := t[i+1 : len(t)-1]
-			if strings.ContainsRune(inner, ',') {
-				return t // multi-arg container — leave as-is
-			}
-			return t[:i] + "<" + qualifyTypeStr(inner) + ">"
-		}
-		if strings.ContainsAny(t, ":*&() ,") { // already-qualified / pointer / decorated — skip
-			return t
-		}
-		return qualifyOne(t)
-	}
 	qualify := func(p *CppParameter) {
-		p.ParameterType = qualifyTypeStr(p.ParameterType)
+		p.ParameterType = qualifyTypeString(p.ParameterType, prefixes)
 	}
-
 	requalify := func(methods []CppMethod) {
 		for mi := range methods {
 			qualify(&methods[mi].ReturnType)

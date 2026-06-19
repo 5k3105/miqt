@@ -15,9 +15,9 @@ Run on a machine with RAM to spare (the regen + cgo link OOM-kill a Steam Deck).
 podman build -t miqt-kf6 -f kf6-offload/Containerfile .
 
 # 2. regen ALL bindings with native clang-18 (clean Qt 6.11 qt6 + kf6/*); skips Qt5 + uninstalled
-#    submodules. NOTE `rm -rf cachedir && mkdir`: genbindings caches the clang AST per header path,
-#    NOT per clang version (cachedir/ is gitignored, persists) — clear it so clang actually
-#    re-parses, but RECREATE the dir (the emit step writes its IL files there, doesn't mkdir it).
+#    submodules. The AST cache is now TOOLCHAIN-KEYED (astCacheKey = hash of clang version + cflags),
+#    so it auto-invalidates when clang/Qt change — the `rm -rf cachedir && mkdir` is just hygiene
+#    now (recreate the dir if you do clear it; the emit step writes IL files there without mkdir).
 podman run --rm -v "$PWD":/work -w /work miqt-kf6 bash -lc '
   rm -rf cmd/genbindings/cachedir && mkdir -p cmd/genbindings/cachedir &&
   cd cmd/genbindings &&

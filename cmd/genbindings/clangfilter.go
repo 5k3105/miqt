@@ -2,16 +2,44 @@ package main
 
 import (
 	"compress/gzip"
+	"crypto/sha256"
+	"encoding/hex"
 	"encoding/json"
 	"fmt"
 	"io"
 	"log"
 	"os"
+	"os/exec"
 	"strings"
 )
 
-func filteredAstPath(inputHeader string) string {
-	return cacheFileRoot(inputHeader) + ".filtered.json.gz"
+func filteredAstPath(inputHeader, cacheKey string) string {
+	return cacheFileRoot(inputHeader) + "." + cacheKey + ".filtered.json.gz"
+}
+
+var clangVersionMemo string
+
+// clangVersionString returns `clang --version` output, memoized (clangBin is constant per run).
+func clangVersionString(clangBin string) string {
+	if clangVersionMemo == "" {
+		out, err := exec.Command(clangBin, "--version").Output()
+		if err != nil {
+			clangVersionMemo = "unknown:" + clangBin
+		} else {
+			clangVersionMemo = string(out)
+		}
+	}
+	return clangVersionMemo
+}
+
+// astCacheKey hashes the clang version + cflags so the on-disk AST cache auto-invalidates when
+// the toolchain or include flags change — instead of silently reusing a parse from a different
+// clang/Qt (the trap that cost a full debugging session: a clang-22 AST was reused on every
+// clang-18 run). Call ONCE per generate() (before the parallel parse) to avoid a data race on
+// the memo and redundant clang --version calls.
+func astCacheKey(clangBin string, cflags []string) string {
+	h := sha256.Sum256([]byte(clangVersionString(clangBin) + "\x00" + strings.Join(cflags, "\x00")))
+	return hex.EncodeToString(h[:6])
 }
 
 func dumpStack(stack []*AstNode) string {
@@ -210,11 +238,11 @@ func filterAst(in io.Reader) (*AstNode, error) {
 	return parseClangAst(&pc)
 }
 
-func writeCache(ast *AstNode, inputHeader string) {
+func writeCache(ast *AstNode, inputHeader, cacheKey string) {
 	// Write a compressed version of the AST to disk - the AST is generally
 	// highly redundant a compresses by a factor of 10-20x - the typical Qt file
 	// is 5-10MB and compresses to ~300-600kB
-	astPath := filteredAstPath(inputHeader)
+	astPath := filteredAstPath(inputHeader, cacheKey)
 	compressedFile, err := os.Create(astPath)
 	if err != nil {
 		panic("could not create filtered AST cache for " + inputHeader + ": " + err.Error())
@@ -235,8 +263,8 @@ func writeCache(ast *AstNode, inputHeader string) {
 	}
 }
 
-func readCache(inputHeader string) (*AstNode, error) {
-	compressedFile, err := os.Open(filteredAstPath(inputHeader))
+func readCache(inputHeader, cacheKey string) (*AstNode, error) {
+	compressedFile, err := os.Open(filteredAstPath(inputHeader, cacheKey))
 	if err != nil {
 		return nil, err
 	}
@@ -258,11 +286,11 @@ func readCache(inputHeader string) (*AstNode, error) {
 	return ast, nil
 }
 
-// Get or create the filtered AST from either the given input header or a version
-// When changing this function, make sure to clear the on-disk cache:
-// rm -rf cachedir/*.filtered.json.gz
-func getFilteredAst(inputHeader, clangBin string, cflags []string) *AstNode {
-	ast, err := readCache(inputHeader)
+// Get or create the filtered AST. The cache is keyed by header path AND cacheKey (a hash of the
+// clang version + cflags via astCacheKey), so changing clang/Qt automatically misses the stale
+// cache and re-parses — no manual `rm -rf cachedir` needed.
+func getFilteredAst(inputHeader, clangBin string, cflags []string, cacheKey string) *AstNode {
+	ast, err := readCache(inputHeader, cacheKey)
 	if err != nil {
 		if !os.IsNotExist(err) {
 			panic("could not open filtered AST cache for " + inputHeader + ": " + err.Error())
@@ -275,7 +303,7 @@ func getFilteredAst(inputHeader, clangBin string, cflags []string) *AstNode {
 			panic("could not create AST cache for " + inputHeader + ": " + err.Error())
 		}
 
-		writeCache(ast, inputHeader)
+		writeCache(ast, inputHeader, cacheKey)
 	}
 
 	return ast

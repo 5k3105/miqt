@@ -111,6 +111,11 @@ func min(a, b int) int {
 func parseHeaders(includeFiles []string, clangBin string, cflags []string, matcher HeaderMatcher) []*CppParsedHeader {
 	result := make([]*CppParsedHeader, len(includeFiles))
 
+	// Toolchain-aware cache key, computed ONCE here (clangBin + cflags are constant for this
+	// call) — before the goroutines, so the clangVersion memo isn't raced. Folding it into the
+	// cache filename makes a clang/Qt change auto-invalidate the on-disk AST cache.
+	cacheKey := astCacheKey(clangBin, cflags)
+
 	// Run clang / parsing in parallel but not too parallel
 	var wg sync.WaitGroup
 	ch := make(chan struct{}, min(runtime.NumCPU(), MaxClangSubprocessCount))
@@ -131,7 +136,7 @@ func parseHeaders(includeFiles []string, clangBin string, cflags []string, match
 			}()
 
 			result[i] = &CppParsedHeader{Filename: includeFile}
-			ast := getFilteredAst(includeFile, clangBin, cflags)
+			ast := getFilteredAst(includeFile, clangBin, cflags, cacheKey)
 			// Convert it to our intermediate format
 			parseHeader(ast, "", result[i], matcher)
 		}(i, includeFile)

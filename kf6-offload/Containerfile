@@ -13,11 +13,30 @@
 FROM archlinux:latest
 
 RUN pacman -Syu --noconfirm \
-      base-devel git go clang llvm pkgconf \
+      base-devel git go curl pkgconf \
       qt6-base \
       syntax-highlighting kwidgetsaddons \
       kcoreaddons kxmlgui kparts ktexteditor \
   && pacman -Scc --noconfirm
+
+# genbindings is written for the Clang 18.1 AST-JSON format. Arch ships Clang 22, whose newer
+# AST format the generator mis-reads — it drops nested-enum qualification, producing broken C
+# like `Options options` instead of `int options`. So fetch the LLVM 18 prebuilt and PARSE with
+# it (clang only emits the AST dump here; the actual cgo build still uses gcc). This is what lets
+# us regen against bleeding-edge Qt 6.11 yet get bindings the generator handles correctly.
+RUN curl -fSL -o /tmp/clang18.tar.xz \
+      https://github.com/llvm/llvm-project/releases/download/llvmorg-18.1.8/clang+llvm-18.1.8-x86_64-linux-gnu-ubuntu-18.04.tar.xz \
+ && mkdir -p /opt/clang18 \
+ && tar -xf /tmp/clang18.tar.xz -C /opt/clang18 --strip-components=1 \
+ && rm /tmp/clang18.tar.xz \
+ && /opt/clang18/bin/clang --version
+
+# Wrapper so genbindings can just use `-clang clang18`: the Ubuntu-built Clang 18 won't
+# auto-detect Arch's x86_64-pc-linux-gnu GCC, so point it at Arch's libstdc++ headers via
+# CPLUS_INCLUDE_PATH (for -fsyntax-only parsing that's all it needs beyond its own builtins).
+RUN printf '#!/bin/sh\nGXX=$(ls -d /usr/include/c++/*/ | head -1)\nexport CPLUS_INCLUDE_PATH="${GXX}:${GXX}x86_64-pc-linux-gnu:${GXX}backward"\nexec /opt/clang18/bin/clang "$@"\n' \
+      > /usr/local/bin/clang18 \
+ && chmod +x /usr/local/bin/clang18
 
 # The upstream genbindings config uses Debian multiarch include paths
 # (/usr/include/x86_64-linux-gnu/qt6/...). Arch puts Qt6 at /usr/include/qt6, so symlink the

@@ -23,7 +23,7 @@ podman build -t miqt-kf6 -f kf6-offload/Containerfile .
 podman run --rm -v "$PWD":/work -w /work miqt-kf6 bash -lc '
   cd cmd/genbindings &&
   go build -o /tmp/genbindings . &&
-  /tmp/genbindings -clang "$(command -v clang)" -outdir ../../
+  /tmp/genbindings -clang clang18 -outdir ../../   # clang18 = the LLVM-18 wrapper baked into the image
 '
 git add -A && git commit -m "kf6: generate KSyntaxHighlighting + KWidgetsAddons bindings"
 git push          # the generated kf6/ksyntaxhighlighting/ + kf6/kwidgetsaddons/ come back via git

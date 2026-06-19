@@ -538,6 +538,43 @@ nextMethod:
 		}
 	}
 
+	// Qualify nested enum/typedef param + return types. Some clang versions spell a nested type
+	// used as a method param/return with its UNqualified name (e.g. "IconType"/"Options" inside
+	// QAbstractFileIconProvider). That misses KnownEnums/KnownTypedefs (keyed by the qualified
+	// "Class::Name", since astTransformChildClasses flattens nested types with their full name) and
+	// gets emitted as a raw, undefined C type (mappu/miqt#... the QAbstractFileIconProvider bug).
+	// Qualify bare types that match one of THIS class's own nested enums/typedefs. (No-op when
+	// clang already spelled them qualified — the map is keyed by the short name only.)
+	if len(ret.ChildEnums) > 0 || len(ret.ChildTypedefs) > 0 {
+		nestedQual := map[string]string{}
+		for _, en := range ret.ChildEnums {
+			if short := strings.TrimPrefix(en.EnumName, ret.ClassName+"::"); short != en.EnumName && short != "" {
+				nestedQual[short] = en.EnumName
+			}
+		}
+		for _, td := range ret.ChildTypedefs {
+			if short := strings.TrimPrefix(td.Alias, ret.ClassName+"::"); short != td.Alias && short != "" {
+				nestedQual[short] = td.Alias
+			}
+		}
+		qualify := func(p *CppParameter) {
+			if q, ok := nestedQual[p.ParameterType]; ok {
+				p.ParameterType = q
+			}
+		}
+		for mi := range ret.Methods {
+			qualify(&ret.Methods[mi].ReturnType)
+			for pi := range ret.Methods[mi].Parameters {
+				qualify(&ret.Methods[mi].Parameters[pi])
+			}
+		}
+		for ci := range ret.Ctors {
+			for pi := range ret.Ctors[ci].Parameters {
+				qualify(&ret.Ctors[ci].Parameters[pi])
+			}
+		}
+	}
+
 	// IW-100: synthesize the missing implicit default ctor (mappu/miqt#327). Safe ONLY when no
 	// user-declared ctor exists (which would suppress the default and is always AST-dumped) and
 	// no zero-arg ctor was already seen, but the class IS constructable (an implicit ctor exists).

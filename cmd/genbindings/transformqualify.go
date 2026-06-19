@@ -64,19 +64,38 @@ func astTransformQualifyTypes(parsed *CppParsedHeader) {
 			addScopes(b.Class.ClassName)
 		}
 
-		qualify := func(p *CppParameter) {
-			t := p.ParameterType
-			// Only touch a bare identifier (no scope/template/pointer punctuation) that isn't
-			// already a known global type. Leave already-qualified or known names alone.
-			if t == "" || strings.ContainsAny(t, ":<>*&() ,") || isKnown(t) {
-				return
+		// qualifyOne resolves a single bare identifier against the scope prefixes.
+		qualifyOne := func(t string) string {
+			if t == "" || isKnown(t) {
+				return t
 			}
 			for _, pre := range prefixes {
 				if cand := pre + "::" + t; isKnown(cand) {
-					p.ParameterType = cand
-					return
+					return cand
 				}
 			}
+			return t
+		}
+		// qualifyTypeStr also reaches into a single-arg container's inner type (QList<X>,
+		// QVector<X>, QSet<X>, QFlags<X>, ...) so e.g. QList<Definition> -> QList<KSyntaxHighlighting::Definition>.
+		// Multi-arg containers (QMap/QPair, inner has a comma) are left alone to avoid format risk.
+		var qualifyTypeStr func(string) string
+		qualifyTypeStr = func(t string) string {
+			t = strings.TrimSpace(t)
+			if i := strings.IndexByte(t, '<'); i >= 0 && strings.HasSuffix(t, ">") {
+				inner := t[i+1 : len(t)-1]
+				if strings.ContainsRune(inner, ',') {
+					return t // multi-arg container — leave as-is
+				}
+				return t[:i] + "<" + qualifyTypeStr(inner) + ">"
+			}
+			if strings.ContainsAny(t, ":*&() ,") { // already-qualified / pointer / decorated — skip
+				return t
+			}
+			return qualifyOne(t)
+		}
+		qualify := func(p *CppParameter) {
+			p.ParameterType = qualifyTypeStr(p.ParameterType)
 		}
 
 		requalify := func(methods []CppMethod) {

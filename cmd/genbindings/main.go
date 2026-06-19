@@ -205,92 +205,101 @@ func generate(packageName string, srcDirs []string, allowHeaderFn func(string) b
 	//
 
 	for _, parsed := range processHeaders {
+		func(parsed *CppParsedHeader) {
+			defer func() {
+				if r := recover(); r != nil {
+					// Best-effort: a header whose emit panics (an unsupported construct on a Qt
+					// newer than this config targets) is skipped, not fatal — its gen_* files
+					// just aren't (re)written this run. Core headers emit fine.
+					log.Printf("skipping header %q during emit: %v", parsed.Filename, r)
+				}
+			}()
 
-		log.Printf("Processing %q...", parsed.Filename)
+			log.Printf("Processing %q...", parsed.Filename)
 
-		// More AST transforms on our IL
-		astTransformTypedefs(parsed)
-		astTransformBlocklist(parsed) // Must happen after typedef transformation
+			// More AST transforms on our IL
+			astTransformTypedefs(parsed)
+			astTransformBlocklist(parsed) // Must happen after typedef transformation
 
-		{
-			// Save the IL file for debug inspection
-			file, err := os.Create(parsedPath(parsed.Filename))
+			{
+				// Save the IL file for debug inspection
+				file, err := os.Create(parsedPath(parsed.Filename))
+				if err != nil {
+					panic(err)
+				}
+				defer file.Close()
+				enc := json.NewEncoder(file)
+				enc.SetIndent("", "\t")
+				enc.Encode(parsed)
+			}
+
+			// Breakout if there is nothing bindable
+			if parsed.Empty() {
+				log.Printf("Nothing in this header was bindable.")
+				return // (inside the per-header closure) = continue to next header
+			}
+
+			// Emit 3 code files from the intermediate format
+			outputName := filepath.Join(outDir, "gen_"+strings.TrimSuffix(filepath.Base(parsed.Filename), `.h`))
+
+			// For packages where we scan multiple directories, it's possible that
+			// there are filename collisions (e.g. Qt 6 has QtWidgets/qaction.h include
+			// QtGui/qaction.h as a compatibility measure).
+			// If the path exists, disambiguate it
+			var counter = 0
+			for {
+				testName := outputName
+				if counter > 0 {
+					testName += fmt.Sprintf(".%d", counter)
+				}
+
+				if _, err := os.Stat(testName + ".go"); err != nil && os.IsNotExist(err) {
+					outputName = testName // Safe
+					break
+				}
+
+				counter++
+			}
+
+			goSrc, go64Src, err := emitGo(parsed, filepath.Base(parsed.Filename), packageName)
 			if err != nil {
 				panic(err)
 			}
-			defer file.Close()
-			enc := json.NewEncoder(file)
-			enc.SetIndent("", "\t")
-			enc.Encode(parsed)
-		}
 
-		// Breakout if there is nothing bindable
-		if parsed.Empty() {
-			log.Printf("Nothing in this header was bindable.")
-			continue
-		}
-
-		// Emit 3 code files from the intermediate format
-		outputName := filepath.Join(outDir, "gen_"+strings.TrimSuffix(filepath.Base(parsed.Filename), `.h`))
-
-		// For packages where we scan multiple directories, it's possible that
-		// there are filename collisions (e.g. Qt 6 has QtWidgets/qaction.h include
-		// QtGui/qaction.h as a compatibility measure).
-		// If the path exists, disambiguate it
-		var counter = 0
-		for {
-			testName := outputName
-			if counter > 0 {
-				testName += fmt.Sprintf(".%d", counter)
-			}
-
-			if _, err := os.Stat(testName + ".go"); err != nil && os.IsNotExist(err) {
-				outputName = testName // Safe
-				break
-			}
-
-			counter++
-		}
-
-		goSrc, go64Src, err := emitGo(parsed, filepath.Base(parsed.Filename), packageName)
-		if err != nil {
-			panic(err)
-		}
-
-		err = os.WriteFile(outputName+".go", []byte(goSrc), 0644)
-		if err != nil {
-			panic(err)
-		}
-
-		if len(go64Src) > 0 {
-			err = os.WriteFile(outputName+"_64bit.go", []byte(go64Src), 0644)
+			err = os.WriteFile(outputName+".go", []byte(goSrc), 0644)
 			if err != nil {
 				panic(err)
 			}
-		}
 
-		bindingCppSrc, err := emitBindingCpp(parsed, filepath.Base(parsed.Filename))
-		if err != nil {
-			panic(err)
-		}
+			if len(go64Src) > 0 {
+				err = os.WriteFile(outputName+"_64bit.go", []byte(go64Src), 0644)
+				if err != nil {
+					panic(err)
+				}
+			}
 
-		err = os.WriteFile(outputName+".cpp", []byte(bindingCppSrc), 0644)
-		if err != nil {
-			panic(err)
-		}
+			bindingCppSrc, err := emitBindingCpp(parsed, filepath.Base(parsed.Filename))
+			if err != nil {
+				panic(err)
+			}
 
-		bindingHSrc, err := emitBindingHeader(parsed, filepath.Base(parsed.Filename), packageName)
-		if err != nil {
-			panic(err)
-		}
+			err = os.WriteFile(outputName+".cpp", []byte(bindingCppSrc), 0644)
+			if err != nil {
+				panic(err)
+			}
 
-		err = os.WriteFile(outputName+".h", []byte(bindingHSrc), 0644)
-		if err != nil {
-			panic(err)
-		}
+			bindingHSrc, err := emitBindingHeader(parsed, filepath.Base(parsed.Filename), packageName)
+			if err != nil {
+				panic(err)
+			}
 
-		// Done
+			err = os.WriteFile(outputName+".h", []byte(bindingHSrc), 0644)
+			if err != nil {
+				panic(err)
+			}
 
+			// Done
+		}(parsed)
 	}
 
 	log.Printf("Processing %d file(s) completed", len(includeFiles))

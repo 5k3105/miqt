@@ -27,7 +27,7 @@ RUN pacman -Syu --noconfirm \
 RUN curl -fSL -o /tmp/clang18.tar.xz \
       https://github.com/llvm/llvm-project/releases/download/llvmorg-18.1.8/clang+llvm-18.1.8-x86_64-linux-gnu-ubuntu-18.04.tar.xz \
  && mkdir -p /opt/clang18 \
- && tar -xf /tmp/clang18.tar.xz -C /opt/clang18 --strip-components=1 \
+ && tar --no-same-owner -xf /tmp/clang18.tar.xz -C /opt/clang18 --strip-components=1 \
  && rm /tmp/clang18.tar.xz \
  && /opt/clang18/bin/clang --version
 

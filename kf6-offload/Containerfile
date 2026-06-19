@@ -24,12 +24,23 @@ RUN pacman -Syu --noconfirm \
 # like `Options options` instead of `int options`. So fetch the LLVM 18 prebuilt and PARSE with
 # it (clang only emits the AST dump here; the actual cgo build still uses gcc). This is what lets
 # us regen against bleeding-edge Qt 6.11 yet get bindings the generator handles correctly.
+#
+# Step A — download + extract (its OWN layer so the ~1GB download is cached across later fixups).
 RUN curl -fSL -o /tmp/clang18.tar.xz \
       https://github.com/llvm/llvm-project/releases/download/llvmorg-18.1.8/clang+llvm-18.1.8-x86_64-linux-gnu-ubuntu-18.04.tar.xz \
  && mkdir -p /opt/clang18 \
  && tar --no-same-owner -xf /tmp/clang18.tar.xz -C /opt/clang18 --strip-components=1 \
- && rm /tmp/clang18.tar.xz \
- && ln -sf /usr/lib/libtinfo.so.6 /usr/lib/libtinfo.so.5 \
+ && rm /tmp/clang18.tar.xz
+
+# Step B — the Ubuntu-built Clang 18 needs ncurses5 libtinfo.so.5; Arch has only libtinfo.so.6,
+# whose symbol versions are incompatible (no NCURSES_TINFO_5.0.*). Install the REAL libtinfo.so.5
+# from Ubuntu's libtinfo5 package, then verify clang runs.
+RUN curl -fSL -o /tmp/libtinfo5.deb \
+      http://archive.ubuntu.com/ubuntu/pool/universe/n/ncurses/libtinfo5_6.3-2ubuntu0.1_amd64.deb \
+ && cd /tmp && ar x libtinfo5.deb && tar xf data.tar.* \
+ && find /tmp -name 'libtinfo.so.5*' -exec cp -a {} /usr/lib/ \; \
+ && ldconfig \
+ && rm -rf /tmp/libtinfo5.deb /tmp/data.tar.* /tmp/control.tar.* /tmp/debian-binary /tmp/lib /tmp/usr \
  && /opt/clang18/bin/clang --version
 
 # Wrapper so genbindings can just use `-clang clang18`: the Ubuntu-built Clang 18 won't

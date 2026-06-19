@@ -123,6 +123,14 @@ func parseHeaders(includeFiles []string, clangBin string, cflags []string, match
 
 		go func(i int, includeFile string) {
 			defer func() {
+				if r := recover(); r != nil {
+					// A header that won't parse standalone — e.g. Qt's internal q20*/q23*/q26*
+					// C++-compat shim headers, which use macros like Q_UNUSED without including
+					// qglobal first and only appear on Qt newer than this config was tuned for.
+					// Skip it instead of crashing the whole regen; result[i] stays an empty
+					// header (no classes), which the pipeline handles harmlessly.
+					log.Printf("skipping unparseable header %q: %v", includeFile, r)
+				}
 				wg.Done()
 				<-ch
 			}()

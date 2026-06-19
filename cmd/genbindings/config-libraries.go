@@ -732,7 +732,10 @@ func ProcessLibraries(clangBin, outDir, extraLibsDir string) {
 		// KF6 KSyntaxHighlighting ships NO pkg-config .pc file (KDE is CMake-based), so we
 		// can't use pkgConfigCflags for it. Feed clang the Qt6 cflags (headers include
 		// <QObject> etc.) + manual KF6 include paths.
-		"--std=c++17 -I/usr/include/KF6 -I/usr/include/KF6/KSyntaxHighlighting/KSyntaxHighlighting "+pkgConfigCflags("Qt6Widgets"),
+		// -I parent too: _export.h includes <ksyntaxhighlighting_version.h>, which lives in
+		// /usr/include/KF6/KSyntaxHighlighting (not the CapitalCase subdir). Validated: clang
+		// -fsyntax-only parses abstracthighlighter.h clean with exactly these three -I paths.
+		"--std=c++17 -I/usr/include/KF6 -I/usr/include/KF6/KSyntaxHighlighting -I/usr/include/KF6/KSyntaxHighlighting/KSyntaxHighlighting "+pkgConfigCflags("Qt6Widgets"),
 		outDir,
 		ClangMatchSameHeaderDefinitionOnly,
 	)

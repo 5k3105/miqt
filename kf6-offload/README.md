@@ -18,7 +18,7 @@ podman build -t miqt-kf6 -f kf6-offload/Containerfile .
 #    version (cachedir/ is gitignored, persists across runs/branches). Without clearing it, a
 #    previous Clang-22 run's AST is reused and Clang 18 never actually re-parses.
 podman run --rm -v "$PWD":/work -w /work miqt-kf6 bash -lc '
-  rm -rf cmd/genbindings/cachedir &&
+  rm -rf cmd/genbindings/cachedir && mkdir -p cmd/genbindings/cachedir &&
   cd cmd/genbindings &&
   go build -o /tmp/genbindings . &&
   /tmp/genbindings -clang clang18 -outdir ../../

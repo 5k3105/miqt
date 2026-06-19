@@ -9,14 +9,15 @@ trimmed Qt6+KF6 Arch env. Hub: IW-098 / IW-102 / WN-053.
 Run on a machine with RAM to spare (the regen + cgo link OOM-kill a Steam Deck). Arch base.
 
 ```sh
-# 1. env image (native Arch clang — no Clang-18 download needed on this base)
+# 1. env image — downloads Clang 18 (~1GB, one-time; the generator needs the Clang-18 AST format,
+#    Arch's Clang 22 produces broken nested-enum bindings even on v0.14.0)
 podman build -t miqt-kf6 -f kf6-offload/Containerfile .
 
-# 2. regen ALL bindings (clean Qt 6.11 qt6 + the new kf6/*); skips Qt5 + uninstalled submodules
+# 2. regen ALL bindings with Clang 18 (clean Qt 6.11 qt6 + kf6/*); skips Qt5 + uninstalled submodules
 podman run --rm -v "$PWD":/work -w /work miqt-kf6 bash -lc '
   cd cmd/genbindings &&
   go build -o /tmp/genbindings . &&
-  /tmp/genbindings -clang clang -outdir ../../
+  /tmp/genbindings -clang clang18 -outdir ../../
 '
 
 # 3. CANARY — should be `int options`, not `Options options`:

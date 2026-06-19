@@ -1,29 +1,52 @@
-# Offload build env for the KF6 genbindings campaign — on the v0.14.0 base (Qt 6.11 support).
-# 5k3105 hub: IW-098 (KSyntaxHighlighting) / IW-102 (KWidgetsAddons) / WN-053 / WN-056.
+# Offload build env for the KF6 genbindings campaign — miqt v0.14.0 base (Qt 6.11 support).
+# 5k3105 hub: IW-098 / IW-102 / WN-053 / WN-056.
 #
-# miqt v0.14.0 ("Support Qt 6.11", #322) handles modern Qt's nested enums correctly, so we use
-# Arch's NATIVE clang here (no Clang-18 download needed — the older base required that only
-# because its generator predated Qt 6.11). Arch = current Qt 6.11 + KF6, all consistent.
+# THE PROVEN RECIPE: v0.14.0 generator + Clang 18 + Qt 6.11. The maintainer's committed v0.14.0
+# bindings are clean for Qt 6.11 (int options, not Options options); they regen with Clang 18.1
+# (miqt README) while Arch ships Clang 22 — whose newer -ast-dump=json format the generator
+# mis-reads (drops nested-enum qualification). So we PARSE with a downloaded Clang 18 (it only
+# emits the AST dump; the cgo build still uses gcc). v0.14.0 is REQUIRED too — the older base
+# predated Qt 6.11 and broke regardless of clang.
 FROM archlinux:latest
 
 RUN pacman -Syu --noconfirm \
-      base-devel git go clang pkgconf \
+      base-devel git go curl pkgconf \
       qt6-base \
       syntax-highlighting kwidgetsaddons \
       kcoreaddons kxmlgui kparts ktexteditor \
   && pacman -Scc --noconfirm
 
-# v0.14.0's genbindings config uses Debian multiarch include paths
-# (/usr/include/x86_64-linux-gnu/qt6/...). Arch puts Qt6 at /usr/include/qt6, so symlink the
-# Debian path onto it. (Qt5 + uninstalled Qt6 submodules are skipped gracefully by the patched
-# generator — see the skip patches in cmd/genbindings.)
+# Clang 18 — Step A: download + extract (own layer so the ~1GB download caches across fixups).
+RUN curl -fSL -o /tmp/clang18.tar.xz \
+      https://github.com/llvm/llvm-project/releases/download/llvmorg-18.1.8/clang+llvm-18.1.8-x86_64-linux-gnu-ubuntu-18.04.tar.xz \
+ && mkdir -p /opt/clang18 \
+ && tar --no-same-owner -xf /tmp/clang18.tar.xz -C /opt/clang18 --strip-components=1 \
+ && rm /tmp/clang18.tar.xz
+
+# Clang 18 — Step B: it needs ncurses5 libtinfo.so.5 (Arch has only the symbol-incompatible v6);
+# install the real lib from Ubuntu's libtinfo5 package, then verify clang runs.
+RUN curl -fSL -o /tmp/libtinfo5.deb \
+      http://archive.ubuntu.com/ubuntu/pool/universe/n/ncurses/libtinfo5_6.3-2ubuntu0.1_amd64.deb \
+ && cd /tmp && ar x libtinfo5.deb && tar xf data.tar.* \
+ && find /tmp -name 'libtinfo.so.5*' -exec cp -a {} /usr/lib/ \; \
+ && ldconfig \
+ && rm -rf /tmp/libtinfo5.deb /tmp/data.tar.* /tmp/control.tar.* /tmp/debian-binary /tmp/lib /tmp/usr \
+ && /opt/clang18/bin/clang --version | head -1
+
+# Wrapper so genbindings can use `-clang clang18`: point the Ubuntu-built Clang 18 at Arch's
+# libstdc++ headers (it won't auto-detect the x86_64-pc-linux-gnu GCC triple).
+RUN printf '#!/bin/sh\nGXX=$(ls -d /usr/include/c++/*/ | head -1)\nexport CPLUS_INCLUDE_PATH="${GXX}:${GXX}x86_64-pc-linux-gnu:${GXX}backward"\nexec /opt/clang18/bin/clang "$@"\n' \
+      > /usr/local/bin/clang18 \
+ && chmod +x /usr/local/bin/clang18
+
+# v0.14.0's config uses Debian multiarch include paths; Arch puts Qt6 at /usr/include/qt6 —
+# symlink so the qt6 generate() blocks resolve. (Qt5 + uninstalled submodules skipped gracefully.)
 RUN mkdir -p /usr/include/x86_64-linux-gnu \
  && ln -sf /usr/include/qt6 /usr/include/x86_64-linux-gnu/qt6
 
 ENV CGO_ENABLED=1
 WORKDIR /work
 
-# Sanity: Phase-1 KF6 headers present (no .pc files for these — check headers) + clang works.
 RUN test -f /usr/include/KF6/KSyntaxHighlighting/KSyntaxHighlighting/repository.h \
  && test -f /usr/include/KF6/KWidgetsAddons/kmessagewidget.h \
- && clang --version | head -1
+ && echo "KF6 Phase-1 headers present."

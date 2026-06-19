@@ -459,6 +459,20 @@ func AllowCtor(className string, mm CppMethod) bool {
 	return true
 }
 
+// isRenderableTemplate reports whether a template type Foo<...> is one of the container
+// templates miqt's emit can actually render — matching exactly the heads recognized by the
+// QListOf/QSetOf/QMapOf/QPairOf/QFlagsOf helpers (QMultiMap/QMultiHash are handled+blocked by
+// QMultiMapOf before this is reached). Any other Foo<...> leaks '<' into the generated Go and
+// must be blocked. Keep this list in sync with those helpers if a new container is supported.
+func isRenderableTemplate(t string) bool {
+	for _, head := range []string{"QList<", "QVector<", "QSet<", "QMap<", "QHash<", "QPair<", "QFlags<"} {
+		if strings.HasPrefix(t, head) {
+			return true
+		}
+	}
+	return false
+}
+
 // AllowType controls whether to permit binding of a method, if a method uses
 // this type in its parameter list or return type.
 // Any type not permitted by AllowClass is also not permitted by this method.
@@ -505,6 +519,17 @@ func AllowType(p CppParameter, isReturnType bool) error {
 		return ErrTooComplex // e.g. Qt5 QNetwork qsslcertificate.h has a QMultiMap<QSsl::AlternativeNameEntryType, QString>
 	}
 
+	// GENERAL RULE: any template type Foo<...> that is NOT one of the renderable containers
+	// handled above (QList/QVector/QSet/QMap/QHash/QPair/QFlags) cannot be rendered by the emit —
+	// the '<' leaks verbatim into the generated Go ("expected ';', found '<'"). Block it
+	// generically rather than enumerating each one. This subsumes the explicit per-template
+	// HasPrefix blocks below (QScopedPointer<, QBindable<, QPointer<, QSpan<, EulerAngles<, ...)
+	// AND auto-handles whatever templated type a future Qt/KF6 version introduces. Inner types of
+	// the renderable containers are still validated by the QListOf/QSetOf/... recursion above.
+	if strings.ContainsRune(p.ParameterType, '<') && !isRenderableTemplate(p.ParameterType) {
+		return ErrTooComplex
+	}
+
 	if !AllowClass(p.ParameterType) {
 		return ErrTooComplex // This whole class type has been blocked, not only as a parameter/return type
 	}
@@ -547,12 +572,6 @@ func AllowType(p CppParameter, isReturnType bool) error {
 	}
 	if strings.HasPrefix(p.ParameterType, "EncodedData<") {
 		return ErrTooComplex // e.g. Qt 6 qstringconverter.h
-	}
-	if strings.HasPrefix(p.ParameterType, "QSpan<") {
-		return ErrTooComplex // Qt 6.9+ std::span-like view, e.g. qcryptographichash.h hashInto() overloads — not yet bindable
-	}
-	if strings.HasPrefix(p.ParameterType, "EulerAngles<") {
-		return ErrTooComplex // Qt 6.x qquaternion.h — QQuaternion::EulerAngles<float> (eulerAngles()/fromEulerAngles()), nested template
 	}
 	if strings.HasPrefix(p.ParameterType, "QQmlListProperty<") {
 		return ErrTooComplex // e.g. Qt 5 QWebChannel qmlwebchannel.h . Supporting this will be required for QML in future

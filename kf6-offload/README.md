@@ -9,19 +9,20 @@ trimmed Qt6+KF6 Arch env. Hub: IW-098 / IW-102 / WN-053.
 Run on a machine with RAM to spare (the regen + cgo link OOM-kill a Steam Deck). Arch base.
 
 ```sh
-# 1. env image — downloads Clang 18 (~1GB, one-time; the generator needs the Clang-18 AST format,
-#    Arch's Clang 22 produces broken nested-enum bindings even on v0.14.0)
+# 1. env image — Debian 13 + native clang-18 (apt.llvm.org) + aqtinstall Qt 6.11.1 + KF6 built
+#    from source against that Qt. Several minutes + a few GB the first time; cached after. The
+#    build fail-fasts if Qt pkg-config or the KF6 headers aren't where expected.
 podman build -t miqt-kf6 -f kf6-offload/Containerfile .
 
-# 2. regen ALL bindings with Clang 18 (clean Qt 6.11 qt6 + kf6/*); skips Qt5 + uninstalled submodules.
-#    NOTE the `rm -rf cachedir`: genbindings caches the clang AST per header path, NOT per clang
-#    version (cachedir/ is gitignored, persists across runs/branches). Without clearing it, a
-#    previous Clang-22 run's AST is reused and Clang 18 never actually re-parses.
+# 2. regen ALL bindings with native clang-18 (clean Qt 6.11 qt6 + kf6/*); skips Qt5 + uninstalled
+#    submodules. NOTE `rm -rf cachedir && mkdir`: genbindings caches the clang AST per header path,
+#    NOT per clang version (cachedir/ is gitignored, persists) — clear it so clang actually
+#    re-parses, but RECREATE the dir (the emit step writes its IL files there, doesn't mkdir it).
 podman run --rm -v "$PWD":/work -w /work miqt-kf6 bash -lc '
   rm -rf cmd/genbindings/cachedir && mkdir -p cmd/genbindings/cachedir &&
   cd cmd/genbindings &&
   go build -o /tmp/genbindings . &&
-  /tmp/genbindings -clang clang18 -outdir ../../
+  /tmp/genbindings -clang clang -outdir ../../
 '
 
 # 3. CANARY — should be `int options`, not `Options options`:

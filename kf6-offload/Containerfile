@@ -23,7 +23,7 @@ ENV CGO_ENABLED=1
 WORKDIR /work
 
 # Build commands live in README.md (kept out of the image so this stays a pure env).
-# Quick sanity at build time: the KF6 dev headers + pkg-config the module needs.
-RUN test -d /usr/include/KF6/KSyntaxHighlighting/ksyntaxhighlighting \
- && pkg-config --exists KF6SyntaxHighlighting \
- && echo "KF6SyntaxHighlighting cflags: $(pkg-config --cflags KF6SyntaxHighlighting)"
+# Quick sanity at build time: pkg-config resolves the Phase-1 KF6 libs (robust — no
+# hardcoded header paths, which vary in case between KF6 libs).
+RUN pkg-config --exists KF6SyntaxHighlighting KF6WidgetsAddons \
+ && echo "KF6 cflags OK: $(pkg-config --cflags KF6SyntaxHighlighting KF6WidgetsAddons)"

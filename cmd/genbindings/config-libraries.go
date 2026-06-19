@@ -714,7 +714,9 @@ func ProcessLibraries(clangBin, outDir, extraLibsDir string) {
 	generate(
 		"kf6/ksyntaxhighlighting",
 		[]string{
-			"/usr/include/KF6/KSyntaxHighlighting/ksyntaxhighlighting",
+			// NOTE: CapitalCase second component on Arch (unlike most KF6 libs which
+			// use a lowercase include subdir). This is where the real .h files live.
+			"/usr/include/KF6/KSyntaxHighlighting/KSyntaxHighlighting",
 		},
 		OnlyHeaders(
 			"repository.h",

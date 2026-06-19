@@ -142,6 +142,12 @@ func generate(packageName string, srcDirs []string, allowHeaderFn func(string) b
 	var includeFiles []string
 	for _, srcDir := range srcDirs {
 		if strings.HasSuffix(srcDir, `.h`) {
+			// Single .h path (e.g. a vendored extra-lib checkout under /usr/local/src).
+			// Skip if it's not present so the package is skipped instead of clang panicking.
+			if _, err := os.Stat(srcDir); err != nil {
+				log.Printf("skipping missing header file %q: %v", srcDir, err)
+				continue
+			}
 			includeFiles = append(includeFiles, srcDir) // single .h
 		} else {
 			includeFiles = append(includeFiles, findHeadersInDir(srcDir, allowHeaderFn)...)

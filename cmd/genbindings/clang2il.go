@@ -492,9 +492,13 @@ nextMethod:
 					}
 
 					if strings.Contains(fieldType.ParameterType, "unnamed") || strings.Contains(fieldType.ParameterType, "struct ") ||
-						strings.Contains(fieldType.ParameterType, "void") || strings.Contains(fieldType.ParameterType, "char[") ||
-						strings.Contains(fieldType.ParameterType, "quint8[") || strings.Contains(fieldType.ParameterType, "uint[") {
-						continue // Skip broken types for now
+						strings.Contains(fieldType.ParameterType, "void") || strings.Contains(fieldType.ParameterType, "[") {
+						// Skip unbindable field types: anonymous/unnamed, raw struct, void, and any C
+						// array T[N] (e.g. QProcess::UnixProcessParameters::_reserved[6]). The array
+						// dimension would leak into the generated Go getter/setter ("expected type,
+						// found 6") and break the build. Generalizes the old char[/quint8[/uint[ list
+						// — every fixed-size array member is unbindable as a simple accessor.
+						continue
 					}
 
 					if strings.HasSuffix(qualType, "const") {

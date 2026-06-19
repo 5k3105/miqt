@@ -548,6 +548,9 @@ func AllowType(p CppParameter, isReturnType bool) error {
 	if strings.HasPrefix(p.ParameterType, "EncodedData<") {
 		return ErrTooComplex // e.g. Qt 6 qstringconverter.h
 	}
+	if strings.HasPrefix(p.ParameterType, "QSpan<") {
+		return ErrTooComplex // Qt 6.9+ std::span-like view, e.g. qcryptographichash.h hashInto() overloads — not yet bindable
+	}
 	if strings.HasPrefix(p.ParameterType, "QQmlListProperty<") {
 		return ErrTooComplex // e.g. Qt 5 QWebChannel qmlwebchannel.h . Supporting this will be required for QML in future
 	}

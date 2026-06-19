@@ -85,6 +85,9 @@ const (
 	QAbstractSocket__SendBufferSizeSocketOption    QAbstractSocket__SocketOption = 5
 	QAbstractSocket__ReceiveBufferSizeSocketOption QAbstractSocket__SocketOption = 6
 	QAbstractSocket__PathMtuSocketOption           QAbstractSocket__SocketOption = 7
+	QAbstractSocket__KeepAliveIdleOption           QAbstractSocket__SocketOption = 8
+	QAbstractSocket__KeepAliveIntervalOption       QAbstractSocket__SocketOption = 9
+	QAbstractSocket__KeepAliveCountOption          QAbstractSocket__SocketOption = 10
 )
 
 type QAbstractSocket__BindFlag int
@@ -140,9 +143,9 @@ func UnsafeNewQAbstractSocket(h unsafe.Pointer) *QAbstractSocket {
 }
 
 // NewQAbstractSocket constructs a new QAbstractSocket object.
-func NewQAbstractSocket(socketType QAbstractSocket__SocketType, parent *qt6.QObject) *QAbstractSocket {
+func NewQAbstractSocket(socketType SocketType, parent *qt6.QObject) *QAbstractSocket {
 
-	return newQAbstractSocket(C.QAbstractSocket_new((C.int)(socketType), (*C.QObject)(parent.UnsafePointer())))
+	return newQAbstractSocket(C.QAbstractSocket_new(socketType, (*C.QObject)(parent.UnsafePointer())))
 }
 
 func (this *QAbstractSocket) MetaObject() *qt6.QMetaObject {
@@ -168,28 +171,28 @@ func (this *QAbstractSocket) Resume() {
 	C.QAbstractSocket_resume(this.h)
 }
 
-func (this *QAbstractSocket) PauseMode() QAbstractSocket__PauseMode {
-	return (QAbstractSocket__PauseMode)(C.QAbstractSocket_pauseMode(this.h))
+func (this *QAbstractSocket) PauseMode() PauseModes {
+	int /* TODO  */
 }
 
-func (this *QAbstractSocket) SetPauseMode(pauseMode QAbstractSocket__PauseMode) {
-	C.QAbstractSocket_setPauseMode(this.h, (C.int)(pauseMode))
+func (this *QAbstractSocket) SetPauseMode(pauseMode PauseModes) {
+	C.QAbstractSocket_setPauseMode(this.h, pauseMode)
 }
 
-func (this *QAbstractSocket) Bind(address *QHostAddress, port uint16, mode QAbstractSocket__BindFlag) bool {
-	return (bool)(C.QAbstractSocket_bind(this.h, address.cPointer(), (C.ushort)(port), (C.int)(mode)))
+func (this *QAbstractSocket) Bind(address *QHostAddress, port uint16, mode BindMode) bool {
+	return (bool)(C.QAbstractSocket_bind(this.h, address.cPointer(), (C.ushort)(port), mode))
 }
 
 func (this *QAbstractSocket) Bind2() bool {
 	return (bool)(C.QAbstractSocket_bind2(this.h))
 }
 
-func (this *QAbstractSocket) ConnectToHost(hostName string, port uint16, mode qt6.QIODeviceBase__OpenModeFlag, protocol QAbstractSocket__NetworkLayerProtocol) {
+func (this *QAbstractSocket) ConnectToHost(hostName string, port uint16, mode OpenMode, protocol NetworkLayerProtocol) {
 	hostName_ms := C.struct_miqt_string{}
 	hostName_ms.data = C.CString(hostName)
 	hostName_ms.len = C.size_t(len(hostName))
 	defer C.free(unsafe.Pointer(hostName_ms.data))
-	C.QAbstractSocket_connectToHost(this.h, hostName_ms, (C.ushort)(port), (C.int)(mode), (C.int)(protocol))
+	C.QAbstractSocket_connectToHost(this.h, hostName_ms, (C.ushort)(port), mode, protocol)
 }
 
 func (this *QAbstractSocket) ConnectToHost2(address *QHostAddress, port uint16) {
@@ -255,8 +258,8 @@ func (this *QAbstractSocket) SocketDescriptor() uintptr {
 	return (uintptr)(C.QAbstractSocket_socketDescriptor(this.h))
 }
 
-func (this *QAbstractSocket) SetSocketDescriptor(socketDescriptor uintptr, state QAbstractSocket__SocketState, openMode qt6.QIODeviceBase__OpenModeFlag) bool {
-	return (bool)(C.QAbstractSocket_setSocketDescriptor(this.h, (C.intptr_t)(socketDescriptor), (C.int)(state), (C.int)(openMode)))
+func (this *QAbstractSocket) SetSocketDescriptor(socketDescriptor uintptr, state SocketState, openMode OpenMode) bool {
+	return (bool)(C.QAbstractSocket_setSocketDescriptor(this.h, (C.intptr_t)(socketDescriptor), state, openMode))
 }
 
 func (this *QAbstractSocket) SetSocketOption(option QAbstractSocket__SocketOption, value *qt6.QVariant) {
@@ -269,16 +272,16 @@ func (this *QAbstractSocket) SocketOption(option QAbstractSocket__SocketOption) 
 	return _goptr
 }
 
-func (this *QAbstractSocket) SocketType() QAbstractSocket__SocketType {
-	return (QAbstractSocket__SocketType)(C.QAbstractSocket_socketType(this.h))
+func (this *QAbstractSocket) SocketType() SocketType {
+	int /* TODO  */
 }
 
-func (this *QAbstractSocket) State() QAbstractSocket__SocketState {
-	return (QAbstractSocket__SocketState)(C.QAbstractSocket_state(this.h))
+func (this *QAbstractSocket) State() SocketState {
+	int /* TODO  */
 }
 
-func (this *QAbstractSocket) Error() QAbstractSocket__SocketError {
-	return (QAbstractSocket__SocketError)(C.QAbstractSocket_error(this.h))
+func (this *QAbstractSocket) Error() SocketError {
+	int /* TODO  */
 }
 
 func (this *QAbstractSocket) Close() {
@@ -473,19 +476,19 @@ func (this *QAbstractSocket) BindWithPort(port uint16) bool {
 	return (bool)(C.QAbstractSocket_bindWithPort(this.h, (C.ushort)(port)))
 }
 
-func (this *QAbstractSocket) Bind3(port uint16, mode QAbstractSocket__BindFlag) bool {
-	return (bool)(C.QAbstractSocket_bind3(this.h, (C.ushort)(port), (C.int)(mode)))
+func (this *QAbstractSocket) Bind3(port uint16, mode BindMode) bool {
+	return (bool)(C.QAbstractSocket_bind3(this.h, (C.ushort)(port), mode))
 }
 
-func (this *QAbstractSocket) ConnectToHost3(address *QHostAddress, port uint16, mode qt6.QIODeviceBase__OpenModeFlag) {
-	C.QAbstractSocket_connectToHost3(this.h, address.cPointer(), (C.ushort)(port), (C.int)(mode))
+func (this *QAbstractSocket) ConnectToHost3(address *QHostAddress, port uint16, mode OpenMode) {
+	C.QAbstractSocket_connectToHost3(this.h, address.cPointer(), (C.ushort)(port), mode)
 }
 
 // SetSocketState can only be called from a QAbstractSocket that was directly constructed.
-func (this *QAbstractSocket) SetSocketState(state QAbstractSocket__SocketState) {
+func (this *QAbstractSocket) SetSocketState(state SocketState) {
 
 	var _dynamic_cast_ok C.bool = false
-	C.QAbstractSocket_protectedbase_setSocketState(&_dynamic_cast_ok, unsafe.Pointer(this.h), (C.int)(state))
+	C.QAbstractSocket_protectedbase_setSocketState(&_dynamic_cast_ok, unsafe.Pointer(this.h), state)
 
 	if !_dynamic_cast_ok {
 		panic("miqt: can only call protected methods for directly constructed types")
@@ -494,10 +497,10 @@ func (this *QAbstractSocket) SetSocketState(state QAbstractSocket__SocketState) 
 }
 
 // SetSocketError can only be called from a QAbstractSocket that was directly constructed.
-func (this *QAbstractSocket) SetSocketError(socketError QAbstractSocket__SocketError) {
+func (this *QAbstractSocket) SetSocketError(socketError SocketError) {
 
 	var _dynamic_cast_ok C.bool = false
-	C.QAbstractSocket_protectedbase_setSocketError(&_dynamic_cast_ok, unsafe.Pointer(this.h), (C.int)(socketError))
+	C.QAbstractSocket_protectedbase_setSocketError(&_dynamic_cast_ok, unsafe.Pointer(this.h), socketError)
 
 	if !_dynamic_cast_ok {
 		panic("miqt: can only call protected methods for directly constructed types")
@@ -570,7 +573,7 @@ func (this *QAbstractSocket) SetPeerName(name string) {
 }
 
 // SetOpenMode can only be called from a QAbstractSocket that was directly constructed.
-func (this *QAbstractSocket) SetOpenMode(openMode qt6.QIODeviceBase__OpenModeFlag) {
+func (this *QAbstractSocket) SetOpenMode(openMode OpenModeFlag) {
 
 	var _dynamic_cast_ok C.bool = false
 	C.QAbstractSocket_protectedbase_setOpenMode(&_dynamic_cast_ok, unsafe.Pointer(this.h), (C.int)(openMode))
@@ -678,12 +681,12 @@ func miqt_exec_callback_QAbstractSocket_resume(self *C.QAbstractSocket, cb C.int
 
 }
 
-func (this *QAbstractSocket) callVirtualBase_Bind(address *QHostAddress, port uint16, mode QAbstractSocket__BindFlag) bool {
+func (this *QAbstractSocket) callVirtualBase_Bind(address *QHostAddress, port uint16, mode BindMode) bool {
 
-	return (bool)(C.QAbstractSocket_virtualbase_bind(unsafe.Pointer(this.h), address.cPointer(), (C.ushort)(port), (C.int)(mode)))
+	return (bool)(C.QAbstractSocket_virtualbase_bind(unsafe.Pointer(this.h), address.cPointer(), (C.ushort)(port), mode))
 
 }
-func (this *QAbstractSocket) OnBind(slot func(super func(address *QHostAddress, port uint16, mode QAbstractSocket__BindFlag) bool, address *QHostAddress, port uint16, mode QAbstractSocket__BindFlag) bool) {
+func (this *QAbstractSocket) OnBind(slot func(super func(address *QHostAddress, port uint16, mode BindMode) bool, address *QHostAddress, port uint16, mode BindMode) bool) {
 	ok := C.QAbstractSocket_override_virtual_bind(unsafe.Pointer(this.h), C.intptr_t(cgo.NewHandle(slot)))
 	if !ok {
 		panic("miqt: can only override virtual methods for directly constructed types")
@@ -691,8 +694,8 @@ func (this *QAbstractSocket) OnBind(slot func(super func(address *QHostAddress, 
 }
 
 //export miqt_exec_callback_QAbstractSocket_bind
-func miqt_exec_callback_QAbstractSocket_bind(self *C.QAbstractSocket, cb C.intptr_t, address *C.QHostAddress, port C.ushort, mode C.int) C.bool {
-	gofunc, ok := cgo.Handle(cb).Value().(func(super func(address *QHostAddress, port uint16, mode QAbstractSocket__BindFlag) bool, address *QHostAddress, port uint16, mode QAbstractSocket__BindFlag) bool)
+func miqt_exec_callback_QAbstractSocket_bind(self *C.QAbstractSocket, cb C.intptr_t, address *C.QHostAddress, port C.ushort, mode C.BindMode) C.bool {
+	gofunc, ok := cgo.Handle(cb).Value().(func(super func(address *QHostAddress, port uint16, mode BindMode) bool, address *QHostAddress, port uint16, mode BindMode) bool)
 	if !ok {
 		panic("miqt: callback of non-callback type (heap corruption?)")
 	}
@@ -702,7 +705,7 @@ func miqt_exec_callback_QAbstractSocket_bind(self *C.QAbstractSocket, cb C.intpt
 
 	slotval2 := (uint16)(port)
 
-	slotval3 := (QAbstractSocket__BindFlag)(mode)
+	int /* TODO  */
 
 	virtualReturn := gofunc((&QAbstractSocket{h: self}).callVirtualBase_Bind, slotval1, slotval2, slotval3)
 
@@ -710,16 +713,16 @@ func miqt_exec_callback_QAbstractSocket_bind(self *C.QAbstractSocket, cb C.intpt
 
 }
 
-func (this *QAbstractSocket) callVirtualBase_ConnectToHost(hostName string, port uint16, mode qt6.QIODeviceBase__OpenModeFlag, protocol QAbstractSocket__NetworkLayerProtocol) {
+func (this *QAbstractSocket) callVirtualBase_ConnectToHost(hostName string, port uint16, mode OpenMode, protocol NetworkLayerProtocol) {
 	hostName_ms := C.struct_miqt_string{}
 	hostName_ms.data = C.CString(hostName)
 	hostName_ms.len = C.size_t(len(hostName))
 	defer C.free(unsafe.Pointer(hostName_ms.data))
 
-	C.QAbstractSocket_virtualbase_connectToHost(unsafe.Pointer(this.h), hostName_ms, (C.ushort)(port), (C.int)(mode), (C.int)(protocol))
+	C.QAbstractSocket_virtualbase_connectToHost(unsafe.Pointer(this.h), hostName_ms, (C.ushort)(port), mode, protocol)
 
 }
-func (this *QAbstractSocket) OnConnectToHost(slot func(super func(hostName string, port uint16, mode qt6.QIODeviceBase__OpenModeFlag, protocol QAbstractSocket__NetworkLayerProtocol), hostName string, port uint16, mode qt6.QIODeviceBase__OpenModeFlag, protocol QAbstractSocket__NetworkLayerProtocol)) {
+func (this *QAbstractSocket) OnConnectToHost(slot func(super func(hostName string, port uint16, mode OpenMode, protocol NetworkLayerProtocol), hostName string, port uint16, mode OpenMode, protocol NetworkLayerProtocol)) {
 	ok := C.QAbstractSocket_override_virtual_connectToHost(unsafe.Pointer(this.h), C.intptr_t(cgo.NewHandle(slot)))
 	if !ok {
 		panic("miqt: can only override virtual methods for directly constructed types")
@@ -727,8 +730,8 @@ func (this *QAbstractSocket) OnConnectToHost(slot func(super func(hostName strin
 }
 
 //export miqt_exec_callback_QAbstractSocket_connectToHost
-func miqt_exec_callback_QAbstractSocket_connectToHost(self *C.QAbstractSocket, cb C.intptr_t, hostName C.struct_miqt_string, port C.ushort, mode C.int, protocol C.int) {
-	gofunc, ok := cgo.Handle(cb).Value().(func(super func(hostName string, port uint16, mode qt6.QIODeviceBase__OpenModeFlag, protocol QAbstractSocket__NetworkLayerProtocol), hostName string, port uint16, mode qt6.QIODeviceBase__OpenModeFlag, protocol QAbstractSocket__NetworkLayerProtocol))
+func miqt_exec_callback_QAbstractSocket_connectToHost(self *C.QAbstractSocket, cb C.intptr_t, hostName C.struct_miqt_string, port C.ushort, mode C.OpenMode, protocol C.NetworkLayerProtocol) {
+	gofunc, ok := cgo.Handle(cb).Value().(func(super func(hostName string, port uint16, mode OpenMode, protocol NetworkLayerProtocol), hostName string, port uint16, mode OpenMode, protocol NetworkLayerProtocol))
 	if !ok {
 		panic("miqt: callback of non-callback type (heap corruption?)")
 	}
@@ -740,9 +743,8 @@ func miqt_exec_callback_QAbstractSocket_connectToHost(self *C.QAbstractSocket, c
 	slotval1 := hostName_ret
 	slotval2 := (uint16)(port)
 
-	slotval3 := (qt6.QIODeviceBase__OpenModeFlag)(mode)
-
-	slotval4 := (QAbstractSocket__NetworkLayerProtocol)(protocol)
+	int /* TODO  */
+	int /* TODO  */
 
 	gofunc((&QAbstractSocket{h: self}).callVirtualBase_ConnectToHost, slotval1, slotval2, slotval3, slotval4)
 
@@ -872,12 +874,12 @@ func miqt_exec_callback_QAbstractSocket_socketDescriptor(self *C.QAbstractSocket
 
 }
 
-func (this *QAbstractSocket) callVirtualBase_SetSocketDescriptor(socketDescriptor uintptr, state QAbstractSocket__SocketState, openMode qt6.QIODeviceBase__OpenModeFlag) bool {
+func (this *QAbstractSocket) callVirtualBase_SetSocketDescriptor(socketDescriptor uintptr, state SocketState, openMode OpenMode) bool {
 
-	return (bool)(C.QAbstractSocket_virtualbase_setSocketDescriptor(unsafe.Pointer(this.h), (C.intptr_t)(socketDescriptor), (C.int)(state), (C.int)(openMode)))
+	return (bool)(C.QAbstractSocket_virtualbase_setSocketDescriptor(unsafe.Pointer(this.h), (C.intptr_t)(socketDescriptor), state, openMode))
 
 }
-func (this *QAbstractSocket) OnSetSocketDescriptor(slot func(super func(socketDescriptor uintptr, state QAbstractSocket__SocketState, openMode qt6.QIODeviceBase__OpenModeFlag) bool, socketDescriptor uintptr, state QAbstractSocket__SocketState, openMode qt6.QIODeviceBase__OpenModeFlag) bool) {
+func (this *QAbstractSocket) OnSetSocketDescriptor(slot func(super func(socketDescriptor uintptr, state SocketState, openMode OpenMode) bool, socketDescriptor uintptr, state SocketState, openMode OpenMode) bool) {
 	ok := C.QAbstractSocket_override_virtual_setSocketDescriptor(unsafe.Pointer(this.h), C.intptr_t(cgo.NewHandle(slot)))
 	if !ok {
 		panic("miqt: can only override virtual methods for directly constructed types")
@@ -885,8 +887,8 @@ func (this *QAbstractSocket) OnSetSocketDescriptor(slot func(super func(socketDe
 }
 
 //export miqt_exec_callback_QAbstractSocket_setSocketDescriptor
-func miqt_exec_callback_QAbstractSocket_setSocketDescriptor(self *C.QAbstractSocket, cb C.intptr_t, socketDescriptor C.intptr_t, state C.int, openMode C.int) C.bool {
-	gofunc, ok := cgo.Handle(cb).Value().(func(super func(socketDescriptor uintptr, state QAbstractSocket__SocketState, openMode qt6.QIODeviceBase__OpenModeFlag) bool, socketDescriptor uintptr, state QAbstractSocket__SocketState, openMode qt6.QIODeviceBase__OpenModeFlag) bool)
+func miqt_exec_callback_QAbstractSocket_setSocketDescriptor(self *C.QAbstractSocket, cb C.intptr_t, socketDescriptor C.intptr_t, state C.SocketState, openMode C.OpenMode) C.bool {
+	gofunc, ok := cgo.Handle(cb).Value().(func(super func(socketDescriptor uintptr, state SocketState, openMode OpenMode) bool, socketDescriptor uintptr, state SocketState, openMode OpenMode) bool)
 	if !ok {
 		panic("miqt: callback of non-callback type (heap corruption?)")
 	}
@@ -894,9 +896,8 @@ func miqt_exec_callback_QAbstractSocket_setSocketDescriptor(self *C.QAbstractSoc
 	// Convert all CABI parameters to Go parameters
 	slotval1 := (uintptr)(socketDescriptor)
 
-	slotval2 := (QAbstractSocket__SocketState)(state)
-
-	slotval3 := (qt6.QIODeviceBase__OpenModeFlag)(openMode)
+	int /* TODO  */
+	int /* TODO  */
 
 	virtualReturn := gofunc((&QAbstractSocket{h: self}).callVirtualBase_SetSocketDescriptor, slotval1, slotval2, slotval3)
 
@@ -1249,12 +1250,12 @@ func miqt_exec_callback_QAbstractSocket_writeData(self *C.QAbstractSocket, cb C.
 
 }
 
-func (this *QAbstractSocket) callVirtualBase_Open(mode qt6.QIODeviceBase__OpenModeFlag) bool {
+func (this *QAbstractSocket) callVirtualBase_Open(mode OpenModeFlag) bool {
 
 	return (bool)(C.QAbstractSocket_virtualbase_open(unsafe.Pointer(this.h), (C.int)(mode)))
 
 }
-func (this *QAbstractSocket) OnOpen(slot func(super func(mode qt6.QIODeviceBase__OpenModeFlag) bool, mode qt6.QIODeviceBase__OpenModeFlag) bool) {
+func (this *QAbstractSocket) OnOpen(slot func(super func(mode OpenModeFlag) bool, mode OpenModeFlag) bool) {
 	ok := C.QAbstractSocket_override_virtual_open(unsafe.Pointer(this.h), C.intptr_t(cgo.NewHandle(slot)))
 	if !ok {
 		panic("miqt: can only override virtual methods for directly constructed types")
@@ -1263,13 +1264,13 @@ func (this *QAbstractSocket) OnOpen(slot func(super func(mode qt6.QIODeviceBase_
 
 //export miqt_exec_callback_QAbstractSocket_open
 func miqt_exec_callback_QAbstractSocket_open(self *C.QAbstractSocket, cb C.intptr_t, mode C.int) C.bool {
-	gofunc, ok := cgo.Handle(cb).Value().(func(super func(mode qt6.QIODeviceBase__OpenModeFlag) bool, mode qt6.QIODeviceBase__OpenModeFlag) bool)
+	gofunc, ok := cgo.Handle(cb).Value().(func(super func(mode OpenModeFlag) bool, mode OpenModeFlag) bool)
 	if !ok {
 		panic("miqt: callback of non-callback type (heap corruption?)")
 	}
 
 	// Convert all CABI parameters to Go parameters
-	slotval1 := (qt6.QIODeviceBase__OpenModeFlag)(mode)
+	slotval1 := (OpenModeFlag)(mode)
 
 	virtualReturn := gofunc((&QAbstractSocket{h: self}).callVirtualBase_Open, slotval1)
 

@@ -1,3 +1,4 @@
+#include <QGenericRunnable>
 #include <QRunnable>
 #include <qrunnable.h>
 #include "gen_qrunnable.h"
@@ -60,6 +61,18 @@ bool QRunnable_override_virtual_run(void* self, intptr_t slot) {
 }
 
 void QRunnable_delete(QRunnable* self) {
+	delete self;
+}
+
+void QGenericRunnable_virtbase(QGenericRunnable* src, QRunnable** outptr_QRunnable) {
+	*outptr_QRunnable = static_cast<QRunnable*>(src);
+}
+
+void QGenericRunnable_run(QGenericRunnable* self) {
+	self->run();
+}
+
+void QGenericRunnable_delete(QGenericRunnable* self) {
 	delete self;
 }
 

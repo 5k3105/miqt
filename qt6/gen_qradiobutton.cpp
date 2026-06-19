@@ -83,7 +83,7 @@ void miqt_exec_callback_QRadioButton_dropEvent(QRadioButton*, intptr_t, QDropEve
 void miqt_exec_callback_QRadioButton_showEvent(QRadioButton*, intptr_t, QShowEvent*);
 void miqt_exec_callback_QRadioButton_hideEvent(QRadioButton*, intptr_t, QHideEvent*);
 bool miqt_exec_callback_QRadioButton_nativeEvent(QRadioButton*, intptr_t, struct miqt_string, void*, intptr_t*);
-int miqt_exec_callback_QRadioButton_metric(const QRadioButton*, intptr_t, int);
+int miqt_exec_callback_QRadioButton_metric(const QRadioButton*, intptr_t, PaintDeviceMetric);
 void miqt_exec_callback_QRadioButton_initPainter(const QRadioButton*, intptr_t, QPainter*);
 QPaintDevice* miqt_exec_callback_QRadioButton_redirected(const QRadioButton*, intptr_t, QPoint*);
 QPainter* miqt_exec_callback_QRadioButton_sharedPainter(const QRadioButton*, intptr_t);
@@ -770,18 +770,17 @@ public:
 	intptr_t handle__metric = 0;
 
 	// Subclass to allow providing a Go implementation
-	virtual int metric(QPaintDevice::PaintDeviceMetric param1) const override {
+	virtual int metric(PaintDeviceMetric param1) const override {
 		if (handle__metric == 0) {
 			return QRadioButton::metric(param1);
 		}
 
-		QPaintDevice::PaintDeviceMetric param1_ret = param1;
-		int sigval1 = static_cast<int>(param1_ret);
+		PaintDeviceMetric sigval1 = param1;
 		int callback_return_value = miqt_exec_callback_QRadioButton_metric(this, handle__metric, sigval1);
 		return static_cast<int>(callback_return_value);
 	}
 
-	friend int QRadioButton_virtualbase_metric(const void* self, int param1);
+	friend int QRadioButton_virtualbase_metric(const void* self, PaintDeviceMetric param1);
 
 	// cgo.Handle value for overwritten implementation
 	intptr_t handle__initPainter = 0;
@@ -980,6 +979,7 @@ public:
 	friend int QRadioButton_protectedbase_senderSignalIndex(bool* _dynamic_cast_ok, const void* self);
 	friend int QRadioButton_protectedbase_receivers(bool* _dynamic_cast_ok, const void* self, const char* signal);
 	friend bool QRadioButton_protectedbase_isSignalConnected(bool* _dynamic_cast_ok, const void* self, QMetaMethod* signal);
+	friend double QRadioButton_protectedbase_getDecodedMetricF(bool* _dynamic_cast_ok, const void* self, PaintDeviceMetric metricA, PaintDeviceMetric metricB);
 };
 
 QRadioButton* QRadioButton_new(QWidget* parent) {
@@ -1610,8 +1610,8 @@ bool QRadioButton_override_virtual_metric(void* self, intptr_t slot) {
 	return true;
 }
 
-int QRadioButton_virtualbase_metric(const void* self, int param1) {
-	return static_cast<const MiqtVirtualQRadioButton*>(self)->QRadioButton::metric(static_cast<MiqtVirtualQRadioButton::PaintDeviceMetric>(param1));
+int QRadioButton_virtualbase_metric(const void* self, PaintDeviceMetric param1) {
+	return static_cast<const MiqtVirtualQRadioButton*>(self)->QRadioButton::metric(param1);
 }
 
 bool QRadioButton_override_virtual_initPainter(void* self, intptr_t slot) {
@@ -1865,6 +1865,17 @@ bool QRadioButton_protectedbase_isSignalConnected(bool* _dynamic_cast_ok, const 
 
 	*_dynamic_cast_ok = true;
 	return self_cast->isSignalConnected(*signal);
+}
+
+double QRadioButton_protectedbase_getDecodedMetricF(bool* _dynamic_cast_ok, const void* self, PaintDeviceMetric metricA, PaintDeviceMetric metricB) {
+	MiqtVirtualQRadioButton* self_cast = dynamic_cast<MiqtVirtualQRadioButton*>( (QRadioButton*)(self) );
+	if (self_cast == nullptr) {
+		*_dynamic_cast_ok = false;
+		return 0;
+	}
+
+	*_dynamic_cast_ok = true;
+	return self_cast->getDecodedMetricF(metricA, metricB);
 }
 
 void QRadioButton_delete(QRadioButton* self) {

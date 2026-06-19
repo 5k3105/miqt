@@ -72,6 +72,7 @@ QMimeData* QConcatenateTablesProxyModel_mimeData(const QConcatenateTablesProxyMo
 bool QConcatenateTablesProxyModel_canDropMimeData(const QConcatenateTablesProxyModel* self, QMimeData* data, int action, int row, int column, QModelIndex* parent);
 bool QConcatenateTablesProxyModel_dropMimeData(QConcatenateTablesProxyModel* self, QMimeData* data, int action, int row, int column, QModelIndex* parent);
 QSize* QConcatenateTablesProxyModel_span(const QConcatenateTablesProxyModel* self, QModelIndex* index);
+struct miqt_map /* of int to struct miqt_string */  QConcatenateTablesProxyModel_roleNames(const QConcatenateTablesProxyModel* self);
 struct miqt_string QConcatenateTablesProxyModel_tr2(const char* s, const char* c);
 struct miqt_string QConcatenateTablesProxyModel_tr3(const char* s, const char* c, int n);
 
@@ -105,6 +106,8 @@ bool QConcatenateTablesProxyModel_override_virtual_dropMimeData(void* self, intp
 bool QConcatenateTablesProxyModel_virtualbase_dropMimeData(void* self, QMimeData* data, int action, int row, int column, QModelIndex* parent);
 bool QConcatenateTablesProxyModel_override_virtual_span(void* self, intptr_t slot);
 QSize* QConcatenateTablesProxyModel_virtualbase_span(const void* self, QModelIndex* index);
+bool QConcatenateTablesProxyModel_override_virtual_roleNames(void* self, intptr_t slot);
+struct miqt_map /* of int to struct miqt_string */  QConcatenateTablesProxyModel_virtualbase_roleNames(const void* self);
 bool QConcatenateTablesProxyModel_override_virtual_sibling(void* self, intptr_t slot);
 QModelIndex* QConcatenateTablesProxyModel_virtualbase_sibling(const void* self, int row, int column, QModelIndex* idx);
 bool QConcatenateTablesProxyModel_override_virtual_hasChildren(void* self, intptr_t slot);
@@ -139,8 +142,6 @@ bool QConcatenateTablesProxyModel_override_virtual_buddy(void* self, intptr_t sl
 QModelIndex* QConcatenateTablesProxyModel_virtualbase_buddy(const void* self, QModelIndex* index);
 bool QConcatenateTablesProxyModel_override_virtual_match(void* self, intptr_t slot);
 struct miqt_array /* of QModelIndex* */  QConcatenateTablesProxyModel_virtualbase_match(const void* self, QModelIndex* start, int role, QVariant* value, int hits, int flags);
-bool QConcatenateTablesProxyModel_override_virtual_roleNames(void* self, intptr_t slot);
-struct miqt_map /* of int to struct miqt_string */  QConcatenateTablesProxyModel_virtualbase_roleNames(const void* self);
 bool QConcatenateTablesProxyModel_override_virtual_multiData(void* self, intptr_t slot);
 void QConcatenateTablesProxyModel_virtualbase_multiData(const void* self, QModelIndex* index, QModelRoleDataSpan* roleDataSpan);
 bool QConcatenateTablesProxyModel_override_virtual_submit(void* self, intptr_t slot);

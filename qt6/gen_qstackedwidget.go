@@ -161,6 +161,26 @@ func miqt_exec_callback_QStackedWidget_widgetRemoved(cb C.intptr_t, index C.int)
 	gofunc(slotval1)
 }
 
+func (this *QStackedWidget) WidgetAdded(index int) {
+	C.QStackedWidget_widgetAdded(this.h, (C.int)(index))
+}
+func (this *QStackedWidget) OnWidgetAdded(slot func(index int)) {
+	C.QStackedWidget_connect_widgetAdded(this.h, C.intptr_t(cgo.NewHandle(slot)))
+}
+
+//export miqt_exec_callback_QStackedWidget_widgetAdded
+func miqt_exec_callback_QStackedWidget_widgetAdded(cb C.intptr_t, index C.int) {
+	gofunc, ok := cgo.Handle(cb).Value().(func(index int))
+	if !ok {
+		panic("miqt: callback of non-callback type (heap corruption?)")
+	}
+
+	// Convert all CABI parameters to Go parameters
+	slotval1 := (int)(index)
+
+	gofunc(slotval1)
+}
+
 func QStackedWidget_Tr2(s string, c string) string {
 	s_Cstring := C.CString(s)
 	defer C.free(unsafe.Pointer(s_Cstring))
@@ -308,6 +328,20 @@ func (this *QStackedWidget) IsSignalConnected(signal *QMetaMethod) bool {
 
 	var _dynamic_cast_ok C.bool = false
 	_method_ret := (bool)(C.QStackedWidget_protectedbase_isSignalConnected(&_dynamic_cast_ok, unsafe.Pointer(this.h), signal.cPointer()))
+
+	if !_dynamic_cast_ok {
+		panic("miqt: can only call protected methods for directly constructed types")
+	}
+
+	return _method_ret
+
+}
+
+// GetDecodedMetricF can only be called from a QStackedWidget that was directly constructed.
+func (this *QStackedWidget) GetDecodedMetricF(metricA PaintDeviceMetric, metricB PaintDeviceMetric) float64 {
+
+	var _dynamic_cast_ok C.bool = false
+	_method_ret := (float64)(C.QStackedWidget_protectedbase_getDecodedMetricF(&_dynamic_cast_ok, unsafe.Pointer(this.h), metricA, metricB))
 
 	if !_dynamic_cast_ok {
 		panic("miqt: can only call protected methods for directly constructed types")
@@ -1245,12 +1279,12 @@ func miqt_exec_callback_QStackedWidget_nativeEvent(self *C.QStackedWidget, cb C.
 
 }
 
-func (this *QStackedWidget) callVirtualBase_Metric(param1 QPaintDevice__PaintDeviceMetric) int {
+func (this *QStackedWidget) callVirtualBase_Metric(param1 PaintDeviceMetric) int {
 
-	return (int)(C.QStackedWidget_virtualbase_metric(unsafe.Pointer(this.h), (C.int)(param1)))
+	return (int)(C.QStackedWidget_virtualbase_metric(unsafe.Pointer(this.h), param1))
 
 }
-func (this *QStackedWidget) OnMetric(slot func(super func(param1 QPaintDevice__PaintDeviceMetric) int, param1 QPaintDevice__PaintDeviceMetric) int) {
+func (this *QStackedWidget) OnMetric(slot func(super func(param1 PaintDeviceMetric) int, param1 PaintDeviceMetric) int) {
 	ok := C.QStackedWidget_override_virtual_metric(unsafe.Pointer(this.h), C.intptr_t(cgo.NewHandle(slot)))
 	if !ok {
 		panic("miqt: can only override virtual methods for directly constructed types")
@@ -1258,14 +1292,14 @@ func (this *QStackedWidget) OnMetric(slot func(super func(param1 QPaintDevice__P
 }
 
 //export miqt_exec_callback_QStackedWidget_metric
-func miqt_exec_callback_QStackedWidget_metric(self *C.QStackedWidget, cb C.intptr_t, param1 C.int) C.int {
-	gofunc, ok := cgo.Handle(cb).Value().(func(super func(param1 QPaintDevice__PaintDeviceMetric) int, param1 QPaintDevice__PaintDeviceMetric) int)
+func miqt_exec_callback_QStackedWidget_metric(self *C.QStackedWidget, cb C.intptr_t, param1 C.PaintDeviceMetric) C.int {
+	gofunc, ok := cgo.Handle(cb).Value().(func(super func(param1 PaintDeviceMetric) int, param1 PaintDeviceMetric) int)
 	if !ok {
 		panic("miqt: callback of non-callback type (heap corruption?)")
 	}
 
 	// Convert all CABI parameters to Go parameters
-	slotval1 := (QPaintDevice__PaintDeviceMetric)(param1)
+	int /* TODO  */
 
 	virtualReturn := gofunc((&QStackedWidget{h: self}).callVirtualBase_Metric, slotval1)
 

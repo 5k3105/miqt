@@ -89,10 +89,10 @@ void miqt_exec_callback_QHeaderView_scrollContentsBy(QHeaderView*, intptr_t, int
 void miqt_exec_callback_QHeaderView_dataChanged(QHeaderView*, intptr_t, QModelIndex*, QModelIndex*, struct miqt_array /* of int */ );
 void miqt_exec_callback_QHeaderView_rowsInserted(QHeaderView*, intptr_t, QModelIndex*, int, int);
 QRect* miqt_exec_callback_QHeaderView_visualRect(const QHeaderView*, intptr_t, QModelIndex*);
-void miqt_exec_callback_QHeaderView_scrollTo(QHeaderView*, intptr_t, QModelIndex*, int);
+void miqt_exec_callback_QHeaderView_scrollTo(QHeaderView*, intptr_t, QModelIndex*, ScrollHint);
 QModelIndex* miqt_exec_callback_QHeaderView_indexAt(const QHeaderView*, intptr_t, QPoint*);
 bool miqt_exec_callback_QHeaderView_isIndexHidden(const QHeaderView*, intptr_t, QModelIndex*);
-QModelIndex* miqt_exec_callback_QHeaderView_moveCursor(QHeaderView*, intptr_t, int, int);
+QModelIndex* miqt_exec_callback_QHeaderView_moveCursor(QHeaderView*, intptr_t, CursorAction, int);
 void miqt_exec_callback_QHeaderView_setSelection(QHeaderView*, intptr_t, QRect*, int);
 QRegion* miqt_exec_callback_QHeaderView_visualRegionForSelection(const QHeaderView*, intptr_t, QItemSelection*);
 void miqt_exec_callback_QHeaderView_initStyleOptionForIndex(const QHeaderView*, intptr_t, QStyleOptionHeader*, int);
@@ -117,7 +117,7 @@ void miqt_exec_callback_QHeaderView_closeEditor(QHeaderView*, intptr_t, QWidget*
 void miqt_exec_callback_QHeaderView_commitData(QHeaderView*, intptr_t, QWidget*);
 void miqt_exec_callback_QHeaderView_editorDestroyed(QHeaderView*, intptr_t, QObject*);
 struct miqt_array /* of QModelIndex* */  miqt_exec_callback_QHeaderView_selectedIndexes(const QHeaderView*, intptr_t);
-bool miqt_exec_callback_QHeaderView_edit2(QHeaderView*, intptr_t, QModelIndex*, int, QEvent*);
+bool miqt_exec_callback_QHeaderView_edit2(QHeaderView*, intptr_t, QModelIndex*, EditTrigger, QEvent*);
 int miqt_exec_callback_QHeaderView_selectionCommand(const QHeaderView*, intptr_t, QModelIndex*, QEvent*);
 void miqt_exec_callback_QHeaderView_startDrag(QHeaderView*, intptr_t, int);
 void miqt_exec_callback_QHeaderView_initViewItemOption(const QHeaderView*, intptr_t, QStyleOptionViewItem*);
@@ -153,7 +153,7 @@ void miqt_exec_callback_QHeaderView_actionEvent(QHeaderView*, intptr_t, QActionE
 void miqt_exec_callback_QHeaderView_showEvent(QHeaderView*, intptr_t, QShowEvent*);
 void miqt_exec_callback_QHeaderView_hideEvent(QHeaderView*, intptr_t, QHideEvent*);
 bool miqt_exec_callback_QHeaderView_nativeEvent(QHeaderView*, intptr_t, struct miqt_string, void*, intptr_t*);
-int miqt_exec_callback_QHeaderView_metric(const QHeaderView*, intptr_t, int);
+int miqt_exec_callback_QHeaderView_metric(const QHeaderView*, intptr_t, PaintDeviceMetric);
 void miqt_exec_callback_QHeaderView_initPainter(const QHeaderView*, intptr_t, QPainter*);
 QPaintDevice* miqt_exec_callback_QHeaderView_redirected(const QHeaderView*, intptr_t, QPoint*);
 QPainter* miqt_exec_callback_QHeaderView_sharedPainter(const QHeaderView*, intptr_t);
@@ -569,7 +569,7 @@ public:
 	intptr_t handle__scrollTo = 0;
 
 	// Subclass to allow providing a Go implementation
-	virtual void scrollTo(const QModelIndex& index, QAbstractItemView::ScrollHint hint) override {
+	virtual void scrollTo(const QModelIndex& index, ScrollHint hint) override {
 		if (handle__scrollTo == 0) {
 			QHeaderView::scrollTo(index, hint);
 			return;
@@ -578,13 +578,12 @@ public:
 		const QModelIndex& index_ret = index;
 		// Cast returned reference into pointer
 		QModelIndex* sigval1 = const_cast<QModelIndex*>(&index_ret);
-		QAbstractItemView::ScrollHint hint_ret = hint;
-		int sigval2 = static_cast<int>(hint_ret);
+		ScrollHint sigval2 = hint;
 		miqt_exec_callback_QHeaderView_scrollTo(this, handle__scrollTo, sigval1, sigval2);
 
 	}
 
-	friend void QHeaderView_virtualbase_scrollTo(void* self, QModelIndex* index, int hint);
+	friend void QHeaderView_virtualbase_scrollTo(void* self, QModelIndex* index, ScrollHint hint);
 
 	// cgo.Handle value for overwritten implementation
 	intptr_t handle__indexAt = 0;
@@ -626,20 +625,19 @@ public:
 	intptr_t handle__moveCursor = 0;
 
 	// Subclass to allow providing a Go implementation
-	virtual QModelIndex moveCursor(QAbstractItemView::CursorAction param1, Qt::KeyboardModifiers param2) override {
+	virtual QModelIndex moveCursor(CursorAction param1, Qt::KeyboardModifiers param2) override {
 		if (handle__moveCursor == 0) {
 			return QHeaderView::moveCursor(param1, param2);
 		}
 
-		QAbstractItemView::CursorAction param1_ret = param1;
-		int sigval1 = static_cast<int>(param1_ret);
+		CursorAction sigval1 = param1;
 		Qt::KeyboardModifiers param2_ret = param2;
 		int sigval2 = static_cast<int>(param2_ret);
 		QModelIndex* callback_return_value = miqt_exec_callback_QHeaderView_moveCursor(this, handle__moveCursor, sigval1, sigval2);
 		return *callback_return_value;
 	}
 
-	friend QModelIndex* QHeaderView_virtualbase_moveCursor(void* self, int param1, int param2);
+	friend QModelIndex* QHeaderView_virtualbase_moveCursor(void* self, CursorAction param1, int param2);
 
 	// cgo.Handle value for overwritten implementation
 	intptr_t handle__setSelection = 0;
@@ -1080,7 +1078,7 @@ public:
 	intptr_t handle__edit2 = 0;
 
 	// Subclass to allow providing a Go implementation
-	virtual bool edit(const QModelIndex& index, QAbstractItemView::EditTrigger trigger, QEvent* event) override {
+	virtual bool edit(const QModelIndex& index, EditTrigger trigger, QEvent* event) override {
 		if (handle__edit2 == 0) {
 			return QHeaderView::edit(index, trigger, event);
 		}
@@ -1088,14 +1086,13 @@ public:
 		const QModelIndex& index_ret = index;
 		// Cast returned reference into pointer
 		QModelIndex* sigval1 = const_cast<QModelIndex*>(&index_ret);
-		QAbstractItemView::EditTrigger trigger_ret = trigger;
-		int sigval2 = static_cast<int>(trigger_ret);
+		EditTrigger sigval2 = trigger;
 		QEvent* sigval3 = event;
 		bool callback_return_value = miqt_exec_callback_QHeaderView_edit2(this, handle__edit2, sigval1, sigval2, sigval3);
 		return callback_return_value;
 	}
 
-	friend bool QHeaderView_virtualbase_edit2(void* self, QModelIndex* index, int trigger, QEvent* event);
+	friend bool QHeaderView_virtualbase_edit2(void* self, QModelIndex* index, EditTrigger trigger, QEvent* event);
 
 	// cgo.Handle value for overwritten implementation
 	intptr_t handle__selectionCommand = 0;
@@ -1694,18 +1691,17 @@ public:
 	intptr_t handle__metric = 0;
 
 	// Subclass to allow providing a Go implementation
-	virtual int metric(QPaintDevice::PaintDeviceMetric param1) const override {
+	virtual int metric(PaintDeviceMetric param1) const override {
 		if (handle__metric == 0) {
 			return QHeaderView::metric(param1);
 		}
 
-		QPaintDevice::PaintDeviceMetric param1_ret = param1;
-		int sigval1 = static_cast<int>(param1_ret);
+		PaintDeviceMetric sigval1 = param1;
 		int callback_return_value = miqt_exec_callback_QHeaderView_metric(this, handle__metric, sigval1);
 		return static_cast<int>(callback_return_value);
 	}
 
-	friend int QHeaderView_virtualbase_metric(const void* self, int param1);
+	friend int QHeaderView_virtualbase_metric(const void* self, PaintDeviceMetric param1);
 
 	// cgo.Handle value for overwritten implementation
 	intptr_t handle__initPainter = 0;
@@ -1835,8 +1831,8 @@ public:
 	friend void QHeaderView_protectedbase_initialize(bool* _dynamic_cast_ok, void* self);
 	friend void QHeaderView_protectedbase_initializeSections(bool* _dynamic_cast_ok, void* self);
 	friend void QHeaderView_protectedbase_initializeSections2(bool* _dynamic_cast_ok, void* self, int start, int end);
-	friend int QHeaderView_protectedbase_state(bool* _dynamic_cast_ok, const void* self);
-	friend void QHeaderView_protectedbase_setState(bool* _dynamic_cast_ok, void* self, int state);
+	friend State QHeaderView_protectedbase_state(bool* _dynamic_cast_ok, const void* self);
+	friend void QHeaderView_protectedbase_setState(bool* _dynamic_cast_ok, void* self, State state);
 	friend void QHeaderView_protectedbase_scheduleDelayedItemsLayout(bool* _dynamic_cast_ok, void* self);
 	friend void QHeaderView_protectedbase_executeDelayedItemsLayout(bool* _dynamic_cast_ok, void* self);
 	friend void QHeaderView_protectedbase_setDirtyRegion(bool* _dynamic_cast_ok, void* self, QRegion* region);
@@ -1845,7 +1841,7 @@ public:
 	friend void QHeaderView_protectedbase_startAutoScroll(bool* _dynamic_cast_ok, void* self);
 	friend void QHeaderView_protectedbase_stopAutoScroll(bool* _dynamic_cast_ok, void* self);
 	friend void QHeaderView_protectedbase_doAutoScroll(bool* _dynamic_cast_ok, void* self);
-	friend int QHeaderView_protectedbase_dropIndicatorPosition(bool* _dynamic_cast_ok, const void* self);
+	friend DropIndicatorPosition QHeaderView_protectedbase_dropIndicatorPosition(bool* _dynamic_cast_ok, const void* self);
 	friend void QHeaderView_protectedbase_setViewportMargins(bool* _dynamic_cast_ok, void* self, int left, int top, int right, int bottom);
 	friend QMargins* QHeaderView_protectedbase_viewportMargins(bool* _dynamic_cast_ok, const void* self);
 	friend void QHeaderView_protectedbase_drawFrame(bool* _dynamic_cast_ok, void* self, QPainter* param1);
@@ -1858,6 +1854,7 @@ public:
 	friend int QHeaderView_protectedbase_senderSignalIndex(bool* _dynamic_cast_ok, const void* self);
 	friend int QHeaderView_protectedbase_receivers(bool* _dynamic_cast_ok, const void* self, const char* signal);
 	friend bool QHeaderView_protectedbase_isSignalConnected(bool* _dynamic_cast_ok, const void* self, QMetaMethod* signal);
+	friend double QHeaderView_protectedbase_getDecodedMetricF(bool* _dynamic_cast_ok, const void* self, PaintDeviceMetric metricA, PaintDeviceMetric metricB);
 };
 
 QHeaderView* QHeaderView_new(int orientation) {
@@ -2028,17 +2025,16 @@ bool QHeaderView_highlightSections(const QHeaderView* self) {
 	return self->highlightSections();
 }
 
-int QHeaderView_sectionResizeMode(const QHeaderView* self, int logicalIndex) {
-	QHeaderView::ResizeMode _ret = self->sectionResizeMode(static_cast<int>(logicalIndex));
-	return static_cast<int>(_ret);
+ResizeMode QHeaderView_sectionResizeMode(const QHeaderView* self, int logicalIndex) {
+	return self->sectionResizeMode(static_cast<int>(logicalIndex));
 }
 
-void QHeaderView_setSectionResizeMode(QHeaderView* self, int mode) {
-	self->setSectionResizeMode(static_cast<QHeaderView::ResizeMode>(mode));
+void QHeaderView_setSectionResizeMode(QHeaderView* self, ResizeMode mode) {
+	self->setSectionResizeMode(mode);
 }
 
-void QHeaderView_setSectionResizeMode2(QHeaderView* self, int logicalIndex, int mode) {
-	self->setSectionResizeMode(static_cast<int>(logicalIndex), static_cast<QHeaderView::ResizeMode>(mode));
+void QHeaderView_setSectionResizeMode2(QHeaderView* self, int logicalIndex, ResizeMode mode) {
+	self->setSectionResizeMode(static_cast<int>(logicalIndex), mode);
 }
 
 void QHeaderView_setResizeContentsPrecision(QHeaderView* self, int precision) {
@@ -2654,8 +2650,8 @@ bool QHeaderView_override_virtual_scrollTo(void* self, intptr_t slot) {
 	return true;
 }
 
-void QHeaderView_virtualbase_scrollTo(void* self, QModelIndex* index, int hint) {
-	static_cast<MiqtVirtualQHeaderView*>(self)->QHeaderView::scrollTo(*index, static_cast<MiqtVirtualQHeaderView::ScrollHint>(hint));
+void QHeaderView_virtualbase_scrollTo(void* self, QModelIndex* index, ScrollHint hint) {
+	static_cast<MiqtVirtualQHeaderView*>(self)->QHeaderView::scrollTo(*index, hint);
 }
 
 bool QHeaderView_override_virtual_indexAt(void* self, intptr_t slot) {
@@ -2696,8 +2692,8 @@ bool QHeaderView_override_virtual_moveCursor(void* self, intptr_t slot) {
 	return true;
 }
 
-QModelIndex* QHeaderView_virtualbase_moveCursor(void* self, int param1, int param2) {
-	return new QModelIndex(static_cast<MiqtVirtualQHeaderView*>(self)->QHeaderView::moveCursor(static_cast<MiqtVirtualQHeaderView::CursorAction>(param1), static_cast<Qt::KeyboardModifiers>(param2)));
+QModelIndex* QHeaderView_virtualbase_moveCursor(void* self, CursorAction param1, int param2) {
+	return new QModelIndex(static_cast<MiqtVirtualQHeaderView*>(self)->QHeaderView::moveCursor(param1, static_cast<Qt::KeyboardModifiers>(param2)));
 }
 
 bool QHeaderView_override_virtual_setSelection(void* self, intptr_t slot) {
@@ -3056,8 +3052,8 @@ bool QHeaderView_override_virtual_edit2(void* self, intptr_t slot) {
 	return true;
 }
 
-bool QHeaderView_virtualbase_edit2(void* self, QModelIndex* index, int trigger, QEvent* event) {
-	return static_cast<MiqtVirtualQHeaderView*>(self)->QHeaderView::edit(*index, static_cast<MiqtVirtualQHeaderView::EditTrigger>(trigger), event);
+bool QHeaderView_virtualbase_edit2(void* self, QModelIndex* index, EditTrigger trigger, QEvent* event) {
+	return static_cast<MiqtVirtualQHeaderView*>(self)->QHeaderView::edit(*index, trigger, event);
 }
 
 bool QHeaderView_override_virtual_selectionCommand(void* self, intptr_t slot) {
@@ -3562,8 +3558,8 @@ bool QHeaderView_override_virtual_metric(void* self, intptr_t slot) {
 	return true;
 }
 
-int QHeaderView_virtualbase_metric(const void* self, int param1) {
-	return static_cast<const MiqtVirtualQHeaderView*>(self)->QHeaderView::metric(static_cast<MiqtVirtualQHeaderView::PaintDeviceMetric>(param1));
+int QHeaderView_virtualbase_metric(const void* self, PaintDeviceMetric param1) {
+	return static_cast<const MiqtVirtualQHeaderView*>(self)->QHeaderView::metric(param1);
 }
 
 bool QHeaderView_override_virtual_initPainter(void* self, intptr_t slot) {
@@ -3741,19 +3737,18 @@ void QHeaderView_protectedbase_initializeSections2(bool* _dynamic_cast_ok, void*
 	self_cast->initializeSections(static_cast<int>(start), static_cast<int>(end));
 }
 
-int QHeaderView_protectedbase_state(bool* _dynamic_cast_ok, const void* self) {
+State QHeaderView_protectedbase_state(bool* _dynamic_cast_ok, const void* self) {
 	MiqtVirtualQHeaderView* self_cast = dynamic_cast<MiqtVirtualQHeaderView*>( (QHeaderView*)(self) );
 	if (self_cast == nullptr) {
 		*_dynamic_cast_ok = false;
-		return (int)(0);
+		return nullptr;
 	}
 
 	*_dynamic_cast_ok = true;
-	MiqtVirtualQHeaderView::State _ret = self_cast->state();
-	return static_cast<int>(_ret);
+	return self_cast->state();
 }
 
-void QHeaderView_protectedbase_setState(bool* _dynamic_cast_ok, void* self, int state) {
+void QHeaderView_protectedbase_setState(bool* _dynamic_cast_ok, void* self, State state) {
 	MiqtVirtualQHeaderView* self_cast = dynamic_cast<MiqtVirtualQHeaderView*>( (QHeaderView*)(self) );
 	if (self_cast == nullptr) {
 		*_dynamic_cast_ok = false;
@@ -3761,7 +3756,7 @@ void QHeaderView_protectedbase_setState(bool* _dynamic_cast_ok, void* self, int 
 	}
 
 	*_dynamic_cast_ok = true;
-	self_cast->setState(static_cast<MiqtVirtualQHeaderView::State>(state));
+	self_cast->setState(state);
 }
 
 void QHeaderView_protectedbase_scheduleDelayedItemsLayout(bool* _dynamic_cast_ok, void* self) {
@@ -3852,16 +3847,15 @@ void QHeaderView_protectedbase_doAutoScroll(bool* _dynamic_cast_ok, void* self) 
 	self_cast->doAutoScroll();
 }
 
-int QHeaderView_protectedbase_dropIndicatorPosition(bool* _dynamic_cast_ok, const void* self) {
+DropIndicatorPosition QHeaderView_protectedbase_dropIndicatorPosition(bool* _dynamic_cast_ok, const void* self) {
 	MiqtVirtualQHeaderView* self_cast = dynamic_cast<MiqtVirtualQHeaderView*>( (QHeaderView*)(self) );
 	if (self_cast == nullptr) {
 		*_dynamic_cast_ok = false;
-		return (int)(0);
+		return nullptr;
 	}
 
 	*_dynamic_cast_ok = true;
-	MiqtVirtualQHeaderView::DropIndicatorPosition _ret = self_cast->dropIndicatorPosition();
-	return static_cast<int>(_ret);
+	return self_cast->dropIndicatorPosition();
 }
 
 void QHeaderView_protectedbase_setViewportMargins(bool* _dynamic_cast_ok, void* self, int left, int top, int right, int bottom) {
@@ -3994,6 +3988,17 @@ bool QHeaderView_protectedbase_isSignalConnected(bool* _dynamic_cast_ok, const v
 
 	*_dynamic_cast_ok = true;
 	return self_cast->isSignalConnected(*signal);
+}
+
+double QHeaderView_protectedbase_getDecodedMetricF(bool* _dynamic_cast_ok, const void* self, PaintDeviceMetric metricA, PaintDeviceMetric metricB) {
+	MiqtVirtualQHeaderView* self_cast = dynamic_cast<MiqtVirtualQHeaderView*>( (QHeaderView*)(self) );
+	if (self_cast == nullptr) {
+		*_dynamic_cast_ok = false;
+		return 0;
+	}
+
+	*_dynamic_cast_ok = true;
+	return self_cast->getDecodedMetricF(metricA, metricB);
 }
 
 void QHeaderView_delete(QHeaderView* self) {

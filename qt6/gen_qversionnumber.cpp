@@ -3,7 +3,6 @@
 #include <QString>
 #include <QByteArray>
 #include <cstring>
-#include <QTypeRevision>
 #include <QVersionNumber>
 #include <qversionnumber.h>
 #include "gen_qversionnumber.h"
@@ -20,14 +19,8 @@ QVersionNumber* QVersionNumber_new() {
 	return new (std::nothrow) QVersionNumber();
 }
 
-QVersionNumber* QVersionNumber_new2(struct miqt_array /* of int */  seg) {
-	QList<int> seg_QList;
-	seg_QList.reserve(seg.len);
-	int* seg_arr = static_cast<int*>(seg.data);
-	for(size_t i = 0; i < seg.len; ++i) {
-		seg_QList.push_back(static_cast<int>(seg_arr[i]));
-	}
-	return new (std::nothrow) QVersionNumber(seg_QList);
+QVersionNumber* QVersionNumber_new2(QSpan<const int> args) {
+	return new (std::nothrow) QVersionNumber(args);
 }
 
 QVersionNumber* QVersionNumber_new3(int maj) {
@@ -92,6 +85,46 @@ ptrdiff_t QVersionNumber_segmentCount(const QVersionNumber* self) {
 	return static_cast<ptrdiff_t>(_ret);
 }
 
+const_iterator QVersionNumber_begin(const QVersionNumber* self) {
+	return self->begin();
+}
+
+const_iterator QVersionNumber_end(const QVersionNumber* self) {
+	return self->end();
+}
+
+const_iterator QVersionNumber_cbegin(const QVersionNumber* self) {
+	return self->cbegin();
+}
+
+const_iterator QVersionNumber_cend(const QVersionNumber* self) {
+	return self->cend();
+}
+
+const_reverse_iterator QVersionNumber_rbegin(const QVersionNumber* self) {
+	return self->rbegin();
+}
+
+const_reverse_iterator QVersionNumber_rend(const QVersionNumber* self) {
+	return self->rend();
+}
+
+const_reverse_iterator QVersionNumber_crbegin(const QVersionNumber* self) {
+	return self->crbegin();
+}
+
+const_reverse_iterator QVersionNumber_crend(const QVersionNumber* self) {
+	return self->crend();
+}
+
+const_iterator QVersionNumber_constBegin(const QVersionNumber* self) {
+	return self->constBegin();
+}
+
+const_iterator QVersionNumber_constEnd(const QVersionNumber* self) {
+	return self->constEnd();
+}
+
 bool QVersionNumber_isPrefixOf(const QVersionNumber* self, QVersionNumber* other) {
 	return self->isPrefixOf(*other);
 }
@@ -128,44 +161,6 @@ QVersionNumber* QVersionNumber_fromString2(QAnyStringView* string, ptrdiff_t* su
 }
 
 void QVersionNumber_delete(QVersionNumber* self) {
-	delete self;
-}
-
-QTypeRevision* QTypeRevision_new() {
-	return new (std::nothrow) QTypeRevision();
-}
-
-QTypeRevision* QTypeRevision_new2(QTypeRevision* param1) {
-	return new (std::nothrow) QTypeRevision(*param1);
-}
-
-QTypeRevision* QTypeRevision_zero() {
-	return new QTypeRevision(QTypeRevision::zero());
-}
-
-bool QTypeRevision_hasMajorVersion(const QTypeRevision* self) {
-	return self->hasMajorVersion();
-}
-
-unsigned char QTypeRevision_majorVersion(const QTypeRevision* self) {
-	quint8 _ret = self->majorVersion();
-	return static_cast<unsigned char>(_ret);
-}
-
-bool QTypeRevision_hasMinorVersion(const QTypeRevision* self) {
-	return self->hasMinorVersion();
-}
-
-unsigned char QTypeRevision_minorVersion(const QTypeRevision* self) {
-	quint8 _ret = self->minorVersion();
-	return static_cast<unsigned char>(_ret);
-}
-
-bool QTypeRevision_isValid(const QTypeRevision* self) {
-	return self->isValid();
-}
-
-void QTypeRevision_delete(QTypeRevision* self) {
 	delete self;
 }
 

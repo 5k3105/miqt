@@ -267,6 +267,32 @@ func (this *QMediaDevices) IsSignalConnected(signal *qt6.QMetaMethod) bool {
 
 }
 
+func (this *QMediaDevices) callVirtualBase_ConnectNotify(signal *qt6.QMetaMethod) {
+
+	C.QMediaDevices_virtualbase_connectNotify(unsafe.Pointer(this.h), (*C.QMetaMethod)(signal.UnsafePointer()))
+
+}
+func (this *QMediaDevices) OnConnectNotify(slot func(super func(signal *qt6.QMetaMethod), signal *qt6.QMetaMethod)) {
+	ok := C.QMediaDevices_override_virtual_connectNotify(unsafe.Pointer(this.h), C.intptr_t(cgo.NewHandle(slot)))
+	if !ok {
+		panic("miqt: can only override virtual methods for directly constructed types")
+	}
+}
+
+//export miqt_exec_callback_QMediaDevices_connectNotify
+func miqt_exec_callback_QMediaDevices_connectNotify(self *C.QMediaDevices, cb C.intptr_t, signal *C.QMetaMethod) {
+	gofunc, ok := cgo.Handle(cb).Value().(func(super func(signal *qt6.QMetaMethod), signal *qt6.QMetaMethod))
+	if !ok {
+		panic("miqt: callback of non-callback type (heap corruption?)")
+	}
+
+	// Convert all CABI parameters to Go parameters
+	slotval1 := qt6.UnsafeNewQMetaMethod(unsafe.Pointer(signal))
+
+	gofunc((&QMediaDevices{h: self}).callVirtualBase_ConnectNotify, slotval1)
+
+}
+
 func (this *QMediaDevices) callVirtualBase_Event(event *qt6.QEvent) bool {
 
 	return (bool)(C.QMediaDevices_virtualbase_event(unsafe.Pointer(this.h), (*C.QEvent)(event.UnsafePointer())))
@@ -400,32 +426,6 @@ func miqt_exec_callback_QMediaDevices_customEvent(self *C.QMediaDevices, cb C.in
 	slotval1 := qt6.UnsafeNewQEvent(unsafe.Pointer(event))
 
 	gofunc((&QMediaDevices{h: self}).callVirtualBase_CustomEvent, slotval1)
-
-}
-
-func (this *QMediaDevices) callVirtualBase_ConnectNotify(signal *qt6.QMetaMethod) {
-
-	C.QMediaDevices_virtualbase_connectNotify(unsafe.Pointer(this.h), (*C.QMetaMethod)(signal.UnsafePointer()))
-
-}
-func (this *QMediaDevices) OnConnectNotify(slot func(super func(signal *qt6.QMetaMethod), signal *qt6.QMetaMethod)) {
-	ok := C.QMediaDevices_override_virtual_connectNotify(unsafe.Pointer(this.h), C.intptr_t(cgo.NewHandle(slot)))
-	if !ok {
-		panic("miqt: can only override virtual methods for directly constructed types")
-	}
-}
-
-//export miqt_exec_callback_QMediaDevices_connectNotify
-func miqt_exec_callback_QMediaDevices_connectNotify(self *C.QMediaDevices, cb C.intptr_t, signal *C.QMetaMethod) {
-	gofunc, ok := cgo.Handle(cb).Value().(func(super func(signal *qt6.QMetaMethod), signal *qt6.QMetaMethod))
-	if !ok {
-		panic("miqt: callback of non-callback type (heap corruption?)")
-	}
-
-	// Convert all CABI parameters to Go parameters
-	slotval1 := qt6.UnsafeNewQMetaMethod(unsafe.Pointer(signal))
-
-	gofunc((&QMediaDevices{h: self}).callVirtualBase_ConnectNotify, slotval1)
 
 }
 

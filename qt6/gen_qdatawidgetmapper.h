@@ -54,8 +54,8 @@ void QDataWidgetMapper_setRootIndex(QDataWidgetMapper* self, QModelIndex* index)
 QModelIndex* QDataWidgetMapper_rootIndex(const QDataWidgetMapper* self);
 void QDataWidgetMapper_setOrientation(QDataWidgetMapper* self, int aOrientation);
 int QDataWidgetMapper_orientation(const QDataWidgetMapper* self);
-void QDataWidgetMapper_setSubmitPolicy(QDataWidgetMapper* self, int policy);
-int QDataWidgetMapper_submitPolicy(const QDataWidgetMapper* self);
+void QDataWidgetMapper_setSubmitPolicy(QDataWidgetMapper* self, SubmitPolicy policy);
+SubmitPolicy QDataWidgetMapper_submitPolicy(const QDataWidgetMapper* self);
 void QDataWidgetMapper_addMapping(QDataWidgetMapper* self, QWidget* widget, int section);
 void QDataWidgetMapper_addMapping2(QDataWidgetMapper* self, QWidget* widget, int section, struct miqt_string propertyName);
 void QDataWidgetMapper_removeMapping(QDataWidgetMapper* self, QWidget* widget);

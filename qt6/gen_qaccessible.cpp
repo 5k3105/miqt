@@ -1,10 +1,13 @@
 #define WORKAROUND_INNER_CLASS_DEFINITION_QAccessible__State
 #include <QAccessibleActionInterface>
+#include <QAccessibleAnnouncementEvent>
+#include <QAccessibleAttributesInterface>
 #include <QAccessibleEditableTextInterface>
 #include <QAccessibleEvent>
 #include <QAccessibleHyperlinkInterface>
 #include <QAccessibleImageInterface>
 #include <QAccessibleInterface>
+#include <QAccessibleSelectionInterface>
 #include <QAccessibleStateChangeEvent>
 #include <QAccessibleTableCellInterface>
 #include <QAccessibleTableInterface>
@@ -20,7 +23,6 @@
 #include <QColor>
 #include <QList>
 #include <QObject>
-#include <QPair>
 #include <QPoint>
 #include <QRect>
 #include <QSize>
@@ -45,6 +47,7 @@ QAccessibleInterface* miqt_exec_callback_QAccessibleTextRemoveEvent_accessibleIn
 QAccessibleInterface* miqt_exec_callback_QAccessibleTextUpdateEvent_accessibleInterface(const QAccessibleTextUpdateEvent*, intptr_t);
 QAccessibleInterface* miqt_exec_callback_QAccessibleValueChangeEvent_accessibleInterface(const QAccessibleValueChangeEvent*, intptr_t);
 QAccessibleInterface* miqt_exec_callback_QAccessibleTableModelChangeEvent_accessibleInterface(const QAccessibleTableModelChangeEvent*, intptr_t);
+QAccessibleInterface* miqt_exec_callback_QAccessibleAnnouncementEvent_accessibleInterface(const QAccessibleAnnouncementEvent*, intptr_t);
 #ifdef __cplusplus
 } /* extern C */
 #endif
@@ -59,30 +62,6 @@ QObject* QAccessibleInterface_object(const QAccessibleInterface* self) {
 
 QWindow* QAccessibleInterface_window(const QAccessibleInterface* self) {
 	return self->window();
-}
-
-struct miqt_array /* of struct miqt_map  tuple of QAccessibleInterface* and int   */  QAccessibleInterface_relations(const QAccessibleInterface* self, int match) {
-	QList<QPair<QAccessibleInterface *, QAccessible::Relation>> _ret = self->relations(static_cast<QAccessible::Relation>(match));
-	// Convert QList<> from C++ memory to manually-managed C memory
-	struct miqt_map /* tuple of QAccessibleInterface* and int */ * _arr = static_cast<struct miqt_map /* tuple of QAccessibleInterface* and int */ *>(malloc(sizeof(struct miqt_map /* tuple of QAccessibleInterface* and int */ ) * _ret.length()));
-	for (size_t i = 0, e = _ret.length(); i < e; ++i) {
-		QPair<QAccessibleInterface*, QFlags<QAccessible::RelationFlag>> _lv_ret = _ret[i];
-		// Convert QPair<> from C++ memory to manually-managed C memory
-		QAccessibleInterface** _lv_first_arr = static_cast<QAccessibleInterface**>(malloc(sizeof(QAccessibleInterface*)));
-		int* _lv_second_arr = static_cast<int*>(malloc(sizeof(int)));
-		_lv_first_arr[0] = _lv_ret.first;
-		QFlags<QAccessible::RelationFlag> _lv_second_ret = _lv_ret.second;
-		_lv_second_arr[0] = static_cast<int>(_lv_second_ret);
-		struct miqt_map _lv_out;
-		_lv_out.len = 1;
-		_lv_out.keys = static_cast<void*>(_lv_first_arr);
-		_lv_out.values = static_cast<void*>(_lv_second_arr);
-		_arr[i] = _lv_out;
-	}
-	struct miqt_array _out;
-	_out.len = _ret.length();
-	_out.data = static_cast<void*>(_arr);
-	return _out;
 }
 
 QAccessibleInterface* QAccessibleInterface_focusChild(const QAccessibleInterface* self) {
@@ -176,6 +155,14 @@ QAccessibleTableCellInterface* QAccessibleInterface_tableCellInterface(QAccessib
 
 QAccessibleHyperlinkInterface* QAccessibleInterface_hyperlinkInterface(QAccessibleInterface* self) {
 	return self->hyperlinkInterface();
+}
+
+QAccessibleSelectionInterface* QAccessibleInterface_selectionInterface(QAccessibleInterface* self) {
+	return self->selectionInterface();
+}
+
+QAccessibleAttributesInterface* QAccessibleInterface_attributesInterface(QAccessibleInterface* self) {
+	return self->attributesInterface();
 }
 
 void QAccessibleInterface_virtualHook(QAccessibleInterface* self, int id, void* data) {
@@ -846,6 +833,81 @@ void QAccessibleHyperlinkInterface_delete(QAccessibleHyperlinkInterface* self) {
 	delete self;
 }
 
+int QAccessibleSelectionInterface_selectedItemCount(const QAccessibleSelectionInterface* self) {
+	return self->selectedItemCount();
+}
+
+struct miqt_array /* of QAccessibleInterface* */  QAccessibleSelectionInterface_selectedItems(const QAccessibleSelectionInterface* self) {
+	QList<QAccessibleInterface *> _ret = self->selectedItems();
+	// Convert QList<> from C++ memory to manually-managed C memory
+	QAccessibleInterface** _arr = static_cast<QAccessibleInterface**>(malloc(sizeof(QAccessibleInterface*) * _ret.length()));
+	for (size_t i = 0, e = _ret.length(); i < e; ++i) {
+		_arr[i] = _ret[i];
+	}
+	struct miqt_array _out;
+	_out.len = _ret.length();
+	_out.data = static_cast<void*>(_arr);
+	return _out;
+}
+
+QAccessibleInterface* QAccessibleSelectionInterface_selectedItem(const QAccessibleSelectionInterface* self, int selectionIndex) {
+	return self->selectedItem(static_cast<int>(selectionIndex));
+}
+
+bool QAccessibleSelectionInterface_isSelected(const QAccessibleSelectionInterface* self, QAccessibleInterface* childItem) {
+	return self->isSelected(childItem);
+}
+
+bool QAccessibleSelectionInterface_select(QAccessibleSelectionInterface* self, QAccessibleInterface* childItem) {
+	return self->select(childItem);
+}
+
+bool QAccessibleSelectionInterface_unselect(QAccessibleSelectionInterface* self, QAccessibleInterface* childItem) {
+	return self->unselect(childItem);
+}
+
+bool QAccessibleSelectionInterface_selectAll(QAccessibleSelectionInterface* self) {
+	return self->selectAll();
+}
+
+bool QAccessibleSelectionInterface_clear(QAccessibleSelectionInterface* self) {
+	return self->clear();
+}
+
+void QAccessibleSelectionInterface_operatorAssign(QAccessibleSelectionInterface* self, QAccessibleSelectionInterface* param1) {
+	self->operator=(*param1);
+}
+
+void QAccessibleSelectionInterface_delete(QAccessibleSelectionInterface* self) {
+	delete self;
+}
+
+struct miqt_array /* of int */  QAccessibleAttributesInterface_attributeKeys(const QAccessibleAttributesInterface* self) {
+	QList<QAccessible::Attribute> _ret = self->attributeKeys();
+	// Convert QList<> from C++ memory to manually-managed C memory
+	int* _arr = static_cast<int*>(malloc(sizeof(int) * _ret.length()));
+	for (size_t i = 0, e = _ret.length(); i < e; ++i) {
+		QAccessible::Attribute _lv_ret = _ret[i];
+		_arr[i] = static_cast<int>(_lv_ret);
+	}
+	struct miqt_array _out;
+	_out.len = _ret.length();
+	_out.data = static_cast<void*>(_arr);
+	return _out;
+}
+
+QVariant* QAccessibleAttributesInterface_attributeValue(const QAccessibleAttributesInterface* self, int key) {
+	return new QVariant(self->attributeValue(static_cast<QAccessible::Attribute>(key)));
+}
+
+void QAccessibleAttributesInterface_operatorAssign(QAccessibleAttributesInterface* self, QAccessibleAttributesInterface* param1) {
+	self->operator=(*param1);
+}
+
+void QAccessibleAttributesInterface_delete(QAccessibleAttributesInterface* self) {
+	delete self;
+}
+
 class MiqtVirtualQAccessibleEvent final : public QAccessibleEvent {
 public:
 
@@ -1407,8 +1469,8 @@ void QAccessibleValueChangeEvent_delete(QAccessibleValueChangeEvent* self) {
 class MiqtVirtualQAccessibleTableModelChangeEvent final : public QAccessibleTableModelChangeEvent {
 public:
 
-	MiqtVirtualQAccessibleTableModelChangeEvent(QObject* obj, QAccessibleTableModelChangeEvent::ModelChangeType changeType): QAccessibleTableModelChangeEvent(obj, changeType) {}
-	MiqtVirtualQAccessibleTableModelChangeEvent(QAccessibleInterface* iface, QAccessibleTableModelChangeEvent::ModelChangeType changeType): QAccessibleTableModelChangeEvent(iface, changeType) {}
+	MiqtVirtualQAccessibleTableModelChangeEvent(QObject* obj, ModelChangeType changeType): QAccessibleTableModelChangeEvent(obj, changeType) {}
+	MiqtVirtualQAccessibleTableModelChangeEvent(QAccessibleInterface* iface, ModelChangeType changeType): QAccessibleTableModelChangeEvent(iface, changeType) {}
 
 	virtual ~MiqtVirtualQAccessibleTableModelChangeEvent() override = default;
 
@@ -1429,25 +1491,24 @@ public:
 
 };
 
-QAccessibleTableModelChangeEvent* QAccessibleTableModelChangeEvent_new(QObject* obj, int changeType) {
-	return new (std::nothrow) MiqtVirtualQAccessibleTableModelChangeEvent(obj, static_cast<QAccessibleTableModelChangeEvent::ModelChangeType>(changeType));
+QAccessibleTableModelChangeEvent* QAccessibleTableModelChangeEvent_new(QObject* obj, ModelChangeType changeType) {
+	return new (std::nothrow) MiqtVirtualQAccessibleTableModelChangeEvent(obj, changeType);
 }
 
-QAccessibleTableModelChangeEvent* QAccessibleTableModelChangeEvent_new2(QAccessibleInterface* iface, int changeType) {
-	return new (std::nothrow) MiqtVirtualQAccessibleTableModelChangeEvent(iface, static_cast<QAccessibleTableModelChangeEvent::ModelChangeType>(changeType));
+QAccessibleTableModelChangeEvent* QAccessibleTableModelChangeEvent_new2(QAccessibleInterface* iface, ModelChangeType changeType) {
+	return new (std::nothrow) MiqtVirtualQAccessibleTableModelChangeEvent(iface, changeType);
 }
 
 void QAccessibleTableModelChangeEvent_virtbase(QAccessibleTableModelChangeEvent* src, QAccessibleEvent** outptr_QAccessibleEvent) {
 	*outptr_QAccessibleEvent = static_cast<QAccessibleEvent*>(src);
 }
 
-void QAccessibleTableModelChangeEvent_setModelChangeType(QAccessibleTableModelChangeEvent* self, int changeType) {
-	self->setModelChangeType(static_cast<QAccessibleTableModelChangeEvent::ModelChangeType>(changeType));
+void QAccessibleTableModelChangeEvent_setModelChangeType(QAccessibleTableModelChangeEvent* self, ModelChangeType changeType) {
+	self->setModelChangeType(changeType);
 }
 
-int QAccessibleTableModelChangeEvent_modelChangeType(const QAccessibleTableModelChangeEvent* self) {
-	QAccessibleTableModelChangeEvent::ModelChangeType _ret = self->modelChangeType();
-	return static_cast<int>(_ret);
+ModelChangeType QAccessibleTableModelChangeEvent_modelChangeType(const QAccessibleTableModelChangeEvent* self) {
+	return self->modelChangeType();
 }
 
 void QAccessibleTableModelChangeEvent_setFirstRow(QAccessibleTableModelChangeEvent* self, int row) {
@@ -1497,6 +1558,83 @@ QAccessibleInterface* QAccessibleTableModelChangeEvent_virtualbase_accessibleInt
 }
 
 void QAccessibleTableModelChangeEvent_delete(QAccessibleTableModelChangeEvent* self) {
+	delete self;
+}
+
+class MiqtVirtualQAccessibleAnnouncementEvent final : public QAccessibleAnnouncementEvent {
+public:
+
+	MiqtVirtualQAccessibleAnnouncementEvent(QObject* object, const QString& message): QAccessibleAnnouncementEvent(object, message) {}
+	MiqtVirtualQAccessibleAnnouncementEvent(QAccessibleInterface* iface, const QString& message): QAccessibleAnnouncementEvent(iface, message) {}
+
+	virtual ~MiqtVirtualQAccessibleAnnouncementEvent() override = default;
+
+	// cgo.Handle value for overwritten implementation
+	intptr_t handle__accessibleInterface = 0;
+
+	// Subclass to allow providing a Go implementation
+	virtual QAccessibleInterface* accessibleInterface() const override {
+		if (handle__accessibleInterface == 0) {
+			return QAccessibleAnnouncementEvent::accessibleInterface();
+		}
+
+		QAccessibleInterface* callback_return_value = miqt_exec_callback_QAccessibleAnnouncementEvent_accessibleInterface(this, handle__accessibleInterface);
+		return callback_return_value;
+	}
+
+	friend QAccessibleInterface* QAccessibleAnnouncementEvent_virtualbase_accessibleInterface(const void* self);
+
+};
+
+QAccessibleAnnouncementEvent* QAccessibleAnnouncementEvent_new(QObject* object, struct miqt_string message) {
+	QString message_QString = QString::fromUtf8(message.data, message.len);
+	return new (std::nothrow) MiqtVirtualQAccessibleAnnouncementEvent(object, message_QString);
+}
+
+QAccessibleAnnouncementEvent* QAccessibleAnnouncementEvent_new2(QAccessibleInterface* iface, struct miqt_string message) {
+	QString message_QString = QString::fromUtf8(message.data, message.len);
+	return new (std::nothrow) MiqtVirtualQAccessibleAnnouncementEvent(iface, message_QString);
+}
+
+void QAccessibleAnnouncementEvent_virtbase(QAccessibleAnnouncementEvent* src, QAccessibleEvent** outptr_QAccessibleEvent) {
+	*outptr_QAccessibleEvent = static_cast<QAccessibleEvent*>(src);
+}
+
+struct miqt_string QAccessibleAnnouncementEvent_message(const QAccessibleAnnouncementEvent* self) {
+	QString _ret = self->message();
+	// Convert QString from UTF-16 in C++ RAII memory to UTF-8 in manually-managed C memory
+	QByteArray _b = _ret.toUtf8();
+	struct miqt_string _ms;
+	_ms.len = _b.length();
+	_ms.data = static_cast<char*>(malloc(_ms.len));
+	memcpy(_ms.data, _b.data(), _ms.len);
+	return _ms;
+}
+
+int QAccessibleAnnouncementEvent_politeness(const QAccessibleAnnouncementEvent* self) {
+	QAccessible::AnnouncementPoliteness _ret = self->politeness();
+	return static_cast<int>(_ret);
+}
+
+void QAccessibleAnnouncementEvent_setPoliteness(QAccessibleAnnouncementEvent* self, int politeness) {
+	self->setPoliteness(static_cast<QAccessible::AnnouncementPoliteness>(politeness));
+}
+
+bool QAccessibleAnnouncementEvent_override_virtual_accessibleInterface(void* self, intptr_t slot) {
+	MiqtVirtualQAccessibleAnnouncementEvent* self_cast = dynamic_cast<MiqtVirtualQAccessibleAnnouncementEvent*>( (QAccessibleAnnouncementEvent*)(self) );
+	if (self_cast == nullptr) {
+		return false;
+	}
+
+	self_cast->handle__accessibleInterface = slot;
+	return true;
+}
+
+QAccessibleInterface* QAccessibleAnnouncementEvent_virtualbase_accessibleInterface(const void* self) {
+	return static_cast<const MiqtVirtualQAccessibleAnnouncementEvent*>(self)->QAccessibleAnnouncementEvent::accessibleInterface();
+}
+
+void QAccessibleAnnouncementEvent_delete(QAccessibleAnnouncementEvent* self) {
 	delete self;
 }
 

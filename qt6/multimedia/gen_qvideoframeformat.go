@@ -140,9 +140,9 @@ func NewQVideoFrameFormat() *QVideoFrameFormat {
 }
 
 // NewQVideoFrameFormat2 constructs a new QVideoFrameFormat object.
-func NewQVideoFrameFormat2(size *qt6.QSize, pixelFormat QVideoFrameFormat__PixelFormat) *QVideoFrameFormat {
+func NewQVideoFrameFormat2(size *qt6.QSize, pixelFormat PixelFormat) *QVideoFrameFormat {
 
-	return newQVideoFrameFormat(C.QVideoFrameFormat_new2((*C.QSize)(size.UnsafePointer()), (C.int)(pixelFormat)))
+	return newQVideoFrameFormat(C.QVideoFrameFormat_new2((*C.QSize)(size.UnsafePointer()), pixelFormat))
 }
 
 // NewQVideoFrameFormat3 constructs a new QVideoFrameFormat object.
@@ -215,12 +215,12 @@ func (this *QVideoFrameFormat) SetViewport(viewport *qt6.QRect) {
 	C.QVideoFrameFormat_setViewport(this.h, (*C.QRect)(viewport.UnsafePointer()))
 }
 
-func (this *QVideoFrameFormat) ScanLineDirection() QVideoFrameFormat__Direction {
-	return (QVideoFrameFormat__Direction)(C.QVideoFrameFormat_scanLineDirection(this.h))
+func (this *QVideoFrameFormat) ScanLineDirection() Direction {
+	int /* TODO  */
 }
 
-func (this *QVideoFrameFormat) SetScanLineDirection(direction QVideoFrameFormat__Direction) {
-	C.QVideoFrameFormat_setScanLineDirection(this.h, (C.int)(direction))
+func (this *QVideoFrameFormat) SetScanLineDirection(direction Direction) {
+	C.QVideoFrameFormat_setScanLineDirection(this.h, direction)
 }
 
 func (this *QVideoFrameFormat) FrameRate() float64 {
@@ -231,36 +231,44 @@ func (this *QVideoFrameFormat) SetFrameRate(rate float64) {
 	C.QVideoFrameFormat_setFrameRate(this.h, (C.double)(rate))
 }
 
-func (this *QVideoFrameFormat) YCbCrColorSpace() QVideoFrameFormat__YCbCrColorSpace {
-	return (QVideoFrameFormat__YCbCrColorSpace)(C.QVideoFrameFormat_yCbCrColorSpace(this.h))
+func (this *QVideoFrameFormat) StreamFrameRate() float64 {
+	return (float64)(C.QVideoFrameFormat_streamFrameRate(this.h))
 }
 
-func (this *QVideoFrameFormat) SetYCbCrColorSpace(colorSpace QVideoFrameFormat__YCbCrColorSpace) {
-	C.QVideoFrameFormat_setYCbCrColorSpace(this.h, (C.int)(colorSpace))
+func (this *QVideoFrameFormat) SetStreamFrameRate(rate float64) {
+	C.QVideoFrameFormat_setStreamFrameRate(this.h, (C.double)(rate))
 }
 
-func (this *QVideoFrameFormat) ColorSpace() QVideoFrameFormat__ColorSpace {
-	return (QVideoFrameFormat__ColorSpace)(C.QVideoFrameFormat_colorSpace(this.h))
+func (this *QVideoFrameFormat) YCbCrColorSpace() YCbCrColorSpace {
+	int /* TODO  */
 }
 
-func (this *QVideoFrameFormat) SetColorSpace(colorSpace QVideoFrameFormat__ColorSpace) {
-	C.QVideoFrameFormat_setColorSpace(this.h, (C.int)(colorSpace))
+func (this *QVideoFrameFormat) SetYCbCrColorSpace(colorSpace YCbCrColorSpace) {
+	C.QVideoFrameFormat_setYCbCrColorSpace(this.h, colorSpace)
 }
 
-func (this *QVideoFrameFormat) ColorTransfer() QVideoFrameFormat__ColorTransfer {
-	return (QVideoFrameFormat__ColorTransfer)(C.QVideoFrameFormat_colorTransfer(this.h))
+func (this *QVideoFrameFormat) ColorSpace() ColorSpace {
+	int /* TODO  */
 }
 
-func (this *QVideoFrameFormat) SetColorTransfer(colorTransfer QVideoFrameFormat__ColorTransfer) {
-	C.QVideoFrameFormat_setColorTransfer(this.h, (C.int)(colorTransfer))
+func (this *QVideoFrameFormat) SetColorSpace(colorSpace ColorSpace) {
+	C.QVideoFrameFormat_setColorSpace(this.h, colorSpace)
 }
 
-func (this *QVideoFrameFormat) ColorRange() QVideoFrameFormat__ColorRange {
-	return (QVideoFrameFormat__ColorRange)(C.QVideoFrameFormat_colorRange(this.h))
+func (this *QVideoFrameFormat) ColorTransfer() ColorTransfer {
+	int /* TODO  */
 }
 
-func (this *QVideoFrameFormat) SetColorRange(rangeVal QVideoFrameFormat__ColorRange) {
-	C.QVideoFrameFormat_setColorRange(this.h, (C.int)(rangeVal))
+func (this *QVideoFrameFormat) SetColorTransfer(colorTransfer ColorTransfer) {
+	C.QVideoFrameFormat_setColorTransfer(this.h, colorTransfer)
+}
+
+func (this *QVideoFrameFormat) ColorRange() ColorRange {
+	int /* TODO  */
+}
+
+func (this *QVideoFrameFormat) SetColorRange(rangeVal ColorRange) {
+	C.QVideoFrameFormat_setColorRange(this.h, rangeVal)
 }
 
 func (this *QVideoFrameFormat) IsMirrored() bool {
@@ -269,6 +277,14 @@ func (this *QVideoFrameFormat) IsMirrored() bool {
 
 func (this *QVideoFrameFormat) SetMirrored(mirrored bool) {
 	C.QVideoFrameFormat_setMirrored(this.h, (C.bool)(mirrored))
+}
+
+func (this *QVideoFrameFormat) Rotation() QtVideo__Rotation {
+	return (QtVideo__Rotation)(C.QVideoFrameFormat_rotation(this.h))
+}
+
+func (this *QVideoFrameFormat) SetRotation(rotation QtVideo__Rotation) {
+	C.QVideoFrameFormat_setRotation(this.h, (C.int)(rotation))
 }
 
 func (this *QVideoFrameFormat) VertexShaderFileName() string {
@@ -293,12 +309,12 @@ func (this *QVideoFrameFormat) SetMaxLuminance(lum float32) {
 	C.QVideoFrameFormat_setMaxLuminance(this.h, (C.float)(lum))
 }
 
-func QVideoFrameFormat_PixelFormatFromImageFormat(format qt6.QImage__Format) QVideoFrameFormat__PixelFormat {
-	return (QVideoFrameFormat__PixelFormat)(C.QVideoFrameFormat_pixelFormatFromImageFormat((C.int)(format)))
+func QVideoFrameFormat_PixelFormatFromImageFormat(format qt6.QImage__Format) PixelFormat {
+	int /* TODO  */
 }
 
-func QVideoFrameFormat_ImageFormatFromPixelFormat(format QVideoFrameFormat__PixelFormat) qt6.QImage__Format {
-	return (qt6.QImage__Format)(C.QVideoFrameFormat_imageFormatFromPixelFormat((C.int)(format)))
+func QVideoFrameFormat_ImageFormatFromPixelFormat(format PixelFormat) qt6.QImage__Format {
+	return (qt6.QImage__Format)(C.QVideoFrameFormat_imageFormatFromPixelFormat(format))
 }
 
 func QVideoFrameFormat_PixelFormatToString(pixelFormat QVideoFrameFormat__PixelFormat) string {

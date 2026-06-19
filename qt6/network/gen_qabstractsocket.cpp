@@ -28,14 +28,14 @@ void miqt_exec_callback_QAbstractSocket_stateChanged(intptr_t, int);
 void miqt_exec_callback_QAbstractSocket_errorOccurred(intptr_t, int);
 void miqt_exec_callback_QAbstractSocket_proxyAuthenticationRequired(intptr_t, QNetworkProxy*, QAuthenticator*);
 void miqt_exec_callback_QAbstractSocket_resume(QAbstractSocket*, intptr_t);
-bool miqt_exec_callback_QAbstractSocket_bind(QAbstractSocket*, intptr_t, QHostAddress*, unsigned short, int);
-void miqt_exec_callback_QAbstractSocket_connectToHost(QAbstractSocket*, intptr_t, struct miqt_string, unsigned short, int, int);
+bool miqt_exec_callback_QAbstractSocket_bind(QAbstractSocket*, intptr_t, QHostAddress*, unsigned short, BindMode);
+void miqt_exec_callback_QAbstractSocket_connectToHost(QAbstractSocket*, intptr_t, struct miqt_string, unsigned short, OpenMode, NetworkLayerProtocol);
 void miqt_exec_callback_QAbstractSocket_disconnectFromHost(QAbstractSocket*, intptr_t);
 long long miqt_exec_callback_QAbstractSocket_bytesAvailable(const QAbstractSocket*, intptr_t);
 long long miqt_exec_callback_QAbstractSocket_bytesToWrite(const QAbstractSocket*, intptr_t);
 void miqt_exec_callback_QAbstractSocket_setReadBufferSize(QAbstractSocket*, intptr_t, long long);
 intptr_t miqt_exec_callback_QAbstractSocket_socketDescriptor(const QAbstractSocket*, intptr_t);
-bool miqt_exec_callback_QAbstractSocket_setSocketDescriptor(QAbstractSocket*, intptr_t, intptr_t, int, int);
+bool miqt_exec_callback_QAbstractSocket_setSocketDescriptor(QAbstractSocket*, intptr_t, intptr_t, SocketState, OpenMode);
 void miqt_exec_callback_QAbstractSocket_setSocketOption(QAbstractSocket*, intptr_t, int, QVariant*);
 QVariant* miqt_exec_callback_QAbstractSocket_socketOption(QAbstractSocket*, intptr_t, int);
 void miqt_exec_callback_QAbstractSocket_close(QAbstractSocket*, intptr_t);
@@ -69,7 +69,7 @@ void miqt_exec_callback_QAbstractSocket_disconnectNotify(QAbstractSocket*, intpt
 class MiqtVirtualQAbstractSocket final : public QAbstractSocket {
 public:
 
-	MiqtVirtualQAbstractSocket(QAbstractSocket::SocketType socketType, QObject* parent): QAbstractSocket(socketType, parent) {}
+	MiqtVirtualQAbstractSocket(SocketType socketType, QObject* parent): QAbstractSocket(socketType, parent) {}
 
 	virtual ~MiqtVirtualQAbstractSocket() override = default;
 
@@ -93,7 +93,7 @@ public:
 	intptr_t handle__bind = 0;
 
 	// Subclass to allow providing a Go implementation
-	virtual bool bind(const QHostAddress& address, quint16 port, QAbstractSocket::BindMode mode) override {
+	virtual bool bind(const QHostAddress& address, quint16 port, BindMode mode) override {
 		if (handle__bind == 0) {
 			return QAbstractSocket::bind(address, port, mode);
 		}
@@ -103,19 +103,18 @@ public:
 		QHostAddress* sigval1 = const_cast<QHostAddress*>(&address_ret);
 		quint16 port_ret = port;
 		unsigned short sigval2 = static_cast<unsigned short>(port_ret);
-		QAbstractSocket::BindMode mode_ret = mode;
-		int sigval3 = static_cast<int>(mode_ret);
+		BindMode sigval3 = mode;
 		bool callback_return_value = miqt_exec_callback_QAbstractSocket_bind(this, handle__bind, sigval1, sigval2, sigval3);
 		return callback_return_value;
 	}
 
-	friend bool QAbstractSocket_virtualbase_bind(void* self, QHostAddress* address, unsigned short port, int mode);
+	friend bool QAbstractSocket_virtualbase_bind(void* self, QHostAddress* address, unsigned short port, BindMode mode);
 
 	// cgo.Handle value for overwritten implementation
 	intptr_t handle__connectToHost = 0;
 
 	// Subclass to allow providing a Go implementation
-	virtual void connectToHost(const QString& hostName, quint16 port, QIODeviceBase::OpenMode mode, QAbstractSocket::NetworkLayerProtocol protocol) override {
+	virtual void connectToHost(const QString& hostName, quint16 port, OpenMode mode, NetworkLayerProtocol protocol) override {
 		if (handle__connectToHost == 0) {
 			QAbstractSocket::connectToHost(hostName, port, mode, protocol);
 			return;
@@ -131,15 +130,13 @@ public:
 		struct miqt_string sigval1 = hostName_ms;
 		quint16 port_ret = port;
 		unsigned short sigval2 = static_cast<unsigned short>(port_ret);
-		QIODeviceBase::OpenMode mode_ret = mode;
-		int sigval3 = static_cast<int>(mode_ret);
-		QAbstractSocket::NetworkLayerProtocol protocol_ret = protocol;
-		int sigval4 = static_cast<int>(protocol_ret);
+		OpenMode sigval3 = mode;
+		NetworkLayerProtocol sigval4 = protocol;
 		miqt_exec_callback_QAbstractSocket_connectToHost(this, handle__connectToHost, sigval1, sigval2, sigval3, sigval4);
 
 	}
 
-	friend void QAbstractSocket_virtualbase_connectToHost(void* self, struct miqt_string hostName, unsigned short port, int mode, int protocol);
+	friend void QAbstractSocket_virtualbase_connectToHost(void* self, struct miqt_string hostName, unsigned short port, OpenMode mode, NetworkLayerProtocol protocol);
 
 	// cgo.Handle value for overwritten implementation
 	intptr_t handle__disconnectFromHost = 0;
@@ -224,22 +221,20 @@ public:
 	intptr_t handle__setSocketDescriptor = 0;
 
 	// Subclass to allow providing a Go implementation
-	virtual bool setSocketDescriptor(qintptr socketDescriptor, QAbstractSocket::SocketState state, QIODeviceBase::OpenMode openMode) override {
+	virtual bool setSocketDescriptor(qintptr socketDescriptor, SocketState state, OpenMode openMode) override {
 		if (handle__setSocketDescriptor == 0) {
 			return QAbstractSocket::setSocketDescriptor(socketDescriptor, state, openMode);
 		}
 
 		qintptr socketDescriptor_ret = socketDescriptor;
 		intptr_t sigval1 = (intptr_t)(socketDescriptor_ret);
-		QAbstractSocket::SocketState state_ret = state;
-		int sigval2 = static_cast<int>(state_ret);
-		QIODeviceBase::OpenMode openMode_ret = openMode;
-		int sigval3 = static_cast<int>(openMode_ret);
+		SocketState sigval2 = state;
+		OpenMode sigval3 = openMode;
 		bool callback_return_value = miqt_exec_callback_QAbstractSocket_setSocketDescriptor(this, handle__setSocketDescriptor, sigval1, sigval2, sigval3);
 		return callback_return_value;
 	}
 
-	friend bool QAbstractSocket_virtualbase_setSocketDescriptor(void* self, intptr_t socketDescriptor, int state, int openMode);
+	friend bool QAbstractSocket_virtualbase_setSocketDescriptor(void* self, intptr_t socketDescriptor, SocketState state, OpenMode openMode);
 
 	// cgo.Handle value for overwritten implementation
 	intptr_t handle__setSocketOption = 0;
@@ -677,8 +672,8 @@ public:
 	friend void QAbstractSocket_virtualbase_disconnectNotify(void* self, QMetaMethod* signal);
 
 	// Wrappers to allow calling protected methods:
-	friend void QAbstractSocket_protectedbase_setSocketState(bool* _dynamic_cast_ok, void* self, int state);
-	friend void QAbstractSocket_protectedbase_setSocketError(bool* _dynamic_cast_ok, void* self, int socketError);
+	friend void QAbstractSocket_protectedbase_setSocketState(bool* _dynamic_cast_ok, void* self, SocketState state);
+	friend void QAbstractSocket_protectedbase_setSocketError(bool* _dynamic_cast_ok, void* self, SocketError socketError);
 	friend void QAbstractSocket_protectedbase_setLocalPort(bool* _dynamic_cast_ok, void* self, unsigned short port);
 	friend void QAbstractSocket_protectedbase_setLocalAddress(bool* _dynamic_cast_ok, void* self, QHostAddress* address);
 	friend void QAbstractSocket_protectedbase_setPeerPort(bool* _dynamic_cast_ok, void* self, unsigned short port);
@@ -692,8 +687,8 @@ public:
 	friend bool QAbstractSocket_protectedbase_isSignalConnected(bool* _dynamic_cast_ok, const void* self, QMetaMethod* signal);
 };
 
-QAbstractSocket* QAbstractSocket_new(int socketType, QObject* parent) {
-	return new (std::nothrow) MiqtVirtualQAbstractSocket(static_cast<QAbstractSocket::SocketType>(socketType), parent);
+QAbstractSocket* QAbstractSocket_new(SocketType socketType, QObject* parent) {
+	return new (std::nothrow) MiqtVirtualQAbstractSocket(socketType, parent);
 }
 
 void QAbstractSocket_virtbase(QAbstractSocket* src, QIODevice** outptr_QIODevice) {
@@ -723,26 +718,25 @@ void QAbstractSocket_resume(QAbstractSocket* self) {
 	self->resume();
 }
 
-int QAbstractSocket_pauseMode(const QAbstractSocket* self) {
-	QAbstractSocket::PauseModes _ret = self->pauseMode();
-	return static_cast<int>(_ret);
+PauseModes QAbstractSocket_pauseMode(const QAbstractSocket* self) {
+	return self->pauseMode();
 }
 
-void QAbstractSocket_setPauseMode(QAbstractSocket* self, int pauseMode) {
-	self->setPauseMode(static_cast<QAbstractSocket::PauseModes>(pauseMode));
+void QAbstractSocket_setPauseMode(QAbstractSocket* self, PauseModes pauseMode) {
+	self->setPauseMode(pauseMode);
 }
 
-bool QAbstractSocket_bind(QAbstractSocket* self, QHostAddress* address, unsigned short port, int mode) {
-	return self->bind(*address, static_cast<quint16>(port), static_cast<QAbstractSocket::BindMode>(mode));
+bool QAbstractSocket_bind(QAbstractSocket* self, QHostAddress* address, unsigned short port, BindMode mode) {
+	return self->bind(*address, static_cast<quint16>(port), mode);
 }
 
 bool QAbstractSocket_bind2(QAbstractSocket* self) {
 	return self->bind();
 }
 
-void QAbstractSocket_connectToHost(QAbstractSocket* self, struct miqt_string hostName, unsigned short port, int mode, int protocol) {
+void QAbstractSocket_connectToHost(QAbstractSocket* self, struct miqt_string hostName, unsigned short port, OpenMode mode, NetworkLayerProtocol protocol) {
 	QString hostName_QString = QString::fromUtf8(hostName.data, hostName.len);
-	self->connectToHost(hostName_QString, static_cast<quint16>(port), static_cast<QIODeviceBase::OpenMode>(mode), static_cast<QAbstractSocket::NetworkLayerProtocol>(protocol));
+	self->connectToHost(hostName_QString, static_cast<quint16>(port), mode, protocol);
 }
 
 void QAbstractSocket_connectToHost2(QAbstractSocket* self, QHostAddress* address, unsigned short port) {
@@ -814,8 +808,8 @@ intptr_t QAbstractSocket_socketDescriptor(const QAbstractSocket* self) {
 	return (intptr_t)(_ret);
 }
 
-bool QAbstractSocket_setSocketDescriptor(QAbstractSocket* self, intptr_t socketDescriptor, int state, int openMode) {
-	return self->setSocketDescriptor((qintptr)(socketDescriptor), static_cast<QAbstractSocket::SocketState>(state), static_cast<QIODeviceBase::OpenMode>(openMode));
+bool QAbstractSocket_setSocketDescriptor(QAbstractSocket* self, intptr_t socketDescriptor, SocketState state, OpenMode openMode) {
+	return self->setSocketDescriptor((qintptr)(socketDescriptor), state, openMode);
 }
 
 void QAbstractSocket_setSocketOption(QAbstractSocket* self, int option, QVariant* value) {
@@ -826,19 +820,16 @@ QVariant* QAbstractSocket_socketOption(QAbstractSocket* self, int option) {
 	return new QVariant(self->socketOption(static_cast<QAbstractSocket::SocketOption>(option)));
 }
 
-int QAbstractSocket_socketType(const QAbstractSocket* self) {
-	QAbstractSocket::SocketType _ret = self->socketType();
-	return static_cast<int>(_ret);
+SocketType QAbstractSocket_socketType(const QAbstractSocket* self) {
+	return self->socketType();
 }
 
-int QAbstractSocket_state(const QAbstractSocket* self) {
-	QAbstractSocket::SocketState _ret = self->state();
-	return static_cast<int>(_ret);
+SocketState QAbstractSocket_state(const QAbstractSocket* self) {
+	return self->state();
 }
 
-int QAbstractSocket_error(const QAbstractSocket* self) {
-	QAbstractSocket::SocketError _ret = self->error();
-	return static_cast<int>(_ret);
+SocketError QAbstractSocket_error(const QAbstractSocket* self) {
+	return self->error();
 }
 
 void QAbstractSocket_close(QAbstractSocket* self) {
@@ -987,12 +978,12 @@ bool QAbstractSocket_bindWithPort(QAbstractSocket* self, unsigned short port) {
 	return self->bind(static_cast<quint16>(port));
 }
 
-bool QAbstractSocket_bind3(QAbstractSocket* self, unsigned short port, int mode) {
-	return self->bind(static_cast<quint16>(port), static_cast<QAbstractSocket::BindMode>(mode));
+bool QAbstractSocket_bind3(QAbstractSocket* self, unsigned short port, BindMode mode) {
+	return self->bind(static_cast<quint16>(port), mode);
 }
 
-void QAbstractSocket_connectToHost3(QAbstractSocket* self, QHostAddress* address, unsigned short port, int mode) {
-	self->connectToHost(*address, static_cast<quint16>(port), static_cast<QIODeviceBase::OpenMode>(mode));
+void QAbstractSocket_connectToHost3(QAbstractSocket* self, QHostAddress* address, unsigned short port, OpenMode mode) {
+	self->connectToHost(*address, static_cast<quint16>(port), mode);
 }
 
 bool QAbstractSocket_override_virtual_resume(void* self, intptr_t slot) {
@@ -1019,8 +1010,8 @@ bool QAbstractSocket_override_virtual_bind(void* self, intptr_t slot) {
 	return true;
 }
 
-bool QAbstractSocket_virtualbase_bind(void* self, QHostAddress* address, unsigned short port, int mode) {
-	return static_cast<MiqtVirtualQAbstractSocket*>(self)->QAbstractSocket::bind(*address, static_cast<quint16>(port), static_cast<MiqtVirtualQAbstractSocket::BindMode>(mode));
+bool QAbstractSocket_virtualbase_bind(void* self, QHostAddress* address, unsigned short port, BindMode mode) {
+	return static_cast<MiqtVirtualQAbstractSocket*>(self)->QAbstractSocket::bind(*address, static_cast<quint16>(port), mode);
 }
 
 bool QAbstractSocket_override_virtual_connectToHost(void* self, intptr_t slot) {
@@ -1033,9 +1024,9 @@ bool QAbstractSocket_override_virtual_connectToHost(void* self, intptr_t slot) {
 	return true;
 }
 
-void QAbstractSocket_virtualbase_connectToHost(void* self, struct miqt_string hostName, unsigned short port, int mode, int protocol) {
+void QAbstractSocket_virtualbase_connectToHost(void* self, struct miqt_string hostName, unsigned short port, OpenMode mode, NetworkLayerProtocol protocol) {
 	QString hostName_QString = QString::fromUtf8(hostName.data, hostName.len);
-	static_cast<MiqtVirtualQAbstractSocket*>(self)->QAbstractSocket::connectToHost(hostName_QString, static_cast<quint16>(port), static_cast<MiqtVirtualQAbstractSocket::OpenMode>(mode), static_cast<MiqtVirtualQAbstractSocket::NetworkLayerProtocol>(protocol));
+	static_cast<MiqtVirtualQAbstractSocket*>(self)->QAbstractSocket::connectToHost(hostName_QString, static_cast<quint16>(port), mode, protocol);
 }
 
 bool QAbstractSocket_override_virtual_disconnectFromHost(void* self, intptr_t slot) {
@@ -1121,8 +1112,8 @@ bool QAbstractSocket_override_virtual_setSocketDescriptor(void* self, intptr_t s
 	return true;
 }
 
-bool QAbstractSocket_virtualbase_setSocketDescriptor(void* self, intptr_t socketDescriptor, int state, int openMode) {
-	return static_cast<MiqtVirtualQAbstractSocket*>(self)->QAbstractSocket::setSocketDescriptor((qintptr)(socketDescriptor), static_cast<MiqtVirtualQAbstractSocket::SocketState>(state), static_cast<MiqtVirtualQAbstractSocket::OpenMode>(openMode));
+bool QAbstractSocket_virtualbase_setSocketDescriptor(void* self, intptr_t socketDescriptor, SocketState state, OpenMode openMode) {
+	return static_cast<MiqtVirtualQAbstractSocket*>(self)->QAbstractSocket::setSocketDescriptor((qintptr)(socketDescriptor), state, openMode);
 }
 
 bool QAbstractSocket_override_virtual_setSocketOption(void* self, intptr_t slot) {
@@ -1495,7 +1486,7 @@ void QAbstractSocket_virtualbase_disconnectNotify(void* self, QMetaMethod* signa
 	static_cast<MiqtVirtualQAbstractSocket*>(self)->QAbstractSocket::disconnectNotify(*signal);
 }
 
-void QAbstractSocket_protectedbase_setSocketState(bool* _dynamic_cast_ok, void* self, int state) {
+void QAbstractSocket_protectedbase_setSocketState(bool* _dynamic_cast_ok, void* self, SocketState state) {
 	MiqtVirtualQAbstractSocket* self_cast = dynamic_cast<MiqtVirtualQAbstractSocket*>( (QAbstractSocket*)(self) );
 	if (self_cast == nullptr) {
 		*_dynamic_cast_ok = false;
@@ -1503,10 +1494,10 @@ void QAbstractSocket_protectedbase_setSocketState(bool* _dynamic_cast_ok, void* 
 	}
 
 	*_dynamic_cast_ok = true;
-	self_cast->setSocketState(static_cast<MiqtVirtualQAbstractSocket::SocketState>(state));
+	self_cast->setSocketState(state);
 }
 
-void QAbstractSocket_protectedbase_setSocketError(bool* _dynamic_cast_ok, void* self, int socketError) {
+void QAbstractSocket_protectedbase_setSocketError(bool* _dynamic_cast_ok, void* self, SocketError socketError) {
 	MiqtVirtualQAbstractSocket* self_cast = dynamic_cast<MiqtVirtualQAbstractSocket*>( (QAbstractSocket*)(self) );
 	if (self_cast == nullptr) {
 		*_dynamic_cast_ok = false;
@@ -1514,7 +1505,7 @@ void QAbstractSocket_protectedbase_setSocketError(bool* _dynamic_cast_ok, void* 
 	}
 
 	*_dynamic_cast_ok = true;
-	self_cast->setSocketError(static_cast<MiqtVirtualQAbstractSocket::SocketError>(socketError));
+	self_cast->setSocketError(socketError);
 }
 
 void QAbstractSocket_protectedbase_setLocalPort(bool* _dynamic_cast_ok, void* self, unsigned short port) {

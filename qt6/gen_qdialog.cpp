@@ -85,7 +85,7 @@ void miqt_exec_callback_QDialog_dropEvent(QDialog*, intptr_t, QDropEvent*);
 void miqt_exec_callback_QDialog_hideEvent(QDialog*, intptr_t, QHideEvent*);
 bool miqt_exec_callback_QDialog_nativeEvent(QDialog*, intptr_t, struct miqt_string, void*, intptr_t*);
 void miqt_exec_callback_QDialog_changeEvent(QDialog*, intptr_t, QEvent*);
-int miqt_exec_callback_QDialog_metric(const QDialog*, intptr_t, int);
+int miqt_exec_callback_QDialog_metric(const QDialog*, intptr_t, PaintDeviceMetric);
 void miqt_exec_callback_QDialog_initPainter(const QDialog*, intptr_t, QPainter*);
 QPaintDevice* miqt_exec_callback_QDialog_redirected(const QDialog*, intptr_t, QPoint*);
 QPainter* miqt_exec_callback_QDialog_sharedPainter(const QDialog*, intptr_t);
@@ -784,18 +784,17 @@ public:
 	intptr_t handle__metric = 0;
 
 	// Subclass to allow providing a Go implementation
-	virtual int metric(QPaintDevice::PaintDeviceMetric param1) const override {
+	virtual int metric(PaintDeviceMetric param1) const override {
 		if (handle__metric == 0) {
 			return QDialog::metric(param1);
 		}
 
-		QPaintDevice::PaintDeviceMetric param1_ret = param1;
-		int sigval1 = static_cast<int>(param1_ret);
+		PaintDeviceMetric sigval1 = param1;
 		int callback_return_value = miqt_exec_callback_QDialog_metric(this, handle__metric, sigval1);
 		return static_cast<int>(callback_return_value);
 	}
 
-	friend int QDialog_virtualbase_metric(const void* self, int param1);
+	friend int QDialog_virtualbase_metric(const void* self, PaintDeviceMetric param1);
 
 	// cgo.Handle value for overwritten implementation
 	intptr_t handle__initPainter = 0;
@@ -995,6 +994,7 @@ public:
 	friend int QDialog_protectedbase_senderSignalIndex(bool* _dynamic_cast_ok, const void* self);
 	friend int QDialog_protectedbase_receivers(bool* _dynamic_cast_ok, const void* self, const char* signal);
 	friend bool QDialog_protectedbase_isSignalConnected(bool* _dynamic_cast_ok, const void* self, QMetaMethod* signal);
+	friend double QDialog_protectedbase_getDecodedMetricF(bool* _dynamic_cast_ok, const void* self, PaintDeviceMetric metricA, PaintDeviceMetric metricB);
 };
 
 QDialog* QDialog_new(QWidget* parent) {
@@ -1708,8 +1708,8 @@ bool QDialog_override_virtual_metric(void* self, intptr_t slot) {
 	return true;
 }
 
-int QDialog_virtualbase_metric(const void* self, int param1) {
-	return static_cast<const MiqtVirtualQDialog*>(self)->QDialog::metric(static_cast<MiqtVirtualQDialog::PaintDeviceMetric>(param1));
+int QDialog_virtualbase_metric(const void* self, PaintDeviceMetric param1) {
+	return static_cast<const MiqtVirtualQDialog*>(self)->QDialog::metric(param1);
 }
 
 bool QDialog_override_virtual_initPainter(void* self, intptr_t slot) {
@@ -1974,6 +1974,17 @@ bool QDialog_protectedbase_isSignalConnected(bool* _dynamic_cast_ok, const void*
 
 	*_dynamic_cast_ok = true;
 	return self_cast->isSignalConnected(*signal);
+}
+
+double QDialog_protectedbase_getDecodedMetricF(bool* _dynamic_cast_ok, const void* self, PaintDeviceMetric metricA, PaintDeviceMetric metricB) {
+	MiqtVirtualQDialog* self_cast = dynamic_cast<MiqtVirtualQDialog*>( (QDialog*)(self) );
+	if (self_cast == nullptr) {
+		*_dynamic_cast_ok = false;
+		return 0;
+	}
+
+	*_dynamic_cast_ok = true;
+	return self_cast->getDecodedMetricF(metricA, metricB);
 }
 
 void QDialog_delete(QDialog* self) {

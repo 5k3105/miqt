@@ -79,7 +79,7 @@ void miqt_exec_callback_QPrintPreviewWidget_showEvent(QPrintPreviewWidget*, intp
 void miqt_exec_callback_QPrintPreviewWidget_hideEvent(QPrintPreviewWidget*, intptr_t, QHideEvent*);
 bool miqt_exec_callback_QPrintPreviewWidget_nativeEvent(QPrintPreviewWidget*, intptr_t, struct miqt_string, void*, intptr_t*);
 void miqt_exec_callback_QPrintPreviewWidget_changeEvent(QPrintPreviewWidget*, intptr_t, QEvent*);
-int miqt_exec_callback_QPrintPreviewWidget_metric(const QPrintPreviewWidget*, intptr_t, int);
+int miqt_exec_callback_QPrintPreviewWidget_metric(const QPrintPreviewWidget*, intptr_t, PaintDeviceMetric);
 void miqt_exec_callback_QPrintPreviewWidget_initPainter(const QPrintPreviewWidget*, intptr_t, QPainter*);
 QPaintDevice* miqt_exec_callback_QPrintPreviewWidget_redirected(const QPrintPreviewWidget*, intptr_t, QPoint*);
 QPainter* miqt_exec_callback_QPrintPreviewWidget_sharedPainter(const QPrintPreviewWidget*, intptr_t);
@@ -685,18 +685,17 @@ public:
 	intptr_t handle__metric = 0;
 
 	// Subclass to allow providing a Go implementation
-	virtual int metric(QPaintDevice::PaintDeviceMetric param1) const override {
+	virtual int metric(PaintDeviceMetric param1) const override {
 		if (handle__metric == 0) {
 			return QPrintPreviewWidget::metric(param1);
 		}
 
-		QPaintDevice::PaintDeviceMetric param1_ret = param1;
-		int sigval1 = static_cast<int>(param1_ret);
+		PaintDeviceMetric sigval1 = param1;
 		int callback_return_value = miqt_exec_callback_QPrintPreviewWidget_metric(this, handle__metric, sigval1);
 		return static_cast<int>(callback_return_value);
 	}
 
-	friend int QPrintPreviewWidget_virtualbase_metric(const void* self, int param1);
+	friend int QPrintPreviewWidget_virtualbase_metric(const void* self, PaintDeviceMetric param1);
 
 	// cgo.Handle value for overwritten implementation
 	intptr_t handle__initPainter = 0;
@@ -912,6 +911,7 @@ public:
 	friend int QPrintPreviewWidget_protectedbase_senderSignalIndex(bool* _dynamic_cast_ok, const void* self);
 	friend int QPrintPreviewWidget_protectedbase_receivers(bool* _dynamic_cast_ok, const void* self, const char* signal);
 	friend bool QPrintPreviewWidget_protectedbase_isSignalConnected(bool* _dynamic_cast_ok, const void* self, QMetaMethod* signal);
+	friend double QPrintPreviewWidget_protectedbase_getDecodedMetricF(bool* _dynamic_cast_ok, const void* self, PaintDeviceMetric metricA, PaintDeviceMetric metricB);
 };
 
 QPrintPreviewWidget* QPrintPreviewWidget_new(QWidget* parent) {
@@ -971,14 +971,12 @@ int QPrintPreviewWidget_orientation(const QPrintPreviewWidget* self) {
 	return static_cast<int>(_ret);
 }
 
-int QPrintPreviewWidget_viewMode(const QPrintPreviewWidget* self) {
-	QPrintPreviewWidget::ViewMode _ret = self->viewMode();
-	return static_cast<int>(_ret);
+ViewMode QPrintPreviewWidget_viewMode(const QPrintPreviewWidget* self) {
+	return self->viewMode();
 }
 
-int QPrintPreviewWidget_zoomMode(const QPrintPreviewWidget* self) {
-	QPrintPreviewWidget::ZoomMode _ret = self->zoomMode();
-	return static_cast<int>(_ret);
+ZoomMode QPrintPreviewWidget_zoomMode(const QPrintPreviewWidget* self) {
+	return self->zoomMode();
 }
 
 int QPrintPreviewWidget_currentPage(const QPrintPreviewWidget* self) {
@@ -1013,12 +1011,12 @@ void QPrintPreviewWidget_setOrientation(QPrintPreviewWidget* self, int orientati
 	self->setOrientation(static_cast<QPageLayout::Orientation>(orientation));
 }
 
-void QPrintPreviewWidget_setViewMode(QPrintPreviewWidget* self, int viewMode) {
-	self->setViewMode(static_cast<QPrintPreviewWidget::ViewMode>(viewMode));
+void QPrintPreviewWidget_setViewMode(QPrintPreviewWidget* self, ViewMode viewMode) {
+	self->setViewMode(viewMode);
 }
 
-void QPrintPreviewWidget_setZoomMode(QPrintPreviewWidget* self, int zoomMode) {
-	self->setZoomMode(static_cast<QPrintPreviewWidget::ZoomMode>(zoomMode));
+void QPrintPreviewWidget_setZoomMode(QPrintPreviewWidget* self, ZoomMode zoomMode) {
+	self->setZoomMode(zoomMode);
 }
 
 void QPrintPreviewWidget_setCurrentPage(QPrintPreviewWidget* self, int pageNumber) {
@@ -1595,8 +1593,8 @@ bool QPrintPreviewWidget_override_virtual_metric(void* self, intptr_t slot) {
 	return true;
 }
 
-int QPrintPreviewWidget_virtualbase_metric(const void* self, int param1) {
-	return static_cast<const MiqtVirtualQPrintPreviewWidget*>(self)->QPrintPreviewWidget::metric(static_cast<MiqtVirtualQPrintPreviewWidget::PaintDeviceMetric>(param1));
+int QPrintPreviewWidget_virtualbase_metric(const void* self, PaintDeviceMetric param1) {
+	return static_cast<const MiqtVirtualQPrintPreviewWidget*>(self)->QPrintPreviewWidget::metric(param1);
 }
 
 bool QPrintPreviewWidget_override_virtual_initPainter(void* self, intptr_t slot) {
@@ -1864,6 +1862,17 @@ bool QPrintPreviewWidget_protectedbase_isSignalConnected(bool* _dynamic_cast_ok,
 
 	*_dynamic_cast_ok = true;
 	return self_cast->isSignalConnected(*signal);
+}
+
+double QPrintPreviewWidget_protectedbase_getDecodedMetricF(bool* _dynamic_cast_ok, const void* self, PaintDeviceMetric metricA, PaintDeviceMetric metricB) {
+	MiqtVirtualQPrintPreviewWidget* self_cast = dynamic_cast<MiqtVirtualQPrintPreviewWidget*>( (QPrintPreviewWidget*)(self) );
+	if (self_cast == nullptr) {
+		*_dynamic_cast_ok = false;
+		return 0;
+	}
+
+	*_dynamic_cast_ok = true;
+	return self_cast->getDecodedMetricF(metricA, metricB);
 }
 
 void QPrintPreviewWidget_delete(QPrintPreviewWidget* self) {

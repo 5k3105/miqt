@@ -30,14 +30,6 @@ typedef struct QJsonValue QJsonValue;
 typedef struct QVariant QVariant;
 #endif
 
-struct miqt_string QJsonParseError_errorString(const QJsonParseError* self);
-int QJsonParseError_offset(const QJsonParseError* self);
-void QJsonParseError_setOffset(QJsonParseError* self, int offset);
-int QJsonParseError_error(const QJsonParseError* self);
-void QJsonParseError_setError(QJsonParseError* self, int error);
-
-void QJsonParseError_delete(QJsonParseError* self);
-
 QJsonDocument* QJsonDocument_new();
 QJsonDocument* QJsonDocument_new2(QJsonObject* object);
 QJsonDocument* QJsonDocument_new3(QJsonArray* array);
@@ -57,11 +49,9 @@ void QJsonDocument_setObject(QJsonDocument* self, QJsonObject* object);
 void QJsonDocument_setArray(QJsonDocument* self, QJsonArray* array);
 QJsonValue* QJsonDocument_operatorSubscript(const QJsonDocument* self, struct miqt_string key);
 QJsonValue* QJsonDocument_operatorSubscriptWithQsizetype(const QJsonDocument* self, ptrdiff_t i);
-bool QJsonDocument_operatorEqual(const QJsonDocument* self, QJsonDocument* other);
-bool QJsonDocument_operatorNotEqual(const QJsonDocument* self, QJsonDocument* other);
 bool QJsonDocument_isNull(const QJsonDocument* self);
 QJsonDocument* QJsonDocument_fromJson2(struct miqt_string json, QJsonParseError* error);
-struct miqt_string QJsonDocument_toJsonWithFormat(const QJsonDocument* self, int format);
+struct miqt_string QJsonDocument_toJsonWithFormat(const QJsonDocument* self, JsonFormat format);
 
 void QJsonDocument_delete(QJsonDocument* self);
 

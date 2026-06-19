@@ -159,14 +159,6 @@ func (this *QLine) SetLine(x1 int, y1 int, x2 int, y2 int) {
 	C.QLine_setLine(this.h, (C.int)(x1), (C.int)(y1), (C.int)(x2), (C.int)(y2))
 }
 
-func (this *QLine) OperatorEqual(d *QLine) bool {
-	return (bool)(C.QLine_operatorEqual(this.h, d.cPointer()))
-}
-
-func (this *QLine) OperatorNotEqual(d *QLine) bool {
-	return (bool)(C.QLine_operatorNotEqual(this.h, d.cPointer()))
-}
-
 func (this *QLine) ToLineF() *QLineF {
 	_goptr := newQLineF(C.QLine_toLineF(this.h))
 	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
@@ -327,8 +319,8 @@ func (this *QLineF) NormalVector() *QLineF {
 	return _goptr
 }
 
-func (this *QLineF) Intersects(l *QLineF) QLineF__IntersectionType {
-	return (QLineF__IntersectionType)(C.QLineF_intersects(this.h, l.cPointer()))
+func (this *QLineF) Intersects(l *QLineF) IntersectionType {
+	int /* TODO  */
 }
 
 func (this *QLineF) PointAt(t float64) *QPointF {
@@ -379,22 +371,14 @@ func (this *QLineF) SetLine(x1 float64, y1 float64, x2 float64, y2 float64) {
 	C.QLineF_setLine(this.h, (C.double)(x1), (C.double)(y1), (C.double)(x2), (C.double)(y2))
 }
 
-func (this *QLineF) OperatorEqual(d *QLineF) bool {
-	return (bool)(C.QLineF_operatorEqual(this.h, d.cPointer()))
-}
-
-func (this *QLineF) OperatorNotEqual(d *QLineF) bool {
-	return (bool)(C.QLineF_operatorNotEqual(this.h, d.cPointer()))
-}
-
 func (this *QLineF) ToLine() *QLine {
 	_goptr := newQLine(C.QLineF_toLine(this.h))
 	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
 	return _goptr
 }
 
-func (this *QLineF) Intersects2(l *QLineF, intersectionPoint *QPointF) QLineF__IntersectionType {
-	return (QLineF__IntersectionType)(C.QLineF_intersects2(this.h, l.cPointer(), intersectionPoint.cPointer()))
+func (this *QLineF) Intersects2(l *QLineF, intersectionPoint *QPointF) IntersectionType {
+	int /* TODO  */
 }
 
 // Delete this object from C++ memory.

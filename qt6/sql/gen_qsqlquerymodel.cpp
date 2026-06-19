@@ -1085,8 +1085,14 @@ void QSqlQueryModel_setQueryWithQuery(QSqlQueryModel* self, struct miqt_string q
 	self->setQuery(query_QString);
 }
 
+void QSqlQueryModel_refresh(QSqlQueryModel* self) {
+	self->refresh();
+}
+
 QSqlQuery* QSqlQueryModel_query(const QSqlQueryModel* self) {
-	return new QSqlQuery(self->query());
+	const QSqlQuery& _ret = self->query();
+	// Cast returned reference into pointer
+	return const_cast<QSqlQuery*>(&_ret);
 }
 
 void QSqlQueryModel_clear(QSqlQueryModel* self) {

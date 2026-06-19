@@ -61,7 +61,7 @@ extern "C" {
 #endif
 
 QRect* miqt_exec_callback_QUndoView_visualRect(const QUndoView*, intptr_t, QModelIndex*);
-void miqt_exec_callback_QUndoView_scrollTo(QUndoView*, intptr_t, QModelIndex*, int);
+void miqt_exec_callback_QUndoView_scrollTo(QUndoView*, intptr_t, QModelIndex*, ScrollHint);
 QModelIndex* miqt_exec_callback_QUndoView_indexAt(const QUndoView*, intptr_t, QPoint*);
 void miqt_exec_callback_QUndoView_doItemsLayout(QUndoView*, intptr_t);
 void miqt_exec_callback_QUndoView_reset(QUndoView*, intptr_t);
@@ -84,7 +84,7 @@ void miqt_exec_callback_QUndoView_initViewItemOption(const QUndoView*, intptr_t,
 void miqt_exec_callback_QUndoView_paintEvent(QUndoView*, intptr_t, QPaintEvent*);
 int miqt_exec_callback_QUndoView_horizontalOffset(const QUndoView*, intptr_t);
 int miqt_exec_callback_QUndoView_verticalOffset(const QUndoView*, intptr_t);
-QModelIndex* miqt_exec_callback_QUndoView_moveCursor(QUndoView*, intptr_t, int, int);
+QModelIndex* miqt_exec_callback_QUndoView_moveCursor(QUndoView*, intptr_t, CursorAction, int);
 void miqt_exec_callback_QUndoView_setSelection(QUndoView*, intptr_t, QRect*, int);
 QRegion* miqt_exec_callback_QUndoView_visualRegionForSelection(const QUndoView*, intptr_t, QItemSelection*);
 struct miqt_array /* of QModelIndex* */  miqt_exec_callback_QUndoView_selectedIndexes(const QUndoView*, intptr_t);
@@ -110,7 +110,7 @@ void miqt_exec_callback_QUndoView_horizontalScrollbarValueChanged(QUndoView*, in
 void miqt_exec_callback_QUndoView_closeEditor(QUndoView*, intptr_t, QWidget*, int);
 void miqt_exec_callback_QUndoView_commitData(QUndoView*, intptr_t, QWidget*);
 void miqt_exec_callback_QUndoView_editorDestroyed(QUndoView*, intptr_t, QObject*);
-bool miqt_exec_callback_QUndoView_edit2(QUndoView*, intptr_t, QModelIndex*, int, QEvent*);
+bool miqt_exec_callback_QUndoView_edit2(QUndoView*, intptr_t, QModelIndex*, EditTrigger, QEvent*);
 int miqt_exec_callback_QUndoView_selectionCommand(const QUndoView*, intptr_t, QModelIndex*, QEvent*);
 bool miqt_exec_callback_QUndoView_focusNextPrevChild(QUndoView*, intptr_t, bool);
 bool miqt_exec_callback_QUndoView_viewportEvent(QUndoView*, intptr_t, QEvent*);
@@ -143,7 +143,7 @@ void miqt_exec_callback_QUndoView_actionEvent(QUndoView*, intptr_t, QActionEvent
 void miqt_exec_callback_QUndoView_showEvent(QUndoView*, intptr_t, QShowEvent*);
 void miqt_exec_callback_QUndoView_hideEvent(QUndoView*, intptr_t, QHideEvent*);
 bool miqt_exec_callback_QUndoView_nativeEvent(QUndoView*, intptr_t, struct miqt_string, void*, intptr_t*);
-int miqt_exec_callback_QUndoView_metric(const QUndoView*, intptr_t, int);
+int miqt_exec_callback_QUndoView_metric(const QUndoView*, intptr_t, PaintDeviceMetric);
 void miqt_exec_callback_QUndoView_initPainter(const QUndoView*, intptr_t, QPainter*);
 QPaintDevice* miqt_exec_callback_QUndoView_redirected(const QUndoView*, intptr_t, QPoint*);
 QPainter* miqt_exec_callback_QUndoView_sharedPainter(const QUndoView*, intptr_t);
@@ -189,7 +189,7 @@ public:
 	intptr_t handle__scrollTo = 0;
 
 	// Subclass to allow providing a Go implementation
-	virtual void scrollTo(const QModelIndex& index, QAbstractItemView::ScrollHint hint) override {
+	virtual void scrollTo(const QModelIndex& index, ScrollHint hint) override {
 		if (handle__scrollTo == 0) {
 			QUndoView::scrollTo(index, hint);
 			return;
@@ -198,13 +198,12 @@ public:
 		const QModelIndex& index_ret = index;
 		// Cast returned reference into pointer
 		QModelIndex* sigval1 = const_cast<QModelIndex*>(&index_ret);
-		QAbstractItemView::ScrollHint hint_ret = hint;
-		int sigval2 = static_cast<int>(hint_ret);
+		ScrollHint sigval2 = hint;
 		miqt_exec_callback_QUndoView_scrollTo(this, handle__scrollTo, sigval1, sigval2);
 
 	}
 
-	friend void QUndoView_virtualbase_scrollTo(void* self, QModelIndex* index, int hint);
+	friend void QUndoView_virtualbase_scrollTo(void* self, QModelIndex* index, ScrollHint hint);
 
 	// cgo.Handle value for overwritten implementation
 	intptr_t handle__indexAt = 0;
@@ -605,20 +604,19 @@ public:
 	intptr_t handle__moveCursor = 0;
 
 	// Subclass to allow providing a Go implementation
-	virtual QModelIndex moveCursor(QAbstractItemView::CursorAction cursorAction, Qt::KeyboardModifiers modifiers) override {
+	virtual QModelIndex moveCursor(CursorAction cursorAction, Qt::KeyboardModifiers modifiers) override {
 		if (handle__moveCursor == 0) {
 			return QUndoView::moveCursor(cursorAction, modifiers);
 		}
 
-		QAbstractItemView::CursorAction cursorAction_ret = cursorAction;
-		int sigval1 = static_cast<int>(cursorAction_ret);
+		CursorAction sigval1 = cursorAction;
 		Qt::KeyboardModifiers modifiers_ret = modifiers;
 		int sigval2 = static_cast<int>(modifiers_ret);
 		QModelIndex* callback_return_value = miqt_exec_callback_QUndoView_moveCursor(this, handle__moveCursor, sigval1, sigval2);
 		return *callback_return_value;
 	}
 
-	friend QModelIndex* QUndoView_virtualbase_moveCursor(void* self, int cursorAction, int modifiers);
+	friend QModelIndex* QUndoView_virtualbase_moveCursor(void* self, CursorAction cursorAction, int modifiers);
 
 	// cgo.Handle value for overwritten implementation
 	intptr_t handle__setSelection = 0;
@@ -1072,7 +1070,7 @@ public:
 	intptr_t handle__edit2 = 0;
 
 	// Subclass to allow providing a Go implementation
-	virtual bool edit(const QModelIndex& index, QAbstractItemView::EditTrigger trigger, QEvent* event) override {
+	virtual bool edit(const QModelIndex& index, EditTrigger trigger, QEvent* event) override {
 		if (handle__edit2 == 0) {
 			return QUndoView::edit(index, trigger, event);
 		}
@@ -1080,14 +1078,13 @@ public:
 		const QModelIndex& index_ret = index;
 		// Cast returned reference into pointer
 		QModelIndex* sigval1 = const_cast<QModelIndex*>(&index_ret);
-		QAbstractItemView::EditTrigger trigger_ret = trigger;
-		int sigval2 = static_cast<int>(trigger_ret);
+		EditTrigger sigval2 = trigger;
 		QEvent* sigval3 = event;
 		bool callback_return_value = miqt_exec_callback_QUndoView_edit2(this, handle__edit2, sigval1, sigval2, sigval3);
 		return callback_return_value;
 	}
 
-	friend bool QUndoView_virtualbase_edit2(void* self, QModelIndex* index, int trigger, QEvent* event);
+	friend bool QUndoView_virtualbase_edit2(void* self, QModelIndex* index, EditTrigger trigger, QEvent* event);
 
 	// cgo.Handle value for overwritten implementation
 	intptr_t handle__selectionCommand = 0;
@@ -1633,18 +1630,17 @@ public:
 	intptr_t handle__metric = 0;
 
 	// Subclass to allow providing a Go implementation
-	virtual int metric(QPaintDevice::PaintDeviceMetric param1) const override {
+	virtual int metric(PaintDeviceMetric param1) const override {
 		if (handle__metric == 0) {
 			return QUndoView::metric(param1);
 		}
 
-		QPaintDevice::PaintDeviceMetric param1_ret = param1;
-		int sigval1 = static_cast<int>(param1_ret);
+		PaintDeviceMetric sigval1 = param1;
 		int callback_return_value = miqt_exec_callback_QUndoView_metric(this, handle__metric, sigval1);
 		return static_cast<int>(callback_return_value);
 	}
 
-	friend int QUndoView_virtualbase_metric(const void* self, int param1);
+	friend int QUndoView_virtualbase_metric(const void* self, PaintDeviceMetric param1);
 
 	// cgo.Handle value for overwritten implementation
 	intptr_t handle__initPainter = 0;
@@ -1771,8 +1767,8 @@ public:
 	friend QSize* QUndoView_protectedbase_contentsSize(bool* _dynamic_cast_ok, const void* self);
 	friend QRect* QUndoView_protectedbase_rectForIndex(bool* _dynamic_cast_ok, const void* self, QModelIndex* index);
 	friend void QUndoView_protectedbase_setPositionForIndex(bool* _dynamic_cast_ok, void* self, QPoint* position, QModelIndex* index);
-	friend int QUndoView_protectedbase_state(bool* _dynamic_cast_ok, const void* self);
-	friend void QUndoView_protectedbase_setState(bool* _dynamic_cast_ok, void* self, int state);
+	friend State QUndoView_protectedbase_state(bool* _dynamic_cast_ok, const void* self);
+	friend void QUndoView_protectedbase_setState(bool* _dynamic_cast_ok, void* self, State state);
 	friend void QUndoView_protectedbase_scheduleDelayedItemsLayout(bool* _dynamic_cast_ok, void* self);
 	friend void QUndoView_protectedbase_executeDelayedItemsLayout(bool* _dynamic_cast_ok, void* self);
 	friend void QUndoView_protectedbase_setDirtyRegion(bool* _dynamic_cast_ok, void* self, QRegion* region);
@@ -1781,7 +1777,7 @@ public:
 	friend void QUndoView_protectedbase_startAutoScroll(bool* _dynamic_cast_ok, void* self);
 	friend void QUndoView_protectedbase_stopAutoScroll(bool* _dynamic_cast_ok, void* self);
 	friend void QUndoView_protectedbase_doAutoScroll(bool* _dynamic_cast_ok, void* self);
-	friend int QUndoView_protectedbase_dropIndicatorPosition(bool* _dynamic_cast_ok, const void* self);
+	friend DropIndicatorPosition QUndoView_protectedbase_dropIndicatorPosition(bool* _dynamic_cast_ok, const void* self);
 	friend void QUndoView_protectedbase_setViewportMargins(bool* _dynamic_cast_ok, void* self, int left, int top, int right, int bottom);
 	friend QMargins* QUndoView_protectedbase_viewportMargins(bool* _dynamic_cast_ok, const void* self);
 	friend void QUndoView_protectedbase_drawFrame(bool* _dynamic_cast_ok, void* self, QPainter* param1);
@@ -1794,6 +1790,7 @@ public:
 	friend int QUndoView_protectedbase_senderSignalIndex(bool* _dynamic_cast_ok, const void* self);
 	friend int QUndoView_protectedbase_receivers(bool* _dynamic_cast_ok, const void* self, const char* signal);
 	friend bool QUndoView_protectedbase_isSignalConnected(bool* _dynamic_cast_ok, const void* self, QMetaMethod* signal);
+	friend double QUndoView_protectedbase_getDecodedMetricF(bool* _dynamic_cast_ok, const void* self, PaintDeviceMetric metricA, PaintDeviceMetric metricB);
 };
 
 QUndoView* QUndoView_new(QWidget* parent) {
@@ -1929,8 +1926,8 @@ bool QUndoView_override_virtual_scrollTo(void* self, intptr_t slot) {
 	return true;
 }
 
-void QUndoView_virtualbase_scrollTo(void* self, QModelIndex* index, int hint) {
-	static_cast<MiqtVirtualQUndoView*>(self)->QUndoView::scrollTo(*index, static_cast<MiqtVirtualQUndoView::ScrollHint>(hint));
+void QUndoView_virtualbase_scrollTo(void* self, QModelIndex* index, ScrollHint hint) {
+	static_cast<MiqtVirtualQUndoView*>(self)->QUndoView::scrollTo(*index, hint);
 }
 
 bool QUndoView_override_virtual_indexAt(void* self, intptr_t slot) {
@@ -2257,8 +2254,8 @@ bool QUndoView_override_virtual_moveCursor(void* self, intptr_t slot) {
 	return true;
 }
 
-QModelIndex* QUndoView_virtualbase_moveCursor(void* self, int cursorAction, int modifiers) {
-	return new QModelIndex(static_cast<MiqtVirtualQUndoView*>(self)->QUndoView::moveCursor(static_cast<MiqtVirtualQUndoView::CursorAction>(cursorAction), static_cast<Qt::KeyboardModifiers>(modifiers)));
+QModelIndex* QUndoView_virtualbase_moveCursor(void* self, CursorAction cursorAction, int modifiers) {
+	return new QModelIndex(static_cast<MiqtVirtualQUndoView*>(self)->QUndoView::moveCursor(cursorAction, static_cast<Qt::KeyboardModifiers>(modifiers)));
 }
 
 bool QUndoView_override_virtual_setSelection(void* self, intptr_t slot) {
@@ -2631,8 +2628,8 @@ bool QUndoView_override_virtual_edit2(void* self, intptr_t slot) {
 	return true;
 }
 
-bool QUndoView_virtualbase_edit2(void* self, QModelIndex* index, int trigger, QEvent* event) {
-	return static_cast<MiqtVirtualQUndoView*>(self)->QUndoView::edit(*index, static_cast<MiqtVirtualQUndoView::EditTrigger>(trigger), event);
+bool QUndoView_virtualbase_edit2(void* self, QModelIndex* index, EditTrigger trigger, QEvent* event) {
+	return static_cast<MiqtVirtualQUndoView*>(self)->QUndoView::edit(*index, trigger, event);
 }
 
 bool QUndoView_override_virtual_selectionCommand(void* self, intptr_t slot) {
@@ -3095,8 +3092,8 @@ bool QUndoView_override_virtual_metric(void* self, intptr_t slot) {
 	return true;
 }
 
-int QUndoView_virtualbase_metric(const void* self, int param1) {
-	return static_cast<const MiqtVirtualQUndoView*>(self)->QUndoView::metric(static_cast<MiqtVirtualQUndoView::PaintDeviceMetric>(param1));
+int QUndoView_virtualbase_metric(const void* self, PaintDeviceMetric param1) {
+	return static_cast<const MiqtVirtualQUndoView*>(self)->QUndoView::metric(param1);
 }
 
 bool QUndoView_override_virtual_initPainter(void* self, intptr_t slot) {
@@ -3241,19 +3238,18 @@ void QUndoView_protectedbase_setPositionForIndex(bool* _dynamic_cast_ok, void* s
 	self_cast->setPositionForIndex(*position, *index);
 }
 
-int QUndoView_protectedbase_state(bool* _dynamic_cast_ok, const void* self) {
+State QUndoView_protectedbase_state(bool* _dynamic_cast_ok, const void* self) {
 	MiqtVirtualQUndoView* self_cast = dynamic_cast<MiqtVirtualQUndoView*>( (QUndoView*)(self) );
 	if (self_cast == nullptr) {
 		*_dynamic_cast_ok = false;
-		return (int)(0);
+		return nullptr;
 	}
 
 	*_dynamic_cast_ok = true;
-	MiqtVirtualQUndoView::State _ret = self_cast->state();
-	return static_cast<int>(_ret);
+	return self_cast->state();
 }
 
-void QUndoView_protectedbase_setState(bool* _dynamic_cast_ok, void* self, int state) {
+void QUndoView_protectedbase_setState(bool* _dynamic_cast_ok, void* self, State state) {
 	MiqtVirtualQUndoView* self_cast = dynamic_cast<MiqtVirtualQUndoView*>( (QUndoView*)(self) );
 	if (self_cast == nullptr) {
 		*_dynamic_cast_ok = false;
@@ -3261,7 +3257,7 @@ void QUndoView_protectedbase_setState(bool* _dynamic_cast_ok, void* self, int st
 	}
 
 	*_dynamic_cast_ok = true;
-	self_cast->setState(static_cast<MiqtVirtualQUndoView::State>(state));
+	self_cast->setState(state);
 }
 
 void QUndoView_protectedbase_scheduleDelayedItemsLayout(bool* _dynamic_cast_ok, void* self) {
@@ -3352,16 +3348,15 @@ void QUndoView_protectedbase_doAutoScroll(bool* _dynamic_cast_ok, void* self) {
 	self_cast->doAutoScroll();
 }
 
-int QUndoView_protectedbase_dropIndicatorPosition(bool* _dynamic_cast_ok, const void* self) {
+DropIndicatorPosition QUndoView_protectedbase_dropIndicatorPosition(bool* _dynamic_cast_ok, const void* self) {
 	MiqtVirtualQUndoView* self_cast = dynamic_cast<MiqtVirtualQUndoView*>( (QUndoView*)(self) );
 	if (self_cast == nullptr) {
 		*_dynamic_cast_ok = false;
-		return (int)(0);
+		return nullptr;
 	}
 
 	*_dynamic_cast_ok = true;
-	MiqtVirtualQUndoView::DropIndicatorPosition _ret = self_cast->dropIndicatorPosition();
-	return static_cast<int>(_ret);
+	return self_cast->dropIndicatorPosition();
 }
 
 void QUndoView_protectedbase_setViewportMargins(bool* _dynamic_cast_ok, void* self, int left, int top, int right, int bottom) {
@@ -3494,6 +3489,17 @@ bool QUndoView_protectedbase_isSignalConnected(bool* _dynamic_cast_ok, const voi
 
 	*_dynamic_cast_ok = true;
 	return self_cast->isSignalConnected(*signal);
+}
+
+double QUndoView_protectedbase_getDecodedMetricF(bool* _dynamic_cast_ok, const void* self, PaintDeviceMetric metricA, PaintDeviceMetric metricB) {
+	MiqtVirtualQUndoView* self_cast = dynamic_cast<MiqtVirtualQUndoView*>( (QUndoView*)(self) );
+	if (self_cast == nullptr) {
+		*_dynamic_cast_ok = false;
+		return 0;
+	}
+
+	*_dynamic_cast_ok = true;
+	return self_cast->getDecodedMetricF(metricA, metricB);
 }
 
 void QUndoView_delete(QUndoView* self) {

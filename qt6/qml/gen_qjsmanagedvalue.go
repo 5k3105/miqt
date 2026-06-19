@@ -114,8 +114,8 @@ func (this *QJSManagedValue) SetPrototype(prototype *QJSManagedValue) {
 	C.QJSManagedValue_setPrototype(this.h, prototype.cPointer())
 }
 
-func (this *QJSManagedValue) Type() QJSManagedValue__Type {
-	return (QJSManagedValue__Type)(C.QJSManagedValue_type(this.h))
+func (this *QJSManagedValue) Type() Type {
+	int /* TODO  */
 }
 
 func (this *QJSManagedValue) IsUndefined() bool {

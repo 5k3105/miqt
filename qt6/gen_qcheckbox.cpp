@@ -45,6 +45,7 @@ extern "C" {
 #endif
 
 void miqt_exec_callback_QCheckBox_stateChanged(intptr_t, int);
+void miqt_exec_callback_QCheckBox_checkStateChanged(intptr_t, int);
 QSize* miqt_exec_callback_QCheckBox_sizeHint(const QCheckBox*, intptr_t);
 QSize* miqt_exec_callback_QCheckBox_minimumSizeHint(const QCheckBox*, intptr_t);
 bool miqt_exec_callback_QCheckBox_event(QCheckBox*, intptr_t, QEvent*);
@@ -84,7 +85,7 @@ void miqt_exec_callback_QCheckBox_dropEvent(QCheckBox*, intptr_t, QDropEvent*);
 void miqt_exec_callback_QCheckBox_showEvent(QCheckBox*, intptr_t, QShowEvent*);
 void miqt_exec_callback_QCheckBox_hideEvent(QCheckBox*, intptr_t, QHideEvent*);
 bool miqt_exec_callback_QCheckBox_nativeEvent(QCheckBox*, intptr_t, struct miqt_string, void*, intptr_t*);
-int miqt_exec_callback_QCheckBox_metric(const QCheckBox*, intptr_t, int);
+int miqt_exec_callback_QCheckBox_metric(const QCheckBox*, intptr_t, PaintDeviceMetric);
 void miqt_exec_callback_QCheckBox_initPainter(const QCheckBox*, intptr_t, QPainter*);
 QPaintDevice* miqt_exec_callback_QCheckBox_redirected(const QCheckBox*, intptr_t, QPoint*);
 QPainter* miqt_exec_callback_QCheckBox_sharedPainter(const QCheckBox*, intptr_t);
@@ -771,18 +772,17 @@ public:
 	intptr_t handle__metric = 0;
 
 	// Subclass to allow providing a Go implementation
-	virtual int metric(QPaintDevice::PaintDeviceMetric param1) const override {
+	virtual int metric(PaintDeviceMetric param1) const override {
 		if (handle__metric == 0) {
 			return QCheckBox::metric(param1);
 		}
 
-		QPaintDevice::PaintDeviceMetric param1_ret = param1;
-		int sigval1 = static_cast<int>(param1_ret);
+		PaintDeviceMetric sigval1 = param1;
 		int callback_return_value = miqt_exec_callback_QCheckBox_metric(this, handle__metric, sigval1);
 		return static_cast<int>(callback_return_value);
 	}
 
-	friend int QCheckBox_virtualbase_metric(const void* self, int param1);
+	friend int QCheckBox_virtualbase_metric(const void* self, PaintDeviceMetric param1);
 
 	// cgo.Handle value for overwritten implementation
 	intptr_t handle__initPainter = 0;
@@ -981,6 +981,7 @@ public:
 	friend int QCheckBox_protectedbase_senderSignalIndex(bool* _dynamic_cast_ok, const void* self);
 	friend int QCheckBox_protectedbase_receivers(bool* _dynamic_cast_ok, const void* self, const char* signal);
 	friend bool QCheckBox_protectedbase_isSignalConnected(bool* _dynamic_cast_ok, const void* self, QMetaMethod* signal);
+	friend double QCheckBox_protectedbase_getDecodedMetricF(bool* _dynamic_cast_ok, const void* self, PaintDeviceMetric metricA, PaintDeviceMetric metricB);
 };
 
 QCheckBox* QCheckBox_new(QWidget* parent) {
@@ -1057,6 +1058,18 @@ void QCheckBox_connect_stateChanged(QCheckBox* self, intptr_t slot) {
 	QCheckBox::connect(self, static_cast<void (QCheckBox::*)(int)>(&QCheckBox::stateChanged), self, [=](int param1) {
 		int sigval1 = param1;
 		miqt_exec_callback_QCheckBox_stateChanged(slot, sigval1);
+	});
+}
+
+void QCheckBox_checkStateChanged(QCheckBox* self, int param1) {
+	self->checkStateChanged(static_cast<Qt::CheckState>(param1));
+}
+
+void QCheckBox_connect_checkStateChanged(QCheckBox* self, intptr_t slot) {
+	QCheckBox::connect(self, static_cast<void (QCheckBox::*)(Qt::CheckState)>(&QCheckBox::checkStateChanged), self, [=](Qt::CheckState param1) {
+		Qt::CheckState param1_ret = param1;
+		int sigval1 = static_cast<int>(param1_ret);
+		miqt_exec_callback_QCheckBox_checkStateChanged(slot, sigval1);
 	});
 }
 
@@ -1643,8 +1656,8 @@ bool QCheckBox_override_virtual_metric(void* self, intptr_t slot) {
 	return true;
 }
 
-int QCheckBox_virtualbase_metric(const void* self, int param1) {
-	return static_cast<const MiqtVirtualQCheckBox*>(self)->QCheckBox::metric(static_cast<MiqtVirtualQCheckBox::PaintDeviceMetric>(param1));
+int QCheckBox_virtualbase_metric(const void* self, PaintDeviceMetric param1) {
+	return static_cast<const MiqtVirtualQCheckBox*>(self)->QCheckBox::metric(param1);
 }
 
 bool QCheckBox_override_virtual_initPainter(void* self, intptr_t slot) {
@@ -1898,6 +1911,17 @@ bool QCheckBox_protectedbase_isSignalConnected(bool* _dynamic_cast_ok, const voi
 
 	*_dynamic_cast_ok = true;
 	return self_cast->isSignalConnected(*signal);
+}
+
+double QCheckBox_protectedbase_getDecodedMetricF(bool* _dynamic_cast_ok, const void* self, PaintDeviceMetric metricA, PaintDeviceMetric metricB) {
+	MiqtVirtualQCheckBox* self_cast = dynamic_cast<MiqtVirtualQCheckBox*>( (QCheckBox*)(self) );
+	if (self_cast == nullptr) {
+		*_dynamic_cast_ok = false;
+		return 0;
+	}
+
+	*_dynamic_cast_ok = true;
+	return self_cast->getDecodedMetricF(metricA, metricB);
 }
 
 void QCheckBox_delete(QCheckBox* self) {

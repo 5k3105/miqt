@@ -90,7 +90,7 @@ int QGraphicsVideoItem_type(const QGraphicsVideoItem* self);
 void QGraphicsVideoItem_nativeSizeChanged(QGraphicsVideoItem* self, QSizeF* size);
 void QGraphicsVideoItem_connect_nativeSizeChanged(QGraphicsVideoItem* self, intptr_t slot);
 void QGraphicsVideoItem_timerEvent(QGraphicsVideoItem* self, QTimerEvent* event);
-QVariant* QGraphicsVideoItem_itemChange(QGraphicsVideoItem* self, int change, QVariant* value);
+QVariant* QGraphicsVideoItem_itemChange(QGraphicsVideoItem* self, GraphicsItemChange change, QVariant* value);
 struct miqt_string QGraphicsVideoItem_tr2(const char* s, const char* c);
 struct miqt_string QGraphicsVideoItem_tr3(const char* s, const char* c, int n);
 
@@ -103,7 +103,7 @@ int QGraphicsVideoItem_virtualbase_type(const void* self);
 bool QGraphicsVideoItem_override_virtual_timerEvent(void* self, intptr_t slot);
 void QGraphicsVideoItem_virtualbase_timerEvent(void* self, QTimerEvent* event);
 bool QGraphicsVideoItem_override_virtual_itemChange(void* self, intptr_t slot);
-QVariant* QGraphicsVideoItem_virtualbase_itemChange(void* self, int change, QVariant* value);
+QVariant* QGraphicsVideoItem_virtualbase_itemChange(void* self, GraphicsItemChange change, QVariant* value);
 bool QGraphicsVideoItem_override_virtual_event(void* self, intptr_t slot);
 bool QGraphicsVideoItem_virtualbase_event(void* self, QEvent* ev);
 bool QGraphicsVideoItem_override_virtual_eventFilter(void* self, intptr_t slot);
@@ -173,9 +173,9 @@ void QGraphicsVideoItem_virtualbase_inputMethodEvent(void* self, QInputMethodEve
 bool QGraphicsVideoItem_override_virtual_inputMethodQuery(void* self, intptr_t slot);
 QVariant* QGraphicsVideoItem_virtualbase_inputMethodQuery(const void* self, int query);
 bool QGraphicsVideoItem_override_virtual_supportsExtension(void* self, intptr_t slot);
-bool QGraphicsVideoItem_virtualbase_supportsExtension(const void* self, int extension);
+bool QGraphicsVideoItem_virtualbase_supportsExtension(const void* self, Extension extension);
 bool QGraphicsVideoItem_override_virtual_setExtension(void* self, intptr_t slot);
-void QGraphicsVideoItem_virtualbase_setExtension(void* self, int extension, QVariant* variant);
+void QGraphicsVideoItem_virtualbase_setExtension(void* self, Extension extension, QVariant* variant);
 bool QGraphicsVideoItem_override_virtual_extension(void* self, intptr_t slot);
 QVariant* QGraphicsVideoItem_virtualbase_extension(const void* self, QVariant* variant);
 

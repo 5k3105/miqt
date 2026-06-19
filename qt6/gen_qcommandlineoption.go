@@ -16,8 +16,9 @@ import (
 type QCommandLineOption__Flag int
 
 const (
-	QCommandLineOption__HiddenFromHelp   QCommandLineOption__Flag = 1
-	QCommandLineOption__ShortOptionStyle QCommandLineOption__Flag = 2
+	QCommandLineOption__HiddenFromHelp     QCommandLineOption__Flag = 1
+	QCommandLineOption__ShortOptionStyle   QCommandLineOption__Flag = 2
+	QCommandLineOption__IgnoreOptionsAfter QCommandLineOption__Flag = 4
 )
 
 type QCommandLineOption struct {
@@ -296,12 +297,12 @@ func (this *QCommandLineOption) DefaultValues() []string {
 	return _ret
 }
 
-func (this *QCommandLineOption) Flags() QCommandLineOption__Flag {
-	return (QCommandLineOption__Flag)(C.QCommandLineOption_flags(this.h))
+func (this *QCommandLineOption) Flags() Flags {
+	int /* TODO  */
 }
 
-func (this *QCommandLineOption) SetFlags(aflags QCommandLineOption__Flag) {
-	C.QCommandLineOption_setFlags(this.h, (C.int)(aflags))
+func (this *QCommandLineOption) SetFlags(aflags Flags) {
+	C.QCommandLineOption_setFlags(this.h, aflags)
 }
 
 // Delete this object from C++ memory.

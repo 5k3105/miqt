@@ -1,3 +1,5 @@
+#include <QBasicReadWriteLock>
+#include <QDeadlineTimer>
 #include <QReadLocker>
 #include <QReadWriteLock>
 #include <QWriteLocker>
@@ -12,40 +14,80 @@ extern "C" {
 } /* extern C */
 #endif
 
+QBasicReadWriteLock* QBasicReadWriteLock_new() {
+	return new (std::nothrow) QBasicReadWriteLock();
+}
+
+void QBasicReadWriteLock_lockForRead(QBasicReadWriteLock* self) {
+	self->lockForRead();
+}
+
+bool QBasicReadWriteLock_tryLockForRead(QBasicReadWriteLock* self) {
+	return self->tryLockForRead();
+}
+
+bool QBasicReadWriteLock_tryLockForReadWithTimeout(QBasicReadWriteLock* self, QDeadlineTimer* timeout) {
+	return self->tryLockForRead(*timeout);
+}
+
+void QBasicReadWriteLock_lockForWrite(QBasicReadWriteLock* self) {
+	self->lockForWrite();
+}
+
+bool QBasicReadWriteLock_tryLockForWrite(QBasicReadWriteLock* self) {
+	return self->tryLockForWrite();
+}
+
+bool QBasicReadWriteLock_tryLockForWriteWithTimeout(QBasicReadWriteLock* self, QDeadlineTimer* timeout) {
+	return self->tryLockForWrite(*timeout);
+}
+
+void QBasicReadWriteLock_unlock(QBasicReadWriteLock* self) {
+	self->unlock();
+}
+
+void QBasicReadWriteLock_lock(QBasicReadWriteLock* self) {
+	self->lock();
+}
+
+void QBasicReadWriteLock_lockShared(QBasicReadWriteLock* self) {
+	self->lock_shared();
+}
+
+bool QBasicReadWriteLock_tryLock(QBasicReadWriteLock* self) {
+	return self->try_lock();
+}
+
+bool QBasicReadWriteLock_tryLockShared(QBasicReadWriteLock* self) {
+	return self->try_lock_shared();
+}
+
+void QBasicReadWriteLock_unlockShared(QBasicReadWriteLock* self) {
+	self->unlock_shared();
+}
+
+void QBasicReadWriteLock_delete(QBasicReadWriteLock* self) {
+	delete self;
+}
+
 QReadWriteLock* QReadWriteLock_new() {
 	return new (std::nothrow) QReadWriteLock();
 }
 
-QReadWriteLock* QReadWriteLock_new2(int recursionMode) {
-	return new (std::nothrow) QReadWriteLock(static_cast<QReadWriteLock::RecursionMode>(recursionMode));
+QReadWriteLock* QReadWriteLock_new2(RecursionMode recursionMode) {
+	return new (std::nothrow) QReadWriteLock(recursionMode);
 }
 
-void QReadWriteLock_lockForRead(QReadWriteLock* self) {
-	self->lockForRead();
+void QReadWriteLock_virtbase(QReadWriteLock* src, QBasicReadWriteLock** outptr_QBasicReadWriteLock) {
+	*outptr_QBasicReadWriteLock = static_cast<QBasicReadWriteLock*>(src);
 }
 
-bool QReadWriteLock_tryLockForRead(QReadWriteLock* self) {
-	return self->tryLockForRead();
-}
-
-bool QReadWriteLock_tryLockForReadWithTimeout(QReadWriteLock* self, int timeout) {
+bool QReadWriteLock_tryLockForRead(QReadWriteLock* self, int timeout) {
 	return self->tryLockForRead(static_cast<int>(timeout));
 }
 
-void QReadWriteLock_lockForWrite(QReadWriteLock* self) {
-	self->lockForWrite();
-}
-
-bool QReadWriteLock_tryLockForWrite(QReadWriteLock* self) {
-	return self->tryLockForWrite();
-}
-
-bool QReadWriteLock_tryLockForWriteWithTimeout(QReadWriteLock* self, int timeout) {
+bool QReadWriteLock_tryLockForWrite(QReadWriteLock* self, int timeout) {
 	return self->tryLockForWrite(static_cast<int>(timeout));
-}
-
-void QReadWriteLock_unlock(QReadWriteLock* self) {
-	self->unlock();
 }
 
 void QReadWriteLock_delete(QReadWriteLock* self) {

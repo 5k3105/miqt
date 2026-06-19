@@ -22,8 +22,12 @@ typedef struct QJSNumberCoercion QJSNumberCoercion;
 
 QJSNumberCoercion* QJSNumberCoercion_new(QJSNumberCoercion* param1);
 bool QJSNumberCoercion_isInteger(double d);
+bool QJSNumberCoercion_isArrayIndex(double d);
+bool QJSNumberCoercion_isArrayIndexWithQint64(long long i);
+bool QJSNumberCoercion_isArrayIndexWithQuint64(unsigned long long i);
 int QJSNumberCoercion_toInteger(double d);
 bool QJSNumberCoercion_equals(double lhs, double rhs);
+double QJSNumberCoercion_roundTowards0(double d);
 
 void QJSNumberCoercion_delete(QJSNumberCoercion* self);
 

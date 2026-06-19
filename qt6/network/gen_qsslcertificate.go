@@ -171,8 +171,8 @@ func (this *QSslCertificate) Digest() []byte {
 	return _ret
 }
 
-func (this *QSslCertificate) IssuerInfo(info QSslCertificate__SubjectInfo) []string {
-	var _ma C.struct_miqt_array = C.QSslCertificate_issuerInfo(this.h, (C.int)(info))
+func (this *QSslCertificate) IssuerInfo(info SubjectInfo) []string {
+	var _ma C.struct_miqt_array = C.QSslCertificate_issuerInfo(this.h, info)
 	_ret := make([]string, int(_ma.len))
 	_outCast := (*[0xffff]C.struct_miqt_string)(unsafe.Pointer(_ma.data)) // hey ya
 	for i := 0; i < int(_ma.len); i++ {
@@ -204,8 +204,8 @@ func (this *QSslCertificate) IssuerInfoWithAttribute(attribute []byte) []string 
 	return _ret
 }
 
-func (this *QSslCertificate) SubjectInfo(info QSslCertificate__SubjectInfo) []string {
-	var _ma C.struct_miqt_array = C.QSslCertificate_subjectInfo(this.h, (C.int)(info))
+func (this *QSslCertificate) SubjectInfo(info SubjectInfo) []string {
+	var _ma C.struct_miqt_array = C.QSslCertificate_subjectInfo(this.h, info)
 	_ret := make([]string, int(_ma.len))
 	_outCast := (*[0xffff]C.struct_miqt_string)(unsafe.Pointer(_ma.data)) // hey ya
 	for i := 0; i < int(_ma.len); i++ {
@@ -375,6 +375,22 @@ func QSslCertificate_FromData(data []byte) []QSslCertificate {
 	return _ret
 }
 
+func QSslCertificate_FromFile(filePath string) []QSslCertificate {
+	filePath_ms := C.struct_miqt_string{}
+	filePath_ms.data = C.CString(filePath)
+	filePath_ms.len = C.size_t(len(filePath))
+	defer C.free(unsafe.Pointer(filePath_ms.data))
+	var _ma C.struct_miqt_array = C.QSslCertificate_fromFile(filePath_ms)
+	_ret := make([]QSslCertificate, int(_ma.len))
+	_outCast := (*[0xffff]*C.QSslCertificate)(unsafe.Pointer(_ma.data)) // hey ya
+	for i := 0; i < int(_ma.len); i++ {
+		_lv_goptr := newQSslCertificate(_outCast[i])
+		_lv_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
+		_ret[i] = *_lv_goptr
+	}
+	return _ret
+}
+
 func QSslCertificate_Verify(certificateChain []QSslCertificate) []QSslError {
 	certificateChain_CArray := (*[0xffff]*C.QSslCertificate)(C.malloc(C.size_t(8 * len(certificateChain))))
 	defer C.free(unsafe.Pointer(certificateChain_CArray))
@@ -424,12 +440,12 @@ func QSslCertificate_FromPath2(path string, format QSsl__EncodingFormat) []QSslC
 	return _ret
 }
 
-func QSslCertificate_FromPath3(path string, format QSsl__EncodingFormat, syntax QSslCertificate__PatternSyntax) []QSslCertificate {
+func QSslCertificate_FromPath3(path string, format QSsl__EncodingFormat, syntax PatternSyntax) []QSslCertificate {
 	path_ms := C.struct_miqt_string{}
 	path_ms.data = C.CString(path)
 	path_ms.len = C.size_t(len(path))
 	defer C.free(unsafe.Pointer(path_ms.data))
-	var _ma C.struct_miqt_array = C.QSslCertificate_fromPath3(path_ms, (C.int)(format), (C.int)(syntax))
+	var _ma C.struct_miqt_array = C.QSslCertificate_fromPath3(path_ms, (C.int)(format), syntax)
 	_ret := make([]QSslCertificate, int(_ma.len))
 	_outCast := (*[0xffff]*C.QSslCertificate)(unsafe.Pointer(_ma.data)) // hey ya
 	for i := 0; i < int(_ma.len); i++ {
@@ -461,6 +477,22 @@ func QSslCertificate_FromData2(data []byte, format QSsl__EncodingFormat) []QSslC
 	}
 	data_alias.len = C.size_t(len(data))
 	var _ma C.struct_miqt_array = C.QSslCertificate_fromData2(data_alias, (C.int)(format))
+	_ret := make([]QSslCertificate, int(_ma.len))
+	_outCast := (*[0xffff]*C.QSslCertificate)(unsafe.Pointer(_ma.data)) // hey ya
+	for i := 0; i < int(_ma.len); i++ {
+		_lv_goptr := newQSslCertificate(_outCast[i])
+		_lv_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
+		_ret[i] = *_lv_goptr
+	}
+	return _ret
+}
+
+func QSslCertificate_FromFile2(filePath string, format QSsl__EncodingFormat) []QSslCertificate {
+	filePath_ms := C.struct_miqt_string{}
+	filePath_ms.data = C.CString(filePath)
+	filePath_ms.len = C.size_t(len(filePath))
+	defer C.free(unsafe.Pointer(filePath_ms.data))
+	var _ma C.struct_miqt_array = C.QSslCertificate_fromFile2(filePath_ms, (C.int)(format))
 	_ret := make([]QSslCertificate, int(_ma.len))
 	_outCast := (*[0xffff]*C.QSslCertificate)(unsafe.Pointer(_ma.data)) // hey ya
 	for i := 0; i < int(_ma.len); i++ {

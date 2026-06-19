@@ -99,6 +99,10 @@ func (this *QKeySequenceEdit) KeySequence() *QKeySequence {
 	return _goptr
 }
 
+func (this *QKeySequenceEdit) MaximumSequenceLength() int64 {
+	return (int64)(C.QKeySequenceEdit_maximumSequenceLength(this.h))
+}
+
 func (this *QKeySequenceEdit) SetClearButtonEnabled(enable bool) {
 	C.QKeySequenceEdit_setClearButtonEnabled(this.h, (C.bool)(enable))
 }
@@ -107,12 +111,38 @@ func (this *QKeySequenceEdit) IsClearButtonEnabled() bool {
 	return (bool)(C.QKeySequenceEdit_isClearButtonEnabled(this.h))
 }
 
+func (this *QKeySequenceEdit) SetFinishingKeyCombinations(finishingKeyCombinations []QKeyCombination) {
+	finishingKeyCombinations_CArray := (*[0xffff]*C.QKeyCombination)(C.malloc(C.size_t(8 * len(finishingKeyCombinations))))
+	defer C.free(unsafe.Pointer(finishingKeyCombinations_CArray))
+	for i := range finishingKeyCombinations {
+		finishingKeyCombinations_CArray[i] = finishingKeyCombinations[i].cPointer()
+	}
+	finishingKeyCombinations_ma := C.struct_miqt_array{len: C.size_t(len(finishingKeyCombinations)), data: unsafe.Pointer(finishingKeyCombinations_CArray)}
+	C.QKeySequenceEdit_setFinishingKeyCombinations(this.h, finishingKeyCombinations_ma)
+}
+
+func (this *QKeySequenceEdit) FinishingKeyCombinations() []QKeyCombination {
+	var _ma C.struct_miqt_array = C.QKeySequenceEdit_finishingKeyCombinations(this.h)
+	_ret := make([]QKeyCombination, int(_ma.len))
+	_outCast := (*[0xffff]*C.QKeyCombination)(unsafe.Pointer(_ma.data)) // hey ya
+	for i := 0; i < int(_ma.len); i++ {
+		_lv_goptr := newQKeyCombination(_outCast[i])
+		_lv_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
+		_ret[i] = *_lv_goptr
+	}
+	return _ret
+}
+
 func (this *QKeySequenceEdit) SetKeySequence(keySequence *QKeySequence) {
 	C.QKeySequenceEdit_setKeySequence(this.h, keySequence.cPointer())
 }
 
 func (this *QKeySequenceEdit) Clear() {
 	C.QKeySequenceEdit_clear(this.h)
+}
+
+func (this *QKeySequenceEdit) SetMaximumSequenceLength(count int64) {
+	C.QKeySequenceEdit_setMaximumSequenceLength(this.h, (C.ptrdiff_t)(count))
 }
 
 func (this *QKeySequenceEdit) EditingFinished() {
@@ -287,6 +317,20 @@ func (this *QKeySequenceEdit) IsSignalConnected(signal *QMetaMethod) bool {
 
 	var _dynamic_cast_ok C.bool = false
 	_method_ret := (bool)(C.QKeySequenceEdit_protectedbase_isSignalConnected(&_dynamic_cast_ok, unsafe.Pointer(this.h), signal.cPointer()))
+
+	if !_dynamic_cast_ok {
+		panic("miqt: can only call protected methods for directly constructed types")
+	}
+
+	return _method_ret
+
+}
+
+// GetDecodedMetricF can only be called from a QKeySequenceEdit that was directly constructed.
+func (this *QKeySequenceEdit) GetDecodedMetricF(metricA PaintDeviceMetric, metricB PaintDeviceMetric) float64 {
+
+	var _dynamic_cast_ok C.bool = false
+	_method_ret := (float64)(C.QKeySequenceEdit_protectedbase_getDecodedMetricF(&_dynamic_cast_ok, unsafe.Pointer(this.h), metricA, metricB))
 
 	if !_dynamic_cast_ok {
 		panic("miqt: can only call protected methods for directly constructed types")
@@ -1224,12 +1268,12 @@ func miqt_exec_callback_QKeySequenceEdit_changeEvent(self *C.QKeySequenceEdit, c
 
 }
 
-func (this *QKeySequenceEdit) callVirtualBase_Metric(param1 QPaintDevice__PaintDeviceMetric) int {
+func (this *QKeySequenceEdit) callVirtualBase_Metric(param1 PaintDeviceMetric) int {
 
-	return (int)(C.QKeySequenceEdit_virtualbase_metric(unsafe.Pointer(this.h), (C.int)(param1)))
+	return (int)(C.QKeySequenceEdit_virtualbase_metric(unsafe.Pointer(this.h), param1))
 
 }
-func (this *QKeySequenceEdit) OnMetric(slot func(super func(param1 QPaintDevice__PaintDeviceMetric) int, param1 QPaintDevice__PaintDeviceMetric) int) {
+func (this *QKeySequenceEdit) OnMetric(slot func(super func(param1 PaintDeviceMetric) int, param1 PaintDeviceMetric) int) {
 	ok := C.QKeySequenceEdit_override_virtual_metric(unsafe.Pointer(this.h), C.intptr_t(cgo.NewHandle(slot)))
 	if !ok {
 		panic("miqt: can only override virtual methods for directly constructed types")
@@ -1237,14 +1281,14 @@ func (this *QKeySequenceEdit) OnMetric(slot func(super func(param1 QPaintDevice_
 }
 
 //export miqt_exec_callback_QKeySequenceEdit_metric
-func miqt_exec_callback_QKeySequenceEdit_metric(self *C.QKeySequenceEdit, cb C.intptr_t, param1 C.int) C.int {
-	gofunc, ok := cgo.Handle(cb).Value().(func(super func(param1 QPaintDevice__PaintDeviceMetric) int, param1 QPaintDevice__PaintDeviceMetric) int)
+func miqt_exec_callback_QKeySequenceEdit_metric(self *C.QKeySequenceEdit, cb C.intptr_t, param1 C.PaintDeviceMetric) C.int {
+	gofunc, ok := cgo.Handle(cb).Value().(func(super func(param1 PaintDeviceMetric) int, param1 PaintDeviceMetric) int)
 	if !ok {
 		panic("miqt: callback of non-callback type (heap corruption?)")
 	}
 
 	// Convert all CABI parameters to Go parameters
-	slotval1 := (QPaintDevice__PaintDeviceMetric)(param1)
+	int /* TODO  */
 
 	virtualReturn := gofunc((&QKeySequenceEdit{h: self}).callVirtualBase_Metric, slotval1)
 

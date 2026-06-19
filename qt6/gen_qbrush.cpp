@@ -5,8 +5,6 @@
 #define WORKAROUND_INNER_CLASS_DEFINITION_QGradient__QGradientData
 #include <QImage>
 #include <QLinearGradient>
-#include <QList>
-#include <QPair>
 #include <QPixmap>
 #include <QPointF>
 #include <QRadialGradient>
@@ -77,6 +75,18 @@ void QBrush_operatorAssign(QBrush* self, QBrush* brush) {
 
 void QBrush_swap(QBrush* self, QBrush* other) {
 	self->swap(*other);
+}
+
+void QBrush_operatorAssignWithStyle(QBrush* self, int style) {
+	self->operator=(static_cast<Qt::BrushStyle>(style));
+}
+
+void QBrush_operatorAssignWithColor(QBrush* self, QColor* color) {
+	self->operator=(*color);
+}
+
+void QBrush_operatorAssign2(QBrush* self, int color) {
+	self->operator=(static_cast<Qt::GlobalColor>(color));
 }
 
 QVariant* QBrush_ToQVariant(const QBrush* self) {
@@ -150,6 +160,10 @@ bool QBrush_isDetached(const QBrush* self) {
 	return self->isDetached();
 }
 
+DataPtr* QBrush_dataPtr(QBrush* self) {
+	return &self->data_ptr();
+}
+
 void QBrush_delete(QBrush* self) {
 	delete self;
 }
@@ -158,86 +172,44 @@ QGradient* QGradient_new() {
 	return new (std::nothrow) QGradient();
 }
 
-QGradient* QGradient_new2(int param1) {
-	return new (std::nothrow) QGradient(static_cast<QGradient::Preset>(param1));
+QGradient* QGradient_new2(Preset param1) {
+	return new (std::nothrow) QGradient(param1);
 }
 
 QGradient* QGradient_new3(QGradient* param1) {
 	return new (std::nothrow) QGradient(*param1);
 }
 
-int QGradient_type(const QGradient* self) {
-	QGradient::Type _ret = self->type();
-	return static_cast<int>(_ret);
+Type QGradient_type(const QGradient* self) {
+	return self->type();
 }
 
-void QGradient_setSpread(QGradient* self, int spread) {
-	self->setSpread(static_cast<QGradient::Spread>(spread));
+void QGradient_setSpread(QGradient* self, Spread spread) {
+	self->setSpread(spread);
 }
 
-int QGradient_spread(const QGradient* self) {
-	QGradient::Spread _ret = self->spread();
-	return static_cast<int>(_ret);
+Spread QGradient_spread(const QGradient* self) {
+	return self->spread();
 }
 
 void QGradient_setColorAt(QGradient* self, double pos, QColor* color) {
 	self->setColorAt(static_cast<qreal>(pos), *color);
 }
 
-void QGradient_setStops(QGradient* self, struct miqt_array /* of struct miqt_map  tuple of double and QColor*   */  stops) {
-	QGradientStops stops_QList;
-	stops_QList.reserve(stops.len);
-	struct miqt_map /* tuple of double and QColor* */ * stops_arr = static_cast<struct miqt_map /* tuple of double and QColor* */ *>(stops.data);
-	for(size_t i = 0; i < stops.len; ++i) {
-		QPair<double, QColor> stops_arr_i_QPair;
-		double* stops_arr_i_first_arr = static_cast<double*>(stops_arr[i].keys);
-		QColor** stops_arr_i_second_arr = static_cast<QColor**>(stops_arr[i].values);
-		stops_arr_i_QPair.first = static_cast<double>(stops_arr_i_first_arr[0]);
-		stops_arr_i_QPair.second = *(stops_arr_i_second_arr[0]);
-		stops_QList.push_back(stops_arr_i_QPair);
-	}
-	self->setStops(stops_QList);
+CoordinateMode QGradient_coordinateMode(const QGradient* self) {
+	return self->coordinateMode();
 }
 
-struct miqt_array /* of struct miqt_map  tuple of double and QColor*   */  QGradient_stops(const QGradient* self) {
-	QGradientStops _ret = self->stops();
-	// Convert QList<> from C++ memory to manually-managed C memory
-	struct miqt_map /* tuple of double and QColor* */ * _arr = static_cast<struct miqt_map /* tuple of double and QColor* */ *>(malloc(sizeof(struct miqt_map /* tuple of double and QColor* */ ) * _ret.length()));
-	for (size_t i = 0, e = _ret.length(); i < e; ++i) {
-		QPair<double, QColor> _lv_ret = _ret[i];
-		// Convert QPair<> from C++ memory to manually-managed C memory
-		double* _lv_first_arr = static_cast<double*>(malloc(sizeof(double)));
-		QColor** _lv_second_arr = static_cast<QColor**>(malloc(sizeof(QColor*)));
-		_lv_first_arr[0] = _lv_ret.first;
-		_lv_second_arr[0] = new QColor(_lv_ret.second);
-		struct miqt_map _lv_out;
-		_lv_out.len = 1;
-		_lv_out.keys = static_cast<void*>(_lv_first_arr);
-		_lv_out.values = static_cast<void*>(_lv_second_arr);
-		_arr[i] = _lv_out;
-	}
-	struct miqt_array _out;
-	_out.len = _ret.length();
-	_out.data = static_cast<void*>(_arr);
-	return _out;
+void QGradient_setCoordinateMode(QGradient* self, CoordinateMode mode) {
+	self->setCoordinateMode(mode);
 }
 
-int QGradient_coordinateMode(const QGradient* self) {
-	QGradient::CoordinateMode _ret = self->coordinateMode();
-	return static_cast<int>(_ret);
+InterpolationMode QGradient_interpolationMode(const QGradient* self) {
+	return self->interpolationMode();
 }
 
-void QGradient_setCoordinateMode(QGradient* self, int mode) {
-	self->setCoordinateMode(static_cast<QGradient::CoordinateMode>(mode));
-}
-
-int QGradient_interpolationMode(const QGradient* self) {
-	QGradient::InterpolationMode _ret = self->interpolationMode();
-	return static_cast<int>(_ret);
-}
-
-void QGradient_setInterpolationMode(QGradient* self, int mode) {
-	self->setInterpolationMode(static_cast<QGradient::InterpolationMode>(mode));
+void QGradient_setInterpolationMode(QGradient* self, InterpolationMode mode) {
+	self->setInterpolationMode(mode);
 }
 
 bool QGradient_operatorEqual(const QGradient* self, QGradient* gradient) {
@@ -436,7 +408,7 @@ void QConicalGradient_delete(QConicalGradient* self) {
 	delete self;
 }
 
-QGradient__QGradientData* QGradient__QGradientData_new(QGradient__QGradientData* param1) {
+QGradient__QGradientData* QGradient__QGradientData_new(const QGradientData* param1) {
 	return new (std::nothrow) QGradient::QGradientData(*param1);
 }
 

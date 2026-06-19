@@ -86,7 +86,7 @@ void miqt_exec_callback_QFontDialog_dragLeaveEvent(QFontDialog*, intptr_t, QDrag
 void miqt_exec_callback_QFontDialog_dropEvent(QFontDialog*, intptr_t, QDropEvent*);
 void miqt_exec_callback_QFontDialog_hideEvent(QFontDialog*, intptr_t, QHideEvent*);
 bool miqt_exec_callback_QFontDialog_nativeEvent(QFontDialog*, intptr_t, struct miqt_string, void*, intptr_t*);
-int miqt_exec_callback_QFontDialog_metric(const QFontDialog*, intptr_t, int);
+int miqt_exec_callback_QFontDialog_metric(const QFontDialog*, intptr_t, PaintDeviceMetric);
 void miqt_exec_callback_QFontDialog_initPainter(const QFontDialog*, intptr_t, QPainter*);
 QPaintDevice* miqt_exec_callback_QFontDialog_redirected(const QFontDialog*, intptr_t, QPoint*);
 QPainter* miqt_exec_callback_QFontDialog_sharedPainter(const QFontDialog*, intptr_t);
@@ -786,18 +786,17 @@ public:
 	intptr_t handle__metric = 0;
 
 	// Subclass to allow providing a Go implementation
-	virtual int metric(QPaintDevice::PaintDeviceMetric param1) const override {
+	virtual int metric(PaintDeviceMetric param1) const override {
 		if (handle__metric == 0) {
 			return QFontDialog::metric(param1);
 		}
 
-		QPaintDevice::PaintDeviceMetric param1_ret = param1;
-		int sigval1 = static_cast<int>(param1_ret);
+		PaintDeviceMetric sigval1 = param1;
 		int callback_return_value = miqt_exec_callback_QFontDialog_metric(this, handle__metric, sigval1);
 		return static_cast<int>(callback_return_value);
 	}
 
-	friend int QFontDialog_virtualbase_metric(const void* self, int param1);
+	friend int QFontDialog_virtualbase_metric(const void* self, PaintDeviceMetric param1);
 
 	// cgo.Handle value for overwritten implementation
 	intptr_t handle__initPainter = 0;
@@ -997,6 +996,7 @@ public:
 	friend int QFontDialog_protectedbase_senderSignalIndex(bool* _dynamic_cast_ok, const void* self);
 	friend int QFontDialog_protectedbase_receivers(bool* _dynamic_cast_ok, const void* self, const char* signal);
 	friend bool QFontDialog_protectedbase_isSignalConnected(bool* _dynamic_cast_ok, const void* self, QMetaMethod* signal);
+	friend double QFontDialog_protectedbase_getDecodedMetricF(bool* _dynamic_cast_ok, const void* self, PaintDeviceMetric metricA, PaintDeviceMetric metricB);
 };
 
 QFontDialog* QFontDialog_new(QWidget* parent) {
@@ -1050,21 +1050,20 @@ QFont* QFontDialog_selectedFont(const QFontDialog* self) {
 	return new QFont(self->selectedFont());
 }
 
-void QFontDialog_setOption(QFontDialog* self, int option) {
-	self->setOption(static_cast<QFontDialog::FontDialogOption>(option));
+void QFontDialog_setOption(QFontDialog* self, FontDialogOption option) {
+	self->setOption(option);
 }
 
-bool QFontDialog_testOption(const QFontDialog* self, int option) {
-	return self->testOption(static_cast<QFontDialog::FontDialogOption>(option));
+bool QFontDialog_testOption(const QFontDialog* self, FontDialogOption option) {
+	return self->testOption(option);
 }
 
-void QFontDialog_setOptions(QFontDialog* self, int options) {
-	self->setOptions(static_cast<QFontDialog::FontDialogOptions>(options));
+void QFontDialog_setOptions(QFontDialog* self, FontDialogOptions options) {
+	self->setOptions(options);
 }
 
-int QFontDialog_options(const QFontDialog* self) {
-	QFontDialog::FontDialogOptions _ret = self->options();
-	return static_cast<int>(_ret);
+FontDialogOptions QFontDialog_options(const QFontDialog* self) {
+	return self->options();
 }
 
 void QFontDialog_setVisible(QFontDialog* self, bool visible) {
@@ -1127,8 +1126,8 @@ struct miqt_string QFontDialog_tr3(const char* s, const char* c, int n) {
 	return _ms;
 }
 
-void QFontDialog_setOption2(QFontDialog* self, int option, bool on) {
-	self->setOption(static_cast<QFontDialog::FontDialogOption>(option), on);
+void QFontDialog_setOption2(QFontDialog* self, FontDialogOption option, bool on) {
+	self->setOption(option, on);
 }
 
 QFont* QFontDialog_getFont3(bool* ok, QWidget* parent) {
@@ -1144,9 +1143,9 @@ QFont* QFontDialog_getFont5(bool* ok, QFont* initial, QWidget* parent, struct mi
 	return new QFont(QFontDialog::getFont(ok, *initial, parent, title_QString));
 }
 
-QFont* QFontDialog_getFont6(bool* ok, QFont* initial, QWidget* parent, struct miqt_string title, int options) {
+QFont* QFontDialog_getFont6(bool* ok, QFont* initial, QWidget* parent, struct miqt_string title, FontDialogOptions options) {
 	QString title_QString = QString::fromUtf8(title.data, title.len);
-	return new QFont(QFontDialog::getFont(ok, *initial, parent, title_QString, static_cast<QFontDialog::FontDialogOptions>(options)));
+	return new QFont(QFontDialog::getFont(ok, *initial, parent, title_QString, options));
 }
 
 bool QFontDialog_override_virtual_setVisible(void* self, intptr_t slot) {
@@ -1720,8 +1719,8 @@ bool QFontDialog_override_virtual_metric(void* self, intptr_t slot) {
 	return true;
 }
 
-int QFontDialog_virtualbase_metric(const void* self, int param1) {
-	return static_cast<const MiqtVirtualQFontDialog*>(self)->QFontDialog::metric(static_cast<MiqtVirtualQFontDialog::PaintDeviceMetric>(param1));
+int QFontDialog_virtualbase_metric(const void* self, PaintDeviceMetric param1) {
+	return static_cast<const MiqtVirtualQFontDialog*>(self)->QFontDialog::metric(param1);
 }
 
 bool QFontDialog_override_virtual_initPainter(void* self, intptr_t slot) {
@@ -1986,6 +1985,17 @@ bool QFontDialog_protectedbase_isSignalConnected(bool* _dynamic_cast_ok, const v
 
 	*_dynamic_cast_ok = true;
 	return self_cast->isSignalConnected(*signal);
+}
+
+double QFontDialog_protectedbase_getDecodedMetricF(bool* _dynamic_cast_ok, const void* self, PaintDeviceMetric metricA, PaintDeviceMetric metricB) {
+	MiqtVirtualQFontDialog* self_cast = dynamic_cast<MiqtVirtualQFontDialog*>( (QFontDialog*)(self) );
+	if (self_cast == nullptr) {
+		*_dynamic_cast_ok = false;
+		return 0;
+	}
+
+	*_dynamic_cast_ok = true;
+	return self_cast->getDecodedMetricF(metricA, metricB);
 }
 
 void QFontDialog_delete(QFontDialog* self) {

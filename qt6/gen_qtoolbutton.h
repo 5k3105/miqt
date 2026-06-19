@@ -105,8 +105,8 @@ int QToolButton_arrowType(const QToolButton* self);
 void QToolButton_setArrowType(QToolButton* self, int type);
 void QToolButton_setMenu(QToolButton* self, QMenu* menu);
 QMenu* QToolButton_menu(const QToolButton* self);
-void QToolButton_setPopupMode(QToolButton* self, int mode);
-int QToolButton_popupMode(const QToolButton* self);
+void QToolButton_setPopupMode(QToolButton* self, ToolButtonPopupMode mode);
+ToolButtonPopupMode QToolButton_popupMode(const QToolButton* self);
 QAction* QToolButton_defaultAction(const QToolButton* self);
 void QToolButton_setAutoRaise(QToolButton* self, bool enable);
 bool QToolButton_autoRaise(const QToolButton* self);
@@ -210,7 +210,7 @@ void QToolButton_virtualbase_hideEvent(void* self, QHideEvent* event);
 bool QToolButton_override_virtual_nativeEvent(void* self, intptr_t slot);
 bool QToolButton_virtualbase_nativeEvent(void* self, struct miqt_string eventType, void* message, intptr_t* result);
 bool QToolButton_override_virtual_metric(void* self, intptr_t slot);
-int QToolButton_virtualbase_metric(const void* self, int param1);
+int QToolButton_virtualbase_metric(const void* self, PaintDeviceMetric param1);
 bool QToolButton_override_virtual_initPainter(void* self, intptr_t slot);
 void QToolButton_virtualbase_initPainter(const void* self, QPainter* painter);
 bool QToolButton_override_virtual_redirected(void* self, intptr_t slot);
@@ -243,6 +243,7 @@ QObject* QToolButton_protectedbase_sender(bool* _dynamic_cast_ok, const void* se
 int QToolButton_protectedbase_senderSignalIndex(bool* _dynamic_cast_ok, const void* self);
 int QToolButton_protectedbase_receivers(bool* _dynamic_cast_ok, const void* self, const char* signal);
 bool QToolButton_protectedbase_isSignalConnected(bool* _dynamic_cast_ok, const void* self, QMetaMethod* signal);
+double QToolButton_protectedbase_getDecodedMetricF(bool* _dynamic_cast_ok, const void* self, PaintDeviceMetric metricA, PaintDeviceMetric metricB);
 
 void QToolButton_delete(QToolButton* self);
 

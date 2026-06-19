@@ -262,6 +262,8 @@ QTreeWidgetItem* QTreeWidget_itemBelow(const QTreeWidget* self, QTreeWidgetItem*
 QModelIndex* QTreeWidget_indexFromItem(const QTreeWidget* self, QTreeWidgetItem* item);
 QTreeWidgetItem* QTreeWidget_itemFromIndex(const QTreeWidget* self, QModelIndex* index);
 void QTreeWidget_setSelectionModel(QTreeWidget* self, QItemSelectionModel* selectionModel);
+int QTreeWidget_supportedDragActions(const QTreeWidget* self);
+void QTreeWidget_setSupportedDragActions(QTreeWidget* self, int actions);
 void QTreeWidget_scrollToItem(QTreeWidget* self, QTreeWidgetItem* item);
 void QTreeWidget_expandItem(QTreeWidget* self, QTreeWidgetItem* item);
 void QTreeWidget_collapseItem(QTreeWidget* self, QTreeWidgetItem* item);
@@ -323,7 +325,7 @@ void QTreeWidget_virtualbase_keyboardSearch(void* self, struct miqt_string searc
 bool QTreeWidget_override_virtual_visualRect(void* self, intptr_t slot);
 QRect* QTreeWidget_virtualbase_visualRect(const void* self, QModelIndex* index);
 bool QTreeWidget_override_virtual_scrollTo(void* self, intptr_t slot);
-void QTreeWidget_virtualbase_scrollTo(void* self, QModelIndex* index, int hint);
+void QTreeWidget_virtualbase_scrollTo(void* self, QModelIndex* index, ScrollHint hint);
 bool QTreeWidget_override_virtual_indexAt(void* self, intptr_t slot);
 QModelIndex* QTreeWidget_virtualbase_indexAt(const void* self, QPoint* p);
 bool QTreeWidget_override_virtual_doItemsLayout(void* self, intptr_t slot);
@@ -343,7 +345,7 @@ void QTreeWidget_virtualbase_rowsInserted(void* self, QModelIndex* parent, int s
 bool QTreeWidget_override_virtual_rowsAboutToBeRemoved(void* self, intptr_t slot);
 void QTreeWidget_virtualbase_rowsAboutToBeRemoved(void* self, QModelIndex* parent, int start, int end);
 bool QTreeWidget_override_virtual_moveCursor(void* self, intptr_t slot);
-QModelIndex* QTreeWidget_virtualbase_moveCursor(void* self, int cursorAction, int modifiers);
+QModelIndex* QTreeWidget_virtualbase_moveCursor(void* self, CursorAction cursorAction, int modifiers);
 bool QTreeWidget_override_virtual_horizontalOffset(void* self, intptr_t slot);
 int QTreeWidget_virtualbase_horizontalOffset(const void* self);
 bool QTreeWidget_override_virtual_verticalOffset(void* self, intptr_t slot);
@@ -413,7 +415,7 @@ void QTreeWidget_virtualbase_commitData(void* self, QWidget* editor);
 bool QTreeWidget_override_virtual_editorDestroyed(void* self, intptr_t slot);
 void QTreeWidget_virtualbase_editorDestroyed(void* self, QObject* editor);
 bool QTreeWidget_override_virtual_edit2(void* self, intptr_t slot);
-bool QTreeWidget_virtualbase_edit2(void* self, QModelIndex* index, int trigger, QEvent* event);
+bool QTreeWidget_virtualbase_edit2(void* self, QModelIndex* index, EditTrigger trigger, QEvent* event);
 bool QTreeWidget_override_virtual_selectionCommand(void* self, intptr_t slot);
 int QTreeWidget_virtualbase_selectionCommand(const void* self, QModelIndex* index, QEvent* event);
 bool QTreeWidget_override_virtual_startDrag(void* self, intptr_t slot);
@@ -479,7 +481,7 @@ void QTreeWidget_virtualbase_hideEvent(void* self, QHideEvent* event);
 bool QTreeWidget_override_virtual_nativeEvent(void* self, intptr_t slot);
 bool QTreeWidget_virtualbase_nativeEvent(void* self, struct miqt_string eventType, void* message, intptr_t* result);
 bool QTreeWidget_override_virtual_metric(void* self, intptr_t slot);
-int QTreeWidget_virtualbase_metric(const void* self, int param1);
+int QTreeWidget_virtualbase_metric(const void* self, PaintDeviceMetric param1);
 bool QTreeWidget_override_virtual_initPainter(void* self, intptr_t slot);
 void QTreeWidget_virtualbase_initPainter(const void* self, QPainter* painter);
 bool QTreeWidget_override_virtual_redirected(void* self, intptr_t slot);
@@ -503,8 +505,8 @@ void QTreeWidget_protectedbase_rowsRemoved(bool* _dynamic_cast_ok, void* self, Q
 void QTreeWidget_protectedbase_drawTree(bool* _dynamic_cast_ok, const void* self, QPainter* painter, QRegion* region);
 int QTreeWidget_protectedbase_indexRowSizeHint(bool* _dynamic_cast_ok, const void* self, QModelIndex* index);
 int QTreeWidget_protectedbase_rowHeight(bool* _dynamic_cast_ok, const void* self, QModelIndex* index);
-int QTreeWidget_protectedbase_state(bool* _dynamic_cast_ok, const void* self);
-void QTreeWidget_protectedbase_setState(bool* _dynamic_cast_ok, void* self, int state);
+State QTreeWidget_protectedbase_state(bool* _dynamic_cast_ok, const void* self);
+void QTreeWidget_protectedbase_setState(bool* _dynamic_cast_ok, void* self, State state);
 void QTreeWidget_protectedbase_scheduleDelayedItemsLayout(bool* _dynamic_cast_ok, void* self);
 void QTreeWidget_protectedbase_executeDelayedItemsLayout(bool* _dynamic_cast_ok, void* self);
 void QTreeWidget_protectedbase_setDirtyRegion(bool* _dynamic_cast_ok, void* self, QRegion* region);
@@ -513,7 +515,7 @@ QPoint* QTreeWidget_protectedbase_dirtyRegionOffset(bool* _dynamic_cast_ok, cons
 void QTreeWidget_protectedbase_startAutoScroll(bool* _dynamic_cast_ok, void* self);
 void QTreeWidget_protectedbase_stopAutoScroll(bool* _dynamic_cast_ok, void* self);
 void QTreeWidget_protectedbase_doAutoScroll(bool* _dynamic_cast_ok, void* self);
-int QTreeWidget_protectedbase_dropIndicatorPosition(bool* _dynamic_cast_ok, const void* self);
+DropIndicatorPosition QTreeWidget_protectedbase_dropIndicatorPosition(bool* _dynamic_cast_ok, const void* self);
 void QTreeWidget_protectedbase_setViewportMargins(bool* _dynamic_cast_ok, void* self, int left, int top, int right, int bottom);
 QMargins* QTreeWidget_protectedbase_viewportMargins(bool* _dynamic_cast_ok, const void* self);
 void QTreeWidget_protectedbase_drawFrame(bool* _dynamic_cast_ok, void* self, QPainter* param1);
@@ -526,6 +528,7 @@ QObject* QTreeWidget_protectedbase_sender(bool* _dynamic_cast_ok, const void* se
 int QTreeWidget_protectedbase_senderSignalIndex(bool* _dynamic_cast_ok, const void* self);
 int QTreeWidget_protectedbase_receivers(bool* _dynamic_cast_ok, const void* self, const char* signal);
 bool QTreeWidget_protectedbase_isSignalConnected(bool* _dynamic_cast_ok, const void* self, QMetaMethod* signal);
+double QTreeWidget_protectedbase_getDecodedMetricF(bool* _dynamic_cast_ok, const void* self, PaintDeviceMetric metricA, PaintDeviceMetric metricB);
 
 void QTreeWidget_delete(QTreeWidget* self);
 

@@ -72,17 +72,36 @@ QJSPrimitiveValue* QJSPrimitiveValue_new8(QMetaType* type, const void* value) {
 	return new (std::nothrow) QJSPrimitiveValue(*type, value);
 }
 
-QJSPrimitiveValue* QJSPrimitiveValue_new9(QVariant* variant) {
+QJSPrimitiveValue* QJSPrimitiveValue_new9(QMetaType* type) {
+	return new (std::nothrow) QJSPrimitiveValue(*type);
+}
+
+QJSPrimitiveValue* QJSPrimitiveValue_new10(QVariant* variant) {
 	return new (std::nothrow) QJSPrimitiveValue(*variant);
 }
 
-QJSPrimitiveValue* QJSPrimitiveValue_new10(QJSPrimitiveValue* param1) {
+QJSPrimitiveValue* QJSPrimitiveValue_new11(QJSPrimitiveValue* param1) {
 	return new (std::nothrow) QJSPrimitiveValue(*param1);
 }
 
-uint8_t QJSPrimitiveValue_type(const QJSPrimitiveValue* self) {
-	QJSPrimitiveValue::Type _ret = self->type();
-	return static_cast<uint8_t>(_ret);
+Type QJSPrimitiveValue_type(const QJSPrimitiveValue* self) {
+	return self->type();
+}
+
+QMetaType* QJSPrimitiveValue_metaType(const QJSPrimitiveValue* self) {
+	return new QMetaType(self->metaType());
+}
+
+void* QJSPrimitiveValue_data(QJSPrimitiveValue* self) {
+	return self->data();
+}
+
+const void* QJSPrimitiveValue_data2(const QJSPrimitiveValue* self) {
+	return (const void*) self->data();
+}
+
+const void* QJSPrimitiveValue_constData(const QJSPrimitiveValue* self) {
+	return (const void*) self->constData();
 }
 
 bool QJSPrimitiveValue_toBoolean(const QJSPrimitiveValue* self) {

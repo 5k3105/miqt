@@ -1,3 +1,4 @@
+#include <QAnyStringView>
 #include <QByteArray>
 #include <QChildEvent>
 #include <QEvent>
@@ -40,9 +41,11 @@ public:
 
 	MiqtVirtualQQmlApplicationEngine(): QQmlApplicationEngine() {}
 	MiqtVirtualQQmlApplicationEngine(const QUrl& url): QQmlApplicationEngine(url) {}
+	MiqtVirtualQQmlApplicationEngine(QAnyStringView uri, QAnyStringView typeName): QQmlApplicationEngine(uri, typeName) {}
 	MiqtVirtualQQmlApplicationEngine(const QString& filePath): QQmlApplicationEngine(filePath) {}
 	MiqtVirtualQQmlApplicationEngine(QObject* parent): QQmlApplicationEngine(parent) {}
 	MiqtVirtualQQmlApplicationEngine(const QUrl& url, QObject* parent): QQmlApplicationEngine(url, parent) {}
+	MiqtVirtualQQmlApplicationEngine(QAnyStringView uri, QAnyStringView typeName, QObject* parent): QQmlApplicationEngine(uri, typeName, parent) {}
 	MiqtVirtualQQmlApplicationEngine(const QString& filePath, QObject* parent): QQmlApplicationEngine(filePath, parent) {}
 
 	virtual ~MiqtVirtualQQmlApplicationEngine() override = default;
@@ -184,20 +187,28 @@ QQmlApplicationEngine* QQmlApplicationEngine_new2(QUrl* url) {
 	return new (std::nothrow) MiqtVirtualQQmlApplicationEngine(*url);
 }
 
-QQmlApplicationEngine* QQmlApplicationEngine_new3(struct miqt_string filePath) {
+QQmlApplicationEngine* QQmlApplicationEngine_new3(QAnyStringView* uri, QAnyStringView* typeName) {
+	return new (std::nothrow) MiqtVirtualQQmlApplicationEngine(*uri, *typeName);
+}
+
+QQmlApplicationEngine* QQmlApplicationEngine_new4(struct miqt_string filePath) {
 	QString filePath_QString = QString::fromUtf8(filePath.data, filePath.len);
 	return new (std::nothrow) MiqtVirtualQQmlApplicationEngine(filePath_QString);
 }
 
-QQmlApplicationEngine* QQmlApplicationEngine_new4(QObject* parent) {
+QQmlApplicationEngine* QQmlApplicationEngine_new5(QObject* parent) {
 	return new (std::nothrow) MiqtVirtualQQmlApplicationEngine(parent);
 }
 
-QQmlApplicationEngine* QQmlApplicationEngine_new5(QUrl* url, QObject* parent) {
+QQmlApplicationEngine* QQmlApplicationEngine_new6(QUrl* url, QObject* parent) {
 	return new (std::nothrow) MiqtVirtualQQmlApplicationEngine(*url, parent);
 }
 
-QQmlApplicationEngine* QQmlApplicationEngine_new6(struct miqt_string filePath, QObject* parent) {
+QQmlApplicationEngine* QQmlApplicationEngine_new7(QAnyStringView* uri, QAnyStringView* typeName, QObject* parent) {
+	return new (std::nothrow) MiqtVirtualQQmlApplicationEngine(*uri, *typeName, parent);
+}
+
+QQmlApplicationEngine* QQmlApplicationEngine_new8(struct miqt_string filePath, QObject* parent) {
 	QString filePath_QString = QString::fromUtf8(filePath.data, filePath.len);
 	return new (std::nothrow) MiqtVirtualQQmlApplicationEngine(filePath_QString, parent);
 }
@@ -245,6 +256,10 @@ void QQmlApplicationEngine_load(QQmlApplicationEngine* self, QUrl* url) {
 void QQmlApplicationEngine_loadWithFilePath(QQmlApplicationEngine* self, struct miqt_string filePath) {
 	QString filePath_QString = QString::fromUtf8(filePath.data, filePath.len);
 	self->load(filePath_QString);
+}
+
+void QQmlApplicationEngine_loadFromModule(QQmlApplicationEngine* self, QAnyStringView* uri, QAnyStringView* typeName) {
+	self->loadFromModule(*uri, *typeName);
 }
 
 void QQmlApplicationEngine_setInitialProperties(QQmlApplicationEngine* self, struct miqt_map /* of struct miqt_string to QVariant* */  initialProperties) {

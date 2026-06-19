@@ -100,33 +100,33 @@ func NewQSettings(organization string) *QSettings {
 }
 
 // NewQSettings2 constructs a new QSettings object.
-func NewQSettings2(scope QSettings__Scope, organization string) *QSettings {
+func NewQSettings2(scope Scope, organization string) *QSettings {
 	organization_ms := C.struct_miqt_string{}
 	organization_ms.data = C.CString(organization)
 	organization_ms.len = C.size_t(len(organization))
 	defer C.free(unsafe.Pointer(organization_ms.data))
 
-	return newQSettings(C.QSettings_new2((C.int)(scope), organization_ms))
+	return newQSettings(C.QSettings_new2(scope, organization_ms))
 }
 
 // NewQSettings3 constructs a new QSettings object.
-func NewQSettings3(format QSettings__Format, scope QSettings__Scope, organization string) *QSettings {
+func NewQSettings3(format Format, scope Scope, organization string) *QSettings {
 	organization_ms := C.struct_miqt_string{}
 	organization_ms.data = C.CString(organization)
 	organization_ms.len = C.size_t(len(organization))
 	defer C.free(unsafe.Pointer(organization_ms.data))
 
-	return newQSettings(C.QSettings_new3((C.int)(format), (C.int)(scope), organization_ms))
+	return newQSettings(C.QSettings_new3(format, scope, organization_ms))
 }
 
 // NewQSettings4 constructs a new QSettings object.
-func NewQSettings4(fileName string, format QSettings__Format) *QSettings {
+func NewQSettings4(fileName string, format Format) *QSettings {
 	fileName_ms := C.struct_miqt_string{}
 	fileName_ms.data = C.CString(fileName)
 	fileName_ms.len = C.size_t(len(fileName))
 	defer C.free(unsafe.Pointer(fileName_ms.data))
 
-	return newQSettings(C.QSettings_new4(fileName_ms, (C.int)(format)))
+	return newQSettings(C.QSettings_new4(fileName_ms, format))
 }
 
 // NewQSettings5 constructs a new QSettings object.
@@ -136,9 +136,9 @@ func NewQSettings5() *QSettings {
 }
 
 // NewQSettings6 constructs a new QSettings object.
-func NewQSettings6(scope QSettings__Scope) *QSettings {
+func NewQSettings6(scope Scope) *QSettings {
 
-	return newQSettings(C.QSettings_new6((C.int)(scope)))
+	return newQSettings(C.QSettings_new6(scope))
 }
 
 // NewQSettings7 constructs a new QSettings object.
@@ -170,7 +170,7 @@ func NewQSettings8(organization string, application string, parent *QObject) *QS
 }
 
 // NewQSettings9 constructs a new QSettings object.
-func NewQSettings9(scope QSettings__Scope, organization string, application string) *QSettings {
+func NewQSettings9(scope Scope, organization string, application string) *QSettings {
 	organization_ms := C.struct_miqt_string{}
 	organization_ms.data = C.CString(organization)
 	organization_ms.len = C.size_t(len(organization))
@@ -180,11 +180,11 @@ func NewQSettings9(scope QSettings__Scope, organization string, application stri
 	application_ms.len = C.size_t(len(application))
 	defer C.free(unsafe.Pointer(application_ms.data))
 
-	return newQSettings(C.QSettings_new9((C.int)(scope), organization_ms, application_ms))
+	return newQSettings(C.QSettings_new9(scope, organization_ms, application_ms))
 }
 
 // NewQSettings10 constructs a new QSettings object.
-func NewQSettings10(scope QSettings__Scope, organization string, application string, parent *QObject) *QSettings {
+func NewQSettings10(scope Scope, organization string, application string, parent *QObject) *QSettings {
 	organization_ms := C.struct_miqt_string{}
 	organization_ms.data = C.CString(organization)
 	organization_ms.len = C.size_t(len(organization))
@@ -194,11 +194,11 @@ func NewQSettings10(scope QSettings__Scope, organization string, application str
 	application_ms.len = C.size_t(len(application))
 	defer C.free(unsafe.Pointer(application_ms.data))
 
-	return newQSettings(C.QSettings_new10((C.int)(scope), organization_ms, application_ms, parent.cPointer()))
+	return newQSettings(C.QSettings_new10(scope, organization_ms, application_ms, parent.cPointer()))
 }
 
 // NewQSettings11 constructs a new QSettings object.
-func NewQSettings11(format QSettings__Format, scope QSettings__Scope, organization string, application string) *QSettings {
+func NewQSettings11(format Format, scope Scope, organization string, application string) *QSettings {
 	organization_ms := C.struct_miqt_string{}
 	organization_ms.data = C.CString(organization)
 	organization_ms.len = C.size_t(len(organization))
@@ -208,11 +208,11 @@ func NewQSettings11(format QSettings__Format, scope QSettings__Scope, organizati
 	application_ms.len = C.size_t(len(application))
 	defer C.free(unsafe.Pointer(application_ms.data))
 
-	return newQSettings(C.QSettings_new11((C.int)(format), (C.int)(scope), organization_ms, application_ms))
+	return newQSettings(C.QSettings_new11(format, scope, organization_ms, application_ms))
 }
 
 // NewQSettings12 constructs a new QSettings object.
-func NewQSettings12(format QSettings__Format, scope QSettings__Scope, organization string, application string, parent *QObject) *QSettings {
+func NewQSettings12(format Format, scope Scope, organization string, application string, parent *QObject) *QSettings {
 	organization_ms := C.struct_miqt_string{}
 	organization_ms.data = C.CString(organization)
 	organization_ms.len = C.size_t(len(organization))
@@ -222,17 +222,17 @@ func NewQSettings12(format QSettings__Format, scope QSettings__Scope, organizati
 	application_ms.len = C.size_t(len(application))
 	defer C.free(unsafe.Pointer(application_ms.data))
 
-	return newQSettings(C.QSettings_new12((C.int)(format), (C.int)(scope), organization_ms, application_ms, parent.cPointer()))
+	return newQSettings(C.QSettings_new12(format, scope, organization_ms, application_ms, parent.cPointer()))
 }
 
 // NewQSettings13 constructs a new QSettings object.
-func NewQSettings13(fileName string, format QSettings__Format, parent *QObject) *QSettings {
+func NewQSettings13(fileName string, format Format, parent *QObject) *QSettings {
 	fileName_ms := C.struct_miqt_string{}
 	fileName_ms.data = C.CString(fileName)
 	fileName_ms.len = C.size_t(len(fileName))
 	defer C.free(unsafe.Pointer(fileName_ms.data))
 
-	return newQSettings(C.QSettings_new13(fileName_ms, (C.int)(format), parent.cPointer()))
+	return newQSettings(C.QSettings_new13(fileName_ms, format, parent.cPointer()))
 }
 
 // NewQSettings14 constructs a new QSettings object.
@@ -242,9 +242,9 @@ func NewQSettings14(parent *QObject) *QSettings {
 }
 
 // NewQSettings15 constructs a new QSettings object.
-func NewQSettings15(scope QSettings__Scope, parent *QObject) *QSettings {
+func NewQSettings15(scope Scope, parent *QObject) *QSettings {
 
-	return newQSettings(C.QSettings_new15((C.int)(scope), parent.cPointer()))
+	return newQSettings(C.QSettings_new15(scope, parent.cPointer()))
 }
 
 func (this *QSettings) MetaObject() *QMetaObject {
@@ -274,8 +274,8 @@ func (this *QSettings) Sync() {
 	C.QSettings_sync(this.h)
 }
 
-func (this *QSettings) Status() QSettings__Status {
-	return (QSettings__Status)(C.QSettings_status(this.h))
+func (this *QSettings) Status() Status {
+	int /* TODO  */
 }
 
 func (this *QSettings) IsAtomicSyncRequired() bool {
@@ -399,12 +399,12 @@ func (this *QSettings) FileName() string {
 	return _ret
 }
 
-func (this *QSettings) Format() QSettings__Format {
-	return (QSettings__Format)(C.QSettings_format(this.h))
+func (this *QSettings) Format() Format {
+	int /* TODO  */
 }
 
-func (this *QSettings) Scope() QSettings__Scope {
-	return (QSettings__Scope)(C.QSettings_scope(this.h))
+func (this *QSettings) Scope() Scope {
+	int /* TODO  */
 }
 
 func (this *QSettings) OrganizationName() string {
@@ -421,20 +421,28 @@ func (this *QSettings) ApplicationName() string {
 	return _ret
 }
 
-func QSettings_SetDefaultFormat(format QSettings__Format) {
-	C.QSettings_setDefaultFormat((C.int)(format))
+func QSettings_SetDefaultFormat(format Format) {
+	C.QSettings_setDefaultFormat(format)
 }
 
-func QSettings_DefaultFormat() QSettings__Format {
-	return (QSettings__Format)(C.QSettings_defaultFormat())
+func QSettings_DefaultFormat() Format {
+	int /* TODO  */
 }
 
-func QSettings_SetPath(format QSettings__Format, scope QSettings__Scope, path string) {
+func QSettings_SetPath(format Format, scope Scope, path string) {
 	path_ms := C.struct_miqt_string{}
 	path_ms.data = C.CString(path)
 	path_ms.len = C.size_t(len(path))
 	defer C.free(unsafe.Pointer(path_ms.data))
-	C.QSettings_setPath((C.int)(format), (C.int)(scope), path_ms)
+	C.QSettings_setPath(format, scope, path_ms)
+}
+
+func QSettings_RegisterFormat(extension string, readFunc ReadFunc, writeFunc WriteFunc) Format {
+	extension_ms := C.struct_miqt_string{}
+	extension_ms.data = C.CString(extension)
+	extension_ms.len = C.size_t(len(extension))
+	defer C.free(unsafe.Pointer(extension_ms.data))
+	int /* TODO  */
 }
 
 func QSettings_Tr2(s string, c string) string {
@@ -461,6 +469,14 @@ func QSettings_Tr3(s string, c string, n int) string {
 
 func (this *QSettings) BeginWriteArray2(prefix QAnyStringView, size int) {
 	C.QSettings_beginWriteArray2(this.h, prefix.cPointer(), (C.int)(size))
+}
+
+func QSettings_RegisterFormat2(extension string, readFunc ReadFunc, writeFunc WriteFunc, caseSensitivity CaseSensitivity) Format {
+	extension_ms := C.struct_miqt_string{}
+	extension_ms.data = C.CString(extension)
+	extension_ms.len = C.size_t(len(extension))
+	defer C.free(unsafe.Pointer(extension_ms.data))
+	int /* TODO  */
 }
 
 // Sender can only be called from a QSettings that was directly constructed.

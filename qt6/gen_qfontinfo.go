@@ -127,6 +127,18 @@ func (this *QFontInfo) StyleHint() QFont__StyleHint {
 	return (QFont__StyleHint)(C.QFontInfo_styleHint(this.h))
 }
 
+func (this *QFontInfo) VariableAxes() []QFontVariableAxis {
+	var _ma C.struct_miqt_array = C.QFontInfo_variableAxes(this.h)
+	_ret := make([]QFontVariableAxis, int(_ma.len))
+	_outCast := (*[0xffff]*C.QFontVariableAxis)(unsafe.Pointer(_ma.data)) // hey ya
+	for i := 0; i < int(_ma.len); i++ {
+		_lv_goptr := newQFontVariableAxis(_outCast[i])
+		_lv_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
+		_ret[i] = *_lv_goptr
+	}
+	return _ret
+}
+
 func (this *QFontInfo) LegacyWeight() int {
 	return (int)(C.QFontInfo_legacyWeight(this.h))
 }

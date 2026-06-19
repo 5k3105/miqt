@@ -16,6 +16,7 @@ extern "C" {
 
 #ifdef __cplusplus
 class QChildEvent;
+class QDeadlineTimer;
 class QEvent;
 class QEventLoop;
 class QEventLoopLocker;
@@ -26,6 +27,7 @@ class QThread;
 class QTimerEvent;
 #else
 typedef struct QChildEvent QChildEvent;
+typedef struct QDeadlineTimer QDeadlineTimer;
 typedef struct QEvent QEvent;
 typedef struct QEventLoop QEventLoop;
 typedef struct QEventLoopLocker QEventLoopLocker;
@@ -43,7 +45,8 @@ QMetaObject* QEventLoop_metaObject(const QEventLoop* self);
 void* QEventLoop_metacast(QEventLoop* self, const char* param1);
 struct miqt_string QEventLoop_tr(const char* s);
 bool QEventLoop_processEvents(QEventLoop* self);
-void QEventLoop_processEvents2(QEventLoop* self, int flags, int maximumTime);
+void QEventLoop_processEvents2(QEventLoop* self, ProcessEventsFlags flags, int maximumTime);
+void QEventLoop_processEvents3(QEventLoop* self, ProcessEventsFlags flags, QDeadlineTimer* deadline);
 int QEventLoop_exec(QEventLoop* self);
 bool QEventLoop_isRunning(const QEventLoop* self);
 void QEventLoop_wakeUp(QEventLoop* self);
@@ -52,8 +55,8 @@ void QEventLoop_exit(QEventLoop* self);
 void QEventLoop_quit(QEventLoop* self);
 struct miqt_string QEventLoop_tr2(const char* s, const char* c);
 struct miqt_string QEventLoop_tr3(const char* s, const char* c, int n);
-bool QEventLoop_processEventsWithFlags(QEventLoop* self, int flags);
-int QEventLoop_execWithFlags(QEventLoop* self, int flags);
+bool QEventLoop_processEventsWithFlags(QEventLoop* self, ProcessEventsFlags flags);
+int QEventLoop_execWithFlags(QEventLoop* self, ProcessEventsFlags flags);
 void QEventLoop_exitWithReturnCode(QEventLoop* self, int returnCode);
 
 bool QEventLoop_override_virtual_event(void* self, intptr_t slot);
@@ -81,6 +84,8 @@ void QEventLoop_delete(QEventLoop* self);
 QEventLoopLocker* QEventLoopLocker_new();
 QEventLoopLocker* QEventLoopLocker_new2(QEventLoop* loop);
 QEventLoopLocker* QEventLoopLocker_new3(QThread* thread);
+void QEventLoopLocker_swap(QEventLoopLocker* self, QEventLoopLocker* other);
+
 void QEventLoopLocker_delete(QEventLoopLocker* self);
 
 #ifdef __cplusplus

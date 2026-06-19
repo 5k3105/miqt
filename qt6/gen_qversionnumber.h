@@ -16,16 +16,14 @@ extern "C" {
 
 #ifdef __cplusplus
 class QAnyStringView;
-class QTypeRevision;
 class QVersionNumber;
 #else
 typedef struct QAnyStringView QAnyStringView;
-typedef struct QTypeRevision QTypeRevision;
 typedef struct QVersionNumber QVersionNumber;
 #endif
 
 QVersionNumber* QVersionNumber_new();
-QVersionNumber* QVersionNumber_new2(struct miqt_array /* of int */  seg);
+QVersionNumber* QVersionNumber_new2(QSpan<const int> args);
 QVersionNumber* QVersionNumber_new3(int maj);
 QVersionNumber* QVersionNumber_new4(int maj, int min);
 QVersionNumber* QVersionNumber_new5(int maj, int min, int mic);
@@ -39,6 +37,16 @@ QVersionNumber* QVersionNumber_normalized(const QVersionNumber* self);
 struct miqt_array /* of int */  QVersionNumber_segments(const QVersionNumber* self);
 int QVersionNumber_segmentAt(const QVersionNumber* self, ptrdiff_t index);
 ptrdiff_t QVersionNumber_segmentCount(const QVersionNumber* self);
+const_iterator QVersionNumber_begin(const QVersionNumber* self);
+const_iterator QVersionNumber_end(const QVersionNumber* self);
+const_iterator QVersionNumber_cbegin(const QVersionNumber* self);
+const_iterator QVersionNumber_cend(const QVersionNumber* self);
+const_reverse_iterator QVersionNumber_rbegin(const QVersionNumber* self);
+const_reverse_iterator QVersionNumber_rend(const QVersionNumber* self);
+const_reverse_iterator QVersionNumber_crbegin(const QVersionNumber* self);
+const_reverse_iterator QVersionNumber_crend(const QVersionNumber* self);
+const_iterator QVersionNumber_constBegin(const QVersionNumber* self);
+const_iterator QVersionNumber_constEnd(const QVersionNumber* self);
 bool QVersionNumber_isPrefixOf(const QVersionNumber* self, QVersionNumber* other);
 int QVersionNumber_compare(QVersionNumber* v1, QVersionNumber* v2);
 QVersionNumber* QVersionNumber_commonPrefix(QVersionNumber* v1, QVersionNumber* v2);
@@ -48,17 +56,6 @@ void QVersionNumber_operatorAssign(QVersionNumber* self, QVersionNumber* param1)
 QVersionNumber* QVersionNumber_fromString2(QAnyStringView* string, ptrdiff_t* suffixIndex);
 
 void QVersionNumber_delete(QVersionNumber* self);
-
-QTypeRevision* QTypeRevision_new();
-QTypeRevision* QTypeRevision_new2(QTypeRevision* param1);
-QTypeRevision* QTypeRevision_zero();
-bool QTypeRevision_hasMajorVersion(const QTypeRevision* self);
-unsigned char QTypeRevision_majorVersion(const QTypeRevision* self);
-bool QTypeRevision_hasMinorVersion(const QTypeRevision* self);
-unsigned char QTypeRevision_minorVersion(const QTypeRevision* self);
-bool QTypeRevision_isValid(const QTypeRevision* self);
-
-void QTypeRevision_delete(QTypeRevision* self);
 
 #ifdef __cplusplus
 } /* extern C */

@@ -58,15 +58,15 @@ func UnsafeNewQRubberBand(h unsafe.Pointer) *QRubberBand {
 }
 
 // NewQRubberBand constructs a new QRubberBand object.
-func NewQRubberBand(param1 QRubberBand__Shape) *QRubberBand {
+func NewQRubberBand(param1 Shape) *QRubberBand {
 
-	return newQRubberBand(C.QRubberBand_new((C.int)(param1)))
+	return newQRubberBand(C.QRubberBand_new(param1))
 }
 
 // NewQRubberBand2 constructs a new QRubberBand object.
-func NewQRubberBand2(param1 QRubberBand__Shape, param2 *QWidget) *QRubberBand {
+func NewQRubberBand2(param1 Shape, param2 *QWidget) *QRubberBand {
 
-	return newQRubberBand(C.QRubberBand_new2((C.int)(param1), param2.cPointer()))
+	return newQRubberBand(C.QRubberBand_new2(param1, param2.cPointer()))
 }
 
 func (this *QRubberBand) MetaObject() *QMetaObject {
@@ -88,8 +88,8 @@ func QRubberBand_Tr(s string) string {
 	return _ret
 }
 
-func (this *QRubberBand) Shape() QRubberBand__Shape {
-	return (QRubberBand__Shape)(C.QRubberBand_shape(this.h))
+func (this *QRubberBand) Shape() Shape {
+	int /* TODO  */
 }
 
 func (this *QRubberBand) SetGeometry(r *QRect) {
@@ -251,6 +251,20 @@ func (this *QRubberBand) IsSignalConnected(signal *QMetaMethod) bool {
 
 	var _dynamic_cast_ok C.bool = false
 	_method_ret := (bool)(C.QRubberBand_protectedbase_isSignalConnected(&_dynamic_cast_ok, unsafe.Pointer(this.h), signal.cPointer()))
+
+	if !_dynamic_cast_ok {
+		panic("miqt: can only call protected methods for directly constructed types")
+	}
+
+	return _method_ret
+
+}
+
+// GetDecodedMetricF can only be called from a QRubberBand that was directly constructed.
+func (this *QRubberBand) GetDecodedMetricF(metricA PaintDeviceMetric, metricB PaintDeviceMetric) float64 {
+
+	var _dynamic_cast_ok C.bool = false
+	_method_ret := (float64)(C.QRubberBand_protectedbase_getDecodedMetricF(&_dynamic_cast_ok, unsafe.Pointer(this.h), metricA, metricB))
 
 	if !_dynamic_cast_ok {
 		panic("miqt: can only call protected methods for directly constructed types")
@@ -1188,12 +1202,12 @@ func miqt_exec_callback_QRubberBand_nativeEvent(self *C.QRubberBand, cb C.intptr
 
 }
 
-func (this *QRubberBand) callVirtualBase_Metric(param1 QPaintDevice__PaintDeviceMetric) int {
+func (this *QRubberBand) callVirtualBase_Metric(param1 PaintDeviceMetric) int {
 
-	return (int)(C.QRubberBand_virtualbase_metric(unsafe.Pointer(this.h), (C.int)(param1)))
+	return (int)(C.QRubberBand_virtualbase_metric(unsafe.Pointer(this.h), param1))
 
 }
-func (this *QRubberBand) OnMetric(slot func(super func(param1 QPaintDevice__PaintDeviceMetric) int, param1 QPaintDevice__PaintDeviceMetric) int) {
+func (this *QRubberBand) OnMetric(slot func(super func(param1 PaintDeviceMetric) int, param1 PaintDeviceMetric) int) {
 	ok := C.QRubberBand_override_virtual_metric(unsafe.Pointer(this.h), C.intptr_t(cgo.NewHandle(slot)))
 	if !ok {
 		panic("miqt: can only override virtual methods for directly constructed types")
@@ -1201,14 +1215,14 @@ func (this *QRubberBand) OnMetric(slot func(super func(param1 QPaintDevice__Pain
 }
 
 //export miqt_exec_callback_QRubberBand_metric
-func miqt_exec_callback_QRubberBand_metric(self *C.QRubberBand, cb C.intptr_t, param1 C.int) C.int {
-	gofunc, ok := cgo.Handle(cb).Value().(func(super func(param1 QPaintDevice__PaintDeviceMetric) int, param1 QPaintDevice__PaintDeviceMetric) int)
+func miqt_exec_callback_QRubberBand_metric(self *C.QRubberBand, cb C.intptr_t, param1 C.PaintDeviceMetric) C.int {
+	gofunc, ok := cgo.Handle(cb).Value().(func(super func(param1 PaintDeviceMetric) int, param1 PaintDeviceMetric) int)
 	if !ok {
 		panic("miqt: callback of non-callback type (heap corruption?)")
 	}
 
 	// Convert all CABI parameters to Go parameters
-	slotval1 := (QPaintDevice__PaintDeviceMetric)(param1)
+	int /* TODO  */
 
 	virtualReturn := gofunc((&QRubberBand{h: self}).callVirtualBase_Metric, slotval1)
 

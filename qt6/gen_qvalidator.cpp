@@ -21,7 +21,7 @@ extern "C" {
 #endif
 
 void miqt_exec_callback_QValidator_changed(intptr_t);
-int miqt_exec_callback_QValidator_validate(const QValidator*, intptr_t, struct miqt_string, int*);
+State miqt_exec_callback_QValidator_validate(const QValidator*, intptr_t, struct miqt_string, int*);
 void miqt_exec_callback_QValidator_fixup(const QValidator*, intptr_t, struct miqt_string);
 bool miqt_exec_callback_QValidator_event(QValidator*, intptr_t, QEvent*);
 bool miqt_exec_callback_QValidator_eventFilter(QValidator*, intptr_t, QObject*, QEvent*);
@@ -80,9 +80,9 @@ public:
 	intptr_t handle__validate = 0;
 
 	// Subclass to allow providing a Go implementation
-	virtual QValidator::State validate(QString& param1, int& param2) const override {
+	virtual State validate(QString& param1, int& param2) const override {
 		if (handle__validate == 0) {
-			return (QValidator::State)(0); // Pure virtual, there is no base we can call
+			return State(); // Pure virtual, there is no base we can call
 		}
 
 		QString param1_ret = param1;
@@ -94,8 +94,8 @@ public:
 		memcpy(param1_ms.data, param1_b.data(), param1_ms.len);
 		struct miqt_string sigval1 = param1_ms;
 		int* sigval2 = &param2;
-		int callback_return_value = miqt_exec_callback_QValidator_validate(this, handle__validate, sigval1, sigval2);
-		return static_cast<QValidator::State>(callback_return_value);
+		State callback_return_value = miqt_exec_callback_QValidator_validate(this, handle__validate, sigval1, sigval2);
+		return callback_return_value;
 	}
 
 	// cgo.Handle value for overwritten implementation
@@ -290,10 +290,9 @@ QLocale* QValidator_locale(const QValidator* self) {
 	return new QLocale(self->locale());
 }
 
-int QValidator_validate(const QValidator* self, struct miqt_string param1, int* param2) {
+State QValidator_validate(const QValidator* self, struct miqt_string param1, int* param2) {
 	QString param1_QString = QString::fromUtf8(param1.data, param1.len);
-	QValidator::State _ret = self->validate(param1_QString, static_cast<int&>(*param2));
-	return static_cast<int>(_ret);
+	return self->validate(param1_QString, static_cast<int&>(*param2));
 }
 
 void QValidator_fixup(const QValidator* self, struct miqt_string param1) {
@@ -1239,8 +1238,8 @@ void QDoubleValidator_setDecimals(QDoubleValidator* self, int decimals) {
 	self->setDecimals(static_cast<int>(decimals));
 }
 
-void QDoubleValidator_setNotation(QDoubleValidator* self, int notation) {
-	self->setNotation(static_cast<QDoubleValidator::Notation>(notation));
+void QDoubleValidator_setNotation(QDoubleValidator* self, Notation notation) {
+	self->setNotation(notation);
 }
 
 double QDoubleValidator_bottom(const QDoubleValidator* self) {
@@ -1255,9 +1254,8 @@ int QDoubleValidator_decimals(const QDoubleValidator* self) {
 	return self->decimals();
 }
 
-int QDoubleValidator_notation(const QDoubleValidator* self) {
-	QDoubleValidator::Notation _ret = self->notation();
-	return static_cast<int>(_ret);
+Notation QDoubleValidator_notation(const QDoubleValidator* self) {
+	return self->notation();
 }
 
 void QDoubleValidator_bottomChanged(QDoubleValidator* self, double bottom) {

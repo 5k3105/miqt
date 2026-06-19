@@ -335,12 +335,16 @@ func (this *QMatrix4x4) ToQVariant() *QVariant {
 	return _goptr
 }
 
-func (this *QMatrix4x4) ProjectedRotate(angle float32, x float32, y float32, z float32) {
-	C.QMatrix4x4_projectedRotate(this.h, (C.float)(angle), (C.float)(x), (C.float)(y), (C.float)(z))
+func (this *QMatrix4x4) ProjectedRotate(angle float32, x float32, y float32, z float32, distanceToPlane float32) {
+	C.QMatrix4x4_projectedRotate(this.h, (C.float)(angle), (C.float)(x), (C.float)(y), (C.float)(z), (C.float)(distanceToPlane))
 }
 
-func (this *QMatrix4x4) Flags() QMatrix4x4__Flag {
-	return (QMatrix4x4__Flag)(C.QMatrix4x4_flags(this.h))
+func (this *QMatrix4x4) ProjectedRotate2(angle float32, x float32, y float32, z float32) {
+	C.QMatrix4x4_projectedRotate2(this.h, (C.float)(angle), (C.float)(x), (C.float)(y), (C.float)(z))
+}
+
+func (this *QMatrix4x4) Flags() Flags {
+	int /* TODO  */
 }
 
 func (this *QMatrix4x4) InvertedWithInvertible(invertible *bool) *QMatrix4x4 {

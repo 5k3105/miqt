@@ -37,7 +37,7 @@ void miqt_exec_callback_QNetworkAccessManager_encrypted(intptr_t, QNetworkReply*
 void miqt_exec_callback_QNetworkAccessManager_sslErrors(intptr_t, QNetworkReply*, struct miqt_array /* of QSslError* */ );
 void miqt_exec_callback_QNetworkAccessManager_preSharedKeyAuthenticationRequired(intptr_t, QNetworkReply*, QSslPreSharedKeyAuthenticator*);
 struct miqt_array /* of struct miqt_string */  miqt_exec_callback_QNetworkAccessManager_supportedSchemes(const QNetworkAccessManager*, intptr_t);
-QNetworkReply* miqt_exec_callback_QNetworkAccessManager_createRequest(QNetworkAccessManager*, intptr_t, int, QNetworkRequest*, QIODevice*);
+QNetworkReply* miqt_exec_callback_QNetworkAccessManager_createRequest(QNetworkAccessManager*, intptr_t, Operation, QNetworkRequest*, QIODevice*);
 bool miqt_exec_callback_QNetworkAccessManager_event(QNetworkAccessManager*, intptr_t, QEvent*);
 bool miqt_exec_callback_QNetworkAccessManager_eventFilter(QNetworkAccessManager*, intptr_t, QObject*, QEvent*);
 void miqt_exec_callback_QNetworkAccessManager_timerEvent(QNetworkAccessManager*, intptr_t, QTimerEvent*);
@@ -88,13 +88,12 @@ public:
 	intptr_t handle__createRequest = 0;
 
 	// Subclass to allow providing a Go implementation
-	virtual QNetworkReply* createRequest(QNetworkAccessManager::Operation op, const QNetworkRequest& request, QIODevice* outgoingData) override {
+	virtual QNetworkReply* createRequest(Operation op, const QNetworkRequest& request, QIODevice* outgoingData) override {
 		if (handle__createRequest == 0) {
 			return QNetworkAccessManager::createRequest(op, request, outgoingData);
 		}
 
-		QNetworkAccessManager::Operation op_ret = op;
-		int sigval1 = static_cast<int>(op_ret);
+		Operation sigval1 = op;
 		const QNetworkRequest& request_ret = request;
 		// Cast returned reference into pointer
 		QNetworkRequest* sigval2 = const_cast<QNetworkRequest*>(&request_ret);
@@ -103,7 +102,7 @@ public:
 		return callback_return_value;
 	}
 
-	friend QNetworkReply* QNetworkAccessManager_virtualbase_createRequest(void* self, int op, QNetworkRequest* request, QIODevice* outgoingData);
+	friend QNetworkReply* QNetworkAccessManager_virtualbase_createRequest(void* self, Operation op, QNetworkRequest* request, QIODevice* outgoingData);
 
 	// cgo.Handle value for overwritten implementation
 	intptr_t handle__event = 0;
@@ -373,6 +372,15 @@ QNetworkReply* QNetworkAccessManager_get(QNetworkAccessManager* self, QNetworkRe
 	return self->get(*request);
 }
 
+QNetworkReply* QNetworkAccessManager_get2(QNetworkAccessManager* self, QNetworkRequest* request, QIODevice* data) {
+	return self->get(*request, data);
+}
+
+QNetworkReply* QNetworkAccessManager_get3(QNetworkAccessManager* self, QNetworkRequest* request, struct miqt_string data) {
+	QByteArray data_QByteArray(data.data, data.len);
+	return self->get(*request, data_QByteArray);
+}
+
 QNetworkReply* QNetworkAccessManager_post(QNetworkAccessManager* self, QNetworkRequest* request, QIODevice* data) {
 	return self->post(*request, data);
 }
@@ -406,11 +414,11 @@ QNetworkReply* QNetworkAccessManager_sendCustomRequest2(QNetworkAccessManager* s
 	return self->sendCustomRequest(*request, verb_QByteArray, data_QByteArray);
 }
 
-QNetworkReply* QNetworkAccessManager_post3(QNetworkAccessManager* self, QNetworkRequest* request, QHttpMultiPart* multiPart) {
+QNetworkReply* QNetworkAccessManager_post4(QNetworkAccessManager* self, QNetworkRequest* request, QHttpMultiPart* multiPart) {
 	return self->post(*request, multiPart);
 }
 
-QNetworkReply* QNetworkAccessManager_put3(QNetworkAccessManager* self, QNetworkRequest* request, QHttpMultiPart* multiPart) {
+QNetworkReply* QNetworkAccessManager_put4(QNetworkAccessManager* self, QNetworkRequest* request, QHttpMultiPart* multiPart) {
 	return self->put(*request, multiPart);
 }
 
@@ -456,7 +464,11 @@ int QNetworkAccessManager_transferTimeout(const QNetworkAccessManager* self) {
 	return self->transferTimeout();
 }
 
-void QNetworkAccessManager_setTransferTimeout(QNetworkAccessManager* self) {
+void QNetworkAccessManager_setTransferTimeout(QNetworkAccessManager* self, int timeout) {
+	self->setTransferTimeout(static_cast<int>(timeout));
+}
+
+void QNetworkAccessManager_setTransferTimeout2(QNetworkAccessManager* self) {
 	self->setTransferTimeout();
 }
 
@@ -594,10 +606,6 @@ void QNetworkAccessManager_connectToHost2(QNetworkAccessManager* self, struct mi
 	self->connectToHost(hostName_QString, static_cast<quint16>(port));
 }
 
-void QNetworkAccessManager_setTransferTimeoutWithTimeout(QNetworkAccessManager* self, int timeout) {
-	self->setTransferTimeout(static_cast<int>(timeout));
-}
-
 bool QNetworkAccessManager_override_virtual_supportedSchemes(void* self, intptr_t slot) {
 	MiqtVirtualQNetworkAccessManager* self_cast = dynamic_cast<MiqtVirtualQNetworkAccessManager*>( (QNetworkAccessManager*)(self) );
 	if (self_cast == nullptr) {
@@ -638,8 +646,8 @@ bool QNetworkAccessManager_override_virtual_createRequest(void* self, intptr_t s
 	return true;
 }
 
-QNetworkReply* QNetworkAccessManager_virtualbase_createRequest(void* self, int op, QNetworkRequest* request, QIODevice* outgoingData) {
-	return static_cast<MiqtVirtualQNetworkAccessManager*>(self)->QNetworkAccessManager::createRequest(static_cast<MiqtVirtualQNetworkAccessManager::Operation>(op), *request, outgoingData);
+QNetworkReply* QNetworkAccessManager_virtualbase_createRequest(void* self, Operation op, QNetworkRequest* request, QIODevice* outgoingData) {
+	return static_cast<MiqtVirtualQNetworkAccessManager*>(self)->QNetworkAccessManager::createRequest(op, *request, outgoingData);
 }
 
 bool QNetworkAccessManager_override_virtual_event(void* self, intptr_t slot) {

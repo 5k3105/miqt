@@ -21,12 +21,12 @@ extern "C" {
 void miqt_exec_callback_QMediaDevices_audioInputsChanged(intptr_t);
 void miqt_exec_callback_QMediaDevices_audioOutputsChanged(intptr_t);
 void miqt_exec_callback_QMediaDevices_videoInputsChanged(intptr_t);
+void miqt_exec_callback_QMediaDevices_connectNotify(QMediaDevices*, intptr_t, QMetaMethod*);
 bool miqt_exec_callback_QMediaDevices_event(QMediaDevices*, intptr_t, QEvent*);
 bool miqt_exec_callback_QMediaDevices_eventFilter(QMediaDevices*, intptr_t, QObject*, QEvent*);
 void miqt_exec_callback_QMediaDevices_timerEvent(QMediaDevices*, intptr_t, QTimerEvent*);
 void miqt_exec_callback_QMediaDevices_childEvent(QMediaDevices*, intptr_t, QChildEvent*);
 void miqt_exec_callback_QMediaDevices_customEvent(QMediaDevices*, intptr_t, QEvent*);
-void miqt_exec_callback_QMediaDevices_connectNotify(QMediaDevices*, intptr_t, QMetaMethod*);
 void miqt_exec_callback_QMediaDevices_disconnectNotify(QMediaDevices*, intptr_t, QMetaMethod*);
 #ifdef __cplusplus
 } /* extern C */
@@ -39,6 +39,25 @@ public:
 	MiqtVirtualQMediaDevices(QObject* parent): QMediaDevices(parent) {}
 
 	virtual ~MiqtVirtualQMediaDevices() override = default;
+
+	// cgo.Handle value for overwritten implementation
+	intptr_t handle__connectNotify = 0;
+
+	// Subclass to allow providing a Go implementation
+	virtual void connectNotify(const QMetaMethod& signal) override {
+		if (handle__connectNotify == 0) {
+			QMediaDevices::connectNotify(signal);
+			return;
+		}
+
+		const QMetaMethod& signal_ret = signal;
+		// Cast returned reference into pointer
+		QMetaMethod* sigval1 = const_cast<QMetaMethod*>(&signal_ret);
+		miqt_exec_callback_QMediaDevices_connectNotify(this, handle__connectNotify, sigval1);
+
+	}
+
+	friend void QMediaDevices_virtualbase_connectNotify(void* self, QMetaMethod* signal);
 
 	// cgo.Handle value for overwritten implementation
 	intptr_t handle__event = 0;
@@ -123,25 +142,6 @@ public:
 	}
 
 	friend void QMediaDevices_virtualbase_customEvent(void* self, QEvent* event);
-
-	// cgo.Handle value for overwritten implementation
-	intptr_t handle__connectNotify = 0;
-
-	// Subclass to allow providing a Go implementation
-	virtual void connectNotify(const QMetaMethod& signal) override {
-		if (handle__connectNotify == 0) {
-			QMediaDevices::connectNotify(signal);
-			return;
-		}
-
-		const QMetaMethod& signal_ret = signal;
-		// Cast returned reference into pointer
-		QMetaMethod* sigval1 = const_cast<QMetaMethod*>(&signal_ret);
-		miqt_exec_callback_QMediaDevices_connectNotify(this, handle__connectNotify, sigval1);
-
-	}
-
-	friend void QMediaDevices_virtualbase_connectNotify(void* self, QMetaMethod* signal);
 
 	// cgo.Handle value for overwritten implementation
 	intptr_t handle__disconnectNotify = 0;
@@ -303,6 +303,20 @@ struct miqt_string QMediaDevices_tr3(const char* s, const char* c, int n) {
 	return _ms;
 }
 
+bool QMediaDevices_override_virtual_connectNotify(void* self, intptr_t slot) {
+	MiqtVirtualQMediaDevices* self_cast = dynamic_cast<MiqtVirtualQMediaDevices*>( (QMediaDevices*)(self) );
+	if (self_cast == nullptr) {
+		return false;
+	}
+
+	self_cast->handle__connectNotify = slot;
+	return true;
+}
+
+void QMediaDevices_virtualbase_connectNotify(void* self, QMetaMethod* signal) {
+	static_cast<MiqtVirtualQMediaDevices*>(self)->QMediaDevices::connectNotify(*signal);
+}
+
 bool QMediaDevices_override_virtual_event(void* self, intptr_t slot) {
 	MiqtVirtualQMediaDevices* self_cast = dynamic_cast<MiqtVirtualQMediaDevices*>( (QMediaDevices*)(self) );
 	if (self_cast == nullptr) {
@@ -371,20 +385,6 @@ bool QMediaDevices_override_virtual_customEvent(void* self, intptr_t slot) {
 
 void QMediaDevices_virtualbase_customEvent(void* self, QEvent* event) {
 	static_cast<MiqtVirtualQMediaDevices*>(self)->QMediaDevices::customEvent(event);
-}
-
-bool QMediaDevices_override_virtual_connectNotify(void* self, intptr_t slot) {
-	MiqtVirtualQMediaDevices* self_cast = dynamic_cast<MiqtVirtualQMediaDevices*>( (QMediaDevices*)(self) );
-	if (self_cast == nullptr) {
-		return false;
-	}
-
-	self_cast->handle__connectNotify = slot;
-	return true;
-}
-
-void QMediaDevices_virtualbase_connectNotify(void* self, QMetaMethod* signal) {
-	static_cast<MiqtVirtualQMediaDevices*>(self)->QMediaDevices::connectNotify(*signal);
 }
 
 bool QMediaDevices_override_virtual_disconnectNotify(void* self, intptr_t slot) {

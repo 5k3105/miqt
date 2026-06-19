@@ -106,10 +106,10 @@ func (this *QBuffer) SetData(data []byte) {
 	C.QBuffer_setData(this.h, data_alias)
 }
 
-func (this *QBuffer) SetData2(data string, lenVal int) {
+func (this *QBuffer) SetData2(data string, lenVal int64) {
 	data_Cstring := C.CString(data)
 	defer C.free(unsafe.Pointer(data_Cstring))
-	C.QBuffer_setData2(this.h, data_Cstring, (C.int)(lenVal))
+	C.QBuffer_setData2(this.h, data_Cstring, (C.ptrdiff_t)(lenVal))
 }
 
 func (this *QBuffer) Data() []byte {
@@ -119,8 +119,8 @@ func (this *QBuffer) Data() []byte {
 	return _ret
 }
 
-func (this *QBuffer) Open(openMode QIODeviceBase__OpenModeFlag) bool {
-	return (bool)(C.QBuffer_open(this.h, (C.int)(openMode)))
+func (this *QBuffer) Open(openMode OpenMode) bool {
+	return (bool)(C.QBuffer_open(this.h, openMode))
 }
 
 func (this *QBuffer) Close() {
@@ -170,7 +170,7 @@ func QBuffer_Tr3(s string, c string, n int) string {
 }
 
 // SetOpenMode can only be called from a QBuffer that was directly constructed.
-func (this *QBuffer) SetOpenMode(openMode QIODeviceBase__OpenModeFlag) {
+func (this *QBuffer) SetOpenMode(openMode OpenModeFlag) {
 
 	var _dynamic_cast_ok C.bool = false
 	C.QBuffer_protectedbase_setOpenMode(&_dynamic_cast_ok, unsafe.Pointer(this.h), (C.int)(openMode))
@@ -255,12 +255,12 @@ func (this *QBuffer) IsSignalConnected(signal *QMetaMethod) bool {
 
 }
 
-func (this *QBuffer) callVirtualBase_Open(openMode QIODeviceBase__OpenModeFlag) bool {
+func (this *QBuffer) callVirtualBase_Open(openMode OpenMode) bool {
 
-	return (bool)(C.QBuffer_virtualbase_open(unsafe.Pointer(this.h), (C.int)(openMode)))
+	return (bool)(C.QBuffer_virtualbase_open(unsafe.Pointer(this.h), openMode))
 
 }
-func (this *QBuffer) OnOpen(slot func(super func(openMode QIODeviceBase__OpenModeFlag) bool, openMode QIODeviceBase__OpenModeFlag) bool) {
+func (this *QBuffer) OnOpen(slot func(super func(openMode OpenMode) bool, openMode OpenMode) bool) {
 	ok := C.QBuffer_override_virtual_open(unsafe.Pointer(this.h), C.intptr_t(cgo.NewHandle(slot)))
 	if !ok {
 		panic("miqt: can only override virtual methods for directly constructed types")
@@ -268,14 +268,14 @@ func (this *QBuffer) OnOpen(slot func(super func(openMode QIODeviceBase__OpenMod
 }
 
 //export miqt_exec_callback_QBuffer_open
-func miqt_exec_callback_QBuffer_open(self *C.QBuffer, cb C.intptr_t, openMode C.int) C.bool {
-	gofunc, ok := cgo.Handle(cb).Value().(func(super func(openMode QIODeviceBase__OpenModeFlag) bool, openMode QIODeviceBase__OpenModeFlag) bool)
+func miqt_exec_callback_QBuffer_open(self *C.QBuffer, cb C.intptr_t, openMode C.OpenMode) C.bool {
+	gofunc, ok := cgo.Handle(cb).Value().(func(super func(openMode OpenMode) bool, openMode OpenMode) bool)
 	if !ok {
 		panic("miqt: callback of non-callback type (heap corruption?)")
 	}
 
 	// Convert all CABI parameters to Go parameters
-	slotval1 := (QIODeviceBase__OpenModeFlag)(openMode)
+	int /* TODO  */
 
 	virtualReturn := gofunc((&QBuffer{h: self}).callVirtualBase_Open, slotval1)
 

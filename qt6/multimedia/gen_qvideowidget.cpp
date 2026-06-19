@@ -79,7 +79,7 @@ void miqt_exec_callback_QVideoWidget_dragLeaveEvent(QVideoWidget*, intptr_t, QDr
 void miqt_exec_callback_QVideoWidget_dropEvent(QVideoWidget*, intptr_t, QDropEvent*);
 bool miqt_exec_callback_QVideoWidget_nativeEvent(QVideoWidget*, intptr_t, struct miqt_string, void*, intptr_t*);
 void miqt_exec_callback_QVideoWidget_changeEvent(QVideoWidget*, intptr_t, QEvent*);
-int miqt_exec_callback_QVideoWidget_metric(const QVideoWidget*, intptr_t, int);
+int miqt_exec_callback_QVideoWidget_metric(const QVideoWidget*, intptr_t, PaintDeviceMetric);
 void miqt_exec_callback_QVideoWidget_initPainter(const QVideoWidget*, intptr_t, QPainter*);
 QPaintDevice* miqt_exec_callback_QVideoWidget_redirected(const QVideoWidget*, intptr_t, QPoint*);
 QPainter* miqt_exec_callback_QVideoWidget_sharedPainter(const QVideoWidget*, intptr_t);
@@ -681,18 +681,17 @@ public:
 	intptr_t handle__metric = 0;
 
 	// Subclass to allow providing a Go implementation
-	virtual int metric(QPaintDevice::PaintDeviceMetric param1) const override {
+	virtual int metric(PaintDeviceMetric param1) const override {
 		if (handle__metric == 0) {
 			return QVideoWidget::metric(param1);
 		}
 
-		QPaintDevice::PaintDeviceMetric param1_ret = param1;
-		int sigval1 = static_cast<int>(param1_ret);
+		PaintDeviceMetric sigval1 = param1;
 		int callback_return_value = miqt_exec_callback_QVideoWidget_metric(this, handle__metric, sigval1);
 		return static_cast<int>(callback_return_value);
 	}
 
-	friend int QVideoWidget_virtualbase_metric(const void* self, int param1);
+	friend int QVideoWidget_virtualbase_metric(const void* self, PaintDeviceMetric param1);
 
 	// cgo.Handle value for overwritten implementation
 	intptr_t handle__initPainter = 0;
@@ -908,6 +907,7 @@ public:
 	friend int QVideoWidget_protectedbase_senderSignalIndex(bool* _dynamic_cast_ok, const void* self);
 	friend int QVideoWidget_protectedbase_receivers(bool* _dynamic_cast_ok, const void* self, const char* signal);
 	friend bool QVideoWidget_protectedbase_isSignalConnected(bool* _dynamic_cast_ok, const void* self, QMetaMethod* signal);
+	friend double QVideoWidget_protectedbase_getDecodedMetricF(bool* _dynamic_cast_ok, const void* self, PaintDeviceMetric metricA, PaintDeviceMetric metricB);
 };
 
 QVideoWidget* QVideoWidget_new(QWidget* parent) {
@@ -1494,8 +1494,8 @@ bool QVideoWidget_override_virtual_metric(void* self, intptr_t slot) {
 	return true;
 }
 
-int QVideoWidget_virtualbase_metric(const void* self, int param1) {
-	return static_cast<const MiqtVirtualQVideoWidget*>(self)->QVideoWidget::metric(static_cast<MiqtVirtualQVideoWidget::PaintDeviceMetric>(param1));
+int QVideoWidget_virtualbase_metric(const void* self, PaintDeviceMetric param1) {
+	return static_cast<const MiqtVirtualQVideoWidget*>(self)->QVideoWidget::metric(param1);
 }
 
 bool QVideoWidget_override_virtual_initPainter(void* self, intptr_t slot) {
@@ -1763,6 +1763,17 @@ bool QVideoWidget_protectedbase_isSignalConnected(bool* _dynamic_cast_ok, const 
 
 	*_dynamic_cast_ok = true;
 	return self_cast->isSignalConnected(*signal);
+}
+
+double QVideoWidget_protectedbase_getDecodedMetricF(bool* _dynamic_cast_ok, const void* self, PaintDeviceMetric metricA, PaintDeviceMetric metricB) {
+	MiqtVirtualQVideoWidget* self_cast = dynamic_cast<MiqtVirtualQVideoWidget*>( (QVideoWidget*)(self) );
+	if (self_cast == nullptr) {
+		*_dynamic_cast_ok = false;
+		return 0;
+	}
+
+	*_dynamic_cast_ok = true;
+	return self_cast->getDecodedMetricF(metricA, metricB);
 }
 
 void QVideoWidget_delete(QVideoWidget* self) {

@@ -222,6 +222,19 @@ QQmlContext* QQmlContext_parentContext(const QQmlContext* self) {
 	return self->parentContext();
 }
 
+struct miqt_array /* of QQmlContext* */  QQmlContext_childContexts(const QQmlContext* self) {
+	QList<QQmlContext *> _ret = self->childContexts();
+	// Convert QList<> from C++ memory to manually-managed C memory
+	QQmlContext** _arr = static_cast<QQmlContext**>(malloc(sizeof(QQmlContext*) * _ret.length()));
+	for (size_t i = 0, e = _ret.length(); i < e; ++i) {
+		_arr[i] = _ret[i];
+	}
+	struct miqt_array _out;
+	_out.len = _ret.length();
+	_out.data = static_cast<void*>(_arr);
+	return _out;
+}
+
 QObject* QQmlContext_contextObject(const QQmlContext* self) {
 	return self->contextObject();
 }
@@ -245,12 +258,12 @@ void QQmlContext_setContextProperty2(QQmlContext* self, struct miqt_string param
 	self->setContextProperty(param1_QString, *param2);
 }
 
-void QQmlContext_setContextProperties(QQmlContext* self, struct miqt_array /* of QQmlContext__PropertyPair* */  properties) {
-	QList<QQmlContext::PropertyPair> properties_QList;
+void QQmlContext_setContextProperties(QQmlContext* self, struct miqt_array /* of PropertyPair */  properties) {
+	QList<PropertyPair> properties_QList;
 	properties_QList.reserve(properties.len);
-	QQmlContext__PropertyPair** properties_arr = static_cast<QQmlContext__PropertyPair**>(properties.data);
+	PropertyPair* properties_arr = static_cast<PropertyPair*>(properties.data);
 	for(size_t i = 0; i < properties.len; ++i) {
-		properties_QList.push_back(*(properties_arr[i]));
+		properties_QList.push_back(properties_arr[i]);
 	}
 	self->setContextProperties(properties_QList);
 }
@@ -269,6 +282,25 @@ struct miqt_string QQmlContext_nameForObject(const QQmlContext* self, QObject* p
 QObject* QQmlContext_objectForName(const QQmlContext* self, struct miqt_string param1) {
 	QString param1_QString = QString::fromUtf8(param1.data, param1.len);
 	return self->objectForName(param1_QString);
+}
+
+QObject* QQmlContext_findObjectRecursively(const QQmlContext* self, struct miqt_string id) {
+	QString id_QString = QString::fromUtf8(id.data, id.len);
+	return self->findObjectRecursively(id_QString);
+}
+
+struct miqt_array /* of QObject* */  QQmlContext_findObjectsRecursively(const QQmlContext* self, struct miqt_string id) {
+	QString id_QString = QString::fromUtf8(id.data, id.len);
+	QList<QObject *> _ret = self->findObjectsRecursively(id_QString);
+	// Convert QList<> from C++ memory to manually-managed C memory
+	QObject** _arr = static_cast<QObject**>(malloc(sizeof(QObject*) * _ret.length()));
+	for (size_t i = 0, e = _ret.length(); i < e; ++i) {
+		_arr[i] = _ret[i];
+	}
+	struct miqt_array _out;
+	_out.len = _ret.length();
+	_out.data = static_cast<void*>(_arr);
+	return _out;
 }
 
 QUrl* QQmlContext_resolvedUrl(const QQmlContext* self, QUrl* param1) {
@@ -456,7 +488,7 @@ void QQmlContext_delete(QQmlContext* self) {
 	delete self;
 }
 
-QQmlContext__PropertyPair* QQmlContext__PropertyPair_new(QQmlContext__PropertyPair* param1) {
+QQmlContext__PropertyPair* QQmlContext__PropertyPair_new(const PropertyPair* param1) {
 	return new (std::nothrow) QQmlContext::PropertyPair(*param1);
 }
 
@@ -484,7 +516,7 @@ void QQmlContext__PropertyPair_setValue(QQmlContext__PropertyPair* self, QVarian
 	self->value = *value;
 }
 
-void QQmlContext__PropertyPair_operatorAssign(QQmlContext__PropertyPair* self, QQmlContext__PropertyPair* param1) {
+void QQmlContext__PropertyPair_operatorAssign(QQmlContext__PropertyPair* self, const PropertyPair* param1) {
 	self->operator=(*param1);
 }
 

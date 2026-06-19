@@ -3,6 +3,9 @@
 #include <QPointF>
 #include <QRawFont>
 #include <QRectF>
+#include <QString>
+#include <QByteArray>
+#include <cstring>
 #include <qglyphrun.h>
 #include "gen_qglyphrun.h"
 
@@ -132,17 +135,16 @@ bool QGlyphRun_isRightToLeft(const QGlyphRun* self) {
 	return self->isRightToLeft();
 }
 
-void QGlyphRun_setFlag(QGlyphRun* self, int flag) {
-	self->setFlag(static_cast<QGlyphRun::GlyphRunFlag>(flag));
+void QGlyphRun_setFlag(QGlyphRun* self, GlyphRunFlag flag) {
+	self->setFlag(flag);
 }
 
-void QGlyphRun_setFlags(QGlyphRun* self, int flags) {
-	self->setFlags(static_cast<QGlyphRun::GlyphRunFlags>(flags));
+void QGlyphRun_setFlags(QGlyphRun* self, GlyphRunFlags flags) {
+	self->setFlags(flags);
 }
 
-int QGlyphRun_flags(const QGlyphRun* self) {
-	QGlyphRun::GlyphRunFlags _ret = self->flags();
-	return static_cast<int>(_ret);
+GlyphRunFlags QGlyphRun_flags(const QGlyphRun* self) {
+	return self->flags();
 }
 
 void QGlyphRun_setBoundingRect(QGlyphRun* self, QRectF* boundingRect) {
@@ -153,12 +155,51 @@ QRectF* QGlyphRun_boundingRect(const QGlyphRun* self) {
 	return new QRectF(self->boundingRect());
 }
 
+struct miqt_array /* of ptrdiff_t */  QGlyphRun_stringIndexes(const QGlyphRun* self) {
+	QList<qsizetype> _ret = self->stringIndexes();
+	// Convert QList<> from C++ memory to manually-managed C memory
+	ptrdiff_t* _arr = static_cast<ptrdiff_t*>(malloc(sizeof(ptrdiff_t) * _ret.length()));
+	for (size_t i = 0, e = _ret.length(); i < e; ++i) {
+		_arr[i] = _ret[i];
+	}
+	struct miqt_array _out;
+	_out.len = _ret.length();
+	_out.data = static_cast<void*>(_arr);
+	return _out;
+}
+
+void QGlyphRun_setStringIndexes(QGlyphRun* self, struct miqt_array /* of ptrdiff_t */  stringIndexes) {
+	QList<qsizetype> stringIndexes_QList;
+	stringIndexes_QList.reserve(stringIndexes.len);
+	ptrdiff_t* stringIndexes_arr = static_cast<ptrdiff_t*>(stringIndexes.data);
+	for(size_t i = 0; i < stringIndexes.len; ++i) {
+		stringIndexes_QList.push_back(static_cast<QIntegerForSizeof<std::size_t>::Signed>(stringIndexes_arr[i]));
+	}
+	self->setStringIndexes(stringIndexes_QList);
+}
+
+void QGlyphRun_setSourceString(QGlyphRun* self, struct miqt_string sourceString) {
+	QString sourceString_QString = QString::fromUtf8(sourceString.data, sourceString.len);
+	self->setSourceString(sourceString_QString);
+}
+
+struct miqt_string QGlyphRun_sourceString(const QGlyphRun* self) {
+	QString _ret = self->sourceString();
+	// Convert QString from UTF-16 in C++ RAII memory to UTF-8 in manually-managed C memory
+	QByteArray _b = _ret.toUtf8();
+	struct miqt_string _ms;
+	_ms.len = _b.length();
+	_ms.data = static_cast<char*>(malloc(_ms.len));
+	memcpy(_ms.data, _b.data(), _ms.len);
+	return _ms;
+}
+
 bool QGlyphRun_isEmpty(const QGlyphRun* self) {
 	return self->isEmpty();
 }
 
-void QGlyphRun_setFlag2(QGlyphRun* self, int flag, bool enabled) {
-	self->setFlag(static_cast<QGlyphRun::GlyphRunFlag>(flag), enabled);
+void QGlyphRun_setFlag2(QGlyphRun* self, GlyphRunFlag flag, bool enabled) {
+	self->setFlag(flag, enabled);
 }
 
 void QGlyphRun_delete(QGlyphRun* self) {

@@ -42,10 +42,10 @@ void QAbstractAnimation_virtbase(QAbstractAnimation* src, QObject** outptr_QObje
 QMetaObject* QAbstractAnimation_metaObject(const QAbstractAnimation* self);
 void* QAbstractAnimation_metacast(QAbstractAnimation* self, const char* param1);
 struct miqt_string QAbstractAnimation_tr(const char* s);
-int QAbstractAnimation_state(const QAbstractAnimation* self);
+State QAbstractAnimation_state(const QAbstractAnimation* self);
 QAnimationGroup* QAbstractAnimation_group(const QAbstractAnimation* self);
-int QAbstractAnimation_direction(const QAbstractAnimation* self);
-void QAbstractAnimation_setDirection(QAbstractAnimation* self, int direction);
+Direction QAbstractAnimation_direction(const QAbstractAnimation* self);
+void QAbstractAnimation_setDirection(QAbstractAnimation* self, Direction direction);
 int QAbstractAnimation_currentTime(const QAbstractAnimation* self);
 int QAbstractAnimation_currentLoopTime(const QAbstractAnimation* self);
 int QAbstractAnimation_loopCount(const QAbstractAnimation* self);

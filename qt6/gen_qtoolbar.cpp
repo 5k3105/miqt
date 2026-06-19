@@ -88,7 +88,7 @@ void miqt_exec_callback_QToolBar_dropEvent(QToolBar*, intptr_t, QDropEvent*);
 void miqt_exec_callback_QToolBar_showEvent(QToolBar*, intptr_t, QShowEvent*);
 void miqt_exec_callback_QToolBar_hideEvent(QToolBar*, intptr_t, QHideEvent*);
 bool miqt_exec_callback_QToolBar_nativeEvent(QToolBar*, intptr_t, struct miqt_string, void*, intptr_t*);
-int miqt_exec_callback_QToolBar_metric(const QToolBar*, intptr_t, int);
+int miqt_exec_callback_QToolBar_metric(const QToolBar*, intptr_t, PaintDeviceMetric);
 void miqt_exec_callback_QToolBar_initPainter(const QToolBar*, intptr_t, QPainter*);
 QPaintDevice* miqt_exec_callback_QToolBar_redirected(const QToolBar*, intptr_t, QPoint*);
 QPainter* miqt_exec_callback_QToolBar_sharedPainter(const QToolBar*, intptr_t);
@@ -709,18 +709,17 @@ public:
 	intptr_t handle__metric = 0;
 
 	// Subclass to allow providing a Go implementation
-	virtual int metric(QPaintDevice::PaintDeviceMetric param1) const override {
+	virtual int metric(PaintDeviceMetric param1) const override {
 		if (handle__metric == 0) {
 			return QToolBar::metric(param1);
 		}
 
-		QPaintDevice::PaintDeviceMetric param1_ret = param1;
-		int sigval1 = static_cast<int>(param1_ret);
+		PaintDeviceMetric sigval1 = param1;
 		int callback_return_value = miqt_exec_callback_QToolBar_metric(this, handle__metric, sigval1);
 		return static_cast<int>(callback_return_value);
 	}
 
-	friend int QToolBar_virtualbase_metric(const void* self, int param1);
+	friend int QToolBar_virtualbase_metric(const void* self, PaintDeviceMetric param1);
 
 	// cgo.Handle value for overwritten implementation
 	intptr_t handle__initPainter = 0;
@@ -936,6 +935,7 @@ public:
 	friend int QToolBar_protectedbase_senderSignalIndex(bool* _dynamic_cast_ok, const void* self);
 	friend int QToolBar_protectedbase_receivers(bool* _dynamic_cast_ok, const void* self, const char* signal);
 	friend bool QToolBar_protectedbase_isSignalConnected(bool* _dynamic_cast_ok, const void* self, QMetaMethod* signal);
+	friend double QToolBar_protectedbase_getDecodedMetricF(bool* _dynamic_cast_ok, const void* self, PaintDeviceMetric metricA, PaintDeviceMetric metricB);
 };
 
 QToolBar* QToolBar_new(QWidget* parent) {
@@ -1694,8 +1694,8 @@ bool QToolBar_override_virtual_metric(void* self, intptr_t slot) {
 	return true;
 }
 
-int QToolBar_virtualbase_metric(const void* self, int param1) {
-	return static_cast<const MiqtVirtualQToolBar*>(self)->QToolBar::metric(static_cast<MiqtVirtualQToolBar::PaintDeviceMetric>(param1));
+int QToolBar_virtualbase_metric(const void* self, PaintDeviceMetric param1) {
+	return static_cast<const MiqtVirtualQToolBar*>(self)->QToolBar::metric(param1);
 }
 
 bool QToolBar_override_virtual_initPainter(void* self, intptr_t slot) {
@@ -1963,6 +1963,17 @@ bool QToolBar_protectedbase_isSignalConnected(bool* _dynamic_cast_ok, const void
 
 	*_dynamic_cast_ok = true;
 	return self_cast->isSignalConnected(*signal);
+}
+
+double QToolBar_protectedbase_getDecodedMetricF(bool* _dynamic_cast_ok, const void* self, PaintDeviceMetric metricA, PaintDeviceMetric metricB) {
+	MiqtVirtualQToolBar* self_cast = dynamic_cast<MiqtVirtualQToolBar*>( (QToolBar*)(self) );
+	if (self_cast == nullptr) {
+		*_dynamic_cast_ok = false;
+		return 0;
+	}
+
+	*_dynamic_cast_ok = true;
+	return self_cast->getDecodedMetricF(metricA, metricB);
 }
 
 void QToolBar_delete(QToolBar* self) {

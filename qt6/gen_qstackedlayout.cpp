@@ -23,6 +23,7 @@ extern "C" {
 
 void miqt_exec_callback_QStackedLayout_widgetRemoved(intptr_t, int);
 void miqt_exec_callback_QStackedLayout_currentChanged(intptr_t, int);
+void miqt_exec_callback_QStackedLayout_widgetAdded(intptr_t, int);
 int miqt_exec_callback_QStackedLayout_count(const QStackedLayout*, intptr_t);
 void miqt_exec_callback_QStackedLayout_addItem(QStackedLayout*, intptr_t, QLayoutItem*);
 QSize* miqt_exec_callback_QStackedLayout_sizeHint(const QStackedLayout*, intptr_t);
@@ -622,13 +623,12 @@ int QStackedLayout_count(const QStackedLayout* self) {
 	return self->count();
 }
 
-int QStackedLayout_stackingMode(const QStackedLayout* self) {
-	QStackedLayout::StackingMode _ret = self->stackingMode();
-	return static_cast<int>(_ret);
+StackingMode QStackedLayout_stackingMode(const QStackedLayout* self) {
+	return self->stackingMode();
 }
 
-void QStackedLayout_setStackingMode(QStackedLayout* self, int stackingMode) {
-	self->setStackingMode(static_cast<QStackedLayout::StackingMode>(stackingMode));
+void QStackedLayout_setStackingMode(QStackedLayout* self, StackingMode stackingMode) {
+	self->setStackingMode(stackingMode);
 }
 
 void QStackedLayout_addItem(QStackedLayout* self, QLayoutItem* item) {
@@ -682,6 +682,17 @@ void QStackedLayout_connect_currentChanged(QStackedLayout* self, intptr_t slot) 
 	QStackedLayout::connect(self, static_cast<void (QStackedLayout::*)(int)>(&QStackedLayout::currentChanged), self, [=](int index) {
 		int sigval1 = index;
 		miqt_exec_callback_QStackedLayout_currentChanged(slot, sigval1);
+	});
+}
+
+void QStackedLayout_widgetAdded(QStackedLayout* self, int index) {
+	self->widgetAdded(static_cast<int>(index));
+}
+
+void QStackedLayout_connect_widgetAdded(QStackedLayout* self, intptr_t slot) {
+	QStackedLayout::connect(self, static_cast<void (QStackedLayout::*)(int)>(&QStackedLayout::widgetAdded), self, [=](int index) {
+		int sigval1 = index;
+		miqt_exec_callback_QStackedLayout_widgetAdded(slot, sigval1);
 	});
 }
 

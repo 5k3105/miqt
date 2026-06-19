@@ -141,8 +141,20 @@ func (this *QThreadPool) ReleaseThread() {
 	C.QThreadPool_releaseThread(this.h)
 }
 
-func (this *QThreadPool) WaitForDone() bool {
-	return (bool)(C.QThreadPool_waitForDone(this.h))
+func (this *QThreadPool) SetServiceLevel(serviceLevel QThread__QualityOfService) {
+	C.QThreadPool_setServiceLevel(this.h, (C.int)(serviceLevel))
+}
+
+func (this *QThreadPool) ServiceLevel() QThread__QualityOfService {
+	return (QThread__QualityOfService)(C.QThreadPool_serviceLevel(this.h))
+}
+
+func (this *QThreadPool) WaitForDone(msecs int) bool {
+	return (bool)(C.QThreadPool_waitForDone(this.h, (C.int)(msecs)))
+}
+
+func (this *QThreadPool) WaitForDone2() bool {
+	return (bool)(C.QThreadPool_waitForDone2(this.h))
 }
 
 func (this *QThreadPool) Clear() {
@@ -183,8 +195,8 @@ func (this *QThreadPool) Start2(runnable *QRunnable, priority int) {
 	C.QThreadPool_start2(this.h, runnable.cPointer(), (C.int)(priority))
 }
 
-func (this *QThreadPool) WaitForDoneWithMsecs(msecs int) bool {
-	return (bool)(C.QThreadPool_waitForDoneWithMsecs(this.h, (C.int)(msecs)))
+func (this *QThreadPool) WaitForDoneWithDeadline(deadline QDeadlineTimer) bool {
+	return (bool)(C.QThreadPool_waitForDoneWithDeadline(this.h, deadline.cPointer()))
 }
 
 // Sender can only be called from a QThreadPool that was directly constructed.

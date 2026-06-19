@@ -1058,6 +1058,8 @@ public:
 	friend void QIdentityProxyModel_virtualbase_disconnectNotify(void* self, QMetaMethod* signal);
 
 	// Wrappers to allow calling protected methods:
+	friend void QIdentityProxyModel_protectedbase_setHandleSourceLayoutChanges(bool* _dynamic_cast_ok, void* self, bool handleSourceLayoutChanges);
+	friend void QIdentityProxyModel_protectedbase_setHandleSourceDataChanges(bool* _dynamic_cast_ok, void* self, bool handleSourceDataChanges);
 	friend QModelIndex* QIdentityProxyModel_protectedbase_createSourceIndex(bool* _dynamic_cast_ok, const void* self, int row, int col, void* internalPtr);
 	friend QModelIndex* QIdentityProxyModel_protectedbase_createIndex(bool* _dynamic_cast_ok, const void* self, int row, int column);
 	friend void QIdentityProxyModel_protectedbase_encodeData(bool* _dynamic_cast_ok, const void* self, struct miqt_array /* of QModelIndex* */  indexes, QDataStream* stream);
@@ -1199,6 +1201,14 @@ bool QIdentityProxyModel_moveRows(QIdentityProxyModel* self, QModelIndex* source
 
 bool QIdentityProxyModel_moveColumns(QIdentityProxyModel* self, QModelIndex* sourceParent, int sourceColumn, int count, QModelIndex* destinationParent, int destinationChild) {
 	return self->moveColumns(*sourceParent, static_cast<int>(sourceColumn), static_cast<int>(count), *destinationParent, static_cast<int>(destinationChild));
+}
+
+bool QIdentityProxyModel_handleSourceLayoutChanges(const QIdentityProxyModel* self) {
+	return self->handleSourceLayoutChanges();
+}
+
+bool QIdentityProxyModel_handleSourceDataChanges(const QIdentityProxyModel* self) {
+	return self->handleSourceDataChanges();
 }
 
 struct miqt_string QIdentityProxyModel_tr2(const char* s, const char* c) {
@@ -1980,6 +1990,28 @@ bool QIdentityProxyModel_override_virtual_disconnectNotify(void* self, intptr_t 
 
 void QIdentityProxyModel_virtualbase_disconnectNotify(void* self, QMetaMethod* signal) {
 	static_cast<MiqtVirtualQIdentityProxyModel*>(self)->QIdentityProxyModel::disconnectNotify(*signal);
+}
+
+void QIdentityProxyModel_protectedbase_setHandleSourceLayoutChanges(bool* _dynamic_cast_ok, void* self, bool handleSourceLayoutChanges) {
+	MiqtVirtualQIdentityProxyModel* self_cast = dynamic_cast<MiqtVirtualQIdentityProxyModel*>( (QIdentityProxyModel*)(self) );
+	if (self_cast == nullptr) {
+		*_dynamic_cast_ok = false;
+		return ;
+	}
+
+	*_dynamic_cast_ok = true;
+	self_cast->setHandleSourceLayoutChanges(handleSourceLayoutChanges);
+}
+
+void QIdentityProxyModel_protectedbase_setHandleSourceDataChanges(bool* _dynamic_cast_ok, void* self, bool handleSourceDataChanges) {
+	MiqtVirtualQIdentityProxyModel* self_cast = dynamic_cast<MiqtVirtualQIdentityProxyModel*>( (QIdentityProxyModel*)(self) );
+	if (self_cast == nullptr) {
+		*_dynamic_cast_ok = false;
+		return ;
+	}
+
+	*_dynamic_cast_ok = true;
+	self_cast->setHandleSourceDataChanges(handleSourceDataChanges);
 }
 
 QModelIndex* QIdentityProxyModel_protectedbase_createSourceIndex(bool* _dynamic_cast_ok, const void* self, int row, int col, void* internalPtr) {

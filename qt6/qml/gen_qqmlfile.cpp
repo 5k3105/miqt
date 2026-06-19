@@ -21,13 +21,13 @@ QQmlFile* QQmlFile_new() {
 	return new (std::nothrow) QQmlFile();
 }
 
-QQmlFile* QQmlFile_new2(QQmlEngine* param1, QUrl* param2) {
-	return new (std::nothrow) QQmlFile(param1, *param2);
+QQmlFile* QQmlFile_new2(QQmlEngine* engine, QUrl* url) {
+	return new (std::nothrow) QQmlFile(engine, *url);
 }
 
-QQmlFile* QQmlFile_new3(QQmlEngine* param1, struct miqt_string param2) {
-	QString param2_QString = QString::fromUtf8(param2.data, param2.len);
-	return new (std::nothrow) QQmlFile(param1, param2_QString);
+QQmlFile* QQmlFile_new3(QQmlEngine* engine, struct miqt_string url) {
+	QString url_QString = QString::fromUtf8(url.data, url.len);
+	return new (std::nothrow) QQmlFile(engine, url_QString);
 }
 
 bool QQmlFile_isNull(const QQmlFile* self) {
@@ -50,9 +50,8 @@ QUrl* QQmlFile_url(const QQmlFile* self) {
 	return new QUrl(self->url());
 }
 
-int QQmlFile_status(const QQmlFile* self) {
-	QQmlFile::Status _ret = self->status();
-	return static_cast<int>(_ret);
+Status QQmlFile_status(const QQmlFile* self) {
+	return self->status();
 }
 
 struct miqt_string QQmlFile_error(const QQmlFile* self) {
@@ -97,8 +96,8 @@ void QQmlFile_clear(QQmlFile* self) {
 	self->clear();
 }
 
-void QQmlFile_clearWithQObject(QQmlFile* self, QObject* param1) {
-	self->clear(param1);
+void QQmlFile_clearWithObject(QQmlFile* self, QObject* object) {
+	self->clear(object);
 }
 
 bool QQmlFile_connectFinished(QQmlFile* self, QObject* param1, const char* param2) {

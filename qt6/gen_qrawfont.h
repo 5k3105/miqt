@@ -17,6 +17,11 @@ extern "C" {
 #ifdef __cplusplus
 class QChar;
 class QFont;
+#if defined(WORKAROUND_INNER_CLASS_DEFINITION_QFont__Tag)
+typedef QFont::Tag QFont__Tag;
+#else
+class QFont__Tag;
+#endif
 class QImage;
 class QPainterPath;
 class QPointF;
@@ -26,6 +31,7 @@ class QTransform;
 #else
 typedef struct QChar QChar;
 typedef struct QFont QFont;
+typedef struct QFont__Tag QFont__Tag;
 typedef struct QImage QImage;
 typedef struct QPainterPath QPainterPath;
 typedef struct QPointF QPointF;
@@ -45,16 +51,17 @@ void QRawFont_swap(QRawFont* self, QRawFont* other);
 bool QRawFont_isValid(const QRawFont* self);
 bool QRawFont_operatorEqual(const QRawFont* self, QRawFont* other);
 bool QRawFont_operatorNotEqual(const QRawFont* self, QRawFont* other);
+unsigned int QRawFont_glyphCount(const QRawFont* self);
 struct miqt_string QRawFont_familyName(const QRawFont* self);
 struct miqt_string QRawFont_styleName(const QRawFont* self);
 int QRawFont_style(const QRawFont* self);
 int QRawFont_weight(const QRawFont* self);
 struct miqt_array /* of unsigned int */  QRawFont_glyphIndexesForString(const QRawFont* self, struct miqt_string text);
 struct miqt_array /* of QPointF* */  QRawFont_advancesForGlyphIndexes(const QRawFont* self, struct miqt_array /* of unsigned int */  glyphIndexes);
-struct miqt_array /* of QPointF* */  QRawFont_advancesForGlyphIndexes2(const QRawFont* self, struct miqt_array /* of unsigned int */  glyphIndexes, int layoutFlags);
+struct miqt_array /* of QPointF* */  QRawFont_advancesForGlyphIndexes2(const QRawFont* self, struct miqt_array /* of unsigned int */  glyphIndexes, LayoutFlags layoutFlags);
 bool QRawFont_glyphIndexesForChars(const QRawFont* self, QChar* chars, int numChars, unsigned int* glyphIndexes, int* numGlyphs);
 bool QRawFont_advancesForGlyphIndexes3(const QRawFont* self, const unsigned int* glyphIndexes, QPointF* advances, int numGlyphs);
-bool QRawFont_advancesForGlyphIndexes4(const QRawFont* self, const unsigned int* glyphIndexes, QPointF* advances, int numGlyphs, int layoutFlags);
+bool QRawFont_advancesForGlyphIndexes4(const QRawFont* self, const unsigned int* glyphIndexes, QPointF* advances, int numGlyphs, LayoutFlags layoutFlags);
 QImage* QRawFont_alphaMapForGlyph(const QRawFont* self, unsigned int glyphIndex);
 QPainterPath* QRawFont_pathForGlyph(const QRawFont* self, unsigned int glyphIndex);
 QRectF* QRawFont_boundingRect(const QRawFont* self, unsigned int glyphIndex);
@@ -71,15 +78,17 @@ double QRawFont_maxCharWidth(const QRawFont* self);
 double QRawFont_lineThickness(const QRawFont* self);
 double QRawFont_underlinePosition(const QRawFont* self);
 double QRawFont_unitsPerEm(const QRawFont* self);
+struct miqt_string QRawFont_glyphName(const QRawFont* self, unsigned int glyphIndex);
 void QRawFont_loadFromFile(QRawFont* self, struct miqt_string fileName, double pixelSize, int hintingPreference);
 void QRawFont_loadFromData(QRawFont* self, struct miqt_string fontData, double pixelSize, int hintingPreference);
 bool QRawFont_supportsCharacter(const QRawFont* self, unsigned int ucs4);
 bool QRawFont_supportsCharacterWithCharacter(const QRawFont* self, QChar* character);
 struct miqt_array /* of int */  QRawFont_supportedWritingSystems(const QRawFont* self);
 struct miqt_string QRawFont_fontTable(const QRawFont* self, const char* tagName);
+struct miqt_string QRawFont_fontTableWithTag(const QRawFont* self, QFont__Tag* tag);
 QRawFont* QRawFont_fromFont(QFont* font);
-QImage* QRawFont_alphaMapForGlyph2(const QRawFont* self, unsigned int glyphIndex, int antialiasingType);
-QImage* QRawFont_alphaMapForGlyph3(const QRawFont* self, unsigned int glyphIndex, int antialiasingType, QTransform* transform);
+QImage* QRawFont_alphaMapForGlyph2(const QRawFont* self, unsigned int glyphIndex, AntialiasingType antialiasingType);
+QImage* QRawFont_alphaMapForGlyph3(const QRawFont* self, unsigned int glyphIndex, AntialiasingType antialiasingType, QTransform* transform);
 QRawFont* QRawFont_fromFont2(QFont* font, int writingSystem);
 
 void QRawFont_delete(QRawFont* self);

@@ -78,43 +78,47 @@ func NewQTextBoundaryFinder2(other *QTextBoundaryFinder) *QTextBoundaryFinder {
 }
 
 // NewQTextBoundaryFinder3 constructs a new QTextBoundaryFinder object.
-func NewQTextBoundaryFinder3(typeVal QTextBoundaryFinder__BoundaryType, stringVal string) *QTextBoundaryFinder {
+func NewQTextBoundaryFinder3(typeVal BoundaryType, stringVal string) *QTextBoundaryFinder {
 	stringVal_ms := C.struct_miqt_string{}
 	stringVal_ms.data = C.CString(stringVal)
 	stringVal_ms.len = C.size_t(len(stringVal))
 	defer C.free(unsafe.Pointer(stringVal_ms.data))
 
-	return newQTextBoundaryFinder(C.QTextBoundaryFinder_new3((C.int)(typeVal), stringVal_ms))
+	return newQTextBoundaryFinder(C.QTextBoundaryFinder_new3(typeVal, stringVal_ms))
 }
 
 // NewQTextBoundaryFinder4 constructs a new QTextBoundaryFinder object.
-func NewQTextBoundaryFinder4(typeVal QTextBoundaryFinder__BoundaryType, chars *QChar, length int64) *QTextBoundaryFinder {
+func NewQTextBoundaryFinder4(typeVal BoundaryType, chars *QChar, length int64) *QTextBoundaryFinder {
 
-	return newQTextBoundaryFinder(C.QTextBoundaryFinder_new4((C.int)(typeVal), chars.cPointer(), (C.ptrdiff_t)(length)))
+	return newQTextBoundaryFinder(C.QTextBoundaryFinder_new4(typeVal, chars.cPointer(), (C.ptrdiff_t)(length)))
 }
 
 // NewQTextBoundaryFinder5 constructs a new QTextBoundaryFinder object.
-func NewQTextBoundaryFinder5(typeVal QTextBoundaryFinder__BoundaryType, chars *QChar, length int64, buffer *byte) *QTextBoundaryFinder {
+func NewQTextBoundaryFinder5(typeVal BoundaryType, chars *QChar, length int64, buffer *byte) *QTextBoundaryFinder {
 
-	return newQTextBoundaryFinder(C.QTextBoundaryFinder_new5((C.int)(typeVal), chars.cPointer(), (C.ptrdiff_t)(length), (*C.uchar)(unsafe.Pointer(buffer))))
+	return newQTextBoundaryFinder(C.QTextBoundaryFinder_new5(typeVal, chars.cPointer(), (C.ptrdiff_t)(length), (*C.uchar)(unsafe.Pointer(buffer))))
 }
 
 // NewQTextBoundaryFinder6 constructs a new QTextBoundaryFinder object.
-func NewQTextBoundaryFinder6(typeVal QTextBoundaryFinder__BoundaryType, chars *QChar, length int64, buffer *byte, bufferSize int64) *QTextBoundaryFinder {
+func NewQTextBoundaryFinder6(typeVal BoundaryType, chars *QChar, length int64, buffer *byte, bufferSize int64) *QTextBoundaryFinder {
 
-	return newQTextBoundaryFinder(C.QTextBoundaryFinder_new6((C.int)(typeVal), chars.cPointer(), (C.ptrdiff_t)(length), (*C.uchar)(unsafe.Pointer(buffer)), (C.ptrdiff_t)(bufferSize)))
+	return newQTextBoundaryFinder(C.QTextBoundaryFinder_new6(typeVal, chars.cPointer(), (C.ptrdiff_t)(length), (*C.uchar)(unsafe.Pointer(buffer)), (C.ptrdiff_t)(bufferSize)))
 }
 
 func (this *QTextBoundaryFinder) OperatorAssign(other *QTextBoundaryFinder) {
 	C.QTextBoundaryFinder_operatorAssign(this.h, other.cPointer())
 }
 
+func (this *QTextBoundaryFinder) Swap(other *QTextBoundaryFinder) {
+	C.QTextBoundaryFinder_swap(this.h, other.cPointer())
+}
+
 func (this *QTextBoundaryFinder) IsValid() bool {
 	return (bool)(C.QTextBoundaryFinder_isValid(this.h))
 }
 
-func (this *QTextBoundaryFinder) Type() QTextBoundaryFinder__BoundaryType {
-	return (QTextBoundaryFinder__BoundaryType)(C.QTextBoundaryFinder_type(this.h))
+func (this *QTextBoundaryFinder) Type() BoundaryType {
+	int /* TODO  */
 }
 
 func (this *QTextBoundaryFinder) String() string {
@@ -152,8 +156,8 @@ func (this *QTextBoundaryFinder) IsAtBoundary() bool {
 	return (bool)(C.QTextBoundaryFinder_isAtBoundary(this.h))
 }
 
-func (this *QTextBoundaryFinder) BoundaryReasons() QTextBoundaryFinder__BoundaryReason {
-	return (QTextBoundaryFinder__BoundaryReason)(C.QTextBoundaryFinder_boundaryReasons(this.h))
+func (this *QTextBoundaryFinder) BoundaryReasons() BoundaryReasons {
+	int /* TODO  */
 }
 
 // Delete this object from C++ memory.

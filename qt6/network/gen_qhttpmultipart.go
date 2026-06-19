@@ -178,9 +178,9 @@ func NewQHttpMultiPart() *QHttpMultiPart {
 }
 
 // NewQHttpMultiPart2 constructs a new QHttpMultiPart object.
-func NewQHttpMultiPart2(contentType QHttpMultiPart__ContentType) *QHttpMultiPart {
+func NewQHttpMultiPart2(contentType ContentType) *QHttpMultiPart {
 
-	return newQHttpMultiPart(C.QHttpMultiPart_new2((C.int)(contentType)))
+	return newQHttpMultiPart(C.QHttpMultiPart_new2(contentType))
 }
 
 // NewQHttpMultiPart3 constructs a new QHttpMultiPart object.
@@ -190,9 +190,9 @@ func NewQHttpMultiPart3(parent *qt6.QObject) *QHttpMultiPart {
 }
 
 // NewQHttpMultiPart4 constructs a new QHttpMultiPart object.
-func NewQHttpMultiPart4(contentType QHttpMultiPart__ContentType, parent *qt6.QObject) *QHttpMultiPart {
+func NewQHttpMultiPart4(contentType ContentType, parent *qt6.QObject) *QHttpMultiPart {
 
-	return newQHttpMultiPart(C.QHttpMultiPart_new4((C.int)(contentType), (*C.QObject)(parent.UnsafePointer())))
+	return newQHttpMultiPart(C.QHttpMultiPart_new4(contentType, (*C.QObject)(parent.UnsafePointer())))
 }
 
 func (this *QHttpMultiPart) MetaObject() *qt6.QMetaObject {
@@ -218,8 +218,8 @@ func (this *QHttpMultiPart) Append(httpPart *QHttpPart) {
 	C.QHttpMultiPart_append(this.h, httpPart.cPointer())
 }
 
-func (this *QHttpMultiPart) SetContentType(contentType QHttpMultiPart__ContentType) {
-	C.QHttpMultiPart_setContentType(this.h, (C.int)(contentType))
+func (this *QHttpMultiPart) SetContentType(contentType ContentType) {
+	C.QHttpMultiPart_setContentType(this.h, contentType)
 }
 
 func (this *QHttpMultiPart) Boundary() []byte {

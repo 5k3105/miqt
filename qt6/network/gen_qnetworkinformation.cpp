@@ -44,18 +44,16 @@ struct miqt_string QNetworkInformation_tr(const char* s) {
 	return _ms;
 }
 
-int QNetworkInformation_reachability(const QNetworkInformation* self) {
-	QNetworkInformation::Reachability _ret = self->reachability();
-	return static_cast<int>(_ret);
+Reachability QNetworkInformation_reachability(const QNetworkInformation* self) {
+	return self->reachability();
 }
 
 bool QNetworkInformation_isBehindCaptivePortal(const QNetworkInformation* self) {
 	return self->isBehindCaptivePortal();
 }
 
-int QNetworkInformation_transportMedium(const QNetworkInformation* self) {
-	QNetworkInformation::TransportMedium _ret = self->transportMedium();
-	return static_cast<int>(_ret);
+TransportMedium QNetworkInformation_transportMedium(const QNetworkInformation* self) {
+	return self->transportMedium();
 }
 
 bool QNetworkInformation_isMetered(const QNetworkInformation* self) {
@@ -73,25 +71,24 @@ struct miqt_string QNetworkInformation_backendName(const QNetworkInformation* se
 	return _ms;
 }
 
-bool QNetworkInformation_supports(const QNetworkInformation* self, int features) {
-	return self->supports(static_cast<QNetworkInformation::Features>(features));
+bool QNetworkInformation_supports(const QNetworkInformation* self, Features features) {
+	return self->supports(features);
 }
 
-int QNetworkInformation_supportedFeatures(const QNetworkInformation* self) {
-	QNetworkInformation::Features _ret = self->supportedFeatures();
-	return static_cast<int>(_ret);
+Features QNetworkInformation_supportedFeatures(const QNetworkInformation* self) {
+	return self->supportedFeatures();
 }
 
 bool QNetworkInformation_loadDefaultBackend() {
 	return QNetworkInformation::loadDefaultBackend();
 }
 
-bool QNetworkInformation_loadBackendByFeatures(int features) {
-	return QNetworkInformation::loadBackendByFeatures(static_cast<QNetworkInformation::Features>(features));
+bool QNetworkInformation_loadBackendByFeatures(Features features) {
+	return QNetworkInformation::loadBackendByFeatures(features);
 }
 
-bool QNetworkInformation_loadWithFeatures(int features) {
-	return QNetworkInformation::load(static_cast<QNetworkInformation::Features>(features));
+bool QNetworkInformation_loadWithFeatures(Features features) {
+	return QNetworkInformation::load(features);
 }
 
 struct miqt_array /* of struct miqt_string */  QNetworkInformation_availableBackends() {

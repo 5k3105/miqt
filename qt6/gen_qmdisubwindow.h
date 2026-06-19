@@ -102,8 +102,8 @@ QWidget* QMdiSubWindow_widget(const QMdiSubWindow* self);
 QWidget* QMdiSubWindow_maximizedButtonsWidget(const QMdiSubWindow* self);
 QWidget* QMdiSubWindow_maximizedSystemMenuIconWidget(const QMdiSubWindow* self);
 bool QMdiSubWindow_isShaded(const QMdiSubWindow* self);
-void QMdiSubWindow_setOption(QMdiSubWindow* self, int option);
-bool QMdiSubWindow_testOption(const QMdiSubWindow* self, int param1);
+void QMdiSubWindow_setOption(QMdiSubWindow* self, SubWindowOption option);
+bool QMdiSubWindow_testOption(const QMdiSubWindow* self, SubWindowOption param1);
 void QMdiSubWindow_setKeyboardSingleStep(QMdiSubWindow* self, int step);
 int QMdiSubWindow_keyboardSingleStep(const QMdiSubWindow* self);
 void QMdiSubWindow_setKeyboardPageStep(QMdiSubWindow* self, int step);
@@ -139,7 +139,7 @@ void QMdiSubWindow_focusOutEvent(QMdiSubWindow* self, QFocusEvent* focusOutEvent
 void QMdiSubWindow_childEvent(QMdiSubWindow* self, QChildEvent* childEvent);
 struct miqt_string QMdiSubWindow_tr2(const char* s, const char* c);
 struct miqt_string QMdiSubWindow_tr3(const char* s, const char* c, int n);
-void QMdiSubWindow_setOption2(QMdiSubWindow* self, int option, bool on);
+void QMdiSubWindow_setOption2(QMdiSubWindow* self, SubWindowOption option, bool on);
 
 bool QMdiSubWindow_override_virtual_sizeHint(void* self, intptr_t slot);
 QSize* QMdiSubWindow_virtualbase_sizeHint(const void* self);
@@ -216,7 +216,7 @@ void QMdiSubWindow_virtualbase_dropEvent(void* self, QDropEvent* event);
 bool QMdiSubWindow_override_virtual_nativeEvent(void* self, intptr_t slot);
 bool QMdiSubWindow_virtualbase_nativeEvent(void* self, struct miqt_string eventType, void* message, intptr_t* result);
 bool QMdiSubWindow_override_virtual_metric(void* self, intptr_t slot);
-int QMdiSubWindow_virtualbase_metric(const void* self, int param1);
+int QMdiSubWindow_virtualbase_metric(const void* self, PaintDeviceMetric param1);
 bool QMdiSubWindow_override_virtual_initPainter(void* self, intptr_t slot);
 void QMdiSubWindow_virtualbase_initPainter(const void* self, QPainter* painter);
 bool QMdiSubWindow_override_virtual_redirected(void* self, intptr_t slot);
@@ -245,6 +245,7 @@ QObject* QMdiSubWindow_protectedbase_sender(bool* _dynamic_cast_ok, const void* 
 int QMdiSubWindow_protectedbase_senderSignalIndex(bool* _dynamic_cast_ok, const void* self);
 int QMdiSubWindow_protectedbase_receivers(bool* _dynamic_cast_ok, const void* self, const char* signal);
 bool QMdiSubWindow_protectedbase_isSignalConnected(bool* _dynamic_cast_ok, const void* self, QMetaMethod* signal);
+double QMdiSubWindow_protectedbase_getDecodedMetricF(bool* _dynamic_cast_ok, const void* self, PaintDeviceMetric metricA, PaintDeviceMetric metricB);
 
 void QMdiSubWindow_delete(QMdiSubWindow* self);
 

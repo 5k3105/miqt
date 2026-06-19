@@ -320,6 +320,10 @@ func (this *QApplication) StyleSheet() string {
 	return _ret
 }
 
+func (this *QApplication) AutoSipEnabled() bool {
+	return (bool)(C.QApplication_autoSipEnabled(this.h))
+}
+
 func (this *QApplication) SetStyleSheet(sheet string) {
 	sheet_ms := C.struct_miqt_string{}
 	sheet_ms.data = C.CString(sheet)
@@ -330,10 +334,6 @@ func (this *QApplication) SetStyleSheet(sheet string) {
 
 func (this *QApplication) SetAutoSipEnabled(enabled bool) {
 	C.QApplication_setAutoSipEnabled(this.h, (C.bool)(enabled))
-}
-
-func (this *QApplication) AutoSipEnabled() bool {
-	return (bool)(C.QApplication_autoSipEnabled(this.h))
 }
 
 func QApplication_CloseAllWindows() {

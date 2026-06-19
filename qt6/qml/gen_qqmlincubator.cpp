@@ -16,7 +16,7 @@
 extern "C" {
 #endif
 
-void miqt_exec_callback_QQmlIncubator_statusChanged(QQmlIncubator*, intptr_t, int);
+void miqt_exec_callback_QQmlIncubator_statusChanged(QQmlIncubator*, intptr_t, Status);
 void miqt_exec_callback_QQmlIncubator_setInitialState(QQmlIncubator*, intptr_t, QObject*);
 void miqt_exec_callback_QQmlIncubationController_incubatingObjectCountChanged(QQmlIncubationController*, intptr_t, int);
 #ifdef __cplusplus
@@ -27,7 +27,7 @@ class MiqtVirtualQQmlIncubator final : public QQmlIncubator {
 public:
 
 	MiqtVirtualQQmlIncubator(): QQmlIncubator() {}
-	MiqtVirtualQQmlIncubator(QQmlIncubator::IncubationMode param1): QQmlIncubator(param1) {}
+	MiqtVirtualQQmlIncubator(IncubationMode param1): QQmlIncubator(param1) {}
 
 	virtual ~MiqtVirtualQQmlIncubator() override = default;
 
@@ -35,19 +35,18 @@ public:
 	intptr_t handle__statusChanged = 0;
 
 	// Subclass to allow providing a Go implementation
-	virtual void statusChanged(QQmlIncubator::Status param1) override {
+	virtual void statusChanged(Status param1) override {
 		if (handle__statusChanged == 0) {
 			QQmlIncubator::statusChanged(param1);
 			return;
 		}
 
-		QQmlIncubator::Status param1_ret = param1;
-		int sigval1 = static_cast<int>(param1_ret);
+		Status sigval1 = param1;
 		miqt_exec_callback_QQmlIncubator_statusChanged(this, handle__statusChanged, sigval1);
 
 	}
 
-	friend void QQmlIncubator_virtualbase_statusChanged(void* self, int param1);
+	friend void QQmlIncubator_virtualbase_statusChanged(void* self, Status param1);
 
 	// cgo.Handle value for overwritten implementation
 	intptr_t handle__setInitialState = 0;
@@ -72,8 +71,8 @@ QQmlIncubator* QQmlIncubator_new() {
 	return new (std::nothrow) MiqtVirtualQQmlIncubator();
 }
 
-QQmlIncubator* QQmlIncubator_new2(int param1) {
-	return new (std::nothrow) MiqtVirtualQQmlIncubator(static_cast<QQmlIncubator::IncubationMode>(param1));
+QQmlIncubator* QQmlIncubator_new2(IncubationMode param1) {
+	return new (std::nothrow) MiqtVirtualQQmlIncubator(param1);
 }
 
 void QQmlIncubator_clear(QQmlIncubator* self) {
@@ -113,14 +112,12 @@ struct miqt_array /* of QQmlError* */  QQmlIncubator_errors(const QQmlIncubator*
 	return _out;
 }
 
-int QQmlIncubator_incubationMode(const QQmlIncubator* self) {
-	QQmlIncubator::IncubationMode _ret = self->incubationMode();
-	return static_cast<int>(_ret);
+IncubationMode QQmlIncubator_incubationMode(const QQmlIncubator* self) {
+	return self->incubationMode();
 }
 
-int QQmlIncubator_status(const QQmlIncubator* self) {
-	QQmlIncubator::Status _ret = self->status();
-	return static_cast<int>(_ret);
+Status QQmlIncubator_status(const QQmlIncubator* self) {
+	return self->status();
 }
 
 QObject* QQmlIncubator_object(const QQmlIncubator* self) {
@@ -148,8 +145,8 @@ bool QQmlIncubator_override_virtual_statusChanged(void* self, intptr_t slot) {
 	return true;
 }
 
-void QQmlIncubator_virtualbase_statusChanged(void* self, int param1) {
-	static_cast<MiqtVirtualQQmlIncubator*>(self)->QQmlIncubator::statusChanged(static_cast<MiqtVirtualQQmlIncubator::Status>(param1));
+void QQmlIncubator_virtualbase_statusChanged(void* self, Status param1) {
+	static_cast<MiqtVirtualQQmlIncubator*>(self)->QQmlIncubator::statusChanged(param1);
 }
 
 bool QQmlIncubator_override_virtual_setInitialState(void* self, intptr_t slot) {

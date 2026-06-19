@@ -1,5 +1,5 @@
-#include <qglobal.h>
-#include "gen_qglobal.h"
+#include <qtmocconstants.h>
+#include "gen_qtmocconstants.h"
 
 #ifdef __cplusplus
 extern "C" {

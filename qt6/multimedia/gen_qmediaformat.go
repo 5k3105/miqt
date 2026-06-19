@@ -129,9 +129,9 @@ func NewQMediaFormat2(other *QMediaFormat) *QMediaFormat {
 }
 
 // NewQMediaFormat3 constructs a new QMediaFormat object.
-func NewQMediaFormat3(format QMediaFormat__FileFormat) *QMediaFormat {
+func NewQMediaFormat3(format FileFormat) *QMediaFormat {
 
-	return newQMediaFormat(C.QMediaFormat_new3((C.int)(format)))
+	return newQMediaFormat(C.QMediaFormat_new3(format))
 }
 
 func (this *QMediaFormat) OperatorAssign(other *QMediaFormat) {
@@ -142,32 +142,32 @@ func (this *QMediaFormat) Swap(other *QMediaFormat) {
 	C.QMediaFormat_swap(this.h, other.cPointer())
 }
 
-func (this *QMediaFormat) FileFormat() QMediaFormat__FileFormat {
-	return (QMediaFormat__FileFormat)(C.QMediaFormat_fileFormat(this.h))
+func (this *QMediaFormat) FileFormat() FileFormat {
+	int /* TODO  */
 }
 
-func (this *QMediaFormat) SetFileFormat(f QMediaFormat__FileFormat) {
-	C.QMediaFormat_setFileFormat(this.h, (C.int)(f))
+func (this *QMediaFormat) SetFileFormat(f FileFormat) {
+	C.QMediaFormat_setFileFormat(this.h, f)
 }
 
-func (this *QMediaFormat) SetVideoCodec(codec QMediaFormat__VideoCodec) {
-	C.QMediaFormat_setVideoCodec(this.h, (C.int)(codec))
+func (this *QMediaFormat) SetVideoCodec(codec VideoCodec) {
+	C.QMediaFormat_setVideoCodec(this.h, codec)
 }
 
-func (this *QMediaFormat) VideoCodec() QMediaFormat__VideoCodec {
-	return (QMediaFormat__VideoCodec)(C.QMediaFormat_videoCodec(this.h))
+func (this *QMediaFormat) VideoCodec() VideoCodec {
+	int /* TODO  */
 }
 
-func (this *QMediaFormat) SetAudioCodec(codec QMediaFormat__AudioCodec) {
-	C.QMediaFormat_setAudioCodec(this.h, (C.int)(codec))
+func (this *QMediaFormat) SetAudioCodec(codec AudioCodec) {
+	C.QMediaFormat_setAudioCodec(this.h, codec)
 }
 
-func (this *QMediaFormat) AudioCodec() QMediaFormat__AudioCodec {
-	return (QMediaFormat__AudioCodec)(C.QMediaFormat_audioCodec(this.h))
+func (this *QMediaFormat) AudioCodec() AudioCodec {
+	int /* TODO  */
 }
 
-func (this *QMediaFormat) IsSupported(mode QMediaFormat__ConversionMode) bool {
-	return (bool)(C.QMediaFormat_isSupported(this.h, (C.int)(mode)))
+func (this *QMediaFormat) IsSupported(mode ConversionMode) bool {
+	return (bool)(C.QMediaFormat_isSupported(this.h, mode))
 }
 
 func (this *QMediaFormat) MimeType() *qt6.QMimeType {
@@ -176,52 +176,52 @@ func (this *QMediaFormat) MimeType() *qt6.QMimeType {
 	return _goptr
 }
 
-func (this *QMediaFormat) SupportedFileFormats(m QMediaFormat__ConversionMode) []QMediaFormat__FileFormat {
-	var _ma C.struct_miqt_array = C.QMediaFormat_supportedFileFormats(this.h, (C.int)(m))
-	_ret := make([]QMediaFormat__FileFormat, int(_ma.len))
-	_outCast := (*[0xffff]C.int)(unsafe.Pointer(_ma.data)) // hey ya
+func (this *QMediaFormat) SupportedFileFormats(m ConversionMode) []FileFormat {
+	var _ma C.struct_miqt_array = C.QMediaFormat_supportedFileFormats(this.h, m)
+	_ret := make([]FileFormat, int(_ma.len))
+	_outCast := (*[0xffff]C.FileFormat)(unsafe.Pointer(_ma.data)) // hey ya
 	for i := 0; i < int(_ma.len); i++ {
-		_ret[i] = (QMediaFormat__FileFormat)(_outCast[i])
+		int /* TODO  */
 	}
 	return _ret
 }
 
-func (this *QMediaFormat) SupportedVideoCodecs(m QMediaFormat__ConversionMode) []QMediaFormat__VideoCodec {
-	var _ma C.struct_miqt_array = C.QMediaFormat_supportedVideoCodecs(this.h, (C.int)(m))
-	_ret := make([]QMediaFormat__VideoCodec, int(_ma.len))
-	_outCast := (*[0xffff]C.int)(unsafe.Pointer(_ma.data)) // hey ya
+func (this *QMediaFormat) SupportedVideoCodecs(m ConversionMode) []VideoCodec {
+	var _ma C.struct_miqt_array = C.QMediaFormat_supportedVideoCodecs(this.h, m)
+	_ret := make([]VideoCodec, int(_ma.len))
+	_outCast := (*[0xffff]C.VideoCodec)(unsafe.Pointer(_ma.data)) // hey ya
 	for i := 0; i < int(_ma.len); i++ {
-		_ret[i] = (QMediaFormat__VideoCodec)(_outCast[i])
+		int /* TODO  */
 	}
 	return _ret
 }
 
-func (this *QMediaFormat) SupportedAudioCodecs(m QMediaFormat__ConversionMode) []QMediaFormat__AudioCodec {
-	var _ma C.struct_miqt_array = C.QMediaFormat_supportedAudioCodecs(this.h, (C.int)(m))
-	_ret := make([]QMediaFormat__AudioCodec, int(_ma.len))
-	_outCast := (*[0xffff]C.int)(unsafe.Pointer(_ma.data)) // hey ya
+func (this *QMediaFormat) SupportedAudioCodecs(m ConversionMode) []AudioCodec {
+	var _ma C.struct_miqt_array = C.QMediaFormat_supportedAudioCodecs(this.h, m)
+	_ret := make([]AudioCodec, int(_ma.len))
+	_outCast := (*[0xffff]C.AudioCodec)(unsafe.Pointer(_ma.data)) // hey ya
 	for i := 0; i < int(_ma.len); i++ {
-		_ret[i] = (QMediaFormat__AudioCodec)(_outCast[i])
+		int /* TODO  */
 	}
 	return _ret
 }
 
-func QMediaFormat_FileFormatName(fileFormat QMediaFormat__FileFormat) string {
-	var _ms C.struct_miqt_string = C.QMediaFormat_fileFormatName((C.int)(fileFormat))
+func QMediaFormat_FileFormatName(fileFormat FileFormat) string {
+	var _ms C.struct_miqt_string = C.QMediaFormat_fileFormatName(fileFormat)
 	_ret := C.GoStringN(_ms.data, C.int(int64(_ms.len)))
 	C.free(unsafe.Pointer(_ms.data))
 	return _ret
 }
 
-func QMediaFormat_AudioCodecName(codec QMediaFormat__AudioCodec) string {
-	var _ms C.struct_miqt_string = C.QMediaFormat_audioCodecName((C.int)(codec))
+func QMediaFormat_AudioCodecName(codec AudioCodec) string {
+	var _ms C.struct_miqt_string = C.QMediaFormat_audioCodecName(codec)
 	_ret := C.GoStringN(_ms.data, C.int(int64(_ms.len)))
 	C.free(unsafe.Pointer(_ms.data))
 	return _ret
 }
 
-func QMediaFormat_VideoCodecName(codec QMediaFormat__VideoCodec) string {
-	var _ms C.struct_miqt_string = C.QMediaFormat_videoCodecName((C.int)(codec))
+func QMediaFormat_VideoCodecName(codec VideoCodec) string {
+	var _ms C.struct_miqt_string = C.QMediaFormat_videoCodecName(codec)
 	_ret := C.GoStringN(_ms.data, C.int(int64(_ms.len)))
 	C.free(unsafe.Pointer(_ms.data))
 	return _ret
@@ -256,8 +256,8 @@ func (this *QMediaFormat) OperatorNotEqual(other *QMediaFormat) bool {
 	return (bool)(C.QMediaFormat_operatorNotEqual(this.h, other.cPointer()))
 }
 
-func (this *QMediaFormat) ResolveForEncoding(flags QMediaFormat__ResolveFlags) {
-	C.QMediaFormat_resolveForEncoding(this.h, (C.int)(flags))
+func (this *QMediaFormat) ResolveForEncoding(flags ResolveFlags) {
+	C.QMediaFormat_resolveForEncoding(this.h, flags)
 }
 
 // Delete this object from C++ memory.

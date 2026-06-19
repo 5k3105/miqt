@@ -18,7 +18,7 @@
 extern "C" {
 #endif
 
-bool miqt_exec_callback_QBuffer_open(QBuffer*, intptr_t, int);
+bool miqt_exec_callback_QBuffer_open(QBuffer*, intptr_t, OpenMode);
 void miqt_exec_callback_QBuffer_close(QBuffer*, intptr_t);
 long long miqt_exec_callback_QBuffer_size(const QBuffer*, intptr_t);
 long long miqt_exec_callback_QBuffer_pos(const QBuffer*, intptr_t);
@@ -58,18 +58,17 @@ public:
 	intptr_t handle__open = 0;
 
 	// Subclass to allow providing a Go implementation
-	virtual bool open(QIODeviceBase::OpenMode openMode) override {
+	virtual bool open(OpenMode openMode) override {
 		if (handle__open == 0) {
 			return QBuffer::open(openMode);
 		}
 
-		QIODeviceBase::OpenMode openMode_ret = openMode;
-		int sigval1 = static_cast<int>(openMode_ret);
+		OpenMode sigval1 = openMode;
 		bool callback_return_value = miqt_exec_callback_QBuffer_open(this, handle__open, sigval1);
 		return callback_return_value;
 	}
 
-	friend bool QBuffer_virtualbase_open(void* self, int openMode);
+	friend bool QBuffer_virtualbase_open(void* self, OpenMode openMode);
 
 	// cgo.Handle value for overwritten implementation
 	intptr_t handle__close = 0;
@@ -512,8 +511,8 @@ void QBuffer_setData(QBuffer* self, struct miqt_string data) {
 	self->setData(data_QByteArray);
 }
 
-void QBuffer_setData2(QBuffer* self, const char* data, int len) {
-	self->setData(data, static_cast<int>(len));
+void QBuffer_setData2(QBuffer* self, const char* data, ptrdiff_t len) {
+	self->setData(data, (qsizetype)(len));
 }
 
 struct miqt_string QBuffer_data(const QBuffer* self) {
@@ -525,8 +524,8 @@ struct miqt_string QBuffer_data(const QBuffer* self) {
 	return _ms;
 }
 
-bool QBuffer_open(QBuffer* self, int openMode) {
-	return self->open(static_cast<QIODeviceBase::OpenMode>(openMode));
+bool QBuffer_open(QBuffer* self, OpenMode openMode) {
+	return self->open(openMode);
 }
 
 void QBuffer_close(QBuffer* self) {
@@ -587,8 +586,8 @@ bool QBuffer_override_virtual_open(void* self, intptr_t slot) {
 	return true;
 }
 
-bool QBuffer_virtualbase_open(void* self, int openMode) {
-	return static_cast<MiqtVirtualQBuffer*>(self)->QBuffer::open(static_cast<MiqtVirtualQBuffer::OpenMode>(openMode));
+bool QBuffer_virtualbase_open(void* self, OpenMode openMode) {
+	return static_cast<MiqtVirtualQBuffer*>(self)->QBuffer::open(openMode);
 }
 
 bool QBuffer_override_virtual_close(void* self, intptr_t slot) {

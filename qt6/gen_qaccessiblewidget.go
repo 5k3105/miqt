@@ -58,19 +58,19 @@ func NewQAccessibleWidget(o *QWidget) *QAccessibleWidget {
 }
 
 // NewQAccessibleWidget2 constructs a new QAccessibleWidget object.
-func NewQAccessibleWidget2(o *QWidget, r QAccessible__Role) *QAccessibleWidget {
-
-	return newQAccessibleWidget(C.QAccessibleWidget_new2(o.cPointer(), (C.int)(r)))
-}
-
-// NewQAccessibleWidget3 constructs a new QAccessibleWidget object.
-func NewQAccessibleWidget3(o *QWidget, r QAccessible__Role, name string) *QAccessibleWidget {
+func NewQAccessibleWidget2(o *QWidget, r QAccessible__Role, name string) *QAccessibleWidget {
 	name_ms := C.struct_miqt_string{}
 	name_ms.data = C.CString(name)
 	name_ms.len = C.size_t(len(name))
 	defer C.free(unsafe.Pointer(name_ms.data))
 
-	return newQAccessibleWidget(C.QAccessibleWidget_new3(o.cPointer(), (C.int)(r), name_ms))
+	return newQAccessibleWidget(C.QAccessibleWidget_new2(o.cPointer(), (C.int)(r), name_ms))
+}
+
+// NewQAccessibleWidget3 constructs a new QAccessibleWidget object.
+func NewQAccessibleWidget3(o *QWidget, r QAccessible__Role) *QAccessibleWidget {
+
+	return newQAccessibleWidget(C.QAccessibleWidget_new3(o.cPointer(), (C.int)(r)))
 }
 
 func (this *QAccessibleWidget) IsValid() bool {
@@ -87,32 +87,6 @@ func (this *QAccessibleWidget) ChildCount() int {
 
 func (this *QAccessibleWidget) IndexOfChild(child *QAccessibleInterface) int {
 	return (int)(C.QAccessibleWidget_indexOfChild(this.h, child.cPointer()))
-}
-
-func (this *QAccessibleWidget) Relations(match QAccessible__RelationFlag) []struct {
-	First  *QAccessibleInterface
-	Second QAccessible__RelationFlag
-} {
-	var _ma C.struct_miqt_array = C.QAccessibleWidget_relations(this.h, (C.int)(match))
-	_ret := make([]struct {
-		First  *QAccessibleInterface
-		Second QAccessible__RelationFlag
-	}, int(_ma.len))
-	_outCast := (*[0xffff]C.struct_miqt_map)(unsafe.Pointer(_ma.data)) // hey ya
-	for i := 0; i < int(_ma.len); i++ {
-		var _lv_mm C.struct_miqt_map = _outCast[i]
-		_lv_First_CArray := (*[0xffff]*C.QAccessibleInterface)(unsafe.Pointer(_lv_mm.keys))
-		_lv_Second_CArray := (*[0xffff]C.int)(unsafe.Pointer(_lv_mm.values))
-		_lv_entry_First := newQAccessibleInterface(_lv_First_CArray[0])
-
-		_lv_entry_Second := (QAccessible__RelationFlag)(_lv_Second_CArray[0])
-
-		_ret[i] = struct {
-			First  *QAccessibleInterface
-			Second QAccessible__RelationFlag
-		}{First: _lv_entry_First, Second: _lv_entry_Second}
-	}
-	return _ret
 }
 
 func (this *QAccessibleWidget) FocusChild() *QAccessibleInterface {
@@ -202,4 +176,85 @@ func (this *QAccessibleWidget) KeyBindingsForAction(actionName string) []string 
 		_ret[i] = _lv_ret
 	}
 	return _ret
+}
+
+type QAccessibleWidgetV2 struct {
+	h *C.QAccessibleWidgetV2
+	*QAccessibleWidget
+	*QAccessibleAttributesInterface
+}
+
+func (this *QAccessibleWidgetV2) cPointer() *C.QAccessibleWidgetV2 {
+	if this == nil {
+		return nil
+	}
+	return this.h
+}
+
+func (this *QAccessibleWidgetV2) UnsafePointer() unsafe.Pointer {
+	if this == nil {
+		return nil
+	}
+	return unsafe.Pointer(this.h)
+}
+
+// newQAccessibleWidgetV2 constructs the type using only CGO pointers.
+func newQAccessibleWidgetV2(h *C.QAccessibleWidgetV2) *QAccessibleWidgetV2 {
+	if h == nil {
+		return nil
+	}
+	var outptr_QAccessibleWidget *C.QAccessibleWidget = nil
+	var outptr_QAccessibleAttributesInterface *C.QAccessibleAttributesInterface = nil
+	C.QAccessibleWidgetV2_virtbase(h, &outptr_QAccessibleWidget, &outptr_QAccessibleAttributesInterface)
+
+	return &QAccessibleWidgetV2{h: h,
+		QAccessibleWidget:              newQAccessibleWidget(outptr_QAccessibleWidget),
+		QAccessibleAttributesInterface: newQAccessibleAttributesInterface(outptr_QAccessibleAttributesInterface)}
+}
+
+// UnsafeNewQAccessibleWidgetV2 constructs the type using only unsafe pointers.
+func UnsafeNewQAccessibleWidgetV2(h unsafe.Pointer) *QAccessibleWidgetV2 {
+	return newQAccessibleWidgetV2((*C.QAccessibleWidgetV2)(h))
+}
+
+// NewQAccessibleWidgetV2 constructs a new QAccessibleWidgetV2 object.
+func NewQAccessibleWidgetV2(object *QWidget) *QAccessibleWidgetV2 {
+
+	return newQAccessibleWidgetV2(C.QAccessibleWidgetV2_new(object.cPointer()))
+}
+
+// NewQAccessibleWidgetV22 constructs a new QAccessibleWidgetV2 object.
+func NewQAccessibleWidgetV22(object *QWidget, role QAccessible__Role, name string) *QAccessibleWidgetV2 {
+	name_ms := C.struct_miqt_string{}
+	name_ms.data = C.CString(name)
+	name_ms.len = C.size_t(len(name))
+	defer C.free(unsafe.Pointer(name_ms.data))
+
+	return newQAccessibleWidgetV2(C.QAccessibleWidgetV2_new2(object.cPointer(), (C.int)(role), name_ms))
+}
+
+// NewQAccessibleWidgetV23 constructs a new QAccessibleWidgetV2 object.
+func NewQAccessibleWidgetV23(object *QWidget, role QAccessible__Role) *QAccessibleWidgetV2 {
+
+	return newQAccessibleWidgetV2(C.QAccessibleWidgetV2_new3(object.cPointer(), (C.int)(role)))
+}
+
+func (this *QAccessibleWidgetV2) InterfaceCast(t QAccessible__InterfaceType) unsafe.Pointer {
+	return (unsafe.Pointer)(C.QAccessibleWidgetV2_interfaceCast(this.h, (C.int)(t)))
+}
+
+func (this *QAccessibleWidgetV2) AttributeKeys() []QAccessible__Attribute {
+	var _ma C.struct_miqt_array = C.QAccessibleWidgetV2_attributeKeys(this.h)
+	_ret := make([]QAccessible__Attribute, int(_ma.len))
+	_outCast := (*[0xffff]C.int)(unsafe.Pointer(_ma.data)) // hey ya
+	for i := 0; i < int(_ma.len); i++ {
+		_ret[i] = (QAccessible__Attribute)(_outCast[i])
+	}
+	return _ret
+}
+
+func (this *QAccessibleWidgetV2) AttributeValue(key QAccessible__Attribute) *QVariant {
+	_goptr := newQVariant(C.QAccessibleWidgetV2_attributeValue(this.h, (C.int)(key)))
+	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
+	return _goptr
 }

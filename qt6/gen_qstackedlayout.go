@@ -118,12 +118,12 @@ func (this *QStackedLayout) Count() int {
 	return (int)(C.QStackedLayout_count(this.h))
 }
 
-func (this *QStackedLayout) StackingMode() QStackedLayout__StackingMode {
-	return (QStackedLayout__StackingMode)(C.QStackedLayout_stackingMode(this.h))
+func (this *QStackedLayout) StackingMode() StackingMode {
+	int /* TODO  */
 }
 
-func (this *QStackedLayout) SetStackingMode(stackingMode QStackedLayout__StackingMode) {
-	C.QStackedLayout_setStackingMode(this.h, (C.int)(stackingMode))
+func (this *QStackedLayout) SetStackingMode(stackingMode StackingMode) {
+	C.QStackedLayout_setStackingMode(this.h, stackingMode)
 }
 
 func (this *QStackedLayout) AddItem(item *QLayoutItem) {
@@ -191,6 +191,26 @@ func (this *QStackedLayout) OnCurrentChanged(slot func(index int)) {
 
 //export miqt_exec_callback_QStackedLayout_currentChanged
 func miqt_exec_callback_QStackedLayout_currentChanged(cb C.intptr_t, index C.int) {
+	gofunc, ok := cgo.Handle(cb).Value().(func(index int))
+	if !ok {
+		panic("miqt: callback of non-callback type (heap corruption?)")
+	}
+
+	// Convert all CABI parameters to Go parameters
+	slotval1 := (int)(index)
+
+	gofunc(slotval1)
+}
+
+func (this *QStackedLayout) WidgetAdded(index int) {
+	C.QStackedLayout_widgetAdded(this.h, (C.int)(index))
+}
+func (this *QStackedLayout) OnWidgetAdded(slot func(index int)) {
+	C.QStackedLayout_connect_widgetAdded(this.h, C.intptr_t(cgo.NewHandle(slot)))
+}
+
+//export miqt_exec_callback_QStackedLayout_widgetAdded
+func miqt_exec_callback_QStackedLayout_widgetAdded(cb C.intptr_t, index C.int) {
 	gofunc, ok := cgo.Handle(cb).Value().(func(index int))
 	if !ok {
 		panic("miqt: callback of non-callback type (heap corruption?)")
@@ -802,12 +822,12 @@ func miqt_exec_callback_QStackedLayout_isEmpty(self *C.QStackedLayout, cb C.intp
 
 }
 
-func (this *QStackedLayout) callVirtualBase_ControlTypes() QSizePolicy__ControlType {
+func (this *QStackedLayout) callVirtualBase_ControlTypes() ControlType {
 
-	return (QSizePolicy__ControlType)(C.QStackedLayout_virtualbase_controlTypes(unsafe.Pointer(this.h)))
+	return (ControlType)(C.QStackedLayout_virtualbase_controlTypes(unsafe.Pointer(this.h)))
 
 }
-func (this *QStackedLayout) OnControlTypes(slot func(super func() QSizePolicy__ControlType) QSizePolicy__ControlType) {
+func (this *QStackedLayout) OnControlTypes(slot func(super func() ControlType) ControlType) {
 	ok := C.QStackedLayout_override_virtual_controlTypes(unsafe.Pointer(this.h), C.intptr_t(cgo.NewHandle(slot)))
 	if !ok {
 		panic("miqt: can only override virtual methods for directly constructed types")
@@ -816,7 +836,7 @@ func (this *QStackedLayout) OnControlTypes(slot func(super func() QSizePolicy__C
 
 //export miqt_exec_callback_QStackedLayout_controlTypes
 func miqt_exec_callback_QStackedLayout_controlTypes(self *C.QStackedLayout, cb C.intptr_t) C.int {
-	gofunc, ok := cgo.Handle(cb).Value().(func(super func() QSizePolicy__ControlType) QSizePolicy__ControlType)
+	gofunc, ok := cgo.Handle(cb).Value().(func(super func() ControlType) ControlType)
 	if !ok {
 		panic("miqt: callback of non-callback type (heap corruption?)")
 	}

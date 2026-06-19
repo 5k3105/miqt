@@ -58,7 +58,7 @@ bool QSoundEffect_isMuted(const QSoundEffect* self);
 void QSoundEffect_setMuted(QSoundEffect* self, bool muted);
 bool QSoundEffect_isLoaded(const QSoundEffect* self);
 bool QSoundEffect_isPlaying(const QSoundEffect* self);
-int QSoundEffect_status(const QSoundEffect* self);
+Status QSoundEffect_status(const QSoundEffect* self);
 void QSoundEffect_sourceChanged(QSoundEffect* self);
 void QSoundEffect_connect_sourceChanged(QSoundEffect* self, intptr_t slot);
 void QSoundEffect_loopCountChanged(QSoundEffect* self);

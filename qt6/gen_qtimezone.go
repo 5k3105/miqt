@@ -13,11 +13,11 @@ import (
 	"unsafe"
 )
 
-type QTimeZone__ int
+type QTimeZone__Initialization int
 
 const (
-	QTimeZone__MinUtcOffsetSecs QTimeZone__ = -50400
-	QTimeZone__MaxUtcOffsetSecs QTimeZone__ = 50400
+	QTimeZone__LocalTime QTimeZone__Initialization = 0
+	QTimeZone__UTC       QTimeZone__Initialization = 1
 )
 
 type QTimeZone__TimeType int
@@ -76,16 +76,9 @@ func NewQTimeZone() *QTimeZone {
 }
 
 // NewQTimeZone2 constructs a new QTimeZone object.
-func NewQTimeZone2(ianaId []byte) *QTimeZone {
-	ianaId_alias := C.struct_miqt_string{}
-	if len(ianaId) > 0 {
-		ianaId_alias.data = (*C.char)(unsafe.Pointer(&ianaId[0]))
-	} else {
-		ianaId_alias.data = (*C.char)(unsafe.Pointer(nil))
-	}
-	ianaId_alias.len = C.size_t(len(ianaId))
+func NewQTimeZone2(spec Initialization) *QTimeZone {
 
-	return newQTimeZone(C.QTimeZone_new2(ianaId_alias))
+	return newQTimeZone(C.QTimeZone_new2(spec))
 }
 
 // NewQTimeZone3 constructs a new QTimeZone object.
@@ -95,34 +88,20 @@ func NewQTimeZone3(offsetSeconds int) *QTimeZone {
 }
 
 // NewQTimeZone4 constructs a new QTimeZone object.
-func NewQTimeZone4(zoneId []byte, offsetSeconds int, name string, abbreviation string) *QTimeZone {
-	zoneId_alias := C.struct_miqt_string{}
-	if len(zoneId) > 0 {
-		zoneId_alias.data = (*C.char)(unsafe.Pointer(&zoneId[0]))
+func NewQTimeZone4(ianaId []byte) *QTimeZone {
+	ianaId_alias := C.struct_miqt_string{}
+	if len(ianaId) > 0 {
+		ianaId_alias.data = (*C.char)(unsafe.Pointer(&ianaId[0]))
 	} else {
-		zoneId_alias.data = (*C.char)(unsafe.Pointer(nil))
+		ianaId_alias.data = (*C.char)(unsafe.Pointer(nil))
 	}
-	zoneId_alias.len = C.size_t(len(zoneId))
-	name_ms := C.struct_miqt_string{}
-	name_ms.data = C.CString(name)
-	name_ms.len = C.size_t(len(name))
-	defer C.free(unsafe.Pointer(name_ms.data))
-	abbreviation_ms := C.struct_miqt_string{}
-	abbreviation_ms.data = C.CString(abbreviation)
-	abbreviation_ms.len = C.size_t(len(abbreviation))
-	defer C.free(unsafe.Pointer(abbreviation_ms.data))
+	ianaId_alias.len = C.size_t(len(ianaId))
 
-	return newQTimeZone(C.QTimeZone_new4(zoneId_alias, (C.int)(offsetSeconds), name_ms, abbreviation_ms))
+	return newQTimeZone(C.QTimeZone_new4(ianaId_alias))
 }
 
 // NewQTimeZone5 constructs a new QTimeZone object.
-func NewQTimeZone5(other *QTimeZone) *QTimeZone {
-
-	return newQTimeZone(C.QTimeZone_new5(other.cPointer()))
-}
-
-// NewQTimeZone6 constructs a new QTimeZone object.
-func NewQTimeZone6(zoneId []byte, offsetSeconds int, name string, abbreviation string, territory QLocale__Country) *QTimeZone {
+func NewQTimeZone5(zoneId []byte, offsetSeconds int, name string, abbreviation string) *QTimeZone {
 	zoneId_alias := C.struct_miqt_string{}
 	if len(zoneId) > 0 {
 		zoneId_alias.data = (*C.char)(unsafe.Pointer(&zoneId[0]))
@@ -139,11 +118,38 @@ func NewQTimeZone6(zoneId []byte, offsetSeconds int, name string, abbreviation s
 	abbreviation_ms.len = C.size_t(len(abbreviation))
 	defer C.free(unsafe.Pointer(abbreviation_ms.data))
 
-	return newQTimeZone(C.QTimeZone_new6(zoneId_alias, (C.int)(offsetSeconds), name_ms, abbreviation_ms, (C.ushort)(territory)))
+	return newQTimeZone(C.QTimeZone_new5(zoneId_alias, (C.int)(offsetSeconds), name_ms, abbreviation_ms))
+}
+
+// NewQTimeZone6 constructs a new QTimeZone object.
+func NewQTimeZone6(other *QTimeZone) *QTimeZone {
+
+	return newQTimeZone(C.QTimeZone_new6(other.cPointer()))
 }
 
 // NewQTimeZone7 constructs a new QTimeZone object.
-func NewQTimeZone7(zoneId []byte, offsetSeconds int, name string, abbreviation string, territory QLocale__Country, comment string) *QTimeZone {
+func NewQTimeZone7(zoneId []byte, offsetSeconds int, name string, abbreviation string, territory Country) *QTimeZone {
+	zoneId_alias := C.struct_miqt_string{}
+	if len(zoneId) > 0 {
+		zoneId_alias.data = (*C.char)(unsafe.Pointer(&zoneId[0]))
+	} else {
+		zoneId_alias.data = (*C.char)(unsafe.Pointer(nil))
+	}
+	zoneId_alias.len = C.size_t(len(zoneId))
+	name_ms := C.struct_miqt_string{}
+	name_ms.data = C.CString(name)
+	name_ms.len = C.size_t(len(name))
+	defer C.free(unsafe.Pointer(name_ms.data))
+	abbreviation_ms := C.struct_miqt_string{}
+	abbreviation_ms.data = C.CString(abbreviation)
+	abbreviation_ms.len = C.size_t(len(abbreviation))
+	defer C.free(unsafe.Pointer(abbreviation_ms.data))
+
+	return newQTimeZone(C.QTimeZone_new7(zoneId_alias, (C.int)(offsetSeconds), name_ms, abbreviation_ms, territory))
+}
+
+// NewQTimeZone8 constructs a new QTimeZone object.
+func NewQTimeZone8(zoneId []byte, offsetSeconds int, name string, abbreviation string, territory Country, comment string) *QTimeZone {
 	zoneId_alias := C.struct_miqt_string{}
 	if len(zoneId) > 0 {
 		zoneId_alias.data = (*C.char)(unsafe.Pointer(&zoneId[0]))
@@ -164,7 +170,7 @@ func NewQTimeZone7(zoneId []byte, offsetSeconds int, name string, abbreviation s
 	comment_ms.len = C.size_t(len(comment))
 	defer C.free(unsafe.Pointer(comment_ms.data))
 
-	return newQTimeZone(C.QTimeZone_new7(zoneId_alias, (C.int)(offsetSeconds), name_ms, abbreviation_ms, (C.ushort)(territory), comment_ms))
+	return newQTimeZone(C.QTimeZone_new8(zoneId_alias, (C.int)(offsetSeconds), name_ms, abbreviation_ms, territory, comment_ms))
 }
 
 func (this *QTimeZone) OperatorAssign(other *QTimeZone) {
@@ -179,6 +185,38 @@ func (this *QTimeZone) IsValid() bool {
 	return (bool)(C.QTimeZone_isValid(this.h))
 }
 
+func QTimeZone_FromSecondsAheadOfUtc(offset int) *QTimeZone {
+	_goptr := newQTimeZone(C.QTimeZone_fromSecondsAheadOfUtc((C.int)(offset)))
+	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
+	return _goptr
+}
+
+func (this *QTimeZone) TimeSpec() TimeSpec {
+	return (TimeSpec)(C.QTimeZone_timeSpec(this.h))
+}
+
+func (this *QTimeZone) FixedSecondsAheadOfUtc() int {
+	return (int)(C.QTimeZone_fixedSecondsAheadOfUtc(this.h))
+}
+
+func QTimeZone_IsUtcOrFixedOffset(spec TimeSpec) bool {
+	return (bool)(C.QTimeZone_isUtcOrFixedOffset((C.int)(spec)))
+}
+
+func (this *QTimeZone) IsUtcOrFixedOffset2() bool {
+	return (bool)(C.QTimeZone_isUtcOrFixedOffset2(this.h))
+}
+
+func (this *QTimeZone) AsBackendZone() *QTimeZone {
+	_goptr := newQTimeZone(C.QTimeZone_asBackendZone(this.h))
+	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
+	return _goptr
+}
+
+func (this *QTimeZone) HasAlternativeName(alias QByteArrayView) bool {
+	return (bool)(C.QTimeZone_hasAlternativeName(this.h, alias.cPointer()))
+}
+
 func (this *QTimeZone) Id() []byte {
 	var _bytearray C.struct_miqt_string = C.QTimeZone_id(this.h)
 	_ret := C.GoBytes(unsafe.Pointer(_bytearray.data), C.int(int64(_bytearray.len)))
@@ -186,8 +224,8 @@ func (this *QTimeZone) Id() []byte {
 	return _ret
 }
 
-func (this *QTimeZone) Territory() QLocale__Country {
-	return (QLocale__Country)(C.QTimeZone_territory(this.h))
+func (this *QTimeZone) Territory() Country {
+	return (Country)(C.QTimeZone_territory(this.h))
 }
 
 func (this *QTimeZone) Country() QLocale__Country {
@@ -208,8 +246,8 @@ func (this *QTimeZone) DisplayName(atDateTime *QDateTime) string {
 	return _ret
 }
 
-func (this *QTimeZone) DisplayNameWithTimeType(timeType QTimeZone__TimeType) string {
-	var _ms C.struct_miqt_string = C.QTimeZone_displayNameWithTimeType(this.h, (C.int)(timeType))
+func (this *QTimeZone) DisplayNameWithTimeType(timeType TimeType) string {
+	var _ms C.struct_miqt_string = C.QTimeZone_displayNameWithTimeType(this.h, timeType)
 	_ret := C.GoStringN(_ms.data, C.int(int64(_ms.len)))
 	C.free(unsafe.Pointer(_ms.data))
 	return _ret
@@ -242,38 +280,24 @@ func (this *QTimeZone) IsDaylightTime(atDateTime *QDateTime) bool {
 	return (bool)(C.QTimeZone_isDaylightTime(this.h, atDateTime.cPointer()))
 }
 
-func (this *QTimeZone) OffsetData(forDateTime *QDateTime) *QTimeZone__OffsetData {
-	_goptr := newQTimeZone__OffsetData(C.QTimeZone_offsetData(this.h, forDateTime.cPointer()))
-	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
-	return _goptr
+func (this *QTimeZone) OffsetData(forDateTime *QDateTime) OffsetData {
+	int /* TODO  */
 }
 
 func (this *QTimeZone) HasTransitions() bool {
 	return (bool)(C.QTimeZone_hasTransitions(this.h))
 }
 
-func (this *QTimeZone) NextTransition(afterDateTime *QDateTime) *QTimeZone__OffsetData {
-	_goptr := newQTimeZone__OffsetData(C.QTimeZone_nextTransition(this.h, afterDateTime.cPointer()))
-	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
-	return _goptr
+func (this *QTimeZone) NextTransition(afterDateTime *QDateTime) OffsetData {
+	int /* TODO  */
 }
 
-func (this *QTimeZone) PreviousTransition(beforeDateTime *QDateTime) *QTimeZone__OffsetData {
-	_goptr := newQTimeZone__OffsetData(C.QTimeZone_previousTransition(this.h, beforeDateTime.cPointer()))
-	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
-	return _goptr
+func (this *QTimeZone) PreviousTransition(beforeDateTime *QDateTime) OffsetData {
+	int /* TODO  */
 }
 
-func (this *QTimeZone) Transitions(fromDateTime *QDateTime, toDateTime *QDateTime) []QTimeZone__OffsetData {
-	var _ma C.struct_miqt_array = C.QTimeZone_transitions(this.h, fromDateTime.cPointer(), toDateTime.cPointer())
-	_ret := make([]QTimeZone__OffsetData, int(_ma.len))
-	_outCast := (*[0xffff]*C.QTimeZone__OffsetData)(unsafe.Pointer(_ma.data)) // hey ya
-	for i := 0; i < int(_ma.len); i++ {
-		_lv_goptr := newQTimeZone__OffsetData(_outCast[i])
-		_lv_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
-		_ret[i] = *_lv_goptr
-	}
-	return _ret
+func (this *QTimeZone) Transitions(fromDateTime *QDateTime, toDateTime *QDateTime) OffsetDataList {
+	int /* TODO  */
 }
 
 func QTimeZone_SystemTimeZoneId() []byte {
@@ -319,8 +343,8 @@ func QTimeZone_AvailableTimeZoneIds() [][]byte {
 	return _ret
 }
 
-func QTimeZone_AvailableTimeZoneIdsWithTerritory(territory QLocale__Country) [][]byte {
-	var _ma C.struct_miqt_array = C.QTimeZone_availableTimeZoneIdsWithTerritory((C.ushort)(territory))
+func QTimeZone_AvailableTimeZoneIdsWithTerritory(territory Country) [][]byte {
+	var _ma C.struct_miqt_array = C.QTimeZone_availableTimeZoneIdsWithTerritory(territory)
 	_ret := make([][]byte, int(_ma.len))
 	_outCast := (*[0xffff]C.struct_miqt_string)(unsafe.Pointer(_ma.data)) // hey ya
 	for i := 0; i < int(_ma.len); i++ {
@@ -373,7 +397,7 @@ func QTimeZone_WindowsIdToDefaultIanaId(windowsId []byte) []byte {
 	return _ret
 }
 
-func QTimeZone_WindowsIdToDefaultIanaId2(windowsId []byte, territory QLocale__Country) []byte {
+func QTimeZone_WindowsIdToDefaultIanaId2(windowsId []byte, territory Country) []byte {
 	windowsId_alias := C.struct_miqt_string{}
 	if len(windowsId) > 0 {
 		windowsId_alias.data = (*C.char)(unsafe.Pointer(&windowsId[0]))
@@ -381,7 +405,7 @@ func QTimeZone_WindowsIdToDefaultIanaId2(windowsId []byte, territory QLocale__Co
 		windowsId_alias.data = (*C.char)(unsafe.Pointer(nil))
 	}
 	windowsId_alias.len = C.size_t(len(windowsId))
-	var _bytearray C.struct_miqt_string = C.QTimeZone_windowsIdToDefaultIanaId2(windowsId_alias, (C.ushort)(territory))
+	var _bytearray C.struct_miqt_string = C.QTimeZone_windowsIdToDefaultIanaId2(windowsId_alias, territory)
 	_ret := C.GoBytes(unsafe.Pointer(_bytearray.data), C.int(int64(_bytearray.len)))
 	C.free(unsafe.Pointer(_bytearray.data))
 	return _ret
@@ -407,7 +431,7 @@ func QTimeZone_WindowsIdToIanaIds(windowsId []byte) [][]byte {
 	return _ret
 }
 
-func QTimeZone_WindowsIdToIanaIds2(windowsId []byte, territory QLocale__Country) [][]byte {
+func QTimeZone_WindowsIdToIanaIds2(windowsId []byte, territory Country) [][]byte {
 	windowsId_alias := C.struct_miqt_string{}
 	if len(windowsId) > 0 {
 		windowsId_alias.data = (*C.char)(unsafe.Pointer(&windowsId[0]))
@@ -415,7 +439,7 @@ func QTimeZone_WindowsIdToIanaIds2(windowsId []byte, territory QLocale__Country)
 		windowsId_alias.data = (*C.char)(unsafe.Pointer(nil))
 	}
 	windowsId_alias.len = C.size_t(len(windowsId))
-	var _ma C.struct_miqt_array = C.QTimeZone_windowsIdToIanaIds2(windowsId_alias, (C.ushort)(territory))
+	var _ma C.struct_miqt_array = C.QTimeZone_windowsIdToIanaIds2(windowsId_alias, territory)
 	_ret := make([][]byte, int(_ma.len))
 	_outCast := (*[0xffff]C.struct_miqt_string)(unsafe.Pointer(_ma.data)) // hey ya
 	for i := 0; i < int(_ma.len); i++ {
@@ -427,29 +451,29 @@ func QTimeZone_WindowsIdToIanaIds2(windowsId []byte, territory QLocale__Country)
 	return _ret
 }
 
-func (this *QTimeZone) DisplayName2(atDateTime *QDateTime, nameType QTimeZone__NameType) string {
-	var _ms C.struct_miqt_string = C.QTimeZone_displayName2(this.h, atDateTime.cPointer(), (C.int)(nameType))
+func (this *QTimeZone) DisplayName2(atDateTime *QDateTime, nameType NameType) string {
+	var _ms C.struct_miqt_string = C.QTimeZone_displayName2(this.h, atDateTime.cPointer(), nameType)
 	_ret := C.GoStringN(_ms.data, C.int(int64(_ms.len)))
 	C.free(unsafe.Pointer(_ms.data))
 	return _ret
 }
 
-func (this *QTimeZone) DisplayName3(atDateTime *QDateTime, nameType QTimeZone__NameType, locale *QLocale) string {
-	var _ms C.struct_miqt_string = C.QTimeZone_displayName3(this.h, atDateTime.cPointer(), (C.int)(nameType), locale.cPointer())
+func (this *QTimeZone) DisplayName3(atDateTime *QDateTime, nameType NameType, locale *QLocale) string {
+	var _ms C.struct_miqt_string = C.QTimeZone_displayName3(this.h, atDateTime.cPointer(), nameType, locale.cPointer())
 	_ret := C.GoStringN(_ms.data, C.int(int64(_ms.len)))
 	C.free(unsafe.Pointer(_ms.data))
 	return _ret
 }
 
-func (this *QTimeZone) DisplayName4(timeType QTimeZone__TimeType, nameType QTimeZone__NameType) string {
-	var _ms C.struct_miqt_string = C.QTimeZone_displayName4(this.h, (C.int)(timeType), (C.int)(nameType))
+func (this *QTimeZone) DisplayName4(timeType TimeType, nameType NameType) string {
+	var _ms C.struct_miqt_string = C.QTimeZone_displayName4(this.h, timeType, nameType)
 	_ret := C.GoStringN(_ms.data, C.int(int64(_ms.len)))
 	C.free(unsafe.Pointer(_ms.data))
 	return _ret
 }
 
-func (this *QTimeZone) DisplayName5(timeType QTimeZone__TimeType, nameType QTimeZone__NameType, locale *QLocale) string {
-	var _ms C.struct_miqt_string = C.QTimeZone_displayName5(this.h, (C.int)(timeType), (C.int)(nameType), locale.cPointer())
+func (this *QTimeZone) DisplayName5(timeType TimeType, nameType NameType, locale *QLocale) string {
+	var _ms C.struct_miqt_string = C.QTimeZone_displayName5(this.h, timeType, nameType, locale.cPointer())
 	_ret := C.GoStringN(_ms.data, C.int(int64(_ms.len)))
 	C.free(unsafe.Pointer(_ms.data))
 	return _ret
@@ -502,9 +526,15 @@ func UnsafeNewQTimeZone__OffsetData(h unsafe.Pointer) *QTimeZone__OffsetData {
 }
 
 // NewQTimeZone__OffsetData constructs a new QTimeZone::OffsetData object.
-func NewQTimeZone__OffsetData(param1 *QTimeZone__OffsetData) *QTimeZone__OffsetData {
+func NewQTimeZone__OffsetData(param1 *OffsetData) *QTimeZone__OffsetData {
 
-	return newQTimeZone__OffsetData(C.QTimeZone__OffsetData_new(param1.cPointer()))
+	return newQTimeZone__OffsetData(C.QTimeZone__OffsetData_new(param1))
+}
+
+// NewQTimeZone__OffsetData2 constructs a new QTimeZone::OffsetData object.
+func NewQTimeZone__OffsetData2() *QTimeZone__OffsetData {
+
+	return newQTimeZone__OffsetData(C.QTimeZone__OffsetData_new2())
 }
 
 func (this *QTimeZone__OffsetData) Abbreviation() string {
@@ -556,8 +586,8 @@ func (this *QTimeZone__OffsetData) SetDaylightTimeOffset(daylightTimeOffset int)
 	C.QTimeZone__OffsetData_setDaylightTimeOffset(this.h, (C.int)(daylightTimeOffset))
 }
 
-func (this *QTimeZone__OffsetData) OperatorAssign(param1 *QTimeZone__OffsetData) {
-	C.QTimeZone__OffsetData_operatorAssign(this.h, param1.cPointer())
+func (this *QTimeZone__OffsetData) OperatorAssign(param1 *OffsetData) {
+	C.QTimeZone__OffsetData_operatorAssign(this.h, param1)
 }
 
 // Delete this object from C++ memory.

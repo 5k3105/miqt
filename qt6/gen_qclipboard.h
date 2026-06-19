@@ -61,16 +61,16 @@ void QClipboard_dataChanged(QClipboard* self);
 void QClipboard_connect_dataChanged(QClipboard* self, intptr_t slot);
 struct miqt_string QClipboard_tr2(const char* s, const char* c);
 struct miqt_string QClipboard_tr3(const char* s, const char* c, int n);
-void QClipboard_clearWithMode(QClipboard* self, int mode);
-struct miqt_string QClipboard_textWithMode(const QClipboard* self, int mode);
-struct miqt_string QClipboard_text2(const QClipboard* self, struct miqt_string subtype, int mode);
-void QClipboard_setText2(QClipboard* self, struct miqt_string param1, int mode);
-QMimeData* QClipboard_mimeDataWithMode(const QClipboard* self, int mode);
-void QClipboard_setMimeData2(QClipboard* self, QMimeData* data, int mode);
-QImage* QClipboard_imageWithMode(const QClipboard* self, int mode);
-QPixmap* QClipboard_pixmapWithMode(const QClipboard* self, int mode);
-void QClipboard_setImage2(QClipboard* self, QImage* param1, int mode);
-void QClipboard_setPixmap2(QClipboard* self, QPixmap* param1, int mode);
+void QClipboard_clearWithMode(QClipboard* self, Mode mode);
+struct miqt_string QClipboard_textWithMode(const QClipboard* self, Mode mode);
+struct miqt_string QClipboard_text2(const QClipboard* self, struct miqt_string subtype, Mode mode);
+void QClipboard_setText2(QClipboard* self, struct miqt_string param1, Mode mode);
+QMimeData* QClipboard_mimeDataWithMode(const QClipboard* self, Mode mode);
+void QClipboard_setMimeData2(QClipboard* self, QMimeData* data, Mode mode);
+QImage* QClipboard_imageWithMode(const QClipboard* self, Mode mode);
+QPixmap* QClipboard_pixmapWithMode(const QClipboard* self, Mode mode);
+void QClipboard_setImage2(QClipboard* self, QImage* param1, Mode mode);
+void QClipboard_setPixmap2(QClipboard* self, QPixmap* param1, Mode mode);
 
 
 #ifdef __cplusplus

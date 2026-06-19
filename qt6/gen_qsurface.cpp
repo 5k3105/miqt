@@ -12,18 +12,16 @@ extern "C" {
 } /* extern C */
 #endif
 
-int QSurface_surfaceClass(const QSurface* self) {
-	QSurface::SurfaceClass _ret = self->surfaceClass();
-	return static_cast<int>(_ret);
+SurfaceClass QSurface_surfaceClass(const QSurface* self) {
+	return self->surfaceClass();
 }
 
 QSurfaceFormat* QSurface_format(const QSurface* self) {
 	return new QSurfaceFormat(self->format());
 }
 
-int QSurface_surfaceType(const QSurface* self) {
-	QSurface::SurfaceType _ret = self->surfaceType();
-	return static_cast<int>(_ret);
+SurfaceType QSurface_surfaceType(const QSurface* self) {
+	return self->surfaceType();
 }
 
 bool QSurface_supportsOpenGL(const QSurface* self) {

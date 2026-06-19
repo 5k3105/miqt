@@ -14,9 +14,8 @@ QElapsedTimer* QElapsedTimer_new() {
 	return new (std::nothrow) QElapsedTimer();
 }
 
-int QElapsedTimer_clockType() {
-	QElapsedTimer::ClockType _ret = QElapsedTimer::clockType();
-	return static_cast<int>(_ret);
+ClockType QElapsedTimer_clockType() {
+	return QElapsedTimer::clockType();
 }
 
 bool QElapsedTimer_isMonotonic() {
@@ -40,6 +39,10 @@ bool QElapsedTimer_isValid(const QElapsedTimer* self) {
 	return self->isValid();
 }
 
+Duration QElapsedTimer_durationElapsed(const QElapsedTimer* self) {
+	return self->durationElapsed();
+}
+
 long long QElapsedTimer_nsecsElapsed(const QElapsedTimer* self) {
 	qint64 _ret = self->nsecsElapsed();
 	return static_cast<long long>(_ret);
@@ -57,6 +60,10 @@ bool QElapsedTimer_hasExpired(const QElapsedTimer* self, long long timeout) {
 long long QElapsedTimer_msecsSinceReference(const QElapsedTimer* self) {
 	qint64 _ret = self->msecsSinceReference();
 	return static_cast<long long>(_ret);
+}
+
+Duration QElapsedTimer_durationTo(const QElapsedTimer* self, QElapsedTimer* other) {
+	return self->durationTo(*other);
 }
 
 long long QElapsedTimer_msecsTo(const QElapsedTimer* self, QElapsedTimer* other) {

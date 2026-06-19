@@ -125,6 +125,10 @@ func (this *QStyleHints) KeyboardAutoRepeatRate() int {
 	return (int)(C.QStyleHints_keyboardAutoRepeatRate(this.h))
 }
 
+func (this *QStyleHints) KeyboardAutoRepeatRateF() float64 {
+	return (float64)(C.QStyleHints_keyboardAutoRepeatRateF(this.h))
+}
+
 func (this *QStyleHints) SetCursorFlashTime(cursorFlashTime int) {
 	C.QStyleHints_setCursorFlashTime(this.h, (C.int)(cursorFlashTime))
 }
@@ -147,6 +151,18 @@ func (this *QStyleHints) ShowShortcutsInContextMenus() bool {
 
 func (this *QStyleHints) SetShowShortcutsInContextMenus(showShortcutsInContextMenus bool) {
 	C.QStyleHints_setShowShortcutsInContextMenus(this.h, (C.bool)(showShortcutsInContextMenus))
+}
+
+func (this *QStyleHints) ContextMenuTrigger() ContextMenuTrigger {
+	return (ContextMenuTrigger)(C.QStyleHints_contextMenuTrigger(this.h))
+}
+
+func (this *QStyleHints) SetContextMenuTrigger(contextMenuTrigger ContextMenuTrigger) {
+	C.QStyleHints_setContextMenuTrigger(this.h, (C.int)(contextMenuTrigger))
+}
+
+func (this *QStyleHints) MenuSelectionWraps() bool {
+	return (bool)(C.QStyleHints_menuSelectionWraps(this.h))
 }
 
 func (this *QStyleHints) PasswordMaskDelay() int {
@@ -205,6 +221,22 @@ func (this *QStyleHints) SetMouseQuickSelectionThreshold(threshold int) {
 
 func (this *QStyleHints) MouseQuickSelectionThreshold() int {
 	return (int)(C.QStyleHints_mouseQuickSelectionThreshold(this.h))
+}
+
+func (this *QStyleHints) ColorScheme() ColorScheme {
+	return (ColorScheme)(C.QStyleHints_colorScheme(this.h))
+}
+
+func (this *QStyleHints) SetColorScheme(scheme ColorScheme) {
+	C.QStyleHints_setColorScheme(this.h, (C.int)(scheme))
+}
+
+func (this *QStyleHints) UnsetColorScheme() {
+	C.QStyleHints_unsetColorScheme(this.h)
+}
+
+func (this *QStyleHints) Accessibility() *QAccessibilityHints {
+	return newQAccessibilityHints(C.QStyleHints_accessibility(this.h))
 }
 
 func (this *QStyleHints) CursorFlashTimeChanged(cursorFlashTime int) {
@@ -387,6 +419,26 @@ func miqt_exec_callback_QStyleHints_showShortcutsInContextMenusChanged(cb C.intp
 	gofunc(slotval1)
 }
 
+func (this *QStyleHints) ContextMenuTriggerChanged(contextMenuTrigger ContextMenuTrigger) {
+	C.QStyleHints_contextMenuTriggerChanged(this.h, (C.int)(contextMenuTrigger))
+}
+func (this *QStyleHints) OnContextMenuTriggerChanged(slot func(contextMenuTrigger ContextMenuTrigger)) {
+	C.QStyleHints_connect_contextMenuTriggerChanged(this.h, C.intptr_t(cgo.NewHandle(slot)))
+}
+
+//export miqt_exec_callback_QStyleHints_contextMenuTriggerChanged
+func miqt_exec_callback_QStyleHints_contextMenuTriggerChanged(cb C.intptr_t, contextMenuTrigger C.int) {
+	gofunc, ok := cgo.Handle(cb).Value().(func(contextMenuTrigger ContextMenuTrigger))
+	if !ok {
+		panic("miqt: callback of non-callback type (heap corruption?)")
+	}
+
+	// Convert all CABI parameters to Go parameters
+	slotval1 := (ContextMenuTrigger)(contextMenuTrigger)
+
+	gofunc(slotval1)
+}
+
 func (this *QStyleHints) WheelScrollLinesChanged(scrollLines int) {
 	C.QStyleHints_wheelScrollLinesChanged(this.h, (C.int)(scrollLines))
 }
@@ -423,6 +475,26 @@ func miqt_exec_callback_QStyleHints_mouseQuickSelectionThresholdChanged(cb C.int
 
 	// Convert all CABI parameters to Go parameters
 	slotval1 := (int)(threshold)
+
+	gofunc(slotval1)
+}
+
+func (this *QStyleHints) ColorSchemeChanged(colorScheme ColorScheme) {
+	C.QStyleHints_colorSchemeChanged(this.h, (C.int)(colorScheme))
+}
+func (this *QStyleHints) OnColorSchemeChanged(slot func(colorScheme ColorScheme)) {
+	C.QStyleHints_connect_colorSchemeChanged(this.h, C.intptr_t(cgo.NewHandle(slot)))
+}
+
+//export miqt_exec_callback_QStyleHints_colorSchemeChanged
+func miqt_exec_callback_QStyleHints_colorSchemeChanged(cb C.intptr_t, colorScheme C.int) {
+	gofunc, ok := cgo.Handle(cb).Value().(func(colorScheme ColorScheme))
+	if !ok {
+		panic("miqt: callback of non-callback type (heap corruption?)")
+	}
+
+	// Convert all CABI parameters to Go parameters
+	slotval1 := (ColorScheme)(colorScheme)
 
 	gofunc(slotval1)
 }

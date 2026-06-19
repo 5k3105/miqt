@@ -190,13 +190,12 @@ struct miqt_array /* of struct miqt_string */  QCommandLineOption_defaultValues(
 	return _out;
 }
 
-int QCommandLineOption_flags(const QCommandLineOption* self) {
-	QCommandLineOption::Flags _ret = self->flags();
-	return static_cast<int>(_ret);
+Flags QCommandLineOption_flags(const QCommandLineOption* self) {
+	return self->flags();
 }
 
-void QCommandLineOption_setFlags(QCommandLineOption* self, int aflags) {
-	self->setFlags(static_cast<QCommandLineOption::Flags>(aflags));
+void QCommandLineOption_setFlags(QCommandLineOption* self, Flags aflags) {
+	self->setFlags(aflags);
 }
 
 void QCommandLineOption_delete(QCommandLineOption* self) {

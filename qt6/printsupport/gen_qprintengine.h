@@ -22,8 +22,8 @@ typedef struct QPrintEngine QPrintEngine;
 typedef struct QVariant QVariant;
 #endif
 
-void QPrintEngine_setProperty(QPrintEngine* self, int key, QVariant* value);
-QVariant* QPrintEngine_property(const QPrintEngine* self, int key);
+void QPrintEngine_setProperty(QPrintEngine* self, PrintEnginePropertyKey key, QVariant* value);
+QVariant* QPrintEngine_property(const QPrintEngine* self, PrintEnginePropertyKey key);
 bool QPrintEngine_newPage(QPrintEngine* self);
 bool QPrintEngine_abort(QPrintEngine* self);
 int QPrintEngine_metric(const QPrintEngine* self, int param1);

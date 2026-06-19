@@ -1,5 +1,6 @@
 #include <QChildEvent>
 #include <QEvent>
+#include <QIODevice>
 #include <QMediaCaptureSession>
 #include <QMediaFormat>
 #include <QMediaMetaData>
@@ -36,6 +37,7 @@ void miqt_exec_callback_QMediaRecorder_videoBitRateChanged(intptr_t);
 void miqt_exec_callback_QMediaRecorder_audioBitRateChanged(intptr_t);
 void miqt_exec_callback_QMediaRecorder_audioChannelCountChanged(intptr_t);
 void miqt_exec_callback_QMediaRecorder_audioSampleRateChanged(intptr_t);
+void miqt_exec_callback_QMediaRecorder_autoStopChanged(intptr_t);
 bool miqt_exec_callback_QMediaRecorder_event(QMediaRecorder*, intptr_t, QEvent*);
 bool miqt_exec_callback_QMediaRecorder_eventFilter(QMediaRecorder*, intptr_t, QObject*, QEvent*);
 void miqt_exec_callback_QMediaRecorder_timerEvent(QMediaRecorder*, intptr_t, QTimerEvent*);
@@ -227,18 +229,24 @@ void QMediaRecorder_setOutputLocation(QMediaRecorder* self, QUrl* location) {
 	self->setOutputLocation(*location);
 }
 
+void QMediaRecorder_setOutputDevice(QMediaRecorder* self, QIODevice* device) {
+	self->setOutputDevice(device);
+}
+
+QIODevice* QMediaRecorder_outputDevice(const QMediaRecorder* self) {
+	return self->outputDevice();
+}
+
 QUrl* QMediaRecorder_actualLocation(const QMediaRecorder* self) {
 	return new QUrl(self->actualLocation());
 }
 
-int QMediaRecorder_recorderState(const QMediaRecorder* self) {
-	QMediaRecorder::RecorderState _ret = self->recorderState();
-	return static_cast<int>(_ret);
+RecorderState QMediaRecorder_recorderState(const QMediaRecorder* self) {
+	return self->recorderState();
 }
 
-int QMediaRecorder_error(const QMediaRecorder* self) {
-	QMediaRecorder::Error _ret = self->error();
-	return static_cast<int>(_ret);
+Error QMediaRecorder_error(const QMediaRecorder* self) {
+	return self->error();
 }
 
 struct miqt_string QMediaRecorder_errorString(const QMediaRecorder* self) {
@@ -265,22 +273,20 @@ void QMediaRecorder_setMediaFormat(QMediaRecorder* self, QMediaFormat* format) {
 	self->setMediaFormat(*format);
 }
 
-int QMediaRecorder_encodingMode(const QMediaRecorder* self) {
-	QMediaRecorder::EncodingMode _ret = self->encodingMode();
-	return static_cast<int>(_ret);
+EncodingMode QMediaRecorder_encodingMode(const QMediaRecorder* self) {
+	return self->encodingMode();
 }
 
-void QMediaRecorder_setEncodingMode(QMediaRecorder* self, int encodingMode) {
-	self->setEncodingMode(static_cast<QMediaRecorder::EncodingMode>(encodingMode));
+void QMediaRecorder_setEncodingMode(QMediaRecorder* self, EncodingMode encodingMode) {
+	self->setEncodingMode(encodingMode);
 }
 
-int QMediaRecorder_quality(const QMediaRecorder* self) {
-	QMediaRecorder::Quality _ret = self->quality();
-	return static_cast<int>(_ret);
+Quality QMediaRecorder_quality(const QMediaRecorder* self) {
+	return self->quality();
 }
 
-void QMediaRecorder_setQuality(QMediaRecorder* self, int quality) {
-	self->setQuality(static_cast<QMediaRecorder::Quality>(quality));
+void QMediaRecorder_setQuality(QMediaRecorder* self, Quality quality) {
+	self->setQuality(quality);
 }
 
 QSize* QMediaRecorder_videoResolution(const QMediaRecorder* self) {
@@ -346,6 +352,14 @@ void QMediaRecorder_setMetaData(QMediaRecorder* self, QMediaMetaData* metaData) 
 
 void QMediaRecorder_addMetaData(QMediaRecorder* self, QMediaMetaData* metaData) {
 	self->addMetaData(*metaData);
+}
+
+bool QMediaRecorder_autoStop(const QMediaRecorder* self) {
+	return self->autoStop();
+}
+
+void QMediaRecorder_setAutoStop(QMediaRecorder* self, bool autoStop) {
+	self->setAutoStop(autoStop);
 }
 
 QMediaCaptureSession* QMediaRecorder_captureSession(const QMediaRecorder* self) {
@@ -539,6 +553,16 @@ void QMediaRecorder_audioSampleRateChanged(QMediaRecorder* self) {
 void QMediaRecorder_connect_audioSampleRateChanged(QMediaRecorder* self, intptr_t slot) {
 	QMediaRecorder::connect(self, static_cast<void (QMediaRecorder::*)()>(&QMediaRecorder::audioSampleRateChanged), self, [=]() {
 		miqt_exec_callback_QMediaRecorder_audioSampleRateChanged(slot);
+	});
+}
+
+void QMediaRecorder_autoStopChanged(QMediaRecorder* self) {
+	self->autoStopChanged();
+}
+
+void QMediaRecorder_connect_autoStopChanged(QMediaRecorder* self, intptr_t slot) {
+	QMediaRecorder::connect(self, static_cast<void (QMediaRecorder::*)()>(&QMediaRecorder::autoStopChanged), self, [=]() {
+		miqt_exec_callback_QMediaRecorder_autoStopChanged(slot);
 	});
 }
 

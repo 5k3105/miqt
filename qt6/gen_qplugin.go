@@ -45,6 +45,12 @@ func UnsafeNewQStaticPlugin(h unsafe.Pointer) *QStaticPlugin {
 	return newQStaticPlugin((*C.QStaticPlugin)(h))
 }
 
+// NewQStaticPlugin constructs a new QStaticPlugin object.
+func NewQStaticPlugin(param1 *QStaticPlugin) *QStaticPlugin {
+
+	return newQStaticPlugin(C.QStaticPlugin_new(param1.cPointer()))
+}
+
 func (this *QStaticPlugin) MetaData() *QJsonObject {
 	_goptr := newQJsonObject(C.QStaticPlugin_metaData(this.h))
 	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer

@@ -191,12 +191,12 @@ func (this *QLocalServer) ListenBacklogSize() int {
 	return (int)(C.QLocalServer_listenBacklogSize(this.h))
 }
 
-func (this *QLocalServer) SetSocketOptions(options QLocalServer__SocketOption) {
-	C.QLocalServer_setSocketOptions(this.h, (C.int)(options))
+func (this *QLocalServer) SetSocketOptions(options SocketOptions) {
+	C.QLocalServer_setSocketOptions(this.h, options)
 }
 
-func (this *QLocalServer) SocketOptions() QLocalServer__SocketOption {
-	return (QLocalServer__SocketOption)(C.QLocalServer_socketOptions(this.h))
+func (this *QLocalServer) SocketOptions() SocketOptions {
+	int /* TODO  */
 }
 
 func (this *QLocalServer) SocketDescriptor() uintptr {
@@ -231,6 +231,18 @@ func (this *QLocalServer) WaitForNewConnectionWithMsec(msec int) bool {
 
 func (this *QLocalServer) WaitForNewConnection2(msec int, timedOut *bool) bool {
 	return (bool)(C.QLocalServer_waitForNewConnection2(this.h, (C.int)(msec), (*C.bool)(unsafe.Pointer(timedOut))))
+}
+
+// AddPendingConnection can only be called from a QLocalServer that was directly constructed.
+func (this *QLocalServer) AddPendingConnection(socket *QLocalSocket) {
+
+	var _dynamic_cast_ok C.bool = false
+	C.QLocalServer_protectedbase_addPendingConnection(&_dynamic_cast_ok, unsafe.Pointer(this.h), socket.cPointer())
+
+	if !_dynamic_cast_ok {
+		panic("miqt: can only call protected methods for directly constructed types")
+	}
+
 }
 
 // Sender can only be called from a QLocalServer that was directly constructed.

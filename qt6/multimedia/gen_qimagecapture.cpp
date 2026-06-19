@@ -220,9 +220,8 @@ QMediaCaptureSession* QImageCapture_captureSession(const QImageCapture* self) {
 	return self->captureSession();
 }
 
-int QImageCapture_error(const QImageCapture* self) {
-	QImageCapture::Error _ret = self->error();
-	return static_cast<int>(_ret);
+Error QImageCapture_error(const QImageCapture* self) {
+	return self->error();
 }
 
 struct miqt_string QImageCapture_errorString(const QImageCapture* self) {
@@ -240,22 +239,20 @@ bool QImageCapture_isReadyForCapture(const QImageCapture* self) {
 	return self->isReadyForCapture();
 }
 
-int QImageCapture_fileFormat(const QImageCapture* self) {
-	QImageCapture::FileFormat _ret = self->fileFormat();
-	return static_cast<int>(_ret);
+FileFormat QImageCapture_fileFormat(const QImageCapture* self) {
+	return self->fileFormat();
 }
 
-void QImageCapture_setFileFormat(QImageCapture* self, int format) {
-	self->setFileFormat(static_cast<QImageCapture::FileFormat>(format));
+void QImageCapture_setFileFormat(QImageCapture* self, FileFormat format) {
+	self->setFileFormat(format);
 }
 
-struct miqt_array /* of int */  QImageCapture_supportedFormats() {
-	QList<QImageCapture::FileFormat> _ret = QImageCapture::supportedFormats();
+struct miqt_array /* of FileFormat */  QImageCapture_supportedFormats() {
+	QList<FileFormat> _ret = QImageCapture::supportedFormats();
 	// Convert QList<> from C++ memory to manually-managed C memory
-	int* _arr = static_cast<int*>(malloc(sizeof(int) * _ret.length()));
+	FileFormat* _arr = static_cast<FileFormat*>(malloc(sizeof(FileFormat) * _ret.length()));
 	for (size_t i = 0, e = _ret.length(); i < e; ++i) {
-		QImageCapture::FileFormat _lv_ret = _ret[i];
-		_arr[i] = static_cast<int>(_lv_ret);
+		_arr[i] = _ret[i];
 	}
 	struct miqt_array _out;
 	_out.len = _ret.length();
@@ -263,8 +260,8 @@ struct miqt_array /* of int */  QImageCapture_supportedFormats() {
 	return _out;
 }
 
-struct miqt_string QImageCapture_fileFormatName(int c) {
-	QString _ret = QImageCapture::fileFormatName(static_cast<QImageCapture::FileFormat>(c));
+struct miqt_string QImageCapture_fileFormatName(FileFormat c) {
+	QString _ret = QImageCapture::fileFormatName(c);
 	// Convert QString from UTF-16 in C++ RAII memory to UTF-8 in manually-managed C memory
 	QByteArray _b = _ret.toUtf8();
 	struct miqt_string _ms;
@@ -274,8 +271,8 @@ struct miqt_string QImageCapture_fileFormatName(int c) {
 	return _ms;
 }
 
-struct miqt_string QImageCapture_fileFormatDescription(int c) {
-	QString _ret = QImageCapture::fileFormatDescription(static_cast<QImageCapture::FileFormat>(c));
+struct miqt_string QImageCapture_fileFormatDescription(FileFormat c) {
+	QString _ret = QImageCapture::fileFormatDescription(c);
 	// Convert QString from UTF-16 in C++ RAII memory to UTF-8 in manually-managed C memory
 	QByteArray _b = _ret.toUtf8();
 	struct miqt_string _ms;
@@ -297,13 +294,12 @@ void QImageCapture_setResolution2(QImageCapture* self, int width, int height) {
 	self->setResolution(static_cast<int>(width), static_cast<int>(height));
 }
 
-int QImageCapture_quality(const QImageCapture* self) {
-	QImageCapture::Quality _ret = self->quality();
-	return static_cast<int>(_ret);
+Quality QImageCapture_quality(const QImageCapture* self) {
+	return self->quality();
 }
 
-void QImageCapture_setQuality(QImageCapture* self, int quality) {
-	self->setQuality(static_cast<QImageCapture::Quality>(quality));
+void QImageCapture_setQuality(QImageCapture* self, Quality quality) {
+	self->setQuality(quality);
 }
 
 QMediaMetaData* QImageCapture_metaData(const QImageCapture* self) {

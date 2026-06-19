@@ -85,7 +85,7 @@ void miqt_exec_callback_QLabel_dropEvent(QLabel*, intptr_t, QDropEvent*);
 void miqt_exec_callback_QLabel_showEvent(QLabel*, intptr_t, QShowEvent*);
 void miqt_exec_callback_QLabel_hideEvent(QLabel*, intptr_t, QHideEvent*);
 bool miqt_exec_callback_QLabel_nativeEvent(QLabel*, intptr_t, struct miqt_string, void*, intptr_t*);
-int miqt_exec_callback_QLabel_metric(const QLabel*, intptr_t, int);
+int miqt_exec_callback_QLabel_metric(const QLabel*, intptr_t, PaintDeviceMetric);
 void miqt_exec_callback_QLabel_initPainter(const QLabel*, intptr_t, QPainter*);
 QPaintDevice* miqt_exec_callback_QLabel_redirected(const QLabel*, intptr_t, QPoint*);
 QPainter* miqt_exec_callback_QLabel_sharedPainter(const QLabel*, intptr_t);
@@ -723,18 +723,17 @@ public:
 	intptr_t handle__metric = 0;
 
 	// Subclass to allow providing a Go implementation
-	virtual int metric(QPaintDevice::PaintDeviceMetric param1) const override {
+	virtual int metric(PaintDeviceMetric param1) const override {
 		if (handle__metric == 0) {
 			return QLabel::metric(param1);
 		}
 
-		QPaintDevice::PaintDeviceMetric param1_ret = param1;
-		int sigval1 = static_cast<int>(param1_ret);
+		PaintDeviceMetric sigval1 = param1;
 		int callback_return_value = miqt_exec_callback_QLabel_metric(this, handle__metric, sigval1);
 		return static_cast<int>(callback_return_value);
 	}
 
-	friend int QLabel_virtualbase_metric(const void* self, int param1);
+	friend int QLabel_virtualbase_metric(const void* self, PaintDeviceMetric param1);
 
 	// cgo.Handle value for overwritten implementation
 	intptr_t handle__initPainter = 0;
@@ -935,6 +934,7 @@ public:
 	friend int QLabel_protectedbase_senderSignalIndex(bool* _dynamic_cast_ok, const void* self);
 	friend int QLabel_protectedbase_receivers(bool* _dynamic_cast_ok, const void* self, const char* signal);
 	friend bool QLabel_protectedbase_isSignalConnected(bool* _dynamic_cast_ok, const void* self, QMetaMethod* signal);
+	friend double QLabel_protectedbase_getDecodedMetricF(bool* _dynamic_cast_ok, const void* self, PaintDeviceMetric metricA, PaintDeviceMetric metricB);
 };
 
 QLabel* QLabel_new(QWidget* parent) {
@@ -1732,8 +1732,8 @@ bool QLabel_override_virtual_metric(void* self, intptr_t slot) {
 	return true;
 }
 
-int QLabel_virtualbase_metric(const void* self, int param1) {
-	return static_cast<const MiqtVirtualQLabel*>(self)->QLabel::metric(static_cast<MiqtVirtualQLabel::PaintDeviceMetric>(param1));
+int QLabel_virtualbase_metric(const void* self, PaintDeviceMetric param1) {
+	return static_cast<const MiqtVirtualQLabel*>(self)->QLabel::metric(param1);
 }
 
 bool QLabel_override_virtual_initPainter(void* self, intptr_t slot) {
@@ -1998,6 +1998,17 @@ bool QLabel_protectedbase_isSignalConnected(bool* _dynamic_cast_ok, const void* 
 
 	*_dynamic_cast_ok = true;
 	return self_cast->isSignalConnected(*signal);
+}
+
+double QLabel_protectedbase_getDecodedMetricF(bool* _dynamic_cast_ok, const void* self, PaintDeviceMetric metricA, PaintDeviceMetric metricB) {
+	MiqtVirtualQLabel* self_cast = dynamic_cast<MiqtVirtualQLabel*>( (QLabel*)(self) );
+	if (self_cast == nullptr) {
+		*_dynamic_cast_ok = false;
+		return 0;
+	}
+
+	*_dynamic_cast_ok = true;
+	return self_cast->getDecodedMetricF(metricA, metricB);
 }
 
 void QLabel_delete(QLabel* self) {

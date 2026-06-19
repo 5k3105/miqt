@@ -48,7 +48,7 @@ typedef struct QSizeF QSizeF;
 typedef struct QWidget QWidget;
 #endif
 
-QGraphicsSceneEvent* QGraphicsSceneEvent_new(int type);
+QGraphicsSceneEvent* QGraphicsSceneEvent_new(Type type);
 void QGraphicsSceneEvent_virtbase(QGraphicsSceneEvent* src, QEvent** outptr_QEvent);
 QWidget* QGraphicsSceneEvent_widget(const QGraphicsSceneEvent* self);
 void QGraphicsSceneEvent_setWidget(QGraphicsSceneEvent* self, QWidget* widget);
@@ -63,7 +63,7 @@ QEvent* QGraphicsSceneEvent_virtualbase_clone(const void* self);
 void QGraphicsSceneEvent_delete(QGraphicsSceneEvent* self);
 
 QGraphicsSceneMouseEvent* QGraphicsSceneMouseEvent_new();
-QGraphicsSceneMouseEvent* QGraphicsSceneMouseEvent_new2(int type);
+QGraphicsSceneMouseEvent* QGraphicsSceneMouseEvent_new2(Type type);
 void QGraphicsSceneMouseEvent_virtbase(QGraphicsSceneMouseEvent* src, QGraphicsSceneEvent** outptr_QGraphicsSceneEvent);
 QPointF* QGraphicsSceneMouseEvent_pos(const QGraphicsSceneMouseEvent* self);
 void QGraphicsSceneMouseEvent_setPos(QGraphicsSceneMouseEvent* self, QPointF* pos);
@@ -102,7 +102,7 @@ QEvent* QGraphicsSceneMouseEvent_virtualbase_clone(const void* self);
 void QGraphicsSceneMouseEvent_delete(QGraphicsSceneMouseEvent* self);
 
 QGraphicsSceneWheelEvent* QGraphicsSceneWheelEvent_new();
-QGraphicsSceneWheelEvent* QGraphicsSceneWheelEvent_new2(int type);
+QGraphicsSceneWheelEvent* QGraphicsSceneWheelEvent_new2(Type type);
 void QGraphicsSceneWheelEvent_virtbase(QGraphicsSceneWheelEvent* src, QGraphicsSceneEvent** outptr_QGraphicsSceneEvent);
 QPointF* QGraphicsSceneWheelEvent_pos(const QGraphicsSceneWheelEvent* self);
 void QGraphicsSceneWheelEvent_setPos(QGraphicsSceneWheelEvent* self, QPointF* pos);
@@ -133,7 +133,7 @@ QEvent* QGraphicsSceneWheelEvent_virtualbase_clone(const void* self);
 void QGraphicsSceneWheelEvent_delete(QGraphicsSceneWheelEvent* self);
 
 QGraphicsSceneContextMenuEvent* QGraphicsSceneContextMenuEvent_new();
-QGraphicsSceneContextMenuEvent* QGraphicsSceneContextMenuEvent_new2(int type);
+QGraphicsSceneContextMenuEvent* QGraphicsSceneContextMenuEvent_new2(Type type);
 void QGraphicsSceneContextMenuEvent_virtbase(QGraphicsSceneContextMenuEvent* src, QGraphicsSceneEvent** outptr_QGraphicsSceneEvent);
 QPointF* QGraphicsSceneContextMenuEvent_pos(const QGraphicsSceneContextMenuEvent* self);
 void QGraphicsSceneContextMenuEvent_setPos(QGraphicsSceneContextMenuEvent* self, QPointF* pos);
@@ -143,8 +143,8 @@ QPoint* QGraphicsSceneContextMenuEvent_screenPos(const QGraphicsSceneContextMenu
 void QGraphicsSceneContextMenuEvent_setScreenPos(QGraphicsSceneContextMenuEvent* self, QPoint* pos);
 int QGraphicsSceneContextMenuEvent_modifiers(const QGraphicsSceneContextMenuEvent* self);
 void QGraphicsSceneContextMenuEvent_setModifiers(QGraphicsSceneContextMenuEvent* self, int modifiers);
-int QGraphicsSceneContextMenuEvent_reason(const QGraphicsSceneContextMenuEvent* self);
-void QGraphicsSceneContextMenuEvent_setReason(QGraphicsSceneContextMenuEvent* self, int reason);
+Reason QGraphicsSceneContextMenuEvent_reason(const QGraphicsSceneContextMenuEvent* self);
+void QGraphicsSceneContextMenuEvent_setReason(QGraphicsSceneContextMenuEvent* self, Reason reason);
 
 bool QGraphicsSceneContextMenuEvent_override_virtual_setAccepted(void* self, intptr_t slot);
 void QGraphicsSceneContextMenuEvent_virtualbase_setAccepted(void* self, bool accepted);
@@ -154,7 +154,7 @@ QEvent* QGraphicsSceneContextMenuEvent_virtualbase_clone(const void* self);
 void QGraphicsSceneContextMenuEvent_delete(QGraphicsSceneContextMenuEvent* self);
 
 QGraphicsSceneHoverEvent* QGraphicsSceneHoverEvent_new();
-QGraphicsSceneHoverEvent* QGraphicsSceneHoverEvent_new2(int type);
+QGraphicsSceneHoverEvent* QGraphicsSceneHoverEvent_new2(Type type);
 void QGraphicsSceneHoverEvent_virtbase(QGraphicsSceneHoverEvent* src, QGraphicsSceneEvent** outptr_QGraphicsSceneEvent);
 QPointF* QGraphicsSceneHoverEvent_pos(const QGraphicsSceneHoverEvent* self);
 void QGraphicsSceneHoverEvent_setPos(QGraphicsSceneHoverEvent* self, QPointF* pos);
@@ -179,7 +179,7 @@ QEvent* QGraphicsSceneHoverEvent_virtualbase_clone(const void* self);
 void QGraphicsSceneHoverEvent_delete(QGraphicsSceneHoverEvent* self);
 
 QGraphicsSceneHelpEvent* QGraphicsSceneHelpEvent_new();
-QGraphicsSceneHelpEvent* QGraphicsSceneHelpEvent_new2(int type);
+QGraphicsSceneHelpEvent* QGraphicsSceneHelpEvent_new2(Type type);
 void QGraphicsSceneHelpEvent_virtbase(QGraphicsSceneHelpEvent* src, QGraphicsSceneEvent** outptr_QGraphicsSceneEvent);
 QPointF* QGraphicsSceneHelpEvent_scenePos(const QGraphicsSceneHelpEvent* self);
 void QGraphicsSceneHelpEvent_setScenePos(QGraphicsSceneHelpEvent* self, QPointF* pos);
@@ -194,7 +194,7 @@ QEvent* QGraphicsSceneHelpEvent_virtualbase_clone(const void* self);
 void QGraphicsSceneHelpEvent_delete(QGraphicsSceneHelpEvent* self);
 
 QGraphicsSceneDragDropEvent* QGraphicsSceneDragDropEvent_new();
-QGraphicsSceneDragDropEvent* QGraphicsSceneDragDropEvent_new2(int type);
+QGraphicsSceneDragDropEvent* QGraphicsSceneDragDropEvent_new2(Type type);
 void QGraphicsSceneDragDropEvent_virtbase(QGraphicsSceneDragDropEvent* src, QGraphicsSceneEvent** outptr_QGraphicsSceneEvent);
 QPointF* QGraphicsSceneDragDropEvent_pos(const QGraphicsSceneDragDropEvent* self);
 void QGraphicsSceneDragDropEvent_setPos(QGraphicsSceneDragDropEvent* self, QPointF* pos);

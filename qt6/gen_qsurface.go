@@ -25,7 +25,6 @@ type QSurface__SurfaceType int
 const (
 	QSurface__RasterSurface   QSurface__SurfaceType = 0
 	QSurface__OpenGLSurface   QSurface__SurfaceType = 1
-	QSurface__RasterGLSurface QSurface__SurfaceType = 2
 	QSurface__OpenVGSurface   QSurface__SurfaceType = 3
 	QSurface__VulkanSurface   QSurface__SurfaceType = 4
 	QSurface__MetalSurface    QSurface__SurfaceType = 5
@@ -64,8 +63,8 @@ func UnsafeNewQSurface(h unsafe.Pointer) *QSurface {
 	return newQSurface((*C.QSurface)(h))
 }
 
-func (this *QSurface) SurfaceClass() QSurface__SurfaceClass {
-	return (QSurface__SurfaceClass)(C.QSurface_surfaceClass(this.h))
+func (this *QSurface) SurfaceClass() SurfaceClass {
+	int /* TODO  */
 }
 
 func (this *QSurface) Format() *QSurfaceFormat {
@@ -74,8 +73,8 @@ func (this *QSurface) Format() *QSurfaceFormat {
 	return _goptr
 }
 
-func (this *QSurface) SurfaceType() QSurface__SurfaceType {
-	return (QSurface__SurfaceType)(C.QSurface_surfaceType(this.h))
+func (this *QSurface) SurfaceType() SurfaceType {
+	int /* TODO  */
 }
 
 func (this *QSurface) SupportsOpenGL() bool {

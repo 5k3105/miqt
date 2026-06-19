@@ -1,4 +1,5 @@
 #include <QChildEvent>
+#include <QDeadlineTimer>
 #include <QEvent>
 #include <QEventLoop>
 #include <QEventLoopLocker>
@@ -200,8 +201,12 @@ bool QEventLoop_processEvents(QEventLoop* self) {
 	return self->processEvents();
 }
 
-void QEventLoop_processEvents2(QEventLoop* self, int flags, int maximumTime) {
-	self->processEvents(static_cast<QEventLoop::ProcessEventsFlags>(flags), static_cast<int>(maximumTime));
+void QEventLoop_processEvents2(QEventLoop* self, ProcessEventsFlags flags, int maximumTime) {
+	self->processEvents(flags, static_cast<int>(maximumTime));
+}
+
+void QEventLoop_processEvents3(QEventLoop* self, ProcessEventsFlags flags, QDeadlineTimer* deadline) {
+	self->processEvents(flags, *deadline);
 }
 
 int QEventLoop_exec(QEventLoop* self) {
@@ -250,12 +255,12 @@ struct miqt_string QEventLoop_tr3(const char* s, const char* c, int n) {
 	return _ms;
 }
 
-bool QEventLoop_processEventsWithFlags(QEventLoop* self, int flags) {
-	return self->processEvents(static_cast<QEventLoop::ProcessEventsFlags>(flags));
+bool QEventLoop_processEventsWithFlags(QEventLoop* self, ProcessEventsFlags flags) {
+	return self->processEvents(flags);
 }
 
-int QEventLoop_execWithFlags(QEventLoop* self, int flags) {
-	return self->exec(static_cast<QEventLoop::ProcessEventsFlags>(flags));
+int QEventLoop_execWithFlags(QEventLoop* self, ProcessEventsFlags flags) {
+	return self->exec(flags);
 }
 
 void QEventLoop_exitWithReturnCode(QEventLoop* self, int returnCode) {
@@ -418,6 +423,10 @@ QEventLoopLocker* QEventLoopLocker_new2(QEventLoop* loop) {
 
 QEventLoopLocker* QEventLoopLocker_new3(QThread* thread) {
 	return new (std::nothrow) QEventLoopLocker(thread);
+}
+
+void QEventLoopLocker_swap(QEventLoopLocker* self, QEventLoopLocker* other) {
+	self->swap(*other);
 }
 
 void QEventLoopLocker_delete(QEventLoopLocker* self) {

@@ -86,7 +86,7 @@ void miqt_exec_callback_QMainWindow_showEvent(QMainWindow*, intptr_t, QShowEvent
 void miqt_exec_callback_QMainWindow_hideEvent(QMainWindow*, intptr_t, QHideEvent*);
 bool miqt_exec_callback_QMainWindow_nativeEvent(QMainWindow*, intptr_t, struct miqt_string, void*, intptr_t*);
 void miqt_exec_callback_QMainWindow_changeEvent(QMainWindow*, intptr_t, QEvent*);
-int miqt_exec_callback_QMainWindow_metric(const QMainWindow*, intptr_t, int);
+int miqt_exec_callback_QMainWindow_metric(const QMainWindow*, intptr_t, PaintDeviceMetric);
 void miqt_exec_callback_QMainWindow_initPainter(const QMainWindow*, intptr_t, QPainter*);
 QPaintDevice* miqt_exec_callback_QMainWindow_redirected(const QMainWindow*, intptr_t, QPoint*);
 QPainter* miqt_exec_callback_QMainWindow_sharedPainter(const QMainWindow*, intptr_t);
@@ -704,18 +704,17 @@ public:
 	intptr_t handle__metric = 0;
 
 	// Subclass to allow providing a Go implementation
-	virtual int metric(QPaintDevice::PaintDeviceMetric param1) const override {
+	virtual int metric(PaintDeviceMetric param1) const override {
 		if (handle__metric == 0) {
 			return QMainWindow::metric(param1);
 		}
 
-		QPaintDevice::PaintDeviceMetric param1_ret = param1;
-		int sigval1 = static_cast<int>(param1_ret);
+		PaintDeviceMetric sigval1 = param1;
 		int callback_return_value = miqt_exec_callback_QMainWindow_metric(this, handle__metric, sigval1);
 		return static_cast<int>(callback_return_value);
 	}
 
-	friend int QMainWindow_virtualbase_metric(const void* self, int param1);
+	friend int QMainWindow_virtualbase_metric(const void* self, PaintDeviceMetric param1);
 
 	// cgo.Handle value for overwritten implementation
 	intptr_t handle__initPainter = 0;
@@ -931,6 +930,7 @@ public:
 	friend int QMainWindow_protectedbase_senderSignalIndex(bool* _dynamic_cast_ok, const void* self);
 	friend int QMainWindow_protectedbase_receivers(bool* _dynamic_cast_ok, const void* self, const char* signal);
 	friend bool QMainWindow_protectedbase_isSignalConnected(bool* _dynamic_cast_ok, const void* self, QMetaMethod* signal);
+	friend double QMainWindow_protectedbase_getDecodedMetricF(bool* _dynamic_cast_ok, const void* self, PaintDeviceMetric metricA, PaintDeviceMetric metricB);
 };
 
 QMainWindow* QMainWindow_new(QWidget* parent) {
@@ -1019,13 +1019,12 @@ void QMainWindow_setTabPosition(QMainWindow* self, int areas, int tabPosition) {
 	self->setTabPosition(static_cast<Qt::DockWidgetAreas>(areas), static_cast<QTabWidget::TabPosition>(tabPosition));
 }
 
-void QMainWindow_setDockOptions(QMainWindow* self, int options) {
-	self->setDockOptions(static_cast<QMainWindow::DockOptions>(options));
+void QMainWindow_setDockOptions(QMainWindow* self, DockOptions options) {
+	self->setDockOptions(options);
 }
 
-int QMainWindow_dockOptions(const QMainWindow* self) {
-	QMainWindow::DockOptions _ret = self->dockOptions();
-	return static_cast<int>(_ret);
+DockOptions QMainWindow_dockOptions(const QMainWindow* self) {
+	return self->dockOptions();
 }
 
 bool QMainWindow_isSeparator(const QMainWindow* self, QPoint* pos) {
@@ -1788,8 +1787,8 @@ bool QMainWindow_override_virtual_metric(void* self, intptr_t slot) {
 	return true;
 }
 
-int QMainWindow_virtualbase_metric(const void* self, int param1) {
-	return static_cast<const MiqtVirtualQMainWindow*>(self)->QMainWindow::metric(static_cast<MiqtVirtualQMainWindow::PaintDeviceMetric>(param1));
+int QMainWindow_virtualbase_metric(const void* self, PaintDeviceMetric param1) {
+	return static_cast<const MiqtVirtualQMainWindow*>(self)->QMainWindow::metric(param1);
 }
 
 bool QMainWindow_override_virtual_initPainter(void* self, intptr_t slot) {
@@ -2057,6 +2056,17 @@ bool QMainWindow_protectedbase_isSignalConnected(bool* _dynamic_cast_ok, const v
 
 	*_dynamic_cast_ok = true;
 	return self_cast->isSignalConnected(*signal);
+}
+
+double QMainWindow_protectedbase_getDecodedMetricF(bool* _dynamic_cast_ok, const void* self, PaintDeviceMetric metricA, PaintDeviceMetric metricB) {
+	MiqtVirtualQMainWindow* self_cast = dynamic_cast<MiqtVirtualQMainWindow*>( (QMainWindow*)(self) );
+	if (self_cast == nullptr) {
+		*_dynamic_cast_ok = false;
+		return 0;
+	}
+
+	*_dynamic_cast_ok = true;
+	return self_cast->getDecodedMetricF(metricA, metricB);
 }
 
 void QMainWindow_delete(QMainWindow* self) {

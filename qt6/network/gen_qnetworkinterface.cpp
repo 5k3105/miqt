@@ -41,13 +41,12 @@ bool QNetworkAddressEntry_operatorNotEqual(const QNetworkAddressEntry* self, QNe
 	return (*self != *other);
 }
 
-int8_t QNetworkAddressEntry_dnsEligibility(const QNetworkAddressEntry* self) {
-	QNetworkAddressEntry::DnsEligibilityStatus _ret = self->dnsEligibility();
-	return static_cast<int8_t>(_ret);
+DnsEligibilityStatus QNetworkAddressEntry_dnsEligibility(const QNetworkAddressEntry* self) {
+	return self->dnsEligibility();
 }
 
-void QNetworkAddressEntry_setDnsEligibility(QNetworkAddressEntry* self, int8_t status) {
-	self->setDnsEligibility(static_cast<QNetworkAddressEntry::DnsEligibilityStatus>(status));
+void QNetworkAddressEntry_setDnsEligibility(QNetworkAddressEntry* self, DnsEligibilityStatus status) {
+	self->setDnsEligibility(status);
 }
 
 QHostAddress* QNetworkAddressEntry_ip(const QNetworkAddressEntry* self) {
@@ -164,14 +163,12 @@ struct miqt_string QNetworkInterface_humanReadableName(const QNetworkInterface* 
 	return _ms;
 }
 
-int QNetworkInterface_flags(const QNetworkInterface* self) {
-	QNetworkInterface::InterfaceFlags _ret = self->flags();
-	return static_cast<int>(_ret);
+InterfaceFlags QNetworkInterface_flags(const QNetworkInterface* self) {
+	return self->flags();
 }
 
-int QNetworkInterface_type(const QNetworkInterface* self) {
-	QNetworkInterface::InterfaceType _ret = self->type();
-	return static_cast<int>(_ret);
+InterfaceType QNetworkInterface_type(const QNetworkInterface* self) {
+	return self->type();
 }
 
 struct miqt_string QNetworkInterface_hardwareAddress(const QNetworkInterface* self) {

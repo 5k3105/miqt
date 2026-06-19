@@ -103,20 +103,20 @@ func QAbstractAnimation_Tr(s string) string {
 	return _ret
 }
 
-func (this *QAbstractAnimation) State() QAbstractAnimation__State {
-	return (QAbstractAnimation__State)(C.QAbstractAnimation_state(this.h))
+func (this *QAbstractAnimation) State() State {
+	int /* TODO  */
 }
 
 func (this *QAbstractAnimation) Group() *QAnimationGroup {
 	return newQAnimationGroup(C.QAbstractAnimation_group(this.h))
 }
 
-func (this *QAbstractAnimation) Direction() QAbstractAnimation__Direction {
-	return (QAbstractAnimation__Direction)(C.QAbstractAnimation_direction(this.h))
+func (this *QAbstractAnimation) Direction() Direction {
+	int /* TODO  */
 }
 
-func (this *QAbstractAnimation) SetDirection(direction QAbstractAnimation__Direction) {
-	C.QAbstractAnimation_setDirection(this.h, (C.int)(direction))
+func (this *QAbstractAnimation) SetDirection(direction Direction) {
+	C.QAbstractAnimation_setDirection(this.h, direction)
 }
 
 func (this *QAbstractAnimation) CurrentTime() int {

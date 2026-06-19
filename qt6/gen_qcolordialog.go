@@ -20,6 +20,7 @@ const (
 	QColorDialog__ShowAlphaChannel    QColorDialog__ColorDialogOption = 1
 	QColorDialog__NoButtons           QColorDialog__ColorDialogOption = 2
 	QColorDialog__DontUseNativeDialog QColorDialog__ColorDialogOption = 4
+	QColorDialog__NoEyeDropperButton  QColorDialog__ColorDialogOption = 8
 )
 
 type QColorDialog struct {
@@ -117,20 +118,20 @@ func (this *QColorDialog) SelectedColor() *QColor {
 	return _goptr
 }
 
-func (this *QColorDialog) SetOption(option QColorDialog__ColorDialogOption) {
-	C.QColorDialog_setOption(this.h, (C.int)(option))
+func (this *QColorDialog) SetOption(option ColorDialogOption) {
+	C.QColorDialog_setOption(this.h, option)
 }
 
-func (this *QColorDialog) TestOption(option QColorDialog__ColorDialogOption) bool {
-	return (bool)(C.QColorDialog_testOption(this.h, (C.int)(option)))
+func (this *QColorDialog) TestOption(option ColorDialogOption) bool {
+	return (bool)(C.QColorDialog_testOption(this.h, option))
 }
 
-func (this *QColorDialog) SetOptions(options QColorDialog__ColorDialogOption) {
-	C.QColorDialog_setOptions(this.h, (C.int)(options))
+func (this *QColorDialog) SetOptions(options ColorDialogOptions) {
+	C.QColorDialog_setOptions(this.h, options)
 }
 
-func (this *QColorDialog) Options() QColorDialog__ColorDialogOption {
-	return (QColorDialog__ColorDialogOption)(C.QColorDialog_options(this.h))
+func (this *QColorDialog) Options() ColorDialogOptions {
+	int /* TODO  */
 }
 
 func (this *QColorDialog) SetVisible(visible bool) {
@@ -229,8 +230,8 @@ func QColorDialog_Tr3(s string, c string, n int) string {
 	return _ret
 }
 
-func (this *QColorDialog) SetOption2(option QColorDialog__ColorDialogOption, on bool) {
-	C.QColorDialog_setOption2(this.h, (C.int)(option), (C.bool)(on))
+func (this *QColorDialog) SetOption2(option ColorDialogOption, on bool) {
+	C.QColorDialog_setOption2(this.h, option, (C.bool)(on))
 }
 
 func QColorDialog_GetColorWithInitial(initial *QColor) *QColor {
@@ -255,12 +256,12 @@ func QColorDialog_GetColor3(initial *QColor, parent *QWidget, title string) *QCo
 	return _goptr
 }
 
-func QColorDialog_GetColor4(initial *QColor, parent *QWidget, title string, options QColorDialog__ColorDialogOption) *QColor {
+func QColorDialog_GetColor4(initial *QColor, parent *QWidget, title string, options ColorDialogOptions) *QColor {
 	title_ms := C.struct_miqt_string{}
 	title_ms.data = C.CString(title)
 	title_ms.len = C.size_t(len(title))
 	defer C.free(unsafe.Pointer(title_ms.data))
-	_goptr := newQColor(C.QColorDialog_getColor4(initial.cPointer(), parent.cPointer(), title_ms, (C.int)(options)))
+	_goptr := newQColor(C.QColorDialog_getColor4(initial.cPointer(), parent.cPointer(), title_ms, options))
 	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
 	return _goptr
 }
@@ -390,6 +391,20 @@ func (this *QColorDialog) IsSignalConnected(signal *QMetaMethod) bool {
 
 	var _dynamic_cast_ok C.bool = false
 	_method_ret := (bool)(C.QColorDialog_protectedbase_isSignalConnected(&_dynamic_cast_ok, unsafe.Pointer(this.h), signal.cPointer()))
+
+	if !_dynamic_cast_ok {
+		panic("miqt: can only call protected methods for directly constructed types")
+	}
+
+	return _method_ret
+
+}
+
+// GetDecodedMetricF can only be called from a QColorDialog that was directly constructed.
+func (this *QColorDialog) GetDecodedMetricF(metricA PaintDeviceMetric, metricB PaintDeviceMetric) float64 {
+
+	var _dynamic_cast_ok C.bool = false
+	_method_ret := (float64)(C.QColorDialog_protectedbase_getDecodedMetricF(&_dynamic_cast_ok, unsafe.Pointer(this.h), metricA, metricB))
 
 	if !_dynamic_cast_ok {
 		panic("miqt: can only call protected methods for directly constructed types")
@@ -1451,12 +1466,12 @@ func miqt_exec_callback_QColorDialog_nativeEvent(self *C.QColorDialog, cb C.intp
 
 }
 
-func (this *QColorDialog) callVirtualBase_Metric(param1 QPaintDevice__PaintDeviceMetric) int {
+func (this *QColorDialog) callVirtualBase_Metric(param1 PaintDeviceMetric) int {
 
-	return (int)(C.QColorDialog_virtualbase_metric(unsafe.Pointer(this.h), (C.int)(param1)))
+	return (int)(C.QColorDialog_virtualbase_metric(unsafe.Pointer(this.h), param1))
 
 }
-func (this *QColorDialog) OnMetric(slot func(super func(param1 QPaintDevice__PaintDeviceMetric) int, param1 QPaintDevice__PaintDeviceMetric) int) {
+func (this *QColorDialog) OnMetric(slot func(super func(param1 PaintDeviceMetric) int, param1 PaintDeviceMetric) int) {
 	ok := C.QColorDialog_override_virtual_metric(unsafe.Pointer(this.h), C.intptr_t(cgo.NewHandle(slot)))
 	if !ok {
 		panic("miqt: can only override virtual methods for directly constructed types")
@@ -1464,14 +1479,14 @@ func (this *QColorDialog) OnMetric(slot func(super func(param1 QPaintDevice__Pai
 }
 
 //export miqt_exec_callback_QColorDialog_metric
-func miqt_exec_callback_QColorDialog_metric(self *C.QColorDialog, cb C.intptr_t, param1 C.int) C.int {
-	gofunc, ok := cgo.Handle(cb).Value().(func(super func(param1 QPaintDevice__PaintDeviceMetric) int, param1 QPaintDevice__PaintDeviceMetric) int)
+func miqt_exec_callback_QColorDialog_metric(self *C.QColorDialog, cb C.intptr_t, param1 C.PaintDeviceMetric) C.int {
+	gofunc, ok := cgo.Handle(cb).Value().(func(super func(param1 PaintDeviceMetric) int, param1 PaintDeviceMetric) int)
 	if !ok {
 		panic("miqt: callback of non-callback type (heap corruption?)")
 	}
 
 	// Convert all CABI parameters to Go parameters
-	slotval1 := (QPaintDevice__PaintDeviceMetric)(param1)
+	int /* TODO  */
 
 	virtualReturn := gofunc((&QColorDialog{h: self}).callVirtualBase_Metric, slotval1)
 

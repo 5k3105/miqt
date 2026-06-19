@@ -115,8 +115,8 @@ func (this *QResource) IsValid() bool {
 	return (bool)(C.QResource_isValid(this.h))
 }
 
-func (this *QResource) CompressionAlgorithm() QResource__Compression {
-	return (QResource__Compression)(C.QResource_compressionAlgorithm(this.h))
+func (this *QResource) CompressionAlgorithm() Compression {
+	int /* TODO  */
 }
 
 func (this *QResource) Size() int64 {

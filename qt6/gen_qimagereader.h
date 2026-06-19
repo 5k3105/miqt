@@ -76,7 +76,7 @@ int QImageReader_imageCount(const QImageReader* self);
 int QImageReader_nextImageDelay(const QImageReader* self);
 int QImageReader_currentImageNumber(const QImageReader* self);
 QRect* QImageReader_currentImageRect(const QImageReader* self);
-int QImageReader_error(const QImageReader* self);
+ImageReaderError QImageReader_error(const QImageReader* self);
 struct miqt_string QImageReader_errorString(const QImageReader* self);
 bool QImageReader_supportsOption(const QImageReader* self, int option);
 struct miqt_string QImageReader_imageFormatWithFileName(struct miqt_string fileName);

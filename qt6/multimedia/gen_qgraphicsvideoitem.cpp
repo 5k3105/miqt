@@ -39,7 +39,7 @@ QRectF* miqt_exec_callback_QGraphicsVideoItem_boundingRect(const QGraphicsVideoI
 void miqt_exec_callback_QGraphicsVideoItem_paint(QGraphicsVideoItem*, intptr_t, QPainter*, QStyleOptionGraphicsItem*, QWidget*);
 int miqt_exec_callback_QGraphicsVideoItem_type(const QGraphicsVideoItem*, intptr_t);
 void miqt_exec_callback_QGraphicsVideoItem_timerEvent(QGraphicsVideoItem*, intptr_t, QTimerEvent*);
-QVariant* miqt_exec_callback_QGraphicsVideoItem_itemChange(QGraphicsVideoItem*, intptr_t, int, QVariant*);
+QVariant* miqt_exec_callback_QGraphicsVideoItem_itemChange(QGraphicsVideoItem*, intptr_t, GraphicsItemChange, QVariant*);
 bool miqt_exec_callback_QGraphicsVideoItem_event(QGraphicsVideoItem*, intptr_t, QEvent*);
 bool miqt_exec_callback_QGraphicsVideoItem_eventFilter(QGraphicsVideoItem*, intptr_t, QObject*, QEvent*);
 void miqt_exec_callback_QGraphicsVideoItem_childEvent(QGraphicsVideoItem*, intptr_t, QChildEvent*);
@@ -74,8 +74,8 @@ void miqt_exec_callback_QGraphicsVideoItem_mouseDoubleClickEvent(QGraphicsVideoI
 void miqt_exec_callback_QGraphicsVideoItem_wheelEvent(QGraphicsVideoItem*, intptr_t, QGraphicsSceneWheelEvent*);
 void miqt_exec_callback_QGraphicsVideoItem_inputMethodEvent(QGraphicsVideoItem*, intptr_t, QInputMethodEvent*);
 QVariant* miqt_exec_callback_QGraphicsVideoItem_inputMethodQuery(const QGraphicsVideoItem*, intptr_t, int);
-bool miqt_exec_callback_QGraphicsVideoItem_supportsExtension(const QGraphicsVideoItem*, intptr_t, int);
-void miqt_exec_callback_QGraphicsVideoItem_setExtension(QGraphicsVideoItem*, intptr_t, int, QVariant*);
+bool miqt_exec_callback_QGraphicsVideoItem_supportsExtension(const QGraphicsVideoItem*, intptr_t, Extension);
+void miqt_exec_callback_QGraphicsVideoItem_setExtension(QGraphicsVideoItem*, intptr_t, Extension, QVariant*);
 QVariant* miqt_exec_callback_QGraphicsVideoItem_extension(const QGraphicsVideoItem*, intptr_t, QVariant*);
 #ifdef __cplusplus
 } /* extern C */
@@ -159,13 +159,12 @@ public:
 	intptr_t handle__itemChange = 0;
 
 	// Subclass to allow providing a Go implementation
-	virtual QVariant itemChange(QGraphicsItem::GraphicsItemChange change, const QVariant& value) override {
+	virtual QVariant itemChange(GraphicsItemChange change, const QVariant& value) override {
 		if (handle__itemChange == 0) {
 			return QGraphicsVideoItem::itemChange(change, value);
 		}
 
-		QGraphicsItem::GraphicsItemChange change_ret = change;
-		int sigval1 = static_cast<int>(change_ret);
+		GraphicsItemChange sigval1 = change;
 		const QVariant& value_ret = value;
 		// Cast returned reference into pointer
 		QVariant* sigval2 = const_cast<QVariant*>(&value_ret);
@@ -173,7 +172,7 @@ public:
 		return *callback_return_value;
 	}
 
-	friend QVariant* QGraphicsVideoItem_virtualbase_itemChange(void* self, int change, QVariant* value);
+	friend QVariant* QGraphicsVideoItem_virtualbase_itemChange(void* self, GraphicsItemChange change, QVariant* value);
 
 	// cgo.Handle value for overwritten implementation
 	intptr_t handle__event = 0;
@@ -759,31 +758,29 @@ public:
 	intptr_t handle__supportsExtension = 0;
 
 	// Subclass to allow providing a Go implementation
-	virtual bool supportsExtension(QGraphicsItem::Extension extension) const override {
+	virtual bool supportsExtension(Extension extension) const override {
 		if (handle__supportsExtension == 0) {
 			return QGraphicsVideoItem::supportsExtension(extension);
 		}
 
-		QGraphicsItem::Extension extension_ret = extension;
-		int sigval1 = static_cast<int>(extension_ret);
+		Extension sigval1 = extension;
 		bool callback_return_value = miqt_exec_callback_QGraphicsVideoItem_supportsExtension(this, handle__supportsExtension, sigval1);
 		return callback_return_value;
 	}
 
-	friend bool QGraphicsVideoItem_virtualbase_supportsExtension(const void* self, int extension);
+	friend bool QGraphicsVideoItem_virtualbase_supportsExtension(const void* self, Extension extension);
 
 	// cgo.Handle value for overwritten implementation
 	intptr_t handle__setExtension = 0;
 
 	// Subclass to allow providing a Go implementation
-	virtual void setExtension(QGraphicsItem::Extension extension, const QVariant& variant) override {
+	virtual void setExtension(Extension extension, const QVariant& variant) override {
 		if (handle__setExtension == 0) {
 			QGraphicsVideoItem::setExtension(extension, variant);
 			return;
 		}
 
-		QGraphicsItem::Extension extension_ret = extension;
-		int sigval1 = static_cast<int>(extension_ret);
+		Extension sigval1 = extension;
 		const QVariant& variant_ret = variant;
 		// Cast returned reference into pointer
 		QVariant* sigval2 = const_cast<QVariant*>(&variant_ret);
@@ -791,7 +788,7 @@ public:
 
 	}
 
-	friend void QGraphicsVideoItem_virtualbase_setExtension(void* self, int extension, QVariant* variant);
+	friend void QGraphicsVideoItem_virtualbase_setExtension(void* self, Extension extension, QVariant* variant);
 
 	// cgo.Handle value for overwritten implementation
 	intptr_t handle__extension = 0;
@@ -999,8 +996,8 @@ bool QGraphicsVideoItem_override_virtual_itemChange(void* self, intptr_t slot) {
 	return true;
 }
 
-QVariant* QGraphicsVideoItem_virtualbase_itemChange(void* self, int change, QVariant* value) {
-	return new QVariant(static_cast<MiqtVirtualQGraphicsVideoItem*>(self)->QGraphicsVideoItem::itemChange(static_cast<MiqtVirtualQGraphicsVideoItem::GraphicsItemChange>(change), *value));
+QVariant* QGraphicsVideoItem_virtualbase_itemChange(void* self, GraphicsItemChange change, QVariant* value) {
+	return new QVariant(static_cast<MiqtVirtualQGraphicsVideoItem*>(self)->QGraphicsVideoItem::itemChange(change, *value));
 }
 
 bool QGraphicsVideoItem_override_virtual_event(void* self, intptr_t slot) {
@@ -1489,8 +1486,8 @@ bool QGraphicsVideoItem_override_virtual_supportsExtension(void* self, intptr_t 
 	return true;
 }
 
-bool QGraphicsVideoItem_virtualbase_supportsExtension(const void* self, int extension) {
-	return static_cast<const MiqtVirtualQGraphicsVideoItem*>(self)->QGraphicsVideoItem::supportsExtension(static_cast<MiqtVirtualQGraphicsVideoItem::Extension>(extension));
+bool QGraphicsVideoItem_virtualbase_supportsExtension(const void* self, Extension extension) {
+	return static_cast<const MiqtVirtualQGraphicsVideoItem*>(self)->QGraphicsVideoItem::supportsExtension(extension);
 }
 
 bool QGraphicsVideoItem_override_virtual_setExtension(void* self, intptr_t slot) {
@@ -1503,8 +1500,8 @@ bool QGraphicsVideoItem_override_virtual_setExtension(void* self, intptr_t slot)
 	return true;
 }
 
-void QGraphicsVideoItem_virtualbase_setExtension(void* self, int extension, QVariant* variant) {
-	static_cast<MiqtVirtualQGraphicsVideoItem*>(self)->QGraphicsVideoItem::setExtension(static_cast<MiqtVirtualQGraphicsVideoItem::Extension>(extension), *variant);
+void QGraphicsVideoItem_virtualbase_setExtension(void* self, Extension extension, QVariant* variant) {
+	static_cast<MiqtVirtualQGraphicsVideoItem*>(self)->QGraphicsVideoItem::setExtension(extension, *variant);
 }
 
 bool QGraphicsVideoItem_override_virtual_extension(void* self, intptr_t slot) {

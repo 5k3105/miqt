@@ -69,8 +69,8 @@ func (this *QGestureRecognizer) Create(target *QObject) *QGesture {
 	return newQGesture(C.QGestureRecognizer_create(this.h, target.cPointer()))
 }
 
-func (this *QGestureRecognizer) Recognize(state *QGesture, watched *QObject, event *QEvent) QGestureRecognizer__ResultFlag {
-	return (QGestureRecognizer__ResultFlag)(C.QGestureRecognizer_recognize(this.h, state.cPointer(), watched.cPointer(), event.cPointer()))
+func (this *QGestureRecognizer) Recognize(state *QGesture, watched *QObject, event *QEvent) Result {
+	int /* TODO  */
 }
 
 func (this *QGestureRecognizer) Reset(state *QGesture) {
@@ -116,7 +116,7 @@ func miqt_exec_callback_QGestureRecognizer_create(self *C.QGestureRecognizer, cb
 	return virtualReturn.cPointer()
 
 }
-func (this *QGestureRecognizer) OnRecognize(slot func(state *QGesture, watched *QObject, event *QEvent) QGestureRecognizer__ResultFlag) {
+func (this *QGestureRecognizer) OnRecognize(slot func(state *QGesture, watched *QObject, event *QEvent) Result) {
 	ok := C.QGestureRecognizer_override_virtual_recognize(unsafe.Pointer(this.h), C.intptr_t(cgo.NewHandle(slot)))
 	if !ok {
 		panic("miqt: can only override virtual methods for directly constructed types")
@@ -124,8 +124,8 @@ func (this *QGestureRecognizer) OnRecognize(slot func(state *QGesture, watched *
 }
 
 //export miqt_exec_callback_QGestureRecognizer_recognize
-func miqt_exec_callback_QGestureRecognizer_recognize(self *C.QGestureRecognizer, cb C.intptr_t, state *C.QGesture, watched *C.QObject, event *C.QEvent) C.int {
-	gofunc, ok := cgo.Handle(cb).Value().(func(state *QGesture, watched *QObject, event *QEvent) QGestureRecognizer__ResultFlag)
+func miqt_exec_callback_QGestureRecognizer_recognize(self *C.QGestureRecognizer, cb C.intptr_t, state *C.QGesture, watched *C.QObject, event *C.QEvent) C.Result {
+	gofunc, ok := cgo.Handle(cb).Value().(func(state *QGesture, watched *QObject, event *QEvent) Result)
 	if !ok {
 		panic("miqt: callback of non-callback type (heap corruption?)")
 	}
@@ -139,7 +139,7 @@ func miqt_exec_callback_QGestureRecognizer_recognize(self *C.QGestureRecognizer,
 
 	virtualReturn := gofunc(slotval1, slotval2, slotval3)
 
-	return (C.int)(virtualReturn)
+	return virtualReturn
 
 }
 

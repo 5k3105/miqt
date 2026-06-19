@@ -225,12 +225,12 @@ func (this *QTextEdit) CurrentCharFormat() *QTextCharFormat {
 	return _goptr
 }
 
-func (this *QTextEdit) AutoFormatting() QTextEdit__AutoFormattingFlag {
-	return (QTextEdit__AutoFormattingFlag)(C.QTextEdit_autoFormatting(this.h))
+func (this *QTextEdit) AutoFormatting() AutoFormatting {
+	int /* TODO  */
 }
 
-func (this *QTextEdit) SetAutoFormatting(features QTextEdit__AutoFormattingFlag) {
-	C.QTextEdit_setAutoFormatting(this.h, (C.int)(features))
+func (this *QTextEdit) SetAutoFormatting(features AutoFormatting) {
+	C.QTextEdit_setAutoFormatting(this.h, features)
 }
 
 func (this *QTextEdit) TabChangesFocus() bool {
@@ -264,12 +264,12 @@ func (this *QTextEdit) SetUndoRedoEnabled(enable bool) {
 	C.QTextEdit_setUndoRedoEnabled(this.h, (C.bool)(enable))
 }
 
-func (this *QTextEdit) LineWrapMode() QTextEdit__LineWrapMode {
-	return (QTextEdit__LineWrapMode)(C.QTextEdit_lineWrapMode(this.h))
+func (this *QTextEdit) LineWrapMode() LineWrapMode {
+	int /* TODO  */
 }
 
-func (this *QTextEdit) SetLineWrapMode(mode QTextEdit__LineWrapMode) {
-	C.QTextEdit_setLineWrapMode(this.h, (C.int)(mode))
+func (this *QTextEdit) SetLineWrapMode(mode LineWrapMode) {
+	C.QTextEdit_setLineWrapMode(this.h, mode)
 }
 
 func (this *QTextEdit) LineWrapColumnOrWidth() int {
@@ -396,24 +396,22 @@ func (this *QTextEdit) SetAcceptRichText(accept bool) {
 	C.QTextEdit_setAcceptRichText(this.h, (C.bool)(accept))
 }
 
-func (this *QTextEdit) SetExtraSelections(selections []QTextEdit__ExtraSelection) {
-	selections_CArray := (*[0xffff]*C.QTextEdit__ExtraSelection)(C.malloc(C.size_t(8 * len(selections))))
+func (this *QTextEdit) SetExtraSelections(selections []ExtraSelection) {
+	selections_CArray := (*[0xffff]C.ExtraSelection)(C.malloc(C.size_t(8 * len(selections))))
 	defer C.free(unsafe.Pointer(selections_CArray))
 	for i := range selections {
-		selections_CArray[i] = selections[i].cPointer()
+		selections_CArray[i] = selections[i]
 	}
 	selections_ma := C.struct_miqt_array{len: C.size_t(len(selections)), data: unsafe.Pointer(selections_CArray)}
 	C.QTextEdit_setExtraSelections(this.h, selections_ma)
 }
 
-func (this *QTextEdit) ExtraSelections() []QTextEdit__ExtraSelection {
+func (this *QTextEdit) ExtraSelections() []ExtraSelection {
 	var _ma C.struct_miqt_array = C.QTextEdit_extraSelections(this.h)
-	_ret := make([]QTextEdit__ExtraSelection, int(_ma.len))
-	_outCast := (*[0xffff]*C.QTextEdit__ExtraSelection)(unsafe.Pointer(_ma.data)) // hey ya
+	_ret := make([]ExtraSelection, int(_ma.len))
+	_outCast := (*[0xffff]C.ExtraSelection)(unsafe.Pointer(_ma.data)) // hey ya
 	for i := 0; i < int(_ma.len); i++ {
-		_lv_goptr := newQTextEdit__ExtraSelection(_outCast[i])
-		_lv_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
-		_ret[i] = *_lv_goptr
+		int /* TODO  */
 	}
 	return _ret
 }
@@ -735,7 +733,7 @@ func QTextEdit_Tr3(s string, c string, n int) string {
 	return _ret
 }
 
-func (this *QTextEdit) Find2(exp string, options QTextDocument__FindFlag) bool {
+func (this *QTextEdit) Find2(exp string, options FindFlag) bool {
 	exp_ms := C.struct_miqt_string{}
 	exp_ms.data = C.CString(exp)
 	exp_ms.len = C.size_t(len(exp))
@@ -743,11 +741,11 @@ func (this *QTextEdit) Find2(exp string, options QTextDocument__FindFlag) bool {
 	return (bool)(C.QTextEdit_find2(this.h, exp_ms, (C.int)(options)))
 }
 
-func (this *QTextEdit) Find3(exp *QRegularExpression, options QTextDocument__FindFlag) bool {
+func (this *QTextEdit) Find3(exp *QRegularExpression, options FindFlag) bool {
 	return (bool)(C.QTextEdit_find3(this.h, exp.cPointer(), (C.int)(options)))
 }
 
-func (this *QTextEdit) ToMarkdownWithFeatures(features QTextDocument__MarkdownFeature) string {
+func (this *QTextEdit) ToMarkdownWithFeatures(features MarkdownFeature) string {
 	var _ms C.struct_miqt_string = C.QTextEdit_toMarkdownWithFeatures(this.h, (C.int)(features))
 	_ret := C.GoStringN(_ms.data, C.int(int64(_ms.len)))
 	C.free(unsafe.Pointer(_ms.data))
@@ -931,6 +929,20 @@ func (this *QTextEdit) IsSignalConnected(signal *QMetaMethod) bool {
 
 	var _dynamic_cast_ok C.bool = false
 	_method_ret := (bool)(C.QTextEdit_protectedbase_isSignalConnected(&_dynamic_cast_ok, unsafe.Pointer(this.h), signal.cPointer()))
+
+	if !_dynamic_cast_ok {
+		panic("miqt: can only call protected methods for directly constructed types")
+	}
+
+	return _method_ret
+
+}
+
+// GetDecodedMetricF can only be called from a QTextEdit that was directly constructed.
+func (this *QTextEdit) GetDecodedMetricF(metricA PaintDeviceMetric, metricB PaintDeviceMetric) float64 {
+
+	var _dynamic_cast_ok C.bool = false
+	_method_ret := (float64)(C.QTextEdit_protectedbase_getDecodedMetricF(&_dynamic_cast_ok, unsafe.Pointer(this.h), metricA, metricB))
 
 	if !_dynamic_cast_ok {
 		panic("miqt: can only call protected methods for directly constructed types")
@@ -2254,12 +2266,12 @@ func miqt_exec_callback_QTextEdit_nativeEvent(self *C.QTextEdit, cb C.intptr_t, 
 
 }
 
-func (this *QTextEdit) callVirtualBase_Metric(param1 QPaintDevice__PaintDeviceMetric) int {
+func (this *QTextEdit) callVirtualBase_Metric(param1 PaintDeviceMetric) int {
 
-	return (int)(C.QTextEdit_virtualbase_metric(unsafe.Pointer(this.h), (C.int)(param1)))
+	return (int)(C.QTextEdit_virtualbase_metric(unsafe.Pointer(this.h), param1))
 
 }
-func (this *QTextEdit) OnMetric(slot func(super func(param1 QPaintDevice__PaintDeviceMetric) int, param1 QPaintDevice__PaintDeviceMetric) int) {
+func (this *QTextEdit) OnMetric(slot func(super func(param1 PaintDeviceMetric) int, param1 PaintDeviceMetric) int) {
 	ok := C.QTextEdit_override_virtual_metric(unsafe.Pointer(this.h), C.intptr_t(cgo.NewHandle(slot)))
 	if !ok {
 		panic("miqt: can only override virtual methods for directly constructed types")
@@ -2267,14 +2279,14 @@ func (this *QTextEdit) OnMetric(slot func(super func(param1 QPaintDevice__PaintD
 }
 
 //export miqt_exec_callback_QTextEdit_metric
-func miqt_exec_callback_QTextEdit_metric(self *C.QTextEdit, cb C.intptr_t, param1 C.int) C.int {
-	gofunc, ok := cgo.Handle(cb).Value().(func(super func(param1 QPaintDevice__PaintDeviceMetric) int, param1 QPaintDevice__PaintDeviceMetric) int)
+func miqt_exec_callback_QTextEdit_metric(self *C.QTextEdit, cb C.intptr_t, param1 C.PaintDeviceMetric) C.int {
+	gofunc, ok := cgo.Handle(cb).Value().(func(super func(param1 PaintDeviceMetric) int, param1 PaintDeviceMetric) int)
 	if !ok {
 		panic("miqt: callback of non-callback type (heap corruption?)")
 	}
 
 	// Convert all CABI parameters to Go parameters
-	slotval1 := (QPaintDevice__PaintDeviceMetric)(param1)
+	int /* TODO  */
 
 	virtualReturn := gofunc((&QTextEdit{h: self}).callVirtualBase_Metric, slotval1)
 
@@ -2512,9 +2524,9 @@ func UnsafeNewQTextEdit__ExtraSelection(h unsafe.Pointer) *QTextEdit__ExtraSelec
 }
 
 // NewQTextEdit__ExtraSelection constructs a new QTextEdit::ExtraSelection object.
-func NewQTextEdit__ExtraSelection(param1 *QTextEdit__ExtraSelection) *QTextEdit__ExtraSelection {
+func NewQTextEdit__ExtraSelection(param1 *ExtraSelection) *QTextEdit__ExtraSelection {
 
-	return newQTextEdit__ExtraSelection(C.QTextEdit__ExtraSelection_new(param1.cPointer()))
+	return newQTextEdit__ExtraSelection(C.QTextEdit__ExtraSelection_new(param1))
 }
 
 func (this *QTextEdit__ExtraSelection) Cursor() *QTextCursor {
@@ -2537,8 +2549,8 @@ func (this *QTextEdit__ExtraSelection) SetFormat(format QTextCharFormat) {
 	C.QTextEdit__ExtraSelection_setFormat(this.h, format.cPointer())
 }
 
-func (this *QTextEdit__ExtraSelection) OperatorAssign(param1 *QTextEdit__ExtraSelection) {
-	C.QTextEdit__ExtraSelection_operatorAssign(this.h, param1.cPointer())
+func (this *QTextEdit__ExtraSelection) OperatorAssign(param1 *ExtraSelection) {
+	C.QTextEdit__ExtraSelection_operatorAssign(this.h, param1)
 }
 
 // Delete this object from C++ memory.

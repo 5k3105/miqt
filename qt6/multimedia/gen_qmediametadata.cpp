@@ -23,25 +23,24 @@ QMediaMetaData* QMediaMetaData_new2() {
 	return new (std::nothrow) QMediaMetaData();
 }
 
-QVariant* QMediaMetaData_value(const QMediaMetaData* self, int k) {
-	return new QVariant(self->value(static_cast<QMediaMetaData::Key>(k)));
+QVariant* QMediaMetaData_value(const QMediaMetaData* self, Key k) {
+	return new QVariant(self->value(k));
 }
 
-void QMediaMetaData_insert(QMediaMetaData* self, int k, QVariant* value) {
-	self->insert(static_cast<QMediaMetaData::Key>(k), *value);
+void QMediaMetaData_insert(QMediaMetaData* self, Key k, QVariant* value) {
+	self->insert(k, *value);
 }
 
-void QMediaMetaData_remove(QMediaMetaData* self, int k) {
-	self->remove(static_cast<QMediaMetaData::Key>(k));
+void QMediaMetaData_remove(QMediaMetaData* self, Key k) {
+	self->remove(k);
 }
 
-struct miqt_array /* of int */  QMediaMetaData_keys(const QMediaMetaData* self) {
-	QList<QMediaMetaData::Key> _ret = self->keys();
+struct miqt_array /* of Key */  QMediaMetaData_keys(const QMediaMetaData* self) {
+	QList<Key> _ret = self->keys();
 	// Convert QList<> from C++ memory to manually-managed C memory
-	int* _arr = static_cast<int*>(malloc(sizeof(int) * _ret.length()));
+	Key* _arr = static_cast<Key*>(malloc(sizeof(Key) * _ret.length()));
 	for (size_t i = 0, e = _ret.length(); i < e; ++i) {
-		QMediaMetaData::Key _lv_ret = _ret[i];
-		_arr[i] = static_cast<int>(_lv_ret);
+		_arr[i] = _ret[i];
 	}
 	struct miqt_array _out;
 	_out.len = _ret.length();
@@ -49,8 +48,8 @@ struct miqt_array /* of int */  QMediaMetaData_keys(const QMediaMetaData* self) 
 	return _out;
 }
 
-QVariant* QMediaMetaData_operatorSubscript(QMediaMetaData* self, int k) {
-	QVariant& _ret = self->operator[](static_cast<QMediaMetaData::Key>(k));
+QVariant* QMediaMetaData_operatorSubscript(QMediaMetaData* self, Key k) {
+	QVariant& _ret = self->operator[](k);
 	// Cast returned reference into pointer
 	return &_ret;
 }
@@ -63,8 +62,8 @@ bool QMediaMetaData_isEmpty(const QMediaMetaData* self) {
 	return self->isEmpty();
 }
 
-struct miqt_string QMediaMetaData_stringValue(const QMediaMetaData* self, int k) {
-	QString _ret = self->stringValue(static_cast<QMediaMetaData::Key>(k));
+struct miqt_string QMediaMetaData_stringValue(const QMediaMetaData* self, Key k) {
+	QString _ret = self->stringValue(k);
 	// Convert QString from UTF-16 in C++ RAII memory to UTF-8 in manually-managed C memory
 	QByteArray _b = _ret.toUtf8();
 	struct miqt_string _ms;
@@ -74,8 +73,8 @@ struct miqt_string QMediaMetaData_stringValue(const QMediaMetaData* self, int k)
 	return _ms;
 }
 
-struct miqt_string QMediaMetaData_metaDataKeyToString(int k) {
-	QString _ret = QMediaMetaData::metaDataKeyToString(static_cast<QMediaMetaData::Key>(k));
+struct miqt_string QMediaMetaData_metaDataKeyToString(Key k) {
+	QString _ret = QMediaMetaData::metaDataKeyToString(k);
 	// Convert QString from UTF-16 in C++ RAII memory to UTF-8 in manually-managed C memory
 	QByteArray _b = _ret.toUtf8();
 	struct miqt_string _ms;

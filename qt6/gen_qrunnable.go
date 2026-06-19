@@ -94,3 +94,57 @@ func (this *QRunnable) GoGC() {
 		runtime.KeepAlive(this.h)
 	})
 }
+
+type QGenericRunnable struct {
+	h *C.QGenericRunnable
+	*QRunnable
+}
+
+func (this *QGenericRunnable) cPointer() *C.QGenericRunnable {
+	if this == nil {
+		return nil
+	}
+	return this.h
+}
+
+func (this *QGenericRunnable) UnsafePointer() unsafe.Pointer {
+	if this == nil {
+		return nil
+	}
+	return unsafe.Pointer(this.h)
+}
+
+// newQGenericRunnable constructs the type using only CGO pointers.
+func newQGenericRunnable(h *C.QGenericRunnable) *QGenericRunnable {
+	if h == nil {
+		return nil
+	}
+	var outptr_QRunnable *C.QRunnable = nil
+	C.QGenericRunnable_virtbase(h, &outptr_QRunnable)
+
+	return &QGenericRunnable{h: h,
+		QRunnable: newQRunnable(outptr_QRunnable)}
+}
+
+// UnsafeNewQGenericRunnable constructs the type using only unsafe pointers.
+func UnsafeNewQGenericRunnable(h unsafe.Pointer) *QGenericRunnable {
+	return newQGenericRunnable((*C.QGenericRunnable)(h))
+}
+
+func (this *QGenericRunnable) Run() {
+	C.QGenericRunnable_run(this.h)
+}
+
+// Delete this object from C++ memory.
+func (this *QGenericRunnable) Delete() {
+	C.QGenericRunnable_delete(this.h)
+}
+
+// GoGC adds a Go Finalizer to this pointer, so that it will be deleted
+// from C++ memory once it is unreachable from Go memory.
+func (this *QGenericRunnable) GoGC() {
+	runtime.SetFinalizer(this, func(this *QGenericRunnable) {
+		this.Delete()
+		runtime.KeepAlive(this.h)
+	})
+}

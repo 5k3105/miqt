@@ -126,6 +126,10 @@ void QAuthenticator_detach(QAuthenticator* self) {
 	self->detach();
 }
 
+void QAuthenticator_clear(QAuthenticator* self) {
+	self->clear();
+}
+
 void QAuthenticator_delete(QAuthenticator* self) {
 	delete self;
 }

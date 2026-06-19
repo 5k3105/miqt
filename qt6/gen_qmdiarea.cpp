@@ -92,7 +92,7 @@ void miqt_exec_callback_QMdiArea_tabletEvent(QMdiArea*, intptr_t, QTabletEvent*)
 void miqt_exec_callback_QMdiArea_actionEvent(QMdiArea*, intptr_t, QActionEvent*);
 void miqt_exec_callback_QMdiArea_hideEvent(QMdiArea*, intptr_t, QHideEvent*);
 bool miqt_exec_callback_QMdiArea_nativeEvent(QMdiArea*, intptr_t, struct miqt_string, void*, intptr_t*);
-int miqt_exec_callback_QMdiArea_metric(const QMdiArea*, intptr_t, int);
+int miqt_exec_callback_QMdiArea_metric(const QMdiArea*, intptr_t, PaintDeviceMetric);
 void miqt_exec_callback_QMdiArea_initPainter(const QMdiArea*, intptr_t, QPainter*);
 QPaintDevice* miqt_exec_callback_QMdiArea_redirected(const QMdiArea*, intptr_t, QPoint*);
 QPainter* miqt_exec_callback_QMdiArea_sharedPainter(const QMdiArea*, intptr_t);
@@ -825,18 +825,17 @@ public:
 	intptr_t handle__metric = 0;
 
 	// Subclass to allow providing a Go implementation
-	virtual int metric(QPaintDevice::PaintDeviceMetric param1) const override {
+	virtual int metric(PaintDeviceMetric param1) const override {
 		if (handle__metric == 0) {
 			return QMdiArea::metric(param1);
 		}
 
-		QPaintDevice::PaintDeviceMetric param1_ret = param1;
-		int sigval1 = static_cast<int>(param1_ret);
+		PaintDeviceMetric sigval1 = param1;
 		int callback_return_value = miqt_exec_callback_QMdiArea_metric(this, handle__metric, sigval1);
 		return static_cast<int>(callback_return_value);
 	}
 
-	friend int QMdiArea_virtualbase_metric(const void* self, int param1);
+	friend int QMdiArea_virtualbase_metric(const void* self, PaintDeviceMetric param1);
 
 	// cgo.Handle value for overwritten implementation
 	intptr_t handle__initPainter = 0;
@@ -1004,6 +1003,7 @@ public:
 	friend int QMdiArea_protectedbase_senderSignalIndex(bool* _dynamic_cast_ok, const void* self);
 	friend int QMdiArea_protectedbase_receivers(bool* _dynamic_cast_ok, const void* self, const char* signal);
 	friend bool QMdiArea_protectedbase_isSignalConnected(bool* _dynamic_cast_ok, const void* self, QMetaMethod* signal);
+	friend double QMdiArea_protectedbase_getDecodedMetricF(bool* _dynamic_cast_ok, const void* self, PaintDeviceMetric metricA, PaintDeviceMetric metricB);
 };
 
 QMdiArea* QMdiArea_new(QWidget* parent) {
@@ -1082,30 +1082,28 @@ void QMdiArea_setBackground(QMdiArea* self, QBrush* background) {
 	self->setBackground(*background);
 }
 
-int QMdiArea_activationOrder(const QMdiArea* self) {
-	QMdiArea::WindowOrder _ret = self->activationOrder();
-	return static_cast<int>(_ret);
+WindowOrder QMdiArea_activationOrder(const QMdiArea* self) {
+	return self->activationOrder();
 }
 
-void QMdiArea_setActivationOrder(QMdiArea* self, int order) {
-	self->setActivationOrder(static_cast<QMdiArea::WindowOrder>(order));
+void QMdiArea_setActivationOrder(QMdiArea* self, WindowOrder order) {
+	self->setActivationOrder(order);
 }
 
-void QMdiArea_setOption(QMdiArea* self, int option) {
-	self->setOption(static_cast<QMdiArea::AreaOption>(option));
+void QMdiArea_setOption(QMdiArea* self, AreaOption option) {
+	self->setOption(option);
 }
 
-bool QMdiArea_testOption(const QMdiArea* self, int opton) {
-	return self->testOption(static_cast<QMdiArea::AreaOption>(opton));
+bool QMdiArea_testOption(const QMdiArea* self, AreaOption opton) {
+	return self->testOption(opton);
 }
 
-void QMdiArea_setViewMode(QMdiArea* self, int mode) {
-	self->setViewMode(static_cast<QMdiArea::ViewMode>(mode));
+void QMdiArea_setViewMode(QMdiArea* self, ViewMode mode) {
+	self->setViewMode(mode);
 }
 
-int QMdiArea_viewMode(const QMdiArea* self) {
-	QMdiArea::ViewMode _ret = self->viewMode();
-	return static_cast<int>(_ret);
+ViewMode QMdiArea_viewMode(const QMdiArea* self) {
+	return self->viewMode();
 }
 
 bool QMdiArea_documentMode(const QMdiArea* self) {
@@ -1211,8 +1209,8 @@ struct miqt_string QMdiArea_tr3(const char* s, const char* c, int n) {
 	return _ms;
 }
 
-struct miqt_array /* of QMdiSubWindow* */  QMdiArea_subWindowListWithOrder(const QMdiArea* self, int order) {
-	QList<QMdiSubWindow *> _ret = self->subWindowList(static_cast<QMdiArea::WindowOrder>(order));
+struct miqt_array /* of QMdiSubWindow* */  QMdiArea_subWindowListWithOrder(const QMdiArea* self, WindowOrder order) {
+	QList<QMdiSubWindow *> _ret = self->subWindowList(order);
 	// Convert QList<> from C++ memory to manually-managed C memory
 	QMdiSubWindow** _arr = static_cast<QMdiSubWindow**>(malloc(sizeof(QMdiSubWindow*) * _ret.length()));
 	for (size_t i = 0, e = _ret.length(); i < e; ++i) {
@@ -1228,8 +1226,8 @@ QMdiSubWindow* QMdiArea_addSubWindow2(QMdiArea* self, QWidget* widget, int flags
 	return self->addSubWindow(widget, static_cast<Qt::WindowFlags>(flags));
 }
 
-void QMdiArea_setOption2(QMdiArea* self, int option, bool on) {
-	self->setOption(static_cast<QMdiArea::AreaOption>(option), on);
+void QMdiArea_setOption2(QMdiArea* self, AreaOption option, bool on) {
+	self->setOption(option, on);
 }
 
 bool QMdiArea_override_virtual_sizeHint(void* self, intptr_t slot) {
@@ -1831,8 +1829,8 @@ bool QMdiArea_override_virtual_metric(void* self, intptr_t slot) {
 	return true;
 }
 
-int QMdiArea_virtualbase_metric(const void* self, int param1) {
-	return static_cast<const MiqtVirtualQMdiArea*>(self)->QMdiArea::metric(static_cast<MiqtVirtualQMdiArea::PaintDeviceMetric>(param1));
+int QMdiArea_virtualbase_metric(const void* self, PaintDeviceMetric param1) {
+	return static_cast<const MiqtVirtualQMdiArea*>(self)->QMdiArea::metric(param1);
 }
 
 bool QMdiArea_override_virtual_initPainter(void* self, intptr_t slot) {
@@ -2091,6 +2089,17 @@ bool QMdiArea_protectedbase_isSignalConnected(bool* _dynamic_cast_ok, const void
 
 	*_dynamic_cast_ok = true;
 	return self_cast->isSignalConnected(*signal);
+}
+
+double QMdiArea_protectedbase_getDecodedMetricF(bool* _dynamic_cast_ok, const void* self, PaintDeviceMetric metricA, PaintDeviceMetric metricB) {
+	MiqtVirtualQMdiArea* self_cast = dynamic_cast<MiqtVirtualQMdiArea*>( (QMdiArea*)(self) );
+	if (self_cast == nullptr) {
+		*_dynamic_cast_ok = false;
+		return 0;
+	}
+
+	*_dynamic_cast_ok = true;
+	return self_cast->getDecodedMetricF(metricA, metricB);
 }
 
 void QMdiArea_delete(QMdiArea* self) {

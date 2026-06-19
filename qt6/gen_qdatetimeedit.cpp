@@ -41,6 +41,7 @@
 #include <QTabletEvent>
 #include <QTime>
 #include <QTimeEdit>
+#include <QTimeZone>
 #include <QTimerEvent>
 #include <QVariant>
 #include <QWheelEvent>
@@ -67,7 +68,7 @@ int miqt_exec_callback_QDateTimeEdit_validate(const QDateTimeEdit*, intptr_t, st
 void miqt_exec_callback_QDateTimeEdit_fixup(const QDateTimeEdit*, intptr_t, struct miqt_string);
 QDateTime* miqt_exec_callback_QDateTimeEdit_dateTimeFromText(const QDateTimeEdit*, intptr_t, struct miqt_string);
 struct miqt_string miqt_exec_callback_QDateTimeEdit_textFromDateTime(const QDateTimeEdit*, intptr_t, QDateTime*);
-int miqt_exec_callback_QDateTimeEdit_stepEnabled(const QDateTimeEdit*, intptr_t);
+StepEnabled miqt_exec_callback_QDateTimeEdit_stepEnabled(const QDateTimeEdit*, intptr_t);
 void miqt_exec_callback_QDateTimeEdit_mousePressEvent(QDateTimeEdit*, intptr_t, QMouseEvent*);
 void miqt_exec_callback_QDateTimeEdit_paintEvent(QDateTimeEdit*, intptr_t, QPaintEvent*);
 void miqt_exec_callback_QDateTimeEdit_initStyleOption(const QDateTimeEdit*, intptr_t, QStyleOptionSpinBox*);
@@ -100,7 +101,7 @@ void miqt_exec_callback_QDateTimeEdit_dragMoveEvent(QDateTimeEdit*, intptr_t, QD
 void miqt_exec_callback_QDateTimeEdit_dragLeaveEvent(QDateTimeEdit*, intptr_t, QDragLeaveEvent*);
 void miqt_exec_callback_QDateTimeEdit_dropEvent(QDateTimeEdit*, intptr_t, QDropEvent*);
 bool miqt_exec_callback_QDateTimeEdit_nativeEvent(QDateTimeEdit*, intptr_t, struct miqt_string, void*, intptr_t*);
-int miqt_exec_callback_QDateTimeEdit_metric(const QDateTimeEdit*, intptr_t, int);
+int miqt_exec_callback_QDateTimeEdit_metric(const QDateTimeEdit*, intptr_t, PaintDeviceMetric);
 void miqt_exec_callback_QDateTimeEdit_initPainter(const QDateTimeEdit*, intptr_t, QPainter*);
 QPaintDevice* miqt_exec_callback_QDateTimeEdit_redirected(const QDateTimeEdit*, intptr_t, QPoint*);
 QPainter* miqt_exec_callback_QDateTimeEdit_sharedPainter(const QDateTimeEdit*, intptr_t);
@@ -123,7 +124,7 @@ int miqt_exec_callback_QTimeEdit_validate(const QTimeEdit*, intptr_t, struct miq
 void miqt_exec_callback_QTimeEdit_fixup(const QTimeEdit*, intptr_t, struct miqt_string);
 QDateTime* miqt_exec_callback_QTimeEdit_dateTimeFromText(const QTimeEdit*, intptr_t, struct miqt_string);
 struct miqt_string miqt_exec_callback_QTimeEdit_textFromDateTime(const QTimeEdit*, intptr_t, QDateTime*);
-int miqt_exec_callback_QTimeEdit_stepEnabled(const QTimeEdit*, intptr_t);
+StepEnabled miqt_exec_callback_QTimeEdit_stepEnabled(const QTimeEdit*, intptr_t);
 void miqt_exec_callback_QTimeEdit_mousePressEvent(QTimeEdit*, intptr_t, QMouseEvent*);
 void miqt_exec_callback_QTimeEdit_paintEvent(QTimeEdit*, intptr_t, QPaintEvent*);
 void miqt_exec_callback_QTimeEdit_initStyleOption(const QTimeEdit*, intptr_t, QStyleOptionSpinBox*);
@@ -156,7 +157,7 @@ void miqt_exec_callback_QTimeEdit_dragMoveEvent(QTimeEdit*, intptr_t, QDragMoveE
 void miqt_exec_callback_QTimeEdit_dragLeaveEvent(QTimeEdit*, intptr_t, QDragLeaveEvent*);
 void miqt_exec_callback_QTimeEdit_dropEvent(QTimeEdit*, intptr_t, QDropEvent*);
 bool miqt_exec_callback_QTimeEdit_nativeEvent(QTimeEdit*, intptr_t, struct miqt_string, void*, intptr_t*);
-int miqt_exec_callback_QTimeEdit_metric(const QTimeEdit*, intptr_t, int);
+int miqt_exec_callback_QTimeEdit_metric(const QTimeEdit*, intptr_t, PaintDeviceMetric);
 void miqt_exec_callback_QTimeEdit_initPainter(const QTimeEdit*, intptr_t, QPainter*);
 QPaintDevice* miqt_exec_callback_QTimeEdit_redirected(const QTimeEdit*, intptr_t, QPoint*);
 QPainter* miqt_exec_callback_QTimeEdit_sharedPainter(const QTimeEdit*, intptr_t);
@@ -179,7 +180,7 @@ int miqt_exec_callback_QDateEdit_validate(const QDateEdit*, intptr_t, struct miq
 void miqt_exec_callback_QDateEdit_fixup(const QDateEdit*, intptr_t, struct miqt_string);
 QDateTime* miqt_exec_callback_QDateEdit_dateTimeFromText(const QDateEdit*, intptr_t, struct miqt_string);
 struct miqt_string miqt_exec_callback_QDateEdit_textFromDateTime(const QDateEdit*, intptr_t, QDateTime*);
-int miqt_exec_callback_QDateEdit_stepEnabled(const QDateEdit*, intptr_t);
+StepEnabled miqt_exec_callback_QDateEdit_stepEnabled(const QDateEdit*, intptr_t);
 void miqt_exec_callback_QDateEdit_mousePressEvent(QDateEdit*, intptr_t, QMouseEvent*);
 void miqt_exec_callback_QDateEdit_paintEvent(QDateEdit*, intptr_t, QPaintEvent*);
 void miqt_exec_callback_QDateEdit_initStyleOption(const QDateEdit*, intptr_t, QStyleOptionSpinBox*);
@@ -212,7 +213,7 @@ void miqt_exec_callback_QDateEdit_dragMoveEvent(QDateEdit*, intptr_t, QDragMoveE
 void miqt_exec_callback_QDateEdit_dragLeaveEvent(QDateEdit*, intptr_t, QDragLeaveEvent*);
 void miqt_exec_callback_QDateEdit_dropEvent(QDateEdit*, intptr_t, QDropEvent*);
 bool miqt_exec_callback_QDateEdit_nativeEvent(QDateEdit*, intptr_t, struct miqt_string, void*, intptr_t*);
-int miqt_exec_callback_QDateEdit_metric(const QDateEdit*, intptr_t, int);
+int miqt_exec_callback_QDateEdit_metric(const QDateEdit*, intptr_t, PaintDeviceMetric);
 void miqt_exec_callback_QDateEdit_initPainter(const QDateEdit*, intptr_t, QPainter*);
 QPaintDevice* miqt_exec_callback_QDateEdit_redirected(const QDateEdit*, intptr_t, QPoint*);
 QPainter* miqt_exec_callback_QDateEdit_sharedPainter(const QDateEdit*, intptr_t);
@@ -466,16 +467,16 @@ public:
 	intptr_t handle__stepEnabled = 0;
 
 	// Subclass to allow providing a Go implementation
-	virtual QAbstractSpinBox::StepEnabled stepEnabled() const override {
+	virtual StepEnabled stepEnabled() const override {
 		if (handle__stepEnabled == 0) {
 			return QDateTimeEdit::stepEnabled();
 		}
 
-		int callback_return_value = miqt_exec_callback_QDateTimeEdit_stepEnabled(this, handle__stepEnabled);
-		return static_cast<QAbstractSpinBox::StepEnabled>(callback_return_value);
+		StepEnabled callback_return_value = miqt_exec_callback_QDateTimeEdit_stepEnabled(this, handle__stepEnabled);
+		return callback_return_value;
 	}
 
-	friend int QDateTimeEdit_virtualbase_stepEnabled(const void* self);
+	friend StepEnabled QDateTimeEdit_virtualbase_stepEnabled(const void* self);
 
 	// cgo.Handle value for overwritten implementation
 	intptr_t handle__mousePressEvent = 0;
@@ -1023,18 +1024,17 @@ public:
 	intptr_t handle__metric = 0;
 
 	// Subclass to allow providing a Go implementation
-	virtual int metric(QPaintDevice::PaintDeviceMetric param1) const override {
+	virtual int metric(PaintDeviceMetric param1) const override {
 		if (handle__metric == 0) {
 			return QDateTimeEdit::metric(param1);
 		}
 
-		QPaintDevice::PaintDeviceMetric param1_ret = param1;
-		int sigval1 = static_cast<int>(param1_ret);
+		PaintDeviceMetric sigval1 = param1;
 		int callback_return_value = miqt_exec_callback_QDateTimeEdit_metric(this, handle__metric, sigval1);
 		return static_cast<int>(callback_return_value);
 	}
 
-	friend int QDateTimeEdit_virtualbase_metric(const void* self, int param1);
+	friend int QDateTimeEdit_virtualbase_metric(const void* self, PaintDeviceMetric param1);
 
 	// cgo.Handle value for overwritten implementation
 	intptr_t handle__initPainter = 0;
@@ -1202,6 +1202,7 @@ public:
 	friend int QDateTimeEdit_protectedbase_senderSignalIndex(bool* _dynamic_cast_ok, const void* self);
 	friend int QDateTimeEdit_protectedbase_receivers(bool* _dynamic_cast_ok, const void* self, const char* signal);
 	friend bool QDateTimeEdit_protectedbase_isSignalConnected(bool* _dynamic_cast_ok, const void* self, QMetaMethod* signal);
+	friend double QDateTimeEdit_protectedbase_getDecodedMetricF(bool* _dynamic_cast_ok, const void* self, PaintDeviceMetric metricA, PaintDeviceMetric metricB);
 };
 
 QDateTimeEdit* QDateTimeEdit_new(QWidget* parent) {
@@ -1363,23 +1364,20 @@ void QDateTimeEdit_setTimeRange(QDateTimeEdit* self, QTime* min, QTime* max) {
 	self->setTimeRange(*min, *max);
 }
 
-int QDateTimeEdit_displayedSections(const QDateTimeEdit* self) {
-	QDateTimeEdit::Sections _ret = self->displayedSections();
-	return static_cast<int>(_ret);
+Sections QDateTimeEdit_displayedSections(const QDateTimeEdit* self) {
+	return self->displayedSections();
 }
 
-int QDateTimeEdit_currentSection(const QDateTimeEdit* self) {
-	QDateTimeEdit::Section _ret = self->currentSection();
-	return static_cast<int>(_ret);
+Section QDateTimeEdit_currentSection(const QDateTimeEdit* self) {
+	return self->currentSection();
 }
 
-int QDateTimeEdit_sectionAt(const QDateTimeEdit* self, int index) {
-	QDateTimeEdit::Section _ret = self->sectionAt(static_cast<int>(index));
-	return static_cast<int>(_ret);
+Section QDateTimeEdit_sectionAt(const QDateTimeEdit* self, int index) {
+	return self->sectionAt(static_cast<int>(index));
 }
 
-void QDateTimeEdit_setCurrentSection(QDateTimeEdit* self, int section) {
-	self->setCurrentSection(static_cast<QDateTimeEdit::Section>(section));
+void QDateTimeEdit_setCurrentSection(QDateTimeEdit* self, Section section) {
+	self->setCurrentSection(section);
 }
 
 int QDateTimeEdit_currentSectionIndex(const QDateTimeEdit* self) {
@@ -1402,12 +1400,12 @@ int QDateTimeEdit_sectionCount(const QDateTimeEdit* self) {
 	return self->sectionCount();
 }
 
-void QDateTimeEdit_setSelectedSection(QDateTimeEdit* self, int section) {
-	self->setSelectedSection(static_cast<QDateTimeEdit::Section>(section));
+void QDateTimeEdit_setSelectedSection(QDateTimeEdit* self, Section section) {
+	self->setSelectedSection(section);
 }
 
-struct miqt_string QDateTimeEdit_sectionText(const QDateTimeEdit* self, int section) {
-	QString _ret = self->sectionText(static_cast<QDateTimeEdit::Section>(section));
+struct miqt_string QDateTimeEdit_sectionText(const QDateTimeEdit* self, Section section) {
+	QString _ret = self->sectionText(section);
 	// Convert QString from UTF-16 in C++ RAII memory to UTF-8 in manually-managed C memory
 	QByteArray _b = _ret.toUtf8();
 	struct miqt_string _ms;
@@ -1448,6 +1446,14 @@ int QDateTimeEdit_timeSpec(const QDateTimeEdit* self) {
 
 void QDateTimeEdit_setTimeSpec(QDateTimeEdit* self, int spec) {
 	self->setTimeSpec(static_cast<Qt::TimeSpec>(spec));
+}
+
+QTimeZone* QDateTimeEdit_timeZone(const QDateTimeEdit* self) {
+	return new QTimeZone(self->timeZone());
+}
+
+void QDateTimeEdit_setTimeZone(QDateTimeEdit* self, QTimeZone* zone) {
+	self->setTimeZone(*zone);
 }
 
 QSize* QDateTimeEdit_sizeHint(const QDateTimeEdit* self) {
@@ -1724,9 +1730,8 @@ bool QDateTimeEdit_override_virtual_stepEnabled(void* self, intptr_t slot) {
 	return true;
 }
 
-int QDateTimeEdit_virtualbase_stepEnabled(const void* self) {
-	MiqtVirtualQDateTimeEdit::StepEnabled _ret = static_cast<const MiqtVirtualQDateTimeEdit*>(self)->QDateTimeEdit::stepEnabled();
-	return static_cast<int>(_ret);
+StepEnabled QDateTimeEdit_virtualbase_stepEnabled(const void* self) {
+	return static_cast<const MiqtVirtualQDateTimeEdit*>(self)->QDateTimeEdit::stepEnabled();
 }
 
 bool QDateTimeEdit_override_virtual_mousePressEvent(void* self, intptr_t slot) {
@@ -2188,8 +2193,8 @@ bool QDateTimeEdit_override_virtual_metric(void* self, intptr_t slot) {
 	return true;
 }
 
-int QDateTimeEdit_virtualbase_metric(const void* self, int param1) {
-	return static_cast<const MiqtVirtualQDateTimeEdit*>(self)->QDateTimeEdit::metric(static_cast<MiqtVirtualQDateTimeEdit::PaintDeviceMetric>(param1));
+int QDateTimeEdit_virtualbase_metric(const void* self, PaintDeviceMetric param1) {
+	return static_cast<const MiqtVirtualQDateTimeEdit*>(self)->QDateTimeEdit::metric(param1);
 }
 
 bool QDateTimeEdit_override_virtual_initPainter(void* self, intptr_t slot) {
@@ -2439,6 +2444,17 @@ bool QDateTimeEdit_protectedbase_isSignalConnected(bool* _dynamic_cast_ok, const
 	return self_cast->isSignalConnected(*signal);
 }
 
+double QDateTimeEdit_protectedbase_getDecodedMetricF(bool* _dynamic_cast_ok, const void* self, PaintDeviceMetric metricA, PaintDeviceMetric metricB) {
+	MiqtVirtualQDateTimeEdit* self_cast = dynamic_cast<MiqtVirtualQDateTimeEdit*>( (QDateTimeEdit*)(self) );
+	if (self_cast == nullptr) {
+		*_dynamic_cast_ok = false;
+		return 0;
+	}
+
+	*_dynamic_cast_ok = true;
+	return self_cast->getDecodedMetricF(metricA, metricB);
+}
+
 void QDateTimeEdit_delete(QDateTimeEdit* self) {
 	delete self;
 }
@@ -2679,16 +2695,16 @@ public:
 	intptr_t handle__stepEnabled = 0;
 
 	// Subclass to allow providing a Go implementation
-	virtual QAbstractSpinBox::StepEnabled stepEnabled() const override {
+	virtual StepEnabled stepEnabled() const override {
 		if (handle__stepEnabled == 0) {
 			return QTimeEdit::stepEnabled();
 		}
 
-		int callback_return_value = miqt_exec_callback_QTimeEdit_stepEnabled(this, handle__stepEnabled);
-		return static_cast<QAbstractSpinBox::StepEnabled>(callback_return_value);
+		StepEnabled callback_return_value = miqt_exec_callback_QTimeEdit_stepEnabled(this, handle__stepEnabled);
+		return callback_return_value;
 	}
 
-	friend int QTimeEdit_virtualbase_stepEnabled(const void* self);
+	friend StepEnabled QTimeEdit_virtualbase_stepEnabled(const void* self);
 
 	// cgo.Handle value for overwritten implementation
 	intptr_t handle__mousePressEvent = 0;
@@ -3236,18 +3252,17 @@ public:
 	intptr_t handle__metric = 0;
 
 	// Subclass to allow providing a Go implementation
-	virtual int metric(QPaintDevice::PaintDeviceMetric param1) const override {
+	virtual int metric(PaintDeviceMetric param1) const override {
 		if (handle__metric == 0) {
 			return QTimeEdit::metric(param1);
 		}
 
-		QPaintDevice::PaintDeviceMetric param1_ret = param1;
-		int sigval1 = static_cast<int>(param1_ret);
+		PaintDeviceMetric sigval1 = param1;
 		int callback_return_value = miqt_exec_callback_QTimeEdit_metric(this, handle__metric, sigval1);
 		return static_cast<int>(callback_return_value);
 	}
 
-	friend int QTimeEdit_virtualbase_metric(const void* self, int param1);
+	friend int QTimeEdit_virtualbase_metric(const void* self, PaintDeviceMetric param1);
 
 	// cgo.Handle value for overwritten implementation
 	intptr_t handle__initPainter = 0;
@@ -3415,6 +3430,7 @@ public:
 	friend int QTimeEdit_protectedbase_senderSignalIndex(bool* _dynamic_cast_ok, const void* self);
 	friend int QTimeEdit_protectedbase_receivers(bool* _dynamic_cast_ok, const void* self, const char* signal);
 	friend bool QTimeEdit_protectedbase_isSignalConnected(bool* _dynamic_cast_ok, const void* self, QMetaMethod* signal);
+	friend double QTimeEdit_protectedbase_getDecodedMetricF(bool* _dynamic_cast_ok, const void* self, PaintDeviceMetric metricA, PaintDeviceMetric metricB);
 };
 
 QTimeEdit* QTimeEdit_new(QWidget* parent) {
@@ -3678,9 +3694,8 @@ bool QTimeEdit_override_virtual_stepEnabled(void* self, intptr_t slot) {
 	return true;
 }
 
-int QTimeEdit_virtualbase_stepEnabled(const void* self) {
-	MiqtVirtualQTimeEdit::StepEnabled _ret = static_cast<const MiqtVirtualQTimeEdit*>(self)->QTimeEdit::stepEnabled();
-	return static_cast<int>(_ret);
+StepEnabled QTimeEdit_virtualbase_stepEnabled(const void* self) {
+	return static_cast<const MiqtVirtualQTimeEdit*>(self)->QTimeEdit::stepEnabled();
 }
 
 bool QTimeEdit_override_virtual_mousePressEvent(void* self, intptr_t slot) {
@@ -4142,8 +4157,8 @@ bool QTimeEdit_override_virtual_metric(void* self, intptr_t slot) {
 	return true;
 }
 
-int QTimeEdit_virtualbase_metric(const void* self, int param1) {
-	return static_cast<const MiqtVirtualQTimeEdit*>(self)->QTimeEdit::metric(static_cast<MiqtVirtualQTimeEdit::PaintDeviceMetric>(param1));
+int QTimeEdit_virtualbase_metric(const void* self, PaintDeviceMetric param1) {
+	return static_cast<const MiqtVirtualQTimeEdit*>(self)->QTimeEdit::metric(param1);
 }
 
 bool QTimeEdit_override_virtual_initPainter(void* self, intptr_t slot) {
@@ -4393,6 +4408,17 @@ bool QTimeEdit_protectedbase_isSignalConnected(bool* _dynamic_cast_ok, const voi
 	return self_cast->isSignalConnected(*signal);
 }
 
+double QTimeEdit_protectedbase_getDecodedMetricF(bool* _dynamic_cast_ok, const void* self, PaintDeviceMetric metricA, PaintDeviceMetric metricB) {
+	MiqtVirtualQTimeEdit* self_cast = dynamic_cast<MiqtVirtualQTimeEdit*>( (QTimeEdit*)(self) );
+	if (self_cast == nullptr) {
+		*_dynamic_cast_ok = false;
+		return 0;
+	}
+
+	*_dynamic_cast_ok = true;
+	return self_cast->getDecodedMetricF(metricA, metricB);
+}
+
 void QTimeEdit_delete(QTimeEdit* self) {
 	delete self;
 }
@@ -4633,16 +4659,16 @@ public:
 	intptr_t handle__stepEnabled = 0;
 
 	// Subclass to allow providing a Go implementation
-	virtual QAbstractSpinBox::StepEnabled stepEnabled() const override {
+	virtual StepEnabled stepEnabled() const override {
 		if (handle__stepEnabled == 0) {
 			return QDateEdit::stepEnabled();
 		}
 
-		int callback_return_value = miqt_exec_callback_QDateEdit_stepEnabled(this, handle__stepEnabled);
-		return static_cast<QAbstractSpinBox::StepEnabled>(callback_return_value);
+		StepEnabled callback_return_value = miqt_exec_callback_QDateEdit_stepEnabled(this, handle__stepEnabled);
+		return callback_return_value;
 	}
 
-	friend int QDateEdit_virtualbase_stepEnabled(const void* self);
+	friend StepEnabled QDateEdit_virtualbase_stepEnabled(const void* self);
 
 	// cgo.Handle value for overwritten implementation
 	intptr_t handle__mousePressEvent = 0;
@@ -5190,18 +5216,17 @@ public:
 	intptr_t handle__metric = 0;
 
 	// Subclass to allow providing a Go implementation
-	virtual int metric(QPaintDevice::PaintDeviceMetric param1) const override {
+	virtual int metric(PaintDeviceMetric param1) const override {
 		if (handle__metric == 0) {
 			return QDateEdit::metric(param1);
 		}
 
-		QPaintDevice::PaintDeviceMetric param1_ret = param1;
-		int sigval1 = static_cast<int>(param1_ret);
+		PaintDeviceMetric sigval1 = param1;
 		int callback_return_value = miqt_exec_callback_QDateEdit_metric(this, handle__metric, sigval1);
 		return static_cast<int>(callback_return_value);
 	}
 
-	friend int QDateEdit_virtualbase_metric(const void* self, int param1);
+	friend int QDateEdit_virtualbase_metric(const void* self, PaintDeviceMetric param1);
 
 	// cgo.Handle value for overwritten implementation
 	intptr_t handle__initPainter = 0;
@@ -5369,6 +5394,7 @@ public:
 	friend int QDateEdit_protectedbase_senderSignalIndex(bool* _dynamic_cast_ok, const void* self);
 	friend int QDateEdit_protectedbase_receivers(bool* _dynamic_cast_ok, const void* self, const char* signal);
 	friend bool QDateEdit_protectedbase_isSignalConnected(bool* _dynamic_cast_ok, const void* self, QMetaMethod* signal);
+	friend double QDateEdit_protectedbase_getDecodedMetricF(bool* _dynamic_cast_ok, const void* self, PaintDeviceMetric metricA, PaintDeviceMetric metricB);
 };
 
 QDateEdit* QDateEdit_new(QWidget* parent) {
@@ -5632,9 +5658,8 @@ bool QDateEdit_override_virtual_stepEnabled(void* self, intptr_t slot) {
 	return true;
 }
 
-int QDateEdit_virtualbase_stepEnabled(const void* self) {
-	MiqtVirtualQDateEdit::StepEnabled _ret = static_cast<const MiqtVirtualQDateEdit*>(self)->QDateEdit::stepEnabled();
-	return static_cast<int>(_ret);
+StepEnabled QDateEdit_virtualbase_stepEnabled(const void* self) {
+	return static_cast<const MiqtVirtualQDateEdit*>(self)->QDateEdit::stepEnabled();
 }
 
 bool QDateEdit_override_virtual_mousePressEvent(void* self, intptr_t slot) {
@@ -6096,8 +6121,8 @@ bool QDateEdit_override_virtual_metric(void* self, intptr_t slot) {
 	return true;
 }
 
-int QDateEdit_virtualbase_metric(const void* self, int param1) {
-	return static_cast<const MiqtVirtualQDateEdit*>(self)->QDateEdit::metric(static_cast<MiqtVirtualQDateEdit::PaintDeviceMetric>(param1));
+int QDateEdit_virtualbase_metric(const void* self, PaintDeviceMetric param1) {
+	return static_cast<const MiqtVirtualQDateEdit*>(self)->QDateEdit::metric(param1);
 }
 
 bool QDateEdit_override_virtual_initPainter(void* self, intptr_t slot) {
@@ -6345,6 +6370,17 @@ bool QDateEdit_protectedbase_isSignalConnected(bool* _dynamic_cast_ok, const voi
 
 	*_dynamic_cast_ok = true;
 	return self_cast->isSignalConnected(*signal);
+}
+
+double QDateEdit_protectedbase_getDecodedMetricF(bool* _dynamic_cast_ok, const void* self, PaintDeviceMetric metricA, PaintDeviceMetric metricB) {
+	MiqtVirtualQDateEdit* self_cast = dynamic_cast<MiqtVirtualQDateEdit*>( (QDateEdit*)(self) );
+	if (self_cast == nullptr) {
+		*_dynamic_cast_ok = false;
+		return 0;
+	}
+
+	*_dynamic_cast_ok = true;
+	return self_cast->getDecodedMetricF(metricA, metricB);
 }
 
 void QDateEdit_delete(QDateEdit* self) {

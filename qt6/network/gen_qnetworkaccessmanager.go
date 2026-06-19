@@ -195,6 +195,21 @@ func (this *QNetworkAccessManager) Get(request *QNetworkRequest) *QNetworkReply 
 	return newQNetworkReply(C.QNetworkAccessManager_get(this.h, request.cPointer()))
 }
 
+func (this *QNetworkAccessManager) Get2(request *QNetworkRequest, data *qt6.QIODevice) *QNetworkReply {
+	return newQNetworkReply(C.QNetworkAccessManager_get2(this.h, request.cPointer(), (*C.QIODevice)(data.UnsafePointer())))
+}
+
+func (this *QNetworkAccessManager) Get3(request *QNetworkRequest, data []byte) *QNetworkReply {
+	data_alias := C.struct_miqt_string{}
+	if len(data) > 0 {
+		data_alias.data = (*C.char)(unsafe.Pointer(&data[0]))
+	} else {
+		data_alias.data = (*C.char)(unsafe.Pointer(nil))
+	}
+	data_alias.len = C.size_t(len(data))
+	return newQNetworkReply(C.QNetworkAccessManager_get3(this.h, request.cPointer(), data_alias))
+}
+
 func (this *QNetworkAccessManager) Post(request *QNetworkRequest, data *qt6.QIODevice) *QNetworkReply {
 	return newQNetworkReply(C.QNetworkAccessManager_post(this.h, request.cPointer(), (*C.QIODevice)(data.UnsafePointer())))
 }
@@ -258,12 +273,12 @@ func (this *QNetworkAccessManager) SendCustomRequest2(request *QNetworkRequest, 
 	return newQNetworkReply(C.QNetworkAccessManager_sendCustomRequest2(this.h, request.cPointer(), verb_alias, data_alias))
 }
 
-func (this *QNetworkAccessManager) Post3(request *QNetworkRequest, multiPart *QHttpMultiPart) *QNetworkReply {
-	return newQNetworkReply(C.QNetworkAccessManager_post3(this.h, request.cPointer(), multiPart.cPointer()))
+func (this *QNetworkAccessManager) Post4(request *QNetworkRequest, multiPart *QHttpMultiPart) *QNetworkReply {
+	return newQNetworkReply(C.QNetworkAccessManager_post4(this.h, request.cPointer(), multiPart.cPointer()))
 }
 
-func (this *QNetworkAccessManager) Put3(request *QNetworkRequest, multiPart *QHttpMultiPart) *QNetworkReply {
-	return newQNetworkReply(C.QNetworkAccessManager_put3(this.h, request.cPointer(), multiPart.cPointer()))
+func (this *QNetworkAccessManager) Put4(request *QNetworkRequest, multiPart *QHttpMultiPart) *QNetworkReply {
+	return newQNetworkReply(C.QNetworkAccessManager_put4(this.h, request.cPointer(), multiPart.cPointer()))
 }
 
 func (this *QNetworkAccessManager) SendCustomRequest3(request *QNetworkRequest, verb []byte, multiPart *QHttpMultiPart) *QNetworkReply {
@@ -325,8 +340,12 @@ func (this *QNetworkAccessManager) TransferTimeout() int {
 	return (int)(C.QNetworkAccessManager_transferTimeout(this.h))
 }
 
-func (this *QNetworkAccessManager) SetTransferTimeout() {
-	C.QNetworkAccessManager_setTransferTimeout(this.h)
+func (this *QNetworkAccessManager) SetTransferTimeout(timeout int) {
+	C.QNetworkAccessManager_setTransferTimeout(this.h, (C.int)(timeout))
+}
+
+func (this *QNetworkAccessManager) SetTransferTimeout2() {
+	C.QNetworkAccessManager_setTransferTimeout2(this.h)
 }
 
 func (this *QNetworkAccessManager) ProxyAuthenticationRequired(proxy *QNetworkProxy, authenticator *QAuthenticator) {
@@ -536,10 +555,6 @@ func (this *QNetworkAccessManager) ConnectToHost2(hostName string, port uint16) 
 	C.QNetworkAccessManager_connectToHost2(this.h, hostName_ms, (C.ushort)(port))
 }
 
-func (this *QNetworkAccessManager) SetTransferTimeoutWithTimeout(timeout int) {
-	C.QNetworkAccessManager_setTransferTimeoutWithTimeout(this.h, (C.int)(timeout))
-}
-
 // SupportedSchemesImplementation can only be called from a QNetworkAccessManager that was directly constructed.
 func (this *QNetworkAccessManager) SupportedSchemesImplementation() []string {
 
@@ -663,12 +678,12 @@ func miqt_exec_callback_QNetworkAccessManager_supportedSchemes(self *C.QNetworkA
 
 }
 
-func (this *QNetworkAccessManager) callVirtualBase_CreateRequest(op QNetworkAccessManager__Operation, request *QNetworkRequest, outgoingData *qt6.QIODevice) *QNetworkReply {
+func (this *QNetworkAccessManager) callVirtualBase_CreateRequest(op Operation, request *QNetworkRequest, outgoingData *qt6.QIODevice) *QNetworkReply {
 
-	return newQNetworkReply(C.QNetworkAccessManager_virtualbase_createRequest(unsafe.Pointer(this.h), (C.int)(op), request.cPointer(), (*C.QIODevice)(outgoingData.UnsafePointer())))
+	return newQNetworkReply(C.QNetworkAccessManager_virtualbase_createRequest(unsafe.Pointer(this.h), op, request.cPointer(), (*C.QIODevice)(outgoingData.UnsafePointer())))
 
 }
-func (this *QNetworkAccessManager) OnCreateRequest(slot func(super func(op QNetworkAccessManager__Operation, request *QNetworkRequest, outgoingData *qt6.QIODevice) *QNetworkReply, op QNetworkAccessManager__Operation, request *QNetworkRequest, outgoingData *qt6.QIODevice) *QNetworkReply) {
+func (this *QNetworkAccessManager) OnCreateRequest(slot func(super func(op Operation, request *QNetworkRequest, outgoingData *qt6.QIODevice) *QNetworkReply, op Operation, request *QNetworkRequest, outgoingData *qt6.QIODevice) *QNetworkReply) {
 	ok := C.QNetworkAccessManager_override_virtual_createRequest(unsafe.Pointer(this.h), C.intptr_t(cgo.NewHandle(slot)))
 	if !ok {
 		panic("miqt: can only override virtual methods for directly constructed types")
@@ -676,15 +691,14 @@ func (this *QNetworkAccessManager) OnCreateRequest(slot func(super func(op QNetw
 }
 
 //export miqt_exec_callback_QNetworkAccessManager_createRequest
-func miqt_exec_callback_QNetworkAccessManager_createRequest(self *C.QNetworkAccessManager, cb C.intptr_t, op C.int, request *C.QNetworkRequest, outgoingData *C.QIODevice) *C.QNetworkReply {
-	gofunc, ok := cgo.Handle(cb).Value().(func(super func(op QNetworkAccessManager__Operation, request *QNetworkRequest, outgoingData *qt6.QIODevice) *QNetworkReply, op QNetworkAccessManager__Operation, request *QNetworkRequest, outgoingData *qt6.QIODevice) *QNetworkReply)
+func miqt_exec_callback_QNetworkAccessManager_createRequest(self *C.QNetworkAccessManager, cb C.intptr_t, op C.Operation, request *C.QNetworkRequest, outgoingData *C.QIODevice) *C.QNetworkReply {
+	gofunc, ok := cgo.Handle(cb).Value().(func(super func(op Operation, request *QNetworkRequest, outgoingData *qt6.QIODevice) *QNetworkReply, op Operation, request *QNetworkRequest, outgoingData *qt6.QIODevice) *QNetworkReply)
 	if !ok {
 		panic("miqt: callback of non-callback type (heap corruption?)")
 	}
 
 	// Convert all CABI parameters to Go parameters
-	slotval1 := (QNetworkAccessManager__Operation)(op)
-
+	int /* TODO  */
 	slotval2 := newQNetworkRequest(request)
 
 	slotval3 := qt6.UnsafeNewQIODevice(unsafe.Pointer(outgoingData))

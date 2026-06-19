@@ -93,9 +93,9 @@ func NewQSizePolicy() *QSizePolicy {
 }
 
 // NewQSizePolicy2 constructs a new QSizePolicy object.
-func NewQSizePolicy2(horizontal QSizePolicy__Policy, vertical QSizePolicy__Policy) *QSizePolicy {
+func NewQSizePolicy2(horizontal Policy, vertical Policy) *QSizePolicy {
 
-	return newQSizePolicy(C.QSizePolicy_new2((C.int)(horizontal), (C.int)(vertical)))
+	return newQSizePolicy(C.QSizePolicy_new2(horizontal, vertical))
 }
 
 // NewQSizePolicy3 constructs a new QSizePolicy object.
@@ -105,33 +105,33 @@ func NewQSizePolicy3(param1 *QSizePolicy) *QSizePolicy {
 }
 
 // NewQSizePolicy4 constructs a new QSizePolicy object.
-func NewQSizePolicy4(horizontal QSizePolicy__Policy, vertical QSizePolicy__Policy, typeVal QSizePolicy__ControlType) *QSizePolicy {
+func NewQSizePolicy4(horizontal Policy, vertical Policy, typeVal ControlType) *QSizePolicy {
 
-	return newQSizePolicy(C.QSizePolicy_new4((C.int)(horizontal), (C.int)(vertical), (C.int)(typeVal)))
+	return newQSizePolicy(C.QSizePolicy_new4(horizontal, vertical, typeVal))
 }
 
-func (this *QSizePolicy) HorizontalPolicy() QSizePolicy__Policy {
-	return (QSizePolicy__Policy)(C.QSizePolicy_horizontalPolicy(this.h))
+func (this *QSizePolicy) HorizontalPolicy() Policy {
+	int /* TODO  */
 }
 
-func (this *QSizePolicy) VerticalPolicy() QSizePolicy__Policy {
-	return (QSizePolicy__Policy)(C.QSizePolicy_verticalPolicy(this.h))
+func (this *QSizePolicy) VerticalPolicy() Policy {
+	int /* TODO  */
 }
 
-func (this *QSizePolicy) ControlType() QSizePolicy__ControlType {
-	return (QSizePolicy__ControlType)(C.QSizePolicy_controlType(this.h))
+func (this *QSizePolicy) ControlType() ControlType {
+	int /* TODO  */
 }
 
-func (this *QSizePolicy) SetHorizontalPolicy(d QSizePolicy__Policy) {
-	C.QSizePolicy_setHorizontalPolicy(this.h, (C.int)(d))
+func (this *QSizePolicy) SetHorizontalPolicy(d Policy) {
+	C.QSizePolicy_setHorizontalPolicy(this.h, d)
 }
 
-func (this *QSizePolicy) SetVerticalPolicy(d QSizePolicy__Policy) {
-	C.QSizePolicy_setVerticalPolicy(this.h, (C.int)(d))
+func (this *QSizePolicy) SetVerticalPolicy(d Policy) {
+	C.QSizePolicy_setVerticalPolicy(this.h, d)
 }
 
-func (this *QSizePolicy) SetControlType(typeVal QSizePolicy__ControlType) {
-	C.QSizePolicy_setControlType(this.h, (C.int)(typeVal))
+func (this *QSizePolicy) SetControlType(typeVal ControlType) {
+	C.QSizePolicy_setControlType(this.h, typeVal)
 }
 
 func (this *QSizePolicy) ExpandingDirections() Orientation {

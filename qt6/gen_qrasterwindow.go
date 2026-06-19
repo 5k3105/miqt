@@ -177,12 +177,26 @@ func (this *QRasterWindow) IsSignalConnected(signal *QMetaMethod) bool {
 
 }
 
-func (this *QRasterWindow) callVirtualBase_Metric(metric QPaintDevice__PaintDeviceMetric) int {
+// GetDecodedMetricF can only be called from a QRasterWindow that was directly constructed.
+func (this *QRasterWindow) GetDecodedMetricF(metricA PaintDeviceMetric, metricB PaintDeviceMetric) float64 {
 
-	return (int)(C.QRasterWindow_virtualbase_metric(unsafe.Pointer(this.h), (C.int)(metric)))
+	var _dynamic_cast_ok C.bool = false
+	_method_ret := (float64)(C.QRasterWindow_protectedbase_getDecodedMetricF(&_dynamic_cast_ok, unsafe.Pointer(this.h), metricA, metricB))
+
+	if !_dynamic_cast_ok {
+		panic("miqt: can only call protected methods for directly constructed types")
+	}
+
+	return _method_ret
 
 }
-func (this *QRasterWindow) OnMetric(slot func(super func(metric QPaintDevice__PaintDeviceMetric) int, metric QPaintDevice__PaintDeviceMetric) int) {
+
+func (this *QRasterWindow) callVirtualBase_Metric(metric PaintDeviceMetric) int {
+
+	return (int)(C.QRasterWindow_virtualbase_metric(unsafe.Pointer(this.h), metric))
+
+}
+func (this *QRasterWindow) OnMetric(slot func(super func(metric PaintDeviceMetric) int, metric PaintDeviceMetric) int) {
 	ok := C.QRasterWindow_override_virtual_metric(unsafe.Pointer(this.h), C.intptr_t(cgo.NewHandle(slot)))
 	if !ok {
 		panic("miqt: can only override virtual methods for directly constructed types")
@@ -190,14 +204,14 @@ func (this *QRasterWindow) OnMetric(slot func(super func(metric QPaintDevice__Pa
 }
 
 //export miqt_exec_callback_QRasterWindow_metric
-func miqt_exec_callback_QRasterWindow_metric(self *C.QRasterWindow, cb C.intptr_t, metric C.int) C.int {
-	gofunc, ok := cgo.Handle(cb).Value().(func(super func(metric QPaintDevice__PaintDeviceMetric) int, metric QPaintDevice__PaintDeviceMetric) int)
+func miqt_exec_callback_QRasterWindow_metric(self *C.QRasterWindow, cb C.intptr_t, metric C.PaintDeviceMetric) C.int {
+	gofunc, ok := cgo.Handle(cb).Value().(func(super func(metric PaintDeviceMetric) int, metric PaintDeviceMetric) int)
 	if !ok {
 		panic("miqt: callback of non-callback type (heap corruption?)")
 	}
 
 	// Convert all CABI parameters to Go parameters
-	slotval1 := (QPaintDevice__PaintDeviceMetric)(metric)
+	int /* TODO  */
 
 	virtualReturn := gofunc((&QRasterWindow{h: self}).callVirtualBase_Metric, slotval1)
 
@@ -230,6 +244,32 @@ func miqt_exec_callback_QRasterWindow_redirected(self *C.QRasterWindow, cb C.int
 	virtualReturn := gofunc((&QRasterWindow{h: self}).callVirtualBase_Redirected, slotval1)
 
 	return virtualReturn.cPointer()
+
+}
+
+func (this *QRasterWindow) callVirtualBase_ResizeEvent(event *QResizeEvent) {
+
+	C.QRasterWindow_virtualbase_resizeEvent(unsafe.Pointer(this.h), event.cPointer())
+
+}
+func (this *QRasterWindow) OnResizeEvent(slot func(super func(event *QResizeEvent), event *QResizeEvent)) {
+	ok := C.QRasterWindow_override_virtual_resizeEvent(unsafe.Pointer(this.h), C.intptr_t(cgo.NewHandle(slot)))
+	if !ok {
+		panic("miqt: can only override virtual methods for directly constructed types")
+	}
+}
+
+//export miqt_exec_callback_QRasterWindow_resizeEvent
+func miqt_exec_callback_QRasterWindow_resizeEvent(self *C.QRasterWindow, cb C.intptr_t, event *C.QResizeEvent) {
+	gofunc, ok := cgo.Handle(cb).Value().(func(super func(event *QResizeEvent), event *QResizeEvent))
+	if !ok {
+		panic("miqt: callback of non-callback type (heap corruption?)")
+	}
+
+	// Convert all CABI parameters to Go parameters
+	slotval1 := newQResizeEvent(event)
+
+	gofunc((&QRasterWindow{h: self}).callVirtualBase_ResizeEvent, slotval1)
 
 }
 
@@ -313,12 +353,11 @@ func miqt_exec_callback_QRasterWindow_event(self *C.QRasterWindow, cb C.intptr_t
 
 }
 
-func (this *QRasterWindow) callVirtualBase_SurfaceType() QSurface__SurfaceType {
+func (this *QRasterWindow) callVirtualBase_SurfaceType() SurfaceType {
 
-	return (QSurface__SurfaceType)(C.QRasterWindow_virtualbase_surfaceType(unsafe.Pointer(this.h)))
-
+	int /* TODO  */
 }
-func (this *QRasterWindow) OnSurfaceType(slot func(super func() QSurface__SurfaceType) QSurface__SurfaceType) {
+func (this *QRasterWindow) OnSurfaceType(slot func(super func() SurfaceType) SurfaceType) {
 	ok := C.QRasterWindow_override_virtual_surfaceType(unsafe.Pointer(this.h), C.intptr_t(cgo.NewHandle(slot)))
 	if !ok {
 		panic("miqt: can only override virtual methods for directly constructed types")
@@ -326,15 +365,15 @@ func (this *QRasterWindow) OnSurfaceType(slot func(super func() QSurface__Surfac
 }
 
 //export miqt_exec_callback_QRasterWindow_surfaceType
-func miqt_exec_callback_QRasterWindow_surfaceType(self *C.QRasterWindow, cb C.intptr_t) C.int {
-	gofunc, ok := cgo.Handle(cb).Value().(func(super func() QSurface__SurfaceType) QSurface__SurfaceType)
+func miqt_exec_callback_QRasterWindow_surfaceType(self *C.QRasterWindow, cb C.intptr_t) C.SurfaceType {
+	gofunc, ok := cgo.Handle(cb).Value().(func(super func() SurfaceType) SurfaceType)
 	if !ok {
 		panic("miqt: callback of non-callback type (heap corruption?)")
 	}
 
 	virtualReturn := gofunc((&QRasterWindow{h: self}).callVirtualBase_SurfaceType)
 
-	return (C.int)(virtualReturn)
+	return virtualReturn
 
 }
 
@@ -439,32 +478,6 @@ func miqt_exec_callback_QRasterWindow_focusObject(self *C.QRasterWindow, cb C.in
 	virtualReturn := gofunc((&QRasterWindow{h: self}).callVirtualBase_FocusObject)
 
 	return virtualReturn.cPointer()
-
-}
-
-func (this *QRasterWindow) callVirtualBase_ResizeEvent(param1 *QResizeEvent) {
-
-	C.QRasterWindow_virtualbase_resizeEvent(unsafe.Pointer(this.h), param1.cPointer())
-
-}
-func (this *QRasterWindow) OnResizeEvent(slot func(super func(param1 *QResizeEvent), param1 *QResizeEvent)) {
-	ok := C.QRasterWindow_override_virtual_resizeEvent(unsafe.Pointer(this.h), C.intptr_t(cgo.NewHandle(slot)))
-	if !ok {
-		panic("miqt: can only override virtual methods for directly constructed types")
-	}
-}
-
-//export miqt_exec_callback_QRasterWindow_resizeEvent
-func miqt_exec_callback_QRasterWindow_resizeEvent(self *C.QRasterWindow, cb C.intptr_t, param1 *C.QResizeEvent) {
-	gofunc, ok := cgo.Handle(cb).Value().(func(super func(param1 *QResizeEvent), param1 *QResizeEvent))
-	if !ok {
-		panic("miqt: callback of non-callback type (heap corruption?)")
-	}
-
-	// Convert all CABI parameters to Go parameters
-	slotval1 := newQResizeEvent(param1)
-
-	gofunc((&QRasterWindow{h: self}).callVirtualBase_ResizeEvent, slotval1)
 
 }
 

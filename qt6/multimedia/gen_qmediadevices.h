@@ -54,9 +54,12 @@ void QMediaDevices_audioOutputsChanged(QMediaDevices* self);
 void QMediaDevices_connect_audioOutputsChanged(QMediaDevices* self, intptr_t slot);
 void QMediaDevices_videoInputsChanged(QMediaDevices* self);
 void QMediaDevices_connect_videoInputsChanged(QMediaDevices* self, intptr_t slot);
+void QMediaDevices_connectNotify(QMediaDevices* self, QMetaMethod* signal);
 struct miqt_string QMediaDevices_tr2(const char* s, const char* c);
 struct miqt_string QMediaDevices_tr3(const char* s, const char* c, int n);
 
+bool QMediaDevices_override_virtual_connectNotify(void* self, intptr_t slot);
+void QMediaDevices_virtualbase_connectNotify(void* self, QMetaMethod* signal);
 bool QMediaDevices_override_virtual_event(void* self, intptr_t slot);
 bool QMediaDevices_virtualbase_event(void* self, QEvent* event);
 bool QMediaDevices_override_virtual_eventFilter(void* self, intptr_t slot);
@@ -67,8 +70,6 @@ bool QMediaDevices_override_virtual_childEvent(void* self, intptr_t slot);
 void QMediaDevices_virtualbase_childEvent(void* self, QChildEvent* event);
 bool QMediaDevices_override_virtual_customEvent(void* self, intptr_t slot);
 void QMediaDevices_virtualbase_customEvent(void* self, QEvent* event);
-bool QMediaDevices_override_virtual_connectNotify(void* self, intptr_t slot);
-void QMediaDevices_virtualbase_connectNotify(void* self, QMetaMethod* signal);
 bool QMediaDevices_override_virtual_disconnectNotify(void* self, intptr_t slot);
 void QMediaDevices_virtualbase_disconnectNotify(void* self, QMetaMethod* signal);
 

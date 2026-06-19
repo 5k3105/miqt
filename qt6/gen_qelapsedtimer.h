@@ -21,16 +21,18 @@ typedef struct QElapsedTimer QElapsedTimer;
 #endif
 
 QElapsedTimer* QElapsedTimer_new();
-int QElapsedTimer_clockType();
+ClockType QElapsedTimer_clockType();
 bool QElapsedTimer_isMonotonic();
 void QElapsedTimer_start(QElapsedTimer* self);
 long long QElapsedTimer_restart(QElapsedTimer* self);
 void QElapsedTimer_invalidate(QElapsedTimer* self);
 bool QElapsedTimer_isValid(const QElapsedTimer* self);
+Duration QElapsedTimer_durationElapsed(const QElapsedTimer* self);
 long long QElapsedTimer_nsecsElapsed(const QElapsedTimer* self);
 long long QElapsedTimer_elapsed(const QElapsedTimer* self);
 bool QElapsedTimer_hasExpired(const QElapsedTimer* self, long long timeout);
 long long QElapsedTimer_msecsSinceReference(const QElapsedTimer* self);
+Duration QElapsedTimer_durationTo(const QElapsedTimer* self, QElapsedTimer* other);
 long long QElapsedTimer_msecsTo(const QElapsedTimer* self, QElapsedTimer* other);
 long long QElapsedTimer_secsTo(const QElapsedTimer* self, QElapsedTimer* other);
 

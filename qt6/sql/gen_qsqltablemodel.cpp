@@ -17,7 +17,6 @@
 #include <QSqlDatabase>
 #include <QSqlError>
 #include <QSqlIndex>
-#include <QSqlQuery>
 #include <QSqlQueryModel>
 #include <QSqlRecord>
 #include <QSqlTableModel>
@@ -44,7 +43,7 @@ bool miqt_exec_callback_QSqlTableModel_setData(QSqlTableModel*, intptr_t, QModel
 bool miqt_exec_callback_QSqlTableModel_clearItemData(QSqlTableModel*, intptr_t, QModelIndex*);
 QVariant* miqt_exec_callback_QSqlTableModel_headerData(const QSqlTableModel*, intptr_t, int, int, int);
 void miqt_exec_callback_QSqlTableModel_clear(QSqlTableModel*, intptr_t);
-void miqt_exec_callback_QSqlTableModel_setEditStrategy(QSqlTableModel*, intptr_t, int);
+void miqt_exec_callback_QSqlTableModel_setEditStrategy(QSqlTableModel*, intptr_t, EditStrategy);
 void miqt_exec_callback_QSqlTableModel_sort(QSqlTableModel*, intptr_t, int, int);
 void miqt_exec_callback_QSqlTableModel_setSort(QSqlTableModel*, intptr_t, int, int);
 void miqt_exec_callback_QSqlTableModel_setFilter(QSqlTableModel*, intptr_t, struct miqt_string);
@@ -247,19 +246,18 @@ public:
 	intptr_t handle__setEditStrategy = 0;
 
 	// Subclass to allow providing a Go implementation
-	virtual void setEditStrategy(QSqlTableModel::EditStrategy strategy) override {
+	virtual void setEditStrategy(EditStrategy strategy) override {
 		if (handle__setEditStrategy == 0) {
 			QSqlTableModel::setEditStrategy(strategy);
 			return;
 		}
 
-		QSqlTableModel::EditStrategy strategy_ret = strategy;
-		int sigval1 = static_cast<int>(strategy_ret);
+		EditStrategy sigval1 = strategy;
 		miqt_exec_callback_QSqlTableModel_setEditStrategy(this, handle__setEditStrategy, sigval1);
 
 	}
 
-	friend void QSqlTableModel_virtualbase_setEditStrategy(void* self, int strategy);
+	friend void QSqlTableModel_virtualbase_setEditStrategy(void* self, EditStrategy strategy);
 
 	// cgo.Handle value for overwritten implementation
 	intptr_t handle__sort = 0;
@@ -1222,7 +1220,6 @@ public:
 
 	// Wrappers to allow calling protected methods:
 	friend void QSqlTableModel_protectedbase_setPrimaryKey(bool* _dynamic_cast_ok, void* self, QSqlIndex* key);
-	friend void QSqlTableModel_protectedbase_setQuery(bool* _dynamic_cast_ok, void* self, QSqlQuery* query);
 	friend QSqlRecord* QSqlTableModel_protectedbase_primaryValues(bool* _dynamic_cast_ok, const void* self, int row);
 	friend void QSqlTableModel_protectedbase_beginInsertRows(bool* _dynamic_cast_ok, void* self, QModelIndex* parent, int first, int last);
 	friend void QSqlTableModel_protectedbase_endInsertRows(bool* _dynamic_cast_ok, void* self);
@@ -1343,13 +1340,12 @@ void QSqlTableModel_clear(QSqlTableModel* self) {
 	self->clear();
 }
 
-void QSqlTableModel_setEditStrategy(QSqlTableModel* self, int strategy) {
-	self->setEditStrategy(static_cast<QSqlTableModel::EditStrategy>(strategy));
+void QSqlTableModel_setEditStrategy(QSqlTableModel* self, EditStrategy strategy) {
+	self->setEditStrategy(strategy);
 }
 
-int QSqlTableModel_editStrategy(const QSqlTableModel* self) {
-	QSqlTableModel::EditStrategy _ret = self->editStrategy();
-	return static_cast<int>(_ret);
+EditStrategy QSqlTableModel_editStrategy(const QSqlTableModel* self) {
+	return self->editStrategy();
 }
 
 QSqlIndex* QSqlTableModel_primaryKey(const QSqlTableModel* self) {
@@ -1625,8 +1621,8 @@ bool QSqlTableModel_override_virtual_setEditStrategy(void* self, intptr_t slot) 
 	return true;
 }
 
-void QSqlTableModel_virtualbase_setEditStrategy(void* self, int strategy) {
-	static_cast<MiqtVirtualQSqlTableModel*>(self)->QSqlTableModel::setEditStrategy(static_cast<MiqtVirtualQSqlTableModel::EditStrategy>(strategy));
+void QSqlTableModel_virtualbase_setEditStrategy(void* self, EditStrategy strategy) {
+	static_cast<MiqtVirtualQSqlTableModel*>(self)->QSqlTableModel::setEditStrategy(strategy);
 }
 
 bool QSqlTableModel_override_virtual_sort(void* self, intptr_t slot) {
@@ -2411,17 +2407,6 @@ void QSqlTableModel_protectedbase_setPrimaryKey(bool* _dynamic_cast_ok, void* se
 
 	*_dynamic_cast_ok = true;
 	self_cast->setPrimaryKey(*key);
-}
-
-void QSqlTableModel_protectedbase_setQuery(bool* _dynamic_cast_ok, void* self, QSqlQuery* query) {
-	MiqtVirtualQSqlTableModel* self_cast = dynamic_cast<MiqtVirtualQSqlTableModel*>( (QSqlTableModel*)(self) );
-	if (self_cast == nullptr) {
-		*_dynamic_cast_ok = false;
-		return ;
-	}
-
-	*_dynamic_cast_ok = true;
-	self_cast->setQuery(*query);
 }
 
 QSqlRecord* QSqlTableModel_protectedbase_primaryValues(bool* _dynamic_cast_ok, const void* self, int row) {

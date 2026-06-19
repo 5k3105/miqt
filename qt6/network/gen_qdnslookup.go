@@ -15,6 +15,42 @@ import (
 	"unsafe"
 )
 
+type QDnsTlsAssociationRecord__CertificateUsage byte
+
+const (
+	QDnsTlsAssociationRecord__CertificateUsage__CertificateAuthorityConstrait QDnsTlsAssociationRecord__CertificateUsage = 0
+	QDnsTlsAssociationRecord__CertificateUsage__ServiceCertificateConstraint  QDnsTlsAssociationRecord__CertificateUsage = 1
+	QDnsTlsAssociationRecord__CertificateUsage__TrustAnchorAssertion          QDnsTlsAssociationRecord__CertificateUsage = 2
+	QDnsTlsAssociationRecord__CertificateUsage__DomainIssuedCertificate       QDnsTlsAssociationRecord__CertificateUsage = 3
+	QDnsTlsAssociationRecord__CertificateUsage__PrivateUse                    QDnsTlsAssociationRecord__CertificateUsage = 255
+	QDnsTlsAssociationRecord__CertificateUsage__PKIX_TA                       QDnsTlsAssociationRecord__CertificateUsage = 0
+	QDnsTlsAssociationRecord__CertificateUsage__PKIX_EE                       QDnsTlsAssociationRecord__CertificateUsage = 1
+	QDnsTlsAssociationRecord__CertificateUsage__DANE_TA                       QDnsTlsAssociationRecord__CertificateUsage = 2
+	QDnsTlsAssociationRecord__CertificateUsage__DANE_EE                       QDnsTlsAssociationRecord__CertificateUsage = 3
+	QDnsTlsAssociationRecord__CertificateUsage__PrivCert                      QDnsTlsAssociationRecord__CertificateUsage = 255
+)
+
+type QDnsTlsAssociationRecord__Selector byte
+
+const (
+	QDnsTlsAssociationRecord__Selector__FullCertificate      QDnsTlsAssociationRecord__Selector = 0
+	QDnsTlsAssociationRecord__Selector__SubjectPublicKeyInfo QDnsTlsAssociationRecord__Selector = 1
+	QDnsTlsAssociationRecord__Selector__PrivateUse           QDnsTlsAssociationRecord__Selector = 255
+	QDnsTlsAssociationRecord__Selector__Cert                 QDnsTlsAssociationRecord__Selector = 0
+	QDnsTlsAssociationRecord__Selector__SPKI                 QDnsTlsAssociationRecord__Selector = 1
+	QDnsTlsAssociationRecord__Selector__PrivSel              QDnsTlsAssociationRecord__Selector = 255
+)
+
+type QDnsTlsAssociationRecord__MatchingType byte
+
+const (
+	QDnsTlsAssociationRecord__MatchingType__Exact      QDnsTlsAssociationRecord__MatchingType = 0
+	QDnsTlsAssociationRecord__MatchingType__Sha256     QDnsTlsAssociationRecord__MatchingType = 1
+	QDnsTlsAssociationRecord__MatchingType__Sha512     QDnsTlsAssociationRecord__MatchingType = 2
+	QDnsTlsAssociationRecord__MatchingType__PrivateUse QDnsTlsAssociationRecord__MatchingType = 255
+	QDnsTlsAssociationRecord__MatchingType__PrivMatch  QDnsTlsAssociationRecord__MatchingType = 255
+)
+
 type QDnsLookup__Error int
 
 const (
@@ -26,6 +62,7 @@ const (
 	QDnsLookup__ServerFailureError      QDnsLookup__Error = 5
 	QDnsLookup__ServerRefusedError      QDnsLookup__Error = 6
 	QDnsLookup__NotFoundError           QDnsLookup__Error = 7
+	QDnsLookup__TimeoutError            QDnsLookup__Error = 8
 )
 
 type QDnsLookup__Type int
@@ -39,7 +76,15 @@ const (
 	QDnsLookup__NS    QDnsLookup__Type = 2
 	QDnsLookup__PTR   QDnsLookup__Type = 12
 	QDnsLookup__SRV   QDnsLookup__Type = 33
+	QDnsLookup__TLSA  QDnsLookup__Type = 52
 	QDnsLookup__TXT   QDnsLookup__Type = 16
+)
+
+type QDnsLookup__Protocol byte
+
+const (
+	QDnsLookup__Standard   QDnsLookup__Protocol = 0
+	QDnsLookup__DnsOverTls QDnsLookup__Protocol = 1
 )
 
 type QDnsDomainNameRecord struct {
@@ -483,6 +528,102 @@ func (this *QDnsTextRecord) GoGC() {
 	})
 }
 
+type QDnsTlsAssociationRecord struct {
+	h *C.QDnsTlsAssociationRecord
+}
+
+func (this *QDnsTlsAssociationRecord) cPointer() *C.QDnsTlsAssociationRecord {
+	if this == nil {
+		return nil
+	}
+	return this.h
+}
+
+func (this *QDnsTlsAssociationRecord) UnsafePointer() unsafe.Pointer {
+	if this == nil {
+		return nil
+	}
+	return unsafe.Pointer(this.h)
+}
+
+// newQDnsTlsAssociationRecord constructs the type using only CGO pointers.
+func newQDnsTlsAssociationRecord(h *C.QDnsTlsAssociationRecord) *QDnsTlsAssociationRecord {
+	if h == nil {
+		return nil
+	}
+
+	return &QDnsTlsAssociationRecord{h: h}
+}
+
+// UnsafeNewQDnsTlsAssociationRecord constructs the type using only unsafe pointers.
+func UnsafeNewQDnsTlsAssociationRecord(h unsafe.Pointer) *QDnsTlsAssociationRecord {
+	return newQDnsTlsAssociationRecord((*C.QDnsTlsAssociationRecord)(h))
+}
+
+// NewQDnsTlsAssociationRecord constructs a new QDnsTlsAssociationRecord object.
+func NewQDnsTlsAssociationRecord() *QDnsTlsAssociationRecord {
+
+	return newQDnsTlsAssociationRecord(C.QDnsTlsAssociationRecord_new())
+}
+
+// NewQDnsTlsAssociationRecord2 constructs a new QDnsTlsAssociationRecord object.
+func NewQDnsTlsAssociationRecord2(other *QDnsTlsAssociationRecord) *QDnsTlsAssociationRecord {
+
+	return newQDnsTlsAssociationRecord(C.QDnsTlsAssociationRecord_new2(other.cPointer()))
+}
+
+func (this *QDnsTlsAssociationRecord) OperatorAssign(other *QDnsTlsAssociationRecord) {
+	C.QDnsTlsAssociationRecord_operatorAssign(this.h, other.cPointer())
+}
+
+func (this *QDnsTlsAssociationRecord) Swap(other *QDnsTlsAssociationRecord) {
+	C.QDnsTlsAssociationRecord_swap(this.h, other.cPointer())
+}
+
+func (this *QDnsTlsAssociationRecord) Name() string {
+	var _ms C.struct_miqt_string = C.QDnsTlsAssociationRecord_name(this.h)
+	_ret := C.GoStringN(_ms.data, C.int(int64(_ms.len)))
+	C.free(unsafe.Pointer(_ms.data))
+	return _ret
+}
+
+func (this *QDnsTlsAssociationRecord) TimeToLive() uint {
+	return (uint)(C.QDnsTlsAssociationRecord_timeToLive(this.h))
+}
+
+func (this *QDnsTlsAssociationRecord) Usage() CertificateUsage {
+	int /* TODO  */
+}
+
+func (this *QDnsTlsAssociationRecord) Selector() Selector {
+	int /* TODO  */
+}
+
+func (this *QDnsTlsAssociationRecord) MatchType() MatchingType {
+	int /* TODO  */
+}
+
+func (this *QDnsTlsAssociationRecord) Value() []byte {
+	var _bytearray C.struct_miqt_string = C.QDnsTlsAssociationRecord_value(this.h)
+	_ret := C.GoBytes(unsafe.Pointer(_bytearray.data), C.int(int64(_bytearray.len)))
+	C.free(unsafe.Pointer(_bytearray.data))
+	return _ret
+}
+
+// Delete this object from C++ memory.
+func (this *QDnsTlsAssociationRecord) Delete() {
+	C.QDnsTlsAssociationRecord_delete(this.h)
+}
+
+// GoGC adds a Go Finalizer to this pointer, so that it will be deleted
+// from C++ memory once it is unreachable from Go memory.
+func (this *QDnsTlsAssociationRecord) GoGC() {
+	runtime.SetFinalizer(this, func(this *QDnsTlsAssociationRecord) {
+		this.Delete()
+		runtime.KeepAlive(this.h)
+	})
+}
+
 type QDnsLookup struct {
 	h *C.QDnsLookup
 	*qt6.QObject
@@ -526,49 +667,99 @@ func NewQDnsLookup() *QDnsLookup {
 }
 
 // NewQDnsLookup2 constructs a new QDnsLookup object.
-func NewQDnsLookup2(typeVal QDnsLookup__Type, name string) *QDnsLookup {
+func NewQDnsLookup2(typeVal Type, name string) *QDnsLookup {
 	name_ms := C.struct_miqt_string{}
 	name_ms.data = C.CString(name)
 	name_ms.len = C.size_t(len(name))
 	defer C.free(unsafe.Pointer(name_ms.data))
 
-	return newQDnsLookup(C.QDnsLookup_new2((C.int)(typeVal), name_ms))
+	return newQDnsLookup(C.QDnsLookup_new2(typeVal, name_ms))
 }
 
 // NewQDnsLookup3 constructs a new QDnsLookup object.
-func NewQDnsLookup3(typeVal QDnsLookup__Type, name string, nameserver *QHostAddress) *QDnsLookup {
+func NewQDnsLookup3(typeVal Type, name string, nameserver *QHostAddress) *QDnsLookup {
 	name_ms := C.struct_miqt_string{}
 	name_ms.data = C.CString(name)
 	name_ms.len = C.size_t(len(name))
 	defer C.free(unsafe.Pointer(name_ms.data))
 
-	return newQDnsLookup(C.QDnsLookup_new3((C.int)(typeVal), name_ms, nameserver.cPointer()))
+	return newQDnsLookup(C.QDnsLookup_new3(typeVal, name_ms, nameserver.cPointer()))
 }
 
 // NewQDnsLookup4 constructs a new QDnsLookup object.
-func NewQDnsLookup4(parent *qt6.QObject) *QDnsLookup {
+func NewQDnsLookup4(typeVal Type, name string, nameserver *QHostAddress, port uint16) *QDnsLookup {
+	name_ms := C.struct_miqt_string{}
+	name_ms.data = C.CString(name)
+	name_ms.len = C.size_t(len(name))
+	defer C.free(unsafe.Pointer(name_ms.data))
 
-	return newQDnsLookup(C.QDnsLookup_new4((*C.QObject)(parent.UnsafePointer())))
+	return newQDnsLookup(C.QDnsLookup_new4(typeVal, name_ms, nameserver.cPointer(), (C.ushort)(port)))
 }
 
 // NewQDnsLookup5 constructs a new QDnsLookup object.
-func NewQDnsLookup5(typeVal QDnsLookup__Type, name string, parent *qt6.QObject) *QDnsLookup {
+func NewQDnsLookup5(typeVal Type, name string, protocol Protocol, nameserver *QHostAddress) *QDnsLookup {
 	name_ms := C.struct_miqt_string{}
 	name_ms.data = C.CString(name)
 	name_ms.len = C.size_t(len(name))
 	defer C.free(unsafe.Pointer(name_ms.data))
 
-	return newQDnsLookup(C.QDnsLookup_new5((C.int)(typeVal), name_ms, (*C.QObject)(parent.UnsafePointer())))
+	return newQDnsLookup(C.QDnsLookup_new5(typeVal, name_ms, protocol, nameserver.cPointer()))
 }
 
 // NewQDnsLookup6 constructs a new QDnsLookup object.
-func NewQDnsLookup6(typeVal QDnsLookup__Type, name string, nameserver *QHostAddress, parent *qt6.QObject) *QDnsLookup {
+func NewQDnsLookup6(parent *qt6.QObject) *QDnsLookup {
+
+	return newQDnsLookup(C.QDnsLookup_new6((*C.QObject)(parent.UnsafePointer())))
+}
+
+// NewQDnsLookup7 constructs a new QDnsLookup object.
+func NewQDnsLookup7(typeVal Type, name string, parent *qt6.QObject) *QDnsLookup {
 	name_ms := C.struct_miqt_string{}
 	name_ms.data = C.CString(name)
 	name_ms.len = C.size_t(len(name))
 	defer C.free(unsafe.Pointer(name_ms.data))
 
-	return newQDnsLookup(C.QDnsLookup_new6((C.int)(typeVal), name_ms, nameserver.cPointer(), (*C.QObject)(parent.UnsafePointer())))
+	return newQDnsLookup(C.QDnsLookup_new7(typeVal, name_ms, (*C.QObject)(parent.UnsafePointer())))
+}
+
+// NewQDnsLookup8 constructs a new QDnsLookup object.
+func NewQDnsLookup8(typeVal Type, name string, nameserver *QHostAddress, parent *qt6.QObject) *QDnsLookup {
+	name_ms := C.struct_miqt_string{}
+	name_ms.data = C.CString(name)
+	name_ms.len = C.size_t(len(name))
+	defer C.free(unsafe.Pointer(name_ms.data))
+
+	return newQDnsLookup(C.QDnsLookup_new8(typeVal, name_ms, nameserver.cPointer(), (*C.QObject)(parent.UnsafePointer())))
+}
+
+// NewQDnsLookup9 constructs a new QDnsLookup object.
+func NewQDnsLookup9(typeVal Type, name string, nameserver *QHostAddress, port uint16, parent *qt6.QObject) *QDnsLookup {
+	name_ms := C.struct_miqt_string{}
+	name_ms.data = C.CString(name)
+	name_ms.len = C.size_t(len(name))
+	defer C.free(unsafe.Pointer(name_ms.data))
+
+	return newQDnsLookup(C.QDnsLookup_new9(typeVal, name_ms, nameserver.cPointer(), (C.ushort)(port), (*C.QObject)(parent.UnsafePointer())))
+}
+
+// NewQDnsLookup10 constructs a new QDnsLookup object.
+func NewQDnsLookup10(typeVal Type, name string, protocol Protocol, nameserver *QHostAddress, port uint16) *QDnsLookup {
+	name_ms := C.struct_miqt_string{}
+	name_ms.data = C.CString(name)
+	name_ms.len = C.size_t(len(name))
+	defer C.free(unsafe.Pointer(name_ms.data))
+
+	return newQDnsLookup(C.QDnsLookup_new10(typeVal, name_ms, protocol, nameserver.cPointer(), (C.ushort)(port)))
+}
+
+// NewQDnsLookup11 constructs a new QDnsLookup object.
+func NewQDnsLookup11(typeVal Type, name string, protocol Protocol, nameserver *QHostAddress, port uint16, parent *qt6.QObject) *QDnsLookup {
+	name_ms := C.struct_miqt_string{}
+	name_ms.data = C.CString(name)
+	name_ms.len = C.size_t(len(name))
+	defer C.free(unsafe.Pointer(name_ms.data))
+
+	return newQDnsLookup(C.QDnsLookup_new11(typeVal, name_ms, protocol, nameserver.cPointer(), (C.ushort)(port), (*C.QObject)(parent.UnsafePointer())))
 }
 
 func (this *QDnsLookup) MetaObject() *qt6.QMetaObject {
@@ -590,8 +781,12 @@ func QDnsLookup_Tr(s string) string {
 	return _ret
 }
 
-func (this *QDnsLookup) Error() QDnsLookup__Error {
-	return (QDnsLookup__Error)(C.QDnsLookup_error(this.h))
+func (this *QDnsLookup) IsAuthenticData() bool {
+	return (bool)(C.QDnsLookup_isAuthenticData(this.h))
+}
+
+func (this *QDnsLookup) Error() Error {
+	int /* TODO  */
 }
 
 func (this *QDnsLookup) ErrorString() string {
@@ -620,8 +815,8 @@ func (this *QDnsLookup) SetName(name string) {
 	C.QDnsLookup_setName(this.h, name_ms)
 }
 
-func (this *QDnsLookup) Type() QDnsLookup__Type {
-	return (QDnsLookup__Type)(C.QDnsLookup_type(this.h))
+func (this *QDnsLookup) Type() Type {
+	int /* TODO  */
 }
 
 func (this *QDnsLookup) SetType(typeVal QDnsLookup__Type) {
@@ -636,6 +831,30 @@ func (this *QDnsLookup) Nameserver() *QHostAddress {
 
 func (this *QDnsLookup) SetNameserver(nameserver *QHostAddress) {
 	C.QDnsLookup_setNameserver(this.h, nameserver.cPointer())
+}
+
+func (this *QDnsLookup) NameserverPort() uint16 {
+	return (uint16)(C.QDnsLookup_nameserverPort(this.h))
+}
+
+func (this *QDnsLookup) SetNameserverPort(port uint16) {
+	C.QDnsLookup_setNameserverPort(this.h, (C.ushort)(port))
+}
+
+func (this *QDnsLookup) NameserverProtocol() Protocol {
+	int /* TODO  */
+}
+
+func (this *QDnsLookup) SetNameserverProtocol(protocol Protocol) {
+	C.QDnsLookup_setNameserverProtocol(this.h, protocol)
+}
+
+func (this *QDnsLookup) SetNameserver2(protocol Protocol, nameserver *QHostAddress) {
+	C.QDnsLookup_setNameserver2(this.h, protocol, nameserver.cPointer())
+}
+
+func (this *QDnsLookup) SetNameserver3(nameserver *QHostAddress, port uint16) {
+	C.QDnsLookup_setNameserver3(this.h, nameserver.cPointer(), (C.ushort)(port))
 }
 
 func (this *QDnsLookup) CanonicalNameRecords() []QDnsDomainNameRecord {
@@ -720,6 +939,36 @@ func (this *QDnsLookup) TextRecords() []QDnsTextRecord {
 		_ret[i] = *_lv_goptr
 	}
 	return _ret
+}
+
+func (this *QDnsLookup) TlsAssociationRecords() []QDnsTlsAssociationRecord {
+	var _ma C.struct_miqt_array = C.QDnsLookup_tlsAssociationRecords(this.h)
+	_ret := make([]QDnsTlsAssociationRecord, int(_ma.len))
+	_outCast := (*[0xffff]*C.QDnsTlsAssociationRecord)(unsafe.Pointer(_ma.data)) // hey ya
+	for i := 0; i < int(_ma.len); i++ {
+		_lv_goptr := newQDnsTlsAssociationRecord(_outCast[i])
+		_lv_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
+		_ret[i] = *_lv_goptr
+	}
+	return _ret
+}
+
+func (this *QDnsLookup) SetSslConfiguration(sslConfiguration *QSslConfiguration) {
+	C.QDnsLookup_setSslConfiguration(this.h, sslConfiguration.cPointer())
+}
+
+func (this *QDnsLookup) SslConfiguration() *QSslConfiguration {
+	_goptr := newQSslConfiguration(C.QDnsLookup_sslConfiguration(this.h))
+	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
+	return _goptr
+}
+
+func QDnsLookup_IsProtocolSupported(protocol Protocol) bool {
+	return (bool)(C.QDnsLookup_isProtocolSupported(protocol))
+}
+
+func QDnsLookup_DefaultPortForProtocol(protocol Protocol) uint16 {
+	return (uint16)(C.QDnsLookup_defaultPortForProtocol(protocol))
 }
 
 func (this *QDnsLookup) Abort() {
@@ -814,6 +1063,46 @@ func miqt_exec_callback_QDnsLookup_nameserverChanged(cb C.intptr_t, nameserver *
 	gofunc(slotval1)
 }
 
+func (this *QDnsLookup) NameserverPortChanged(port uint16) {
+	C.QDnsLookup_nameserverPortChanged(this.h, (C.ushort)(port))
+}
+func (this *QDnsLookup) OnNameserverPortChanged(slot func(port uint16)) {
+	C.QDnsLookup_connect_nameserverPortChanged(this.h, C.intptr_t(cgo.NewHandle(slot)))
+}
+
+//export miqt_exec_callback_QDnsLookup_nameserverPortChanged
+func miqt_exec_callback_QDnsLookup_nameserverPortChanged(cb C.intptr_t, port C.ushort) {
+	gofunc, ok := cgo.Handle(cb).Value().(func(port uint16))
+	if !ok {
+		panic("miqt: callback of non-callback type (heap corruption?)")
+	}
+
+	// Convert all CABI parameters to Go parameters
+	slotval1 := (uint16)(port)
+
+	gofunc(slotval1)
+}
+
+func (this *QDnsLookup) NameserverProtocolChanged(protocol QDnsLookup__Protocol) {
+	C.QDnsLookup_nameserverProtocolChanged(this.h, (C.uint8_t)(protocol))
+}
+func (this *QDnsLookup) OnNameserverProtocolChanged(slot func(protocol QDnsLookup__Protocol)) {
+	C.QDnsLookup_connect_nameserverProtocolChanged(this.h, C.intptr_t(cgo.NewHandle(slot)))
+}
+
+//export miqt_exec_callback_QDnsLookup_nameserverProtocolChanged
+func miqt_exec_callback_QDnsLookup_nameserverProtocolChanged(cb C.intptr_t, protocol C.uint8_t) {
+	gofunc, ok := cgo.Handle(cb).Value().(func(protocol QDnsLookup__Protocol))
+	if !ok {
+		panic("miqt: callback of non-callback type (heap corruption?)")
+	}
+
+	// Convert all CABI parameters to Go parameters
+	slotval1 := (QDnsLookup__Protocol)(protocol)
+
+	gofunc(slotval1)
+}
+
 func QDnsLookup_Tr2(s string, c string) string {
 	s_Cstring := C.CString(s)
 	defer C.free(unsafe.Pointer(s_Cstring))
@@ -834,6 +1123,10 @@ func QDnsLookup_Tr3(s string, c string, n int) string {
 	_ret := C.GoStringN(_ms.data, C.int(int64(_ms.len)))
 	C.free(unsafe.Pointer(_ms.data))
 	return _ret
+}
+
+func (this *QDnsLookup) SetNameserver4(protocol Protocol, nameserver *QHostAddress, port uint16) {
+	C.QDnsLookup_setNameserver4(this.h, protocol, nameserver.cPointer(), (C.ushort)(port))
 }
 
 // Sender can only be called from a QDnsLookup that was directly constructed.

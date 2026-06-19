@@ -1,4 +1,7 @@
+#include <QAnyStringView>
 #include <QByteArray>
+#include <QByteArrayView>
+#include <QHttpHeaders>
 #include <QIODevice>
 #include <QIODeviceBase>
 #include <QList>
@@ -8,7 +11,6 @@
 #include <QNetworkReply>
 #include <QNetworkRequest>
 #include <QObject>
-#include <QPair>
 #include <QSslConfiguration>
 #include <QSslError>
 #include <QSslPreSharedKeyAuthenticator>
@@ -93,9 +95,8 @@ QNetworkRequest* QNetworkReply_request(const QNetworkReply* self) {
 	return new QNetworkRequest(self->request());
 }
 
-int QNetworkReply_error(const QNetworkReply* self) {
-	QNetworkReply::NetworkError _ret = self->error();
-	return static_cast<int>(_ret);
+NetworkError QNetworkReply_error(const QNetworkReply* self) {
+	return self->error();
 }
 
 bool QNetworkReply_isFinished(const QNetworkReply* self) {
@@ -114,9 +115,8 @@ QVariant* QNetworkReply_header(const QNetworkReply* self, int header) {
 	return new QVariant(self->header(static_cast<QNetworkRequest::KnownHeaders>(header)));
 }
 
-bool QNetworkReply_hasRawHeader(const QNetworkReply* self, struct miqt_string headerName) {
-	QByteArray headerName_QByteArray(headerName.data, headerName.len);
-	return self->hasRawHeader(headerName_QByteArray);
+bool QNetworkReply_hasRawHeader(const QNetworkReply* self, QAnyStringView* headerName) {
+	return self->hasRawHeader(*headerName);
 }
 
 struct miqt_array /* of struct miqt_string */  QNetworkReply_rawHeaderList(const QNetworkReply* self) {
@@ -137,9 +137,8 @@ struct miqt_array /* of struct miqt_string */  QNetworkReply_rawHeaderList(const
 	return _out;
 }
 
-struct miqt_string QNetworkReply_rawHeader(const QNetworkReply* self, struct miqt_string headerName) {
-	QByteArray headerName_QByteArray(headerName.data, headerName.len);
-	QByteArray _qb = self->rawHeader(headerName_QByteArray);
+struct miqt_string QNetworkReply_rawHeader(const QNetworkReply* self, QAnyStringView* headerName) {
+	QByteArray _qb = self->rawHeader(*headerName);
 	struct miqt_string _ms;
 	_ms.len = _qb.length();
 	_ms.data = static_cast<char*>(malloc(_ms.len));
@@ -147,37 +146,21 @@ struct miqt_string QNetworkReply_rawHeader(const QNetworkReply* self, struct miq
 	return _ms;
 }
 
-struct miqt_array /* of struct miqt_map  tuple of struct miqt_string and struct miqt_string   */  QNetworkReply_rawHeaderPairs(const QNetworkReply* self) {
-	const QList<QNetworkReply::RawHeaderPair>& _ret = self->rawHeaderPairs();
+struct miqt_array /* of RawHeaderPair */  QNetworkReply_rawHeaderPairs(const QNetworkReply* self) {
+	const QList<RawHeaderPair>& _ret = self->rawHeaderPairs();
 	// Convert QList<> from C++ memory to manually-managed C memory
-	struct miqt_map /* tuple of struct miqt_string and struct miqt_string */ * _arr = static_cast<struct miqt_map /* tuple of struct miqt_string and struct miqt_string */ *>(malloc(sizeof(struct miqt_map /* tuple of struct miqt_string and struct miqt_string */ ) * _ret.length()));
+	RawHeaderPair* _arr = static_cast<RawHeaderPair*>(malloc(sizeof(RawHeaderPair) * _ret.length()));
 	for (size_t i = 0, e = _ret.length(); i < e; ++i) {
-		QPair<QByteArray, QByteArray> _lv_ret = _ret[i];
-		// Convert QPair<> from C++ memory to manually-managed C memory
-		struct miqt_string* _lv_first_arr = static_cast<struct miqt_string*>(malloc(sizeof(struct miqt_string)));
-		struct miqt_string* _lv_second_arr = static_cast<struct miqt_string*>(malloc(sizeof(struct miqt_string)));
-		QByteArray _lv_first_qb = _lv_ret.first;
-		struct miqt_string _lv_first_ms;
-		_lv_first_ms.len = _lv_first_qb.length();
-		_lv_first_ms.data = static_cast<char*>(malloc(_lv_first_ms.len));
-		memcpy(_lv_first_ms.data, _lv_first_qb.data(), _lv_first_ms.len);
-		_lv_first_arr[0] = _lv_first_ms;
-		QByteArray _lv_second_qb = _lv_ret.second;
-		struct miqt_string _lv_second_ms;
-		_lv_second_ms.len = _lv_second_qb.length();
-		_lv_second_ms.data = static_cast<char*>(malloc(_lv_second_ms.len));
-		memcpy(_lv_second_ms.data, _lv_second_qb.data(), _lv_second_ms.len);
-		_lv_second_arr[0] = _lv_second_ms;
-		struct miqt_map _lv_out;
-		_lv_out.len = 1;
-		_lv_out.keys = static_cast<void*>(_lv_first_arr);
-		_lv_out.values = static_cast<void*>(_lv_second_arr);
-		_arr[i] = _lv_out;
+		_arr[i] = _ret[i];
 	}
 	struct miqt_array _out;
 	_out.len = _ret.length();
 	_out.data = static_cast<void*>(_arr);
 	return _out;
+}
+
+QHttpHeaders* QNetworkReply_headers(const QNetworkReply* self) {
+	return new QHttpHeaders(self->headers());
 }
 
 QVariant* QNetworkReply_attribute(const QNetworkReply* self, int code) {

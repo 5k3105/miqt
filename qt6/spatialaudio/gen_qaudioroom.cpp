@@ -224,13 +224,12 @@ QQuaternion* QAudioRoom_rotation(const QAudioRoom* self) {
 	return new QQuaternion(self->rotation());
 }
 
-void QAudioRoom_setWallMaterial(QAudioRoom* self, int wall, int material) {
-	self->setWallMaterial(static_cast<QAudioRoom::Wall>(wall), static_cast<QAudioRoom::Material>(material));
+void QAudioRoom_setWallMaterial(QAudioRoom* self, Wall wall, Material material) {
+	self->setWallMaterial(wall, material);
 }
 
-int QAudioRoom_wallMaterial(const QAudioRoom* self, int wall) {
-	QAudioRoom::Material _ret = self->wallMaterial(static_cast<QAudioRoom::Wall>(wall));
-	return static_cast<int>(_ret);
+Material QAudioRoom_wallMaterial(const QAudioRoom* self, Wall wall) {
+	return self->wallMaterial(wall);
 }
 
 void QAudioRoom_setReflectionGain(QAudioRoom* self, float factor) {

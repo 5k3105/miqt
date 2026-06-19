@@ -117,12 +117,8 @@ func (this *QSqlQuery) IsNull(field int) bool {
 	return (bool)(C.QSqlQuery_isNull(this.h, (C.int)(field)))
 }
 
-func (this *QSqlQuery) IsNullWithName(name string) bool {
-	name_ms := C.struct_miqt_string{}
-	name_ms.data = C.CString(name)
-	name_ms.len = C.size_t(len(name))
-	defer C.free(unsafe.Pointer(name_ms.data))
-	return (bool)(C.QSqlQuery_isNullWithName(this.h, name_ms))
+func (this *QSqlQuery) IsNullWithName(name qt6.QAnyStringView) bool {
+	return (bool)(C.QSqlQuery_isNullWithName(this.h, (*C.QAnyStringView)(name.UnsafePointer())))
 }
 
 func (this *QSqlQuery) At() int {
@@ -190,12 +186,8 @@ func (this *QSqlQuery) Value(i int) *qt6.QVariant {
 	return _goptr
 }
 
-func (this *QSqlQuery) ValueWithName(name string) *qt6.QVariant {
-	name_ms := C.struct_miqt_string{}
-	name_ms.data = C.CString(name)
-	name_ms.len = C.size_t(len(name))
-	defer C.free(unsafe.Pointer(name_ms.data))
-	_goptr := qt6.UnsafeNewQVariant(unsafe.Pointer(C.QSqlQuery_valueWithName(this.h, name_ms)))
+func (this *QSqlQuery) ValueWithName(name qt6.QAnyStringView) *qt6.QVariant {
+	_goptr := qt6.UnsafeNewQVariant(unsafe.Pointer(C.QSqlQuery_valueWithName(this.h, (*C.QAnyStringView)(name.UnsafePointer()))))
 	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
 	return _goptr
 }
@@ -206,6 +198,14 @@ func (this *QSqlQuery) SetNumericalPrecisionPolicy(precisionPolicy QSql__Numeric
 
 func (this *QSqlQuery) NumericalPrecisionPolicy() QSql__NumericalPrecisionPolicy {
 	return (QSql__NumericalPrecisionPolicy)(C.QSqlQuery_numericalPrecisionPolicy(this.h))
+}
+
+func (this *QSqlQuery) SetPositionalBindingEnabled(enable bool) {
+	C.QSqlQuery_setPositionalBindingEnabled(this.h, (C.bool)(enable))
+}
+
+func (this *QSqlQuery) IsPositionalBindingEnabled() bool {
+	return (bool)(C.QSqlQuery_isPositionalBindingEnabled(this.h))
 }
 
 func (this *QSqlQuery) Seek(i int) bool {
@@ -292,6 +292,26 @@ func (this *QSqlQuery) BoundValues() []qt6.QVariant {
 	return _ret
 }
 
+func (this *QSqlQuery) BoundValueNames() []string {
+	var _ma C.struct_miqt_array = C.QSqlQuery_boundValueNames(this.h)
+	_ret := make([]string, int(_ma.len))
+	_outCast := (*[0xffff]C.struct_miqt_string)(unsafe.Pointer(_ma.data)) // hey ya
+	for i := 0; i < int(_ma.len); i++ {
+		var _lv_ms C.struct_miqt_string = _outCast[i]
+		_lv_ret := C.GoStringN(_lv_ms.data, C.int(int64(_lv_ms.len)))
+		C.free(unsafe.Pointer(_lv_ms.data))
+		_ret[i] = _lv_ret
+	}
+	return _ret
+}
+
+func (this *QSqlQuery) BoundValueName(pos int) string {
+	var _ms C.struct_miqt_string = C.QSqlQuery_boundValueName(this.h, (C.int)(pos))
+	_ret := C.GoStringN(_ms.data, C.int(int64(_ms.len)))
+	C.free(unsafe.Pointer(_ms.data))
+	return _ret
+}
+
 func (this *QSqlQuery) ExecutedQuery() string {
 	var _ms C.struct_miqt_string = C.QSqlQuery_executedQuery(this.h)
 	_ret := C.GoStringN(_ms.data, C.int(int64(_ms.len)))
@@ -317,11 +337,11 @@ func (this *QSqlQuery) Seek2(i int, relative bool) bool {
 	return (bool)(C.QSqlQuery_seek2(this.h, (C.int)(i), (C.bool)(relative)))
 }
 
-func (this *QSqlQuery) ExecBatchWithMode(mode QSqlQuery__BatchExecutionMode) bool {
-	return (bool)(C.QSqlQuery_execBatchWithMode(this.h, (C.int)(mode)))
+func (this *QSqlQuery) ExecBatchWithMode(mode BatchExecutionMode) bool {
+	return (bool)(C.QSqlQuery_execBatchWithMode(this.h, mode))
 }
 
-func (this *QSqlQuery) BindValue3(placeholder string, val *qt6.QVariant, typeVal QSql__ParamTypeFlag) {
+func (this *QSqlQuery) BindValue3(placeholder string, val *qt6.QVariant, typeVal ParamTypeFlag) {
 	placeholder_ms := C.struct_miqt_string{}
 	placeholder_ms.data = C.CString(placeholder)
 	placeholder_ms.len = C.size_t(len(placeholder))
@@ -329,11 +349,11 @@ func (this *QSqlQuery) BindValue3(placeholder string, val *qt6.QVariant, typeVal
 	C.QSqlQuery_bindValue3(this.h, placeholder_ms, (*C.QVariant)(val.UnsafePointer()), (C.int)(typeVal))
 }
 
-func (this *QSqlQuery) BindValue4(pos int, val *qt6.QVariant, typeVal QSql__ParamTypeFlag) {
+func (this *QSqlQuery) BindValue4(pos int, val *qt6.QVariant, typeVal ParamTypeFlag) {
 	C.QSqlQuery_bindValue4(this.h, (C.int)(pos), (*C.QVariant)(val.UnsafePointer()), (C.int)(typeVal))
 }
 
-func (this *QSqlQuery) AddBindValue2(val *qt6.QVariant, typeVal QSql__ParamTypeFlag) {
+func (this *QSqlQuery) AddBindValue2(val *qt6.QVariant, typeVal ParamTypeFlag) {
 	C.QSqlQuery_addBindValue2(this.h, (*C.QVariant)(val.UnsafePointer()), (C.int)(typeVal))
 }
 

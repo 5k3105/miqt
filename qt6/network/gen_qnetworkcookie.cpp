@@ -1,4 +1,5 @@
 #include <QByteArray>
+#include <QByteArrayView>
 #include <QDateTime>
 #include <QList>
 #include <QNetworkCookie>
@@ -68,13 +69,12 @@ void QNetworkCookie_setHttpOnly(QNetworkCookie* self, bool enable) {
 	self->setHttpOnly(enable);
 }
 
-int QNetworkCookie_sameSitePolicy(const QNetworkCookie* self) {
-	QNetworkCookie::SameSite _ret = self->sameSitePolicy();
-	return static_cast<int>(_ret);
+SameSite QNetworkCookie_sameSitePolicy(const QNetworkCookie* self) {
+	return self->sameSitePolicy();
 }
 
-void QNetworkCookie_setSameSitePolicy(QNetworkCookie* self, int sameSite) {
-	self->setSameSitePolicy(static_cast<QNetworkCookie::SameSite>(sameSite));
+void QNetworkCookie_setSameSitePolicy(QNetworkCookie* self, SameSite sameSite) {
+	self->setSameSitePolicy(sameSite);
 }
 
 bool QNetworkCookie_isSessionCookie(const QNetworkCookie* self) {
@@ -166,9 +166,8 @@ void QNetworkCookie_normalize(QNetworkCookie* self, QUrl* url) {
 	self->normalize(*url);
 }
 
-struct miqt_array /* of QNetworkCookie* */  QNetworkCookie_parseCookies(struct miqt_string cookieString) {
-	QByteArray cookieString_QByteArray(cookieString.data, cookieString.len);
-	QList<QNetworkCookie> _ret = QNetworkCookie::parseCookies(cookieString_QByteArray);
+struct miqt_array /* of QNetworkCookie* */  QNetworkCookie_parseCookies(QByteArrayView* cookieString) {
+	QList<QNetworkCookie> _ret = QNetworkCookie::parseCookies(*cookieString);
 	// Convert QList<> from C++ memory to manually-managed C memory
 	QNetworkCookie** _arr = static_cast<QNetworkCookie**>(malloc(sizeof(QNetworkCookie*) * _ret.length()));
 	for (size_t i = 0, e = _ret.length(); i < e; ++i) {
@@ -180,8 +179,8 @@ struct miqt_array /* of QNetworkCookie* */  QNetworkCookie_parseCookies(struct m
 	return _out;
 }
 
-struct miqt_string QNetworkCookie_toRawFormWithForm(const QNetworkCookie* self, int form) {
-	QByteArray _qb = self->toRawForm(static_cast<QNetworkCookie::RawForm>(form));
+struct miqt_string QNetworkCookie_toRawFormWithForm(const QNetworkCookie* self, RawForm form) {
+	QByteArray _qb = self->toRawForm(form);
 	struct miqt_string _ms;
 	_ms.len = _qb.length();
 	_ms.data = static_cast<char*>(malloc(_ms.len));

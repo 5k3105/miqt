@@ -19,10 +19,12 @@ class QAbstractEventDispatcher;
 class QAbstractNativeEventFilter;
 class QChildEvent;
 class QCoreApplication;
+class QDeadlineTimer;
 class QEvent;
 class QMetaMethod;
 class QMetaObject;
 class QObject;
+class QPermission;
 class QTimerEvent;
 class QTranslator;
 #else
@@ -30,10 +32,12 @@ typedef struct QAbstractEventDispatcher QAbstractEventDispatcher;
 typedef struct QAbstractNativeEventFilter QAbstractNativeEventFilter;
 typedef struct QChildEvent QChildEvent;
 typedef struct QCoreApplication QCoreApplication;
+typedef struct QDeadlineTimer QDeadlineTimer;
 typedef struct QEvent QEvent;
 typedef struct QMetaMethod QMetaMethod;
 typedef struct QMetaObject QMetaObject;
 typedef struct QObject QObject;
+typedef struct QPermission QPermission;
 typedef struct QTimerEvent QTimerEvent;
 typedef struct QTranslator QTranslator;
 #endif
@@ -58,9 +62,11 @@ struct miqt_string QCoreApplication_applicationVersion();
 void QCoreApplication_setSetuidAllowed(bool allow);
 bool QCoreApplication_isSetuidAllowed();
 QCoreApplication* QCoreApplication_instance();
+bool QCoreApplication_instanceExists();
 int QCoreApplication_exec();
 void QCoreApplication_processEvents();
 void QCoreApplication_processEvents2(int flags, int maxtime);
+void QCoreApplication_processEvents3(int flags, QDeadlineTimer* deadline);
 bool QCoreApplication_sendEvent(QObject* receiver, QEvent* event);
 void QCoreApplication_postEvent(QObject* receiver, QEvent* event);
 void QCoreApplication_sendPostedEvents();
@@ -73,6 +79,7 @@ bool QCoreApplication_closingDown();
 struct miqt_string QCoreApplication_applicationDirPath();
 struct miqt_string QCoreApplication_applicationFilePath();
 long long QCoreApplication_applicationPid();
+int QCoreApplication_checkPermission(QCoreApplication* self, QPermission* permission);
 void QCoreApplication_setLibraryPaths(struct miqt_array /* of struct miqt_string */  libraryPaths);
 struct miqt_array /* of struct miqt_string */  QCoreApplication_libraryPaths();
 void QCoreApplication_addLibraryPath(struct miqt_string param1);
@@ -131,8 +138,6 @@ QObject* QCoreApplication_protectedbase_sender(bool* _dynamic_cast_ok, const voi
 int QCoreApplication_protectedbase_senderSignalIndex(bool* _dynamic_cast_ok, const void* self);
 int QCoreApplication_protectedbase_receivers(bool* _dynamic_cast_ok, const void* self, const char* signal);
 bool QCoreApplication_protectedbase_isSignalConnected(bool* _dynamic_cast_ok, const void* self, QMetaMethod* signal);
-
-void QCoreApplication_connect_aboutToQuit(QCoreApplication* self, intptr_t slot);
 
 void QCoreApplication_delete(QCoreApplication* self);
 

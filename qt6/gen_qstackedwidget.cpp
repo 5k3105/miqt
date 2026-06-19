@@ -46,6 +46,7 @@ extern "C" {
 
 void miqt_exec_callback_QStackedWidget_currentChanged(intptr_t, int);
 void miqt_exec_callback_QStackedWidget_widgetRemoved(intptr_t, int);
+void miqt_exec_callback_QStackedWidget_widgetAdded(intptr_t, int);
 bool miqt_exec_callback_QStackedWidget_event(QStackedWidget*, intptr_t, QEvent*);
 QSize* miqt_exec_callback_QStackedWidget_sizeHint(const QStackedWidget*, intptr_t);
 void miqt_exec_callback_QStackedWidget_paintEvent(QStackedWidget*, intptr_t, QPaintEvent*);
@@ -81,7 +82,7 @@ void miqt_exec_callback_QStackedWidget_dropEvent(QStackedWidget*, intptr_t, QDro
 void miqt_exec_callback_QStackedWidget_showEvent(QStackedWidget*, intptr_t, QShowEvent*);
 void miqt_exec_callback_QStackedWidget_hideEvent(QStackedWidget*, intptr_t, QHideEvent*);
 bool miqt_exec_callback_QStackedWidget_nativeEvent(QStackedWidget*, intptr_t, struct miqt_string, void*, intptr_t*);
-int miqt_exec_callback_QStackedWidget_metric(const QStackedWidget*, intptr_t, int);
+int miqt_exec_callback_QStackedWidget_metric(const QStackedWidget*, intptr_t, PaintDeviceMetric);
 void miqt_exec_callback_QStackedWidget_initPainter(const QStackedWidget*, intptr_t, QPainter*);
 QPaintDevice* miqt_exec_callback_QStackedWidget_redirected(const QStackedWidget*, intptr_t, QPoint*);
 QPainter* miqt_exec_callback_QStackedWidget_sharedPainter(const QStackedWidget*, intptr_t);
@@ -700,18 +701,17 @@ public:
 	intptr_t handle__metric = 0;
 
 	// Subclass to allow providing a Go implementation
-	virtual int metric(QPaintDevice::PaintDeviceMetric param1) const override {
+	virtual int metric(PaintDeviceMetric param1) const override {
 		if (handle__metric == 0) {
 			return QStackedWidget::metric(param1);
 		}
 
-		QPaintDevice::PaintDeviceMetric param1_ret = param1;
-		int sigval1 = static_cast<int>(param1_ret);
+		PaintDeviceMetric sigval1 = param1;
 		int callback_return_value = miqt_exec_callback_QStackedWidget_metric(this, handle__metric, sigval1);
 		return static_cast<int>(callback_return_value);
 	}
 
-	friend int QStackedWidget_virtualbase_metric(const void* self, int param1);
+	friend int QStackedWidget_virtualbase_metric(const void* self, PaintDeviceMetric param1);
 
 	// cgo.Handle value for overwritten implementation
 	intptr_t handle__initPainter = 0;
@@ -928,6 +928,7 @@ public:
 	friend int QStackedWidget_protectedbase_senderSignalIndex(bool* _dynamic_cast_ok, const void* self);
 	friend int QStackedWidget_protectedbase_receivers(bool* _dynamic_cast_ok, const void* self, const char* signal);
 	friend bool QStackedWidget_protectedbase_isSignalConnected(bool* _dynamic_cast_ok, const void* self, QMetaMethod* signal);
+	friend double QStackedWidget_protectedbase_getDecodedMetricF(bool* _dynamic_cast_ok, const void* self, PaintDeviceMetric metricA, PaintDeviceMetric metricB);
 };
 
 QStackedWidget* QStackedWidget_new(QWidget* parent) {
@@ -1020,6 +1021,17 @@ void QStackedWidget_connect_widgetRemoved(QStackedWidget* self, intptr_t slot) {
 	QStackedWidget::connect(self, static_cast<void (QStackedWidget::*)(int)>(&QStackedWidget::widgetRemoved), self, [=](int index) {
 		int sigval1 = index;
 		miqt_exec_callback_QStackedWidget_widgetRemoved(slot, sigval1);
+	});
+}
+
+void QStackedWidget_widgetAdded(QStackedWidget* self, int index) {
+	self->widgetAdded(static_cast<int>(index));
+}
+
+void QStackedWidget_connect_widgetAdded(QStackedWidget* self, intptr_t slot) {
+	QStackedWidget::connect(self, static_cast<void (QStackedWidget::*)(int)>(&QStackedWidget::widgetAdded), self, [=](int index) {
+		int sigval1 = index;
+		miqt_exec_callback_QStackedWidget_widgetAdded(slot, sigval1);
 	});
 }
 
@@ -1546,8 +1558,8 @@ bool QStackedWidget_override_virtual_metric(void* self, intptr_t slot) {
 	return true;
 }
 
-int QStackedWidget_virtualbase_metric(const void* self, int param1) {
-	return static_cast<const MiqtVirtualQStackedWidget*>(self)->QStackedWidget::metric(static_cast<MiqtVirtualQStackedWidget::PaintDeviceMetric>(param1));
+int QStackedWidget_virtualbase_metric(const void* self, PaintDeviceMetric param1) {
+	return static_cast<const MiqtVirtualQStackedWidget*>(self)->QStackedWidget::metric(param1);
 }
 
 bool QStackedWidget_override_virtual_initPainter(void* self, intptr_t slot) {
@@ -1826,6 +1838,17 @@ bool QStackedWidget_protectedbase_isSignalConnected(bool* _dynamic_cast_ok, cons
 
 	*_dynamic_cast_ok = true;
 	return self_cast->isSignalConnected(*signal);
+}
+
+double QStackedWidget_protectedbase_getDecodedMetricF(bool* _dynamic_cast_ok, const void* self, PaintDeviceMetric metricA, PaintDeviceMetric metricB) {
+	MiqtVirtualQStackedWidget* self_cast = dynamic_cast<MiqtVirtualQStackedWidget*>( (QStackedWidget*)(self) );
+	if (self_cast == nullptr) {
+		*_dynamic_cast_ok = false;
+		return 0;
+	}
+
+	*_dynamic_cast_ok = true;
+	return self_cast->getDecodedMetricF(metricA, metricB);
 }
 
 void QStackedWidget_delete(QStackedWidget* self) {

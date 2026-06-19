@@ -355,12 +355,12 @@ QTextFrame* QTextFrame_parentFrame(const QTextFrame* self) {
 	return self->parentFrame();
 }
 
-QTextFrame__iterator* QTextFrame_begin(const QTextFrame* self) {
-	return new QTextFrame::iterator(self->begin());
+iterator QTextFrame_begin(const QTextFrame* self) {
+	return self->begin();
 }
 
-QTextFrame__iterator* QTextFrame_end(const QTextFrame* self) {
-	return new QTextFrame::iterator(self->end());
+iterator QTextFrame_end(const QTextFrame* self) {
+	return self->end();
 }
 
 struct miqt_string QTextFrame_tr2(const char* s, const char* c) {
@@ -699,12 +699,12 @@ int QTextBlock_lineCount(const QTextBlock* self) {
 	return self->lineCount();
 }
 
-QTextBlock__iterator* QTextBlock_begin(const QTextBlock* self) {
-	return new QTextBlock::iterator(self->begin());
+iterator QTextBlock_begin(const QTextBlock* self) {
+	return self->begin();
 }
 
-QTextBlock__iterator* QTextBlock_end(const QTextBlock* self) {
-	return new QTextBlock::iterator(self->end());
+iterator QTextBlock_end(const QTextBlock* self) {
+	return self->end();
 }
 
 QTextBlock* QTextBlock_next(const QTextBlock* self) {
@@ -829,7 +829,7 @@ QTextFrame__iterator* QTextFrame__iterator_new() {
 	return new (std::nothrow) QTextFrame::iterator();
 }
 
-QTextFrame__iterator* QTextFrame__iterator_new2(QTextFrame__iterator* param1) {
+QTextFrame__iterator* QTextFrame__iterator_new2(const iterator* param1) {
 	return new (std::nothrow) QTextFrame::iterator(*param1);
 }
 
@@ -849,32 +849,28 @@ bool QTextFrame__iterator_atEnd(const QTextFrame__iterator* self) {
 	return self->atEnd();
 }
 
-bool QTextFrame__iterator_operatorEqual(const QTextFrame__iterator* self, QTextFrame__iterator* o) {
+bool QTextFrame__iterator_operatorEqual(const QTextFrame__iterator* self, const iterator* o) {
 	return (*self == *o);
 }
 
-bool QTextFrame__iterator_operatorNotEqual(const QTextFrame__iterator* self, QTextFrame__iterator* o) {
+bool QTextFrame__iterator_operatorNotEqual(const QTextFrame__iterator* self, const iterator* o) {
 	return (*self != *o);
 }
 
-QTextFrame__iterator* QTextFrame__iterator_operatorPlusPlus(QTextFrame__iterator* self) {
-	QTextFrame::iterator& _ret = self->operator++();
-	// Cast returned reference into pointer
-	return &_ret;
+iterator* QTextFrame__iterator_operatorPlusPlus(QTextFrame__iterator* self) {
+	return &self->operator++();
 }
 
-QTextFrame__iterator* QTextFrame__iterator_operatorPlusPlusWithInt(QTextFrame__iterator* self, int param1) {
-	return new QTextFrame::iterator(self->operator++(static_cast<int>(param1)));
+iterator QTextFrame__iterator_operatorPlusPlusWithInt(QTextFrame__iterator* self, int param1) {
+	return self->operator++(static_cast<int>(param1));
 }
 
-QTextFrame__iterator* QTextFrame__iterator_operatorMinusMinus(QTextFrame__iterator* self) {
-	QTextFrame::iterator& _ret = self->operator--();
-	// Cast returned reference into pointer
-	return &_ret;
+iterator* QTextFrame__iterator_operatorMinusMinus(QTextFrame__iterator* self) {
+	return &self->operator--();
 }
 
-QTextFrame__iterator* QTextFrame__iterator_operatorMinusMinusWithInt(QTextFrame__iterator* self, int param1) {
-	return new QTextFrame::iterator(self->operator--(static_cast<int>(param1)));
+iterator QTextFrame__iterator_operatorMinusMinusWithInt(QTextFrame__iterator* self, int param1) {
+	return self->operator--(static_cast<int>(param1));
 }
 
 void QTextFrame__iterator_delete(QTextFrame__iterator* self) {
@@ -885,7 +881,7 @@ QTextBlock__iterator* QTextBlock__iterator_new() {
 	return new (std::nothrow) QTextBlock::iterator();
 }
 
-QTextBlock__iterator* QTextBlock__iterator_new2(QTextBlock__iterator* param1) {
+QTextBlock__iterator* QTextBlock__iterator_new2(const iterator* param1) {
 	return new (std::nothrow) QTextBlock::iterator(*param1);
 }
 
@@ -897,32 +893,28 @@ bool QTextBlock__iterator_atEnd(const QTextBlock__iterator* self) {
 	return self->atEnd();
 }
 
-bool QTextBlock__iterator_operatorEqual(const QTextBlock__iterator* self, QTextBlock__iterator* o) {
+bool QTextBlock__iterator_operatorEqual(const QTextBlock__iterator* self, const iterator* o) {
 	return (*self == *o);
 }
 
-bool QTextBlock__iterator_operatorNotEqual(const QTextBlock__iterator* self, QTextBlock__iterator* o) {
+bool QTextBlock__iterator_operatorNotEqual(const QTextBlock__iterator* self, const iterator* o) {
 	return (*self != *o);
 }
 
-QTextBlock__iterator* QTextBlock__iterator_operatorPlusPlus(QTextBlock__iterator* self) {
-	QTextBlock::iterator& _ret = self->operator++();
-	// Cast returned reference into pointer
-	return &_ret;
+iterator* QTextBlock__iterator_operatorPlusPlus(QTextBlock__iterator* self) {
+	return &self->operator++();
 }
 
-QTextBlock__iterator* QTextBlock__iterator_operatorPlusPlusWithInt(QTextBlock__iterator* self, int param1) {
-	return new QTextBlock::iterator(self->operator++(static_cast<int>(param1)));
+iterator QTextBlock__iterator_operatorPlusPlusWithInt(QTextBlock__iterator* self, int param1) {
+	return self->operator++(static_cast<int>(param1));
 }
 
-QTextBlock__iterator* QTextBlock__iterator_operatorMinusMinus(QTextBlock__iterator* self) {
-	QTextBlock::iterator& _ret = self->operator--();
-	// Cast returned reference into pointer
-	return &_ret;
+iterator* QTextBlock__iterator_operatorMinusMinus(QTextBlock__iterator* self) {
+	return &self->operator--();
 }
 
-QTextBlock__iterator* QTextBlock__iterator_operatorMinusMinusWithInt(QTextBlock__iterator* self, int param1) {
-	return new QTextBlock::iterator(self->operator--(static_cast<int>(param1)));
+iterator QTextBlock__iterator_operatorMinusMinusWithInt(QTextBlock__iterator* self, int param1) {
+	return self->operator--(static_cast<int>(param1));
 }
 
 void QTextBlock__iterator_delete(QTextBlock__iterator* self) {

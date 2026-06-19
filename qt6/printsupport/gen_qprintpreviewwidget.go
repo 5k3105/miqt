@@ -92,13 +92,13 @@ func NewQPrintPreviewWidget4(printer *QPrinter, parent *qt6.QWidget) *QPrintPrev
 }
 
 // NewQPrintPreviewWidget5 constructs a new QPrintPreviewWidget object.
-func NewQPrintPreviewWidget5(printer *QPrinter, parent *qt6.QWidget, flags qt6.WindowType) *QPrintPreviewWidget {
+func NewQPrintPreviewWidget5(printer *QPrinter, parent *qt6.QWidget, flags WindowType) *QPrintPreviewWidget {
 
 	return newQPrintPreviewWidget(C.QPrintPreviewWidget_new5(printer.cPointer(), (*C.QWidget)(parent.UnsafePointer()), (C.int)(flags)))
 }
 
 // NewQPrintPreviewWidget6 constructs a new QPrintPreviewWidget object.
-func NewQPrintPreviewWidget6(parent *qt6.QWidget, flags qt6.WindowType) *QPrintPreviewWidget {
+func NewQPrintPreviewWidget6(parent *qt6.QWidget, flags WindowType) *QPrintPreviewWidget {
 
 	return newQPrintPreviewWidget(C.QPrintPreviewWidget_new6((*C.QWidget)(parent.UnsafePointer()), (C.int)(flags)))
 }
@@ -130,12 +130,12 @@ func (this *QPrintPreviewWidget) Orientation() qt6.QPageLayout__Orientation {
 	return (qt6.QPageLayout__Orientation)(C.QPrintPreviewWidget_orientation(this.h))
 }
 
-func (this *QPrintPreviewWidget) ViewMode() QPrintPreviewWidget__ViewMode {
-	return (QPrintPreviewWidget__ViewMode)(C.QPrintPreviewWidget_viewMode(this.h))
+func (this *QPrintPreviewWidget) ViewMode() ViewMode {
+	int /* TODO  */
 }
 
-func (this *QPrintPreviewWidget) ZoomMode() QPrintPreviewWidget__ZoomMode {
-	return (QPrintPreviewWidget__ZoomMode)(C.QPrintPreviewWidget_zoomMode(this.h))
+func (this *QPrintPreviewWidget) ZoomMode() ZoomMode {
+	int /* TODO  */
 }
 
 func (this *QPrintPreviewWidget) CurrentPage() int {
@@ -170,12 +170,12 @@ func (this *QPrintPreviewWidget) SetOrientation(orientation qt6.QPageLayout__Ori
 	C.QPrintPreviewWidget_setOrientation(this.h, (C.int)(orientation))
 }
 
-func (this *QPrintPreviewWidget) SetViewMode(viewMode QPrintPreviewWidget__ViewMode) {
-	C.QPrintPreviewWidget_setViewMode(this.h, (C.int)(viewMode))
+func (this *QPrintPreviewWidget) SetViewMode(viewMode ViewMode) {
+	C.QPrintPreviewWidget_setViewMode(this.h, viewMode)
 }
 
-func (this *QPrintPreviewWidget) SetZoomMode(zoomMode QPrintPreviewWidget__ZoomMode) {
-	C.QPrintPreviewWidget_setZoomMode(this.h, (C.int)(zoomMode))
+func (this *QPrintPreviewWidget) SetZoomMode(zoomMode ZoomMode) {
+	C.QPrintPreviewWidget_setZoomMode(this.h, zoomMode)
 }
 
 func (this *QPrintPreviewWidget) SetCurrentPage(pageNumber int) {
@@ -394,6 +394,20 @@ func (this *QPrintPreviewWidget) IsSignalConnected(signal *qt6.QMetaMethod) bool
 
 	var _dynamic_cast_ok C.bool = false
 	_method_ret := (bool)(C.QPrintPreviewWidget_protectedbase_isSignalConnected(&_dynamic_cast_ok, unsafe.Pointer(this.h), (*C.QMetaMethod)(signal.UnsafePointer())))
+
+	if !_dynamic_cast_ok {
+		panic("miqt: can only call protected methods for directly constructed types")
+	}
+
+	return _method_ret
+
+}
+
+// GetDecodedMetricF can only be called from a QPrintPreviewWidget that was directly constructed.
+func (this *QPrintPreviewWidget) GetDecodedMetricF(metricA PaintDeviceMetric, metricB PaintDeviceMetric) float64 {
+
+	var _dynamic_cast_ok C.bool = false
+	_method_ret := (float64)(C.QPrintPreviewWidget_protectedbase_getDecodedMetricF(&_dynamic_cast_ok, unsafe.Pointer(this.h), metricA, metricB))
 
 	if !_dynamic_cast_ok {
 		panic("miqt: can only call protected methods for directly constructed types")
@@ -1305,12 +1319,12 @@ func miqt_exec_callback_QPrintPreviewWidget_changeEvent(self *C.QPrintPreviewWid
 
 }
 
-func (this *QPrintPreviewWidget) callVirtualBase_Metric(param1 qt6.QPaintDevice__PaintDeviceMetric) int {
+func (this *QPrintPreviewWidget) callVirtualBase_Metric(param1 PaintDeviceMetric) int {
 
-	return (int)(C.QPrintPreviewWidget_virtualbase_metric(unsafe.Pointer(this.h), (C.int)(param1)))
+	return (int)(C.QPrintPreviewWidget_virtualbase_metric(unsafe.Pointer(this.h), param1))
 
 }
-func (this *QPrintPreviewWidget) OnMetric(slot func(super func(param1 qt6.QPaintDevice__PaintDeviceMetric) int, param1 qt6.QPaintDevice__PaintDeviceMetric) int) {
+func (this *QPrintPreviewWidget) OnMetric(slot func(super func(param1 PaintDeviceMetric) int, param1 PaintDeviceMetric) int) {
 	ok := C.QPrintPreviewWidget_override_virtual_metric(unsafe.Pointer(this.h), C.intptr_t(cgo.NewHandle(slot)))
 	if !ok {
 		panic("miqt: can only override virtual methods for directly constructed types")
@@ -1318,14 +1332,14 @@ func (this *QPrintPreviewWidget) OnMetric(slot func(super func(param1 qt6.QPaint
 }
 
 //export miqt_exec_callback_QPrintPreviewWidget_metric
-func miqt_exec_callback_QPrintPreviewWidget_metric(self *C.QPrintPreviewWidget, cb C.intptr_t, param1 C.int) C.int {
-	gofunc, ok := cgo.Handle(cb).Value().(func(super func(param1 qt6.QPaintDevice__PaintDeviceMetric) int, param1 qt6.QPaintDevice__PaintDeviceMetric) int)
+func miqt_exec_callback_QPrintPreviewWidget_metric(self *C.QPrintPreviewWidget, cb C.intptr_t, param1 C.PaintDeviceMetric) C.int {
+	gofunc, ok := cgo.Handle(cb).Value().(func(super func(param1 PaintDeviceMetric) int, param1 PaintDeviceMetric) int)
 	if !ok {
 		panic("miqt: callback of non-callback type (heap corruption?)")
 	}
 
 	// Convert all CABI parameters to Go parameters
-	slotval1 := (qt6.QPaintDevice__PaintDeviceMetric)(param1)
+	int /* TODO  */
 
 	virtualReturn := gofunc((&QPrintPreviewWidget{h: self}).callVirtualBase_Metric, slotval1)
 

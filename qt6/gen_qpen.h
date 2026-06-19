@@ -36,6 +36,8 @@ QPen* QPen_new7(QBrush* brush, double width, int s, int c);
 QPen* QPen_new8(QBrush* brush, double width, int s, int c, int j);
 void QPen_operatorAssign(QPen* self, QPen* pen);
 void QPen_swap(QPen* self, QPen* other);
+void QPen_operatorAssignWithColor(QPen* self, QColor* color);
+void QPen_operatorAssignWithStyle(QPen* self, int style);
 int QPen_style(const QPen* self);
 void QPen_setStyle(QPen* self, int style);
 struct miqt_array /* of double */  QPen_dashPattern(const QPen* self);
@@ -63,6 +65,7 @@ bool QPen_operatorEqual(const QPen* self, QPen* p);
 bool QPen_operatorNotEqual(const QPen* self, QPen* p);
 QVariant* QPen_ToQVariant(const QPen* self);
 bool QPen_isDetached(QPen* self);
+DataPtr* QPen_dataPtr(QPen* self);
 
 void QPen_delete(QPen* self);
 

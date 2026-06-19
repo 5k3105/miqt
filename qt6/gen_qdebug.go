@@ -113,6 +113,14 @@ func (this *QDebug) SetAutoInsertSpaces(b bool) {
 	C.QDebug_setAutoInsertSpaces(this.h, (C.bool)(b))
 }
 
+func (this *QDebug) QuoteStrings() bool {
+	return (bool)(C.QDebug_quoteStrings(this.h))
+}
+
+func (this *QDebug) SetQuoteStrings(b bool) {
+	C.QDebug_setQuoteStrings(this.h, (C.bool)(b))
+}
+
 func (this *QDebug) Quote() *QDebug {
 	return newQDebug(C.QDebug_quote(this.h))
 }

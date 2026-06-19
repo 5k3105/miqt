@@ -21,11 +21,14 @@ typedef QAccessible::State QAccessible__State;
 class QAccessible__State;
 #endif
 class QAccessibleActionInterface;
+class QAccessibleAnnouncementEvent;
+class QAccessibleAttributesInterface;
 class QAccessibleEditableTextInterface;
 class QAccessibleEvent;
 class QAccessibleHyperlinkInterface;
 class QAccessibleImageInterface;
 class QAccessibleInterface;
+class QAccessibleSelectionInterface;
 class QAccessibleStateChangeEvent;
 class QAccessibleTableCellInterface;
 class QAccessibleTableInterface;
@@ -48,11 +51,14 @@ class QWindow;
 #else
 typedef struct QAccessible__State QAccessible__State;
 typedef struct QAccessibleActionInterface QAccessibleActionInterface;
+typedef struct QAccessibleAnnouncementEvent QAccessibleAnnouncementEvent;
+typedef struct QAccessibleAttributesInterface QAccessibleAttributesInterface;
 typedef struct QAccessibleEditableTextInterface QAccessibleEditableTextInterface;
 typedef struct QAccessibleEvent QAccessibleEvent;
 typedef struct QAccessibleHyperlinkInterface QAccessibleHyperlinkInterface;
 typedef struct QAccessibleImageInterface QAccessibleImageInterface;
 typedef struct QAccessibleInterface QAccessibleInterface;
+typedef struct QAccessibleSelectionInterface QAccessibleSelectionInterface;
 typedef struct QAccessibleStateChangeEvent QAccessibleStateChangeEvent;
 typedef struct QAccessibleTableCellInterface QAccessibleTableCellInterface;
 typedef struct QAccessibleTableInterface QAccessibleTableInterface;
@@ -77,7 +83,6 @@ typedef struct QWindow QWindow;
 bool QAccessibleInterface_isValid(const QAccessibleInterface* self);
 QObject* QAccessibleInterface_object(const QAccessibleInterface* self);
 QWindow* QAccessibleInterface_window(const QAccessibleInterface* self);
-struct miqt_array /* of struct miqt_map  tuple of QAccessibleInterface* and int   */  QAccessibleInterface_relations(const QAccessibleInterface* self, int match);
 QAccessibleInterface* QAccessibleInterface_focusChild(const QAccessibleInterface* self);
 QAccessibleInterface* QAccessibleInterface_childAt(const QAccessibleInterface* self, int x, int y);
 QAccessibleInterface* QAccessibleInterface_parent(const QAccessibleInterface* self);
@@ -99,6 +104,8 @@ QAccessibleImageInterface* QAccessibleInterface_imageInterface(QAccessibleInterf
 QAccessibleTableInterface* QAccessibleInterface_tableInterface(QAccessibleInterface* self);
 QAccessibleTableCellInterface* QAccessibleInterface_tableCellInterface(QAccessibleInterface* self);
 QAccessibleHyperlinkInterface* QAccessibleInterface_hyperlinkInterface(QAccessibleInterface* self);
+QAccessibleSelectionInterface* QAccessibleInterface_selectionInterface(QAccessibleInterface* self);
+QAccessibleAttributesInterface* QAccessibleInterface_attributesInterface(QAccessibleInterface* self);
 void QAccessibleInterface_virtualHook(QAccessibleInterface* self, int id, void* data);
 void* QAccessibleInterface_interfaceCast(QAccessibleInterface* self, int param1);
 void QAccessibleInterface_operatorAssign(QAccessibleInterface* self, QAccessibleInterface* param1);
@@ -216,6 +223,24 @@ void QAccessibleHyperlinkInterface_operatorAssign(QAccessibleHyperlinkInterface*
 
 void QAccessibleHyperlinkInterface_delete(QAccessibleHyperlinkInterface* self);
 
+int QAccessibleSelectionInterface_selectedItemCount(const QAccessibleSelectionInterface* self);
+struct miqt_array /* of QAccessibleInterface* */  QAccessibleSelectionInterface_selectedItems(const QAccessibleSelectionInterface* self);
+QAccessibleInterface* QAccessibleSelectionInterface_selectedItem(const QAccessibleSelectionInterface* self, int selectionIndex);
+bool QAccessibleSelectionInterface_isSelected(const QAccessibleSelectionInterface* self, QAccessibleInterface* childItem);
+bool QAccessibleSelectionInterface_select(QAccessibleSelectionInterface* self, QAccessibleInterface* childItem);
+bool QAccessibleSelectionInterface_unselect(QAccessibleSelectionInterface* self, QAccessibleInterface* childItem);
+bool QAccessibleSelectionInterface_selectAll(QAccessibleSelectionInterface* self);
+bool QAccessibleSelectionInterface_clear(QAccessibleSelectionInterface* self);
+void QAccessibleSelectionInterface_operatorAssign(QAccessibleSelectionInterface* self, QAccessibleSelectionInterface* param1);
+
+void QAccessibleSelectionInterface_delete(QAccessibleSelectionInterface* self);
+
+struct miqt_array /* of int */  QAccessibleAttributesInterface_attributeKeys(const QAccessibleAttributesInterface* self);
+QVariant* QAccessibleAttributesInterface_attributeValue(const QAccessibleAttributesInterface* self, int key);
+void QAccessibleAttributesInterface_operatorAssign(QAccessibleAttributesInterface* self, QAccessibleAttributesInterface* param1);
+
+void QAccessibleAttributesInterface_delete(QAccessibleAttributesInterface* self);
+
 QAccessibleEvent* QAccessibleEvent_new(QObject* obj, int typ);
 QAccessibleEvent* QAccessibleEvent_new2(QAccessibleInterface* iface, int typ);
 int QAccessibleEvent_type(const QAccessibleEvent* self);
@@ -308,11 +333,11 @@ QAccessibleInterface* QAccessibleValueChangeEvent_virtualbase_accessibleInterfac
 
 void QAccessibleValueChangeEvent_delete(QAccessibleValueChangeEvent* self);
 
-QAccessibleTableModelChangeEvent* QAccessibleTableModelChangeEvent_new(QObject* obj, int changeType);
-QAccessibleTableModelChangeEvent* QAccessibleTableModelChangeEvent_new2(QAccessibleInterface* iface, int changeType);
+QAccessibleTableModelChangeEvent* QAccessibleTableModelChangeEvent_new(QObject* obj, ModelChangeType changeType);
+QAccessibleTableModelChangeEvent* QAccessibleTableModelChangeEvent_new2(QAccessibleInterface* iface, ModelChangeType changeType);
 void QAccessibleTableModelChangeEvent_virtbase(QAccessibleTableModelChangeEvent* src, QAccessibleEvent** outptr_QAccessibleEvent);
-void QAccessibleTableModelChangeEvent_setModelChangeType(QAccessibleTableModelChangeEvent* self, int changeType);
-int QAccessibleTableModelChangeEvent_modelChangeType(const QAccessibleTableModelChangeEvent* self);
+void QAccessibleTableModelChangeEvent_setModelChangeType(QAccessibleTableModelChangeEvent* self, ModelChangeType changeType);
+ModelChangeType QAccessibleTableModelChangeEvent_modelChangeType(const QAccessibleTableModelChangeEvent* self);
 void QAccessibleTableModelChangeEvent_setFirstRow(QAccessibleTableModelChangeEvent* self, int row);
 void QAccessibleTableModelChangeEvent_setFirstColumn(QAccessibleTableModelChangeEvent* self, int col);
 void QAccessibleTableModelChangeEvent_setLastRow(QAccessibleTableModelChangeEvent* self, int row);
@@ -326,6 +351,18 @@ bool QAccessibleTableModelChangeEvent_override_virtual_accessibleInterface(void*
 QAccessibleInterface* QAccessibleTableModelChangeEvent_virtualbase_accessibleInterface(const void* self);
 
 void QAccessibleTableModelChangeEvent_delete(QAccessibleTableModelChangeEvent* self);
+
+QAccessibleAnnouncementEvent* QAccessibleAnnouncementEvent_new(QObject* object, struct miqt_string message);
+QAccessibleAnnouncementEvent* QAccessibleAnnouncementEvent_new2(QAccessibleInterface* iface, struct miqt_string message);
+void QAccessibleAnnouncementEvent_virtbase(QAccessibleAnnouncementEvent* src, QAccessibleEvent** outptr_QAccessibleEvent);
+struct miqt_string QAccessibleAnnouncementEvent_message(const QAccessibleAnnouncementEvent* self);
+int QAccessibleAnnouncementEvent_politeness(const QAccessibleAnnouncementEvent* self);
+void QAccessibleAnnouncementEvent_setPoliteness(QAccessibleAnnouncementEvent* self, int politeness);
+
+bool QAccessibleAnnouncementEvent_override_virtual_accessibleInterface(void* self, intptr_t slot);
+QAccessibleInterface* QAccessibleAnnouncementEvent_virtualbase_accessibleInterface(const void* self);
+
+void QAccessibleAnnouncementEvent_delete(QAccessibleAnnouncementEvent* self);
 
 #ifdef __cplusplus
 } /* extern C */

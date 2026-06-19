@@ -160,6 +160,10 @@ func (this *QAuthenticator) Detach() {
 	C.QAuthenticator_detach(this.h)
 }
 
+func (this *QAuthenticator) Clear() {
+	C.QAuthenticator_clear(this.h)
+}
+
 // Delete this object from C++ memory.
 func (this *QAuthenticator) Delete() {
 	C.QAuthenticator_delete(this.h)

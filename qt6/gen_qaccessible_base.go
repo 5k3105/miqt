@@ -84,6 +84,9 @@ const (
 	QAccessible__HelpChanged                     QAccessible__Event = 32928
 	QAccessible__DefaultActionChanged            QAccessible__Event = 32944
 	QAccessible__AcceleratorChanged              QAccessible__Event = 32960
+	QAccessible__Announcement                    QAccessible__Event = 32976
+	QAccessible__IdentifierChanged               QAccessible__Event = 32992
+	QAccessible__RoleChanged                     QAccessible__Event = 32993
 	QAccessible__InvalidEvent                    QAccessible__Event = 32961
 )
 
@@ -160,12 +163,14 @@ const (
 	QAccessible__WebDocument          QAccessible__Role = 132
 	QAccessible__Section              QAccessible__Role = 133
 	QAccessible__Notification         QAccessible__Role = 134
+	QAccessible__Switch               QAccessible__Role = 135
 	QAccessible__ColorChooser         QAccessible__Role = 1028
 	QAccessible__Footer               QAccessible__Role = 1038
 	QAccessible__Form                 QAccessible__Role = 1040
 	QAccessible__Heading              QAccessible__Role = 1044
 	QAccessible__Note                 QAccessible__Role = 1051
 	QAccessible__ComplementaryContent QAccessible__Role = 1068
+	QAccessible__BlockQuote           QAccessible__Role = 1073
 	QAccessible__UserRole             QAccessible__Role = 65535
 )
 
@@ -178,16 +183,21 @@ const (
 	QAccessible__Help             QAccessible__Text = 3
 	QAccessible__Accelerator      QAccessible__Text = 4
 	QAccessible__DebugDescription QAccessible__Text = 5
+	QAccessible__Identifier       QAccessible__Text = 6
 	QAccessible__UserText         QAccessible__Text = 65535
 )
 
 type QAccessible__RelationFlag int
 
 const (
-	QAccessible__Label      QAccessible__RelationFlag = 1
-	QAccessible__Labelled   QAccessible__RelationFlag = 2
-	QAccessible__Controller QAccessible__RelationFlag = 4
-	QAccessible__Controlled QAccessible__RelationFlag = 8
+	QAccessible__Label          QAccessible__RelationFlag = 1
+	QAccessible__Labelled       QAccessible__RelationFlag = 2
+	QAccessible__Controller     QAccessible__RelationFlag = 4
+	QAccessible__Controlled     QAccessible__RelationFlag = 8
+	QAccessible__DescriptionFor QAccessible__RelationFlag = 16
+	QAccessible__Described      QAccessible__RelationFlag = 32
+	QAccessible__FlowsFrom      QAccessible__RelationFlag = 64
+	QAccessible__FlowsTo        QAccessible__RelationFlag = 128
 )
 
 type QAccessible__InterfaceType int
@@ -201,6 +211,8 @@ const (
 	QAccessible__TableInterface        QAccessible__InterfaceType = 5
 	QAccessible__TableCellInterface    QAccessible__InterfaceType = 6
 	QAccessible__HyperlinkInterface    QAccessible__InterfaceType = 7
+	QAccessible__SelectionInterface    QAccessible__InterfaceType = 8
+	QAccessible__AttributesInterface   QAccessible__InterfaceType = 9
 )
 
 type QAccessible__TextBoundaryType int
@@ -212,6 +224,22 @@ const (
 	QAccessible__ParagraphBoundary QAccessible__TextBoundaryType = 3
 	QAccessible__LineBoundary      QAccessible__TextBoundaryType = 4
 	QAccessible__NoBoundary        QAccessible__TextBoundaryType = 5
+)
+
+type QAccessible__Attribute int
+
+const (
+	QAccessible__Custom      QAccessible__Attribute = 0
+	QAccessible__Level       QAccessible__Attribute = 1
+	QAccessible__Locale      QAccessible__Attribute = 2
+	QAccessible__Orientation QAccessible__Attribute = 3
+)
+
+type QAccessible__AnnouncementPoliteness int
+
+const (
+	QAccessible__Polite    QAccessible__AnnouncementPoliteness = 0
+	QAccessible__Assertive QAccessible__AnnouncementPoliteness = 1
 )
 
 type QAccessible struct {
@@ -246,32 +274,48 @@ func UnsafeNewQAccessible(h unsafe.Pointer) *QAccessible {
 	return newQAccessible((*C.QAccessible)(h))
 }
 
-func QAccessible_InstallActivationObserver(param1 *QAccessible__ActivationObserver) {
-	C.QAccessible_installActivationObserver(param1.cPointer())
+func QAccessible_InstallFactory(param1 InterfaceFactory) {
+	C.QAccessible_installFactory(param1)
 }
 
-func QAccessible_RemoveActivationObserver(param1 *QAccessible__ActivationObserver) {
-	C.QAccessible_removeActivationObserver(param1.cPointer())
+func QAccessible_RemoveFactory(param1 InterfaceFactory) {
+	C.QAccessible_removeFactory(param1)
+}
+
+func QAccessible_InstallUpdateHandler(param1 UpdateHandler) UpdateHandler {
+	int /* TODO  */
+}
+
+func QAccessible_InstallRootObjectHandler(param1 RootObjectHandler) RootObjectHandler {
+	int /* TODO  */
+}
+
+func QAccessible_InstallActivationObserver(param1 *ActivationObserver) {
+	C.QAccessible_installActivationObserver(param1)
+}
+
+func QAccessible_RemoveActivationObserver(param1 *ActivationObserver) {
+	C.QAccessible_removeActivationObserver(param1)
 }
 
 func QAccessible_QueryAccessibleInterface(param1 *QObject) *QAccessibleInterface {
 	return newQAccessibleInterface(C.QAccessible_queryAccessibleInterface(param1.cPointer()))
 }
 
-func QAccessible_UniqueId(iface *QAccessibleInterface) uint {
-	return (uint)(C.QAccessible_uniqueId(iface.cPointer()))
+func QAccessible_UniqueId(iface *QAccessibleInterface) Id {
+	int /* TODO  */
 }
 
-func QAccessible_AccessibleInterface(uniqueId uint) *QAccessibleInterface {
-	return newQAccessibleInterface(C.QAccessible_accessibleInterface((C.uint)(uniqueId)))
+func QAccessible_AccessibleInterface(uniqueId Id) *QAccessibleInterface {
+	return newQAccessibleInterface(C.QAccessible_accessibleInterface(uniqueId))
 }
 
-func QAccessible_RegisterAccessibleInterface(iface *QAccessibleInterface) uint {
-	return (uint)(C.QAccessible_registerAccessibleInterface(iface.cPointer()))
+func QAccessible_RegisterAccessibleInterface(iface *QAccessibleInterface) Id {
+	int /* TODO  */
 }
 
-func QAccessible_DeleteAccessibleInterface(uniqueId uint) {
-	C.QAccessible_deleteAccessibleInterface((C.uint)(uniqueId))
+func QAccessible_DeleteAccessibleInterface(uniqueId Id) {
+	C.QAccessible_deleteAccessibleInterface(uniqueId)
 }
 
 func QAccessible_UpdateAccessibility(event *QAccessibleEvent) {
@@ -292,23 +336,6 @@ func QAccessible_SetRootObject(object *QObject) {
 
 func QAccessible_Cleanup() {
 	C.QAccessible_cleanup()
-}
-
-func QAccessible_QAccessibleTextBoundaryHelper(cursor *QTextCursor, boundaryType QAccessible__TextBoundaryType) struct {
-	First  int
-	Second int
-} {
-	var _mm C.struct_miqt_map = C.QAccessible_qAccessibleTextBoundaryHelper(cursor.cPointer(), (C.int)(boundaryType))
-	_First_CArray := (*[0xffff]C.int)(unsafe.Pointer(_mm.keys))
-	_Second_CArray := (*[0xffff]C.int)(unsafe.Pointer(_mm.values))
-	_entry_First := (int)(_First_CArray[0])
-
-	_entry_Second := (int)(_Second_CArray[0])
-
-	return struct {
-		First  int
-		Second int
-	}{First: _entry_First, Second: _entry_Second}
 }
 
 // Delete this object from C++ memory.
@@ -659,6 +686,14 @@ func (this *QAccessible__State) SetSearchEdit(searchEdit uint64) {
 	C.QAccessible__State_setSearchEdit(this.h, (C.ulonglong)(searchEdit))
 }
 
+func (this *QAccessible__State) Reserved() uint64 {
+	return (uint64)(C.QAccessible__State_reserved(this.h))
+}
+
+func (this *QAccessible__State) SetQtReserved(qt_reserved uint64) {
+	C.QAccessible__State_setQtReserved(this.h, (C.ulonglong)(qt_reserved))
+}
+
 // Delete this object from C++ memory.
 func (this *QAccessible__State) Delete() {
 	C.QAccessible__State_delete(this.h)
@@ -709,8 +744,8 @@ func (this *QAccessible__ActivationObserver) AccessibilityActiveChanged(active b
 	C.QAccessible__ActivationObserver_accessibilityActiveChanged(this.h, (C.bool)(active))
 }
 
-func (this *QAccessible__ActivationObserver) OperatorAssign(param1 *QAccessible__ActivationObserver) {
-	C.QAccessible__ActivationObserver_operatorAssign(this.h, param1.cPointer())
+func (this *QAccessible__ActivationObserver) OperatorAssign(param1 *ActivationObserver) {
+	C.QAccessible__ActivationObserver_operatorAssign(this.h, param1)
 }
 
 // Delete this object from C++ memory.

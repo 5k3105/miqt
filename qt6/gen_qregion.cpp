@@ -34,12 +34,12 @@ QRegion* QRegion_new5(QBitmap* bitmap) {
 	return new (std::nothrow) QRegion(*bitmap);
 }
 
-QRegion* QRegion_new6(int x, int y, int w, int h, int t) {
-	return new (std::nothrow) QRegion(static_cast<int>(x), static_cast<int>(y), static_cast<int>(w), static_cast<int>(h), static_cast<QRegion::RegionType>(t));
+QRegion* QRegion_new6(int x, int y, int w, int h, RegionType t) {
+	return new (std::nothrow) QRegion(static_cast<int>(x), static_cast<int>(y), static_cast<int>(w), static_cast<int>(h), t);
 }
 
-QRegion* QRegion_new7(QRect* r, int t) {
-	return new (std::nothrow) QRegion(*r, static_cast<QRegion::RegionType>(t));
+QRegion* QRegion_new7(QRect* r, RegionType t) {
+	return new (std::nothrow) QRegion(*r, t);
 }
 
 void QRegion_operatorAssign(QRegion* self, QRegion* param1) {
@@ -58,24 +58,36 @@ bool QRegion_isNull(const QRegion* self) {
 	return self->isNull();
 }
 
-QRect* QRegion_begin(const QRegion* self) {
-	QRegion::const_iterator _ret = self->begin();
-	return const_cast<QRect*>(static_cast<const QRect*>(_ret));
+const_iterator QRegion_begin(const QRegion* self) {
+	return self->begin();
 }
 
-QRect* QRegion_cbegin(const QRegion* self) {
-	QRegion::const_iterator _ret = self->cbegin();
-	return const_cast<QRect*>(static_cast<const QRect*>(_ret));
+const_iterator QRegion_cbegin(const QRegion* self) {
+	return self->cbegin();
 }
 
-QRect* QRegion_end(const QRegion* self) {
-	QRegion::const_iterator _ret = self->end();
-	return const_cast<QRect*>(static_cast<const QRect*>(_ret));
+const_iterator QRegion_end(const QRegion* self) {
+	return self->end();
 }
 
-QRect* QRegion_cend(const QRegion* self) {
-	QRegion::const_iterator _ret = self->cend();
-	return const_cast<QRect*>(static_cast<const QRect*>(_ret));
+const_iterator QRegion_cend(const QRegion* self) {
+	return self->cend();
+}
+
+const_reverse_iterator QRegion_rbegin(const QRegion* self) {
+	return self->rbegin();
+}
+
+const_reverse_iterator QRegion_crbegin(const QRegion* self) {
+	return self->crbegin();
+}
+
+const_reverse_iterator QRegion_rend(const QRegion* self) {
+	return self->rend();
+}
+
+const_reverse_iterator QRegion_crend(const QRegion* self) {
+	return self->crend();
 }
 
 bool QRegion_contains(const QRegion* self, QPoint* p) {
@@ -140,6 +152,14 @@ QRect* QRegion_boundingRect(const QRegion* self) {
 
 void QRegion_setRects(QRegion* self, QRect* rect, int num) {
 	self->setRects(rect, static_cast<int>(num));
+}
+
+void QRegion_setRectsWithQSpanLesserconstQRectGreater(QRegion* self, QSpan<const QRect> r) {
+	self->setRects(r);
+}
+
+QSpan<const QRect> QRegion_rects(const QRegion* self) {
+	return self->rects();
 }
 
 int QRegion_rectCount(const QRegion* self) {

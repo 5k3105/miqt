@@ -239,9 +239,8 @@ void QAudioDecoder_setAudioFormat(QAudioDecoder* self, QAudioFormat* format) {
 	self->setAudioFormat(*format);
 }
 
-int QAudioDecoder_error(const QAudioDecoder* self) {
-	QAudioDecoder::Error _ret = self->error();
-	return static_cast<int>(_ret);
+Error QAudioDecoder_error(const QAudioDecoder* self) {
+	return self->error();
 }
 
 struct miqt_string QAudioDecoder_errorString(const QAudioDecoder* self) {

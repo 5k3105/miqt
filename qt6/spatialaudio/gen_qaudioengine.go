@@ -103,12 +103,12 @@ func QAudioEngine_Tr(s string) string {
 	return _ret
 }
 
-func (this *QAudioEngine) SetOutputMode(mode QAudioEngine__OutputMode) {
-	C.QAudioEngine_setOutputMode(this.h, (C.int)(mode))
+func (this *QAudioEngine) SetOutputMode(mode OutputMode) {
+	C.QAudioEngine_setOutputMode(this.h, mode)
 }
 
-func (this *QAudioEngine) OutputMode() QAudioEngine__OutputMode {
-	return (QAudioEngine__OutputMode)(C.QAudioEngine_outputMode(this.h))
+func (this *QAudioEngine) OutputMode() OutputMode {
+	int /* TODO  */
 }
 
 func (this *QAudioEngine) SampleRate() int {

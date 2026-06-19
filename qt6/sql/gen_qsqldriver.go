@@ -72,6 +72,7 @@ const (
 	QSqlDriver__SQLite      QSqlDriver__DbmsType = 6
 	QSqlDriver__Interbase   QSqlDriver__DbmsType = 7
 	QSqlDriver__DB2         QSqlDriver__DbmsType = 8
+	QSqlDriver__MimerSQL    QSqlDriver__DbmsType = 9
 )
 
 type QSqlDriver struct {
@@ -201,23 +202,23 @@ func (this *QSqlDriver) FormatValue(field *QSqlField, trimStrings bool) string {
 	return _ret
 }
 
-func (this *QSqlDriver) EscapeIdentifier(identifier string, typeVal QSqlDriver__IdentifierType) string {
+func (this *QSqlDriver) EscapeIdentifier(identifier string, typeVal IdentifierType) string {
 	identifier_ms := C.struct_miqt_string{}
 	identifier_ms.data = C.CString(identifier)
 	identifier_ms.len = C.size_t(len(identifier))
 	defer C.free(unsafe.Pointer(identifier_ms.data))
-	var _ms C.struct_miqt_string = C.QSqlDriver_escapeIdentifier(this.h, identifier_ms, (C.int)(typeVal))
+	var _ms C.struct_miqt_string = C.QSqlDriver_escapeIdentifier(this.h, identifier_ms, typeVal)
 	_ret := C.GoStringN(_ms.data, C.int(int64(_ms.len)))
 	C.free(unsafe.Pointer(_ms.data))
 	return _ret
 }
 
-func (this *QSqlDriver) SqlStatement(typeVal QSqlDriver__StatementType, tableName string, rec *QSqlRecord, preparedStatement bool) string {
+func (this *QSqlDriver) SqlStatement(typeVal StatementType, tableName string, rec *QSqlRecord, preparedStatement bool) string {
 	tableName_ms := C.struct_miqt_string{}
 	tableName_ms.data = C.CString(tableName)
 	tableName_ms.len = C.size_t(len(tableName))
 	defer C.free(unsafe.Pointer(tableName_ms.data))
-	var _ms C.struct_miqt_string = C.QSqlDriver_sqlStatement(this.h, (C.int)(typeVal), tableName_ms, rec.cPointer(), (C.bool)(preparedStatement))
+	var _ms C.struct_miqt_string = C.QSqlDriver_sqlStatement(this.h, typeVal, tableName_ms, rec.cPointer(), (C.bool)(preparedStatement))
 	_ret := C.GoStringN(_ms.data, C.int(int64(_ms.len)))
 	C.free(unsafe.Pointer(_ms.data))
 	return _ret
@@ -235,8 +236,8 @@ func (this *QSqlDriver) Handle() *qt6.QVariant {
 	return _goptr
 }
 
-func (this *QSqlDriver) HasFeature(f QSqlDriver__DriverFeature) bool {
-	return (bool)(C.QSqlDriver_hasFeature(this.h, (C.int)(f)))
+func (this *QSqlDriver) HasFeature(f DriverFeature) bool {
+	return (bool)(C.QSqlDriver_hasFeature(this.h, f))
 }
 
 func (this *QSqlDriver) Close() {
@@ -300,20 +301,20 @@ func (this *QSqlDriver) SubscribedToNotifications() []string {
 	return _ret
 }
 
-func (this *QSqlDriver) IsIdentifierEscaped(identifier string, typeVal QSqlDriver__IdentifierType) bool {
+func (this *QSqlDriver) IsIdentifierEscaped(identifier string, typeVal IdentifierType) bool {
 	identifier_ms := C.struct_miqt_string{}
 	identifier_ms.data = C.CString(identifier)
 	identifier_ms.len = C.size_t(len(identifier))
 	defer C.free(unsafe.Pointer(identifier_ms.data))
-	return (bool)(C.QSqlDriver_isIdentifierEscaped(this.h, identifier_ms, (C.int)(typeVal)))
+	return (bool)(C.QSqlDriver_isIdentifierEscaped(this.h, identifier_ms, typeVal))
 }
 
-func (this *QSqlDriver) StripDelimiters(identifier string, typeVal QSqlDriver__IdentifierType) string {
+func (this *QSqlDriver) StripDelimiters(identifier string, typeVal IdentifierType) string {
 	identifier_ms := C.struct_miqt_string{}
 	identifier_ms.data = C.CString(identifier)
 	identifier_ms.len = C.size_t(len(identifier))
 	defer C.free(unsafe.Pointer(identifier_ms.data))
-	var _ms C.struct_miqt_string = C.QSqlDriver_stripDelimiters(this.h, identifier_ms, (C.int)(typeVal))
+	var _ms C.struct_miqt_string = C.QSqlDriver_stripDelimiters(this.h, identifier_ms, typeVal)
 	_ret := C.GoStringN(_ms.data, C.int(int64(_ms.len)))
 	C.free(unsafe.Pointer(_ms.data))
 	return _ret
@@ -327,12 +328,19 @@ func (this *QSqlDriver) NumericalPrecisionPolicy() QSql__NumericalPrecisionPolic
 	return (QSql__NumericalPrecisionPolicy)(C.QSqlDriver_numericalPrecisionPolicy(this.h))
 }
 
-func (this *QSqlDriver) DbmsType() QSqlDriver__DbmsType {
-	return (QSqlDriver__DbmsType)(C.QSqlDriver_dbmsType(this.h))
+func (this *QSqlDriver) DbmsType() DbmsType {
+	int /* TODO  */
 }
 
-func (this *QSqlDriver) MaximumIdentifierLength(typeVal QSqlDriver__IdentifierType) int {
-	return (int)(C.QSqlDriver_maximumIdentifierLength(this.h, (C.int)(typeVal)))
+func (this *QSqlDriver) MaximumIdentifierLength(typeVal IdentifierType) int {
+	return (int)(C.QSqlDriver_maximumIdentifierLength(this.h, typeVal))
+}
+
+func (this *QSqlDriver) ConnectionName() string {
+	var _ms C.struct_miqt_string = C.QSqlDriver_connectionName(this.h)
+	_ret := C.GoStringN(_ms.data, C.int(int64(_ms.len)))
+	C.free(unsafe.Pointer(_ms.data))
+	return _ret
 }
 
 func (this *QSqlDriver) CancelQuery() bool {
@@ -703,18 +711,18 @@ func miqt_exec_callback_QSqlDriver_formatValue(self *C.QSqlDriver, cb C.intptr_t
 
 }
 
-func (this *QSqlDriver) callVirtualBase_EscapeIdentifier(identifier string, typeVal QSqlDriver__IdentifierType) string {
+func (this *QSqlDriver) callVirtualBase_EscapeIdentifier(identifier string, typeVal IdentifierType) string {
 	identifier_ms := C.struct_miqt_string{}
 	identifier_ms.data = C.CString(identifier)
 	identifier_ms.len = C.size_t(len(identifier))
 	defer C.free(unsafe.Pointer(identifier_ms.data))
 
-	var _ms C.struct_miqt_string = C.QSqlDriver_virtualbase_escapeIdentifier(unsafe.Pointer(this.h), identifier_ms, (C.int)(typeVal))
+	var _ms C.struct_miqt_string = C.QSqlDriver_virtualbase_escapeIdentifier(unsafe.Pointer(this.h), identifier_ms, typeVal)
 	_ret := C.GoStringN(_ms.data, C.int(int64(_ms.len)))
 	C.free(unsafe.Pointer(_ms.data))
 	return _ret
 }
-func (this *QSqlDriver) OnEscapeIdentifier(slot func(super func(identifier string, typeVal QSqlDriver__IdentifierType) string, identifier string, typeVal QSqlDriver__IdentifierType) string) {
+func (this *QSqlDriver) OnEscapeIdentifier(slot func(super func(identifier string, typeVal IdentifierType) string, identifier string, typeVal IdentifierType) string) {
 	ok := C.QSqlDriver_override_virtual_escapeIdentifier(unsafe.Pointer(this.h), C.intptr_t(cgo.NewHandle(slot)))
 	if !ok {
 		panic("miqt: can only override virtual methods for directly constructed types")
@@ -722,8 +730,8 @@ func (this *QSqlDriver) OnEscapeIdentifier(slot func(super func(identifier strin
 }
 
 //export miqt_exec_callback_QSqlDriver_escapeIdentifier
-func miqt_exec_callback_QSqlDriver_escapeIdentifier(self *C.QSqlDriver, cb C.intptr_t, identifier C.struct_miqt_string, typeVal C.int) C.struct_miqt_string {
-	gofunc, ok := cgo.Handle(cb).Value().(func(super func(identifier string, typeVal QSqlDriver__IdentifierType) string, identifier string, typeVal QSqlDriver__IdentifierType) string)
+func miqt_exec_callback_QSqlDriver_escapeIdentifier(self *C.QSqlDriver, cb C.intptr_t, identifier C.struct_miqt_string, typeVal C.IdentifierType) C.struct_miqt_string {
+	gofunc, ok := cgo.Handle(cb).Value().(func(super func(identifier string, typeVal IdentifierType) string, identifier string, typeVal IdentifierType) string)
 	if !ok {
 		panic("miqt: callback of non-callback type (heap corruption?)")
 	}
@@ -733,7 +741,7 @@ func miqt_exec_callback_QSqlDriver_escapeIdentifier(self *C.QSqlDriver, cb C.int
 	identifier_ret := C.GoStringN(identifier_ms.data, C.int(int64(identifier_ms.len)))
 	C.free(unsafe.Pointer(identifier_ms.data))
 	slotval1 := identifier_ret
-	slotval2 := (QSqlDriver__IdentifierType)(typeVal)
+	int /* TODO  */
 
 	virtualReturn := gofunc((&QSqlDriver{h: self}).callVirtualBase_EscapeIdentifier, slotval1, slotval2)
 	virtualReturn_ms := C.struct_miqt_string{}
@@ -744,18 +752,18 @@ func miqt_exec_callback_QSqlDriver_escapeIdentifier(self *C.QSqlDriver, cb C.int
 
 }
 
-func (this *QSqlDriver) callVirtualBase_SqlStatement(typeVal QSqlDriver__StatementType, tableName string, rec *QSqlRecord, preparedStatement bool) string {
+func (this *QSqlDriver) callVirtualBase_SqlStatement(typeVal StatementType, tableName string, rec *QSqlRecord, preparedStatement bool) string {
 	tableName_ms := C.struct_miqt_string{}
 	tableName_ms.data = C.CString(tableName)
 	tableName_ms.len = C.size_t(len(tableName))
 	defer C.free(unsafe.Pointer(tableName_ms.data))
 
-	var _ms C.struct_miqt_string = C.QSqlDriver_virtualbase_sqlStatement(unsafe.Pointer(this.h), (C.int)(typeVal), tableName_ms, rec.cPointer(), (C.bool)(preparedStatement))
+	var _ms C.struct_miqt_string = C.QSqlDriver_virtualbase_sqlStatement(unsafe.Pointer(this.h), typeVal, tableName_ms, rec.cPointer(), (C.bool)(preparedStatement))
 	_ret := C.GoStringN(_ms.data, C.int(int64(_ms.len)))
 	C.free(unsafe.Pointer(_ms.data))
 	return _ret
 }
-func (this *QSqlDriver) OnSqlStatement(slot func(super func(typeVal QSqlDriver__StatementType, tableName string, rec *QSqlRecord, preparedStatement bool) string, typeVal QSqlDriver__StatementType, tableName string, rec *QSqlRecord, preparedStatement bool) string) {
+func (this *QSqlDriver) OnSqlStatement(slot func(super func(typeVal StatementType, tableName string, rec *QSqlRecord, preparedStatement bool) string, typeVal StatementType, tableName string, rec *QSqlRecord, preparedStatement bool) string) {
 	ok := C.QSqlDriver_override_virtual_sqlStatement(unsafe.Pointer(this.h), C.intptr_t(cgo.NewHandle(slot)))
 	if !ok {
 		panic("miqt: can only override virtual methods for directly constructed types")
@@ -763,15 +771,14 @@ func (this *QSqlDriver) OnSqlStatement(slot func(super func(typeVal QSqlDriver__
 }
 
 //export miqt_exec_callback_QSqlDriver_sqlStatement
-func miqt_exec_callback_QSqlDriver_sqlStatement(self *C.QSqlDriver, cb C.intptr_t, typeVal C.int, tableName C.struct_miqt_string, rec *C.QSqlRecord, preparedStatement C.bool) C.struct_miqt_string {
-	gofunc, ok := cgo.Handle(cb).Value().(func(super func(typeVal QSqlDriver__StatementType, tableName string, rec *QSqlRecord, preparedStatement bool) string, typeVal QSqlDriver__StatementType, tableName string, rec *QSqlRecord, preparedStatement bool) string)
+func miqt_exec_callback_QSqlDriver_sqlStatement(self *C.QSqlDriver, cb C.intptr_t, typeVal C.StatementType, tableName C.struct_miqt_string, rec *C.QSqlRecord, preparedStatement C.bool) C.struct_miqt_string {
+	gofunc, ok := cgo.Handle(cb).Value().(func(super func(typeVal StatementType, tableName string, rec *QSqlRecord, preparedStatement bool) string, typeVal StatementType, tableName string, rec *QSqlRecord, preparedStatement bool) string)
 	if !ok {
 		panic("miqt: callback of non-callback type (heap corruption?)")
 	}
 
 	// Convert all CABI parameters to Go parameters
-	slotval1 := (QSqlDriver__StatementType)(typeVal)
-
+	int /* TODO  */
 	var tableName_ms C.struct_miqt_string = tableName
 	tableName_ret := C.GoStringN(tableName_ms.data, C.int(int64(tableName_ms.len)))
 	C.free(unsafe.Pointer(tableName_ms.data))
@@ -815,7 +822,7 @@ func miqt_exec_callback_QSqlDriver_handle(self *C.QSqlDriver, cb C.intptr_t) *C.
 	return (*C.QVariant)(virtualReturn.UnsafePointer())
 
 }
-func (this *QSqlDriver) OnHasFeature(slot func(f QSqlDriver__DriverFeature) bool) {
+func (this *QSqlDriver) OnHasFeature(slot func(f DriverFeature) bool) {
 	ok := C.QSqlDriver_override_virtual_hasFeature(unsafe.Pointer(this.h), C.intptr_t(cgo.NewHandle(slot)))
 	if !ok {
 		panic("miqt: can only override virtual methods for directly constructed types")
@@ -823,14 +830,14 @@ func (this *QSqlDriver) OnHasFeature(slot func(f QSqlDriver__DriverFeature) bool
 }
 
 //export miqt_exec_callback_QSqlDriver_hasFeature
-func miqt_exec_callback_QSqlDriver_hasFeature(self *C.QSqlDriver, cb C.intptr_t, f C.int) C.bool {
-	gofunc, ok := cgo.Handle(cb).Value().(func(f QSqlDriver__DriverFeature) bool)
+func miqt_exec_callback_QSqlDriver_hasFeature(self *C.QSqlDriver, cb C.intptr_t, f C.DriverFeature) C.bool {
+	gofunc, ok := cgo.Handle(cb).Value().(func(f DriverFeature) bool)
 	if !ok {
 		panic("miqt: callback of non-callback type (heap corruption?)")
 	}
 
 	// Convert all CABI parameters to Go parameters
-	slotval1 := (QSqlDriver__DriverFeature)(f)
+	int /* TODO  */
 
 	virtualReturn := gofunc(slotval1)
 
@@ -1029,16 +1036,16 @@ func miqt_exec_callback_QSqlDriver_subscribedToNotifications(self *C.QSqlDriver,
 
 }
 
-func (this *QSqlDriver) callVirtualBase_IsIdentifierEscaped(identifier string, typeVal QSqlDriver__IdentifierType) bool {
+func (this *QSqlDriver) callVirtualBase_IsIdentifierEscaped(identifier string, typeVal IdentifierType) bool {
 	identifier_ms := C.struct_miqt_string{}
 	identifier_ms.data = C.CString(identifier)
 	identifier_ms.len = C.size_t(len(identifier))
 	defer C.free(unsafe.Pointer(identifier_ms.data))
 
-	return (bool)(C.QSqlDriver_virtualbase_isIdentifierEscaped(unsafe.Pointer(this.h), identifier_ms, (C.int)(typeVal)))
+	return (bool)(C.QSqlDriver_virtualbase_isIdentifierEscaped(unsafe.Pointer(this.h), identifier_ms, typeVal))
 
 }
-func (this *QSqlDriver) OnIsIdentifierEscaped(slot func(super func(identifier string, typeVal QSqlDriver__IdentifierType) bool, identifier string, typeVal QSqlDriver__IdentifierType) bool) {
+func (this *QSqlDriver) OnIsIdentifierEscaped(slot func(super func(identifier string, typeVal IdentifierType) bool, identifier string, typeVal IdentifierType) bool) {
 	ok := C.QSqlDriver_override_virtual_isIdentifierEscaped(unsafe.Pointer(this.h), C.intptr_t(cgo.NewHandle(slot)))
 	if !ok {
 		panic("miqt: can only override virtual methods for directly constructed types")
@@ -1046,8 +1053,8 @@ func (this *QSqlDriver) OnIsIdentifierEscaped(slot func(super func(identifier st
 }
 
 //export miqt_exec_callback_QSqlDriver_isIdentifierEscaped
-func miqt_exec_callback_QSqlDriver_isIdentifierEscaped(self *C.QSqlDriver, cb C.intptr_t, identifier C.struct_miqt_string, typeVal C.int) C.bool {
-	gofunc, ok := cgo.Handle(cb).Value().(func(super func(identifier string, typeVal QSqlDriver__IdentifierType) bool, identifier string, typeVal QSqlDriver__IdentifierType) bool)
+func miqt_exec_callback_QSqlDriver_isIdentifierEscaped(self *C.QSqlDriver, cb C.intptr_t, identifier C.struct_miqt_string, typeVal C.IdentifierType) C.bool {
+	gofunc, ok := cgo.Handle(cb).Value().(func(super func(identifier string, typeVal IdentifierType) bool, identifier string, typeVal IdentifierType) bool)
 	if !ok {
 		panic("miqt: callback of non-callback type (heap corruption?)")
 	}
@@ -1057,7 +1064,7 @@ func miqt_exec_callback_QSqlDriver_isIdentifierEscaped(self *C.QSqlDriver, cb C.
 	identifier_ret := C.GoStringN(identifier_ms.data, C.int(int64(identifier_ms.len)))
 	C.free(unsafe.Pointer(identifier_ms.data))
 	slotval1 := identifier_ret
-	slotval2 := (QSqlDriver__IdentifierType)(typeVal)
+	int /* TODO  */
 
 	virtualReturn := gofunc((&QSqlDriver{h: self}).callVirtualBase_IsIdentifierEscaped, slotval1, slotval2)
 
@@ -1065,18 +1072,18 @@ func miqt_exec_callback_QSqlDriver_isIdentifierEscaped(self *C.QSqlDriver, cb C.
 
 }
 
-func (this *QSqlDriver) callVirtualBase_StripDelimiters(identifier string, typeVal QSqlDriver__IdentifierType) string {
+func (this *QSqlDriver) callVirtualBase_StripDelimiters(identifier string, typeVal IdentifierType) string {
 	identifier_ms := C.struct_miqt_string{}
 	identifier_ms.data = C.CString(identifier)
 	identifier_ms.len = C.size_t(len(identifier))
 	defer C.free(unsafe.Pointer(identifier_ms.data))
 
-	var _ms C.struct_miqt_string = C.QSqlDriver_virtualbase_stripDelimiters(unsafe.Pointer(this.h), identifier_ms, (C.int)(typeVal))
+	var _ms C.struct_miqt_string = C.QSqlDriver_virtualbase_stripDelimiters(unsafe.Pointer(this.h), identifier_ms, typeVal)
 	_ret := C.GoStringN(_ms.data, C.int(int64(_ms.len)))
 	C.free(unsafe.Pointer(_ms.data))
 	return _ret
 }
-func (this *QSqlDriver) OnStripDelimiters(slot func(super func(identifier string, typeVal QSqlDriver__IdentifierType) string, identifier string, typeVal QSqlDriver__IdentifierType) string) {
+func (this *QSqlDriver) OnStripDelimiters(slot func(super func(identifier string, typeVal IdentifierType) string, identifier string, typeVal IdentifierType) string) {
 	ok := C.QSqlDriver_override_virtual_stripDelimiters(unsafe.Pointer(this.h), C.intptr_t(cgo.NewHandle(slot)))
 	if !ok {
 		panic("miqt: can only override virtual methods for directly constructed types")
@@ -1084,8 +1091,8 @@ func (this *QSqlDriver) OnStripDelimiters(slot func(super func(identifier string
 }
 
 //export miqt_exec_callback_QSqlDriver_stripDelimiters
-func miqt_exec_callback_QSqlDriver_stripDelimiters(self *C.QSqlDriver, cb C.intptr_t, identifier C.struct_miqt_string, typeVal C.int) C.struct_miqt_string {
-	gofunc, ok := cgo.Handle(cb).Value().(func(super func(identifier string, typeVal QSqlDriver__IdentifierType) string, identifier string, typeVal QSqlDriver__IdentifierType) string)
+func miqt_exec_callback_QSqlDriver_stripDelimiters(self *C.QSqlDriver, cb C.intptr_t, identifier C.struct_miqt_string, typeVal C.IdentifierType) C.struct_miqt_string {
+	gofunc, ok := cgo.Handle(cb).Value().(func(super func(identifier string, typeVal IdentifierType) string, identifier string, typeVal IdentifierType) string)
 	if !ok {
 		panic("miqt: callback of non-callback type (heap corruption?)")
 	}
@@ -1095,7 +1102,7 @@ func miqt_exec_callback_QSqlDriver_stripDelimiters(self *C.QSqlDriver, cb C.intp
 	identifier_ret := C.GoStringN(identifier_ms.data, C.int(int64(identifier_ms.len)))
 	C.free(unsafe.Pointer(identifier_ms.data))
 	slotval1 := identifier_ret
-	slotval2 := (QSqlDriver__IdentifierType)(typeVal)
+	int /* TODO  */
 
 	virtualReturn := gofunc((&QSqlDriver{h: self}).callVirtualBase_StripDelimiters, slotval1, slotval2)
 	virtualReturn_ms := C.struct_miqt_string{}
@@ -1106,12 +1113,12 @@ func miqt_exec_callback_QSqlDriver_stripDelimiters(self *C.QSqlDriver, cb C.intp
 
 }
 
-func (this *QSqlDriver) callVirtualBase_MaximumIdentifierLength(typeVal QSqlDriver__IdentifierType) int {
+func (this *QSqlDriver) callVirtualBase_MaximumIdentifierLength(typeVal IdentifierType) int {
 
-	return (int)(C.QSqlDriver_virtualbase_maximumIdentifierLength(unsafe.Pointer(this.h), (C.int)(typeVal)))
+	return (int)(C.QSqlDriver_virtualbase_maximumIdentifierLength(unsafe.Pointer(this.h), typeVal))
 
 }
-func (this *QSqlDriver) OnMaximumIdentifierLength(slot func(super func(typeVal QSqlDriver__IdentifierType) int, typeVal QSqlDriver__IdentifierType) int) {
+func (this *QSqlDriver) OnMaximumIdentifierLength(slot func(super func(typeVal IdentifierType) int, typeVal IdentifierType) int) {
 	ok := C.QSqlDriver_override_virtual_maximumIdentifierLength(unsafe.Pointer(this.h), C.intptr_t(cgo.NewHandle(slot)))
 	if !ok {
 		panic("miqt: can only override virtual methods for directly constructed types")
@@ -1119,14 +1126,14 @@ func (this *QSqlDriver) OnMaximumIdentifierLength(slot func(super func(typeVal Q
 }
 
 //export miqt_exec_callback_QSqlDriver_maximumIdentifierLength
-func miqt_exec_callback_QSqlDriver_maximumIdentifierLength(self *C.QSqlDriver, cb C.intptr_t, typeVal C.int) C.int {
-	gofunc, ok := cgo.Handle(cb).Value().(func(super func(typeVal QSqlDriver__IdentifierType) int, typeVal QSqlDriver__IdentifierType) int)
+func miqt_exec_callback_QSqlDriver_maximumIdentifierLength(self *C.QSqlDriver, cb C.intptr_t, typeVal C.IdentifierType) C.int {
+	gofunc, ok := cgo.Handle(cb).Value().(func(super func(typeVal IdentifierType) int, typeVal IdentifierType) int)
 	if !ok {
 		panic("miqt: callback of non-callback type (heap corruption?)")
 	}
 
 	// Convert all CABI parameters to Go parameters
-	slotval1 := (QSqlDriver__IdentifierType)(typeVal)
+	int /* TODO  */
 
 	virtualReturn := gofunc((&QSqlDriver{h: self}).callVirtualBase_MaximumIdentifierLength, slotval1)
 

@@ -1,5 +1,6 @@
 #include <QList>
 #include <QSqlDatabase>
+#include <QSqlDatabaseDefaultConnectionName>
 #include <QSqlDriver>
 #include <QSqlDriverCreatorBase>
 #include <QSqlError>
@@ -9,6 +10,7 @@
 #include <QString>
 #include <QByteArray>
 #include <cstring>
+#include <QThread>
 #include <qsqldatabase.h>
 #include "gen_qsqldatabase.h"
 
@@ -32,12 +34,31 @@ void QSqlDriverCreatorBase_delete(QSqlDriverCreatorBase* self) {
 	delete self;
 }
 
+struct miqt_string QSqlDatabaseDefaultConnectionName_defaultConnectionName() {
+	QString _ret = QSqlDatabaseDefaultConnectionName::defaultConnectionName();
+	// Convert QString from UTF-16 in C++ RAII memory to UTF-8 in manually-managed C memory
+	QByteArray _b = _ret.toUtf8();
+	struct miqt_string _ms;
+	_ms.len = _b.length();
+	_ms.data = static_cast<char*>(malloc(_ms.len));
+	memcpy(_ms.data, _b.data(), _ms.len);
+	return _ms;
+}
+
+void QSqlDatabaseDefaultConnectionName_delete(QSqlDatabaseDefaultConnectionName* self) {
+	delete self;
+}
+
 QSqlDatabase* QSqlDatabase_new() {
 	return new (std::nothrow) QSqlDatabase();
 }
 
 QSqlDatabase* QSqlDatabase_new2(QSqlDatabase* other) {
 	return new (std::nothrow) QSqlDatabase(*other);
+}
+
+void QSqlDatabase_virtbase(QSqlDatabase* src, QSqlDatabaseDefaultConnectionName** outptr_QSqlDatabaseDefaultConnectionName) {
+	*outptr_QSqlDatabaseDefaultConnectionName = static_cast<QSqlDatabaseDefaultConnectionName*>(src);
 }
 
 void QSqlDatabase_operatorAssign(QSqlDatabase* self, QSqlDatabase* other) {
@@ -236,6 +257,14 @@ void QSqlDatabase_setNumericalPrecisionPolicy(QSqlDatabase* self, int precisionP
 int QSqlDatabase_numericalPrecisionPolicy(const QSqlDatabase* self) {
 	QSql::NumericalPrecisionPolicy _ret = self->numericalPrecisionPolicy();
 	return static_cast<int>(_ret);
+}
+
+bool QSqlDatabase_moveToThread(QSqlDatabase* self, QThread* targetThread) {
+	return self->moveToThread(targetThread);
+}
+
+QThread* QSqlDatabase_thread(const QSqlDatabase* self) {
+	return self->thread();
 }
 
 QSqlDriver* QSqlDatabase_driver(const QSqlDatabase* self) {

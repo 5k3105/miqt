@@ -22,6 +22,7 @@
 #include <QString>
 #include <QByteArray>
 #include <cstring>
+#include <QTimeZone>
 #include <QTimerEvent>
 #include <QVariant>
 #include <qfilesystemmodel.h>
@@ -1318,21 +1319,20 @@ struct miqt_array /* of struct miqt_string */  QFileSystemModel_nameFilters(cons
 	return _out;
 }
 
-void QFileSystemModel_setOption(QFileSystemModel* self, int option) {
-	self->setOption(static_cast<QFileSystemModel::Option>(option));
+void QFileSystemModel_setOption(QFileSystemModel* self, Option option) {
+	self->setOption(option);
 }
 
-bool QFileSystemModel_testOption(const QFileSystemModel* self, int option) {
-	return self->testOption(static_cast<QFileSystemModel::Option>(option));
+bool QFileSystemModel_testOption(const QFileSystemModel* self, Option option) {
+	return self->testOption(option);
 }
 
-void QFileSystemModel_setOptions(QFileSystemModel* self, int options) {
-	self->setOptions(static_cast<QFileSystemModel::Options>(options));
+void QFileSystemModel_setOptions(QFileSystemModel* self, Options options) {
+	self->setOptions(options);
 }
 
-int QFileSystemModel_options(const QFileSystemModel* self) {
-	QFileSystemModel::Options _ret = self->options();
-	return static_cast<int>(_ret);
+Options QFileSystemModel_options(const QFileSystemModel* self) {
+	return self->options();
 }
 
 struct miqt_string QFileSystemModel_filePath(const QFileSystemModel* self, QModelIndex* index) {
@@ -1368,6 +1368,10 @@ struct miqt_string QFileSystemModel_type(const QFileSystemModel* self, QModelInd
 
 QDateTime* QFileSystemModel_lastModified(const QFileSystemModel* self, QModelIndex* index) {
 	return new QDateTime(self->lastModified(*index));
+}
+
+QDateTime* QFileSystemModel_lastModified2(const QFileSystemModel* self, QModelIndex* index, QTimeZone* tz) {
+	return new QDateTime(self->lastModified(*index, *tz));
 }
 
 QModelIndex* QFileSystemModel_mkdir(QFileSystemModel* self, QModelIndex* parent, struct miqt_string name) {
@@ -1438,8 +1442,8 @@ QVariant* QFileSystemModel_myComputerWithRole(const QFileSystemModel* self, int 
 	return new QVariant(self->myComputer(static_cast<int>(role)));
 }
 
-void QFileSystemModel_setOption2(QFileSystemModel* self, int option, bool on) {
-	self->setOption(static_cast<QFileSystemModel::Option>(option), on);
+void QFileSystemModel_setOption2(QFileSystemModel* self, Option option, bool on) {
+	self->setOption(option, on);
 }
 
 bool QFileSystemModel_override_virtual_index(void* self, intptr_t slot) {

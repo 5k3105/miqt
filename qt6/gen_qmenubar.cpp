@@ -86,7 +86,7 @@ void miqt_exec_callback_QMenuBar_dropEvent(QMenuBar*, intptr_t, QDropEvent*);
 void miqt_exec_callback_QMenuBar_showEvent(QMenuBar*, intptr_t, QShowEvent*);
 void miqt_exec_callback_QMenuBar_hideEvent(QMenuBar*, intptr_t, QHideEvent*);
 bool miqt_exec_callback_QMenuBar_nativeEvent(QMenuBar*, intptr_t, struct miqt_string, void*, intptr_t*);
-int miqt_exec_callback_QMenuBar_metric(const QMenuBar*, intptr_t, int);
+int miqt_exec_callback_QMenuBar_metric(const QMenuBar*, intptr_t, PaintDeviceMetric);
 void miqt_exec_callback_QMenuBar_initPainter(const QMenuBar*, intptr_t, QPainter*);
 QPaintDevice* miqt_exec_callback_QMenuBar_redirected(const QMenuBar*, intptr_t, QPoint*);
 QPainter* miqt_exec_callback_QMenuBar_sharedPainter(const QMenuBar*, intptr_t);
@@ -738,18 +738,17 @@ public:
 	intptr_t handle__metric = 0;
 
 	// Subclass to allow providing a Go implementation
-	virtual int metric(QPaintDevice::PaintDeviceMetric param1) const override {
+	virtual int metric(PaintDeviceMetric param1) const override {
 		if (handle__metric == 0) {
 			return QMenuBar::metric(param1);
 		}
 
-		QPaintDevice::PaintDeviceMetric param1_ret = param1;
-		int sigval1 = static_cast<int>(param1_ret);
+		PaintDeviceMetric sigval1 = param1;
 		int callback_return_value = miqt_exec_callback_QMenuBar_metric(this, handle__metric, sigval1);
 		return static_cast<int>(callback_return_value);
 	}
 
-	friend int QMenuBar_virtualbase_metric(const void* self, int param1);
+	friend int QMenuBar_virtualbase_metric(const void* self, PaintDeviceMetric param1);
 
 	// cgo.Handle value for overwritten implementation
 	intptr_t handle__initPainter = 0;
@@ -931,6 +930,7 @@ public:
 	friend int QMenuBar_protectedbase_senderSignalIndex(bool* _dynamic_cast_ok, const void* self);
 	friend int QMenuBar_protectedbase_receivers(bool* _dynamic_cast_ok, const void* self, const char* signal);
 	friend bool QMenuBar_protectedbase_isSignalConnected(bool* _dynamic_cast_ok, const void* self, QMetaMethod* signal);
+	friend double QMenuBar_protectedbase_getDecodedMetricF(bool* _dynamic_cast_ok, const void* self, PaintDeviceMetric metricA, PaintDeviceMetric metricB);
 };
 
 QMenuBar* QMenuBar_new(QWidget* parent) {
@@ -1631,8 +1631,8 @@ bool QMenuBar_override_virtual_metric(void* self, intptr_t slot) {
 	return true;
 }
 
-int QMenuBar_virtualbase_metric(const void* self, int param1) {
-	return static_cast<const MiqtVirtualQMenuBar*>(self)->QMenuBar::metric(static_cast<MiqtVirtualQMenuBar::PaintDeviceMetric>(param1));
+int QMenuBar_virtualbase_metric(const void* self, PaintDeviceMetric param1) {
+	return static_cast<const MiqtVirtualQMenuBar*>(self)->QMenuBar::metric(param1);
 }
 
 bool QMenuBar_override_virtual_initPainter(void* self, intptr_t slot) {
@@ -1872,6 +1872,17 @@ bool QMenuBar_protectedbase_isSignalConnected(bool* _dynamic_cast_ok, const void
 
 	*_dynamic_cast_ok = true;
 	return self_cast->isSignalConnected(*signal);
+}
+
+double QMenuBar_protectedbase_getDecodedMetricF(bool* _dynamic_cast_ok, const void* self, PaintDeviceMetric metricA, PaintDeviceMetric metricB) {
+	MiqtVirtualQMenuBar* self_cast = dynamic_cast<MiqtVirtualQMenuBar*>( (QMenuBar*)(self) );
+	if (self_cast == nullptr) {
+		*_dynamic_cast_ok = false;
+		return 0;
+	}
+
+	*_dynamic_cast_ok = true;
+	return self_cast->getDecodedMetricF(metricA, metricB);
 }
 
 void QMenuBar_delete(QMenuBar* self) {

@@ -112,7 +112,7 @@ func QWaveDecoder_HeaderLength() int64 {
 	return (int64)(C.QWaveDecoder_headerLength())
 }
 
-func (this *QWaveDecoder) Open(mode qt6.QIODeviceBase__OpenModeFlag) bool {
+func (this *QWaveDecoder) Open(mode OpenModeFlag) bool {
 	return (bool)(C.QWaveDecoder_open(this.h, (C.int)(mode)))
 }
 
@@ -197,7 +197,7 @@ func QWaveDecoder_Tr3(s string, c string, n int) string {
 }
 
 // SetOpenMode can only be called from a QWaveDecoder that was directly constructed.
-func (this *QWaveDecoder) SetOpenMode(openMode qt6.QIODeviceBase__OpenModeFlag) {
+func (this *QWaveDecoder) SetOpenMode(openMode OpenModeFlag) {
 
 	var _dynamic_cast_ok C.bool = false
 	C.QWaveDecoder_protectedbase_setOpenMode(&_dynamic_cast_ok, unsafe.Pointer(this.h), (C.int)(openMode))
@@ -282,12 +282,12 @@ func (this *QWaveDecoder) IsSignalConnected(signal *qt6.QMetaMethod) bool {
 
 }
 
-func (this *QWaveDecoder) callVirtualBase_Open(mode qt6.QIODeviceBase__OpenModeFlag) bool {
+func (this *QWaveDecoder) callVirtualBase_Open(mode OpenModeFlag) bool {
 
 	return (bool)(C.QWaveDecoder_virtualbase_open(unsafe.Pointer(this.h), (C.int)(mode)))
 
 }
-func (this *QWaveDecoder) OnOpen(slot func(super func(mode qt6.QIODeviceBase__OpenModeFlag) bool, mode qt6.QIODeviceBase__OpenModeFlag) bool) {
+func (this *QWaveDecoder) OnOpen(slot func(super func(mode OpenModeFlag) bool, mode OpenModeFlag) bool) {
 	ok := C.QWaveDecoder_override_virtual_open(unsafe.Pointer(this.h), C.intptr_t(cgo.NewHandle(slot)))
 	if !ok {
 		panic("miqt: can only override virtual methods for directly constructed types")
@@ -296,13 +296,13 @@ func (this *QWaveDecoder) OnOpen(slot func(super func(mode qt6.QIODeviceBase__Op
 
 //export miqt_exec_callback_QWaveDecoder_open
 func miqt_exec_callback_QWaveDecoder_open(self *C.QWaveDecoder, cb C.intptr_t, mode C.int) C.bool {
-	gofunc, ok := cgo.Handle(cb).Value().(func(super func(mode qt6.QIODeviceBase__OpenModeFlag) bool, mode qt6.QIODeviceBase__OpenModeFlag) bool)
+	gofunc, ok := cgo.Handle(cb).Value().(func(super func(mode OpenModeFlag) bool, mode OpenModeFlag) bool)
 	if !ok {
 		panic("miqt: callback of non-callback type (heap corruption?)")
 	}
 
 	// Convert all CABI parameters to Go parameters
-	slotval1 := (qt6.QIODeviceBase__OpenModeFlag)(mode)
+	slotval1 := (OpenModeFlag)(mode)
 
 	virtualReturn := gofunc((&QWaveDecoder{h: self}).callVirtualBase_Open, slotval1)
 

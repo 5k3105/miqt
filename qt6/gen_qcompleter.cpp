@@ -311,13 +311,12 @@ QAbstractItemModel* QCompleter_model(const QCompleter* self) {
 	return self->model();
 }
 
-void QCompleter_setCompletionMode(QCompleter* self, int mode) {
-	self->setCompletionMode(static_cast<QCompleter::CompletionMode>(mode));
+void QCompleter_setCompletionMode(QCompleter* self, CompletionMode mode) {
+	self->setCompletionMode(mode);
 }
 
-int QCompleter_completionMode(const QCompleter* self) {
-	QCompleter::CompletionMode _ret = self->completionMode();
-	return static_cast<int>(_ret);
+CompletionMode QCompleter_completionMode(const QCompleter* self) {
+	return self->completionMode();
 }
 
 void QCompleter_setFilterMode(QCompleter* self, int filterMode) {
@@ -346,13 +345,12 @@ int QCompleter_caseSensitivity(const QCompleter* self) {
 	return static_cast<int>(_ret);
 }
 
-void QCompleter_setModelSorting(QCompleter* self, int sorting) {
-	self->setModelSorting(static_cast<QCompleter::ModelSorting>(sorting));
+void QCompleter_setModelSorting(QCompleter* self, ModelSorting sorting) {
+	self->setModelSorting(sorting);
 }
 
-int QCompleter_modelSorting(const QCompleter* self) {
-	QCompleter::ModelSorting _ret = self->modelSorting();
-	return static_cast<int>(_ret);
+ModelSorting QCompleter_modelSorting(const QCompleter* self) {
+	return self->modelSorting();
 }
 
 void QCompleter_setCompletionColumn(QCompleter* self, int column) {

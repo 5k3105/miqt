@@ -17,7 +17,7 @@ import (
 type QCoreApplication__ int
 
 const (
-	QCoreApplication__ApplicationFlags QCoreApplication__ = 394242
+	QCoreApplication__ApplicationFlags QCoreApplication__ = 396033
 )
 
 type QCoreApplication struct {
@@ -198,6 +198,10 @@ func QCoreApplication_Instance() *QCoreApplication {
 	return newQCoreApplication(C.QCoreApplication_instance())
 }
 
+func QCoreApplication_InstanceExists() bool {
+	return (bool)(C.QCoreApplication_instanceExists())
+}
+
 func QCoreApplication_Exec() int {
 	return (int)(C.QCoreApplication_exec())
 }
@@ -206,8 +210,12 @@ func QCoreApplication_ProcessEvents() {
 	C.QCoreApplication_processEvents()
 }
 
-func QCoreApplication_ProcessEvents2(flags QEventLoop__ProcessEventsFlag, maxtime int) {
+func QCoreApplication_ProcessEvents2(flags ProcessEventsFlag, maxtime int) {
 	C.QCoreApplication_processEvents2((C.int)(flags), (C.int)(maxtime))
+}
+
+func QCoreApplication_ProcessEvents3(flags ProcessEventsFlag, deadline QDeadlineTimer) {
+	C.QCoreApplication_processEvents3((C.int)(flags), deadline.cPointer())
 }
 
 func QCoreApplication_SendEvent(receiver *QObject, event *QEvent) bool {
@@ -262,6 +270,10 @@ func QCoreApplication_ApplicationFilePath() string {
 
 func QCoreApplication_ApplicationPid() int64 {
 	return (int64)(C.QCoreApplication_applicationPid())
+}
+
+func (this *QCoreApplication) CheckPermission(permission *QPermission) PermissionStatus {
+	return (PermissionStatus)(C.QCoreApplication_checkPermission(this.h, permission.cPointer()))
 }
 
 func QCoreApplication_SetLibraryPaths(libraryPaths []string) {
@@ -476,7 +488,7 @@ func QCoreApplication_SetAttribute2(attribute ApplicationAttribute, on bool) {
 	C.QCoreApplication_setAttribute2((C.int)(attribute), (C.bool)(on))
 }
 
-func QCoreApplication_ProcessEventsWithFlags(flags QEventLoop__ProcessEventsFlag) {
+func QCoreApplication_ProcessEventsWithFlags(flags ProcessEventsFlag) {
 	C.QCoreApplication_processEventsWithFlags((C.int)(flags))
 }
 
@@ -816,19 +828,6 @@ func miqt_exec_callback_QCoreApplication_disconnectNotify(self *C.QCoreApplicati
 
 	gofunc((&QCoreApplication{h: self}).callVirtualBase_DisconnectNotify, slotval1)
 
-}
-func (this *QCoreApplication) OnAboutToQuit(slot func()) {
-	C.QCoreApplication_connect_aboutToQuit(this.h, C.intptr_t(cgo.NewHandle(slot)))
-}
-
-//export miqt_exec_callback_QCoreApplication_aboutToQuit
-func miqt_exec_callback_QCoreApplication_aboutToQuit(cb C.intptr_t) {
-	gofunc, ok := cgo.Handle(cb).Value().(func())
-	if !ok {
-		panic("miqt: callback of non-callback type (heap corruption?)")
-	}
-
-	gofunc()
 }
 
 // Delete this object from C++ memory.

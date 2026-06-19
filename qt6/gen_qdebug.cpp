@@ -86,6 +86,14 @@ void QDebug_setAutoInsertSpaces(QDebug* self, bool b) {
 	self->setAutoInsertSpaces(b);
 }
 
+bool QDebug_quoteStrings(const QDebug* self) {
+	return self->quoteStrings();
+}
+
+void QDebug_setQuoteStrings(QDebug* self, bool b) {
+	self->setQuoteStrings(b);
+}
+
 QDebug* QDebug_quote(QDebug* self) {
 	QDebug& _ret = self->quote();
 	// Cast returned reference into pointer

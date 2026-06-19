@@ -224,6 +224,23 @@ func (this *QConcatenateTablesProxyModel) Span(index *QModelIndex) *QSize {
 	return _goptr
 }
 
+func (this *QConcatenateTablesProxyModel) RoleNames() map[int][]byte {
+	var _mm C.struct_miqt_map = C.QConcatenateTablesProxyModel_roleNames(this.h)
+	_ret := make(map[int][]byte, int(_mm.len))
+	_Keys := (*[0xffff]C.int)(unsafe.Pointer(_mm.keys))
+	_Values := (*[0xffff]C.struct_miqt_string)(unsafe.Pointer(_mm.values))
+	for i := 0; i < int(_mm.len); i++ {
+		_entry_Key := (int)(_Keys[i])
+
+		var _hashval_bytearray C.struct_miqt_string = _Values[i]
+		_hashval_ret := C.GoBytes(unsafe.Pointer(_hashval_bytearray.data), C.int(int64(_hashval_bytearray.len)))
+		C.free(unsafe.Pointer(_hashval_bytearray.data))
+		_entry_Value := _hashval_ret
+		_ret[_entry_Key] = _entry_Value
+	}
+	return _ret
+}
+
 func QConcatenateTablesProxyModel_Tr2(s string, c string) string {
 	s_Cstring := C.CString(s)
 	defer C.free(unsafe.Pointer(s_Cstring))
@@ -1126,6 +1143,64 @@ func miqt_exec_callback_QConcatenateTablesProxyModel_span(self *C.QConcatenateTa
 
 }
 
+func (this *QConcatenateTablesProxyModel) callVirtualBase_RoleNames() map[int][]byte {
+
+	var _mm C.struct_miqt_map = C.QConcatenateTablesProxyModel_virtualbase_roleNames(unsafe.Pointer(this.h))
+	_ret := make(map[int][]byte, int(_mm.len))
+	_Keys := (*[0xffff]C.int)(unsafe.Pointer(_mm.keys))
+	_Values := (*[0xffff]C.struct_miqt_string)(unsafe.Pointer(_mm.values))
+	for i := 0; i < int(_mm.len); i++ {
+		_entry_Key := (int)(_Keys[i])
+
+		var _hashval_bytearray C.struct_miqt_string = _Values[i]
+		_hashval_ret := C.GoBytes(unsafe.Pointer(_hashval_bytearray.data), C.int(int64(_hashval_bytearray.len)))
+		C.free(unsafe.Pointer(_hashval_bytearray.data))
+		_entry_Value := _hashval_ret
+		_ret[_entry_Key] = _entry_Value
+	}
+	return _ret
+
+}
+func (this *QConcatenateTablesProxyModel) OnRoleNames(slot func(super func() map[int][]byte) map[int][]byte) {
+	ok := C.QConcatenateTablesProxyModel_override_virtual_roleNames(unsafe.Pointer(this.h), C.intptr_t(cgo.NewHandle(slot)))
+	if !ok {
+		panic("miqt: can only override virtual methods for directly constructed types")
+	}
+}
+
+//export miqt_exec_callback_QConcatenateTablesProxyModel_roleNames
+func miqt_exec_callback_QConcatenateTablesProxyModel_roleNames(self *C.QConcatenateTablesProxyModel, cb C.intptr_t) C.struct_miqt_map {
+	gofunc, ok := cgo.Handle(cb).Value().(func(super func() map[int][]byte) map[int][]byte)
+	if !ok {
+		panic("miqt: callback of non-callback type (heap corruption?)")
+	}
+
+	virtualReturn := gofunc((&QConcatenateTablesProxyModel{h: self}).callVirtualBase_RoleNames)
+	virtualReturn_Keys_CArray := (*[0xffff]C.int)(C.malloc(C.size_t(8 * len(virtualReturn))))
+	virtualReturn_Values_CArray := (*[0xffff]C.struct_miqt_string)(C.malloc(C.size_t(int(unsafe.Sizeof(C.struct_miqt_string{})) * len(virtualReturn))))
+	virtualReturn_ctr := 0
+	for virtualReturn_k, virtualReturn_v := range virtualReturn {
+		virtualReturn_Keys_CArray[virtualReturn_ctr] = (C.int)(virtualReturn_k)
+		virtualReturn_v_alias := C.struct_miqt_string{}
+		if len(virtualReturn_v) > 0 {
+			virtualReturn_v_alias.data = (*C.char)(unsafe.Pointer(&virtualReturn_v[0]))
+		} else {
+			virtualReturn_v_alias.data = (*C.char)(unsafe.Pointer(nil))
+		}
+		virtualReturn_v_alias.len = C.size_t(len(virtualReturn_v))
+		virtualReturn_Values_CArray[virtualReturn_ctr] = virtualReturn_v_alias
+		virtualReturn_ctr++
+	}
+	virtualReturn_mm := C.struct_miqt_map{
+		len:    C.size_t(len(virtualReturn)),
+		keys:   unsafe.Pointer(virtualReturn_Keys_CArray),
+		values: unsafe.Pointer(virtualReturn_Values_CArray),
+	}
+
+	return virtualReturn_mm
+
+}
+
 func (this *QConcatenateTablesProxyModel) callVirtualBase_Sibling(row int, column int, idx *QModelIndex) *QModelIndex {
 
 	_goptr := newQModelIndex(C.QConcatenateTablesProxyModel_virtualbase_sibling(unsafe.Pointer(this.h), (C.int)(row), (C.int)(column), idx.cPointer()))
@@ -1658,64 +1733,6 @@ func miqt_exec_callback_QConcatenateTablesProxyModel_match(self *C.QConcatenateT
 	virtualReturn_ma := C.struct_miqt_array{len: C.size_t(len(virtualReturn)), data: unsafe.Pointer(virtualReturn_CArray)}
 
 	return virtualReturn_ma
-
-}
-
-func (this *QConcatenateTablesProxyModel) callVirtualBase_RoleNames() map[int][]byte {
-
-	var _mm C.struct_miqt_map = C.QConcatenateTablesProxyModel_virtualbase_roleNames(unsafe.Pointer(this.h))
-	_ret := make(map[int][]byte, int(_mm.len))
-	_Keys := (*[0xffff]C.int)(unsafe.Pointer(_mm.keys))
-	_Values := (*[0xffff]C.struct_miqt_string)(unsafe.Pointer(_mm.values))
-	for i := 0; i < int(_mm.len); i++ {
-		_entry_Key := (int)(_Keys[i])
-
-		var _hashval_bytearray C.struct_miqt_string = _Values[i]
-		_hashval_ret := C.GoBytes(unsafe.Pointer(_hashval_bytearray.data), C.int(int64(_hashval_bytearray.len)))
-		C.free(unsafe.Pointer(_hashval_bytearray.data))
-		_entry_Value := _hashval_ret
-		_ret[_entry_Key] = _entry_Value
-	}
-	return _ret
-
-}
-func (this *QConcatenateTablesProxyModel) OnRoleNames(slot func(super func() map[int][]byte) map[int][]byte) {
-	ok := C.QConcatenateTablesProxyModel_override_virtual_roleNames(unsafe.Pointer(this.h), C.intptr_t(cgo.NewHandle(slot)))
-	if !ok {
-		panic("miqt: can only override virtual methods for directly constructed types")
-	}
-}
-
-//export miqt_exec_callback_QConcatenateTablesProxyModel_roleNames
-func miqt_exec_callback_QConcatenateTablesProxyModel_roleNames(self *C.QConcatenateTablesProxyModel, cb C.intptr_t) C.struct_miqt_map {
-	gofunc, ok := cgo.Handle(cb).Value().(func(super func() map[int][]byte) map[int][]byte)
-	if !ok {
-		panic("miqt: callback of non-callback type (heap corruption?)")
-	}
-
-	virtualReturn := gofunc((&QConcatenateTablesProxyModel{h: self}).callVirtualBase_RoleNames)
-	virtualReturn_Keys_CArray := (*[0xffff]C.int)(C.malloc(C.size_t(8 * len(virtualReturn))))
-	virtualReturn_Values_CArray := (*[0xffff]C.struct_miqt_string)(C.malloc(C.size_t(int(unsafe.Sizeof(C.struct_miqt_string{})) * len(virtualReturn))))
-	virtualReturn_ctr := 0
-	for virtualReturn_k, virtualReturn_v := range virtualReturn {
-		virtualReturn_Keys_CArray[virtualReturn_ctr] = (C.int)(virtualReturn_k)
-		virtualReturn_v_alias := C.struct_miqt_string{}
-		if len(virtualReturn_v) > 0 {
-			virtualReturn_v_alias.data = (*C.char)(unsafe.Pointer(&virtualReturn_v[0]))
-		} else {
-			virtualReturn_v_alias.data = (*C.char)(unsafe.Pointer(nil))
-		}
-		virtualReturn_v_alias.len = C.size_t(len(virtualReturn_v))
-		virtualReturn_Values_CArray[virtualReturn_ctr] = virtualReturn_v_alias
-		virtualReturn_ctr++
-	}
-	virtualReturn_mm := C.struct_miqt_map{
-		len:    C.size_t(len(virtualReturn)),
-		keys:   unsafe.Pointer(virtualReturn_Keys_CArray),
-		values: unsafe.Pointer(virtualReturn_Values_CArray),
-	}
-
-	return virtualReturn_mm
 
 }
 

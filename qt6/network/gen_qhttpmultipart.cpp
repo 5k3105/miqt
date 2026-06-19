@@ -81,9 +81,9 @@ class MiqtVirtualQHttpMultiPart final : public QHttpMultiPart {
 public:
 
 	MiqtVirtualQHttpMultiPart(): QHttpMultiPart() {}
-	MiqtVirtualQHttpMultiPart(QHttpMultiPart::ContentType contentType): QHttpMultiPart(contentType) {}
+	MiqtVirtualQHttpMultiPart(ContentType contentType): QHttpMultiPart(contentType) {}
 	MiqtVirtualQHttpMultiPart(QObject* parent): QHttpMultiPart(parent) {}
-	MiqtVirtualQHttpMultiPart(QHttpMultiPart::ContentType contentType, QObject* parent): QHttpMultiPart(contentType, parent) {}
+	MiqtVirtualQHttpMultiPart(ContentType contentType, QObject* parent): QHttpMultiPart(contentType, parent) {}
 
 	virtual ~MiqtVirtualQHttpMultiPart() override = default;
 
@@ -220,16 +220,16 @@ QHttpMultiPart* QHttpMultiPart_new() {
 	return new (std::nothrow) MiqtVirtualQHttpMultiPart();
 }
 
-QHttpMultiPart* QHttpMultiPart_new2(int contentType) {
-	return new (std::nothrow) MiqtVirtualQHttpMultiPart(static_cast<QHttpMultiPart::ContentType>(contentType));
+QHttpMultiPart* QHttpMultiPart_new2(ContentType contentType) {
+	return new (std::nothrow) MiqtVirtualQHttpMultiPart(contentType);
 }
 
 QHttpMultiPart* QHttpMultiPart_new3(QObject* parent) {
 	return new (std::nothrow) MiqtVirtualQHttpMultiPart(parent);
 }
 
-QHttpMultiPart* QHttpMultiPart_new4(int contentType, QObject* parent) {
-	return new (std::nothrow) MiqtVirtualQHttpMultiPart(static_cast<QHttpMultiPart::ContentType>(contentType), parent);
+QHttpMultiPart* QHttpMultiPart_new4(ContentType contentType, QObject* parent) {
+	return new (std::nothrow) MiqtVirtualQHttpMultiPart(contentType, parent);
 }
 
 void QHttpMultiPart_virtbase(QHttpMultiPart* src, QObject** outptr_QObject) {
@@ -259,8 +259,8 @@ void QHttpMultiPart_append(QHttpMultiPart* self, QHttpPart* httpPart) {
 	self->append(*httpPart);
 }
 
-void QHttpMultiPart_setContentType(QHttpMultiPart* self, int contentType) {
-	self->setContentType(static_cast<QHttpMultiPart::ContentType>(contentType));
+void QHttpMultiPart_setContentType(QHttpMultiPart* self, ContentType contentType) {
+	self->setContentType(contentType);
 }
 
 struct miqt_string QHttpMultiPart_boundary(const QHttpMultiPart* self) {

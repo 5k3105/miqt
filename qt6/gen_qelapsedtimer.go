@@ -60,8 +60,8 @@ func NewQElapsedTimer() *QElapsedTimer {
 	return newQElapsedTimer(C.QElapsedTimer_new())
 }
 
-func QElapsedTimer_ClockType() QElapsedTimer__ClockType {
-	return (QElapsedTimer__ClockType)(C.QElapsedTimer_clockType())
+func QElapsedTimer_ClockType() ClockType {
+	int /* TODO  */
 }
 
 func QElapsedTimer_IsMonotonic() bool {
@@ -84,6 +84,10 @@ func (this *QElapsedTimer) IsValid() bool {
 	return (bool)(C.QElapsedTimer_isValid(this.h))
 }
 
+func (this *QElapsedTimer) DurationElapsed() Duration {
+	int /* TODO  */
+}
+
 func (this *QElapsedTimer) NsecsElapsed() int64 {
 	return (int64)(C.QElapsedTimer_nsecsElapsed(this.h))
 }
@@ -98,6 +102,10 @@ func (this *QElapsedTimer) HasExpired(timeout int64) bool {
 
 func (this *QElapsedTimer) MsecsSinceReference() int64 {
 	return (int64)(C.QElapsedTimer_msecsSinceReference(this.h))
+}
+
+func (this *QElapsedTimer) DurationTo(other *QElapsedTimer) Duration {
+	int /* TODO  */
 }
 
 func (this *QElapsedTimer) MsecsTo(other *QElapsedTimer) int64 {

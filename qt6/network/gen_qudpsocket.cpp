@@ -24,14 +24,14 @@ extern "C" {
 #endif
 
 void miqt_exec_callback_QUdpSocket_resume(QUdpSocket*, intptr_t);
-bool miqt_exec_callback_QUdpSocket_bind(QUdpSocket*, intptr_t, QHostAddress*, unsigned short, int);
-void miqt_exec_callback_QUdpSocket_connectToHost(QUdpSocket*, intptr_t, struct miqt_string, unsigned short, int, int);
+bool miqt_exec_callback_QUdpSocket_bind(QUdpSocket*, intptr_t, QHostAddress*, unsigned short, BindMode);
+void miqt_exec_callback_QUdpSocket_connectToHost(QUdpSocket*, intptr_t, struct miqt_string, unsigned short, OpenMode, NetworkLayerProtocol);
 void miqt_exec_callback_QUdpSocket_disconnectFromHost(QUdpSocket*, intptr_t);
 long long miqt_exec_callback_QUdpSocket_bytesAvailable(const QUdpSocket*, intptr_t);
 long long miqt_exec_callback_QUdpSocket_bytesToWrite(const QUdpSocket*, intptr_t);
 void miqt_exec_callback_QUdpSocket_setReadBufferSize(QUdpSocket*, intptr_t, long long);
 intptr_t miqt_exec_callback_QUdpSocket_socketDescriptor(const QUdpSocket*, intptr_t);
-bool miqt_exec_callback_QUdpSocket_setSocketDescriptor(QUdpSocket*, intptr_t, intptr_t, int, int);
+bool miqt_exec_callback_QUdpSocket_setSocketDescriptor(QUdpSocket*, intptr_t, intptr_t, SocketState, OpenMode);
 void miqt_exec_callback_QUdpSocket_setSocketOption(QUdpSocket*, intptr_t, int, QVariant*);
 QVariant* miqt_exec_callback_QUdpSocket_socketOption(QUdpSocket*, intptr_t, int);
 void miqt_exec_callback_QUdpSocket_close(QUdpSocket*, intptr_t);
@@ -90,7 +90,7 @@ public:
 	intptr_t handle__bind = 0;
 
 	// Subclass to allow providing a Go implementation
-	virtual bool bind(const QHostAddress& address, quint16 port, QAbstractSocket::BindMode mode) override {
+	virtual bool bind(const QHostAddress& address, quint16 port, BindMode mode) override {
 		if (handle__bind == 0) {
 			return QUdpSocket::bind(address, port, mode);
 		}
@@ -100,19 +100,18 @@ public:
 		QHostAddress* sigval1 = const_cast<QHostAddress*>(&address_ret);
 		quint16 port_ret = port;
 		unsigned short sigval2 = static_cast<unsigned short>(port_ret);
-		QAbstractSocket::BindMode mode_ret = mode;
-		int sigval3 = static_cast<int>(mode_ret);
+		BindMode sigval3 = mode;
 		bool callback_return_value = miqt_exec_callback_QUdpSocket_bind(this, handle__bind, sigval1, sigval2, sigval3);
 		return callback_return_value;
 	}
 
-	friend bool QUdpSocket_virtualbase_bind(void* self, QHostAddress* address, unsigned short port, int mode);
+	friend bool QUdpSocket_virtualbase_bind(void* self, QHostAddress* address, unsigned short port, BindMode mode);
 
 	// cgo.Handle value for overwritten implementation
 	intptr_t handle__connectToHost = 0;
 
 	// Subclass to allow providing a Go implementation
-	virtual void connectToHost(const QString& hostName, quint16 port, QIODeviceBase::OpenMode mode, QAbstractSocket::NetworkLayerProtocol protocol) override {
+	virtual void connectToHost(const QString& hostName, quint16 port, OpenMode mode, NetworkLayerProtocol protocol) override {
 		if (handle__connectToHost == 0) {
 			QUdpSocket::connectToHost(hostName, port, mode, protocol);
 			return;
@@ -128,15 +127,13 @@ public:
 		struct miqt_string sigval1 = hostName_ms;
 		quint16 port_ret = port;
 		unsigned short sigval2 = static_cast<unsigned short>(port_ret);
-		QIODeviceBase::OpenMode mode_ret = mode;
-		int sigval3 = static_cast<int>(mode_ret);
-		QAbstractSocket::NetworkLayerProtocol protocol_ret = protocol;
-		int sigval4 = static_cast<int>(protocol_ret);
+		OpenMode sigval3 = mode;
+		NetworkLayerProtocol sigval4 = protocol;
 		miqt_exec_callback_QUdpSocket_connectToHost(this, handle__connectToHost, sigval1, sigval2, sigval3, sigval4);
 
 	}
 
-	friend void QUdpSocket_virtualbase_connectToHost(void* self, struct miqt_string hostName, unsigned short port, int mode, int protocol);
+	friend void QUdpSocket_virtualbase_connectToHost(void* self, struct miqt_string hostName, unsigned short port, OpenMode mode, NetworkLayerProtocol protocol);
 
 	// cgo.Handle value for overwritten implementation
 	intptr_t handle__disconnectFromHost = 0;
@@ -221,22 +218,20 @@ public:
 	intptr_t handle__setSocketDescriptor = 0;
 
 	// Subclass to allow providing a Go implementation
-	virtual bool setSocketDescriptor(qintptr socketDescriptor, QAbstractSocket::SocketState state, QIODeviceBase::OpenMode openMode) override {
+	virtual bool setSocketDescriptor(qintptr socketDescriptor, SocketState state, OpenMode openMode) override {
 		if (handle__setSocketDescriptor == 0) {
 			return QUdpSocket::setSocketDescriptor(socketDescriptor, state, openMode);
 		}
 
 		qintptr socketDescriptor_ret = socketDescriptor;
 		intptr_t sigval1 = (intptr_t)(socketDescriptor_ret);
-		QAbstractSocket::SocketState state_ret = state;
-		int sigval2 = static_cast<int>(state_ret);
-		QIODeviceBase::OpenMode openMode_ret = openMode;
-		int sigval3 = static_cast<int>(openMode_ret);
+		SocketState sigval2 = state;
+		OpenMode sigval3 = openMode;
 		bool callback_return_value = miqt_exec_callback_QUdpSocket_setSocketDescriptor(this, handle__setSocketDescriptor, sigval1, sigval2, sigval3);
 		return callback_return_value;
 	}
 
-	friend bool QUdpSocket_virtualbase_setSocketDescriptor(void* self, intptr_t socketDescriptor, int state, int openMode);
+	friend bool QUdpSocket_virtualbase_setSocketDescriptor(void* self, intptr_t socketDescriptor, SocketState state, OpenMode openMode);
 
 	// cgo.Handle value for overwritten implementation
 	intptr_t handle__setSocketOption = 0;
@@ -674,8 +669,8 @@ public:
 	friend void QUdpSocket_virtualbase_disconnectNotify(void* self, QMetaMethod* signal);
 
 	// Wrappers to allow calling protected methods:
-	friend void QUdpSocket_protectedbase_setSocketState(bool* _dynamic_cast_ok, void* self, int state);
-	friend void QUdpSocket_protectedbase_setSocketError(bool* _dynamic_cast_ok, void* self, int socketError);
+	friend void QUdpSocket_protectedbase_setSocketState(bool* _dynamic_cast_ok, void* self, SocketState state);
+	friend void QUdpSocket_protectedbase_setSocketError(bool* _dynamic_cast_ok, void* self, SocketError socketError);
 	friend void QUdpSocket_protectedbase_setLocalPort(bool* _dynamic_cast_ok, void* self, unsigned short port);
 	friend void QUdpSocket_protectedbase_setLocalAddress(bool* _dynamic_cast_ok, void* self, QHostAddress* address);
 	friend void QUdpSocket_protectedbase_setPeerPort(bool* _dynamic_cast_ok, void* self, unsigned short port);
@@ -808,8 +803,8 @@ bool QUdpSocket_bind2(QUdpSocket* self, int addr, unsigned short port) {
 	return self->bind(static_cast<QHostAddress::SpecialAddress>(addr), static_cast<quint16>(port));
 }
 
-bool QUdpSocket_bind3(QUdpSocket* self, int addr, unsigned short port, int mode) {
-	return self->bind(static_cast<QHostAddress::SpecialAddress>(addr), static_cast<quint16>(port), static_cast<QAbstractSocket::BindMode>(mode));
+bool QUdpSocket_bind3(QUdpSocket* self, int addr, unsigned short port, BindMode mode) {
+	return self->bind(static_cast<QHostAddress::SpecialAddress>(addr), static_cast<quint16>(port), mode);
 }
 
 QNetworkDatagram* QUdpSocket_receiveDatagramWithMaxSize(QUdpSocket* self, long long maxSize) {
@@ -850,8 +845,8 @@ bool QUdpSocket_override_virtual_bind(void* self, intptr_t slot) {
 	return true;
 }
 
-bool QUdpSocket_virtualbase_bind(void* self, QHostAddress* address, unsigned short port, int mode) {
-	return static_cast<MiqtVirtualQUdpSocket*>(self)->QUdpSocket::bind(*address, static_cast<quint16>(port), static_cast<MiqtVirtualQUdpSocket::BindMode>(mode));
+bool QUdpSocket_virtualbase_bind(void* self, QHostAddress* address, unsigned short port, BindMode mode) {
+	return static_cast<MiqtVirtualQUdpSocket*>(self)->QUdpSocket::bind(*address, static_cast<quint16>(port), mode);
 }
 
 bool QUdpSocket_override_virtual_connectToHost(void* self, intptr_t slot) {
@@ -864,9 +859,9 @@ bool QUdpSocket_override_virtual_connectToHost(void* self, intptr_t slot) {
 	return true;
 }
 
-void QUdpSocket_virtualbase_connectToHost(void* self, struct miqt_string hostName, unsigned short port, int mode, int protocol) {
+void QUdpSocket_virtualbase_connectToHost(void* self, struct miqt_string hostName, unsigned short port, OpenMode mode, NetworkLayerProtocol protocol) {
 	QString hostName_QString = QString::fromUtf8(hostName.data, hostName.len);
-	static_cast<MiqtVirtualQUdpSocket*>(self)->QUdpSocket::connectToHost(hostName_QString, static_cast<quint16>(port), static_cast<MiqtVirtualQUdpSocket::OpenMode>(mode), static_cast<MiqtVirtualQUdpSocket::NetworkLayerProtocol>(protocol));
+	static_cast<MiqtVirtualQUdpSocket*>(self)->QUdpSocket::connectToHost(hostName_QString, static_cast<quint16>(port), mode, protocol);
 }
 
 bool QUdpSocket_override_virtual_disconnectFromHost(void* self, intptr_t slot) {
@@ -952,8 +947,8 @@ bool QUdpSocket_override_virtual_setSocketDescriptor(void* self, intptr_t slot) 
 	return true;
 }
 
-bool QUdpSocket_virtualbase_setSocketDescriptor(void* self, intptr_t socketDescriptor, int state, int openMode) {
-	return static_cast<MiqtVirtualQUdpSocket*>(self)->QUdpSocket::setSocketDescriptor((qintptr)(socketDescriptor), static_cast<MiqtVirtualQUdpSocket::SocketState>(state), static_cast<MiqtVirtualQUdpSocket::OpenMode>(openMode));
+bool QUdpSocket_virtualbase_setSocketDescriptor(void* self, intptr_t socketDescriptor, SocketState state, OpenMode openMode) {
+	return static_cast<MiqtVirtualQUdpSocket*>(self)->QUdpSocket::setSocketDescriptor((qintptr)(socketDescriptor), state, openMode);
 }
 
 bool QUdpSocket_override_virtual_setSocketOption(void* self, intptr_t slot) {
@@ -1326,7 +1321,7 @@ void QUdpSocket_virtualbase_disconnectNotify(void* self, QMetaMethod* signal) {
 	static_cast<MiqtVirtualQUdpSocket*>(self)->QUdpSocket::disconnectNotify(*signal);
 }
 
-void QUdpSocket_protectedbase_setSocketState(bool* _dynamic_cast_ok, void* self, int state) {
+void QUdpSocket_protectedbase_setSocketState(bool* _dynamic_cast_ok, void* self, SocketState state) {
 	MiqtVirtualQUdpSocket* self_cast = dynamic_cast<MiqtVirtualQUdpSocket*>( (QUdpSocket*)(self) );
 	if (self_cast == nullptr) {
 		*_dynamic_cast_ok = false;
@@ -1334,10 +1329,10 @@ void QUdpSocket_protectedbase_setSocketState(bool* _dynamic_cast_ok, void* self,
 	}
 
 	*_dynamic_cast_ok = true;
-	self_cast->setSocketState(static_cast<MiqtVirtualQUdpSocket::SocketState>(state));
+	self_cast->setSocketState(state);
 }
 
-void QUdpSocket_protectedbase_setSocketError(bool* _dynamic_cast_ok, void* self, int socketError) {
+void QUdpSocket_protectedbase_setSocketError(bool* _dynamic_cast_ok, void* self, SocketError socketError) {
 	MiqtVirtualQUdpSocket* self_cast = dynamic_cast<MiqtVirtualQUdpSocket*>( (QUdpSocket*)(self) );
 	if (self_cast == nullptr) {
 		*_dynamic_cast_ok = false;
@@ -1345,7 +1340,7 @@ void QUdpSocket_protectedbase_setSocketError(bool* _dynamic_cast_ok, void* self,
 	}
 
 	*_dynamic_cast_ok = true;
-	self_cast->setSocketError(static_cast<MiqtVirtualQUdpSocket::SocketError>(socketError));
+	self_cast->setSocketError(socketError);
 }
 
 void QUdpSocket_protectedbase_setLocalPort(bool* _dynamic_cast_ok, void* self, unsigned short port) {

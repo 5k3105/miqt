@@ -136,8 +136,8 @@ func (this *QLayoutItem) SetAlignment(a AlignmentFlag) {
 	C.QLayoutItem_setAlignment(this.h, (C.int)(a))
 }
 
-func (this *QLayoutItem) ControlTypes() QSizePolicy__ControlType {
-	return (QSizePolicy__ControlType)(C.QLayoutItem_controlTypes(this.h))
+func (this *QLayoutItem) ControlTypes() ControlType {
+	return (ControlType)(C.QLayoutItem_controlTypes(this.h))
 }
 
 func (this *QLayoutItem) OperatorAssign(param1 *QLayoutItem) {
@@ -457,12 +457,12 @@ func miqt_exec_callback_QLayoutItem_spacerItem(self *C.QLayoutItem, cb C.intptr_
 
 }
 
-func (this *QLayoutItem) callVirtualBase_ControlTypes() QSizePolicy__ControlType {
+func (this *QLayoutItem) callVirtualBase_ControlTypes() ControlType {
 
-	return (QSizePolicy__ControlType)(C.QLayoutItem_virtualbase_controlTypes(unsafe.Pointer(this.h)))
+	return (ControlType)(C.QLayoutItem_virtualbase_controlTypes(unsafe.Pointer(this.h)))
 
 }
-func (this *QLayoutItem) OnControlTypes(slot func(super func() QSizePolicy__ControlType) QSizePolicy__ControlType) {
+func (this *QLayoutItem) OnControlTypes(slot func(super func() ControlType) ControlType) {
 	ok := C.QLayoutItem_override_virtual_controlTypes(unsafe.Pointer(this.h), C.intptr_t(cgo.NewHandle(slot)))
 	if !ok {
 		panic("miqt: can only override virtual methods for directly constructed types")
@@ -471,7 +471,7 @@ func (this *QLayoutItem) OnControlTypes(slot func(super func() QSizePolicy__Cont
 
 //export miqt_exec_callback_QLayoutItem_controlTypes
 func miqt_exec_callback_QLayoutItem_controlTypes(self *C.QLayoutItem, cb C.intptr_t) C.int {
-	gofunc, ok := cgo.Handle(cb).Value().(func(super func() QSizePolicy__ControlType) QSizePolicy__ControlType)
+	gofunc, ok := cgo.Handle(cb).Value().(func(super func() ControlType) ControlType)
 	if !ok {
 		panic("miqt: callback of non-callback type (heap corruption?)")
 	}
@@ -981,12 +981,12 @@ func miqt_exec_callback_QSpacerItem_layout(self *C.QSpacerItem, cb C.intptr_t) *
 
 }
 
-func (this *QSpacerItem) callVirtualBase_ControlTypes() QSizePolicy__ControlType {
+func (this *QSpacerItem) callVirtualBase_ControlTypes() ControlType {
 
-	return (QSizePolicy__ControlType)(C.QSpacerItem_virtualbase_controlTypes(unsafe.Pointer(this.h)))
+	return (ControlType)(C.QSpacerItem_virtualbase_controlTypes(unsafe.Pointer(this.h)))
 
 }
-func (this *QSpacerItem) OnControlTypes(slot func(super func() QSizePolicy__ControlType) QSizePolicy__ControlType) {
+func (this *QSpacerItem) OnControlTypes(slot func(super func() ControlType) ControlType) {
 	ok := C.QSpacerItem_override_virtual_controlTypes(unsafe.Pointer(this.h), C.intptr_t(cgo.NewHandle(slot)))
 	if !ok {
 		panic("miqt: can only override virtual methods for directly constructed types")
@@ -995,7 +995,7 @@ func (this *QSpacerItem) OnControlTypes(slot func(super func() QSizePolicy__Cont
 
 //export miqt_exec_callback_QSpacerItem_controlTypes
 func miqt_exec_callback_QSpacerItem_controlTypes(self *C.QSpacerItem, cb C.intptr_t) C.int {
-	gofunc, ok := cgo.Handle(cb).Value().(func(super func() QSizePolicy__ControlType) QSizePolicy__ControlType)
+	gofunc, ok := cgo.Handle(cb).Value().(func(super func() ControlType) ControlType)
 	if !ok {
 		panic("miqt: callback of non-callback type (heap corruption?)")
 	}
@@ -1114,8 +1114,8 @@ func (this *QWidgetItem) MinimumHeightForWidth(param1 int) int {
 	return (int)(C.QWidgetItem_minimumHeightForWidth(this.h, (C.int)(param1)))
 }
 
-func (this *QWidgetItem) ControlTypes() QSizePolicy__ControlType {
-	return (QSizePolicy__ControlType)(C.QWidgetItem_controlTypes(this.h))
+func (this *QWidgetItem) ControlTypes() ControlType {
+	return (ControlType)(C.QWidgetItem_controlTypes(this.h))
 }
 
 func (this *QWidgetItem) callVirtualBase_SizeHint() *QSize {
@@ -1408,12 +1408,12 @@ func miqt_exec_callback_QWidgetItem_minimumHeightForWidth(self *C.QWidgetItem, c
 
 }
 
-func (this *QWidgetItem) callVirtualBase_ControlTypes() QSizePolicy__ControlType {
+func (this *QWidgetItem) callVirtualBase_ControlTypes() ControlType {
 
-	return (QSizePolicy__ControlType)(C.QWidgetItem_virtualbase_controlTypes(unsafe.Pointer(this.h)))
+	return (ControlType)(C.QWidgetItem_virtualbase_controlTypes(unsafe.Pointer(this.h)))
 
 }
-func (this *QWidgetItem) OnControlTypes(slot func(super func() QSizePolicy__ControlType) QSizePolicy__ControlType) {
+func (this *QWidgetItem) OnControlTypes(slot func(super func() ControlType) ControlType) {
 	ok := C.QWidgetItem_override_virtual_controlTypes(unsafe.Pointer(this.h), C.intptr_t(cgo.NewHandle(slot)))
 	if !ok {
 		panic("miqt: can only override virtual methods for directly constructed types")
@@ -1422,7 +1422,7 @@ func (this *QWidgetItem) OnControlTypes(slot func(super func() QSizePolicy__Cont
 
 //export miqt_exec_callback_QWidgetItem_controlTypes
 func miqt_exec_callback_QWidgetItem_controlTypes(self *C.QWidgetItem, cb C.intptr_t) C.int {
-	gofunc, ok := cgo.Handle(cb).Value().(func(super func() QSizePolicy__ControlType) QSizePolicy__ControlType)
+	gofunc, ok := cgo.Handle(cb).Value().(func(super func() ControlType) ControlType)
 	if !ok {
 		panic("miqt: callback of non-callback type (heap corruption?)")
 	}
@@ -1874,12 +1874,12 @@ func miqt_exec_callback_QWidgetItemV2_minimumHeightForWidth(self *C.QWidgetItemV
 
 }
 
-func (this *QWidgetItemV2) callVirtualBase_ControlTypes() QSizePolicy__ControlType {
+func (this *QWidgetItemV2) callVirtualBase_ControlTypes() ControlType {
 
-	return (QSizePolicy__ControlType)(C.QWidgetItemV2_virtualbase_controlTypes(unsafe.Pointer(this.h)))
+	return (ControlType)(C.QWidgetItemV2_virtualbase_controlTypes(unsafe.Pointer(this.h)))
 
 }
-func (this *QWidgetItemV2) OnControlTypes(slot func(super func() QSizePolicy__ControlType) QSizePolicy__ControlType) {
+func (this *QWidgetItemV2) OnControlTypes(slot func(super func() ControlType) ControlType) {
 	ok := C.QWidgetItemV2_override_virtual_controlTypes(unsafe.Pointer(this.h), C.intptr_t(cgo.NewHandle(slot)))
 	if !ok {
 		panic("miqt: can only override virtual methods for directly constructed types")
@@ -1888,7 +1888,7 @@ func (this *QWidgetItemV2) OnControlTypes(slot func(super func() QSizePolicy__Co
 
 //export miqt_exec_callback_QWidgetItemV2_controlTypes
 func miqt_exec_callback_QWidgetItemV2_controlTypes(self *C.QWidgetItemV2, cb C.intptr_t) C.int {
-	gofunc, ok := cgo.Handle(cb).Value().(func(super func() QSizePolicy__ControlType) QSizePolicy__ControlType)
+	gofunc, ok := cgo.Handle(cb).Value().(func(super func() ControlType) ControlType)
 	if !ok {
 		panic("miqt: callback of non-callback type (heap corruption?)")
 	}

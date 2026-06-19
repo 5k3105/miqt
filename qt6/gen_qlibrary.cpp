@@ -287,13 +287,12 @@ struct miqt_string QLibrary_errorString(const QLibrary* self) {
 	return _ms;
 }
 
-void QLibrary_setLoadHints(QLibrary* self, int hints) {
-	self->setLoadHints(static_cast<QLibrary::LoadHints>(hints));
+void QLibrary_setLoadHints(QLibrary* self, LoadHints hints) {
+	self->setLoadHints(hints);
 }
 
-int QLibrary_loadHints(const QLibrary* self) {
-	QLibrary::LoadHints _ret = self->loadHints();
-	return static_cast<int>(_ret);
+LoadHints QLibrary_loadHints(const QLibrary* self) {
+	return self->loadHints();
 }
 
 struct miqt_string QLibrary_tr2(const char* s, const char* c) {

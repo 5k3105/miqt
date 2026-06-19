@@ -95,9 +95,9 @@ func NewQSurfaceFormat() *QSurfaceFormat {
 }
 
 // NewQSurfaceFormat2 constructs a new QSurfaceFormat object.
-func NewQSurfaceFormat2(options QSurfaceFormat__FormatOption) *QSurfaceFormat {
+func NewQSurfaceFormat2(options FormatOptions) *QSurfaceFormat {
 
-	return newQSurfaceFormat(C.QSurfaceFormat_new2((C.int)(options)))
+	return newQSurfaceFormat(C.QSurfaceFormat_new2(options))
 }
 
 // NewQSurfaceFormat3 constructs a new QSurfaceFormat object.
@@ -166,32 +166,32 @@ func (this *QSurfaceFormat) Samples() int {
 	return (int)(C.QSurfaceFormat_samples(this.h))
 }
 
-func (this *QSurfaceFormat) SetSwapBehavior(behavior QSurfaceFormat__SwapBehavior) {
-	C.QSurfaceFormat_setSwapBehavior(this.h, (C.int)(behavior))
+func (this *QSurfaceFormat) SetSwapBehavior(behavior SwapBehavior) {
+	C.QSurfaceFormat_setSwapBehavior(this.h, behavior)
 }
 
-func (this *QSurfaceFormat) SwapBehavior() QSurfaceFormat__SwapBehavior {
-	return (QSurfaceFormat__SwapBehavior)(C.QSurfaceFormat_swapBehavior(this.h))
+func (this *QSurfaceFormat) SwapBehavior() SwapBehavior {
+	int /* TODO  */
 }
 
 func (this *QSurfaceFormat) HasAlpha() bool {
 	return (bool)(C.QSurfaceFormat_hasAlpha(this.h))
 }
 
-func (this *QSurfaceFormat) SetProfile(profile QSurfaceFormat__OpenGLContextProfile) {
-	C.QSurfaceFormat_setProfile(this.h, (C.int)(profile))
+func (this *QSurfaceFormat) SetProfile(profile OpenGLContextProfile) {
+	C.QSurfaceFormat_setProfile(this.h, profile)
 }
 
-func (this *QSurfaceFormat) Profile() QSurfaceFormat__OpenGLContextProfile {
-	return (QSurfaceFormat__OpenGLContextProfile)(C.QSurfaceFormat_profile(this.h))
+func (this *QSurfaceFormat) Profile() OpenGLContextProfile {
+	int /* TODO  */
 }
 
-func (this *QSurfaceFormat) SetRenderableType(typeVal QSurfaceFormat__RenderableType) {
-	C.QSurfaceFormat_setRenderableType(this.h, (C.int)(typeVal))
+func (this *QSurfaceFormat) SetRenderableType(typeVal RenderableType) {
+	C.QSurfaceFormat_setRenderableType(this.h, typeVal)
 }
 
-func (this *QSurfaceFormat) RenderableType() QSurfaceFormat__RenderableType {
-	return (QSurfaceFormat__RenderableType)(C.QSurfaceFormat_renderableType(this.h))
+func (this *QSurfaceFormat) RenderableType() RenderableType {
+	int /* TODO  */
 }
 
 func (this *QSurfaceFormat) SetMajorVersion(majorVersion int) {
@@ -210,23 +210,6 @@ func (this *QSurfaceFormat) MinorVersion() int {
 	return (int)(C.QSurfaceFormat_minorVersion(this.h))
 }
 
-func (this *QSurfaceFormat) Version() struct {
-	First  int
-	Second int
-} {
-	var _mm C.struct_miqt_map = C.QSurfaceFormat_version(this.h)
-	_First_CArray := (*[0xffff]C.int)(unsafe.Pointer(_mm.keys))
-	_Second_CArray := (*[0xffff]C.int)(unsafe.Pointer(_mm.values))
-	_entry_First := (int)(_First_CArray[0])
-
-	_entry_Second := (int)(_Second_CArray[0])
-
-	return struct {
-		First  int
-		Second int
-	}{First: _entry_First, Second: _entry_Second}
-}
-
 func (this *QSurfaceFormat) SetVersion(major int, minor int) {
 	C.QSurfaceFormat_setVersion(this.h, (C.int)(major), (C.int)(minor))
 }
@@ -239,20 +222,20 @@ func (this *QSurfaceFormat) SetStereo(enable bool) {
 	C.QSurfaceFormat_setStereo(this.h, (C.bool)(enable))
 }
 
-func (this *QSurfaceFormat) SetOptions(options QSurfaceFormat__FormatOption) {
+func (this *QSurfaceFormat) SetOptions(options FormatOption) {
 	C.QSurfaceFormat_setOptions(this.h, (C.int)(options))
 }
 
-func (this *QSurfaceFormat) SetOption(option QSurfaceFormat__FormatOption) {
-	C.QSurfaceFormat_setOption(this.h, (C.int)(option))
+func (this *QSurfaceFormat) SetOption(option FormatOption) {
+	C.QSurfaceFormat_setOption(this.h, option)
 }
 
-func (this *QSurfaceFormat) TestOption(option QSurfaceFormat__FormatOption) bool {
-	return (bool)(C.QSurfaceFormat_testOption(this.h, (C.int)(option)))
+func (this *QSurfaceFormat) TestOption(option FormatOption) bool {
+	return (bool)(C.QSurfaceFormat_testOption(this.h, option))
 }
 
-func (this *QSurfaceFormat) Options() QSurfaceFormat__FormatOption {
-	return (QSurfaceFormat__FormatOption)(C.QSurfaceFormat_options(this.h))
+func (this *QSurfaceFormat) Options() FormatOption {
+	return (FormatOption)(C.QSurfaceFormat_options(this.h))
 }
 
 func (this *QSurfaceFormat) SwapInterval() int {
@@ -271,8 +254,8 @@ func (this *QSurfaceFormat) SetColorSpace(colorSpace *QColorSpace) {
 	C.QSurfaceFormat_setColorSpace(this.h, colorSpace.cPointer())
 }
 
-func (this *QSurfaceFormat) SetColorSpaceWithColorSpace(colorSpace QSurfaceFormat__ColorSpace) {
-	C.QSurfaceFormat_setColorSpaceWithColorSpace(this.h, (C.int)(colorSpace))
+func (this *QSurfaceFormat) SetColorSpaceWithColorSpace(colorSpace ColorSpace) {
+	C.QSurfaceFormat_setColorSpaceWithColorSpace(this.h, colorSpace)
 }
 
 func QSurfaceFormat_SetDefaultFormat(format *QSurfaceFormat) {
@@ -285,8 +268,8 @@ func QSurfaceFormat_DefaultFormat() *QSurfaceFormat {
 	return _goptr
 }
 
-func (this *QSurfaceFormat) SetOption2(option QSurfaceFormat__FormatOption, on bool) {
-	C.QSurfaceFormat_setOption2(this.h, (C.int)(option), (C.bool)(on))
+func (this *QSurfaceFormat) SetOption2(option FormatOption, on bool) {
+	C.QSurfaceFormat_setOption2(this.h, option, (C.bool)(on))
 }
 
 // Delete this object from C++ memory.

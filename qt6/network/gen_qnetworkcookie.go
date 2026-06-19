@@ -139,12 +139,12 @@ func (this *QNetworkCookie) SetHttpOnly(enable bool) {
 	C.QNetworkCookie_setHttpOnly(this.h, (C.bool)(enable))
 }
 
-func (this *QNetworkCookie) SameSitePolicy() QNetworkCookie__SameSite {
-	return (QNetworkCookie__SameSite)(C.QNetworkCookie_sameSitePolicy(this.h))
+func (this *QNetworkCookie) SameSitePolicy() SameSite {
+	int /* TODO  */
 }
 
-func (this *QNetworkCookie) SetSameSitePolicy(sameSite QNetworkCookie__SameSite) {
-	C.QNetworkCookie_setSameSitePolicy(this.h, (C.int)(sameSite))
+func (this *QNetworkCookie) SetSameSitePolicy(sameSite SameSite) {
+	C.QNetworkCookie_setSameSitePolicy(this.h, sameSite)
 }
 
 func (this *QNetworkCookie) IsSessionCookie() bool {
@@ -242,15 +242,8 @@ func (this *QNetworkCookie) Normalize(url *qt6.QUrl) {
 	C.QNetworkCookie_normalize(this.h, (*C.QUrl)(url.UnsafePointer()))
 }
 
-func QNetworkCookie_ParseCookies(cookieString []byte) []QNetworkCookie {
-	cookieString_alias := C.struct_miqt_string{}
-	if len(cookieString) > 0 {
-		cookieString_alias.data = (*C.char)(unsafe.Pointer(&cookieString[0]))
-	} else {
-		cookieString_alias.data = (*C.char)(unsafe.Pointer(nil))
-	}
-	cookieString_alias.len = C.size_t(len(cookieString))
-	var _ma C.struct_miqt_array = C.QNetworkCookie_parseCookies(cookieString_alias)
+func QNetworkCookie_ParseCookies(cookieString qt6.QByteArrayView) []QNetworkCookie {
+	var _ma C.struct_miqt_array = C.QNetworkCookie_parseCookies((*C.QByteArrayView)(cookieString.UnsafePointer()))
 	_ret := make([]QNetworkCookie, int(_ma.len))
 	_outCast := (*[0xffff]*C.QNetworkCookie)(unsafe.Pointer(_ma.data)) // hey ya
 	for i := 0; i < int(_ma.len); i++ {
@@ -261,8 +254,8 @@ func QNetworkCookie_ParseCookies(cookieString []byte) []QNetworkCookie {
 	return _ret
 }
 
-func (this *QNetworkCookie) ToRawFormWithForm(form QNetworkCookie__RawForm) []byte {
-	var _bytearray C.struct_miqt_string = C.QNetworkCookie_toRawFormWithForm(this.h, (C.int)(form))
+func (this *QNetworkCookie) ToRawFormWithForm(form RawForm) []byte {
+	var _bytearray C.struct_miqt_string = C.QNetworkCookie_toRawFormWithForm(this.h, form)
 	_ret := C.GoBytes(unsafe.Pointer(_bytearray.data), C.int(int64(_bytearray.len)))
 	C.free(unsafe.Pointer(_bytearray.data))
 	return _ret

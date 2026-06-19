@@ -62,6 +62,7 @@ void QAbstractItemDelegate_setEditorData(const QAbstractItemDelegate* self, QWid
 void QAbstractItemDelegate_setModelData(const QAbstractItemDelegate* self, QWidget* editor, QAbstractItemModel* model, QModelIndex* index);
 void QAbstractItemDelegate_updateEditorGeometry(const QAbstractItemDelegate* self, QWidget* editor, QStyleOptionViewItem* option, QModelIndex* index);
 bool QAbstractItemDelegate_editorEvent(QAbstractItemDelegate* self, QEvent* event, QAbstractItemModel* model, QStyleOptionViewItem* option, QModelIndex* index);
+bool QAbstractItemDelegate_handleEditorEvent(QAbstractItemDelegate* self, QObject* object, QEvent* event);
 bool QAbstractItemDelegate_helpEvent(QAbstractItemDelegate* self, QHelpEvent* event, QAbstractItemView* view, QStyleOptionViewItem* option, QModelIndex* index);
 struct miqt_array /* of int */  QAbstractItemDelegate_paintingRoles(const QAbstractItemDelegate* self);
 void QAbstractItemDelegate_commitData(QAbstractItemDelegate* self, QWidget* editor);

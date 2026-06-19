@@ -30,6 +30,7 @@ const (
 	QSsl__Dsa    QSsl__KeyAlgorithm = 2
 	QSsl__Ec     QSsl__KeyAlgorithm = 3
 	QSsl__Dh     QSsl__KeyAlgorithm = 4
+	QSsl__MlDsa  QSsl__KeyAlgorithm = 5
 )
 
 type QSsl__AlternativeNameEntryType int

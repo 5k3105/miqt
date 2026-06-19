@@ -241,9 +241,12 @@ void QSortFilterProxyModel_virtualbase_connectNotify(void* self, QMetaMethod* si
 bool QSortFilterProxyModel_override_virtual_disconnectNotify(void* self, intptr_t slot);
 void QSortFilterProxyModel_virtualbase_disconnectNotify(void* self, QMetaMethod* signal);
 
+void QSortFilterProxyModel_protectedbase_beginFilterChange(bool* _dynamic_cast_ok, void* self);
+void QSortFilterProxyModel_protectedbase_endFilterChange(bool* _dynamic_cast_ok, void* self);
 void QSortFilterProxyModel_protectedbase_invalidateFilter(bool* _dynamic_cast_ok, void* self);
 void QSortFilterProxyModel_protectedbase_invalidateRowsFilter(bool* _dynamic_cast_ok, void* self);
 void QSortFilterProxyModel_protectedbase_invalidateColumnsFilter(bool* _dynamic_cast_ok, void* self);
+void QSortFilterProxyModel_protectedbase_endFilterChangeWithDirections(bool* _dynamic_cast_ok, void* self, Directions directions);
 QModelIndex* QSortFilterProxyModel_protectedbase_createSourceIndex(bool* _dynamic_cast_ok, const void* self, int row, int col, void* internalPtr);
 QModelIndex* QSortFilterProxyModel_protectedbase_createIndex(bool* _dynamic_cast_ok, const void* self, int row, int column);
 void QSortFilterProxyModel_protectedbase_encodeData(bool* _dynamic_cast_ok, const void* self, struct miqt_array /* of QModelIndex* */  indexes, QDataStream* stream);

@@ -99,10 +99,10 @@ struct miqt_string QFontDialog_tr(const char* s);
 void QFontDialog_setCurrentFont(QFontDialog* self, QFont* font);
 QFont* QFontDialog_currentFont(const QFontDialog* self);
 QFont* QFontDialog_selectedFont(const QFontDialog* self);
-void QFontDialog_setOption(QFontDialog* self, int option);
-bool QFontDialog_testOption(const QFontDialog* self, int option);
-void QFontDialog_setOptions(QFontDialog* self, int options);
-int QFontDialog_options(const QFontDialog* self);
+void QFontDialog_setOption(QFontDialog* self, FontDialogOption option);
+bool QFontDialog_testOption(const QFontDialog* self, FontDialogOption option);
+void QFontDialog_setOptions(QFontDialog* self, FontDialogOptions options);
+FontDialogOptions QFontDialog_options(const QFontDialog* self);
 void QFontDialog_setVisible(QFontDialog* self, bool visible);
 QFont* QFontDialog_getFont(bool* ok);
 QFont* QFontDialog_getFont2(bool* ok, QFont* initial);
@@ -115,11 +115,11 @@ void QFontDialog_done(QFontDialog* self, int result);
 bool QFontDialog_eventFilter(QFontDialog* self, QObject* object, QEvent* event);
 struct miqt_string QFontDialog_tr2(const char* s, const char* c);
 struct miqt_string QFontDialog_tr3(const char* s, const char* c, int n);
-void QFontDialog_setOption2(QFontDialog* self, int option, bool on);
+void QFontDialog_setOption2(QFontDialog* self, FontDialogOption option, bool on);
 QFont* QFontDialog_getFont3(bool* ok, QWidget* parent);
 QFont* QFontDialog_getFont4(bool* ok, QFont* initial, QWidget* parent);
 QFont* QFontDialog_getFont5(bool* ok, QFont* initial, QWidget* parent, struct miqt_string title);
-QFont* QFontDialog_getFont6(bool* ok, QFont* initial, QWidget* parent, struct miqt_string title, int options);
+QFont* QFontDialog_getFont6(bool* ok, QFont* initial, QWidget* parent, struct miqt_string title, FontDialogOptions options);
 
 bool QFontDialog_override_virtual_setVisible(void* self, intptr_t slot);
 void QFontDialog_virtualbase_setVisible(void* self, bool visible);
@@ -202,7 +202,7 @@ void QFontDialog_virtualbase_hideEvent(void* self, QHideEvent* event);
 bool QFontDialog_override_virtual_nativeEvent(void* self, intptr_t slot);
 bool QFontDialog_virtualbase_nativeEvent(void* self, struct miqt_string eventType, void* message, intptr_t* result);
 bool QFontDialog_override_virtual_metric(void* self, intptr_t slot);
-int QFontDialog_virtualbase_metric(const void* self, int param1);
+int QFontDialog_virtualbase_metric(const void* self, PaintDeviceMetric param1);
 bool QFontDialog_override_virtual_initPainter(void* self, intptr_t slot);
 void QFontDialog_virtualbase_initPainter(const void* self, QPainter* painter);
 bool QFontDialog_override_virtual_redirected(void* self, intptr_t slot);
@@ -236,6 +236,7 @@ QObject* QFontDialog_protectedbase_sender(bool* _dynamic_cast_ok, const void* se
 int QFontDialog_protectedbase_senderSignalIndex(bool* _dynamic_cast_ok, const void* self);
 int QFontDialog_protectedbase_receivers(bool* _dynamic_cast_ok, const void* self, const char* signal);
 bool QFontDialog_protectedbase_isSignalConnected(bool* _dynamic_cast_ok, const void* self, QMetaMethod* signal);
+double QFontDialog_protectedbase_getDecodedMetricF(bool* _dynamic_cast_ok, const void* self, PaintDeviceMetric metricA, PaintDeviceMetric metricB);
 
 void QFontDialog_delete(QFontDialog* self);
 

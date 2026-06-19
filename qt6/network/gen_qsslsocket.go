@@ -123,16 +123,16 @@ func (this *QSslSocket) ConnectToHostEncrypted2(hostName string, port uint16, ss
 	C.QSslSocket_connectToHostEncrypted2(this.h, hostName_ms, (C.ushort)(port), sslPeerName_ms)
 }
 
-func (this *QSslSocket) SetSocketDescriptor(socketDescriptor uintptr, state QAbstractSocket__SocketState, openMode qt6.QIODeviceBase__OpenModeFlag) bool {
-	return (bool)(C.QSslSocket_setSocketDescriptor(this.h, (C.intptr_t)(socketDescriptor), (C.int)(state), (C.int)(openMode)))
+func (this *QSslSocket) SetSocketDescriptor(socketDescriptor uintptr, state SocketState, openMode OpenMode) bool {
+	return (bool)(C.QSslSocket_setSocketDescriptor(this.h, (C.intptr_t)(socketDescriptor), state, openMode))
 }
 
-func (this *QSslSocket) ConnectToHost(hostName string, port uint16, openMode qt6.QIODeviceBase__OpenModeFlag, protocol QAbstractSocket__NetworkLayerProtocol) {
+func (this *QSslSocket) ConnectToHost(hostName string, port uint16, openMode OpenMode, protocol NetworkLayerProtocol) {
 	hostName_ms := C.struct_miqt_string{}
 	hostName_ms.data = C.CString(hostName)
 	hostName_ms.len = C.size_t(len(hostName))
 	defer C.free(unsafe.Pointer(hostName_ms.data))
-	C.QSslSocket_connectToHost(this.h, hostName_ms, (C.ushort)(port), (C.int)(openMode), (C.int)(protocol))
+	C.QSslSocket_connectToHost(this.h, hostName_ms, (C.ushort)(port), openMode, protocol)
 }
 
 func (this *QSslSocket) DisconnectFromHost() {
@@ -149,8 +149,8 @@ func (this *QSslSocket) SocketOption(option QAbstractSocket__SocketOption) *qt6.
 	return _goptr
 }
 
-func (this *QSslSocket) Mode() QSslSocket__SslMode {
-	return (QSslSocket__SslMode)(C.QSslSocket_mode(this.h))
+func (this *QSslSocket) Mode() SslMode {
+	int /* TODO  */
 }
 
 func (this *QSslSocket) IsEncrypted() bool {
@@ -742,23 +742,23 @@ func QSslSocket_Tr3(s string, c string, n int) string {
 	return _ret
 }
 
-func (this *QSslSocket) ConnectToHostEncrypted3(hostName string, port uint16, mode qt6.QIODeviceBase__OpenModeFlag) {
+func (this *QSslSocket) ConnectToHostEncrypted3(hostName string, port uint16, mode OpenMode) {
 	hostName_ms := C.struct_miqt_string{}
 	hostName_ms.data = C.CString(hostName)
 	hostName_ms.len = C.size_t(len(hostName))
 	defer C.free(unsafe.Pointer(hostName_ms.data))
-	C.QSslSocket_connectToHostEncrypted3(this.h, hostName_ms, (C.ushort)(port), (C.int)(mode))
+	C.QSslSocket_connectToHostEncrypted3(this.h, hostName_ms, (C.ushort)(port), mode)
 }
 
-func (this *QSslSocket) ConnectToHostEncrypted4(hostName string, port uint16, mode qt6.QIODeviceBase__OpenModeFlag, protocol QAbstractSocket__NetworkLayerProtocol) {
+func (this *QSslSocket) ConnectToHostEncrypted4(hostName string, port uint16, mode OpenMode, protocol NetworkLayerProtocol) {
 	hostName_ms := C.struct_miqt_string{}
 	hostName_ms.data = C.CString(hostName)
 	hostName_ms.len = C.size_t(len(hostName))
 	defer C.free(unsafe.Pointer(hostName_ms.data))
-	C.QSslSocket_connectToHostEncrypted4(this.h, hostName_ms, (C.ushort)(port), (C.int)(mode), (C.int)(protocol))
+	C.QSslSocket_connectToHostEncrypted4(this.h, hostName_ms, (C.ushort)(port), mode, protocol)
 }
 
-func (this *QSslSocket) ConnectToHostEncrypted5(hostName string, port uint16, sslPeerName string, mode qt6.QIODeviceBase__OpenModeFlag) {
+func (this *QSslSocket) ConnectToHostEncrypted5(hostName string, port uint16, sslPeerName string, mode OpenMode) {
 	hostName_ms := C.struct_miqt_string{}
 	hostName_ms.data = C.CString(hostName)
 	hostName_ms.len = C.size_t(len(hostName))
@@ -767,10 +767,10 @@ func (this *QSslSocket) ConnectToHostEncrypted5(hostName string, port uint16, ss
 	sslPeerName_ms.data = C.CString(sslPeerName)
 	sslPeerName_ms.len = C.size_t(len(sslPeerName))
 	defer C.free(unsafe.Pointer(sslPeerName_ms.data))
-	C.QSslSocket_connectToHostEncrypted5(this.h, hostName_ms, (C.ushort)(port), sslPeerName_ms, (C.int)(mode))
+	C.QSslSocket_connectToHostEncrypted5(this.h, hostName_ms, (C.ushort)(port), sslPeerName_ms, mode)
 }
 
-func (this *QSslSocket) ConnectToHostEncrypted6(hostName string, port uint16, sslPeerName string, mode qt6.QIODeviceBase__OpenModeFlag, protocol QAbstractSocket__NetworkLayerProtocol) {
+func (this *QSslSocket) ConnectToHostEncrypted6(hostName string, port uint16, sslPeerName string, mode OpenMode, protocol NetworkLayerProtocol) {
 	hostName_ms := C.struct_miqt_string{}
 	hostName_ms.data = C.CString(hostName)
 	hostName_ms.len = C.size_t(len(hostName))
@@ -779,7 +779,7 @@ func (this *QSslSocket) ConnectToHostEncrypted6(hostName string, port uint16, ss
 	sslPeerName_ms.data = C.CString(sslPeerName)
 	sslPeerName_ms.len = C.size_t(len(sslPeerName))
 	defer C.free(unsafe.Pointer(sslPeerName_ms.data))
-	C.QSslSocket_connectToHostEncrypted6(this.h, hostName_ms, (C.ushort)(port), sslPeerName_ms, (C.int)(mode), (C.int)(protocol))
+	C.QSslSocket_connectToHostEncrypted6(this.h, hostName_ms, (C.ushort)(port), sslPeerName_ms, mode, protocol)
 }
 
 func (this *QSslSocket) SetLocalCertificate2(fileName string, format QSsl__EncodingFormat) {
@@ -892,10 +892,10 @@ func QSslSocket_IsFeatureSupported2(feat QSsl__SupportedFeature, backendName str
 }
 
 // SetSocketState can only be called from a QSslSocket that was directly constructed.
-func (this *QSslSocket) SetSocketState(state QAbstractSocket__SocketState) {
+func (this *QSslSocket) SetSocketState(state SocketState) {
 
 	var _dynamic_cast_ok C.bool = false
-	C.QSslSocket_protectedbase_setSocketState(&_dynamic_cast_ok, unsafe.Pointer(this.h), (C.int)(state))
+	C.QSslSocket_protectedbase_setSocketState(&_dynamic_cast_ok, unsafe.Pointer(this.h), state)
 
 	if !_dynamic_cast_ok {
 		panic("miqt: can only call protected methods for directly constructed types")
@@ -904,10 +904,10 @@ func (this *QSslSocket) SetSocketState(state QAbstractSocket__SocketState) {
 }
 
 // SetSocketError can only be called from a QSslSocket that was directly constructed.
-func (this *QSslSocket) SetSocketError(socketError QAbstractSocket__SocketError) {
+func (this *QSslSocket) SetSocketError(socketError SocketError) {
 
 	var _dynamic_cast_ok C.bool = false
-	C.QSslSocket_protectedbase_setSocketError(&_dynamic_cast_ok, unsafe.Pointer(this.h), (C.int)(socketError))
+	C.QSslSocket_protectedbase_setSocketError(&_dynamic_cast_ok, unsafe.Pointer(this.h), socketError)
 
 	if !_dynamic_cast_ok {
 		panic("miqt: can only call protected methods for directly constructed types")
@@ -980,7 +980,7 @@ func (this *QSslSocket) SetPeerName(name string) {
 }
 
 // SetOpenMode can only be called from a QSslSocket that was directly constructed.
-func (this *QSslSocket) SetOpenMode(openMode qt6.QIODeviceBase__OpenModeFlag) {
+func (this *QSslSocket) SetOpenMode(openMode OpenModeFlag) {
 
 	var _dynamic_cast_ok C.bool = false
 	C.QSslSocket_protectedbase_setOpenMode(&_dynamic_cast_ok, unsafe.Pointer(this.h), (C.int)(openMode))
@@ -1088,12 +1088,12 @@ func miqt_exec_callback_QSslSocket_resume(self *C.QSslSocket, cb C.intptr_t) {
 
 }
 
-func (this *QSslSocket) callVirtualBase_SetSocketDescriptor(socketDescriptor uintptr, state QAbstractSocket__SocketState, openMode qt6.QIODeviceBase__OpenModeFlag) bool {
+func (this *QSslSocket) callVirtualBase_SetSocketDescriptor(socketDescriptor uintptr, state SocketState, openMode OpenMode) bool {
 
-	return (bool)(C.QSslSocket_virtualbase_setSocketDescriptor(unsafe.Pointer(this.h), (C.intptr_t)(socketDescriptor), (C.int)(state), (C.int)(openMode)))
+	return (bool)(C.QSslSocket_virtualbase_setSocketDescriptor(unsafe.Pointer(this.h), (C.intptr_t)(socketDescriptor), state, openMode))
 
 }
-func (this *QSslSocket) OnSetSocketDescriptor(slot func(super func(socketDescriptor uintptr, state QAbstractSocket__SocketState, openMode qt6.QIODeviceBase__OpenModeFlag) bool, socketDescriptor uintptr, state QAbstractSocket__SocketState, openMode qt6.QIODeviceBase__OpenModeFlag) bool) {
+func (this *QSslSocket) OnSetSocketDescriptor(slot func(super func(socketDescriptor uintptr, state SocketState, openMode OpenMode) bool, socketDescriptor uintptr, state SocketState, openMode OpenMode) bool) {
 	ok := C.QSslSocket_override_virtual_setSocketDescriptor(unsafe.Pointer(this.h), C.intptr_t(cgo.NewHandle(slot)))
 	if !ok {
 		panic("miqt: can only override virtual methods for directly constructed types")
@@ -1101,8 +1101,8 @@ func (this *QSslSocket) OnSetSocketDescriptor(slot func(super func(socketDescrip
 }
 
 //export miqt_exec_callback_QSslSocket_setSocketDescriptor
-func miqt_exec_callback_QSslSocket_setSocketDescriptor(self *C.QSslSocket, cb C.intptr_t, socketDescriptor C.intptr_t, state C.int, openMode C.int) C.bool {
-	gofunc, ok := cgo.Handle(cb).Value().(func(super func(socketDescriptor uintptr, state QAbstractSocket__SocketState, openMode qt6.QIODeviceBase__OpenModeFlag) bool, socketDescriptor uintptr, state QAbstractSocket__SocketState, openMode qt6.QIODeviceBase__OpenModeFlag) bool)
+func miqt_exec_callback_QSslSocket_setSocketDescriptor(self *C.QSslSocket, cb C.intptr_t, socketDescriptor C.intptr_t, state C.SocketState, openMode C.OpenMode) C.bool {
+	gofunc, ok := cgo.Handle(cb).Value().(func(super func(socketDescriptor uintptr, state SocketState, openMode OpenMode) bool, socketDescriptor uintptr, state SocketState, openMode OpenMode) bool)
 	if !ok {
 		panic("miqt: callback of non-callback type (heap corruption?)")
 	}
@@ -1110,9 +1110,8 @@ func miqt_exec_callback_QSslSocket_setSocketDescriptor(self *C.QSslSocket, cb C.
 	// Convert all CABI parameters to Go parameters
 	slotval1 := (uintptr)(socketDescriptor)
 
-	slotval2 := (QAbstractSocket__SocketState)(state)
-
-	slotval3 := (qt6.QIODeviceBase__OpenModeFlag)(openMode)
+	int /* TODO  */
+	int /* TODO  */
 
 	virtualReturn := gofunc((&QSslSocket{h: self}).callVirtualBase_SetSocketDescriptor, slotval1, slotval2, slotval3)
 
@@ -1120,16 +1119,16 @@ func miqt_exec_callback_QSslSocket_setSocketDescriptor(self *C.QSslSocket, cb C.
 
 }
 
-func (this *QSslSocket) callVirtualBase_ConnectToHost(hostName string, port uint16, openMode qt6.QIODeviceBase__OpenModeFlag, protocol QAbstractSocket__NetworkLayerProtocol) {
+func (this *QSslSocket) callVirtualBase_ConnectToHost(hostName string, port uint16, openMode OpenMode, protocol NetworkLayerProtocol) {
 	hostName_ms := C.struct_miqt_string{}
 	hostName_ms.data = C.CString(hostName)
 	hostName_ms.len = C.size_t(len(hostName))
 	defer C.free(unsafe.Pointer(hostName_ms.data))
 
-	C.QSslSocket_virtualbase_connectToHost(unsafe.Pointer(this.h), hostName_ms, (C.ushort)(port), (C.int)(openMode), (C.int)(protocol))
+	C.QSslSocket_virtualbase_connectToHost(unsafe.Pointer(this.h), hostName_ms, (C.ushort)(port), openMode, protocol)
 
 }
-func (this *QSslSocket) OnConnectToHost(slot func(super func(hostName string, port uint16, openMode qt6.QIODeviceBase__OpenModeFlag, protocol QAbstractSocket__NetworkLayerProtocol), hostName string, port uint16, openMode qt6.QIODeviceBase__OpenModeFlag, protocol QAbstractSocket__NetworkLayerProtocol)) {
+func (this *QSslSocket) OnConnectToHost(slot func(super func(hostName string, port uint16, openMode OpenMode, protocol NetworkLayerProtocol), hostName string, port uint16, openMode OpenMode, protocol NetworkLayerProtocol)) {
 	ok := C.QSslSocket_override_virtual_connectToHost(unsafe.Pointer(this.h), C.intptr_t(cgo.NewHandle(slot)))
 	if !ok {
 		panic("miqt: can only override virtual methods for directly constructed types")
@@ -1137,8 +1136,8 @@ func (this *QSslSocket) OnConnectToHost(slot func(super func(hostName string, po
 }
 
 //export miqt_exec_callback_QSslSocket_connectToHost
-func miqt_exec_callback_QSslSocket_connectToHost(self *C.QSslSocket, cb C.intptr_t, hostName C.struct_miqt_string, port C.ushort, openMode C.int, protocol C.int) {
-	gofunc, ok := cgo.Handle(cb).Value().(func(super func(hostName string, port uint16, openMode qt6.QIODeviceBase__OpenModeFlag, protocol QAbstractSocket__NetworkLayerProtocol), hostName string, port uint16, openMode qt6.QIODeviceBase__OpenModeFlag, protocol QAbstractSocket__NetworkLayerProtocol))
+func miqt_exec_callback_QSslSocket_connectToHost(self *C.QSslSocket, cb C.intptr_t, hostName C.struct_miqt_string, port C.ushort, openMode C.OpenMode, protocol C.NetworkLayerProtocol) {
+	gofunc, ok := cgo.Handle(cb).Value().(func(super func(hostName string, port uint16, openMode OpenMode, protocol NetworkLayerProtocol), hostName string, port uint16, openMode OpenMode, protocol NetworkLayerProtocol))
 	if !ok {
 		panic("miqt: callback of non-callback type (heap corruption?)")
 	}
@@ -1150,9 +1149,8 @@ func miqt_exec_callback_QSslSocket_connectToHost(self *C.QSslSocket, cb C.intptr
 	slotval1 := hostName_ret
 	slotval2 := (uint16)(port)
 
-	slotval3 := (qt6.QIODeviceBase__OpenModeFlag)(openMode)
-
-	slotval4 := (QAbstractSocket__NetworkLayerProtocol)(protocol)
+	int /* TODO  */
+	int /* TODO  */
 
 	gofunc((&QSslSocket{h: self}).callVirtualBase_ConnectToHost, slotval1, slotval2, slotval3, slotval4)
 
@@ -1594,12 +1592,12 @@ func miqt_exec_callback_QSslSocket_writeData(self *C.QSslSocket, cb C.intptr_t, 
 
 }
 
-func (this *QSslSocket) callVirtualBase_Bind(address *QHostAddress, port uint16, mode QAbstractSocket__BindFlag) bool {
+func (this *QSslSocket) callVirtualBase_Bind(address *QHostAddress, port uint16, mode BindMode) bool {
 
-	return (bool)(C.QSslSocket_virtualbase_bind(unsafe.Pointer(this.h), address.cPointer(), (C.ushort)(port), (C.int)(mode)))
+	return (bool)(C.QSslSocket_virtualbase_bind(unsafe.Pointer(this.h), address.cPointer(), (C.ushort)(port), mode))
 
 }
-func (this *QSslSocket) OnBind(slot func(super func(address *QHostAddress, port uint16, mode QAbstractSocket__BindFlag) bool, address *QHostAddress, port uint16, mode QAbstractSocket__BindFlag) bool) {
+func (this *QSslSocket) OnBind(slot func(super func(address *QHostAddress, port uint16, mode BindMode) bool, address *QHostAddress, port uint16, mode BindMode) bool) {
 	ok := C.QSslSocket_override_virtual_bind(unsafe.Pointer(this.h), C.intptr_t(cgo.NewHandle(slot)))
 	if !ok {
 		panic("miqt: can only override virtual methods for directly constructed types")
@@ -1607,8 +1605,8 @@ func (this *QSslSocket) OnBind(slot func(super func(address *QHostAddress, port 
 }
 
 //export miqt_exec_callback_QSslSocket_bind
-func miqt_exec_callback_QSslSocket_bind(self *C.QSslSocket, cb C.intptr_t, address *C.QHostAddress, port C.ushort, mode C.int) C.bool {
-	gofunc, ok := cgo.Handle(cb).Value().(func(super func(address *QHostAddress, port uint16, mode QAbstractSocket__BindFlag) bool, address *QHostAddress, port uint16, mode QAbstractSocket__BindFlag) bool)
+func miqt_exec_callback_QSslSocket_bind(self *C.QSslSocket, cb C.intptr_t, address *C.QHostAddress, port C.ushort, mode C.BindMode) C.bool {
+	gofunc, ok := cgo.Handle(cb).Value().(func(super func(address *QHostAddress, port uint16, mode BindMode) bool, address *QHostAddress, port uint16, mode BindMode) bool)
 	if !ok {
 		panic("miqt: callback of non-callback type (heap corruption?)")
 	}
@@ -1618,7 +1616,7 @@ func miqt_exec_callback_QSslSocket_bind(self *C.QSslSocket, cb C.intptr_t, addre
 
 	slotval2 := (uint16)(port)
 
-	slotval3 := (QAbstractSocket__BindFlag)(mode)
+	int /* TODO  */
 
 	virtualReturn := gofunc((&QSslSocket{h: self}).callVirtualBase_Bind, slotval1, slotval2, slotval3)
 
@@ -1709,12 +1707,12 @@ func miqt_exec_callback_QSslSocket_readLineData(self *C.QSslSocket, cb C.intptr_
 
 }
 
-func (this *QSslSocket) callVirtualBase_Open(mode qt6.QIODeviceBase__OpenModeFlag) bool {
+func (this *QSslSocket) callVirtualBase_Open(mode OpenModeFlag) bool {
 
 	return (bool)(C.QSslSocket_virtualbase_open(unsafe.Pointer(this.h), (C.int)(mode)))
 
 }
-func (this *QSslSocket) OnOpen(slot func(super func(mode qt6.QIODeviceBase__OpenModeFlag) bool, mode qt6.QIODeviceBase__OpenModeFlag) bool) {
+func (this *QSslSocket) OnOpen(slot func(super func(mode OpenModeFlag) bool, mode OpenModeFlag) bool) {
 	ok := C.QSslSocket_override_virtual_open(unsafe.Pointer(this.h), C.intptr_t(cgo.NewHandle(slot)))
 	if !ok {
 		panic("miqt: can only override virtual methods for directly constructed types")
@@ -1723,13 +1721,13 @@ func (this *QSslSocket) OnOpen(slot func(super func(mode qt6.QIODeviceBase__Open
 
 //export miqt_exec_callback_QSslSocket_open
 func miqt_exec_callback_QSslSocket_open(self *C.QSslSocket, cb C.intptr_t, mode C.int) C.bool {
-	gofunc, ok := cgo.Handle(cb).Value().(func(super func(mode qt6.QIODeviceBase__OpenModeFlag) bool, mode qt6.QIODeviceBase__OpenModeFlag) bool)
+	gofunc, ok := cgo.Handle(cb).Value().(func(super func(mode OpenModeFlag) bool, mode OpenModeFlag) bool)
 	if !ok {
 		panic("miqt: callback of non-callback type (heap corruption?)")
 	}
 
 	// Convert all CABI parameters to Go parameters
-	slotval1 := (qt6.QIODeviceBase__OpenModeFlag)(mode)
+	slotval1 := (OpenModeFlag)(mode)
 
 	virtualReturn := gofunc((&QSslSocket{h: self}).callVirtualBase_Open, slotval1)
 

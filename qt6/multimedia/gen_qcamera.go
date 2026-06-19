@@ -219,8 +219,8 @@ func (this *QCamera) SetCameraFormat(format *QCameraFormat) {
 	C.QCamera_setCameraFormat(this.h, format.cPointer())
 }
 
-func (this *QCamera) Error() QCamera__Error {
-	return (QCamera__Error)(C.QCamera_error(this.h))
+func (this *QCamera) Error() Error {
+	int /* TODO  */
 }
 
 func (this *QCamera) ErrorString() string {
@@ -230,20 +230,20 @@ func (this *QCamera) ErrorString() string {
 	return _ret
 }
 
-func (this *QCamera) SupportedFeatures() QCamera__Feature {
-	return (QCamera__Feature)(C.QCamera_supportedFeatures(this.h))
+func (this *QCamera) SupportedFeatures() Features {
+	int /* TODO  */
 }
 
-func (this *QCamera) FocusMode() QCamera__FocusMode {
-	return (QCamera__FocusMode)(C.QCamera_focusMode(this.h))
+func (this *QCamera) FocusMode() FocusMode {
+	int /* TODO  */
 }
 
-func (this *QCamera) SetFocusMode(mode QCamera__FocusMode) {
-	C.QCamera_setFocusMode(this.h, (C.int)(mode))
+func (this *QCamera) SetFocusMode(mode FocusMode) {
+	C.QCamera_setFocusMode(this.h, mode)
 }
 
-func (this *QCamera) IsFocusModeSupported(mode QCamera__FocusMode) bool {
-	return (bool)(C.QCamera_isFocusModeSupported(this.h, (C.int)(mode)))
+func (this *QCamera) IsFocusModeSupported(mode FocusMode) bool {
+	return (bool)(C.QCamera_isFocusModeSupported(this.h, mode))
 }
 
 func (this *QCamera) FocusPoint() *qt6.QPointF {
@@ -286,32 +286,32 @@ func (this *QCamera) SetZoomFactor(factor float32) {
 	C.QCamera_setZoomFactor(this.h, (C.float)(factor))
 }
 
-func (this *QCamera) FlashMode() QCamera__FlashMode {
-	return (QCamera__FlashMode)(C.QCamera_flashMode(this.h))
+func (this *QCamera) FlashMode() FlashMode {
+	int /* TODO  */
 }
 
-func (this *QCamera) IsFlashModeSupported(mode QCamera__FlashMode) bool {
-	return (bool)(C.QCamera_isFlashModeSupported(this.h, (C.int)(mode)))
+func (this *QCamera) IsFlashModeSupported(mode FlashMode) bool {
+	return (bool)(C.QCamera_isFlashModeSupported(this.h, mode))
 }
 
 func (this *QCamera) IsFlashReady() bool {
 	return (bool)(C.QCamera_isFlashReady(this.h))
 }
 
-func (this *QCamera) TorchMode() QCamera__TorchMode {
-	return (QCamera__TorchMode)(C.QCamera_torchMode(this.h))
+func (this *QCamera) TorchMode() TorchMode {
+	int /* TODO  */
 }
 
-func (this *QCamera) IsTorchModeSupported(mode QCamera__TorchMode) bool {
-	return (bool)(C.QCamera_isTorchModeSupported(this.h, (C.int)(mode)))
+func (this *QCamera) IsTorchModeSupported(mode TorchMode) bool {
+	return (bool)(C.QCamera_isTorchModeSupported(this.h, mode))
 }
 
-func (this *QCamera) ExposureMode() QCamera__ExposureMode {
-	return (QCamera__ExposureMode)(C.QCamera_exposureMode(this.h))
+func (this *QCamera) ExposureMode() ExposureMode {
+	int /* TODO  */
 }
 
-func (this *QCamera) IsExposureModeSupported(mode QCamera__ExposureMode) bool {
-	return (bool)(C.QCamera_isExposureModeSupported(this.h, (C.int)(mode)))
+func (this *QCamera) IsExposureModeSupported(mode ExposureMode) bool {
+	return (bool)(C.QCamera_isExposureModeSupported(this.h, mode))
 }
 
 func (this *QCamera) ExposureCompensation() float32 {
@@ -350,12 +350,12 @@ func (this *QCamera) MaximumExposureTime() float32 {
 	return (float32)(C.QCamera_maximumExposureTime(this.h))
 }
 
-func (this *QCamera) WhiteBalanceMode() QCamera__WhiteBalanceMode {
-	return (QCamera__WhiteBalanceMode)(C.QCamera_whiteBalanceMode(this.h))
+func (this *QCamera) WhiteBalanceMode() WhiteBalanceMode {
+	int /* TODO  */
 }
 
-func (this *QCamera) IsWhiteBalanceModeSupported(mode QCamera__WhiteBalanceMode) bool {
-	return (bool)(C.QCamera_isWhiteBalanceModeSupported(this.h, (C.int)(mode)))
+func (this *QCamera) IsWhiteBalanceModeSupported(mode WhiteBalanceMode) bool {
+	return (bool)(C.QCamera_isWhiteBalanceModeSupported(this.h, mode))
 }
 
 func (this *QCamera) ColorTemperature() int {
@@ -378,16 +378,16 @@ func (this *QCamera) ZoomTo(zoom float32, rate float32) {
 	C.QCamera_zoomTo(this.h, (C.float)(zoom), (C.float)(rate))
 }
 
-func (this *QCamera) SetFlashMode(mode QCamera__FlashMode) {
-	C.QCamera_setFlashMode(this.h, (C.int)(mode))
+func (this *QCamera) SetFlashMode(mode FlashMode) {
+	C.QCamera_setFlashMode(this.h, mode)
 }
 
-func (this *QCamera) SetTorchMode(mode QCamera__TorchMode) {
-	C.QCamera_setTorchMode(this.h, (C.int)(mode))
+func (this *QCamera) SetTorchMode(mode TorchMode) {
+	C.QCamera_setTorchMode(this.h, mode)
 }
 
-func (this *QCamera) SetExposureMode(mode QCamera__ExposureMode) {
-	C.QCamera_setExposureMode(this.h, (C.int)(mode))
+func (this *QCamera) SetExposureMode(mode ExposureMode) {
+	C.QCamera_setExposureMode(this.h, mode)
 }
 
 func (this *QCamera) SetExposureCompensation(ev float32) {
@@ -410,8 +410,8 @@ func (this *QCamera) SetAutoExposureTime() {
 	C.QCamera_setAutoExposureTime(this.h)
 }
 
-func (this *QCamera) SetWhiteBalanceMode(mode QCamera__WhiteBalanceMode) {
-	C.QCamera_setWhiteBalanceMode(this.h, (C.int)(mode))
+func (this *QCamera) SetWhiteBalanceMode(mode WhiteBalanceMode) {
+	C.QCamera_setWhiteBalanceMode(this.h, mode)
 }
 
 func (this *QCamera) SetColorTemperature(colorTemperature int) {

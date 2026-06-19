@@ -62,12 +62,16 @@ func (this *QStringView) Size() int64 {
 	return (int64)(C.QStringView_size(this.h))
 }
 
-func (this *QStringView) Data() *QChar {
-	return newQChar(C.QStringView_data(this.h))
+func (this *QStringView) Data() const_pointer {
+	int /* TODO  */
 }
 
-func (this *QStringView) ConstData() *QChar {
-	return newQChar(C.QStringView_constData(this.h))
+func (this *QStringView) ConstData() const_pointer {
+	int /* TODO  */
+}
+
+func (this *QStringView) Utf16() *storage_type {
+	int /* TODO  */
 }
 
 func (this *QStringView) OperatorSubscript(n int64) *QChar {
@@ -125,8 +129,8 @@ func (this *QStringView) CompareWithQChar(c QChar) int {
 	return (int)(C.QStringView_compareWithQChar(this.h, c.cPointer()))
 }
 
-func (this *QStringView) Compare2(c QChar, cs CaseSensitivity) int {
-	return (int)(C.QStringView_compare2(this.h, c.cPointer(), (C.int)(cs)))
+func (this *QStringView) Compare3(c QChar, cs CaseSensitivity) int {
+	return (int)(C.QStringView_compare3(this.h, c.cPointer(), (C.int)(cs)))
 }
 
 func (this *QStringView) StartsWithWithQChar(c QChar) bool {
@@ -189,6 +193,14 @@ func (this *QStringView) IsValidUtf16() bool {
 	return (bool)(C.QStringView_isValidUtf16(this.h))
 }
 
+func (this *QStringView) IsUpper() bool {
+	return (bool)(C.QStringView_isUpper(this.h))
+}
+
+func (this *QStringView) IsLower() bool {
+	return (bool)(C.QStringView_isLower(this.h))
+}
+
 func (this *QStringView) ToShort() int16 {
 	return (int16)(C.QStringView_toShort(this.h))
 }
@@ -229,20 +241,36 @@ func (this *QStringView) ToDouble() float64 {
 	return (float64)(C.QStringView_toDouble(this.h))
 }
 
-func (this *QStringView) Begin() *QChar {
-	return newQChar(C.QStringView_begin(this.h))
+func (this *QStringView) Begin() const_iterator {
+	int /* TODO  */
 }
 
-func (this *QStringView) End() *QChar {
-	return newQChar(C.QStringView_end(this.h))
+func (this *QStringView) End() const_iterator {
+	int /* TODO  */
 }
 
-func (this *QStringView) Cbegin() *QChar {
-	return newQChar(C.QStringView_cbegin(this.h))
+func (this *QStringView) Cbegin() const_iterator {
+	int /* TODO  */
 }
 
-func (this *QStringView) Cend() *QChar {
-	return newQChar(C.QStringView_cend(this.h))
+func (this *QStringView) Cend() const_iterator {
+	int /* TODO  */
+}
+
+func (this *QStringView) Rbegin() const_reverse_iterator {
+	int /* TODO  */
+}
+
+func (this *QStringView) Rend() const_reverse_iterator {
+	int /* TODO  */
+}
+
+func (this *QStringView) Crbegin() const_reverse_iterator {
+	int /* TODO  */
+}
+
+func (this *QStringView) Crend() const_reverse_iterator {
+	int /* TODO  */
 }
 
 func (this *QStringView) Empty() bool {
@@ -261,12 +289,16 @@ func (this *QStringView) Back() *QChar {
 	return _goptr
 }
 
-func (this *QStringView) ConstBegin() *QChar {
-	return newQChar(C.QStringView_constBegin(this.h))
+func (this *QStringView) MaxSize() int64 {
+	return (int64)(C.QStringView_maxSize(this.h))
 }
 
-func (this *QStringView) ConstEnd() *QChar {
-	return newQChar(C.QStringView_constEnd(this.h))
+func (this *QStringView) ConstBegin() const_iterator {
+	int /* TODO  */
+}
+
+func (this *QStringView) ConstEnd() const_iterator {
+	int /* TODO  */
 }
 
 func (this *QStringView) IsNull() bool {
@@ -291,6 +323,10 @@ func (this *QStringView) Last2() *QChar {
 	_goptr := newQChar(C.QStringView_last2(this.h))
 	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
 	return _goptr
+}
+
+func QStringView_MaxSize2() int64 {
+	return (int64)(C.QStringView_maxSize2())
 }
 
 func (this *QStringView) IndexOf2(c QChar, from int64) int64 {

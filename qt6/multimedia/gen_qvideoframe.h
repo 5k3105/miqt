@@ -40,7 +40,8 @@ typedef struct QVideoFrameFormat QVideoFrameFormat;
 
 QVideoFrame* QVideoFrame_new();
 QVideoFrame* QVideoFrame_new2(QVideoFrameFormat* format);
-QVideoFrame* QVideoFrame_new3(QVideoFrame* other);
+QVideoFrame* QVideoFrame_new3(QImage* image);
+QVideoFrame* QVideoFrame_new4(QVideoFrame* other);
 void QVideoFrame_swap(QVideoFrame* self, QVideoFrame* other);
 void QVideoFrame_operatorAssign(QVideoFrame* self, QVideoFrame* other);
 bool QVideoFrame_operatorEqual(const QVideoFrame* self, QVideoFrame* other);
@@ -67,14 +68,18 @@ long long QVideoFrame_startTime(const QVideoFrame* self);
 void QVideoFrame_setStartTime(QVideoFrame* self, long long time);
 long long QVideoFrame_endTime(const QVideoFrame* self);
 void QVideoFrame_setEndTime(QVideoFrame* self, long long time);
-void QVideoFrame_setRotationAngle(QVideoFrame* self, int rotationAngle);
-int QVideoFrame_rotationAngle(const QVideoFrame* self);
+void QVideoFrame_setRotationAngle(QVideoFrame* self, RotationAngle angle);
+RotationAngle QVideoFrame_rotationAngle(const QVideoFrame* self);
+void QVideoFrame_setRotation(QVideoFrame* self, int angle);
+int QVideoFrame_rotation(const QVideoFrame* self);
 void QVideoFrame_setMirrored(QVideoFrame* self, bool mirrored);
 bool QVideoFrame_mirrored(const QVideoFrame* self);
+void QVideoFrame_setStreamFrameRate(QVideoFrame* self, double rate);
+double QVideoFrame_streamFrameRate(const QVideoFrame* self);
 QImage* QVideoFrame_toImage(const QVideoFrame* self);
 struct miqt_string QVideoFrame_subtitleText(const QVideoFrame* self);
 void QVideoFrame_setSubtitleText(QVideoFrame* self, struct miqt_string text);
-void QVideoFrame_paint(QVideoFrame* self, QPainter* painter, QRectF* rect, QVideoFrame__PaintOptions* options);
+void QVideoFrame_paint(QVideoFrame* self, QPainter* painter, QRectF* rect, const PaintOptions* options);
 
 void QVideoFrame_delete(QVideoFrame* self);
 
@@ -82,8 +87,8 @@ QColor* QVideoFrame__PaintOptions_backgroundColor(const QVideoFrame__PaintOption
 void QVideoFrame__PaintOptions_setBackgroundColor(QVideoFrame__PaintOptions* self, QColor* backgroundColor);
 int QVideoFrame__PaintOptions_aspectRatioMode(const QVideoFrame__PaintOptions* self);
 void QVideoFrame__PaintOptions_setAspectRatioMode(QVideoFrame__PaintOptions* self, int aspectRatioMode);
-int QVideoFrame__PaintOptions_paintFlags(const QVideoFrame__PaintOptions* self);
-void QVideoFrame__PaintOptions_setPaintFlags(QVideoFrame__PaintOptions* self, int paintFlags);
+PaintFlags QVideoFrame__PaintOptions_paintFlags(const QVideoFrame__PaintOptions* self);
+void QVideoFrame__PaintOptions_setPaintFlags(QVideoFrame__PaintOptions* self, PaintFlags paintFlags);
 
 void QVideoFrame__PaintOptions_delete(QVideoFrame__PaintOptions* self);
 

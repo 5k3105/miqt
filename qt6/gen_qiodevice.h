@@ -15,6 +15,7 @@ extern "C" {
 #endif
 
 #ifdef __cplusplus
+class QByteArrayView;
 class QChildEvent;
 class QEvent;
 class QIODevice;
@@ -24,6 +25,7 @@ class QMetaObject;
 class QObject;
 class QTimerEvent;
 #else
+typedef struct QByteArrayView QByteArrayView;
 typedef struct QChildEvent QChildEvent;
 typedef struct QEvent QEvent;
 typedef struct QIODevice QIODevice;
@@ -67,6 +69,9 @@ struct miqt_string QIODevice_readWithMaxlen(QIODevice* self, long long maxlen);
 struct miqt_string QIODevice_readAll(QIODevice* self);
 long long QIODevice_readLine(QIODevice* self, char* data, long long maxlen);
 struct miqt_string QIODevice_readLine2(QIODevice* self);
+QByteArrayView* QIODevice_readLineIntoWithBuffer(QIODevice* self, QSpan<char> buffer);
+QByteArrayView* QIODevice_readLineInto2(QIODevice* self, QSpan<uchar> buffer);
+QByteArrayView* QIODevice_readLineInto3(QIODevice* self, QSpan<std::byte> buffer);
 bool QIODevice_canReadLine(const QIODevice* self);
 void QIODevice_startTransaction(QIODevice* self);
 void QIODevice_commitTransaction(QIODevice* self);

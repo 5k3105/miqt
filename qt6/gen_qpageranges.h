@@ -32,7 +32,7 @@ void QPageRanges_operatorAssign(QPageRanges* self, QPageRanges* other);
 void QPageRanges_swap(QPageRanges* self, QPageRanges* other);
 void QPageRanges_addPage(QPageRanges* self, int pageNumber);
 void QPageRanges_addRange(QPageRanges* self, int from, int to);
-struct miqt_array /* of QPageRanges__Range* */  QPageRanges_toRangeList(const QPageRanges* self);
+struct miqt_array /* of Range */  QPageRanges_toRangeList(const QPageRanges* self);
 void QPageRanges_clear(QPageRanges* self);
 struct miqt_string QPageRanges_toString(const QPageRanges* self);
 QPageRanges* QPageRanges_fromString(struct miqt_string ranges);
@@ -45,7 +45,7 @@ void QPageRanges_detach(QPageRanges* self);
 void QPageRanges_delete(QPageRanges* self);
 
 QPageRanges__Range* QPageRanges__Range_new();
-QPageRanges__Range* QPageRanges__Range_new2(QPageRanges__Range* param1);
+QPageRanges__Range* QPageRanges__Range_new2(const Range* param1);
 int QPageRanges__Range_from(const QPageRanges__Range* self);
 void QPageRanges__Range_setFrom(QPageRanges__Range* self, int from);
 int QPageRanges__Range_to(const QPageRanges__Range* self);

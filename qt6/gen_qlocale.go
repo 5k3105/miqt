@@ -346,6 +346,25 @@ const (
 	QLocale__Zulu                      QLocale__Language = 327
 	QLocale__Kaingang                  QLocale__Language = 328
 	QLocale__Nheengatu                 QLocale__Language = 329
+	QLocale__Haryanvi                  QLocale__Language = 330
+	QLocale__NorthernFrisian           QLocale__Language = 331
+	QLocale__Rajasthani                QLocale__Language = 332
+	QLocale__Moksha                    QLocale__Language = 333
+	QLocale__TokiPona                  QLocale__Language = 334
+	QLocale__Pijin                     QLocale__Language = 335
+	QLocale__Obolo                     QLocale__Language = 336
+	QLocale__Baluchi                   QLocale__Language = 337
+	QLocale__Ligurian                  QLocale__Language = 338
+	QLocale__Rohingya                  QLocale__Language = 339
+	QLocale__Torwali                   QLocale__Language = 340
+	QLocale__Anii                      QLocale__Language = 341
+	QLocale__Kangri                    QLocale__Language = 342
+	QLocale__Venetian                  QLocale__Language = 343
+	QLocale__Kuvi                      QLocale__Language = 344
+	QLocale__KaraKalpak                QLocale__Language = 345
+	QLocale__SwampyCree                QLocale__Language = 346
+	QLocale__Ladin                     QLocale__Language = 347
+	QLocale__Shan                      QLocale__Language = 348
 	QLocale__Afan                      QLocale__Language = 220
 	QLocale__Bengali                   QLocale__Language = 30
 	QLocale__Bhutani                   QLocale__Language = 73
@@ -365,7 +384,7 @@ const (
 	QLocale__Uighur                    QLocale__Language = 306
 	QLocale__Uigur                     QLocale__Language = 306
 	QLocale__Walamo                    QLocale__Language = 319
-	QLocale__LastLanguage              QLocale__Language = 329
+	QLocale__LastLanguage              QLocale__Language = 348
 )
 
 type QLocale__Script uint16
@@ -513,12 +532,13 @@ const (
 	QLocale__VaiScript                   QLocale__Script = 139
 	QLocale__VarangKshitiScript          QLocale__Script = 140
 	QLocale__YiScript                    QLocale__Script = 141
+	QLocale__HanifiScript                QLocale__Script = 142
 	QLocale__BengaliScript               QLocale__Script = 9
 	QLocale__MendeKikakuiScript          QLocale__Script = 79
 	QLocale__OriyaScript                 QLocale__Script = 91
 	QLocale__SimplifiedChineseScript     QLocale__Script = 118
 	QLocale__TraditionalChineseScript    QLocale__Script = 137
-	QLocale__LastScript                  QLocale__Script = 141
+	QLocale__LastScript                  QLocale__Script = 142
 )
 
 type QLocale__Country uint16
@@ -849,6 +869,13 @@ const (
 	QLocale__FloatingPointShortest QLocale__FloatingPointPrecisionOption = -128
 )
 
+type QLocale__TagSeparator int8
+
+const (
+	QLocale__Dash       QLocale__TagSeparator = 45
+	QLocale__Underscore QLocale__TagSeparator = 95
+)
+
 type QLocale__CurrencySymbolFormat int
 
 const (
@@ -938,15 +965,15 @@ func NewQLocale2(name string) *QLocale {
 }
 
 // NewQLocale3 constructs a new QLocale object.
-func NewQLocale3(language QLocale__Language, territory QLocale__Country) *QLocale {
+func NewQLocale3(language Language, territory Territory) *QLocale {
 
-	return newQLocale(C.QLocale_new3((C.ushort)(language), (C.ushort)(territory)))
+	return newQLocale(C.QLocale_new3(language, territory))
 }
 
 // NewQLocale4 constructs a new QLocale object.
-func NewQLocale4(language QLocale__Language) *QLocale {
+func NewQLocale4(language Language) *QLocale {
 
-	return newQLocale(C.QLocale_new4((C.ushort)(language)))
+	return newQLocale(C.QLocale_new4(language))
 }
 
 // NewQLocale5 constructs a new QLocale object.
@@ -956,15 +983,15 @@ func NewQLocale5(other *QLocale) *QLocale {
 }
 
 // NewQLocale6 constructs a new QLocale object.
-func NewQLocale6(language QLocale__Language, script QLocale__Script) *QLocale {
+func NewQLocale6(language Language, script Script) *QLocale {
 
-	return newQLocale(C.QLocale_new6((C.ushort)(language), (C.ushort)(script)))
+	return newQLocale(C.QLocale_new6(language, script))
 }
 
 // NewQLocale7 constructs a new QLocale object.
-func NewQLocale7(language QLocale__Language, script QLocale__Script, territory QLocale__Country) *QLocale {
+func NewQLocale7(language Language, script Script, territory Territory) *QLocale {
 
-	return newQLocale(C.QLocale_new7((C.ushort)(language), (C.ushort)(script), (C.ushort)(territory)))
+	return newQLocale(C.QLocale_new7(language, script, territory))
 }
 
 func (this *QLocale) OperatorAssign(other *QLocale) {
@@ -975,20 +1002,20 @@ func (this *QLocale) Swap(other *QLocale) {
 	C.QLocale_swap(this.h, other.cPointer())
 }
 
-func (this *QLocale) Language() QLocale__Language {
-	return (QLocale__Language)(C.QLocale_language(this.h))
+func (this *QLocale) Language() Language {
+	int /* TODO  */
 }
 
-func (this *QLocale) Script() QLocale__Script {
-	return (QLocale__Script)(C.QLocale_script(this.h))
+func (this *QLocale) Script() Script {
+	int /* TODO  */
 }
 
-func (this *QLocale) Territory() QLocale__Country {
-	return (QLocale__Country)(C.QLocale_territory(this.h))
+func (this *QLocale) Territory() Territory {
+	int /* TODO  */
 }
 
-func (this *QLocale) Country() QLocale__Country {
-	return (QLocale__Country)(C.QLocale_country(this.h))
+func (this *QLocale) Country() Country {
+	int /* TODO  */
 }
 
 func (this *QLocale) Name() string {
@@ -1176,34 +1203,34 @@ func (this *QLocale) ToStringWithFloat(f float32) string {
 	return _ret
 }
 
-func (this *QLocale) ToString2(date QDate, format string) string {
+func (this *QLocale) ToString10(date QDate, format string) string {
 	format_ms := C.struct_miqt_string{}
 	format_ms.data = C.CString(format)
 	format_ms.len = C.size_t(len(format))
 	defer C.free(unsafe.Pointer(format_ms.data))
-	var _ms C.struct_miqt_string = C.QLocale_toString2(this.h, date.cPointer(), format_ms)
+	var _ms C.struct_miqt_string = C.QLocale_toString10(this.h, date.cPointer(), format_ms)
 	_ret := C.GoStringN(_ms.data, C.int(int64(_ms.len)))
 	C.free(unsafe.Pointer(_ms.data))
 	return _ret
 }
 
-func (this *QLocale) ToString3(time QTime, format string) string {
+func (this *QLocale) ToString11(time QTime, format string) string {
 	format_ms := C.struct_miqt_string{}
 	format_ms.data = C.CString(format)
 	format_ms.len = C.size_t(len(format))
 	defer C.free(unsafe.Pointer(format_ms.data))
-	var _ms C.struct_miqt_string = C.QLocale_toString3(this.h, time.cPointer(), format_ms)
+	var _ms C.struct_miqt_string = C.QLocale_toString11(this.h, time.cPointer(), format_ms)
 	_ret := C.GoStringN(_ms.data, C.int(int64(_ms.len)))
 	C.free(unsafe.Pointer(_ms.data))
 	return _ret
 }
 
-func (this *QLocale) ToString4(dateTime *QDateTime, format string) string {
+func (this *QLocale) ToString12(dateTime *QDateTime, format string) string {
 	format_ms := C.struct_miqt_string{}
 	format_ms.data = C.CString(format)
 	format_ms.len = C.size_t(len(format))
 	defer C.free(unsafe.Pointer(format_ms.data))
-	var _ms C.struct_miqt_string = C.QLocale_toString4(this.h, dateTime.cPointer(), format_ms)
+	var _ms C.struct_miqt_string = C.QLocale_toString12(this.h, dateTime.cPointer(), format_ms)
 	_ret := C.GoStringN(_ms.data, C.int(int64(_ms.len)))
 	C.free(unsafe.Pointer(_ms.data))
 	return _ret
@@ -1230,15 +1257,15 @@ func (this *QLocale) ToStringWithDateTime(dateTime *QDateTime) string {
 	return _ret
 }
 
-func (this *QLocale) ToString9(date QDate, format QLocale__FormatType, cal QCalendar) string {
-	var _ms C.struct_miqt_string = C.QLocale_toString9(this.h, date.cPointer(), (C.int)(format), cal.cPointer())
+func (this *QLocale) ToString17(date QDate, format FormatType, cal QCalendar) string {
+	var _ms C.struct_miqt_string = C.QLocale_toString17(this.h, date.cPointer(), format, cal.cPointer())
 	_ret := C.GoStringN(_ms.data, C.int(int64(_ms.len)))
 	C.free(unsafe.Pointer(_ms.data))
 	return _ret
 }
 
-func (this *QLocale) ToString10(dateTime *QDateTime, format QLocale__FormatType, cal QCalendar) string {
-	var _ms C.struct_miqt_string = C.QLocale_toString10(this.h, dateTime.cPointer(), (C.int)(format), cal.cPointer())
+func (this *QLocale) ToString18(dateTime *QDateTime, format FormatType, cal QCalendar) string {
+	var _ms C.struct_miqt_string = C.QLocale_toString18(this.h, dateTime.cPointer(), format, cal.cPointer())
 	_ret := C.GoStringN(_ms.data, C.int(int64(_ms.len)))
 	C.free(unsafe.Pointer(_ms.data))
 	return _ret
@@ -1265,46 +1292,12 @@ func (this *QLocale) DateTimeFormat() string {
 	return _ret
 }
 
-func (this *QLocale) ToDate(stringVal string) *QDate {
-	stringVal_ms := C.struct_miqt_string{}
-	stringVal_ms.data = C.CString(stringVal)
-	stringVal_ms.len = C.size_t(len(stringVal))
-	defer C.free(unsafe.Pointer(stringVal_ms.data))
-	_goptr := newQDate(C.QLocale_toDate(this.h, stringVal_ms))
-	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
-	return _goptr
-}
-
 func (this *QLocale) ToTime(stringVal string) *QTime {
 	stringVal_ms := C.struct_miqt_string{}
 	stringVal_ms.data = C.CString(stringVal)
 	stringVal_ms.len = C.size_t(len(stringVal))
 	defer C.free(unsafe.Pointer(stringVal_ms.data))
 	_goptr := newQTime(C.QLocale_toTime(this.h, stringVal_ms))
-	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
-	return _goptr
-}
-
-func (this *QLocale) ToDateTime(stringVal string) *QDateTime {
-	stringVal_ms := C.struct_miqt_string{}
-	stringVal_ms.data = C.CString(stringVal)
-	stringVal_ms.len = C.size_t(len(stringVal))
-	defer C.free(unsafe.Pointer(stringVal_ms.data))
-	_goptr := newQDateTime(C.QLocale_toDateTime(this.h, stringVal_ms))
-	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
-	return _goptr
-}
-
-func (this *QLocale) ToDate2(stringVal string, format string) *QDate {
-	stringVal_ms := C.struct_miqt_string{}
-	stringVal_ms.data = C.CString(stringVal)
-	stringVal_ms.len = C.size_t(len(stringVal))
-	defer C.free(unsafe.Pointer(stringVal_ms.data))
-	format_ms := C.struct_miqt_string{}
-	format_ms.data = C.CString(format)
-	format_ms.len = C.size_t(len(format))
-	defer C.free(unsafe.Pointer(format_ms.data))
-	_goptr := newQDate(C.QLocale_toDate2(this.h, stringVal_ms, format_ms))
 	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
 	return _goptr
 }
@@ -1323,6 +1316,40 @@ func (this *QLocale) ToTime2(stringVal string, format string) *QTime {
 	return _goptr
 }
 
+func (this *QLocale) ToDate(stringVal string) *QDate {
+	stringVal_ms := C.struct_miqt_string{}
+	stringVal_ms.data = C.CString(stringVal)
+	stringVal_ms.len = C.size_t(len(stringVal))
+	defer C.free(unsafe.Pointer(stringVal_ms.data))
+	_goptr := newQDate(C.QLocale_toDate(this.h, stringVal_ms))
+	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
+	return _goptr
+}
+
+func (this *QLocale) ToDate2(stringVal string, format string) *QDate {
+	stringVal_ms := C.struct_miqt_string{}
+	stringVal_ms.data = C.CString(stringVal)
+	stringVal_ms.len = C.size_t(len(stringVal))
+	defer C.free(unsafe.Pointer(stringVal_ms.data))
+	format_ms := C.struct_miqt_string{}
+	format_ms.data = C.CString(format)
+	format_ms.len = C.size_t(len(format))
+	defer C.free(unsafe.Pointer(format_ms.data))
+	_goptr := newQDate(C.QLocale_toDate2(this.h, stringVal_ms, format_ms))
+	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
+	return _goptr
+}
+
+func (this *QLocale) ToDateTime(stringVal string) *QDateTime {
+	stringVal_ms := C.struct_miqt_string{}
+	stringVal_ms.data = C.CString(stringVal)
+	stringVal_ms.len = C.size_t(len(stringVal))
+	defer C.free(unsafe.Pointer(stringVal_ms.data))
+	_goptr := newQDateTime(C.QLocale_toDateTime(this.h, stringVal_ms))
+	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
+	return _goptr
+}
+
 func (this *QLocale) ToDateTime2(stringVal string, format string) *QDateTime {
 	stringVal_ms := C.struct_miqt_string{}
 	stringVal_ms.data = C.CString(stringVal)
@@ -1337,22 +1364,12 @@ func (this *QLocale) ToDateTime2(stringVal string, format string) *QDateTime {
 	return _goptr
 }
 
-func (this *QLocale) ToDate3(stringVal string, format QLocale__FormatType, cal QCalendar) *QDate {
+func (this *QLocale) ToDate3(stringVal string, format FormatType, cal QCalendar) *QDate {
 	stringVal_ms := C.struct_miqt_string{}
 	stringVal_ms.data = C.CString(stringVal)
 	stringVal_ms.len = C.size_t(len(stringVal))
 	defer C.free(unsafe.Pointer(stringVal_ms.data))
-	_goptr := newQDate(C.QLocale_toDate3(this.h, stringVal_ms, (C.int)(format), cal.cPointer()))
-	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
-	return _goptr
-}
-
-func (this *QLocale) ToDateTime3(stringVal string, format QLocale__FormatType, cal QCalendar) *QDateTime {
-	stringVal_ms := C.struct_miqt_string{}
-	stringVal_ms.data = C.CString(stringVal)
-	stringVal_ms.len = C.size_t(len(stringVal))
-	defer C.free(unsafe.Pointer(stringVal_ms.data))
-	_goptr := newQDateTime(C.QLocale_toDateTime3(this.h, stringVal_ms, (C.int)(format), cal.cPointer()))
+	_goptr := newQDate(C.QLocale_toDate3(this.h, stringVal_ms, format, cal.cPointer()))
 	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
 	return _goptr
 }
@@ -1367,6 +1384,16 @@ func (this *QLocale) ToDate4(stringVal string, format string, cal QCalendar) *QD
 	format_ms.len = C.size_t(len(format))
 	defer C.free(unsafe.Pointer(format_ms.data))
 	_goptr := newQDate(C.QLocale_toDate4(this.h, stringVal_ms, format_ms, cal.cPointer()))
+	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
+	return _goptr
+}
+
+func (this *QLocale) ToDateTime3(stringVal string, format FormatType, cal QCalendar) *QDateTime {
+	stringVal_ms := C.struct_miqt_string{}
+	stringVal_ms.data = C.CString(stringVal)
+	stringVal_ms.len = C.size_t(len(stringVal))
+	defer C.free(unsafe.Pointer(stringVal_ms.data))
+	_goptr := newQDateTime(C.QLocale_toDateTime3(this.h, stringVal_ms, format, cal.cPointer()))
 	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
 	return _goptr
 }
@@ -1490,8 +1517,8 @@ func (this *QLocale) PmText() string {
 	return _ret
 }
 
-func (this *QLocale) MeasurementSystem() QLocale__MeasurementSystem {
-	return (QLocale__MeasurementSystem)(C.QLocale_measurementSystem(this.h))
+func (this *QLocale) MeasurementSystem() MeasurementSystem {
+	int /* TODO  */
 }
 
 func (this *QLocale) Collation() *QLocale {
@@ -1609,57 +1636,57 @@ func (this *QLocale) UiLanguages() []string {
 	return _ret
 }
 
-func QLocale_LanguageToCode(language QLocale__Language) string {
-	var _ms C.struct_miqt_string = C.QLocale_languageToCode((C.ushort)(language))
+func QLocale_LanguageToCode(language Language) string {
+	var _ms C.struct_miqt_string = C.QLocale_languageToCode(language)
 	_ret := C.GoStringN(_ms.data, C.int(int64(_ms.len)))
 	C.free(unsafe.Pointer(_ms.data))
 	return _ret
 }
 
-func QLocale_TerritoryToCode(territory QLocale__Country) string {
-	var _ms C.struct_miqt_string = C.QLocale_territoryToCode((C.ushort)(territory))
+func QLocale_TerritoryToCode(territory Territory) string {
+	var _ms C.struct_miqt_string = C.QLocale_territoryToCode(territory)
 	_ret := C.GoStringN(_ms.data, C.int(int64(_ms.len)))
 	C.free(unsafe.Pointer(_ms.data))
 	return _ret
 }
 
-func QLocale_CountryToCode(country QLocale__Country) string {
-	var _ms C.struct_miqt_string = C.QLocale_countryToCode((C.ushort)(country))
+func QLocale_CountryToCode(country Country) string {
+	var _ms C.struct_miqt_string = C.QLocale_countryToCode(country)
 	_ret := C.GoStringN(_ms.data, C.int(int64(_ms.len)))
 	C.free(unsafe.Pointer(_ms.data))
 	return _ret
 }
 
-func QLocale_ScriptToCode(script QLocale__Script) string {
-	var _ms C.struct_miqt_string = C.QLocale_scriptToCode((C.ushort)(script))
+func QLocale_ScriptToCode(script Script) string {
+	var _ms C.struct_miqt_string = C.QLocale_scriptToCode(script)
 	_ret := C.GoStringN(_ms.data, C.int(int64(_ms.len)))
 	C.free(unsafe.Pointer(_ms.data))
 	return _ret
 }
 
-func QLocale_LanguageToString(language QLocale__Language) string {
-	var _ms C.struct_miqt_string = C.QLocale_languageToString((C.ushort)(language))
+func QLocale_LanguageToString(language Language) string {
+	var _ms C.struct_miqt_string = C.QLocale_languageToString(language)
 	_ret := C.GoStringN(_ms.data, C.int(int64(_ms.len)))
 	C.free(unsafe.Pointer(_ms.data))
 	return _ret
 }
 
-func QLocale_TerritoryToString(territory QLocale__Country) string {
-	var _ms C.struct_miqt_string = C.QLocale_territoryToString((C.ushort)(territory))
+func QLocale_TerritoryToString(territory Territory) string {
+	var _ms C.struct_miqt_string = C.QLocale_territoryToString(territory)
 	_ret := C.GoStringN(_ms.data, C.int(int64(_ms.len)))
 	C.free(unsafe.Pointer(_ms.data))
 	return _ret
 }
 
-func QLocale_CountryToString(country QLocale__Country) string {
-	var _ms C.struct_miqt_string = C.QLocale_countryToString((C.ushort)(country))
+func QLocale_CountryToString(country Country) string {
+	var _ms C.struct_miqt_string = C.QLocale_countryToString(country)
 	_ret := C.GoStringN(_ms.data, C.int(int64(_ms.len)))
 	C.free(unsafe.Pointer(_ms.data))
 	return _ret
 }
 
-func QLocale_ScriptToString(script QLocale__Script) string {
-	var _ms C.struct_miqt_string = C.QLocale_scriptToString((C.ushort)(script))
+func QLocale_ScriptToString(script Script) string {
+	var _ms C.struct_miqt_string = C.QLocale_scriptToString(script)
 	_ret := C.GoStringN(_ms.data, C.int(int64(_ms.len)))
 	C.free(unsafe.Pointer(_ms.data))
 	return _ret
@@ -1681,8 +1708,8 @@ func QLocale_System() *QLocale {
 	return _goptr
 }
 
-func QLocale_MatchingLocales(language QLocale__Language, script QLocale__Script, territory QLocale__Country) []QLocale {
-	var _ma C.struct_miqt_array = C.QLocale_matchingLocales((C.ushort)(language), (C.ushort)(script), (C.ushort)(territory))
+func QLocale_MatchingLocales(language QLocale__Language, script QLocale__Script, territory Country) []QLocale {
+	var _ma C.struct_miqt_array = C.QLocale_matchingLocales((C.ushort)(language), (C.ushort)(script), territory)
 	_ret := make([]QLocale, int(_ma.len))
 	_outCast := (*[0xffff]*C.QLocale)(unsafe.Pointer(_ma.data)) // hey ya
 	for i := 0; i < int(_ma.len); i++ {
@@ -1693,22 +1720,22 @@ func QLocale_MatchingLocales(language QLocale__Language, script QLocale__Script,
 	return _ret
 }
 
-func QLocale_CountriesForLanguage(lang QLocale__Language) []QLocale__Country {
-	var _ma C.struct_miqt_array = C.QLocale_countriesForLanguage((C.ushort)(lang))
-	_ret := make([]QLocale__Country, int(_ma.len))
-	_outCast := (*[0xffff]C.ushort)(unsafe.Pointer(_ma.data)) // hey ya
+func QLocale_CountriesForLanguage(lang Language) []Country {
+	var _ma C.struct_miqt_array = C.QLocale_countriesForLanguage(lang)
+	_ret := make([]Country, int(_ma.len))
+	_outCast := (*[0xffff]C.Country)(unsafe.Pointer(_ma.data)) // hey ya
 	for i := 0; i < int(_ma.len); i++ {
-		_ret[i] = (QLocale__Country)(_outCast[i])
+		int /* TODO  */
 	}
 	return _ret
 }
 
-func (this *QLocale) SetNumberOptions(options QLocale__NumberOption) {
-	C.QLocale_setNumberOptions(this.h, (C.int)(options))
+func (this *QLocale) SetNumberOptions(options NumberOptions) {
+	C.QLocale_setNumberOptions(this.h, options)
 }
 
-func (this *QLocale) NumberOptions() QLocale__NumberOption {
-	return (QLocale__NumberOption)(C.QLocale_numberOptions(this.h))
+func (this *QLocale) NumberOptions() NumberOptions {
+	int /* TODO  */
 }
 
 func (this *QLocale) QuoteString(str string) string {
@@ -1734,6 +1761,20 @@ func (this *QLocale) CreateSeparatedList(strl []string) string {
 	}
 	strl_ma := C.struct_miqt_array{len: C.size_t(len(strl)), data: unsafe.Pointer(strl_CArray)}
 	var _ms C.struct_miqt_string = C.QLocale_createSeparatedList(this.h, strl_ma)
+	_ret := C.GoStringN(_ms.data, C.int(int64(_ms.len)))
+	C.free(unsafe.Pointer(_ms.data))
+	return _ret
+}
+
+func (this *QLocale) NameWithSeparator(separator TagSeparator) string {
+	var _ms C.struct_miqt_string = C.QLocale_nameWithSeparator(this.h, separator)
+	_ret := C.GoStringN(_ms.data, C.int(int64(_ms.len)))
+	C.free(unsafe.Pointer(_ms.data))
+	return _ret
+}
+
+func (this *QLocale) Bcp47NameWithSeparator(separator TagSeparator) string {
+	var _ms C.struct_miqt_string = C.QLocale_bcp47NameWithSeparator(this.h, separator)
 	_ret := C.GoStringN(_ms.data, C.int(int64(_ms.len)))
 	C.free(unsafe.Pointer(_ms.data))
 	return _ret
@@ -1819,136 +1860,232 @@ func (this *QLocale) ToDouble2(s string, ok *bool) float64 {
 	return (float64)(C.QLocale_toDouble2(this.h, s_ms, (*C.bool)(unsafe.Pointer(ok))))
 }
 
-func (this *QLocale) ToString12(f float64, format int8) string {
-	var _ms C.struct_miqt_string = C.QLocale_toString12(this.h, (C.double)(f), (C.char)(format))
+func (this *QLocale) ToString20(f float64, format int8) string {
+	var _ms C.struct_miqt_string = C.QLocale_toString20(this.h, (C.double)(f), (C.char)(format))
 	_ret := C.GoStringN(_ms.data, C.int(int64(_ms.len)))
 	C.free(unsafe.Pointer(_ms.data))
 	return _ret
 }
 
-func (this *QLocale) ToString13(f float64, format int8, precision int) string {
-	var _ms C.struct_miqt_string = C.QLocale_toString13(this.h, (C.double)(f), (C.char)(format), (C.int)(precision))
+func (this *QLocale) ToString21(f float64, format int8, precision int) string {
+	var _ms C.struct_miqt_string = C.QLocale_toString21(this.h, (C.double)(f), (C.char)(format), (C.int)(precision))
 	_ret := C.GoStringN(_ms.data, C.int(int64(_ms.len)))
 	C.free(unsafe.Pointer(_ms.data))
 	return _ret
 }
 
-func (this *QLocale) ToString14(f float32, format int8) string {
-	var _ms C.struct_miqt_string = C.QLocale_toString14(this.h, (C.float)(f), (C.char)(format))
+func (this *QLocale) ToString22(f float32, format int8) string {
+	var _ms C.struct_miqt_string = C.QLocale_toString22(this.h, (C.float)(f), (C.char)(format))
 	_ret := C.GoStringN(_ms.data, C.int(int64(_ms.len)))
 	C.free(unsafe.Pointer(_ms.data))
 	return _ret
 }
 
-func (this *QLocale) ToString15(f float32, format int8, precision int) string {
-	var _ms C.struct_miqt_string = C.QLocale_toString15(this.h, (C.float)(f), (C.char)(format), (C.int)(precision))
+func (this *QLocale) ToString23(f float32, format int8, precision int) string {
+	var _ms C.struct_miqt_string = C.QLocale_toString23(this.h, (C.float)(f), (C.char)(format), (C.int)(precision))
 	_ret := C.GoStringN(_ms.data, C.int(int64(_ms.len)))
 	C.free(unsafe.Pointer(_ms.data))
 	return _ret
 }
 
-func (this *QLocale) ToString16(date QDate, format QLocale__FormatType) string {
-	var _ms C.struct_miqt_string = C.QLocale_toString16(this.h, date.cPointer(), (C.int)(format))
+func (this *QLocale) ToString24(date QDate, format FormatType) string {
+	var _ms C.struct_miqt_string = C.QLocale_toString24(this.h, date.cPointer(), format)
 	_ret := C.GoStringN(_ms.data, C.int(int64(_ms.len)))
 	C.free(unsafe.Pointer(_ms.data))
 	return _ret
 }
 
-func (this *QLocale) ToString17(time QTime, format QLocale__FormatType) string {
-	var _ms C.struct_miqt_string = C.QLocale_toString17(this.h, time.cPointer(), (C.int)(format))
+func (this *QLocale) ToString25(time QTime, format FormatType) string {
+	var _ms C.struct_miqt_string = C.QLocale_toString25(this.h, time.cPointer(), format)
 	_ret := C.GoStringN(_ms.data, C.int(int64(_ms.len)))
 	C.free(unsafe.Pointer(_ms.data))
 	return _ret
 }
 
-func (this *QLocale) ToString18(dateTime *QDateTime, format QLocale__FormatType) string {
-	var _ms C.struct_miqt_string = C.QLocale_toString18(this.h, dateTime.cPointer(), (C.int)(format))
+func (this *QLocale) ToString26(dateTime *QDateTime, format FormatType) string {
+	var _ms C.struct_miqt_string = C.QLocale_toString26(this.h, dateTime.cPointer(), format)
 	_ret := C.GoStringN(_ms.data, C.int(int64(_ms.len)))
 	C.free(unsafe.Pointer(_ms.data))
 	return _ret
 }
 
-func (this *QLocale) DateFormatWithFormat(format QLocale__FormatType) string {
-	var _ms C.struct_miqt_string = C.QLocale_dateFormatWithFormat(this.h, (C.int)(format))
+func (this *QLocale) DateFormatWithFormat(format FormatType) string {
+	var _ms C.struct_miqt_string = C.QLocale_dateFormatWithFormat(this.h, format)
 	_ret := C.GoStringN(_ms.data, C.int(int64(_ms.len)))
 	C.free(unsafe.Pointer(_ms.data))
 	return _ret
 }
 
-func (this *QLocale) TimeFormatWithFormat(format QLocale__FormatType) string {
-	var _ms C.struct_miqt_string = C.QLocale_timeFormatWithFormat(this.h, (C.int)(format))
+func (this *QLocale) TimeFormatWithFormat(format FormatType) string {
+	var _ms C.struct_miqt_string = C.QLocale_timeFormatWithFormat(this.h, format)
 	_ret := C.GoStringN(_ms.data, C.int(int64(_ms.len)))
 	C.free(unsafe.Pointer(_ms.data))
 	return _ret
 }
 
-func (this *QLocale) DateTimeFormatWithFormat(format QLocale__FormatType) string {
-	var _ms C.struct_miqt_string = C.QLocale_dateTimeFormatWithFormat(this.h, (C.int)(format))
+func (this *QLocale) DateTimeFormatWithFormat(format FormatType) string {
+	var _ms C.struct_miqt_string = C.QLocale_dateTimeFormatWithFormat(this.h, format)
 	_ret := C.GoStringN(_ms.data, C.int(int64(_ms.len)))
 	C.free(unsafe.Pointer(_ms.data))
 	return _ret
 }
 
-func (this *QLocale) ToDate5(stringVal string, param2 QLocale__FormatType) *QDate {
+func (this *QLocale) ToTime3(stringVal string, param2 FormatType) *QTime {
 	stringVal_ms := C.struct_miqt_string{}
 	stringVal_ms.data = C.CString(stringVal)
 	stringVal_ms.len = C.size_t(len(stringVal))
 	defer C.free(unsafe.Pointer(stringVal_ms.data))
-	_goptr := newQDate(C.QLocale_toDate5(this.h, stringVal_ms, (C.int)(param2)))
+	_goptr := newQTime(C.QLocale_toTime3(this.h, stringVal_ms, param2))
 	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
 	return _goptr
 }
 
-func (this *QLocale) ToTime3(stringVal string, param2 QLocale__FormatType) *QTime {
+func (this *QLocale) ToDate5(stringVal string, param2 FormatType) *QDate {
 	stringVal_ms := C.struct_miqt_string{}
 	stringVal_ms.data = C.CString(stringVal)
 	stringVal_ms.len = C.size_t(len(stringVal))
 	defer C.free(unsafe.Pointer(stringVal_ms.data))
-	_goptr := newQTime(C.QLocale_toTime3(this.h, stringVal_ms, (C.int)(param2)))
+	_goptr := newQDate(C.QLocale_toDate5(this.h, stringVal_ms, param2))
 	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
 	return _goptr
 }
 
-func (this *QLocale) ToDateTime5(stringVal string, format QLocale__FormatType) *QDateTime {
+func (this *QLocale) ToDate6(stringVal string, param2 FormatType, baseYear int) *QDate {
 	stringVal_ms := C.struct_miqt_string{}
 	stringVal_ms.data = C.CString(stringVal)
 	stringVal_ms.len = C.size_t(len(stringVal))
 	defer C.free(unsafe.Pointer(stringVal_ms.data))
-	_goptr := newQDateTime(C.QLocale_toDateTime5(this.h, stringVal_ms, (C.int)(format)))
+	_goptr := newQDate(C.QLocale_toDate6(this.h, stringVal_ms, param2, (C.int)(baseYear)))
 	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
 	return _goptr
 }
 
-func (this *QLocale) MonthName2(param1 int, format QLocale__FormatType) string {
-	var _ms C.struct_miqt_string = C.QLocale_monthName2(this.h, (C.int)(param1), (C.int)(format))
+func (this *QLocale) ToDate7(stringVal string, format string, baseYear int) *QDate {
+	stringVal_ms := C.struct_miqt_string{}
+	stringVal_ms.data = C.CString(stringVal)
+	stringVal_ms.len = C.size_t(len(stringVal))
+	defer C.free(unsafe.Pointer(stringVal_ms.data))
+	format_ms := C.struct_miqt_string{}
+	format_ms.data = C.CString(format)
+	format_ms.len = C.size_t(len(format))
+	defer C.free(unsafe.Pointer(format_ms.data))
+	_goptr := newQDate(C.QLocale_toDate7(this.h, stringVal_ms, format_ms, (C.int)(baseYear)))
+	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
+	return _goptr
+}
+
+func (this *QLocale) ToDateTime5(stringVal string, format FormatType) *QDateTime {
+	stringVal_ms := C.struct_miqt_string{}
+	stringVal_ms.data = C.CString(stringVal)
+	stringVal_ms.len = C.size_t(len(stringVal))
+	defer C.free(unsafe.Pointer(stringVal_ms.data))
+	_goptr := newQDateTime(C.QLocale_toDateTime5(this.h, stringVal_ms, format))
+	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
+	return _goptr
+}
+
+func (this *QLocale) ToDateTime6(stringVal string, format FormatType, baseYear int) *QDateTime {
+	stringVal_ms := C.struct_miqt_string{}
+	stringVal_ms.data = C.CString(stringVal)
+	stringVal_ms.len = C.size_t(len(stringVal))
+	defer C.free(unsafe.Pointer(stringVal_ms.data))
+	_goptr := newQDateTime(C.QLocale_toDateTime6(this.h, stringVal_ms, format, (C.int)(baseYear)))
+	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
+	return _goptr
+}
+
+func (this *QLocale) ToDateTime7(stringVal string, format string, baseYear int) *QDateTime {
+	stringVal_ms := C.struct_miqt_string{}
+	stringVal_ms.data = C.CString(stringVal)
+	stringVal_ms.len = C.size_t(len(stringVal))
+	defer C.free(unsafe.Pointer(stringVal_ms.data))
+	format_ms := C.struct_miqt_string{}
+	format_ms.data = C.CString(format)
+	format_ms.len = C.size_t(len(format))
+	defer C.free(unsafe.Pointer(format_ms.data))
+	_goptr := newQDateTime(C.QLocale_toDateTime7(this.h, stringVal_ms, format_ms, (C.int)(baseYear)))
+	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
+	return _goptr
+}
+
+func (this *QLocale) ToDate8(stringVal string, format FormatType, cal QCalendar, baseYear int) *QDate {
+	stringVal_ms := C.struct_miqt_string{}
+	stringVal_ms.data = C.CString(stringVal)
+	stringVal_ms.len = C.size_t(len(stringVal))
+	defer C.free(unsafe.Pointer(stringVal_ms.data))
+	_goptr := newQDate(C.QLocale_toDate8(this.h, stringVal_ms, format, cal.cPointer(), (C.int)(baseYear)))
+	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
+	return _goptr
+}
+
+func (this *QLocale) ToDate9(stringVal string, format string, cal QCalendar, baseYear int) *QDate {
+	stringVal_ms := C.struct_miqt_string{}
+	stringVal_ms.data = C.CString(stringVal)
+	stringVal_ms.len = C.size_t(len(stringVal))
+	defer C.free(unsafe.Pointer(stringVal_ms.data))
+	format_ms := C.struct_miqt_string{}
+	format_ms.data = C.CString(format)
+	format_ms.len = C.size_t(len(format))
+	defer C.free(unsafe.Pointer(format_ms.data))
+	_goptr := newQDate(C.QLocale_toDate9(this.h, stringVal_ms, format_ms, cal.cPointer(), (C.int)(baseYear)))
+	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
+	return _goptr
+}
+
+func (this *QLocale) ToDateTime8(stringVal string, format FormatType, cal QCalendar, baseYear int) *QDateTime {
+	stringVal_ms := C.struct_miqt_string{}
+	stringVal_ms.data = C.CString(stringVal)
+	stringVal_ms.len = C.size_t(len(stringVal))
+	defer C.free(unsafe.Pointer(stringVal_ms.data))
+	_goptr := newQDateTime(C.QLocale_toDateTime8(this.h, stringVal_ms, format, cal.cPointer(), (C.int)(baseYear)))
+	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
+	return _goptr
+}
+
+func (this *QLocale) ToDateTime9(stringVal string, format string, cal QCalendar, baseYear int) *QDateTime {
+	stringVal_ms := C.struct_miqt_string{}
+	stringVal_ms.data = C.CString(stringVal)
+	stringVal_ms.len = C.size_t(len(stringVal))
+	defer C.free(unsafe.Pointer(stringVal_ms.data))
+	format_ms := C.struct_miqt_string{}
+	format_ms.data = C.CString(format)
+	format_ms.len = C.size_t(len(format))
+	defer C.free(unsafe.Pointer(format_ms.data))
+	_goptr := newQDateTime(C.QLocale_toDateTime9(this.h, stringVal_ms, format_ms, cal.cPointer(), (C.int)(baseYear)))
+	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
+	return _goptr
+}
+
+func (this *QLocale) MonthName2(param1 int, format FormatType) string {
+	var _ms C.struct_miqt_string = C.QLocale_monthName2(this.h, (C.int)(param1), format)
 	_ret := C.GoStringN(_ms.data, C.int(int64(_ms.len)))
 	C.free(unsafe.Pointer(_ms.data))
 	return _ret
 }
 
-func (this *QLocale) StandaloneMonthName2(param1 int, format QLocale__FormatType) string {
-	var _ms C.struct_miqt_string = C.QLocale_standaloneMonthName2(this.h, (C.int)(param1), (C.int)(format))
+func (this *QLocale) StandaloneMonthName2(param1 int, format FormatType) string {
+	var _ms C.struct_miqt_string = C.QLocale_standaloneMonthName2(this.h, (C.int)(param1), format)
 	_ret := C.GoStringN(_ms.data, C.int(int64(_ms.len)))
 	C.free(unsafe.Pointer(_ms.data))
 	return _ret
 }
 
-func (this *QLocale) DayName2(param1 int, format QLocale__FormatType) string {
-	var _ms C.struct_miqt_string = C.QLocale_dayName2(this.h, (C.int)(param1), (C.int)(format))
+func (this *QLocale) DayName2(param1 int, format FormatType) string {
+	var _ms C.struct_miqt_string = C.QLocale_dayName2(this.h, (C.int)(param1), format)
 	_ret := C.GoStringN(_ms.data, C.int(int64(_ms.len)))
 	C.free(unsafe.Pointer(_ms.data))
 	return _ret
 }
 
-func (this *QLocale) StandaloneDayName2(param1 int, format QLocale__FormatType) string {
-	var _ms C.struct_miqt_string = C.QLocale_standaloneDayName2(this.h, (C.int)(param1), (C.int)(format))
+func (this *QLocale) StandaloneDayName2(param1 int, format FormatType) string {
+	var _ms C.struct_miqt_string = C.QLocale_standaloneDayName2(this.h, (C.int)(param1), format)
 	_ret := C.GoStringN(_ms.data, C.int(int64(_ms.len)))
 	C.free(unsafe.Pointer(_ms.data))
 	return _ret
 }
 
-func (this *QLocale) CurrencySymbolWithQLocaleCurrencySymbolFormat(param1 QLocale__CurrencySymbolFormat) string {
-	var _ms C.struct_miqt_string = C.QLocale_currencySymbolWithQLocaleCurrencySymbolFormat(this.h, (C.int)(param1))
+func (this *QLocale) CurrencySymbolWithCurrencySymbolFormat(param1 CurrencySymbolFormat) string {
+	var _ms C.struct_miqt_string = C.QLocale_currencySymbolWithCurrencySymbolFormat(this.h, param1)
 	_ret := C.GoStringN(_ms.data, C.int(int64(_ms.len)))
 	C.free(unsafe.Pointer(_ms.data))
 	return _ret
@@ -2071,26 +2208,39 @@ func (this *QLocale) FormattedDataSize2(bytes int64, precision int) string {
 	return _ret
 }
 
-func (this *QLocale) FormattedDataSize3(bytes int64, precision int, format QLocale__DataSizeFormat) string {
-	var _ms C.struct_miqt_string = C.QLocale_formattedDataSize3(this.h, (C.longlong)(bytes), (C.int)(precision), (C.int)(format))
+func (this *QLocale) FormattedDataSize3(bytes int64, precision int, format DataSizeFormats) string {
+	var _ms C.struct_miqt_string = C.QLocale_formattedDataSize3(this.h, (C.longlong)(bytes), (C.int)(precision), format)
 	_ret := C.GoStringN(_ms.data, C.int(int64(_ms.len)))
 	C.free(unsafe.Pointer(_ms.data))
 	return _ret
 }
 
-func QLocale_LanguageToCode2(language QLocale__Language, codeTypes QLocale__LanguageCodeType) string {
-	var _ms C.struct_miqt_string = C.QLocale_languageToCode2((C.ushort)(language), (C.int)(codeTypes))
+func (this *QLocale) UiLanguagesWithSeparator(separator TagSeparator) []string {
+	var _ma C.struct_miqt_array = C.QLocale_uiLanguagesWithSeparator(this.h, separator)
+	_ret := make([]string, int(_ma.len))
+	_outCast := (*[0xffff]C.struct_miqt_string)(unsafe.Pointer(_ma.data)) // hey ya
+	for i := 0; i < int(_ma.len); i++ {
+		var _lv_ms C.struct_miqt_string = _outCast[i]
+		_lv_ret := C.GoStringN(_lv_ms.data, C.int(int64(_lv_ms.len)))
+		C.free(unsafe.Pointer(_lv_ms.data))
+		_ret[i] = _lv_ret
+	}
+	return _ret
+}
+
+func QLocale_LanguageToCode2(language Language, codeTypes LanguageCodeTypes) string {
+	var _ms C.struct_miqt_string = C.QLocale_languageToCode2(language, codeTypes)
 	_ret := C.GoStringN(_ms.data, C.int(int64(_ms.len)))
 	C.free(unsafe.Pointer(_ms.data))
 	return _ret
 }
 
-func (this *QLocale) QuoteString2(str string, style QLocale__QuotationStyle) string {
+func (this *QLocale) QuoteString2(str string, style QuotationStyle) string {
 	str_ms := C.struct_miqt_string{}
 	str_ms.data = C.CString(str)
 	str_ms.len = C.size_t(len(str))
 	defer C.free(unsafe.Pointer(str_ms.data))
-	var _ms C.struct_miqt_string = C.QLocale_quoteString2(this.h, str_ms, (C.int)(style))
+	var _ms C.struct_miqt_string = C.QLocale_quoteString2(this.h, str_ms, style)
 	_ret := C.GoStringN(_ms.data, C.int(int64(_ms.len)))
 	C.free(unsafe.Pointer(_ms.data))
 	return _ret

@@ -32,17 +32,17 @@ QSqlError* QSqlError_new4(struct miqt_string driverText, struct miqt_string data
 	return new (std::nothrow) QSqlError(driverText_QString, databaseText_QString);
 }
 
-QSqlError* QSqlError_new5(struct miqt_string driverText, struct miqt_string databaseText, int type) {
+QSqlError* QSqlError_new5(struct miqt_string driverText, struct miqt_string databaseText, ErrorType type) {
 	QString driverText_QString = QString::fromUtf8(driverText.data, driverText.len);
 	QString databaseText_QString = QString::fromUtf8(databaseText.data, databaseText.len);
-	return new (std::nothrow) QSqlError(driverText_QString, databaseText_QString, static_cast<QSqlError::ErrorType>(type));
+	return new (std::nothrow) QSqlError(driverText_QString, databaseText_QString, type);
 }
 
-QSqlError* QSqlError_new6(struct miqt_string driverText, struct miqt_string databaseText, int type, struct miqt_string errorCode) {
+QSqlError* QSqlError_new6(struct miqt_string driverText, struct miqt_string databaseText, ErrorType type, struct miqt_string nativeErrorCode) {
 	QString driverText_QString = QString::fromUtf8(driverText.data, driverText.len);
 	QString databaseText_QString = QString::fromUtf8(databaseText.data, databaseText.len);
-	QString errorCode_QString = QString::fromUtf8(errorCode.data, errorCode.len);
-	return new (std::nothrow) QSqlError(driverText_QString, databaseText_QString, static_cast<QSqlError::ErrorType>(type), errorCode_QString);
+	QString nativeErrorCode_QString = QString::fromUtf8(nativeErrorCode.data, nativeErrorCode.len);
+	return new (std::nothrow) QSqlError(driverText_QString, databaseText_QString, type, nativeErrorCode_QString);
 }
 
 void QSqlError_operatorAssign(QSqlError* self, QSqlError* other) {
@@ -83,9 +83,8 @@ struct miqt_string QSqlError_databaseText(const QSqlError* self) {
 	return _ms;
 }
 
-int QSqlError_type(const QSqlError* self) {
-	QSqlError::ErrorType _ret = self->type();
-	return static_cast<int>(_ret);
+ErrorType QSqlError_type(const QSqlError* self) {
+	return self->type();
 }
 
 struct miqt_string QSqlError_nativeErrorCode(const QSqlError* self) {

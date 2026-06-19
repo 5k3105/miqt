@@ -29,7 +29,6 @@ class QAccessible__State;
 class QAccessibleEvent;
 class QAccessibleInterface;
 class QObject;
-class QTextCursor;
 #else
 typedef struct QAccessible QAccessible;
 typedef struct QAccessible__ActivationObserver QAccessible__ActivationObserver;
@@ -37,22 +36,24 @@ typedef struct QAccessible__State QAccessible__State;
 typedef struct QAccessibleEvent QAccessibleEvent;
 typedef struct QAccessibleInterface QAccessibleInterface;
 typedef struct QObject QObject;
-typedef struct QTextCursor QTextCursor;
 #endif
 
-void QAccessible_installActivationObserver(QAccessible__ActivationObserver* param1);
-void QAccessible_removeActivationObserver(QAccessible__ActivationObserver* param1);
+void QAccessible_installFactory(InterfaceFactory param1);
+void QAccessible_removeFactory(InterfaceFactory param1);
+UpdateHandler QAccessible_installUpdateHandler(UpdateHandler param1);
+RootObjectHandler QAccessible_installRootObjectHandler(RootObjectHandler param1);
+void QAccessible_installActivationObserver(ActivationObserver* param1);
+void QAccessible_removeActivationObserver(ActivationObserver* param1);
 QAccessibleInterface* QAccessible_queryAccessibleInterface(QObject* param1);
-unsigned int QAccessible_uniqueId(QAccessibleInterface* iface);
-QAccessibleInterface* QAccessible_accessibleInterface(unsigned int uniqueId);
-unsigned int QAccessible_registerAccessibleInterface(QAccessibleInterface* iface);
-void QAccessible_deleteAccessibleInterface(unsigned int uniqueId);
+Id QAccessible_uniqueId(QAccessibleInterface* iface);
+QAccessibleInterface* QAccessible_accessibleInterface(Id uniqueId);
+Id QAccessible_registerAccessibleInterface(QAccessibleInterface* iface);
+void QAccessible_deleteAccessibleInterface(Id uniqueId);
 void QAccessible_updateAccessibility(QAccessibleEvent* event);
 bool QAccessible_isActive();
 void QAccessible_setActive(bool active);
 void QAccessible_setRootObject(QObject* object);
 void QAccessible_cleanup();
-struct miqt_map /* tuple of int and int */  QAccessible_qAccessibleTextBoundaryHelper(QTextCursor* cursor, int boundaryType);
 
 void QAccessible_delete(QAccessible* self);
 
@@ -131,11 +132,13 @@ unsigned long long QAccessible__State_supportsAutoCompletion(const QAccessible__
 void QAccessible__State_setSupportsAutoCompletion(QAccessible__State* self, unsigned long long supportsAutoCompletion);
 unsigned long long QAccessible__State_searchEdit(const QAccessible__State* self);
 void QAccessible__State_setSearchEdit(QAccessible__State* self, unsigned long long searchEdit);
+unsigned long long QAccessible__State_reserved(const QAccessible__State* self);
+void QAccessible__State_setQtReserved(QAccessible__State* self, unsigned long long qt_reserved);
 
 void QAccessible__State_delete(QAccessible__State* self);
 
 void QAccessible__ActivationObserver_accessibilityActiveChanged(QAccessible__ActivationObserver* self, bool active);
-void QAccessible__ActivationObserver_operatorAssign(QAccessible__ActivationObserver* self, QAccessible__ActivationObserver* param1);
+void QAccessible__ActivationObserver_operatorAssign(QAccessible__ActivationObserver* self, const ActivationObserver* param1);
 
 void QAccessible__ActivationObserver_delete(QAccessible__ActivationObserver* self);
 

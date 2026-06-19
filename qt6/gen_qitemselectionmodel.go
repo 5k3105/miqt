@@ -150,14 +150,6 @@ func (this *QItemSelectionRange) Intersected(other *QItemSelectionRange) *QItemS
 	return _goptr
 }
 
-func (this *QItemSelectionRange) OperatorEqual(other *QItemSelectionRange) bool {
-	return (bool)(C.QItemSelectionRange_operatorEqual(this.h, other.cPointer()))
-}
-
-func (this *QItemSelectionRange) OperatorNotEqual(other *QItemSelectionRange) bool {
-	return (bool)(C.QItemSelectionRange_operatorNotEqual(this.h, other.cPointer()))
-}
-
 func (this *QItemSelectionRange) IsValid() bool {
 	return (bool)(C.QItemSelectionRange_isValid(this.h))
 }
@@ -353,15 +345,15 @@ func (this *QItemSelectionModel) SetModel(model *QAbstractItemModel) {
 	C.QItemSelectionModel_setModel(this.h, model.cPointer())
 }
 
-func (this *QItemSelectionModel) SetCurrentIndex(index *QModelIndex, command QItemSelectionModel__SelectionFlag) {
+func (this *QItemSelectionModel) SetCurrentIndex(index *QModelIndex, command SelectionFlag) {
 	C.QItemSelectionModel_setCurrentIndex(this.h, index.cPointer(), (C.int)(command))
 }
 
-func (this *QItemSelectionModel) Select(index *QModelIndex, command QItemSelectionModel__SelectionFlag) {
+func (this *QItemSelectionModel) Select(index *QModelIndex, command SelectionFlag) {
 	C.QItemSelectionModel_select(this.h, index.cPointer(), (C.int)(command))
 }
 
-func (this *QItemSelectionModel) Select2(selection *QItemSelection, command QItemSelectionModel__SelectionFlag) {
+func (this *QItemSelectionModel) Select2(selection *QItemSelection, command SelectionFlag) {
 	C.QItemSelectionModel_select2(this.h, selection.cPointer(), (C.int)(command))
 }
 
@@ -621,12 +613,12 @@ func (this *QItemSelectionModel) IsSignalConnected(signal *QMetaMethod) bool {
 
 }
 
-func (this *QItemSelectionModel) callVirtualBase_SetCurrentIndex(index *QModelIndex, command QItemSelectionModel__SelectionFlag) {
+func (this *QItemSelectionModel) callVirtualBase_SetCurrentIndex(index *QModelIndex, command SelectionFlag) {
 
 	C.QItemSelectionModel_virtualbase_setCurrentIndex(unsafe.Pointer(this.h), index.cPointer(), (C.int)(command))
 
 }
-func (this *QItemSelectionModel) OnSetCurrentIndex(slot func(super func(index *QModelIndex, command QItemSelectionModel__SelectionFlag), index *QModelIndex, command QItemSelectionModel__SelectionFlag)) {
+func (this *QItemSelectionModel) OnSetCurrentIndex(slot func(super func(index *QModelIndex, command SelectionFlag), index *QModelIndex, command SelectionFlag)) {
 	ok := C.QItemSelectionModel_override_virtual_setCurrentIndex(unsafe.Pointer(this.h), C.intptr_t(cgo.NewHandle(slot)))
 	if !ok {
 		panic("miqt: can only override virtual methods for directly constructed types")
@@ -635,7 +627,7 @@ func (this *QItemSelectionModel) OnSetCurrentIndex(slot func(super func(index *Q
 
 //export miqt_exec_callback_QItemSelectionModel_setCurrentIndex
 func miqt_exec_callback_QItemSelectionModel_setCurrentIndex(self *C.QItemSelectionModel, cb C.intptr_t, index *C.QModelIndex, command C.int) {
-	gofunc, ok := cgo.Handle(cb).Value().(func(super func(index *QModelIndex, command QItemSelectionModel__SelectionFlag), index *QModelIndex, command QItemSelectionModel__SelectionFlag))
+	gofunc, ok := cgo.Handle(cb).Value().(func(super func(index *QModelIndex, command SelectionFlag), index *QModelIndex, command SelectionFlag))
 	if !ok {
 		panic("miqt: callback of non-callback type (heap corruption?)")
 	}
@@ -643,18 +635,18 @@ func miqt_exec_callback_QItemSelectionModel_setCurrentIndex(self *C.QItemSelecti
 	// Convert all CABI parameters to Go parameters
 	slotval1 := newQModelIndex(index)
 
-	slotval2 := (QItemSelectionModel__SelectionFlag)(command)
+	slotval2 := (SelectionFlag)(command)
 
 	gofunc((&QItemSelectionModel{h: self}).callVirtualBase_SetCurrentIndex, slotval1, slotval2)
 
 }
 
-func (this *QItemSelectionModel) callVirtualBase_Select(index *QModelIndex, command QItemSelectionModel__SelectionFlag) {
+func (this *QItemSelectionModel) callVirtualBase_Select(index *QModelIndex, command SelectionFlag) {
 
 	C.QItemSelectionModel_virtualbase_select(unsafe.Pointer(this.h), index.cPointer(), (C.int)(command))
 
 }
-func (this *QItemSelectionModel) OnSelect(slot func(super func(index *QModelIndex, command QItemSelectionModel__SelectionFlag), index *QModelIndex, command QItemSelectionModel__SelectionFlag)) {
+func (this *QItemSelectionModel) OnSelect(slot func(super func(index *QModelIndex, command SelectionFlag), index *QModelIndex, command SelectionFlag)) {
 	ok := C.QItemSelectionModel_override_virtual_select(unsafe.Pointer(this.h), C.intptr_t(cgo.NewHandle(slot)))
 	if !ok {
 		panic("miqt: can only override virtual methods for directly constructed types")
@@ -663,7 +655,7 @@ func (this *QItemSelectionModel) OnSelect(slot func(super func(index *QModelInde
 
 //export miqt_exec_callback_QItemSelectionModel_select
 func miqt_exec_callback_QItemSelectionModel_select(self *C.QItemSelectionModel, cb C.intptr_t, index *C.QModelIndex, command C.int) {
-	gofunc, ok := cgo.Handle(cb).Value().(func(super func(index *QModelIndex, command QItemSelectionModel__SelectionFlag), index *QModelIndex, command QItemSelectionModel__SelectionFlag))
+	gofunc, ok := cgo.Handle(cb).Value().(func(super func(index *QModelIndex, command SelectionFlag), index *QModelIndex, command SelectionFlag))
 	if !ok {
 		panic("miqt: callback of non-callback type (heap corruption?)")
 	}
@@ -671,18 +663,18 @@ func miqt_exec_callback_QItemSelectionModel_select(self *C.QItemSelectionModel, 
 	// Convert all CABI parameters to Go parameters
 	slotval1 := newQModelIndex(index)
 
-	slotval2 := (QItemSelectionModel__SelectionFlag)(command)
+	slotval2 := (SelectionFlag)(command)
 
 	gofunc((&QItemSelectionModel{h: self}).callVirtualBase_Select, slotval1, slotval2)
 
 }
 
-func (this *QItemSelectionModel) callVirtualBase_Select2(selection *QItemSelection, command QItemSelectionModel__SelectionFlag) {
+func (this *QItemSelectionModel) callVirtualBase_Select2(selection *QItemSelection, command SelectionFlag) {
 
 	C.QItemSelectionModel_virtualbase_select2(unsafe.Pointer(this.h), selection.cPointer(), (C.int)(command))
 
 }
-func (this *QItemSelectionModel) OnSelect2(slot func(super func(selection *QItemSelection, command QItemSelectionModel__SelectionFlag), selection *QItemSelection, command QItemSelectionModel__SelectionFlag)) {
+func (this *QItemSelectionModel) OnSelect2(slot func(super func(selection *QItemSelection, command SelectionFlag), selection *QItemSelection, command SelectionFlag)) {
 	ok := C.QItemSelectionModel_override_virtual_select2(unsafe.Pointer(this.h), C.intptr_t(cgo.NewHandle(slot)))
 	if !ok {
 		panic("miqt: can only override virtual methods for directly constructed types")
@@ -691,7 +683,7 @@ func (this *QItemSelectionModel) OnSelect2(slot func(super func(selection *QItem
 
 //export miqt_exec_callback_QItemSelectionModel_select2
 func miqt_exec_callback_QItemSelectionModel_select2(self *C.QItemSelectionModel, cb C.intptr_t, selection *C.QItemSelection, command C.int) {
-	gofunc, ok := cgo.Handle(cb).Value().(func(super func(selection *QItemSelection, command QItemSelectionModel__SelectionFlag), selection *QItemSelection, command QItemSelectionModel__SelectionFlag))
+	gofunc, ok := cgo.Handle(cb).Value().(func(super func(selection *QItemSelection, command SelectionFlag), selection *QItemSelection, command SelectionFlag))
 	if !ok {
 		panic("miqt: callback of non-callback type (heap corruption?)")
 	}
@@ -699,7 +691,7 @@ func miqt_exec_callback_QItemSelectionModel_select2(self *C.QItemSelectionModel,
 	// Convert all CABI parameters to Go parameters
 	slotval1 := newQItemSelection(selection)
 
-	slotval2 := (QItemSelectionModel__SelectionFlag)(command)
+	slotval2 := (SelectionFlag)(command)
 
 	gofunc((&QItemSelectionModel{h: self}).callVirtualBase_Select2, slotval1, slotval2)
 
@@ -1048,7 +1040,7 @@ func (this *QItemSelection) Indexes() []QModelIndex {
 	return _ret
 }
 
-func (this *QItemSelection) Merge(other *QItemSelection, command QItemSelectionModel__SelectionFlag) {
+func (this *QItemSelection) Merge(other *QItemSelection, command SelectionFlag) {
 	C.QItemSelection_merge(this.h, other.cPointer(), (C.int)(command))
 }
 

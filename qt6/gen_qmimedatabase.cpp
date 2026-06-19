@@ -100,13 +100,13 @@ struct miqt_array /* of QMimeType* */  QMimeDatabase_allMimeTypes(const QMimeDat
 	return _out;
 }
 
-QMimeType* QMimeDatabase_mimeTypeForFile2(const QMimeDatabase* self, struct miqt_string fileName, int mode) {
+QMimeType* QMimeDatabase_mimeTypeForFile2(const QMimeDatabase* self, struct miqt_string fileName, MatchMode mode) {
 	QString fileName_QString = QString::fromUtf8(fileName.data, fileName.len);
-	return new QMimeType(self->mimeTypeForFile(fileName_QString, static_cast<QMimeDatabase::MatchMode>(mode)));
+	return new QMimeType(self->mimeTypeForFile(fileName_QString, mode));
 }
 
-QMimeType* QMimeDatabase_mimeTypeForFile3(const QMimeDatabase* self, QFileInfo* fileInfo, int mode) {
-	return new QMimeType(self->mimeTypeForFile(*fileInfo, static_cast<QMimeDatabase::MatchMode>(mode)));
+QMimeType* QMimeDatabase_mimeTypeForFile3(const QMimeDatabase* self, QFileInfo* fileInfo, MatchMode mode) {
+	return new QMimeType(self->mimeTypeForFile(*fileInfo, mode));
 }
 
 void QMimeDatabase_delete(QMimeDatabase* self) {

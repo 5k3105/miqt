@@ -167,12 +167,12 @@ func (this *QPluginLoader) ErrorString() string {
 	return _ret
 }
 
-func (this *QPluginLoader) SetLoadHints(loadHints QLibrary__LoadHint) {
+func (this *QPluginLoader) SetLoadHints(loadHints LoadHint) {
 	C.QPluginLoader_setLoadHints(this.h, (C.int)(loadHints))
 }
 
-func (this *QPluginLoader) LoadHints() QLibrary__LoadHint {
-	return (QLibrary__LoadHint)(C.QPluginLoader_loadHints(this.h))
+func (this *QPluginLoader) LoadHints() LoadHint {
+	return (LoadHint)(C.QPluginLoader_loadHints(this.h))
 }
 
 func QPluginLoader_Tr2(s string, c string) string {

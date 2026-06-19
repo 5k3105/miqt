@@ -16,20 +16,24 @@ extern "C" {
 
 #ifdef __cplusplus
 class QSqlDatabase;
+class QSqlDatabaseDefaultConnectionName;
 class QSqlDriver;
 class QSqlDriverCreatorBase;
 class QSqlError;
 class QSqlIndex;
 class QSqlQuery;
 class QSqlRecord;
+class QThread;
 #else
 typedef struct QSqlDatabase QSqlDatabase;
+typedef struct QSqlDatabaseDefaultConnectionName QSqlDatabaseDefaultConnectionName;
 typedef struct QSqlDriver QSqlDriver;
 typedef struct QSqlDriverCreatorBase QSqlDriverCreatorBase;
 typedef struct QSqlError QSqlError;
 typedef struct QSqlIndex QSqlIndex;
 typedef struct QSqlQuery QSqlQuery;
 typedef struct QSqlRecord QSqlRecord;
+typedef struct QThread QThread;
 #endif
 
 QSqlDriver* QSqlDriverCreatorBase_createObject(const QSqlDriverCreatorBase* self);
@@ -37,8 +41,13 @@ void QSqlDriverCreatorBase_operatorAssign(QSqlDriverCreatorBase* self, QSqlDrive
 
 void QSqlDriverCreatorBase_delete(QSqlDriverCreatorBase* self);
 
+struct miqt_string QSqlDatabaseDefaultConnectionName_defaultConnectionName();
+
+void QSqlDatabaseDefaultConnectionName_delete(QSqlDatabaseDefaultConnectionName* self);
+
 QSqlDatabase* QSqlDatabase_new();
 QSqlDatabase* QSqlDatabase_new2(QSqlDatabase* other);
+void QSqlDatabase_virtbase(QSqlDatabase* src, QSqlDatabaseDefaultConnectionName** outptr_QSqlDatabaseDefaultConnectionName);
 void QSqlDatabase_operatorAssign(QSqlDatabase* self, QSqlDatabase* other);
 bool QSqlDatabase_open(QSqlDatabase* self);
 bool QSqlDatabase_open2(QSqlDatabase* self, struct miqt_string user, struct miqt_string password);
@@ -70,6 +79,8 @@ struct miqt_string QSqlDatabase_connectOptions(const QSqlDatabase* self);
 struct miqt_string QSqlDatabase_connectionName(const QSqlDatabase* self);
 void QSqlDatabase_setNumericalPrecisionPolicy(QSqlDatabase* self, int precisionPolicy);
 int QSqlDatabase_numericalPrecisionPolicy(const QSqlDatabase* self);
+bool QSqlDatabase_moveToThread(QSqlDatabase* self, QThread* targetThread);
+QThread* QSqlDatabase_thread(const QSqlDatabase* self);
 QSqlDriver* QSqlDatabase_driver(const QSqlDatabase* self);
 QSqlDatabase* QSqlDatabase_addDatabase(struct miqt_string type);
 QSqlDatabase* QSqlDatabase_addDatabaseWithDriver(QSqlDriver* driver);

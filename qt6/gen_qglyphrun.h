@@ -48,13 +48,17 @@ void QGlyphRun_setStrikeOut(QGlyphRun* self, bool strikeOut);
 bool QGlyphRun_strikeOut(const QGlyphRun* self);
 void QGlyphRun_setRightToLeft(QGlyphRun* self, bool on);
 bool QGlyphRun_isRightToLeft(const QGlyphRun* self);
-void QGlyphRun_setFlag(QGlyphRun* self, int flag);
-void QGlyphRun_setFlags(QGlyphRun* self, int flags);
-int QGlyphRun_flags(const QGlyphRun* self);
+void QGlyphRun_setFlag(QGlyphRun* self, GlyphRunFlag flag);
+void QGlyphRun_setFlags(QGlyphRun* self, GlyphRunFlags flags);
+GlyphRunFlags QGlyphRun_flags(const QGlyphRun* self);
 void QGlyphRun_setBoundingRect(QGlyphRun* self, QRectF* boundingRect);
 QRectF* QGlyphRun_boundingRect(const QGlyphRun* self);
+struct miqt_array /* of ptrdiff_t */  QGlyphRun_stringIndexes(const QGlyphRun* self);
+void QGlyphRun_setStringIndexes(QGlyphRun* self, struct miqt_array /* of ptrdiff_t */  stringIndexes);
+void QGlyphRun_setSourceString(QGlyphRun* self, struct miqt_string sourceString);
+struct miqt_string QGlyphRun_sourceString(const QGlyphRun* self);
 bool QGlyphRun_isEmpty(const QGlyphRun* self);
-void QGlyphRun_setFlag2(QGlyphRun* self, int flag, bool enabled);
+void QGlyphRun_setFlag2(QGlyphRun* self, GlyphRunFlag flag, bool enabled);
 
 void QGlyphRun_delete(QGlyphRun* self);
 

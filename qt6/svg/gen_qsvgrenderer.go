@@ -178,6 +178,14 @@ func (this *QSvgRenderer) SetAspectRatioMode(mode qt6.AspectRatioMode) {
 	C.QSvgRenderer_setAspectRatioMode(this.h, (C.int)(mode))
 }
 
+func (this *QSvgRenderer) Options() Option {
+	return (Option)(C.QSvgRenderer_options(this.h))
+}
+
+func (this *QSvgRenderer) SetOptions(flags Option) {
+	C.QSvgRenderer_setOptions(this.h, (C.int)(flags))
+}
+
 func (this *QSvgRenderer) Animated() bool {
 	return (bool)(C.QSvgRenderer_animated(this.h))
 }
@@ -200,6 +208,14 @@ func (this *QSvgRenderer) SetCurrentFrame(currentFrame int) {
 
 func (this *QSvgRenderer) AnimationDuration() int {
 	return (int)(C.QSvgRenderer_animationDuration(this.h))
+}
+
+func (this *QSvgRenderer) IsAnimationEnabled() bool {
+	return (bool)(C.QSvgRenderer_isAnimationEnabled(this.h))
+}
+
+func (this *QSvgRenderer) SetAnimationEnabled(enable bool) {
+	C.QSvgRenderer_setAnimationEnabled(this.h, (C.bool)(enable))
 }
 
 func (this *QSvgRenderer) BoundsOnElement(id string) *qt6.QRectF {
@@ -228,6 +244,10 @@ func (this *QSvgRenderer) TransformForElement(id string) *qt6.QTransform {
 	_goptr := qt6.UnsafeNewQTransform(unsafe.Pointer(C.QSvgRenderer_transformForElement(this.h, id_ms)))
 	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
 	return _goptr
+}
+
+func QSvgRenderer_SetDefaultOptions(flags Option) {
+	C.QSvgRenderer_setDefaultOptions((C.int)(flags))
 }
 
 func (this *QSvgRenderer) Load(filename string) bool {

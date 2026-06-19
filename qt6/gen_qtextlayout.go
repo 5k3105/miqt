@@ -13,6 +13,17 @@ import (
 	"unsafe"
 )
 
+type QTextLayout__GlyphRunRetrievalFlag uint16
+
+const (
+	QTextLayout__RetrieveGlyphIndexes   QTextLayout__GlyphRunRetrievalFlag = 1
+	QTextLayout__RetrieveGlyphPositions QTextLayout__GlyphRunRetrievalFlag = 2
+	QTextLayout__RetrieveStringIndexes  QTextLayout__GlyphRunRetrievalFlag = 4
+	QTextLayout__RetrieveString         QTextLayout__GlyphRunRetrievalFlag = 8
+	QTextLayout__DefaultRetrievalFlags  QTextLayout__GlyphRunRetrievalFlag = 3
+	QTextLayout__RetrieveAll            QTextLayout__GlyphRunRetrievalFlag = 65535
+)
+
 type QTextLayout__CursorMode int
 
 const (
@@ -272,24 +283,22 @@ func (this *QTextLayout) PreeditAreaText() string {
 	return _ret
 }
 
-func (this *QTextLayout) SetFormats(overrides []QTextLayout__FormatRange) {
-	overrides_CArray := (*[0xffff]*C.QTextLayout__FormatRange)(C.malloc(C.size_t(8 * len(overrides))))
+func (this *QTextLayout) SetFormats(overrides []FormatRange) {
+	overrides_CArray := (*[0xffff]C.FormatRange)(C.malloc(C.size_t(8 * len(overrides))))
 	defer C.free(unsafe.Pointer(overrides_CArray))
 	for i := range overrides {
-		overrides_CArray[i] = overrides[i].cPointer()
+		overrides_CArray[i] = overrides[i]
 	}
 	overrides_ma := C.struct_miqt_array{len: C.size_t(len(overrides)), data: unsafe.Pointer(overrides_CArray)}
 	C.QTextLayout_setFormats(this.h, overrides_ma)
 }
 
-func (this *QTextLayout) Formats() []QTextLayout__FormatRange {
+func (this *QTextLayout) Formats() []FormatRange {
 	var _ma C.struct_miqt_array = C.QTextLayout_formats(this.h)
-	_ret := make([]QTextLayout__FormatRange, int(_ma.len))
-	_outCast := (*[0xffff]*C.QTextLayout__FormatRange)(unsafe.Pointer(_ma.data)) // hey ya
+	_ret := make([]FormatRange, int(_ma.len))
+	_outCast := (*[0xffff]C.FormatRange)(unsafe.Pointer(_ma.data)) // hey ya
 	for i := 0; i < int(_ma.len); i++ {
-		_lv_goptr := newQTextLayout__FormatRange(_outCast[i])
-		_lv_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
-		_ret[i] = *_lv_goptr
+		int /* TODO  */
 	}
 	return _ret
 }
@@ -404,8 +413,20 @@ func (this *QTextLayout) MaximumWidth() float64 {
 	return (float64)(C.QTextLayout_maximumWidth(this.h))
 }
 
-func (this *QTextLayout) GlyphRuns() []QGlyphRun {
-	var _ma C.struct_miqt_array = C.QTextLayout_glyphRuns(this.h)
+func (this *QTextLayout) GlyphRuns(from int, length int, flags GlyphRunRetrievalFlags) []QGlyphRun {
+	var _ma C.struct_miqt_array = C.QTextLayout_glyphRuns(this.h, (C.int)(from), (C.int)(length), flags)
+	_ret := make([]QGlyphRun, int(_ma.len))
+	_outCast := (*[0xffff]*C.QGlyphRun)(unsafe.Pointer(_ma.data)) // hey ya
+	for i := 0; i < int(_ma.len); i++ {
+		_lv_goptr := newQGlyphRun(_outCast[i])
+		_lv_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
+		_ret[i] = *_lv_goptr
+	}
+	return _ret
+}
+
+func (this *QTextLayout) GlyphRuns2() []QGlyphRun {
+	var _ma C.struct_miqt_array = C.QTextLayout_glyphRuns2(this.h)
 	_ret := make([]QGlyphRun, int(_ma.len))
 	_outCast := (*[0xffff]*C.QGlyphRun)(unsafe.Pointer(_ma.data)) // hey ya
 	for i := 0; i < int(_ma.len); i++ {
@@ -420,29 +441,29 @@ func (this *QTextLayout) SetFlags(flags int) {
 	C.QTextLayout_setFlags(this.h, (C.int)(flags))
 }
 
-func (this *QTextLayout) NextCursorPosition2(oldPos int, mode QTextLayout__CursorMode) int {
-	return (int)(C.QTextLayout_nextCursorPosition2(this.h, (C.int)(oldPos), (C.int)(mode)))
+func (this *QTextLayout) NextCursorPosition2(oldPos int, mode CursorMode) int {
+	return (int)(C.QTextLayout_nextCursorPosition2(this.h, (C.int)(oldPos), mode))
 }
 
-func (this *QTextLayout) PreviousCursorPosition2(oldPos int, mode QTextLayout__CursorMode) int {
-	return (int)(C.QTextLayout_previousCursorPosition2(this.h, (C.int)(oldPos), (C.int)(mode)))
+func (this *QTextLayout) PreviousCursorPosition2(oldPos int, mode CursorMode) int {
+	return (int)(C.QTextLayout_previousCursorPosition2(this.h, (C.int)(oldPos), mode))
 }
 
-func (this *QTextLayout) Draw2(p *QPainter, pos *QPointF, selections []QTextLayout__FormatRange) {
-	selections_CArray := (*[0xffff]*C.QTextLayout__FormatRange)(C.malloc(C.size_t(8 * len(selections))))
+func (this *QTextLayout) Draw2(p *QPainter, pos *QPointF, selections []FormatRange) {
+	selections_CArray := (*[0xffff]C.FormatRange)(C.malloc(C.size_t(8 * len(selections))))
 	defer C.free(unsafe.Pointer(selections_CArray))
 	for i := range selections {
-		selections_CArray[i] = selections[i].cPointer()
+		selections_CArray[i] = selections[i]
 	}
 	selections_ma := C.struct_miqt_array{len: C.size_t(len(selections)), data: unsafe.Pointer(selections_CArray)}
 	C.QTextLayout_draw2(this.h, p.cPointer(), pos.cPointer(), selections_ma)
 }
 
-func (this *QTextLayout) Draw3(p *QPainter, pos *QPointF, selections []QTextLayout__FormatRange, clip *QRectF) {
-	selections_CArray := (*[0xffff]*C.QTextLayout__FormatRange)(C.malloc(C.size_t(8 * len(selections))))
+func (this *QTextLayout) Draw3(p *QPainter, pos *QPointF, selections []FormatRange, clip *QRectF) {
+	selections_CArray := (*[0xffff]C.FormatRange)(C.malloc(C.size_t(8 * len(selections))))
 	defer C.free(unsafe.Pointer(selections_CArray))
 	for i := range selections {
-		selections_CArray[i] = selections[i].cPointer()
+		selections_CArray[i] = selections[i]
 	}
 	selections_ma := C.struct_miqt_array{len: C.size_t(len(selections)), data: unsafe.Pointer(selections_CArray)}
 	C.QTextLayout_draw3(this.h, p.cPointer(), pos.cPointer(), selections_ma, clip.cPointer())
@@ -460,8 +481,8 @@ func (this *QTextLayout) GlyphRunsWithFrom(from int) []QGlyphRun {
 	return _ret
 }
 
-func (this *QTextLayout) GlyphRuns2(from int, length int) []QGlyphRun {
-	var _ma C.struct_miqt_array = C.QTextLayout_glyphRuns2(this.h, (C.int)(from), (C.int)(length))
+func (this *QTextLayout) GlyphRuns3(from int, length int) []QGlyphRun {
+	var _ma C.struct_miqt_array = C.QTextLayout_glyphRuns3(this.h, (C.int)(from), (C.int)(length))
 	_ret := make([]QGlyphRun, int(_ma.len))
 	_outCast := (*[0xffff]*C.QGlyphRun)(unsafe.Pointer(_ma.data)) // hey ya
 	for i := 0; i < int(_ma.len); i++ {
@@ -634,8 +655,8 @@ func (this *QTextLine) Draw(painter *QPainter, position *QPointF) {
 	C.QTextLine_draw(this.h, painter.cPointer(), position.cPointer())
 }
 
-func (this *QTextLine) GlyphRuns() []QGlyphRun {
-	var _ma C.struct_miqt_array = C.QTextLine_glyphRuns(this.h)
+func (this *QTextLine) GlyphRuns(from int, length int, flags GlyphRunRetrievalFlag) []QGlyphRun {
+	var _ma C.struct_miqt_array = C.QTextLine_glyphRuns(this.h, (C.int)(from), (C.int)(length), (C.int)(flags))
 	_ret := make([]QGlyphRun, int(_ma.len))
 	_outCast := (*[0xffff]*C.QGlyphRun)(unsafe.Pointer(_ma.data)) // hey ya
 	for i := 0; i < int(_ma.len); i++ {
@@ -646,16 +667,28 @@ func (this *QTextLine) GlyphRuns() []QGlyphRun {
 	return _ret
 }
 
-func (this *QTextLine) CursorToX2(cursorPos *int, edge QTextLine__Edge) float64 {
-	return (float64)(C.QTextLine_cursorToX2(this.h, (*C.int)(unsafe.Pointer(cursorPos)), (C.int)(edge)))
+func (this *QTextLine) GlyphRuns2() []QGlyphRun {
+	var _ma C.struct_miqt_array = C.QTextLine_glyphRuns2(this.h)
+	_ret := make([]QGlyphRun, int(_ma.len))
+	_outCast := (*[0xffff]*C.QGlyphRun)(unsafe.Pointer(_ma.data)) // hey ya
+	for i := 0; i < int(_ma.len); i++ {
+		_lv_goptr := newQGlyphRun(_outCast[i])
+		_lv_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
+		_ret[i] = *_lv_goptr
+	}
+	return _ret
 }
 
-func (this *QTextLine) CursorToX3(cursorPos int, edge QTextLine__Edge) float64 {
-	return (float64)(C.QTextLine_cursorToX3(this.h, (C.int)(cursorPos), (C.int)(edge)))
+func (this *QTextLine) CursorToX2(cursorPos *int, edge Edge) float64 {
+	return (float64)(C.QTextLine_cursorToX2(this.h, (*C.int)(unsafe.Pointer(cursorPos)), edge))
 }
 
-func (this *QTextLine) XToCursor2(x float64, param2 QTextLine__CursorPosition) int {
-	return (int)(C.QTextLine_xToCursor2(this.h, (C.double)(x), (C.int)(param2)))
+func (this *QTextLine) CursorToX3(cursorPos int, edge Edge) float64 {
+	return (float64)(C.QTextLine_cursorToX3(this.h, (C.int)(cursorPos), edge))
+}
+
+func (this *QTextLine) XToCursor2(x float64, param2 CursorPosition) int {
+	return (int)(C.QTextLine_xToCursor2(this.h, (C.double)(x), param2))
 }
 
 func (this *QTextLine) GlyphRunsWithFrom(from int) []QGlyphRun {
@@ -670,8 +703,8 @@ func (this *QTextLine) GlyphRunsWithFrom(from int) []QGlyphRun {
 	return _ret
 }
 
-func (this *QTextLine) GlyphRuns2(from int, length int) []QGlyphRun {
-	var _ma C.struct_miqt_array = C.QTextLine_glyphRuns2(this.h, (C.int)(from), (C.int)(length))
+func (this *QTextLine) GlyphRuns3(from int, length int) []QGlyphRun {
+	var _ma C.struct_miqt_array = C.QTextLine_glyphRuns3(this.h, (C.int)(from), (C.int)(length))
 	_ret := make([]QGlyphRun, int(_ma.len))
 	_outCast := (*[0xffff]*C.QGlyphRun)(unsafe.Pointer(_ma.data)) // hey ya
 	for i := 0; i < int(_ma.len); i++ {
@@ -729,9 +762,15 @@ func UnsafeNewQTextLayout__FormatRange(h unsafe.Pointer) *QTextLayout__FormatRan
 }
 
 // NewQTextLayout__FormatRange constructs a new QTextLayout::FormatRange object.
-func NewQTextLayout__FormatRange(param1 *QTextLayout__FormatRange) *QTextLayout__FormatRange {
+func NewQTextLayout__FormatRange() *QTextLayout__FormatRange {
 
-	return newQTextLayout__FormatRange(C.QTextLayout__FormatRange_new(param1.cPointer()))
+	return newQTextLayout__FormatRange(C.QTextLayout__FormatRange_new())
+}
+
+// NewQTextLayout__FormatRange2 constructs a new QTextLayout::FormatRange object.
+func NewQTextLayout__FormatRange2(param1 *FormatRange) *QTextLayout__FormatRange {
+
+	return newQTextLayout__FormatRange(C.QTextLayout__FormatRange_new2(param1))
 }
 
 func (this *QTextLayout__FormatRange) Start() int {
@@ -760,8 +799,8 @@ func (this *QTextLayout__FormatRange) SetFormat(format QTextCharFormat) {
 	C.QTextLayout__FormatRange_setFormat(this.h, format.cPointer())
 }
 
-func (this *QTextLayout__FormatRange) OperatorAssign(param1 *QTextLayout__FormatRange) {
-	C.QTextLayout__FormatRange_operatorAssign(this.h, param1.cPointer())
+func (this *QTextLayout__FormatRange) OperatorAssign(param1 *FormatRange) {
+	C.QTextLayout__FormatRange_operatorAssign(this.h, param1)
 }
 
 // Delete this object from C++ memory.

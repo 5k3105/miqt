@@ -56,8 +56,8 @@ func NewQFileIconProvider() *QFileIconProvider {
 	return newQFileIconProvider(C.QFileIconProvider_new())
 }
 
-func (this *QFileIconProvider) Icon(typeVal QAbstractFileIconProvider__IconType) *QIcon {
-	_goptr := newQIcon(C.QFileIconProvider_icon(this.h, (C.int)(typeVal)))
+func (this *QFileIconProvider) Icon(typeVal IconType) *QIcon {
+	_goptr := newQIcon(C.QFileIconProvider_icon(this.h, typeVal))
 	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
 	return _goptr
 }
@@ -68,14 +68,14 @@ func (this *QFileIconProvider) IconWithInfo(info *QFileInfo) *QIcon {
 	return _goptr
 }
 
-func (this *QFileIconProvider) callVirtualBase_Icon(typeVal QAbstractFileIconProvider__IconType) *QIcon {
+func (this *QFileIconProvider) callVirtualBase_Icon(typeVal IconType) *QIcon {
 
-	_goptr := newQIcon(C.QFileIconProvider_virtualbase_icon(unsafe.Pointer(this.h), (C.int)(typeVal)))
+	_goptr := newQIcon(C.QFileIconProvider_virtualbase_icon(unsafe.Pointer(this.h), typeVal))
 	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
 	return _goptr
 
 }
-func (this *QFileIconProvider) OnIcon(slot func(super func(typeVal QAbstractFileIconProvider__IconType) *QIcon, typeVal QAbstractFileIconProvider__IconType) *QIcon) {
+func (this *QFileIconProvider) OnIcon(slot func(super func(typeVal IconType) *QIcon, typeVal IconType) *QIcon) {
 	ok := C.QFileIconProvider_override_virtual_icon(unsafe.Pointer(this.h), C.intptr_t(cgo.NewHandle(slot)))
 	if !ok {
 		panic("miqt: can only override virtual methods for directly constructed types")
@@ -83,14 +83,14 @@ func (this *QFileIconProvider) OnIcon(slot func(super func(typeVal QAbstractFile
 }
 
 //export miqt_exec_callback_QFileIconProvider_icon
-func miqt_exec_callback_QFileIconProvider_icon(self *C.QFileIconProvider, cb C.intptr_t, typeVal C.int) *C.QIcon {
-	gofunc, ok := cgo.Handle(cb).Value().(func(super func(typeVal QAbstractFileIconProvider__IconType) *QIcon, typeVal QAbstractFileIconProvider__IconType) *QIcon)
+func miqt_exec_callback_QFileIconProvider_icon(self *C.QFileIconProvider, cb C.intptr_t, typeVal C.IconType) *C.QIcon {
+	gofunc, ok := cgo.Handle(cb).Value().(func(super func(typeVal IconType) *QIcon, typeVal IconType) *QIcon)
 	if !ok {
 		panic("miqt: callback of non-callback type (heap corruption?)")
 	}
 
 	// Convert all CABI parameters to Go parameters
-	slotval1 := (QAbstractFileIconProvider__IconType)(typeVal)
+	int /* TODO  */
 
 	virtualReturn := gofunc((&QFileIconProvider{h: self}).callVirtualBase_Icon, slotval1)
 
@@ -161,12 +161,12 @@ func miqt_exec_callback_QFileIconProvider_type(self *C.QFileIconProvider, cb C.i
 
 }
 
-func (this *QFileIconProvider) callVirtualBase_SetOptions(options QAbstractFileIconProvider__Option) {
+func (this *QFileIconProvider) callVirtualBase_SetOptions(options Options) {
 
-	C.QFileIconProvider_virtualbase_setOptions(unsafe.Pointer(this.h), (C.int)(options))
+	C.QFileIconProvider_virtualbase_setOptions(unsafe.Pointer(this.h), options)
 
 }
-func (this *QFileIconProvider) OnSetOptions(slot func(super func(options QAbstractFileIconProvider__Option), options QAbstractFileIconProvider__Option)) {
+func (this *QFileIconProvider) OnSetOptions(slot func(super func(options Options), options Options)) {
 	ok := C.QFileIconProvider_override_virtual_setOptions(unsafe.Pointer(this.h), C.intptr_t(cgo.NewHandle(slot)))
 	if !ok {
 		panic("miqt: can only override virtual methods for directly constructed types")
@@ -174,25 +174,24 @@ func (this *QFileIconProvider) OnSetOptions(slot func(super func(options QAbstra
 }
 
 //export miqt_exec_callback_QFileIconProvider_setOptions
-func miqt_exec_callback_QFileIconProvider_setOptions(self *C.QFileIconProvider, cb C.intptr_t, options C.int) {
-	gofunc, ok := cgo.Handle(cb).Value().(func(super func(options QAbstractFileIconProvider__Option), options QAbstractFileIconProvider__Option))
+func miqt_exec_callback_QFileIconProvider_setOptions(self *C.QFileIconProvider, cb C.intptr_t, options C.Options) {
+	gofunc, ok := cgo.Handle(cb).Value().(func(super func(options Options), options Options))
 	if !ok {
 		panic("miqt: callback of non-callback type (heap corruption?)")
 	}
 
 	// Convert all CABI parameters to Go parameters
-	slotval1 := (QAbstractFileIconProvider__Option)(options)
+	int /* TODO  */
 
 	gofunc((&QFileIconProvider{h: self}).callVirtualBase_SetOptions, slotval1)
 
 }
 
-func (this *QFileIconProvider) callVirtualBase_Options() QAbstractFileIconProvider__Option {
+func (this *QFileIconProvider) callVirtualBase_Options() Options {
 
-	return (QAbstractFileIconProvider__Option)(C.QFileIconProvider_virtualbase_options(unsafe.Pointer(this.h)))
-
+	int /* TODO  */
 }
-func (this *QFileIconProvider) OnOptions(slot func(super func() QAbstractFileIconProvider__Option) QAbstractFileIconProvider__Option) {
+func (this *QFileIconProvider) OnOptions(slot func(super func() Options) Options) {
 	ok := C.QFileIconProvider_override_virtual_options(unsafe.Pointer(this.h), C.intptr_t(cgo.NewHandle(slot)))
 	if !ok {
 		panic("miqt: can only override virtual methods for directly constructed types")
@@ -200,15 +199,15 @@ func (this *QFileIconProvider) OnOptions(slot func(super func() QAbstractFileIco
 }
 
 //export miqt_exec_callback_QFileIconProvider_options
-func miqt_exec_callback_QFileIconProvider_options(self *C.QFileIconProvider, cb C.intptr_t) C.int {
-	gofunc, ok := cgo.Handle(cb).Value().(func(super func() QAbstractFileIconProvider__Option) QAbstractFileIconProvider__Option)
+func miqt_exec_callback_QFileIconProvider_options(self *C.QFileIconProvider, cb C.intptr_t) C.Options {
+	gofunc, ok := cgo.Handle(cb).Value().(func(super func() Options) Options)
 	if !ok {
 		panic("miqt: callback of non-callback type (heap corruption?)")
 	}
 
 	virtualReturn := gofunc((&QFileIconProvider{h: self}).callVirtualBase_Options)
 
-	return (C.int)(virtualReturn)
+	return virtualReturn
 
 }
 

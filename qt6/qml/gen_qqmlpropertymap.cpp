@@ -225,6 +225,10 @@ struct miqt_string QQmlPropertyMap_tr(const char* s) {
 	return _ms;
 }
 
+QQmlPropertyMap* QQmlPropertyMap_create() {
+	return QQmlPropertyMap::create();
+}
+
 QVariant* QQmlPropertyMap_value(const QQmlPropertyMap* self, struct miqt_string key) {
 	QString key_QString = QString::fromUtf8(key.data, key.len);
 	return new QVariant(self->value(key_QString));
@@ -347,6 +351,10 @@ struct miqt_string QQmlPropertyMap_tr3(const char* s, const char* c, int n) {
 	_ms.data = static_cast<char*>(malloc(_ms.len));
 	memcpy(_ms.data, _b.data(), _ms.len);
 	return _ms;
+}
+
+QQmlPropertyMap* QQmlPropertyMap_createWithParent(QObject* parent) {
+	return QQmlPropertyMap::create(parent);
 }
 
 bool QQmlPropertyMap_override_virtual_updateValue(void* self, intptr_t slot) {

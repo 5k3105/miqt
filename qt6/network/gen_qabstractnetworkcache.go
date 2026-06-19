@@ -88,72 +88,22 @@ func (this *QNetworkCacheMetaData) SetUrl(url *qt6.QUrl) {
 	C.QNetworkCacheMetaData_setUrl(this.h, (*C.QUrl)(url.UnsafePointer()))
 }
 
-func (this *QNetworkCacheMetaData) RawHeaders() []struct {
-	First  []byte
-	Second []byte
-} {
-	var _ma C.struct_miqt_array = C.QNetworkCacheMetaData_rawHeaders(this.h)
-	_ret := make([]struct {
-		First  []byte
-		Second []byte
-	}, int(_ma.len))
-	_outCast := (*[0xffff]C.struct_miqt_map)(unsafe.Pointer(_ma.data)) // hey ya
-	for i := 0; i < int(_ma.len); i++ {
-		var _lv_mm C.struct_miqt_map = _outCast[i]
-		_lv_First_CArray := (*[0xffff]C.struct_miqt_string)(unsafe.Pointer(_lv_mm.keys))
-		_lv_Second_CArray := (*[0xffff]C.struct_miqt_string)(unsafe.Pointer(_lv_mm.values))
-		var _lv_first_bytearray C.struct_miqt_string = _lv_First_CArray[0]
-		_lv_first_ret := C.GoBytes(unsafe.Pointer(_lv_first_bytearray.data), C.int(int64(_lv_first_bytearray.len)))
-		C.free(unsafe.Pointer(_lv_first_bytearray.data))
-		_lv_entry_First := _lv_first_ret
-		var _lv_second_bytearray C.struct_miqt_string = _lv_Second_CArray[0]
-		_lv_second_ret := C.GoBytes(unsafe.Pointer(_lv_second_bytearray.data), C.int(int64(_lv_second_bytearray.len)))
-		C.free(unsafe.Pointer(_lv_second_bytearray.data))
-		_lv_entry_Second := _lv_second_ret
-		_ret[i] = struct {
-			First  []byte
-			Second []byte
-		}{First: _lv_entry_First, Second: _lv_entry_Second}
-	}
-	return _ret
+func (this *QNetworkCacheMetaData) RawHeaders() RawHeaderList {
+	int /* TODO  */
 }
 
-func (this *QNetworkCacheMetaData) SetRawHeaders(headers []struct {
-	First  []byte
-	Second []byte
-}) {
-	headers_CArray := (*[0xffff]C.struct_miqt_map)(C.malloc(C.size_t(8 * len(headers))))
-	defer C.free(unsafe.Pointer(headers_CArray))
-	for i := range headers {
-		headers_i_First_CArray := (*[0xffff]C.struct_miqt_string)(C.malloc(C.size_t(int(unsafe.Sizeof(C.struct_miqt_string{})))))
-		defer C.free(unsafe.Pointer(headers_i_First_CArray))
-		headers_i_Second_CArray := (*[0xffff]C.struct_miqt_string)(C.malloc(C.size_t(int(unsafe.Sizeof(C.struct_miqt_string{})))))
-		defer C.free(unsafe.Pointer(headers_i_Second_CArray))
-		headers_i_First_alias := C.struct_miqt_string{}
-		if len(headers[i].First) > 0 {
-			headers_i_First_alias.data = (*C.char)(unsafe.Pointer(&headers[i].First[0]))
-		} else {
-			headers_i_First_alias.data = (*C.char)(unsafe.Pointer(nil))
-		}
-		headers_i_First_alias.len = C.size_t(len(headers[i].First))
-		headers_i_First_CArray[0] = headers_i_First_alias
-		headers_i_Second_alias := C.struct_miqt_string{}
-		if len(headers[i].Second) > 0 {
-			headers_i_Second_alias.data = (*C.char)(unsafe.Pointer(&headers[i].Second[0]))
-		} else {
-			headers_i_Second_alias.data = (*C.char)(unsafe.Pointer(nil))
-		}
-		headers_i_Second_alias.len = C.size_t(len(headers[i].Second))
-		headers_i_Second_CArray[0] = headers_i_Second_alias
-		headers_i_pair := C.struct_miqt_map{
-			len:    1,
-			keys:   unsafe.Pointer(headers_i_First_CArray),
-			values: unsafe.Pointer(headers_i_Second_CArray),
-		}
-		headers_CArray[i] = headers_i_pair
-	}
-	headers_ma := C.struct_miqt_array{len: C.size_t(len(headers)), data: unsafe.Pointer(headers_CArray)}
-	C.QNetworkCacheMetaData_setRawHeaders(this.h, headers_ma)
+func (this *QNetworkCacheMetaData) SetRawHeaders(headers *RawHeaderList) {
+	C.QNetworkCacheMetaData_setRawHeaders(this.h, headers)
+}
+
+func (this *QNetworkCacheMetaData) Headers() *QHttpHeaders {
+	_goptr := newQHttpHeaders(C.QNetworkCacheMetaData_headers(this.h))
+	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
+	return _goptr
+}
+
+func (this *QNetworkCacheMetaData) SetHeaders(headers *QHttpHeaders) {
+	C.QNetworkCacheMetaData_setHeaders(this.h, headers.cPointer())
 }
 
 func (this *QNetworkCacheMetaData) LastModified() *qt6.QDateTime {
@@ -184,40 +134,12 @@ func (this *QNetworkCacheMetaData) SetSaveToDisk(allow bool) {
 	C.QNetworkCacheMetaData_setSaveToDisk(this.h, (C.bool)(allow))
 }
 
-func (this *QNetworkCacheMetaData) Attributes() map[QNetworkRequest__Attribute]qt6.QVariant {
-	var _mm C.struct_miqt_map = C.QNetworkCacheMetaData_attributes(this.h)
-	_ret := make(map[QNetworkRequest__Attribute]qt6.QVariant, int(_mm.len))
-	_Keys := (*[0xffff]C.int)(unsafe.Pointer(_mm.keys))
-	_Values := (*[0xffff]*C.QVariant)(unsafe.Pointer(_mm.values))
-	for i := 0; i < int(_mm.len); i++ {
-		_entry_Key := (QNetworkRequest__Attribute)(_Keys[i])
-
-		_hashval_goptr := qt6.UnsafeNewQVariant(unsafe.Pointer(_Values[i]))
-		_hashval_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
-		_entry_Value := *_hashval_goptr
-
-		_ret[_entry_Key] = _entry_Value
-	}
-	return _ret
+func (this *QNetworkCacheMetaData) Attributes() AttributesMap {
+	int /* TODO  */
 }
 
-func (this *QNetworkCacheMetaData) SetAttributes(attributes map[QNetworkRequest__Attribute]qt6.QVariant) {
-	attributes_Keys_CArray := (*[0xffff]C.int)(C.malloc(C.size_t(8 * len(attributes))))
-	defer C.free(unsafe.Pointer(attributes_Keys_CArray))
-	attributes_Values_CArray := (*[0xffff]*C.QVariant)(C.malloc(C.size_t(8 * len(attributes))))
-	defer C.free(unsafe.Pointer(attributes_Values_CArray))
-	attributes_ctr := 0
-	for attributes_k, attributes_v := range attributes {
-		attributes_Keys_CArray[attributes_ctr] = (C.int)(attributes_k)
-		attributes_Values_CArray[attributes_ctr] = (*C.QVariant)(attributes_v.UnsafePointer())
-		attributes_ctr++
-	}
-	attributes_mm := C.struct_miqt_map{
-		len:    C.size_t(len(attributes)),
-		keys:   unsafe.Pointer(attributes_Keys_CArray),
-		values: unsafe.Pointer(attributes_Values_CArray),
-	}
-	C.QNetworkCacheMetaData_setAttributes(this.h, attributes_mm)
+func (this *QNetworkCacheMetaData) SetAttributes(attributes *AttributesMap) {
+	C.QNetworkCacheMetaData_setAttributes(this.h, attributes)
 }
 
 // Delete this object from C++ memory.

@@ -140,15 +140,15 @@ func (this *QGraphicsView) SizeHint() *QSize {
 	return _goptr
 }
 
-func (this *QGraphicsView) RenderHints() QPainter__RenderHint {
-	return (QPainter__RenderHint)(C.QGraphicsView_renderHints(this.h))
+func (this *QGraphicsView) RenderHints() RenderHint {
+	return (RenderHint)(C.QGraphicsView_renderHints(this.h))
 }
 
 func (this *QGraphicsView) SetRenderHint(hint QPainter__RenderHint) {
 	C.QGraphicsView_setRenderHint(this.h, (C.int)(hint))
 }
 
-func (this *QGraphicsView) SetRenderHints(hints QPainter__RenderHint) {
+func (this *QGraphicsView) SetRenderHints(hints RenderHint) {
 	C.QGraphicsView_setRenderHints(this.h, (C.int)(hints))
 }
 
@@ -160,48 +160,48 @@ func (this *QGraphicsView) SetAlignment(alignment AlignmentFlag) {
 	C.QGraphicsView_setAlignment(this.h, (C.int)(alignment))
 }
 
-func (this *QGraphicsView) TransformationAnchor() QGraphicsView__ViewportAnchor {
-	return (QGraphicsView__ViewportAnchor)(C.QGraphicsView_transformationAnchor(this.h))
+func (this *QGraphicsView) TransformationAnchor() ViewportAnchor {
+	int /* TODO  */
 }
 
-func (this *QGraphicsView) SetTransformationAnchor(anchor QGraphicsView__ViewportAnchor) {
-	C.QGraphicsView_setTransformationAnchor(this.h, (C.int)(anchor))
+func (this *QGraphicsView) SetTransformationAnchor(anchor ViewportAnchor) {
+	C.QGraphicsView_setTransformationAnchor(this.h, anchor)
 }
 
-func (this *QGraphicsView) ResizeAnchor() QGraphicsView__ViewportAnchor {
-	return (QGraphicsView__ViewportAnchor)(C.QGraphicsView_resizeAnchor(this.h))
+func (this *QGraphicsView) ResizeAnchor() ViewportAnchor {
+	int /* TODO  */
 }
 
-func (this *QGraphicsView) SetResizeAnchor(anchor QGraphicsView__ViewportAnchor) {
-	C.QGraphicsView_setResizeAnchor(this.h, (C.int)(anchor))
+func (this *QGraphicsView) SetResizeAnchor(anchor ViewportAnchor) {
+	C.QGraphicsView_setResizeAnchor(this.h, anchor)
 }
 
-func (this *QGraphicsView) ViewportUpdateMode() QGraphicsView__ViewportUpdateMode {
-	return (QGraphicsView__ViewportUpdateMode)(C.QGraphicsView_viewportUpdateMode(this.h))
+func (this *QGraphicsView) ViewportUpdateMode() ViewportUpdateMode {
+	int /* TODO  */
 }
 
-func (this *QGraphicsView) SetViewportUpdateMode(mode QGraphicsView__ViewportUpdateMode) {
-	C.QGraphicsView_setViewportUpdateMode(this.h, (C.int)(mode))
+func (this *QGraphicsView) SetViewportUpdateMode(mode ViewportUpdateMode) {
+	C.QGraphicsView_setViewportUpdateMode(this.h, mode)
 }
 
-func (this *QGraphicsView) OptimizationFlags() QGraphicsView__OptimizationFlag {
-	return (QGraphicsView__OptimizationFlag)(C.QGraphicsView_optimizationFlags(this.h))
+func (this *QGraphicsView) OptimizationFlags() OptimizationFlags {
+	int /* TODO  */
 }
 
-func (this *QGraphicsView) SetOptimizationFlag(flag QGraphicsView__OptimizationFlag) {
-	C.QGraphicsView_setOptimizationFlag(this.h, (C.int)(flag))
+func (this *QGraphicsView) SetOptimizationFlag(flag OptimizationFlag) {
+	C.QGraphicsView_setOptimizationFlag(this.h, flag)
 }
 
-func (this *QGraphicsView) SetOptimizationFlags(flags QGraphicsView__OptimizationFlag) {
-	C.QGraphicsView_setOptimizationFlags(this.h, (C.int)(flags))
+func (this *QGraphicsView) SetOptimizationFlags(flags OptimizationFlags) {
+	C.QGraphicsView_setOptimizationFlags(this.h, flags)
 }
 
-func (this *QGraphicsView) DragMode() QGraphicsView__DragMode {
-	return (QGraphicsView__DragMode)(C.QGraphicsView_dragMode(this.h))
+func (this *QGraphicsView) DragMode() DragMode {
+	int /* TODO  */
 }
 
-func (this *QGraphicsView) SetDragMode(mode QGraphicsView__DragMode) {
-	C.QGraphicsView_setDragMode(this.h, (C.int)(mode))
+func (this *QGraphicsView) SetDragMode(mode DragMode) {
+	C.QGraphicsView_setDragMode(this.h, mode)
 }
 
 func (this *QGraphicsView) RubberBandSelectionMode() ItemSelectionMode {
@@ -218,12 +218,12 @@ func (this *QGraphicsView) RubberBandRect() *QRect {
 	return _goptr
 }
 
-func (this *QGraphicsView) CacheMode() QGraphicsView__CacheModeFlag {
-	return (QGraphicsView__CacheModeFlag)(C.QGraphicsView_cacheMode(this.h))
+func (this *QGraphicsView) CacheMode() CacheMode {
+	int /* TODO  */
 }
 
-func (this *QGraphicsView) SetCacheMode(mode QGraphicsView__CacheModeFlag) {
-	C.QGraphicsView_setCacheMode(this.h, (C.int)(mode))
+func (this *QGraphicsView) SetCacheMode(mode CacheMode) {
+	C.QGraphicsView_setCacheMode(this.h, mode)
 }
 
 func (this *QGraphicsView) ResetCachedContent() {
@@ -544,8 +544,8 @@ func (this *QGraphicsView) SetRenderHint2(hint QPainter__RenderHint, enabled boo
 	C.QGraphicsView_setRenderHint2(this.h, (C.int)(hint), (C.bool)(enabled))
 }
 
-func (this *QGraphicsView) SetOptimizationFlag2(flag QGraphicsView__OptimizationFlag, enabled bool) {
-	C.QGraphicsView_setOptimizationFlag2(this.h, (C.int)(flag), (C.bool)(enabled))
+func (this *QGraphicsView) SetOptimizationFlag2(flag OptimizationFlag, enabled bool) {
+	C.QGraphicsView_setOptimizationFlag2(this.h, flag, (C.bool)(enabled))
 }
 
 func (this *QGraphicsView) SetTransform2(matrix *QTransform, combine bool) {
@@ -634,7 +634,7 @@ func (this *QGraphicsView) InvalidateSceneWithRect(rect *QRectF) {
 	C.QGraphicsView_invalidateSceneWithRect(this.h, rect.cPointer())
 }
 
-func (this *QGraphicsView) InvalidateScene2(rect *QRectF, layers QGraphicsScene__SceneLayer) {
+func (this *QGraphicsView) InvalidateScene2(rect *QRectF, layers SceneLayer) {
 	C.QGraphicsView_invalidateScene2(this.h, rect.cPointer(), (C.int)(layers))
 }
 
@@ -791,6 +791,20 @@ func (this *QGraphicsView) IsSignalConnected(signal *QMetaMethod) bool {
 
 	var _dynamic_cast_ok C.bool = false
 	_method_ret := (bool)(C.QGraphicsView_protectedbase_isSignalConnected(&_dynamic_cast_ok, unsafe.Pointer(this.h), signal.cPointer()))
+
+	if !_dynamic_cast_ok {
+		panic("miqt: can only call protected methods for directly constructed types")
+	}
+
+	return _method_ret
+
+}
+
+// GetDecodedMetricF can only be called from a QGraphicsView that was directly constructed.
+func (this *QGraphicsView) GetDecodedMetricF(metricA PaintDeviceMetric, metricB PaintDeviceMetric) float64 {
+
+	var _dynamic_cast_ok C.bool = false
+	_method_ret := (float64)(C.QGraphicsView_protectedbase_getDecodedMetricF(&_dynamic_cast_ok, unsafe.Pointer(this.h), metricA, metricB))
 
 	if !_dynamic_cast_ok {
 		panic("miqt: can only call protected methods for directly constructed types")
@@ -2007,12 +2021,12 @@ func miqt_exec_callback_QGraphicsView_nativeEvent(self *C.QGraphicsView, cb C.in
 
 }
 
-func (this *QGraphicsView) callVirtualBase_Metric(param1 QPaintDevice__PaintDeviceMetric) int {
+func (this *QGraphicsView) callVirtualBase_Metric(param1 PaintDeviceMetric) int {
 
-	return (int)(C.QGraphicsView_virtualbase_metric(unsafe.Pointer(this.h), (C.int)(param1)))
+	return (int)(C.QGraphicsView_virtualbase_metric(unsafe.Pointer(this.h), param1))
 
 }
-func (this *QGraphicsView) OnMetric(slot func(super func(param1 QPaintDevice__PaintDeviceMetric) int, param1 QPaintDevice__PaintDeviceMetric) int) {
+func (this *QGraphicsView) OnMetric(slot func(super func(param1 PaintDeviceMetric) int, param1 PaintDeviceMetric) int) {
 	ok := C.QGraphicsView_override_virtual_metric(unsafe.Pointer(this.h), C.intptr_t(cgo.NewHandle(slot)))
 	if !ok {
 		panic("miqt: can only override virtual methods for directly constructed types")
@@ -2020,14 +2034,14 @@ func (this *QGraphicsView) OnMetric(slot func(super func(param1 QPaintDevice__Pa
 }
 
 //export miqt_exec_callback_QGraphicsView_metric
-func miqt_exec_callback_QGraphicsView_metric(self *C.QGraphicsView, cb C.intptr_t, param1 C.int) C.int {
-	gofunc, ok := cgo.Handle(cb).Value().(func(super func(param1 QPaintDevice__PaintDeviceMetric) int, param1 QPaintDevice__PaintDeviceMetric) int)
+func miqt_exec_callback_QGraphicsView_metric(self *C.QGraphicsView, cb C.intptr_t, param1 C.PaintDeviceMetric) C.int {
+	gofunc, ok := cgo.Handle(cb).Value().(func(super func(param1 PaintDeviceMetric) int, param1 PaintDeviceMetric) int)
 	if !ok {
 		panic("miqt: callback of non-callback type (heap corruption?)")
 	}
 
 	// Convert all CABI parameters to Go parameters
-	slotval1 := (QPaintDevice__PaintDeviceMetric)(param1)
+	int /* TODO  */
 
 	virtualReturn := gofunc((&QGraphicsView{h: self}).callVirtualBase_Metric, slotval1)
 

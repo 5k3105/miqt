@@ -60,7 +60,8 @@ const (
 	QImage__Format_RGBX32FPx4               QImage__Format = 33
 	QImage__Format_RGBA32FPx4               QImage__Format = 34
 	QImage__Format_RGBA32FPx4_Premultiplied QImage__Format = 35
-	QImage__NImageFormats                   QImage__Format = 36
+	QImage__Format_CMYK8888                 QImage__Format = 36
+	QImage__NImageFormats                   QImage__Format = 37
 )
 
 type QImage struct {
@@ -106,39 +107,39 @@ func NewQImage() *QImage {
 }
 
 // NewQImage2 constructs a new QImage object.
-func NewQImage2(size *QSize, format QImage__Format) *QImage {
+func NewQImage2(size *QSize, format Format) *QImage {
 
-	return newQImage(C.QImage_new2(size.cPointer(), (C.int)(format)))
+	return newQImage(C.QImage_new2(size.cPointer(), format))
 }
 
 // NewQImage3 constructs a new QImage object.
-func NewQImage3(width int, height int, format QImage__Format) *QImage {
+func NewQImage3(width int, height int, format Format) *QImage {
 
-	return newQImage(C.QImage_new3((C.int)(width), (C.int)(height), (C.int)(format)))
+	return newQImage(C.QImage_new3((C.int)(width), (C.int)(height), format))
 }
 
 // NewQImage4 constructs a new QImage object.
-func NewQImage4(data *byte, width int, height int, format QImage__Format) *QImage {
+func NewQImage4(data *byte, width int, height int, format Format) *QImage {
 
-	return newQImage(C.QImage_new4((*C.uchar)(unsafe.Pointer(data)), (C.int)(width), (C.int)(height), (C.int)(format)))
+	return newQImage(C.QImage_new4((*C.uchar)(unsafe.Pointer(data)), (C.int)(width), (C.int)(height), format))
 }
 
 // NewQImage5 constructs a new QImage object.
-func NewQImage5(data *byte, width int, height int, format QImage__Format) *QImage {
+func NewQImage5(data *byte, width int, height int, format Format) *QImage {
 
-	return newQImage(C.QImage_new5((*C.uchar)(unsafe.Pointer(data)), (C.int)(width), (C.int)(height), (C.int)(format)))
+	return newQImage(C.QImage_new5((*C.uchar)(unsafe.Pointer(data)), (C.int)(width), (C.int)(height), format))
 }
 
 // NewQImage6 constructs a new QImage object.
-func NewQImage6(data *byte, width int, height int, bytesPerLine int64, format QImage__Format) *QImage {
+func NewQImage6(data *byte, width int, height int, bytesPerLine int64, format Format) *QImage {
 
-	return newQImage(C.QImage_new6((*C.uchar)(unsafe.Pointer(data)), (C.int)(width), (C.int)(height), (C.ptrdiff_t)(bytesPerLine), (C.int)(format)))
+	return newQImage(C.QImage_new6((*C.uchar)(unsafe.Pointer(data)), (C.int)(width), (C.int)(height), (C.ptrdiff_t)(bytesPerLine), format))
 }
 
 // NewQImage7 constructs a new QImage object.
-func NewQImage7(data *byte, width int, height int, bytesPerLine int64, format QImage__Format) *QImage {
+func NewQImage7(data *byte, width int, height int, bytesPerLine int64, format Format) *QImage {
 
-	return newQImage(C.QImage_new7((*C.uchar)(unsafe.Pointer(data)), (C.int)(width), (C.int)(height), (C.ptrdiff_t)(bytesPerLine), (C.int)(format)))
+	return newQImage(C.QImage_new7((*C.uchar)(unsafe.Pointer(data)), (C.int)(width), (C.int)(height), (C.ptrdiff_t)(bytesPerLine), format))
 }
 
 // NewQImage8 constructs a new QImage object.
@@ -219,40 +220,40 @@ func (this *QImage) Copy2(x int, y int, w int, h int) *QImage {
 	return _goptr
 }
 
-func (this *QImage) Format() QImage__Format {
-	return (QImage__Format)(C.QImage_format(this.h))
+func (this *QImage) Format() Format {
+	int /* TODO  */
 }
 
-func (this *QImage) ConvertToFormat(f QImage__Format) *QImage {
-	_goptr := newQImage(C.QImage_convertToFormat(this.h, (C.int)(f)))
+func (this *QImage) ConvertToFormat(f Format) *QImage {
+	_goptr := newQImage(C.QImage_convertToFormat(this.h, f))
 	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
 	return _goptr
 }
 
-func (this *QImage) ConvertToFormat2(f QImage__Format, colorTable []uint) *QImage {
+func (this *QImage) ConvertToFormat2(f Format, colorTable []uint) *QImage {
 	colorTable_CArray := (*[0xffff]C.uint)(C.malloc(C.size_t(8 * len(colorTable))))
 	defer C.free(unsafe.Pointer(colorTable_CArray))
 	for i := range colorTable {
 		colorTable_CArray[i] = (C.uint)(colorTable[i])
 	}
 	colorTable_ma := C.struct_miqt_array{len: C.size_t(len(colorTable)), data: unsafe.Pointer(colorTable_CArray)}
-	_goptr := newQImage(C.QImage_convertToFormat2(this.h, (C.int)(f), colorTable_ma))
+	_goptr := newQImage(C.QImage_convertToFormat2(this.h, f, colorTable_ma))
 	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
 	return _goptr
 }
 
-func (this *QImage) ReinterpretAsFormat(f QImage__Format) bool {
-	return (bool)(C.QImage_reinterpretAsFormat(this.h, (C.int)(f)))
+func (this *QImage) ReinterpretAsFormat(f Format) bool {
+	return (bool)(C.QImage_reinterpretAsFormat(this.h, f))
 }
 
-func (this *QImage) ConvertedTo(f QImage__Format) *QImage {
-	_goptr := newQImage(C.QImage_convertedTo(this.h, (C.int)(f)))
+func (this *QImage) ConvertedTo(f Format) *QImage {
+	_goptr := newQImage(C.QImage_convertedTo(this.h, f))
 	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
 	return _goptr
 }
 
-func (this *QImage) ConvertTo(f QImage__Format) {
-	C.QImage_convertTo(this.h, (C.int)(f))
+func (this *QImage) ConvertTo(f Format) {
+	C.QImage_convertTo(this.h, f)
 }
 
 func (this *QImage) Width() int {
@@ -505,14 +506,24 @@ func (this *QImage) Mirrored() *QImage {
 	return _goptr
 }
 
+func (this *QImage) Mirror() {
+	C.QImage_mirror(this.h)
+}
+
 func (this *QImage) RgbSwapped() *QImage {
 	_goptr := newQImage(C.QImage_rgbSwapped(this.h))
 	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
 	return _goptr
 }
 
-func (this *QImage) Mirror() {
-	C.QImage_mirror(this.h)
+func (this *QImage) Flipped() *QImage {
+	_goptr := newQImage(C.QImage_flipped(this.h))
+	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
+	return _goptr
+}
+
+func (this *QImage) Flip() {
+	C.QImage_flip(this.h)
 }
 
 func (this *QImage) RgbSwap() {
@@ -529,14 +540,24 @@ func (this *QImage) ColorSpace() *QColorSpace {
 	return _goptr
 }
 
-func (this *QImage) ConvertedToColorSpace(param1 *QColorSpace) *QImage {
-	_goptr := newQImage(C.QImage_convertedToColorSpace(this.h, param1.cPointer()))
+func (this *QImage) ConvertedToColorSpace(colorSpace *QColorSpace) *QImage {
+	_goptr := newQImage(C.QImage_convertedToColorSpace(this.h, colorSpace.cPointer()))
 	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
 	return _goptr
 }
 
-func (this *QImage) ConvertToColorSpace(param1 *QColorSpace) {
-	C.QImage_convertToColorSpace(this.h, param1.cPointer())
+func (this *QImage) ConvertedToColorSpace2(colorSpace *QColorSpace, format QImage__Format) *QImage {
+	_goptr := newQImage(C.QImage_convertedToColorSpace2(this.h, colorSpace.cPointer(), (C.int)(format)))
+	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
+	return _goptr
+}
+
+func (this *QImage) ConvertToColorSpace(colorSpace *QColorSpace) {
+	C.QImage_convertToColorSpace(this.h, colorSpace.cPointer())
+}
+
+func (this *QImage) ConvertToColorSpace2(colorSpace *QColorSpace, format QImage__Format) {
+	C.QImage_convertToColorSpace2(this.h, colorSpace.cPointer(), (C.int)(format))
 }
 
 func (this *QImage) SetColorSpace(colorSpace *QColorSpace) {
@@ -549,8 +570,18 @@ func (this *QImage) ColorTransformed(transform *QColorTransform) *QImage {
 	return _goptr
 }
 
+func (this *QImage) ColorTransformed2(transform *QColorTransform, format QImage__Format) *QImage {
+	_goptr := newQImage(C.QImage_colorTransformed2(this.h, transform.cPointer(), (C.int)(format)))
+	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
+	return _goptr
+}
+
 func (this *QImage) ApplyColorTransform(transform *QColorTransform) {
 	C.QImage_applyColorTransform(this.h, transform.cPointer())
+}
+
+func (this *QImage) ApplyColorTransform2(transform *QColorTransform, format QImage__Format) {
+	C.QImage_applyColorTransform2(this.h, transform.cPointer(), (C.int)(format))
 }
 
 func (this *QImage) Load(device *QIODevice, format string) bool {
@@ -705,38 +736,42 @@ func QImage_ToImageFormat(format QPixelFormat) QImage__Format {
 	return (QImage__Format)(C.QImage_toImageFormat(format.cPointer()))
 }
 
+func (this *QImage) DataPtr() *DataPtr {
+	int /* TODO  */
+}
+
 func (this *QImage) CopyWithRect(rect *QRect) *QImage {
 	_goptr := newQImage(C.QImage_copyWithRect(this.h, rect.cPointer()))
 	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
 	return _goptr
 }
 
-func (this *QImage) ConvertToFormat3(f QImage__Format, flags ImageConversionFlag) *QImage {
-	_goptr := newQImage(C.QImage_convertToFormat3(this.h, (C.int)(f), (C.int)(flags)))
+func (this *QImage) ConvertToFormat3(f Format, flags ImageConversionFlag) *QImage {
+	_goptr := newQImage(C.QImage_convertToFormat3(this.h, f, (C.int)(flags)))
 	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
 	return _goptr
 }
 
-func (this *QImage) ConvertToFormat4(f QImage__Format, colorTable []uint, flags ImageConversionFlag) *QImage {
+func (this *QImage) ConvertToFormat4(f Format, colorTable []uint, flags ImageConversionFlag) *QImage {
 	colorTable_CArray := (*[0xffff]C.uint)(C.malloc(C.size_t(8 * len(colorTable))))
 	defer C.free(unsafe.Pointer(colorTable_CArray))
 	for i := range colorTable {
 		colorTable_CArray[i] = (C.uint)(colorTable[i])
 	}
 	colorTable_ma := C.struct_miqt_array{len: C.size_t(len(colorTable)), data: unsafe.Pointer(colorTable_CArray)}
-	_goptr := newQImage(C.QImage_convertToFormat4(this.h, (C.int)(f), colorTable_ma, (C.int)(flags)))
+	_goptr := newQImage(C.QImage_convertToFormat4(this.h, f, colorTable_ma, (C.int)(flags)))
 	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
 	return _goptr
 }
 
-func (this *QImage) ConvertedTo2(f QImage__Format, flags ImageConversionFlag) *QImage {
-	_goptr := newQImage(C.QImage_convertedTo2(this.h, (C.int)(f), (C.int)(flags)))
+func (this *QImage) ConvertedTo2(f Format, flags ImageConversionFlag) *QImage {
+	_goptr := newQImage(C.QImage_convertedTo2(this.h, f, (C.int)(flags)))
 	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
 	return _goptr
 }
 
-func (this *QImage) ConvertTo2(f QImage__Format, flags ImageConversionFlag) {
-	C.QImage_convertTo2(this.h, (C.int)(f), (C.int)(flags))
+func (this *QImage) ConvertTo2(f Format, flags ImageConversionFlag) {
+	C.QImage_convertTo2(this.h, f, (C.int)(flags))
 }
 
 func (this *QImage) CreateAlphaMaskWithFlags(flags ImageConversionFlag) *QImage {
@@ -819,8 +854,38 @@ func (this *QImage) Mirror2(horizontally bool, vertically bool) {
 	C.QImage_mirror2(this.h, (C.bool)(horizontally), (C.bool)(vertically))
 }
 
-func (this *QImage) InvertPixelsWithQImageInvertMode(param1 QImage__InvertMode) {
-	C.QImage_invertPixelsWithQImageInvertMode(this.h, (C.int)(param1))
+func (this *QImage) FlippedWithOrient(orient Orientation) *QImage {
+	_goptr := newQImage(C.QImage_flippedWithOrient(this.h, (C.int)(orient)))
+	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
+	return _goptr
+}
+
+func (this *QImage) FlipWithOrient(orient Orientation) {
+	C.QImage_flipWithOrient(this.h, (C.int)(orient))
+}
+
+func (this *QImage) InvertPixelsWithInvertMode(param1 InvertMode) {
+	C.QImage_invertPixelsWithInvertMode(this.h, param1)
+}
+
+func (this *QImage) ConvertedToColorSpace3(colorSpace *QColorSpace, format QImage__Format, flags ImageConversionFlag) *QImage {
+	_goptr := newQImage(C.QImage_convertedToColorSpace3(this.h, colorSpace.cPointer(), (C.int)(format), (C.int)(flags)))
+	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
+	return _goptr
+}
+
+func (this *QImage) ConvertToColorSpace3(colorSpace *QColorSpace, format QImage__Format, flags ImageConversionFlag) {
+	C.QImage_convertToColorSpace3(this.h, colorSpace.cPointer(), (C.int)(format), (C.int)(flags))
+}
+
+func (this *QImage) ColorTransformed3(transform *QColorTransform, format QImage__Format, flags ImageConversionFlag) *QImage {
+	_goptr := newQImage(C.QImage_colorTransformed3(this.h, transform.cPointer(), (C.int)(format), (C.int)(flags)))
+	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
+	return _goptr
+}
+
+func (this *QImage) ApplyColorTransform3(transform *QColorTransform, format QImage__Format, flags ImageConversionFlag) {
+	C.QImage_applyColorTransform3(this.h, transform.cPointer(), (C.int)(format), (C.int)(flags))
 }
 
 func (this *QImage) Load2(fileName string, format string) bool {
@@ -989,10 +1054,10 @@ func (this *QImage) RgbSwappedInplace() {
 }
 
 // ConvertToFormatHelper can only be called from a QImage that was directly constructed.
-func (this *QImage) ConvertToFormatHelper(format QImage__Format, flags ImageConversionFlag) QImage {
+func (this *QImage) ConvertToFormatHelper(format Format, flags ImageConversionFlag) QImage {
 
 	var _dynamic_cast_ok C.bool = false
-	_goptr := newQImage(C.QImage_protectedbase_convertToFormatHelper(&_dynamic_cast_ok, unsafe.Pointer(this.h), (C.int)(format), (C.int)(flags)))
+	_goptr := newQImage(C.QImage_protectedbase_convertToFormatHelper(&_dynamic_cast_ok, unsafe.Pointer(this.h), format, (C.int)(flags)))
 	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
 	_method_ret := *_goptr
 
@@ -1005,10 +1070,10 @@ func (this *QImage) ConvertToFormatHelper(format QImage__Format, flags ImageConv
 }
 
 // ConvertToFormatInplace can only be called from a QImage that was directly constructed.
-func (this *QImage) ConvertToFormatInplace(format QImage__Format, flags ImageConversionFlag) bool {
+func (this *QImage) ConvertToFormatInplace(format Format, flags ImageConversionFlag) bool {
 
 	var _dynamic_cast_ok C.bool = false
-	_method_ret := (bool)(C.QImage_protectedbase_convertToFormatInplace(&_dynamic_cast_ok, unsafe.Pointer(this.h), (C.int)(format), (C.int)(flags)))
+	_method_ret := (bool)(C.QImage_protectedbase_convertToFormatInplace(&_dynamic_cast_ok, unsafe.Pointer(this.h), format, (C.int)(flags)))
 
 	if !_dynamic_cast_ok {
 		panic("miqt: can only call protected methods for directly constructed types")
@@ -1055,6 +1120,20 @@ func (this *QImage) DetachMetadataWithInvalidateCache(invalidateCache bool) {
 	if !_dynamic_cast_ok {
 		panic("miqt: can only call protected methods for directly constructed types")
 	}
+
+}
+
+// GetDecodedMetricF can only be called from a QImage that was directly constructed.
+func (this *QImage) GetDecodedMetricF(metricA PaintDeviceMetric, metricB PaintDeviceMetric) float64 {
+
+	var _dynamic_cast_ok C.bool = false
+	_method_ret := (float64)(C.QImage_protectedbase_getDecodedMetricF(&_dynamic_cast_ok, unsafe.Pointer(this.h), metricA, metricB))
+
+	if !_dynamic_cast_ok {
+		panic("miqt: can only call protected methods for directly constructed types")
+	}
+
+	return _method_ret
 
 }
 
@@ -1108,12 +1187,12 @@ func miqt_exec_callback_QImage_paintEngine(self *C.QImage, cb C.intptr_t) *C.QPa
 
 }
 
-func (this *QImage) callVirtualBase_Metric(metric QPaintDevice__PaintDeviceMetric) int {
+func (this *QImage) callVirtualBase_Metric(metric PaintDeviceMetric) int {
 
-	return (int)(C.QImage_virtualbase_metric(unsafe.Pointer(this.h), (C.int)(metric)))
+	return (int)(C.QImage_virtualbase_metric(unsafe.Pointer(this.h), metric))
 
 }
-func (this *QImage) OnMetric(slot func(super func(metric QPaintDevice__PaintDeviceMetric) int, metric QPaintDevice__PaintDeviceMetric) int) {
+func (this *QImage) OnMetric(slot func(super func(metric PaintDeviceMetric) int, metric PaintDeviceMetric) int) {
 	ok := C.QImage_override_virtual_metric(unsafe.Pointer(this.h), C.intptr_t(cgo.NewHandle(slot)))
 	if !ok {
 		panic("miqt: can only override virtual methods for directly constructed types")
@@ -1121,14 +1200,14 @@ func (this *QImage) OnMetric(slot func(super func(metric QPaintDevice__PaintDevi
 }
 
 //export miqt_exec_callback_QImage_metric
-func miqt_exec_callback_QImage_metric(self *C.QImage, cb C.intptr_t, metric C.int) C.int {
-	gofunc, ok := cgo.Handle(cb).Value().(func(super func(metric QPaintDevice__PaintDeviceMetric) int, metric QPaintDevice__PaintDeviceMetric) int)
+func miqt_exec_callback_QImage_metric(self *C.QImage, cb C.intptr_t, metric C.PaintDeviceMetric) C.int {
+	gofunc, ok := cgo.Handle(cb).Value().(func(super func(metric PaintDeviceMetric) int, metric PaintDeviceMetric) int)
 	if !ok {
 		panic("miqt: callback of non-callback type (heap corruption?)")
 	}
 
 	// Convert all CABI parameters to Go parameters
-	slotval1 := (QPaintDevice__PaintDeviceMetric)(metric)
+	int /* TODO  */
 
 	virtualReturn := gofunc((&QImage{h: self}).callVirtualBase_Metric, slotval1)
 

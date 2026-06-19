@@ -165,8 +165,8 @@ func (this *QTextCursor) InsertText2(text string, format *QTextCharFormat) {
 	C.QTextCursor_insertText2(this.h, text_ms, format.cPointer())
 }
 
-func (this *QTextCursor) MovePosition(op QTextCursor__MoveOperation) bool {
-	return (bool)(C.QTextCursor_movePosition(this.h, (C.int)(op)))
+func (this *QTextCursor) MovePosition(op MoveOperation) bool {
+	return (bool)(C.QTextCursor_movePosition(this.h, op))
 }
 
 func (this *QTextCursor) VisualNavigation() bool {
@@ -201,8 +201,8 @@ func (this *QTextCursor) DeletePreviousChar() {
 	C.QTextCursor_deletePreviousChar(this.h)
 }
 
-func (this *QTextCursor) Select(selection QTextCursor__SelectionType) {
-	C.QTextCursor_select(this.h, (C.int)(selection))
+func (this *QTextCursor) Select(selection SelectionType) {
+	C.QTextCursor_select(this.h, selection)
 }
 
 func (this *QTextCursor) HasSelection() bool {
@@ -454,19 +454,19 @@ func (this *QTextCursor) Document() *QTextDocument {
 	return newQTextDocument(C.QTextCursor_document(this.h))
 }
 
-func (this *QTextCursor) SetPosition2(pos int, mode QTextCursor__MoveMode) {
-	C.QTextCursor_setPosition2(this.h, (C.int)(pos), (C.int)(mode))
+func (this *QTextCursor) SetPosition2(pos int, mode MoveMode) {
+	C.QTextCursor_setPosition2(this.h, (C.int)(pos), mode)
 }
 
-func (this *QTextCursor) MovePosition2(op QTextCursor__MoveOperation, param2 QTextCursor__MoveMode) bool {
-	return (bool)(C.QTextCursor_movePosition2(this.h, (C.int)(op), (C.int)(param2)))
+func (this *QTextCursor) MovePosition2(op MoveOperation, param2 MoveMode) bool {
+	return (bool)(C.QTextCursor_movePosition2(this.h, op, param2))
 }
 
-func (this *QTextCursor) MovePosition3(op QTextCursor__MoveOperation, param2 QTextCursor__MoveMode, n int) bool {
-	return (bool)(C.QTextCursor_movePosition3(this.h, (C.int)(op), (C.int)(param2), (C.int)(n)))
+func (this *QTextCursor) MovePosition3(op MoveOperation, param2 MoveMode, n int) bool {
+	return (bool)(C.QTextCursor_movePosition3(this.h, op, param2, (C.int)(n)))
 }
 
-func (this *QTextCursor) InsertMarkdown2(markdown string, features QTextDocument__MarkdownFeature) {
+func (this *QTextCursor) InsertMarkdown2(markdown string, features MarkdownFeature) {
 	markdown_ms := C.struct_miqt_string{}
 	markdown_ms.data = C.CString(markdown)
 	markdown_ms.len = C.size_t(len(markdown))

@@ -251,13 +251,12 @@ int QDataWidgetMapper_orientation(const QDataWidgetMapper* self) {
 	return static_cast<int>(_ret);
 }
 
-void QDataWidgetMapper_setSubmitPolicy(QDataWidgetMapper* self, int policy) {
-	self->setSubmitPolicy(static_cast<QDataWidgetMapper::SubmitPolicy>(policy));
+void QDataWidgetMapper_setSubmitPolicy(QDataWidgetMapper* self, SubmitPolicy policy) {
+	self->setSubmitPolicy(policy);
 }
 
-int QDataWidgetMapper_submitPolicy(const QDataWidgetMapper* self) {
-	QDataWidgetMapper::SubmitPolicy _ret = self->submitPolicy();
-	return static_cast<int>(_ret);
+SubmitPolicy QDataWidgetMapper_submitPolicy(const QDataWidgetMapper* self) {
+	return self->submitPolicy();
 }
 
 void QDataWidgetMapper_addMapping(QDataWidgetMapper* self, QWidget* widget, int section) {

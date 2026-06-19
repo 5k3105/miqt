@@ -84,8 +84,8 @@ QTextOption* QTextLayout_textOption(const QTextLayout* self);
 void QTextLayout_setPreeditArea(QTextLayout* self, int position, struct miqt_string text);
 int QTextLayout_preeditAreaPosition(const QTextLayout* self);
 struct miqt_string QTextLayout_preeditAreaText(const QTextLayout* self);
-void QTextLayout_setFormats(QTextLayout* self, struct miqt_array /* of QTextLayout__FormatRange* */  overrides);
-struct miqt_array /* of QTextLayout__FormatRange* */  QTextLayout_formats(const QTextLayout* self);
+void QTextLayout_setFormats(QTextLayout* self, struct miqt_array /* of FormatRange */  overrides);
+struct miqt_array /* of FormatRange */  QTextLayout_formats(const QTextLayout* self);
 void QTextLayout_clearFormats(QTextLayout* self);
 void QTextLayout_setCacheEnabled(QTextLayout* self, bool enable);
 bool QTextLayout_cacheEnabled(const QTextLayout* self);
@@ -111,14 +111,15 @@ void QTextLayout_setPosition(QTextLayout* self, QPointF* p);
 QRectF* QTextLayout_boundingRect(const QTextLayout* self);
 double QTextLayout_minimumWidth(const QTextLayout* self);
 double QTextLayout_maximumWidth(const QTextLayout* self);
-struct miqt_array /* of QGlyphRun* */  QTextLayout_glyphRuns(const QTextLayout* self);
+struct miqt_array /* of QGlyphRun* */  QTextLayout_glyphRuns(const QTextLayout* self, int from, int length, GlyphRunRetrievalFlags flags);
+struct miqt_array /* of QGlyphRun* */  QTextLayout_glyphRuns2(const QTextLayout* self);
 void QTextLayout_setFlags(QTextLayout* self, int flags);
-int QTextLayout_nextCursorPosition2(const QTextLayout* self, int oldPos, int mode);
-int QTextLayout_previousCursorPosition2(const QTextLayout* self, int oldPos, int mode);
-void QTextLayout_draw2(const QTextLayout* self, QPainter* p, QPointF* pos, struct miqt_array /* of QTextLayout__FormatRange* */  selections);
-void QTextLayout_draw3(const QTextLayout* self, QPainter* p, QPointF* pos, struct miqt_array /* of QTextLayout__FormatRange* */  selections, QRectF* clip);
+int QTextLayout_nextCursorPosition2(const QTextLayout* self, int oldPos, CursorMode mode);
+int QTextLayout_previousCursorPosition2(const QTextLayout* self, int oldPos, CursorMode mode);
+void QTextLayout_draw2(const QTextLayout* self, QPainter* p, QPointF* pos, struct miqt_array /* of FormatRange */  selections);
+void QTextLayout_draw3(const QTextLayout* self, QPainter* p, QPointF* pos, struct miqt_array /* of FormatRange */  selections, QRectF* clip);
 struct miqt_array /* of QGlyphRun* */  QTextLayout_glyphRunsWithFrom(const QTextLayout* self, int from);
-struct miqt_array /* of QGlyphRun* */  QTextLayout_glyphRuns2(const QTextLayout* self, int from, int length);
+struct miqt_array /* of QGlyphRun* */  QTextLayout_glyphRuns3(const QTextLayout* self, int from, int length);
 
 void QTextLayout_delete(QTextLayout* self);
 
@@ -149,23 +150,25 @@ int QTextLine_textStart(const QTextLine* self);
 int QTextLine_textLength(const QTextLine* self);
 int QTextLine_lineNumber(const QTextLine* self);
 void QTextLine_draw(const QTextLine* self, QPainter* painter, QPointF* position);
-struct miqt_array /* of QGlyphRun* */  QTextLine_glyphRuns(const QTextLine* self);
-double QTextLine_cursorToX2(const QTextLine* self, int* cursorPos, int edge);
-double QTextLine_cursorToX3(const QTextLine* self, int cursorPos, int edge);
-int QTextLine_xToCursor2(const QTextLine* self, double x, int param2);
+struct miqt_array /* of QGlyphRun* */  QTextLine_glyphRuns(const QTextLine* self, int from, int length, int flags);
+struct miqt_array /* of QGlyphRun* */  QTextLine_glyphRuns2(const QTextLine* self);
+double QTextLine_cursorToX2(const QTextLine* self, int* cursorPos, Edge edge);
+double QTextLine_cursorToX3(const QTextLine* self, int cursorPos, Edge edge);
+int QTextLine_xToCursor2(const QTextLine* self, double x, CursorPosition param2);
 struct miqt_array /* of QGlyphRun* */  QTextLine_glyphRunsWithFrom(const QTextLine* self, int from);
-struct miqt_array /* of QGlyphRun* */  QTextLine_glyphRuns2(const QTextLine* self, int from, int length);
+struct miqt_array /* of QGlyphRun* */  QTextLine_glyphRuns3(const QTextLine* self, int from, int length);
 
 void QTextLine_delete(QTextLine* self);
 
-QTextLayout__FormatRange* QTextLayout__FormatRange_new(QTextLayout__FormatRange* param1);
+QTextLayout__FormatRange* QTextLayout__FormatRange_new();
+QTextLayout__FormatRange* QTextLayout__FormatRange_new2(const FormatRange* param1);
 int QTextLayout__FormatRange_start(const QTextLayout__FormatRange* self);
 void QTextLayout__FormatRange_setStart(QTextLayout__FormatRange* self, int start);
 int QTextLayout__FormatRange_length(const QTextLayout__FormatRange* self);
 void QTextLayout__FormatRange_setLength(QTextLayout__FormatRange* self, int length);
 QTextCharFormat* QTextLayout__FormatRange_format(const QTextLayout__FormatRange* self);
 void QTextLayout__FormatRange_setFormat(QTextLayout__FormatRange* self, QTextCharFormat* format);
-void QTextLayout__FormatRange_operatorAssign(QTextLayout__FormatRange* self, QTextLayout__FormatRange* param1);
+void QTextLayout__FormatRange_operatorAssign(QTextLayout__FormatRange* self, const FormatRange* param1);
 
 void QTextLayout__FormatRange_delete(QTextLayout__FormatRange* self);
 

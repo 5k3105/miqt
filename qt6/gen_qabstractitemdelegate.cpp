@@ -462,6 +462,10 @@ bool QAbstractItemDelegate_editorEvent(QAbstractItemDelegate* self, QEvent* even
 	return self->editorEvent(event, model, *option, *index);
 }
 
+bool QAbstractItemDelegate_handleEditorEvent(QAbstractItemDelegate* self, QObject* object, QEvent* event) {
+	return self->handleEditorEvent(object, event);
+}
+
 bool QAbstractItemDelegate_helpEvent(QAbstractItemDelegate* self, QHelpEvent* event, QAbstractItemView* view, QStyleOptionViewItem* option, QModelIndex* index) {
 	return self->helpEvent(event, view, *option, *index);
 }

@@ -115,9 +115,8 @@ void QRandomGenerator_generate2(QRandomGenerator* self, unsigned int* begin, uns
 	self->generate(static_cast<quint32*>(begin), static_cast<quint32*>(end));
 }
 
-unsigned int QRandomGenerator_operatorCall(QRandomGenerator* self) {
-	QRandomGenerator::result_type _ret = self->operator()();
-	return static_cast<unsigned int>(_ret);
+result_type QRandomGenerator_operatorCall(QRandomGenerator* self) {
+	return self->operator()();
 }
 
 void QRandomGenerator_seed(QRandomGenerator* self) {
@@ -128,14 +127,12 @@ void QRandomGenerator_discard(QRandomGenerator* self, unsigned long long z) {
 	self->discard(static_cast<unsigned long long>(z));
 }
 
-unsigned int QRandomGenerator_min() {
-	QRandomGenerator::result_type _ret = QRandomGenerator::min();
-	return static_cast<unsigned int>(_ret);
+result_type QRandomGenerator_min() {
+	return QRandomGenerator::min();
 }
 
-unsigned int QRandomGenerator_max() {
-	QRandomGenerator::result_type _ret = QRandomGenerator::max();
-	return static_cast<unsigned int>(_ret);
+result_type QRandomGenerator_max() {
+	return QRandomGenerator::max();
 }
 
 QRandomGenerator* QRandomGenerator_system() {
@@ -191,23 +188,20 @@ unsigned long long QRandomGenerator64_generate(QRandomGenerator64* self) {
 	return static_cast<unsigned long long>(_ret);
 }
 
-unsigned long long QRandomGenerator64_operatorCall(QRandomGenerator64* self) {
-	QRandomGenerator64::result_type _ret = self->operator()();
-	return static_cast<unsigned long long>(_ret);
+result_type QRandomGenerator64_operatorCall(QRandomGenerator64* self) {
+	return self->operator()();
 }
 
 void QRandomGenerator64_discard(QRandomGenerator64* self, unsigned long long z) {
 	self->discard(static_cast<unsigned long long>(z));
 }
 
-unsigned long long QRandomGenerator64_min() {
-	QRandomGenerator64::result_type _ret = QRandomGenerator64::min();
-	return static_cast<unsigned long long>(_ret);
+result_type QRandomGenerator64_min() {
+	return QRandomGenerator64::min();
 }
 
-unsigned long long QRandomGenerator64_max() {
-	QRandomGenerator64::result_type _ret = QRandomGenerator64::max();
-	return static_cast<unsigned long long>(_ret);
+result_type QRandomGenerator64_max() {
+	return QRandomGenerator64::max();
 }
 
 QRandomGenerator64* QRandomGenerator64_system() {

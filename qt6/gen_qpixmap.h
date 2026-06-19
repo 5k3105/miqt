@@ -104,7 +104,8 @@ void QPixmap_detach(QPixmap* self);
 bool QPixmap_isQBitmap(const QPixmap* self);
 QPaintEngine* QPixmap_paintEngine(const QPixmap* self);
 bool QPixmap_operatorNot(const QPixmap* self);
-int QPixmap_metric(const QPixmap* self, int param1);
+int QPixmap_metric(const QPixmap* self, PaintDeviceMetric param1);
+DataPtr* QPixmap_dataPtr(QPixmap* self);
 void QPixmap_fillWithFillColor(QPixmap* self, QColor* fillColor);
 QBitmap* QPixmap_createHeuristicMaskWithClipTight(const QPixmap* self, bool clipTight);
 QBitmap* QPixmap_createMaskFromColor2(const QPixmap* self, QColor* maskColor, int mode);
@@ -137,13 +138,15 @@ int QPixmap_virtualbase_devType(const void* self);
 bool QPixmap_override_virtual_paintEngine(void* self, intptr_t slot);
 QPaintEngine* QPixmap_virtualbase_paintEngine(const void* self);
 bool QPixmap_override_virtual_metric(void* self, intptr_t slot);
-int QPixmap_virtualbase_metric(const void* self, int param1);
+int QPixmap_virtualbase_metric(const void* self, PaintDeviceMetric param1);
 bool QPixmap_override_virtual_initPainter(void* self, intptr_t slot);
 void QPixmap_virtualbase_initPainter(const void* self, QPainter* painter);
 bool QPixmap_override_virtual_redirected(void* self, intptr_t slot);
 QPaintDevice* QPixmap_virtualbase_redirected(const void* self, QPoint* offset);
 bool QPixmap_override_virtual_sharedPainter(void* self, intptr_t slot);
 QPainter* QPixmap_virtualbase_sharedPainter(const void* self);
+
+double QPixmap_protectedbase_getDecodedMetricF(bool* _dynamic_cast_ok, const void* self, PaintDeviceMetric metricA, PaintDeviceMetric metricB);
 
 void QPixmap_delete(QPixmap* self);
 

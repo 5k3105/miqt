@@ -20,8 +20,8 @@ QEasingCurve* QEasingCurve_new2(QEasingCurve* other) {
 	return new (std::nothrow) QEasingCurve(*other);
 }
 
-QEasingCurve* QEasingCurve_new3(int type) {
-	return new (std::nothrow) QEasingCurve(static_cast<QEasingCurve::Type>(type));
+QEasingCurve* QEasingCurve_new3(Type type) {
+	return new (std::nothrow) QEasingCurve(type);
 }
 
 void QEasingCurve_operatorAssign(QEasingCurve* self, QEasingCurve* other) {
@@ -30,14 +30,6 @@ void QEasingCurve_operatorAssign(QEasingCurve* self, QEasingCurve* other) {
 
 void QEasingCurve_swap(QEasingCurve* self, QEasingCurve* other) {
 	self->swap(*other);
-}
-
-bool QEasingCurve_operatorEqual(const QEasingCurve* self, QEasingCurve* other) {
-	return (*self == *other);
-}
-
-bool QEasingCurve_operatorNotEqual(const QEasingCurve* self, QEasingCurve* other) {
-	return (*self != *other);
 }
 
 double QEasingCurve_amplitude(const QEasingCurve* self) {
@@ -88,13 +80,20 @@ struct miqt_array /* of QPointF* */  QEasingCurve_toCubicSpline(const QEasingCur
 	return _out;
 }
 
-int QEasingCurve_type(const QEasingCurve* self) {
-	QEasingCurve::Type _ret = self->type();
-	return static_cast<int>(_ret);
+Type QEasingCurve_type(const QEasingCurve* self) {
+	return self->type();
 }
 
-void QEasingCurve_setType(QEasingCurve* self, int type) {
-	self->setType(static_cast<QEasingCurve::Type>(type));
+void QEasingCurve_setType(QEasingCurve* self, Type type) {
+	self->setType(type);
+}
+
+void QEasingCurve_setCustomType(QEasingCurve* self, EasingFunction func) {
+	self->setCustomType(func);
+}
+
+EasingFunction QEasingCurve_customType(const QEasingCurve* self) {
+	return self->customType();
 }
 
 double QEasingCurve_valueForProgress(const QEasingCurve* self, double progress) {

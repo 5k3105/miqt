@@ -128,8 +128,8 @@ func QFileDevice_Tr(s string) string {
 	return _ret
 }
 
-func (this *QFileDevice) Error() QFileDevice__FileError {
-	return (QFileDevice__FileError)(C.QFileDevice_error(this.h))
+func (this *QFileDevice) Error() FileError {
+	int /* TODO  */
 }
 
 func (this *QFileDevice) UnsetError() {
@@ -179,12 +179,12 @@ func (this *QFileDevice) Resize(sz int64) bool {
 	return (bool)(C.QFileDevice_resize(this.h, (C.longlong)(sz)))
 }
 
-func (this *QFileDevice) Permissions() QFileDevice__Permission {
-	return (QFileDevice__Permission)(C.QFileDevice_permissions(this.h))
+func (this *QFileDevice) Permissions() Permissions {
+	int /* TODO  */
 }
 
-func (this *QFileDevice) SetPermissions(permissionSpec QFileDevice__Permission) bool {
-	return (bool)(C.QFileDevice_setPermissions(this.h, (C.int)(permissionSpec)))
+func (this *QFileDevice) SetPermissions(permissionSpec Permissions) bool {
+	return (bool)(C.QFileDevice_setPermissions(this.h, permissionSpec))
 }
 
 func (this *QFileDevice) Map(offset int64, size int64) *byte {
@@ -227,8 +227,8 @@ func QFileDevice_Tr3(s string, c string, n int) string {
 	return _ret
 }
 
-func (this *QFileDevice) Map2(offset int64, size int64, flags QFileDevice__MemoryMapFlag) *byte {
-	return (*byte)(unsafe.Pointer(C.QFileDevice_map2(this.h, (C.longlong)(offset), (C.longlong)(size), (C.int)(flags))))
+func (this *QFileDevice) Map2(offset int64, size int64, flags MemoryMapFlags) *byte {
+	return (*byte)(unsafe.Pointer(C.QFileDevice_map2(this.h, (C.longlong)(offset), (C.longlong)(size), flags)))
 }
 
 // Delete this object from C++ memory.

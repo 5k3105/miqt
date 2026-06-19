@@ -201,9 +201,9 @@ func NewQPageSize() *QPageSize {
 }
 
 // NewQPageSize2 constructs a new QPageSize object.
-func NewQPageSize2(pageSizeId QPageSize__PageSizeId) *QPageSize {
+func NewQPageSize2(pageSizeId PageSizeId) *QPageSize {
 
-	return newQPageSize(C.QPageSize_new2((C.int)(pageSizeId)))
+	return newQPageSize(C.QPageSize_new2(pageSizeId))
 }
 
 // NewQPageSize3 constructs a new QPageSize object.
@@ -213,9 +213,9 @@ func NewQPageSize3(pointSize *QSize) *QPageSize {
 }
 
 // NewQPageSize4 constructs a new QPageSize object.
-func NewQPageSize4(size *QSizeF, units QPageSize__Unit) *QPageSize {
+func NewQPageSize4(size *QSizeF, units Unit) *QPageSize {
 
-	return newQPageSize(C.QPageSize_new4(size.cPointer(), (C.int)(units)))
+	return newQPageSize(C.QPageSize_new4(size.cPointer(), units))
 }
 
 // NewQPageSize5 constructs a new QPageSize object.
@@ -235,33 +235,33 @@ func NewQPageSize6(pointSize *QSize, name string) *QPageSize {
 }
 
 // NewQPageSize7 constructs a new QPageSize object.
-func NewQPageSize7(pointSize *QSize, name string, matchPolicy QPageSize__SizeMatchPolicy) *QPageSize {
+func NewQPageSize7(pointSize *QSize, name string, matchPolicy SizeMatchPolicy) *QPageSize {
 	name_ms := C.struct_miqt_string{}
 	name_ms.data = C.CString(name)
 	name_ms.len = C.size_t(len(name))
 	defer C.free(unsafe.Pointer(name_ms.data))
 
-	return newQPageSize(C.QPageSize_new7(pointSize.cPointer(), name_ms, (C.int)(matchPolicy)))
+	return newQPageSize(C.QPageSize_new7(pointSize.cPointer(), name_ms, matchPolicy))
 }
 
 // NewQPageSize8 constructs a new QPageSize object.
-func NewQPageSize8(size *QSizeF, units QPageSize__Unit, name string) *QPageSize {
+func NewQPageSize8(size *QSizeF, units Unit, name string) *QPageSize {
 	name_ms := C.struct_miqt_string{}
 	name_ms.data = C.CString(name)
 	name_ms.len = C.size_t(len(name))
 	defer C.free(unsafe.Pointer(name_ms.data))
 
-	return newQPageSize(C.QPageSize_new8(size.cPointer(), (C.int)(units), name_ms))
+	return newQPageSize(C.QPageSize_new8(size.cPointer(), units, name_ms))
 }
 
 // NewQPageSize9 constructs a new QPageSize object.
-func NewQPageSize9(size *QSizeF, units QPageSize__Unit, name string, matchPolicy QPageSize__SizeMatchPolicy) *QPageSize {
+func NewQPageSize9(size *QSizeF, units Unit, name string, matchPolicy SizeMatchPolicy) *QPageSize {
 	name_ms := C.struct_miqt_string{}
 	name_ms.data = C.CString(name)
 	name_ms.len = C.size_t(len(name))
 	defer C.free(unsafe.Pointer(name_ms.data))
 
-	return newQPageSize(C.QPageSize_new9(size.cPointer(), (C.int)(units), name_ms, (C.int)(matchPolicy)))
+	return newQPageSize(C.QPageSize_new9(size.cPointer(), units, name_ms, matchPolicy))
 }
 
 func (this *QPageSize) OperatorAssign(other *QPageSize) {
@@ -294,8 +294,8 @@ func (this *QPageSize) Name() string {
 	return _ret
 }
 
-func (this *QPageSize) Id() QPageSize__PageSizeId {
-	return (QPageSize__PageSizeId)(C.QPageSize_id(this.h))
+func (this *QPageSize) Id() PageSizeId {
+	int /* TODO  */
 }
 
 func (this *QPageSize) WindowsId() int {
@@ -308,12 +308,12 @@ func (this *QPageSize) DefinitionSize() *QSizeF {
 	return _goptr
 }
 
-func (this *QPageSize) DefinitionUnits() QPageSize__Unit {
-	return (QPageSize__Unit)(C.QPageSize_definitionUnits(this.h))
+func (this *QPageSize) DefinitionUnits() Unit {
+	int /* TODO  */
 }
 
-func (this *QPageSize) Size(units QPageSize__Unit) *QSizeF {
-	_goptr := newQSizeF(C.QPageSize_size(this.h, (C.int)(units)))
+func (this *QPageSize) Size(units Unit) *QSizeF {
+	_goptr := newQSizeF(C.QPageSize_size(this.h, units))
 	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
 	return _goptr
 }
@@ -330,8 +330,8 @@ func (this *QPageSize) SizePixels(resolution int) *QSize {
 	return _goptr
 }
 
-func (this *QPageSize) Rect(units QPageSize__Unit) *QRectF {
-	_goptr := newQRectF(C.QPageSize_rect(this.h, (C.int)(units)))
+func (this *QPageSize) Rect(units Unit) *QRectF {
+	_goptr := newQRectF(C.QPageSize_rect(this.h, units))
 	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
 	return _goptr
 }
@@ -348,70 +348,70 @@ func (this *QPageSize) RectPixels(resolution int) *QRect {
 	return _goptr
 }
 
-func QPageSize_KeyWithPageSizeId(pageSizeId QPageSize__PageSizeId) string {
-	var _ms C.struct_miqt_string = C.QPageSize_keyWithPageSizeId((C.int)(pageSizeId))
+func QPageSize_KeyWithPageSizeId(pageSizeId PageSizeId) string {
+	var _ms C.struct_miqt_string = C.QPageSize_keyWithPageSizeId(pageSizeId)
 	_ret := C.GoStringN(_ms.data, C.int(int64(_ms.len)))
 	C.free(unsafe.Pointer(_ms.data))
 	return _ret
 }
 
-func QPageSize_NameWithPageSizeId(pageSizeId QPageSize__PageSizeId) string {
-	var _ms C.struct_miqt_string = C.QPageSize_nameWithPageSizeId((C.int)(pageSizeId))
+func QPageSize_NameWithPageSizeId(pageSizeId PageSizeId) string {
+	var _ms C.struct_miqt_string = C.QPageSize_nameWithPageSizeId(pageSizeId)
 	_ret := C.GoStringN(_ms.data, C.int(int64(_ms.len)))
 	C.free(unsafe.Pointer(_ms.data))
 	return _ret
 }
 
-func QPageSize_IdWithPointSize(pointSize *QSize) QPageSize__PageSizeId {
-	return (QPageSize__PageSizeId)(C.QPageSize_idWithPointSize(pointSize.cPointer()))
+func QPageSize_IdWithPointSize(pointSize *QSize) PageSizeId {
+	int /* TODO  */
 }
 
-func QPageSize_Id2(size *QSizeF, units QPageSize__Unit) QPageSize__PageSizeId {
-	return (QPageSize__PageSizeId)(C.QPageSize_id2(size.cPointer(), (C.int)(units)))
+func QPageSize_Id2(size *QSizeF, units Unit) PageSizeId {
+	int /* TODO  */
 }
 
-func QPageSize_IdWithWindowsId(windowsId int) QPageSize__PageSizeId {
-	return (QPageSize__PageSizeId)(C.QPageSize_idWithWindowsId((C.int)(windowsId)))
+func QPageSize_IdWithWindowsId(windowsId int) PageSizeId {
+	int /* TODO  */
 }
 
-func QPageSize_WindowsIdWithPageSizeId(pageSizeId QPageSize__PageSizeId) int {
-	return (int)(C.QPageSize_windowsIdWithPageSizeId((C.int)(pageSizeId)))
+func QPageSize_WindowsIdWithPageSizeId(pageSizeId PageSizeId) int {
+	return (int)(C.QPageSize_windowsIdWithPageSizeId(pageSizeId))
 }
 
-func QPageSize_DefinitionSizeWithPageSizeId(pageSizeId QPageSize__PageSizeId) *QSizeF {
-	_goptr := newQSizeF(C.QPageSize_definitionSizeWithPageSizeId((C.int)(pageSizeId)))
+func QPageSize_DefinitionSizeWithPageSizeId(pageSizeId PageSizeId) *QSizeF {
+	_goptr := newQSizeF(C.QPageSize_definitionSizeWithPageSizeId(pageSizeId))
 	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
 	return _goptr
 }
 
-func QPageSize_DefinitionUnitsWithPageSizeId(pageSizeId QPageSize__PageSizeId) QPageSize__Unit {
-	return (QPageSize__Unit)(C.QPageSize_definitionUnitsWithPageSizeId((C.int)(pageSizeId)))
+func QPageSize_DefinitionUnitsWithPageSizeId(pageSizeId PageSizeId) Unit {
+	int /* TODO  */
 }
 
-func QPageSize_Size2(pageSizeId QPageSize__PageSizeId, units QPageSize__Unit) *QSizeF {
-	_goptr := newQSizeF(C.QPageSize_size2((C.int)(pageSizeId), (C.int)(units)))
+func QPageSize_Size2(pageSizeId PageSizeId, units Unit) *QSizeF {
+	_goptr := newQSizeF(C.QPageSize_size2(pageSizeId, units))
 	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
 	return _goptr
 }
 
-func QPageSize_SizePointsWithPageSizeId(pageSizeId QPageSize__PageSizeId) *QSize {
-	_goptr := newQSize(C.QPageSize_sizePointsWithPageSizeId((C.int)(pageSizeId)))
+func QPageSize_SizePointsWithPageSizeId(pageSizeId PageSizeId) *QSize {
+	_goptr := newQSize(C.QPageSize_sizePointsWithPageSizeId(pageSizeId))
 	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
 	return _goptr
 }
 
-func QPageSize_SizePixels2(pageSizeId QPageSize__PageSizeId, resolution int) *QSize {
-	_goptr := newQSize(C.QPageSize_sizePixels2((C.int)(pageSizeId), (C.int)(resolution)))
+func QPageSize_SizePixels2(pageSizeId PageSizeId, resolution int) *QSize {
+	_goptr := newQSize(C.QPageSize_sizePixels2(pageSizeId, (C.int)(resolution)))
 	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
 	return _goptr
 }
 
-func QPageSize_Id3(pointSize *QSize, matchPolicy QPageSize__SizeMatchPolicy) QPageSize__PageSizeId {
-	return (QPageSize__PageSizeId)(C.QPageSize_id3(pointSize.cPointer(), (C.int)(matchPolicy)))
+func QPageSize_Id3(pointSize *QSize, matchPolicy SizeMatchPolicy) PageSizeId {
+	int /* TODO  */
 }
 
-func QPageSize_Id4(size *QSizeF, units QPageSize__Unit, matchPolicy QPageSize__SizeMatchPolicy) QPageSize__PageSizeId {
-	return (QPageSize__PageSizeId)(C.QPageSize_id4(size.cPointer(), (C.int)(units), (C.int)(matchPolicy)))
+func QPageSize_Id4(size *QSizeF, units Unit, matchPolicy SizeMatchPolicy) PageSizeId {
+	int /* TODO  */
 }
 
 // Delete this object from C++ memory.

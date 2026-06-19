@@ -210,12 +210,12 @@ func (this *QPlainTextEdit) MaximumBlockCount() int {
 	return (int)(C.QPlainTextEdit_maximumBlockCount(this.h))
 }
 
-func (this *QPlainTextEdit) LineWrapMode() QPlainTextEdit__LineWrapMode {
-	return (QPlainTextEdit__LineWrapMode)(C.QPlainTextEdit_lineWrapMode(this.h))
+func (this *QPlainTextEdit) LineWrapMode() LineWrapMode {
+	int /* TODO  */
 }
 
-func (this *QPlainTextEdit) SetLineWrapMode(mode QPlainTextEdit__LineWrapMode) {
-	C.QPlainTextEdit_setLineWrapMode(this.h, (C.int)(mode))
+func (this *QPlainTextEdit) SetLineWrapMode(mode LineWrapMode) {
+	C.QPlainTextEdit_setLineWrapMode(this.h, mode)
 }
 
 func (this *QPlainTextEdit) WordWrapMode() QTextOption__WrapMode {
@@ -645,7 +645,7 @@ func QPlainTextEdit_Tr3(s string, c string, n int) string {
 	return _ret
 }
 
-func (this *QPlainTextEdit) Find2(exp string, options QTextDocument__FindFlag) bool {
+func (this *QPlainTextEdit) Find2(exp string, options FindFlag) bool {
 	exp_ms := C.struct_miqt_string{}
 	exp_ms.data = C.CString(exp)
 	exp_ms.len = C.size_t(len(exp))
@@ -653,7 +653,7 @@ func (this *QPlainTextEdit) Find2(exp string, options QTextDocument__FindFlag) b
 	return (bool)(C.QPlainTextEdit_find2(this.h, exp_ms, (C.int)(options)))
 }
 
-func (this *QPlainTextEdit) Find3(exp *QRegularExpression, options QTextDocument__FindFlag) bool {
+func (this *QPlainTextEdit) Find3(exp *QRegularExpression, options FindFlag) bool {
 	return (bool)(C.QPlainTextEdit_find3(this.h, exp.cPointer(), (C.int)(options)))
 }
 
@@ -914,6 +914,20 @@ func (this *QPlainTextEdit) IsSignalConnected(signal *QMetaMethod) bool {
 
 	var _dynamic_cast_ok C.bool = false
 	_method_ret := (bool)(C.QPlainTextEdit_protectedbase_isSignalConnected(&_dynamic_cast_ok, unsafe.Pointer(this.h), signal.cPointer()))
+
+	if !_dynamic_cast_ok {
+		panic("miqt: can only call protected methods for directly constructed types")
+	}
+
+	return _method_ret
+
+}
+
+// GetDecodedMetricF can only be called from a QPlainTextEdit that was directly constructed.
+func (this *QPlainTextEdit) GetDecodedMetricF(metricA PaintDeviceMetric, metricB PaintDeviceMetric) float64 {
+
+	var _dynamic_cast_ok C.bool = false
+	_method_ret := (float64)(C.QPlainTextEdit_protectedbase_getDecodedMetricF(&_dynamic_cast_ok, unsafe.Pointer(this.h), metricA, metricB))
 
 	if !_dynamic_cast_ok {
 		panic("miqt: can only call protected methods for directly constructed types")
@@ -2237,12 +2251,12 @@ func miqt_exec_callback_QPlainTextEdit_nativeEvent(self *C.QPlainTextEdit, cb C.
 
 }
 
-func (this *QPlainTextEdit) callVirtualBase_Metric(param1 QPaintDevice__PaintDeviceMetric) int {
+func (this *QPlainTextEdit) callVirtualBase_Metric(param1 PaintDeviceMetric) int {
 
-	return (int)(C.QPlainTextEdit_virtualbase_metric(unsafe.Pointer(this.h), (C.int)(param1)))
+	return (int)(C.QPlainTextEdit_virtualbase_metric(unsafe.Pointer(this.h), param1))
 
 }
-func (this *QPlainTextEdit) OnMetric(slot func(super func(param1 QPaintDevice__PaintDeviceMetric) int, param1 QPaintDevice__PaintDeviceMetric) int) {
+func (this *QPlainTextEdit) OnMetric(slot func(super func(param1 PaintDeviceMetric) int, param1 PaintDeviceMetric) int) {
 	ok := C.QPlainTextEdit_override_virtual_metric(unsafe.Pointer(this.h), C.intptr_t(cgo.NewHandle(slot)))
 	if !ok {
 		panic("miqt: can only override virtual methods for directly constructed types")
@@ -2250,14 +2264,14 @@ func (this *QPlainTextEdit) OnMetric(slot func(super func(param1 QPaintDevice__P
 }
 
 //export miqt_exec_callback_QPlainTextEdit_metric
-func miqt_exec_callback_QPlainTextEdit_metric(self *C.QPlainTextEdit, cb C.intptr_t, param1 C.int) C.int {
-	gofunc, ok := cgo.Handle(cb).Value().(func(super func(param1 QPaintDevice__PaintDeviceMetric) int, param1 QPaintDevice__PaintDeviceMetric) int)
+func miqt_exec_callback_QPlainTextEdit_metric(self *C.QPlainTextEdit, cb C.intptr_t, param1 C.PaintDeviceMetric) C.int {
+	gofunc, ok := cgo.Handle(cb).Value().(func(super func(param1 PaintDeviceMetric) int, param1 PaintDeviceMetric) int)
 	if !ok {
 		panic("miqt: callback of non-callback type (heap corruption?)")
 	}
 
 	// Convert all CABI parameters to Go parameters
-	slotval1 := (QPaintDevice__PaintDeviceMetric)(param1)
+	int /* TODO  */
 
 	virtualReturn := gofunc((&QPlainTextEdit{h: self}).callVirtualBase_Metric, slotval1)
 
@@ -2523,8 +2537,8 @@ func QPlainTextDocumentLayout_Tr(s string) string {
 	return _ret
 }
 
-func (this *QPlainTextDocumentLayout) Draw(param1 *QPainter, param2 *QAbstractTextDocumentLayout__PaintContext) {
-	C.QPlainTextDocumentLayout_draw(this.h, param1.cPointer(), param2.cPointer())
+func (this *QPlainTextDocumentLayout) Draw(param1 *QPainter, param2 *PaintContext) {
+	C.QPlainTextDocumentLayout_draw(this.h, param1.cPointer(), param2)
 }
 
 func (this *QPlainTextDocumentLayout) HitTest(param1 *QPointF, param2 HitTestAccuracy) int {
@@ -2679,12 +2693,12 @@ func (this *QPlainTextDocumentLayout) IsSignalConnected(signal *QMetaMethod) boo
 
 }
 
-func (this *QPlainTextDocumentLayout) callVirtualBase_Draw(param1 *QPainter, param2 *QAbstractTextDocumentLayout__PaintContext) {
+func (this *QPlainTextDocumentLayout) callVirtualBase_Draw(param1 *QPainter, param2 *PaintContext) {
 
-	C.QPlainTextDocumentLayout_virtualbase_draw(unsafe.Pointer(this.h), param1.cPointer(), param2.cPointer())
+	C.QPlainTextDocumentLayout_virtualbase_draw(unsafe.Pointer(this.h), param1.cPointer(), param2)
 
 }
-func (this *QPlainTextDocumentLayout) OnDraw(slot func(super func(param1 *QPainter, param2 *QAbstractTextDocumentLayout__PaintContext), param1 *QPainter, param2 *QAbstractTextDocumentLayout__PaintContext)) {
+func (this *QPlainTextDocumentLayout) OnDraw(slot func(super func(param1 *QPainter, param2 *PaintContext), param1 *QPainter, param2 *PaintContext)) {
 	ok := C.QPlainTextDocumentLayout_override_virtual_draw(unsafe.Pointer(this.h), C.intptr_t(cgo.NewHandle(slot)))
 	if !ok {
 		panic("miqt: can only override virtual methods for directly constructed types")
@@ -2692,8 +2706,8 @@ func (this *QPlainTextDocumentLayout) OnDraw(slot func(super func(param1 *QPaint
 }
 
 //export miqt_exec_callback_QPlainTextDocumentLayout_draw
-func miqt_exec_callback_QPlainTextDocumentLayout_draw(self *C.QPlainTextDocumentLayout, cb C.intptr_t, param1 *C.QPainter, param2 *C.QAbstractTextDocumentLayout__PaintContext) {
-	gofunc, ok := cgo.Handle(cb).Value().(func(super func(param1 *QPainter, param2 *QAbstractTextDocumentLayout__PaintContext), param1 *QPainter, param2 *QAbstractTextDocumentLayout__PaintContext))
+func miqt_exec_callback_QPlainTextDocumentLayout_draw(self *C.QPlainTextDocumentLayout, cb C.intptr_t, param1 *C.QPainter, param2 *C.PaintContext) {
+	gofunc, ok := cgo.Handle(cb).Value().(func(super func(param1 *QPainter, param2 *PaintContext), param1 *QPainter, param2 *PaintContext))
 	if !ok {
 		panic("miqt: callback of non-callback type (heap corruption?)")
 	}
@@ -2701,7 +2715,7 @@ func miqt_exec_callback_QPlainTextDocumentLayout_draw(self *C.QPlainTextDocument
 	// Convert all CABI parameters to Go parameters
 	slotval1 := newQPainter(param1)
 
-	slotval2 := newQAbstractTextDocumentLayout__PaintContext(param2)
+	int /* TODO  */
 
 	gofunc((&QPlainTextDocumentLayout{h: self}).callVirtualBase_Draw, slotval1, slotval2)
 

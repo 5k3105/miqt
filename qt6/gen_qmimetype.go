@@ -65,14 +65,6 @@ func (this *QMimeType) Swap(other *QMimeType) {
 	C.QMimeType_swap(this.h, other.cPointer())
 }
 
-func (this *QMimeType) OperatorEqual(other *QMimeType) bool {
-	return (bool)(C.QMimeType_operatorEqual(this.h, other.cPointer()))
-}
-
-func (this *QMimeType) OperatorNotEqual(other *QMimeType) bool {
-	return (bool)(C.QMimeType_operatorNotEqual(this.h, other.cPointer()))
-}
-
 func (this *QMimeType) IsValid() bool {
 	return (bool)(C.QMimeType_isValid(this.h))
 }

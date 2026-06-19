@@ -1,3 +1,4 @@
+#include <QDeadlineTimer>
 #include <QSemaphore>
 #include <QSemaphoreReleaser>
 #include <qsemaphore.h>
@@ -31,6 +32,10 @@ bool QSemaphore_tryAcquire2(QSemaphore* self, int n, int timeout) {
 	return self->tryAcquire(static_cast<int>(n), static_cast<int>(timeout));
 }
 
+bool QSemaphore_tryAcquire3(QSemaphore* self, int n, QDeadlineTimer* timeout) {
+	return self->tryAcquire(static_cast<int>(n), *timeout);
+}
+
 void QSemaphore_release(QSemaphore* self) {
 	self->release();
 }
@@ -39,7 +44,7 @@ int QSemaphore_available(const QSemaphore* self) {
 	return self->available();
 }
 
-bool QSemaphore_tryAcquire3(QSemaphore* self) {
+bool QSemaphore_tryAcquire4(QSemaphore* self) {
 	return self->try_acquire();
 }
 

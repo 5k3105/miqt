@@ -44,7 +44,7 @@ extern "C" {
 void miqt_exec_callback_QGraphicsProxyWidget_setGeometry(QGraphicsProxyWidget*, intptr_t, QRectF*);
 void miqt_exec_callback_QGraphicsProxyWidget_paint(QGraphicsProxyWidget*, intptr_t, QPainter*, QStyleOptionGraphicsItem*, QWidget*);
 int miqt_exec_callback_QGraphicsProxyWidget_type(const QGraphicsProxyWidget*, intptr_t);
-QVariant* miqt_exec_callback_QGraphicsProxyWidget_itemChange(QGraphicsProxyWidget*, intptr_t, int, QVariant*);
+QVariant* miqt_exec_callback_QGraphicsProxyWidget_itemChange(QGraphicsProxyWidget*, intptr_t, GraphicsItemChange, QVariant*);
 bool miqt_exec_callback_QGraphicsProxyWidget_event(QGraphicsProxyWidget*, intptr_t, QEvent*);
 bool miqt_exec_callback_QGraphicsProxyWidget_eventFilter(QGraphicsProxyWidget*, intptr_t, QObject*, QEvent*);
 void miqt_exec_callback_QGraphicsProxyWidget_showEvent(QGraphicsProxyWidget*, intptr_t, QShowEvent*);
@@ -101,8 +101,8 @@ bool miqt_exec_callback_QGraphicsProxyWidget_collidesWithPath(const QGraphicsPro
 bool miqt_exec_callback_QGraphicsProxyWidget_isObscuredBy(const QGraphicsProxyWidget*, intptr_t, QGraphicsItem*);
 QPainterPath* miqt_exec_callback_QGraphicsProxyWidget_opaqueArea(const QGraphicsProxyWidget*, intptr_t);
 bool miqt_exec_callback_QGraphicsProxyWidget_sceneEventFilter(QGraphicsProxyWidget*, intptr_t, QGraphicsItem*, QEvent*);
-bool miqt_exec_callback_QGraphicsProxyWidget_supportsExtension(const QGraphicsProxyWidget*, intptr_t, int);
-void miqt_exec_callback_QGraphicsProxyWidget_setExtension(QGraphicsProxyWidget*, intptr_t, int, QVariant*);
+bool miqt_exec_callback_QGraphicsProxyWidget_supportsExtension(const QGraphicsProxyWidget*, intptr_t, Extension);
+void miqt_exec_callback_QGraphicsProxyWidget_setExtension(QGraphicsProxyWidget*, intptr_t, Extension, QVariant*);
 QVariant* miqt_exec_callback_QGraphicsProxyWidget_extension(const QGraphicsProxyWidget*, intptr_t, QVariant*);
 bool miqt_exec_callback_QGraphicsProxyWidget_isEmpty(const QGraphicsProxyWidget*, intptr_t);
 #ifdef __cplusplus
@@ -175,13 +175,12 @@ public:
 	intptr_t handle__itemChange = 0;
 
 	// Subclass to allow providing a Go implementation
-	virtual QVariant itemChange(QGraphicsItem::GraphicsItemChange change, const QVariant& value) override {
+	virtual QVariant itemChange(GraphicsItemChange change, const QVariant& value) override {
 		if (handle__itemChange == 0) {
 			return QGraphicsProxyWidget::itemChange(change, value);
 		}
 
-		QGraphicsItem::GraphicsItemChange change_ret = change;
-		int sigval1 = static_cast<int>(change_ret);
+		GraphicsItemChange sigval1 = change;
 		const QVariant& value_ret = value;
 		// Cast returned reference into pointer
 		QVariant* sigval2 = const_cast<QVariant*>(&value_ret);
@@ -189,7 +188,7 @@ public:
 		return *callback_return_value;
 	}
 
-	friend QVariant* QGraphicsProxyWidget_virtualbase_itemChange(void* self, int change, QVariant* value);
+	friend QVariant* QGraphicsProxyWidget_virtualbase_itemChange(void* self, GraphicsItemChange change, QVariant* value);
 
 	// cgo.Handle value for overwritten implementation
 	intptr_t handle__event = 0;
@@ -1165,31 +1164,29 @@ public:
 	intptr_t handle__supportsExtension = 0;
 
 	// Subclass to allow providing a Go implementation
-	virtual bool supportsExtension(QGraphicsItem::Extension extension) const override {
+	virtual bool supportsExtension(Extension extension) const override {
 		if (handle__supportsExtension == 0) {
 			return QGraphicsProxyWidget::supportsExtension(extension);
 		}
 
-		QGraphicsItem::Extension extension_ret = extension;
-		int sigval1 = static_cast<int>(extension_ret);
+		Extension sigval1 = extension;
 		bool callback_return_value = miqt_exec_callback_QGraphicsProxyWidget_supportsExtension(this, handle__supportsExtension, sigval1);
 		return callback_return_value;
 	}
 
-	friend bool QGraphicsProxyWidget_virtualbase_supportsExtension(const void* self, int extension);
+	friend bool QGraphicsProxyWidget_virtualbase_supportsExtension(const void* self, Extension extension);
 
 	// cgo.Handle value for overwritten implementation
 	intptr_t handle__setExtension = 0;
 
 	// Subclass to allow providing a Go implementation
-	virtual void setExtension(QGraphicsItem::Extension extension, const QVariant& variant) override {
+	virtual void setExtension(Extension extension, const QVariant& variant) override {
 		if (handle__setExtension == 0) {
 			QGraphicsProxyWidget::setExtension(extension, variant);
 			return;
 		}
 
-		QGraphicsItem::Extension extension_ret = extension;
-		int sigval1 = static_cast<int>(extension_ret);
+		Extension sigval1 = extension;
 		const QVariant& variant_ret = variant;
 		// Cast returned reference into pointer
 		QVariant* sigval2 = const_cast<QVariant*>(&variant_ret);
@@ -1197,7 +1194,7 @@ public:
 
 	}
 
-	friend void QGraphicsProxyWidget_virtualbase_setExtension(void* self, int extension, QVariant* variant);
+	friend void QGraphicsProxyWidget_virtualbase_setExtension(void* self, Extension extension, QVariant* variant);
 
 	// cgo.Handle value for overwritten implementation
 	intptr_t handle__extension = 0;
@@ -1383,8 +1380,8 @@ bool QGraphicsProxyWidget_override_virtual_itemChange(void* self, intptr_t slot)
 	return true;
 }
 
-QVariant* QGraphicsProxyWidget_virtualbase_itemChange(void* self, int change, QVariant* value) {
-	return new QVariant(static_cast<MiqtVirtualQGraphicsProxyWidget*>(self)->QGraphicsProxyWidget::itemChange(static_cast<MiqtVirtualQGraphicsProxyWidget::GraphicsItemChange>(change), *value));
+QVariant* QGraphicsProxyWidget_virtualbase_itemChange(void* self, GraphicsItemChange change, QVariant* value) {
+	return new QVariant(static_cast<MiqtVirtualQGraphicsProxyWidget*>(self)->QGraphicsProxyWidget::itemChange(change, *value));
 }
 
 bool QGraphicsProxyWidget_override_virtual_event(void* self, intptr_t slot) {
@@ -2183,8 +2180,8 @@ bool QGraphicsProxyWidget_override_virtual_supportsExtension(void* self, intptr_
 	return true;
 }
 
-bool QGraphicsProxyWidget_virtualbase_supportsExtension(const void* self, int extension) {
-	return static_cast<const MiqtVirtualQGraphicsProxyWidget*>(self)->QGraphicsProxyWidget::supportsExtension(static_cast<MiqtVirtualQGraphicsProxyWidget::Extension>(extension));
+bool QGraphicsProxyWidget_virtualbase_supportsExtension(const void* self, Extension extension) {
+	return static_cast<const MiqtVirtualQGraphicsProxyWidget*>(self)->QGraphicsProxyWidget::supportsExtension(extension);
 }
 
 bool QGraphicsProxyWidget_override_virtual_setExtension(void* self, intptr_t slot) {
@@ -2197,8 +2194,8 @@ bool QGraphicsProxyWidget_override_virtual_setExtension(void* self, intptr_t slo
 	return true;
 }
 
-void QGraphicsProxyWidget_virtualbase_setExtension(void* self, int extension, QVariant* variant) {
-	static_cast<MiqtVirtualQGraphicsProxyWidget*>(self)->QGraphicsProxyWidget::setExtension(static_cast<MiqtVirtualQGraphicsProxyWidget::Extension>(extension), *variant);
+void QGraphicsProxyWidget_virtualbase_setExtension(void* self, Extension extension, QVariant* variant) {
+	static_cast<MiqtVirtualQGraphicsProxyWidget*>(self)->QGraphicsProxyWidget::setExtension(extension, *variant);
 }
 
 bool QGraphicsProxyWidget_override_virtual_extension(void* self, intptr_t slot) {

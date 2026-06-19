@@ -27,6 +27,13 @@ const (
 	QCommandLineParser__ParseAsPositionalArguments QCommandLineParser__OptionsAfterPositionalArgumentsMode = 1
 )
 
+type QCommandLineParser__MessageType int
+
+const (
+	QCommandLineParser__Information QCommandLineParser__MessageType = 0
+	QCommandLineParser__Error       QCommandLineParser__MessageType = 1
+)
+
 type QCommandLineParser struct {
 	h *C.QCommandLineParser
 }
@@ -74,12 +81,12 @@ func QCommandLineParser_Tr(sourceText string) string {
 	return _ret
 }
 
-func (this *QCommandLineParser) SetSingleDashWordOptionMode(parsingMode QCommandLineParser__SingleDashWordOptionMode) {
-	C.QCommandLineParser_setSingleDashWordOptionMode(this.h, (C.int)(parsingMode))
+func (this *QCommandLineParser) SetSingleDashWordOptionMode(parsingMode SingleDashWordOptionMode) {
+	C.QCommandLineParser_setSingleDashWordOptionMode(this.h, parsingMode)
 }
 
-func (this *QCommandLineParser) SetOptionsAfterPositionalArgumentsMode(mode QCommandLineParser__OptionsAfterPositionalArgumentsMode) {
-	C.QCommandLineParser_setOptionsAfterPositionalArgumentsMode(this.h, (C.int)(mode))
+func (this *QCommandLineParser) SetOptionsAfterPositionalArgumentsMode(mode OptionsAfterPositionalArgumentsMode) {
+	C.QCommandLineParser_setOptionsAfterPositionalArgumentsMode(this.h, mode)
 }
 
 func (this *QCommandLineParser) AddOption(commandLineOption *QCommandLineOption) bool {
@@ -292,6 +299,14 @@ func (this *QCommandLineParser) HelpText() string {
 	return _ret
 }
 
+func QCommandLineParser_ShowMessageAndExit(typeVal MessageType, message string) {
+	message_ms := C.struct_miqt_string{}
+	message_ms.data = C.CString(message)
+	message_ms.len = C.size_t(len(message))
+	defer C.free(unsafe.Pointer(message_ms.data))
+	C.QCommandLineParser_showMessageAndExit(typeVal, message_ms)
+}
+
 func QCommandLineParser_Tr2(sourceText string, disambiguation string) string {
 	sourceText_Cstring := C.CString(sourceText)
 	defer C.free(unsafe.Pointer(sourceText_Cstring))
@@ -332,6 +347,14 @@ func (this *QCommandLineParser) AddPositionalArgument2(name string, description 
 
 func (this *QCommandLineParser) ShowHelpWithExitCode(exitCode int) {
 	C.QCommandLineParser_showHelpWithExitCode(this.h, (C.int)(exitCode))
+}
+
+func QCommandLineParser_ShowMessageAndExit2(typeVal MessageType, message string, exitCode int) {
+	message_ms := C.struct_miqt_string{}
+	message_ms.data = C.CString(message)
+	message_ms.len = C.size_t(len(message))
+	defer C.free(unsafe.Pointer(message_ms.data))
+	C.QCommandLineParser_showMessageAndExit2(typeVal, message_ms, (C.int)(exitCode))
 }
 
 // Delete this object from C++ memory.

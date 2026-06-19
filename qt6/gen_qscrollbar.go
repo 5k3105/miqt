@@ -103,6 +103,10 @@ func (this *QScrollBar) Event(event *QEvent) bool {
 	return (bool)(C.QScrollBar_event(this.h, event.cPointer()))
 }
 
+func (this *QScrollBar) CreateStandardContextMenu(position QPoint) *QMenu {
+	return newQMenu(C.QScrollBar_createStandardContextMenu(this.h, position.cPointer()))
+}
+
 func QScrollBar_Tr2(s string, c string) string {
 	s_Cstring := C.CString(s)
 	defer C.free(unsafe.Pointer(s_Cstring))
@@ -126,10 +130,10 @@ func QScrollBar_Tr3(s string, c string, n int) string {
 }
 
 // SetRepeatAction can only be called from a QScrollBar that was directly constructed.
-func (this *QScrollBar) SetRepeatAction(action QAbstractSlider__SliderAction) {
+func (this *QScrollBar) SetRepeatAction(action SliderAction) {
 
 	var _dynamic_cast_ok C.bool = false
-	C.QScrollBar_protectedbase_setRepeatAction(&_dynamic_cast_ok, unsafe.Pointer(this.h), (C.int)(action))
+	C.QScrollBar_protectedbase_setRepeatAction(&_dynamic_cast_ok, unsafe.Pointer(this.h), action)
 
 	if !_dynamic_cast_ok {
 		panic("miqt: can only call protected methods for directly constructed types")
@@ -138,11 +142,10 @@ func (this *QScrollBar) SetRepeatAction(action QAbstractSlider__SliderAction) {
 }
 
 // RepeatAction can only be called from a QScrollBar that was directly constructed.
-func (this *QScrollBar) RepeatAction() QAbstractSlider__SliderAction {
+func (this *QScrollBar) RepeatAction() SliderAction {
 
 	var _dynamic_cast_ok C.bool = false
-	_method_ret := (QAbstractSlider__SliderAction)(C.QScrollBar_protectedbase_repeatAction(&_dynamic_cast_ok, unsafe.Pointer(this.h)))
-
+	int /* TODO  */
 	if !_dynamic_cast_ok {
 		panic("miqt: can only call protected methods for directly constructed types")
 	}
@@ -264,6 +267,20 @@ func (this *QScrollBar) IsSignalConnected(signal *QMetaMethod) bool {
 
 	var _dynamic_cast_ok C.bool = false
 	_method_ret := (bool)(C.QScrollBar_protectedbase_isSignalConnected(&_dynamic_cast_ok, unsafe.Pointer(this.h), signal.cPointer()))
+
+	if !_dynamic_cast_ok {
+		panic("miqt: can only call protected methods for directly constructed types")
+	}
+
+	return _method_ret
+
+}
+
+// GetDecodedMetricF can only be called from a QScrollBar that was directly constructed.
+func (this *QScrollBar) GetDecodedMetricF(metricA PaintDeviceMetric, metricB PaintDeviceMetric) float64 {
+
+	var _dynamic_cast_ok C.bool = false
+	_method_ret := (float64)(C.QScrollBar_protectedbase_getDecodedMetricF(&_dynamic_cast_ok, unsafe.Pointer(this.h), metricA, metricB))
 
 	if !_dynamic_cast_ok {
 		panic("miqt: can only call protected methods for directly constructed types")
@@ -484,12 +501,12 @@ func miqt_exec_callback_QScrollBar_hideEvent(self *C.QScrollBar, cb C.intptr_t, 
 
 }
 
-func (this *QScrollBar) callVirtualBase_SliderChange(change QAbstractSlider__SliderChange) {
+func (this *QScrollBar) callVirtualBase_SliderChange(change SliderChange) {
 
-	C.QScrollBar_virtualbase_sliderChange(unsafe.Pointer(this.h), (C.int)(change))
+	C.QScrollBar_virtualbase_sliderChange(unsafe.Pointer(this.h), change)
 
 }
-func (this *QScrollBar) OnSliderChange(slot func(super func(change QAbstractSlider__SliderChange), change QAbstractSlider__SliderChange)) {
+func (this *QScrollBar) OnSliderChange(slot func(super func(change SliderChange), change SliderChange)) {
 	ok := C.QScrollBar_override_virtual_sliderChange(unsafe.Pointer(this.h), C.intptr_t(cgo.NewHandle(slot)))
 	if !ok {
 		panic("miqt: can only override virtual methods for directly constructed types")
@@ -497,14 +514,14 @@ func (this *QScrollBar) OnSliderChange(slot func(super func(change QAbstractSlid
 }
 
 //export miqt_exec_callback_QScrollBar_sliderChange
-func miqt_exec_callback_QScrollBar_sliderChange(self *C.QScrollBar, cb C.intptr_t, change C.int) {
-	gofunc, ok := cgo.Handle(cb).Value().(func(super func(change QAbstractSlider__SliderChange), change QAbstractSlider__SliderChange))
+func miqt_exec_callback_QScrollBar_sliderChange(self *C.QScrollBar, cb C.intptr_t, change C.SliderChange) {
+	gofunc, ok := cgo.Handle(cb).Value().(func(super func(change SliderChange), change SliderChange))
 	if !ok {
 		panic("miqt: callback of non-callback type (heap corruption?)")
 	}
 
 	// Convert all CABI parameters to Go parameters
-	slotval1 := (QAbstractSlider__SliderChange)(change)
+	int /* TODO  */
 
 	gofunc((&QScrollBar{h: self}).callVirtualBase_SliderChange, slotval1)
 
@@ -1253,12 +1270,12 @@ func miqt_exec_callback_QScrollBar_nativeEvent(self *C.QScrollBar, cb C.intptr_t
 
 }
 
-func (this *QScrollBar) callVirtualBase_Metric(param1 QPaintDevice__PaintDeviceMetric) int {
+func (this *QScrollBar) callVirtualBase_Metric(param1 PaintDeviceMetric) int {
 
-	return (int)(C.QScrollBar_virtualbase_metric(unsafe.Pointer(this.h), (C.int)(param1)))
+	return (int)(C.QScrollBar_virtualbase_metric(unsafe.Pointer(this.h), param1))
 
 }
-func (this *QScrollBar) OnMetric(slot func(super func(param1 QPaintDevice__PaintDeviceMetric) int, param1 QPaintDevice__PaintDeviceMetric) int) {
+func (this *QScrollBar) OnMetric(slot func(super func(param1 PaintDeviceMetric) int, param1 PaintDeviceMetric) int) {
 	ok := C.QScrollBar_override_virtual_metric(unsafe.Pointer(this.h), C.intptr_t(cgo.NewHandle(slot)))
 	if !ok {
 		panic("miqt: can only override virtual methods for directly constructed types")
@@ -1266,14 +1283,14 @@ func (this *QScrollBar) OnMetric(slot func(super func(param1 QPaintDevice__Paint
 }
 
 //export miqt_exec_callback_QScrollBar_metric
-func miqt_exec_callback_QScrollBar_metric(self *C.QScrollBar, cb C.intptr_t, param1 C.int) C.int {
-	gofunc, ok := cgo.Handle(cb).Value().(func(super func(param1 QPaintDevice__PaintDeviceMetric) int, param1 QPaintDevice__PaintDeviceMetric) int)
+func miqt_exec_callback_QScrollBar_metric(self *C.QScrollBar, cb C.intptr_t, param1 C.PaintDeviceMetric) C.int {
+	gofunc, ok := cgo.Handle(cb).Value().(func(super func(param1 PaintDeviceMetric) int, param1 PaintDeviceMetric) int)
 	if !ok {
 		panic("miqt: callback of non-callback type (heap corruption?)")
 	}
 
 	// Convert all CABI parameters to Go parameters
-	slotval1 := (QPaintDevice__PaintDeviceMetric)(param1)
+	int /* TODO  */
 
 	virtualReturn := gofunc((&QScrollBar{h: self}).callVirtualBase_Metric, slotval1)
 

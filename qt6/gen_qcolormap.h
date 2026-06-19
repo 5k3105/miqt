@@ -27,7 +27,7 @@ void QColormap_initialize();
 void QColormap_cleanup();
 QColormap* QColormap_instance();
 void QColormap_operatorAssign(QColormap* self, QColormap* colormap);
-int QColormap_mode(const QColormap* self);
+Mode QColormap_mode(const QColormap* self);
 int QColormap_depth(const QColormap* self);
 int QColormap_size(const QColormap* self);
 unsigned int QColormap_pixel(const QColormap* self, QColor* color);

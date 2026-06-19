@@ -125,7 +125,7 @@ void miqt_exec_callback_QPlainTextEdit_tabletEvent(QPlainTextEdit*, intptr_t, QT
 void miqt_exec_callback_QPlainTextEdit_actionEvent(QPlainTextEdit*, intptr_t, QActionEvent*);
 void miqt_exec_callback_QPlainTextEdit_hideEvent(QPlainTextEdit*, intptr_t, QHideEvent*);
 bool miqt_exec_callback_QPlainTextEdit_nativeEvent(QPlainTextEdit*, intptr_t, struct miqt_string, void*, intptr_t*);
-int miqt_exec_callback_QPlainTextEdit_metric(const QPlainTextEdit*, intptr_t, int);
+int miqt_exec_callback_QPlainTextEdit_metric(const QPlainTextEdit*, intptr_t, PaintDeviceMetric);
 void miqt_exec_callback_QPlainTextEdit_initPainter(const QPlainTextEdit*, intptr_t, QPainter*);
 QPaintDevice* miqt_exec_callback_QPlainTextEdit_redirected(const QPlainTextEdit*, intptr_t, QPoint*);
 QPainter* miqt_exec_callback_QPlainTextEdit_sharedPainter(const QPlainTextEdit*, intptr_t);
@@ -133,7 +133,7 @@ void miqt_exec_callback_QPlainTextEdit_childEvent(QPlainTextEdit*, intptr_t, QCh
 void miqt_exec_callback_QPlainTextEdit_customEvent(QPlainTextEdit*, intptr_t, QEvent*);
 void miqt_exec_callback_QPlainTextEdit_connectNotify(QPlainTextEdit*, intptr_t, QMetaMethod*);
 void miqt_exec_callback_QPlainTextEdit_disconnectNotify(QPlainTextEdit*, intptr_t, QMetaMethod*);
-void miqt_exec_callback_QPlainTextDocumentLayout_draw(QPlainTextDocumentLayout*, intptr_t, QPainter*, QAbstractTextDocumentLayout__PaintContext*);
+void miqt_exec_callback_QPlainTextDocumentLayout_draw(QPlainTextDocumentLayout*, intptr_t, QPainter*, const PaintContext*);
 int miqt_exec_callback_QPlainTextDocumentLayout_hitTest(const QPlainTextDocumentLayout*, intptr_t, QPointF*, int);
 int miqt_exec_callback_QPlainTextDocumentLayout_pageCount(const QPlainTextDocumentLayout*, intptr_t);
 QSizeF* miqt_exec_callback_QPlainTextDocumentLayout_documentSize(const QPlainTextDocumentLayout*, intptr_t);
@@ -994,18 +994,17 @@ public:
 	intptr_t handle__metric = 0;
 
 	// Subclass to allow providing a Go implementation
-	virtual int metric(QPaintDevice::PaintDeviceMetric param1) const override {
+	virtual int metric(PaintDeviceMetric param1) const override {
 		if (handle__metric == 0) {
 			return QPlainTextEdit::metric(param1);
 		}
 
-		QPaintDevice::PaintDeviceMetric param1_ret = param1;
-		int sigval1 = static_cast<int>(param1_ret);
+		PaintDeviceMetric sigval1 = param1;
 		int callback_return_value = miqt_exec_callback_QPlainTextEdit_metric(this, handle__metric, sigval1);
 		return static_cast<int>(callback_return_value);
 	}
 
-	friend int QPlainTextEdit_virtualbase_metric(const void* self, int param1);
+	friend int QPlainTextEdit_virtualbase_metric(const void* self, PaintDeviceMetric param1);
 
 	// cgo.Handle value for overwritten implementation
 	intptr_t handle__initPainter = 0;
@@ -1146,6 +1145,7 @@ public:
 	friend int QPlainTextEdit_protectedbase_senderSignalIndex(bool* _dynamic_cast_ok, const void* self);
 	friend int QPlainTextEdit_protectedbase_receivers(bool* _dynamic_cast_ok, const void* self, const char* signal);
 	friend bool QPlainTextEdit_protectedbase_isSignalConnected(bool* _dynamic_cast_ok, const void* self, QMetaMethod* signal);
+	friend double QPlainTextEdit_protectedbase_getDecodedMetricF(bool* _dynamic_cast_ok, const void* self, PaintDeviceMetric metricA, PaintDeviceMetric metricB);
 };
 
 QPlainTextEdit* QPlainTextEdit_new(QWidget* parent) {
@@ -1290,13 +1290,12 @@ int QPlainTextEdit_maximumBlockCount(const QPlainTextEdit* self) {
 	return self->maximumBlockCount();
 }
 
-int QPlainTextEdit_lineWrapMode(const QPlainTextEdit* self) {
-	QPlainTextEdit::LineWrapMode _ret = self->lineWrapMode();
-	return static_cast<int>(_ret);
+LineWrapMode QPlainTextEdit_lineWrapMode(const QPlainTextEdit* self) {
+	return self->lineWrapMode();
 }
 
-void QPlainTextEdit_setLineWrapMode(QPlainTextEdit* self, int mode) {
-	self->setLineWrapMode(static_cast<QPlainTextEdit::LineWrapMode>(mode));
+void QPlainTextEdit_setLineWrapMode(QPlainTextEdit* self, LineWrapMode mode) {
+	self->setLineWrapMode(mode);
 }
 
 int QPlainTextEdit_wordWrapMode(const QPlainTextEdit* self) {
@@ -2354,8 +2353,8 @@ bool QPlainTextEdit_override_virtual_metric(void* self, intptr_t slot) {
 	return true;
 }
 
-int QPlainTextEdit_virtualbase_metric(const void* self, int param1) {
-	return static_cast<const MiqtVirtualQPlainTextEdit*>(self)->QPlainTextEdit::metric(static_cast<MiqtVirtualQPlainTextEdit::PaintDeviceMetric>(param1));
+int QPlainTextEdit_virtualbase_metric(const void* self, PaintDeviceMetric param1) {
+	return static_cast<const MiqtVirtualQPlainTextEdit*>(self)->QPlainTextEdit::metric(param1);
 }
 
 bool QPlainTextEdit_override_virtual_initPainter(void* self, intptr_t slot) {
@@ -2654,6 +2653,17 @@ bool QPlainTextEdit_protectedbase_isSignalConnected(bool* _dynamic_cast_ok, cons
 	return self_cast->isSignalConnected(*signal);
 }
 
+double QPlainTextEdit_protectedbase_getDecodedMetricF(bool* _dynamic_cast_ok, const void* self, PaintDeviceMetric metricA, PaintDeviceMetric metricB) {
+	MiqtVirtualQPlainTextEdit* self_cast = dynamic_cast<MiqtVirtualQPlainTextEdit*>( (QPlainTextEdit*)(self) );
+	if (self_cast == nullptr) {
+		*_dynamic_cast_ok = false;
+		return 0;
+	}
+
+	*_dynamic_cast_ok = true;
+	return self_cast->getDecodedMetricF(metricA, metricB);
+}
+
 void QPlainTextEdit_delete(QPlainTextEdit* self) {
 	delete self;
 }
@@ -2669,21 +2679,19 @@ public:
 	intptr_t handle__draw = 0;
 
 	// Subclass to allow providing a Go implementation
-	virtual void draw(QPainter* param1, const QAbstractTextDocumentLayout::PaintContext& param2) override {
+	virtual void draw(QPainter* param1, const PaintContext& param2) override {
 		if (handle__draw == 0) {
 			QPlainTextDocumentLayout::draw(param1, param2);
 			return;
 		}
 
 		QPainter* sigval1 = param1;
-		const QAbstractTextDocumentLayout::PaintContext& param2_ret = param2;
-		// Cast returned reference into pointer
-		QAbstractTextDocumentLayout__PaintContext* sigval2 = const_cast<QAbstractTextDocumentLayout::PaintContext*>(&param2_ret);
+		const PaintContext* sigval2 = (const PaintContext*) param2;
 		miqt_exec_callback_QPlainTextDocumentLayout_draw(this, handle__draw, sigval1, sigval2);
 
 	}
 
-	friend void QPlainTextDocumentLayout_virtualbase_draw(void* self, QPainter* param1, QAbstractTextDocumentLayout__PaintContext* param2);
+	friend void QPlainTextDocumentLayout_virtualbase_draw(void* self, QPainter* param1, const PaintContext* param2);
 
 	// cgo.Handle value for overwritten implementation
 	intptr_t handle__hitTest = 0;
@@ -3013,7 +3021,7 @@ struct miqt_string QPlainTextDocumentLayout_tr(const char* s) {
 	return _ms;
 }
 
-void QPlainTextDocumentLayout_draw(QPlainTextDocumentLayout* self, QPainter* param1, QAbstractTextDocumentLayout__PaintContext* param2) {
+void QPlainTextDocumentLayout_draw(QPlainTextDocumentLayout* self, QPainter* param1, const PaintContext* param2) {
 	self->draw(param1, *param2);
 }
 
@@ -3085,7 +3093,7 @@ bool QPlainTextDocumentLayout_override_virtual_draw(void* self, intptr_t slot) {
 	return true;
 }
 
-void QPlainTextDocumentLayout_virtualbase_draw(void* self, QPainter* param1, QAbstractTextDocumentLayout__PaintContext* param2) {
+void QPlainTextDocumentLayout_virtualbase_draw(void* self, QPainter* param1, const PaintContext* param2) {
 	static_cast<MiqtVirtualQPlainTextDocumentLayout*>(self)->QPlainTextDocumentLayout::draw(param1, *param2);
 }
 

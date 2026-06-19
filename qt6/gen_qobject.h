@@ -58,12 +58,14 @@ void QObject_setObjectName(QObject* self, QAnyStringView* name);
 bool QObject_isWidgetType(const QObject* self);
 bool QObject_isWindowType(const QObject* self);
 bool QObject_isQuickItemType(const QObject* self);
+bool QObject_isQmlExposed(const QObject* self);
 bool QObject_signalsBlocked(const QObject* self);
 bool QObject_blockSignals(QObject* self, bool b);
 QThread* QObject_thread(const QObject* self);
-void QObject_moveToThread(QObject* self, QThread* thread);
+bool QObject_moveToThread(QObject* self, QThread* thread);
 int QObject_startTimer(QObject* self, int interval);
 void QObject_killTimer(QObject* self, int id);
+void QObject_killTimerWithId(QObject* self, int id);
 struct miqt_array /* of QObject* */  QObject_children(const QObject* self);
 void QObject_setParent(QObject* self, QObject* parent);
 void QObject_installEventFilter(QObject* self, QObject* filterObj);
@@ -117,14 +119,13 @@ int QObject_protectedbase_senderSignalIndex(bool* _dynamic_cast_ok, const void* 
 int QObject_protectedbase_receivers(bool* _dynamic_cast_ok, const void* self, const char* signal);
 bool QObject_protectedbase_isSignalConnected(bool* _dynamic_cast_ok, const void* self, QMetaMethod* signal);
 
-void QObject_connect_objectNameChanged(QObject* self, intptr_t slot);
-
 void QObject_delete(QObject* self);
 
 QSignalBlocker* QSignalBlocker_new(QObject* o);
 QSignalBlocker* QSignalBlocker_new2(QObject* o);
 void QSignalBlocker_reblock(QSignalBlocker* self);
 void QSignalBlocker_unblock(QSignalBlocker* self);
+void QSignalBlocker_dismiss(QSignalBlocker* self);
 
 void QSignalBlocker_delete(QSignalBlocker* self);
 

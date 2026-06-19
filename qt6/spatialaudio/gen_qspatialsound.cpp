@@ -255,13 +255,12 @@ float QSpatialSound_volume(const QSpatialSound* self) {
 	return self->volume();
 }
 
-void QSpatialSound_setDistanceModel(QSpatialSound* self, int model) {
-	self->setDistanceModel(static_cast<QSpatialSound::DistanceModel>(model));
+void QSpatialSound_setDistanceModel(QSpatialSound* self, DistanceModel model) {
+	self->setDistanceModel(model);
 }
 
-int QSpatialSound_distanceModel(const QSpatialSound* self) {
-	QSpatialSound::DistanceModel _ret = self->distanceModel();
-	return static_cast<int>(_ret);
+DistanceModel QSpatialSound_distanceModel(const QSpatialSound* self) {
+	return self->distanceModel();
 }
 
 void QSpatialSound_setSize(QSpatialSound* self, float size) {

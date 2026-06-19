@@ -113,8 +113,8 @@ int QMainWindow_tabShape(const QMainWindow* self);
 void QMainWindow_setTabShape(QMainWindow* self, int tabShape);
 int QMainWindow_tabPosition(const QMainWindow* self, int area);
 void QMainWindow_setTabPosition(QMainWindow* self, int areas, int tabPosition);
-void QMainWindow_setDockOptions(QMainWindow* self, int options);
-int QMainWindow_dockOptions(const QMainWindow* self);
+void QMainWindow_setDockOptions(QMainWindow* self, DockOptions options);
+DockOptions QMainWindow_dockOptions(const QMainWindow* self);
 bool QMainWindow_isSeparator(const QMainWindow* self, QPoint* pos);
 QMenuBar* QMainWindow_menuBar(const QMainWindow* self);
 void QMainWindow_setMenuBar(QMainWindow* self, QMenuBar* menubar);
@@ -238,7 +238,7 @@ bool QMainWindow_virtualbase_nativeEvent(void* self, struct miqt_string eventTyp
 bool QMainWindow_override_virtual_changeEvent(void* self, intptr_t slot);
 void QMainWindow_virtualbase_changeEvent(void* self, QEvent* param1);
 bool QMainWindow_override_virtual_metric(void* self, intptr_t slot);
-int QMainWindow_virtualbase_metric(const void* self, int param1);
+int QMainWindow_virtualbase_metric(const void* self, PaintDeviceMetric param1);
 bool QMainWindow_override_virtual_initPainter(void* self, intptr_t slot);
 void QMainWindow_virtualbase_initPainter(const void* self, QPainter* painter);
 bool QMainWindow_override_virtual_redirected(void* self, intptr_t slot);
@@ -273,6 +273,7 @@ QObject* QMainWindow_protectedbase_sender(bool* _dynamic_cast_ok, const void* se
 int QMainWindow_protectedbase_senderSignalIndex(bool* _dynamic_cast_ok, const void* self);
 int QMainWindow_protectedbase_receivers(bool* _dynamic_cast_ok, const void* self, const char* signal);
 bool QMainWindow_protectedbase_isSignalConnected(bool* _dynamic_cast_ok, const void* self, QMetaMethod* signal);
+double QMainWindow_protectedbase_getDecodedMetricF(bool* _dynamic_cast_ok, const void* self, PaintDeviceMetric metricA, PaintDeviceMetric metricB);
 
 void QMainWindow_delete(QMainWindow* self);
 

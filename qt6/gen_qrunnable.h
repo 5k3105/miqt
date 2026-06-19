@@ -15,8 +15,10 @@ extern "C" {
 #endif
 
 #ifdef __cplusplus
+class QGenericRunnable;
 class QRunnable;
 #else
+typedef struct QGenericRunnable QGenericRunnable;
 typedef struct QRunnable QRunnable;
 #endif
 
@@ -29,6 +31,11 @@ bool QRunnable_override_virtual_run(void* self, intptr_t slot);
 void QRunnable_virtualbase_run(void* self);
 
 void QRunnable_delete(QRunnable* self);
+
+void QGenericRunnable_virtbase(QGenericRunnable* src, QRunnable** outptr_QRunnable);
+void QGenericRunnable_run(QGenericRunnable* self);
+
+void QGenericRunnable_delete(QGenericRunnable* self);
 
 #ifdef __cplusplus
 } /* extern C */

@@ -8,13 +8,13 @@ package qml
 */
 import "C"
 
-type QQmlPrivate__ConstructionMode int
+type QQmlPrivate__SingletonConstructionMode int
 
 const (
-	QQmlPrivate__None           QQmlPrivate__ConstructionMode = 0
-	QQmlPrivate__Constructor    QQmlPrivate__ConstructionMode = 1
-	QQmlPrivate__Factory        QQmlPrivate__ConstructionMode = 2
-	QQmlPrivate__FactoryWrapper QQmlPrivate__ConstructionMode = 3
+	QQmlPrivate__SingletonConstructionMode__None           QQmlPrivate__SingletonConstructionMode = 0
+	QQmlPrivate__SingletonConstructionMode__Constructor    QQmlPrivate__SingletonConstructionMode = 1
+	QQmlPrivate__SingletonConstructionMode__Factory        QQmlPrivate__SingletonConstructionMode = 2
+	QQmlPrivate__SingletonConstructionMode__FactoryWrapper QQmlPrivate__SingletonConstructionMode = 3
 )
 
 type QQmlPrivate__AutoParentResult int
@@ -23,6 +23,14 @@ const (
 	QQmlPrivate__Parented           QQmlPrivate__AutoParentResult = 0
 	QQmlPrivate__IncompatibleObject QQmlPrivate__AutoParentResult = 1
 	QQmlPrivate__IncompatibleParent QQmlPrivate__AutoParentResult = 2
+)
+
+type QQmlPrivate__ValueTypeCreationMethod int
+
+const (
+	QQmlPrivate__ValueTypeCreationMethod__None       QQmlPrivate__ValueTypeCreationMethod = 0
+	QQmlPrivate__ValueTypeCreationMethod__Construct  QQmlPrivate__ValueTypeCreationMethod = 1
+	QQmlPrivate__ValueTypeCreationMethod__Structured QQmlPrivate__ValueTypeCreationMethod = 2
 )
 
 type QQmlPrivate__RegistrationType int
@@ -39,6 +47,23 @@ const (
 	QQmlPrivate__SingletonAndRevisionsRegistration           QQmlPrivate__RegistrationType = 8
 	QQmlPrivate__SequentialContainerRegistration             QQmlPrivate__RegistrationType = 9
 	QQmlPrivate__SequentialContainerAndRevisionsRegistration QQmlPrivate__RegistrationType = 10
+)
+
+type QQmlPrivate__QmlRegistrationWarning int
+
+const (
+	QQmlPrivate__UnconstructibleType      QQmlPrivate__QmlRegistrationWarning = 0
+	QQmlPrivate__UnconstructibleSingleton QQmlPrivate__QmlRegistrationWarning = 1
+	QQmlPrivate__NonQObjectWithAtached    QQmlPrivate__QmlRegistrationWarning = 2
+)
+
+type QQmlPrivate__RegisterType__StructVersion int
+
+const (
+	QQmlPrivate__RegisterType__Base           QQmlPrivate__RegisterType__StructVersion = 0
+	QQmlPrivate__RegisterType__FinalizerCast  QQmlPrivate__RegisterType__StructVersion = 1
+	QQmlPrivate__RegisterType__CreationMethod QQmlPrivate__RegisterType__StructVersion = 2
+	QQmlPrivate__RegisterType__CurrentVersion QQmlPrivate__RegisterType__StructVersion = 2
 )
 
 type QQmlPrivate__AOTCompiledContext__ uint

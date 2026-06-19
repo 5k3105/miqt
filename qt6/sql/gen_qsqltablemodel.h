@@ -30,7 +30,6 @@ class QSize;
 class QSqlDatabase;
 class QSqlError;
 class QSqlIndex;
-class QSqlQuery;
 class QSqlQueryModel;
 class QSqlRecord;
 class QSqlTableModel;
@@ -52,7 +51,6 @@ typedef struct QSize QSize;
 typedef struct QSqlDatabase QSqlDatabase;
 typedef struct QSqlError QSqlError;
 typedef struct QSqlIndex QSqlIndex;
-typedef struct QSqlQuery QSqlQuery;
 typedef struct QSqlQueryModel QSqlQueryModel;
 typedef struct QSqlRecord QSqlRecord;
 typedef struct QSqlTableModel QSqlTableModel;
@@ -79,8 +77,8 @@ QVariant* QSqlTableModel_headerData(const QSqlTableModel* self, int section, int
 bool QSqlTableModel_isDirty(const QSqlTableModel* self);
 bool QSqlTableModel_isDirtyWithIndex(const QSqlTableModel* self, QModelIndex* index);
 void QSqlTableModel_clear(QSqlTableModel* self);
-void QSqlTableModel_setEditStrategy(QSqlTableModel* self, int strategy);
-int QSqlTableModel_editStrategy(const QSqlTableModel* self);
+void QSqlTableModel_setEditStrategy(QSqlTableModel* self, EditStrategy strategy);
+EditStrategy QSqlTableModel_editStrategy(const QSqlTableModel* self);
 QSqlIndex* QSqlTableModel_primaryKey(const QSqlTableModel* self);
 QSqlDatabase* QSqlTableModel_database(const QSqlTableModel* self);
 int QSqlTableModel_fieldIndex(const QSqlTableModel* self, struct miqt_string fieldName);
@@ -133,7 +131,7 @@ QVariant* QSqlTableModel_virtualbase_headerData(const void* self, int section, i
 bool QSqlTableModel_override_virtual_clear(void* self, intptr_t slot);
 void QSqlTableModel_virtualbase_clear(void* self);
 bool QSqlTableModel_override_virtual_setEditStrategy(void* self, intptr_t slot);
-void QSqlTableModel_virtualbase_setEditStrategy(void* self, int strategy);
+void QSqlTableModel_virtualbase_setEditStrategy(void* self, EditStrategy strategy);
 bool QSqlTableModel_override_virtual_sort(void* self, intptr_t slot);
 void QSqlTableModel_virtualbase_sort(void* self, int column, int order);
 bool QSqlTableModel_override_virtual_setSort(void* self, intptr_t slot);
@@ -234,7 +232,6 @@ bool QSqlTableModel_override_virtual_disconnectNotify(void* self, intptr_t slot)
 void QSqlTableModel_virtualbase_disconnectNotify(void* self, QMetaMethod* signal);
 
 void QSqlTableModel_protectedbase_setPrimaryKey(bool* _dynamic_cast_ok, void* self, QSqlIndex* key);
-void QSqlTableModel_protectedbase_setQuery(bool* _dynamic_cast_ok, void* self, QSqlQuery* query);
 QSqlRecord* QSqlTableModel_protectedbase_primaryValues(bool* _dynamic_cast_ok, const void* self, int row);
 void QSqlTableModel_protectedbase_beginInsertRows(bool* _dynamic_cast_ok, void* self, QModelIndex* parent, int first, int last);
 void QSqlTableModel_protectedbase_endInsertRows(bool* _dynamic_cast_ok, void* self);

@@ -116,9 +116,9 @@ func NewQNetworkProxyQuery5(other *QNetworkProxyQuery) *QNetworkProxyQuery {
 }
 
 // NewQNetworkProxyQuery6 constructs a new QNetworkProxyQuery object.
-func NewQNetworkProxyQuery6(requestUrl *qt6.QUrl, queryType QNetworkProxyQuery__QueryType) *QNetworkProxyQuery {
+func NewQNetworkProxyQuery6(requestUrl *qt6.QUrl, queryType QueryType) *QNetworkProxyQuery {
 
-	return newQNetworkProxyQuery(C.QNetworkProxyQuery_new6((*C.QUrl)(requestUrl.UnsafePointer()), (C.int)(queryType)))
+	return newQNetworkProxyQuery(C.QNetworkProxyQuery_new6((*C.QUrl)(requestUrl.UnsafePointer()), queryType))
 }
 
 // NewQNetworkProxyQuery7 constructs a new QNetworkProxyQuery object.
@@ -136,7 +136,7 @@ func NewQNetworkProxyQuery7(hostname string, port int, protocolTag string) *QNet
 }
 
 // NewQNetworkProxyQuery8 constructs a new QNetworkProxyQuery object.
-func NewQNetworkProxyQuery8(hostname string, port int, protocolTag string, queryType QNetworkProxyQuery__QueryType) *QNetworkProxyQuery {
+func NewQNetworkProxyQuery8(hostname string, port int, protocolTag string, queryType QueryType) *QNetworkProxyQuery {
 	hostname_ms := C.struct_miqt_string{}
 	hostname_ms.data = C.CString(hostname)
 	hostname_ms.len = C.size_t(len(hostname))
@@ -146,7 +146,7 @@ func NewQNetworkProxyQuery8(hostname string, port int, protocolTag string, query
 	protocolTag_ms.len = C.size_t(len(protocolTag))
 	defer C.free(unsafe.Pointer(protocolTag_ms.data))
 
-	return newQNetworkProxyQuery(C.QNetworkProxyQuery_new8(hostname_ms, (C.int)(port), protocolTag_ms, (C.int)(queryType)))
+	return newQNetworkProxyQuery(C.QNetworkProxyQuery_new8(hostname_ms, (C.int)(port), protocolTag_ms, queryType))
 }
 
 // NewQNetworkProxyQuery9 constructs a new QNetworkProxyQuery object.
@@ -160,13 +160,13 @@ func NewQNetworkProxyQuery9(bindPort uint16, protocolTag string) *QNetworkProxyQ
 }
 
 // NewQNetworkProxyQuery10 constructs a new QNetworkProxyQuery object.
-func NewQNetworkProxyQuery10(bindPort uint16, protocolTag string, queryType QNetworkProxyQuery__QueryType) *QNetworkProxyQuery {
+func NewQNetworkProxyQuery10(bindPort uint16, protocolTag string, queryType QueryType) *QNetworkProxyQuery {
 	protocolTag_ms := C.struct_miqt_string{}
 	protocolTag_ms.data = C.CString(protocolTag)
 	protocolTag_ms.len = C.size_t(len(protocolTag))
 	defer C.free(unsafe.Pointer(protocolTag_ms.data))
 
-	return newQNetworkProxyQuery(C.QNetworkProxyQuery_new10((C.ushort)(bindPort), protocolTag_ms, (C.int)(queryType)))
+	return newQNetworkProxyQuery(C.QNetworkProxyQuery_new10((C.ushort)(bindPort), protocolTag_ms, queryType))
 }
 
 func (this *QNetworkProxyQuery) OperatorAssign(other *QNetworkProxyQuery) {
@@ -185,12 +185,12 @@ func (this *QNetworkProxyQuery) OperatorNotEqual(other *QNetworkProxyQuery) bool
 	return (bool)(C.QNetworkProxyQuery_operatorNotEqual(this.h, other.cPointer()))
 }
 
-func (this *QNetworkProxyQuery) QueryType() QNetworkProxyQuery__QueryType {
-	return (QNetworkProxyQuery__QueryType)(C.QNetworkProxyQuery_queryType(this.h))
+func (this *QNetworkProxyQuery) QueryType() QueryType {
+	int /* TODO  */
 }
 
-func (this *QNetworkProxyQuery) SetQueryType(typeVal QNetworkProxyQuery__QueryType) {
-	C.QNetworkProxyQuery_setQueryType(this.h, (C.int)(typeVal))
+func (this *QNetworkProxyQuery) SetQueryType(typeVal QueryType) {
+	C.QNetworkProxyQuery_setQueryType(this.h, typeVal)
 }
 
 func (this *QNetworkProxyQuery) PeerPort() int {
@@ -302,9 +302,9 @@ func NewQNetworkProxy() *QNetworkProxy {
 }
 
 // NewQNetworkProxy2 constructs a new QNetworkProxy object.
-func NewQNetworkProxy2(typeVal QNetworkProxy__ProxyType) *QNetworkProxy {
+func NewQNetworkProxy2(typeVal ProxyType) *QNetworkProxy {
 
-	return newQNetworkProxy(C.QNetworkProxy_new2((C.int)(typeVal)))
+	return newQNetworkProxy(C.QNetworkProxy_new2(typeVal))
 }
 
 // NewQNetworkProxy3 constructs a new QNetworkProxy object.
@@ -314,27 +314,27 @@ func NewQNetworkProxy3(other *QNetworkProxy) *QNetworkProxy {
 }
 
 // NewQNetworkProxy4 constructs a new QNetworkProxy object.
-func NewQNetworkProxy4(typeVal QNetworkProxy__ProxyType, hostName string) *QNetworkProxy {
+func NewQNetworkProxy4(typeVal ProxyType, hostName string) *QNetworkProxy {
 	hostName_ms := C.struct_miqt_string{}
 	hostName_ms.data = C.CString(hostName)
 	hostName_ms.len = C.size_t(len(hostName))
 	defer C.free(unsafe.Pointer(hostName_ms.data))
 
-	return newQNetworkProxy(C.QNetworkProxy_new4((C.int)(typeVal), hostName_ms))
+	return newQNetworkProxy(C.QNetworkProxy_new4(typeVal, hostName_ms))
 }
 
 // NewQNetworkProxy5 constructs a new QNetworkProxy object.
-func NewQNetworkProxy5(typeVal QNetworkProxy__ProxyType, hostName string, port uint16) *QNetworkProxy {
+func NewQNetworkProxy5(typeVal ProxyType, hostName string, port uint16) *QNetworkProxy {
 	hostName_ms := C.struct_miqt_string{}
 	hostName_ms.data = C.CString(hostName)
 	hostName_ms.len = C.size_t(len(hostName))
 	defer C.free(unsafe.Pointer(hostName_ms.data))
 
-	return newQNetworkProxy(C.QNetworkProxy_new5((C.int)(typeVal), hostName_ms, (C.ushort)(port)))
+	return newQNetworkProxy(C.QNetworkProxy_new5(typeVal, hostName_ms, (C.ushort)(port)))
 }
 
 // NewQNetworkProxy6 constructs a new QNetworkProxy object.
-func NewQNetworkProxy6(typeVal QNetworkProxy__ProxyType, hostName string, port uint16, user string) *QNetworkProxy {
+func NewQNetworkProxy6(typeVal ProxyType, hostName string, port uint16, user string) *QNetworkProxy {
 	hostName_ms := C.struct_miqt_string{}
 	hostName_ms.data = C.CString(hostName)
 	hostName_ms.len = C.size_t(len(hostName))
@@ -344,11 +344,11 @@ func NewQNetworkProxy6(typeVal QNetworkProxy__ProxyType, hostName string, port u
 	user_ms.len = C.size_t(len(user))
 	defer C.free(unsafe.Pointer(user_ms.data))
 
-	return newQNetworkProxy(C.QNetworkProxy_new6((C.int)(typeVal), hostName_ms, (C.ushort)(port), user_ms))
+	return newQNetworkProxy(C.QNetworkProxy_new6(typeVal, hostName_ms, (C.ushort)(port), user_ms))
 }
 
 // NewQNetworkProxy7 constructs a new QNetworkProxy object.
-func NewQNetworkProxy7(typeVal QNetworkProxy__ProxyType, hostName string, port uint16, user string, password string) *QNetworkProxy {
+func NewQNetworkProxy7(typeVal ProxyType, hostName string, port uint16, user string, password string) *QNetworkProxy {
 	hostName_ms := C.struct_miqt_string{}
 	hostName_ms.data = C.CString(hostName)
 	hostName_ms.len = C.size_t(len(hostName))
@@ -362,7 +362,7 @@ func NewQNetworkProxy7(typeVal QNetworkProxy__ProxyType, hostName string, port u
 	password_ms.len = C.size_t(len(password))
 	defer C.free(unsafe.Pointer(password_ms.data))
 
-	return newQNetworkProxy(C.QNetworkProxy_new7((C.int)(typeVal), hostName_ms, (C.ushort)(port), user_ms, password_ms))
+	return newQNetworkProxy(C.QNetworkProxy_new7(typeVal, hostName_ms, (C.ushort)(port), user_ms, password_ms))
 }
 
 func (this *QNetworkProxy) OperatorAssign(other *QNetworkProxy) {
@@ -389,12 +389,12 @@ func (this *QNetworkProxy) Type() QNetworkProxy__ProxyType {
 	return (QNetworkProxy__ProxyType)(C.QNetworkProxy_type(this.h))
 }
 
-func (this *QNetworkProxy) SetCapabilities(capab QNetworkProxy__Capability) {
-	C.QNetworkProxy_setCapabilities(this.h, (C.int)(capab))
+func (this *QNetworkProxy) SetCapabilities(capab Capabilities) {
+	C.QNetworkProxy_setCapabilities(this.h, capab)
 }
 
-func (this *QNetworkProxy) Capabilities() QNetworkProxy__Capability {
-	return (QNetworkProxy__Capability)(C.QNetworkProxy_capabilities(this.h))
+func (this *QNetworkProxy) Capabilities() Capabilities {
+	int /* TODO  */
 }
 
 func (this *QNetworkProxy) IsCachingProxy() bool {
@@ -466,6 +466,16 @@ func QNetworkProxy_ApplicationProxy() *QNetworkProxy {
 	_goptr := newQNetworkProxy(C.QNetworkProxy_applicationProxy())
 	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
 	return _goptr
+}
+
+func (this *QNetworkProxy) Headers() *QHttpHeaders {
+	_goptr := newQHttpHeaders(C.QNetworkProxy_headers(this.h))
+	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
+	return _goptr
+}
+
+func (this *QNetworkProxy) SetHeaders(newHeaders *QHttpHeaders) {
+	C.QNetworkProxy_setHeaders(this.h, newHeaders.cPointer())
 }
 
 func (this *QNetworkProxy) Header(header QNetworkRequest__KnownHeaders) *qt6.QVariant {

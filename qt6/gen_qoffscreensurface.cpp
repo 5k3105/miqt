@@ -20,7 +20,7 @@ extern "C" {
 #endif
 
 void miqt_exec_callback_QOffscreenSurface_screenChanged(intptr_t, QScreen*);
-int miqt_exec_callback_QOffscreenSurface_surfaceType(const QOffscreenSurface*, intptr_t);
+SurfaceType miqt_exec_callback_QOffscreenSurface_surfaceType(const QOffscreenSurface*, intptr_t);
 QSurfaceFormat* miqt_exec_callback_QOffscreenSurface_format(const QOffscreenSurface*, intptr_t);
 QSize* miqt_exec_callback_QOffscreenSurface_size(const QOffscreenSurface*, intptr_t);
 bool miqt_exec_callback_QOffscreenSurface_event(QOffscreenSurface*, intptr_t, QEvent*);
@@ -47,16 +47,16 @@ public:
 	intptr_t handle__surfaceType = 0;
 
 	// Subclass to allow providing a Go implementation
-	virtual QSurface::SurfaceType surfaceType() const override {
+	virtual SurfaceType surfaceType() const override {
 		if (handle__surfaceType == 0) {
 			return QOffscreenSurface::surfaceType();
 		}
 
-		int callback_return_value = miqt_exec_callback_QOffscreenSurface_surfaceType(this, handle__surfaceType);
-		return static_cast<QSurface::SurfaceType>(callback_return_value);
+		SurfaceType callback_return_value = miqt_exec_callback_QOffscreenSurface_surfaceType(this, handle__surfaceType);
+		return callback_return_value;
 	}
 
-	friend int QOffscreenSurface_virtualbase_surfaceType(const void* self);
+	friend SurfaceType QOffscreenSurface_virtualbase_surfaceType(const void* self);
 
 	// cgo.Handle value for overwritten implementation
 	intptr_t handle__format = 0;
@@ -254,9 +254,8 @@ struct miqt_string QOffscreenSurface_tr(const char* s) {
 	return _ms;
 }
 
-int QOffscreenSurface_surfaceType(const QOffscreenSurface* self) {
-	QSurface::SurfaceType _ret = self->surfaceType();
-	return static_cast<int>(_ret);
+SurfaceType QOffscreenSurface_surfaceType(const QOffscreenSurface* self) {
+	return self->surfaceType();
 }
 
 void QOffscreenSurface_create(QOffscreenSurface* self) {
@@ -338,9 +337,8 @@ bool QOffscreenSurface_override_virtual_surfaceType(void* self, intptr_t slot) {
 	return true;
 }
 
-int QOffscreenSurface_virtualbase_surfaceType(const void* self) {
-	MiqtVirtualQOffscreenSurface::SurfaceType _ret = static_cast<const MiqtVirtualQOffscreenSurface*>(self)->QOffscreenSurface::surfaceType();
-	return static_cast<int>(_ret);
+SurfaceType QOffscreenSurface_virtualbase_surfaceType(const void* self) {
+	return static_cast<const MiqtVirtualQOffscreenSurface*>(self)->QOffscreenSurface::surfaceType();
 }
 
 bool QOffscreenSurface_override_virtual_format(void* self, intptr_t slot) {

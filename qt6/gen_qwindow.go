@@ -108,24 +108,24 @@ func QWindow_Tr(s string) string {
 	return _ret
 }
 
-func (this *QWindow) SetSurfaceType(surfaceType QSurface__SurfaceType) {
-	C.QWindow_setSurfaceType(this.h, (C.int)(surfaceType))
+func (this *QWindow) SetSurfaceType(surfaceType SurfaceType) {
+	C.QWindow_setSurfaceType(this.h, surfaceType)
 }
 
-func (this *QWindow) SurfaceType() QSurface__SurfaceType {
-	return (QSurface__SurfaceType)(C.QWindow_surfaceType(this.h))
+func (this *QWindow) SurfaceType() SurfaceType {
+	int /* TODO  */
 }
 
 func (this *QWindow) IsVisible() bool {
 	return (bool)(C.QWindow_isVisible(this.h))
 }
 
-func (this *QWindow) Visibility() QWindow__Visibility {
-	return (QWindow__Visibility)(C.QWindow_visibility(this.h))
+func (this *QWindow) Visibility() Visibility {
+	int /* TODO  */
 }
 
-func (this *QWindow) SetVisibility(v QWindow__Visibility) {
-	C.QWindow_setVisibility(this.h, (C.int)(v))
+func (this *QWindow) SetVisibility(v Visibility) {
+	C.QWindow_setVisibility(this.h, v)
 }
 
 func (this *QWindow) Create() {
@@ -347,6 +347,12 @@ func (this *QWindow) FramePosition() *QPoint {
 
 func (this *QWindow) SetFramePosition(point *QPoint) {
 	C.QWindow_setFramePosition(this.h, point.cPointer())
+}
+
+func (this *QWindow) SafeAreaMargins() *QMargins {
+	_goptr := newQMargins(C.QWindow_safeAreaMargins(this.h))
+	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
+	return _goptr
 }
 
 func (this *QWindow) Width() int {
@@ -636,6 +642,26 @@ func miqt_exec_callback_QWindow_modalityChanged(cb C.intptr_t, modality C.int) {
 	gofunc(slotval1)
 }
 
+func (this *QWindow) FlagsChanged(flags WindowType) {
+	C.QWindow_flagsChanged(this.h, (C.int)(flags))
+}
+func (this *QWindow) OnFlagsChanged(slot func(flags WindowType)) {
+	C.QWindow_connect_flagsChanged(this.h, C.intptr_t(cgo.NewHandle(slot)))
+}
+
+//export miqt_exec_callback_QWindow_flagsChanged
+func miqt_exec_callback_QWindow_flagsChanged(cb C.intptr_t, flags C.int) {
+	gofunc, ok := cgo.Handle(cb).Value().(func(flags WindowType))
+	if !ok {
+		panic("miqt: callback of non-callback type (heap corruption?)")
+	}
+
+	// Convert all CABI parameters to Go parameters
+	slotval1 := (WindowType)(flags)
+
+	gofunc(slotval1)
+}
+
 func (this *QWindow) WindowStateChanged(windowState WindowState) {
 	C.QWindow_windowStateChanged(this.h, (C.int)(windowState))
 }
@@ -843,6 +869,28 @@ func miqt_exec_callback_QWindow_maximumHeightChanged(cb C.intptr_t, arg C.int) {
 	gofunc(slotval1)
 }
 
+func (this *QWindow) SafeAreaMarginsChanged(arg QMargins) {
+	C.QWindow_safeAreaMarginsChanged(this.h, arg.cPointer())
+}
+func (this *QWindow) OnSafeAreaMarginsChanged(slot func(arg QMargins)) {
+	C.QWindow_connect_safeAreaMarginsChanged(this.h, C.intptr_t(cgo.NewHandle(slot)))
+}
+
+//export miqt_exec_callback_QWindow_safeAreaMarginsChanged
+func miqt_exec_callback_QWindow_safeAreaMarginsChanged(cb C.intptr_t, arg *C.QMargins) {
+	gofunc, ok := cgo.Handle(cb).Value().(func(arg QMargins))
+	if !ok {
+		panic("miqt: callback of non-callback type (heap corruption?)")
+	}
+
+	// Convert all CABI parameters to Go parameters
+	arg_goptr := newQMargins(arg)
+	arg_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
+	slotval1 := *arg_goptr
+
+	gofunc(slotval1)
+}
+
 func (this *QWindow) VisibleChanged(arg bool) {
 	C.QWindow_visibleChanged(this.h, (C.bool)(arg))
 }
@@ -1002,16 +1050,16 @@ func QWindow_Tr3(s string, c string, n int) string {
 	return _ret
 }
 
-func (this *QWindow) ParentWithMode(mode QWindow__AncestorMode) *QWindow {
-	return newQWindow(C.QWindow_parentWithMode(this.h, (C.int)(mode)))
+func (this *QWindow) ParentWithMode(mode AncestorMode) *QWindow {
+	return newQWindow(C.QWindow_parentWithMode(this.h, mode))
 }
 
 func (this *QWindow) SetFlag2(param1 WindowType, on bool) {
 	C.QWindow_setFlag2(this.h, (C.int)(param1), (C.bool)(on))
 }
 
-func (this *QWindow) IsAncestorOf2(child *QWindow, mode QWindow__AncestorMode) bool {
-	return (bool)(C.QWindow_isAncestorOf2(this.h, child.cPointer(), (C.int)(mode)))
+func (this *QWindow) IsAncestorOf2(child *QWindow, mode AncestorMode) bool {
+	return (bool)(C.QWindow_isAncestorOf2(this.h, child.cPointer(), mode))
 }
 
 // ResolveInterface can only be called from a QWindow that was directly constructed.
@@ -1088,12 +1136,11 @@ func (this *QWindow) IsSignalConnected(signal *QMetaMethod) bool {
 
 }
 
-func (this *QWindow) callVirtualBase_SurfaceType() QSurface__SurfaceType {
+func (this *QWindow) callVirtualBase_SurfaceType() SurfaceType {
 
-	return (QSurface__SurfaceType)(C.QWindow_virtualbase_surfaceType(unsafe.Pointer(this.h)))
-
+	int /* TODO  */
 }
-func (this *QWindow) OnSurfaceType(slot func(super func() QSurface__SurfaceType) QSurface__SurfaceType) {
+func (this *QWindow) OnSurfaceType(slot func(super func() SurfaceType) SurfaceType) {
 	ok := C.QWindow_override_virtual_surfaceType(unsafe.Pointer(this.h), C.intptr_t(cgo.NewHandle(slot)))
 	if !ok {
 		panic("miqt: can only override virtual methods for directly constructed types")
@@ -1101,15 +1148,15 @@ func (this *QWindow) OnSurfaceType(slot func(super func() QSurface__SurfaceType)
 }
 
 //export miqt_exec_callback_QWindow_surfaceType
-func miqt_exec_callback_QWindow_surfaceType(self *C.QWindow, cb C.intptr_t) C.int {
-	gofunc, ok := cgo.Handle(cb).Value().(func(super func() QSurface__SurfaceType) QSurface__SurfaceType)
+func miqt_exec_callback_QWindow_surfaceType(self *C.QWindow, cb C.intptr_t) C.SurfaceType {
+	gofunc, ok := cgo.Handle(cb).Value().(func(super func() SurfaceType) SurfaceType)
 	if !ok {
 		panic("miqt: callback of non-callback type (heap corruption?)")
 	}
 
 	virtualReturn := gofunc((&QWindow{h: self}).callVirtualBase_SurfaceType)
 
-	return (C.int)(virtualReturn)
+	return virtualReturn
 
 }
 

@@ -628,7 +628,7 @@ void QIconEngine_delete(QIconEngine* self) {
 	delete self;
 }
 
-QIconEngine__ScaledPixmapArgument* QIconEngine__ScaledPixmapArgument_new(QIconEngine__ScaledPixmapArgument* param1) {
+QIconEngine__ScaledPixmapArgument* QIconEngine__ScaledPixmapArgument_new(const ScaledPixmapArgument* param1) {
 	return new (std::nothrow) QIconEngine::ScaledPixmapArgument(*param1);
 }
 
@@ -675,7 +675,7 @@ void QIconEngine__ScaledPixmapArgument_setPixmap(QIconEngine__ScaledPixmapArgume
 	self->pixmap = *pixmap;
 }
 
-void QIconEngine__ScaledPixmapArgument_operatorAssign(QIconEngine__ScaledPixmapArgument* self, QIconEngine__ScaledPixmapArgument* param1) {
+void QIconEngine__ScaledPixmapArgument_operatorAssign(QIconEngine__ScaledPixmapArgument* self, const ScaledPixmapArgument* param1) {
 	self->operator=(*param1);
 }
 

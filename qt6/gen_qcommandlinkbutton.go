@@ -308,6 +308,20 @@ func (this *QCommandLinkButton) IsSignalConnected(signal *QMetaMethod) bool {
 
 }
 
+// GetDecodedMetricF can only be called from a QCommandLinkButton that was directly constructed.
+func (this *QCommandLinkButton) GetDecodedMetricF(metricA PaintDeviceMetric, metricB PaintDeviceMetric) float64 {
+
+	var _dynamic_cast_ok C.bool = false
+	_method_ret := (float64)(C.QCommandLinkButton_protectedbase_getDecodedMetricF(&_dynamic_cast_ok, unsafe.Pointer(this.h), metricA, metricB))
+
+	if !_dynamic_cast_ok {
+		panic("miqt: can only call protected methods for directly constructed types")
+	}
+
+	return _method_ret
+
+}
+
 func (this *QCommandLinkButton) callVirtualBase_SizeHint() *QSize {
 
 	_goptr := newQSize(C.QCommandLinkButton_virtualbase_sizeHint(unsafe.Pointer(this.h)))
@@ -1336,12 +1350,12 @@ func miqt_exec_callback_QCommandLinkButton_nativeEvent(self *C.QCommandLinkButto
 
 }
 
-func (this *QCommandLinkButton) callVirtualBase_Metric(param1 QPaintDevice__PaintDeviceMetric) int {
+func (this *QCommandLinkButton) callVirtualBase_Metric(param1 PaintDeviceMetric) int {
 
-	return (int)(C.QCommandLinkButton_virtualbase_metric(unsafe.Pointer(this.h), (C.int)(param1)))
+	return (int)(C.QCommandLinkButton_virtualbase_metric(unsafe.Pointer(this.h), param1))
 
 }
-func (this *QCommandLinkButton) OnMetric(slot func(super func(param1 QPaintDevice__PaintDeviceMetric) int, param1 QPaintDevice__PaintDeviceMetric) int) {
+func (this *QCommandLinkButton) OnMetric(slot func(super func(param1 PaintDeviceMetric) int, param1 PaintDeviceMetric) int) {
 	ok := C.QCommandLinkButton_override_virtual_metric(unsafe.Pointer(this.h), C.intptr_t(cgo.NewHandle(slot)))
 	if !ok {
 		panic("miqt: can only override virtual methods for directly constructed types")
@@ -1349,14 +1363,14 @@ func (this *QCommandLinkButton) OnMetric(slot func(super func(param1 QPaintDevic
 }
 
 //export miqt_exec_callback_QCommandLinkButton_metric
-func miqt_exec_callback_QCommandLinkButton_metric(self *C.QCommandLinkButton, cb C.intptr_t, param1 C.int) C.int {
-	gofunc, ok := cgo.Handle(cb).Value().(func(super func(param1 QPaintDevice__PaintDeviceMetric) int, param1 QPaintDevice__PaintDeviceMetric) int)
+func miqt_exec_callback_QCommandLinkButton_metric(self *C.QCommandLinkButton, cb C.intptr_t, param1 C.PaintDeviceMetric) C.int {
+	gofunc, ok := cgo.Handle(cb).Value().(func(super func(param1 PaintDeviceMetric) int, param1 PaintDeviceMetric) int)
 	if !ok {
 		panic("miqt: callback of non-callback type (heap corruption?)")
 	}
 
 	// Convert all CABI parameters to Go parameters
-	slotval1 := (QPaintDevice__PaintDeviceMetric)(param1)
+	int /* TODO  */
 
 	virtualReturn := gofunc((&QCommandLinkButton{h: self}).callVirtualBase_Metric, slotval1)
 

@@ -86,7 +86,7 @@ void miqt_exec_callback_QTabWidget_dragLeaveEvent(QTabWidget*, intptr_t, QDragLe
 void miqt_exec_callback_QTabWidget_dropEvent(QTabWidget*, intptr_t, QDropEvent*);
 void miqt_exec_callback_QTabWidget_hideEvent(QTabWidget*, intptr_t, QHideEvent*);
 bool miqt_exec_callback_QTabWidget_nativeEvent(QTabWidget*, intptr_t, struct miqt_string, void*, intptr_t*);
-int miqt_exec_callback_QTabWidget_metric(const QTabWidget*, intptr_t, int);
+int miqt_exec_callback_QTabWidget_metric(const QTabWidget*, intptr_t, PaintDeviceMetric);
 void miqt_exec_callback_QTabWidget_initPainter(const QTabWidget*, intptr_t, QPainter*);
 QPaintDevice* miqt_exec_callback_QTabWidget_redirected(const QTabWidget*, intptr_t, QPoint*);
 QPainter* miqt_exec_callback_QTabWidget_sharedPainter(const QTabWidget*, intptr_t);
@@ -739,18 +739,17 @@ public:
 	intptr_t handle__metric = 0;
 
 	// Subclass to allow providing a Go implementation
-	virtual int metric(QPaintDevice::PaintDeviceMetric param1) const override {
+	virtual int metric(PaintDeviceMetric param1) const override {
 		if (handle__metric == 0) {
 			return QTabWidget::metric(param1);
 		}
 
-		QPaintDevice::PaintDeviceMetric param1_ret = param1;
-		int sigval1 = static_cast<int>(param1_ret);
+		PaintDeviceMetric sigval1 = param1;
 		int callback_return_value = miqt_exec_callback_QTabWidget_metric(this, handle__metric, sigval1);
 		return static_cast<int>(callback_return_value);
 	}
 
-	friend int QTabWidget_virtualbase_metric(const void* self, int param1);
+	friend int QTabWidget_virtualbase_metric(const void* self, PaintDeviceMetric param1);
 
 	// cgo.Handle value for overwritten implementation
 	intptr_t handle__initPainter = 0;
@@ -967,6 +966,7 @@ public:
 	friend int QTabWidget_protectedbase_senderSignalIndex(bool* _dynamic_cast_ok, const void* self);
 	friend int QTabWidget_protectedbase_receivers(bool* _dynamic_cast_ok, const void* self, const char* signal);
 	friend bool QTabWidget_protectedbase_isSignalConnected(bool* _dynamic_cast_ok, const void* self, QMetaMethod* signal);
+	friend double QTabWidget_protectedbase_getDecodedMetricF(bool* _dynamic_cast_ok, const void* self, PaintDeviceMetric metricA, PaintDeviceMetric metricB);
 };
 
 QTabWidget* QTabWidget_new(QWidget* parent) {
@@ -1116,13 +1116,12 @@ int QTabWidget_count(const QTabWidget* self) {
 	return self->count();
 }
 
-int QTabWidget_tabPosition(const QTabWidget* self) {
-	QTabWidget::TabPosition _ret = self->tabPosition();
-	return static_cast<int>(_ret);
+TabPosition QTabWidget_tabPosition(const QTabWidget* self) {
+	return self->tabPosition();
 }
 
-void QTabWidget_setTabPosition(QTabWidget* self, int position) {
-	self->setTabPosition(static_cast<QTabWidget::TabPosition>(position));
+void QTabWidget_setTabPosition(QTabWidget* self, TabPosition position) {
+	self->setTabPosition(position);
 }
 
 bool QTabWidget_tabsClosable(const QTabWidget* self) {
@@ -1141,13 +1140,12 @@ void QTabWidget_setMovable(QTabWidget* self, bool movable) {
 	self->setMovable(movable);
 }
 
-int QTabWidget_tabShape(const QTabWidget* self) {
-	QTabWidget::TabShape _ret = self->tabShape();
-	return static_cast<int>(_ret);
+TabShape QTabWidget_tabShape(const QTabWidget* self) {
+	return self->tabShape();
 }
 
-void QTabWidget_setTabShape(QTabWidget* self, int s) {
-	self->setTabShape(static_cast<QTabWidget::TabShape>(s));
+void QTabWidget_setTabShape(QTabWidget* self, TabShape s) {
+	self->setTabShape(s);
 }
 
 QSize* QTabWidget_sizeHint(const QTabWidget* self) {
@@ -1834,8 +1832,8 @@ bool QTabWidget_override_virtual_metric(void* self, intptr_t slot) {
 	return true;
 }
 
-int QTabWidget_virtualbase_metric(const void* self, int param1) {
-	return static_cast<const MiqtVirtualQTabWidget*>(self)->QTabWidget::metric(static_cast<MiqtVirtualQTabWidget::PaintDeviceMetric>(param1));
+int QTabWidget_virtualbase_metric(const void* self, PaintDeviceMetric param1) {
+	return static_cast<const MiqtVirtualQTabWidget*>(self)->QTabWidget::metric(param1);
 }
 
 bool QTabWidget_override_virtual_initPainter(void* self, intptr_t slot) {
@@ -2114,6 +2112,17 @@ bool QTabWidget_protectedbase_isSignalConnected(bool* _dynamic_cast_ok, const vo
 
 	*_dynamic_cast_ok = true;
 	return self_cast->isSignalConnected(*signal);
+}
+
+double QTabWidget_protectedbase_getDecodedMetricF(bool* _dynamic_cast_ok, const void* self, PaintDeviceMetric metricA, PaintDeviceMetric metricB) {
+	MiqtVirtualQTabWidget* self_cast = dynamic_cast<MiqtVirtualQTabWidget*>( (QTabWidget*)(self) );
+	if (self_cast == nullptr) {
+		*_dynamic_cast_ok = false;
+		return 0;
+	}
+
+	*_dynamic_cast_ok = true;
+	return self_cast->getDecodedMetricF(metricA, metricB);
 }
 
 void QTabWidget_delete(QTabWidget* self) {

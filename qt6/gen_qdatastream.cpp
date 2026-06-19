@@ -42,35 +42,32 @@ bool QDataStream_atEnd(const QDataStream* self) {
 	return self->atEnd();
 }
 
-int QDataStream_status(const QDataStream* self) {
-	QDataStream::Status _ret = self->status();
-	return static_cast<int>(_ret);
+Status QDataStream_status(const QDataStream* self) {
+	return self->status();
 }
 
-void QDataStream_setStatus(QDataStream* self, int status) {
-	self->setStatus(static_cast<QDataStream::Status>(status));
+void QDataStream_setStatus(QDataStream* self, Status status) {
+	self->setStatus(status);
 }
 
 void QDataStream_resetStatus(QDataStream* self) {
 	self->resetStatus();
 }
 
-int QDataStream_floatingPointPrecision(const QDataStream* self) {
-	QDataStream::FloatingPointPrecision _ret = self->floatingPointPrecision();
-	return static_cast<int>(_ret);
+FloatingPointPrecision QDataStream_floatingPointPrecision(const QDataStream* self) {
+	return self->floatingPointPrecision();
 }
 
-void QDataStream_setFloatingPointPrecision(QDataStream* self, int precision) {
-	self->setFloatingPointPrecision(static_cast<QDataStream::FloatingPointPrecision>(precision));
+void QDataStream_setFloatingPointPrecision(QDataStream* self, FloatingPointPrecision precision) {
+	self->setFloatingPointPrecision(precision);
 }
 
-int QDataStream_byteOrder(const QDataStream* self) {
-	QDataStream::ByteOrder _ret = self->byteOrder();
-	return static_cast<int>(_ret);
+ByteOrder QDataStream_byteOrder(const QDataStream* self) {
+	return self->byteOrder();
 }
 
-void QDataStream_setByteOrder(QDataStream* self, int byteOrder) {
-	self->setByteOrder(static_cast<QDataStream::ByteOrder>(byteOrder));
+void QDataStream_setByteOrder(QDataStream* self, ByteOrder byteOrder) {
+	self->setByteOrder(byteOrder);
 }
 
 int QDataStream_version(const QDataStream* self) {
@@ -169,10 +166,6 @@ void QDataStream_operatorShiftLeftWithQuint64(QDataStream* self, unsigned long l
 	self->operator<<(static_cast<quint64>(i));
 }
 
-void QDataStream_operatorShiftLeftWithBool(QDataStream* self, bool i) {
-	self->operator<<(i);
-}
-
 void QDataStream_operatorShiftLeftWithFloat(QDataStream* self, float f) {
 	self->operator<<(static_cast<float>(f));
 }
@@ -185,26 +178,39 @@ void QDataStream_operatorShiftLeftWithStr(QDataStream* self, const char* str) {
 	self->operator<<(str);
 }
 
+bool QDataStream_ToBool(const QDataStream* self) {
+	return self->operator bool();
+}
+
 QDataStream* QDataStream_readBytes(QDataStream* self, char* param1, unsigned int* len) {
 	QDataStream& _ret = self->readBytes(param1, static_cast<uint&>(*len));
 	// Cast returned reference into pointer
 	return &_ret;
 }
 
-int QDataStream_readRawData(QDataStream* self, char* param1, int len) {
-	return self->readRawData(param1, static_cast<int>(len));
+QDataStream* QDataStream_readBytes2(QDataStream* self, char* param1, long long* len) {
+	QDataStream& _ret = self->readBytes(param1, static_cast<qint64&>(*len));
+	// Cast returned reference into pointer
+	return &_ret;
 }
 
-void QDataStream_writeBytes(QDataStream* self, const char* param1, unsigned int len) {
-	self->writeBytes(param1, static_cast<uint>(len));
+long long QDataStream_readRawData(QDataStream* self, char* param1, long long len) {
+	qint64 _ret = self->readRawData(param1, static_cast<qint64>(len));
+	return static_cast<long long>(_ret);
 }
 
-int QDataStream_writeRawData(QDataStream* self, const char* param1, int len) {
-	return self->writeRawData(param1, static_cast<int>(len));
+void QDataStream_writeBytes(QDataStream* self, const char* param1, long long len) {
+	self->writeBytes(param1, static_cast<qint64>(len));
 }
 
-int QDataStream_skipRawData(QDataStream* self, int len) {
-	return self->skipRawData(static_cast<int>(len));
+long long QDataStream_writeRawData(QDataStream* self, const char* param1, long long len) {
+	qint64 _ret = self->writeRawData(param1, static_cast<qint64>(len));
+	return static_cast<long long>(_ret);
+}
+
+long long QDataStream_skipRawData(QDataStream* self, long long len) {
+	qint64 _ret = self->skipRawData(static_cast<qint64>(len));
+	return static_cast<long long>(_ret);
 }
 
 void QDataStream_startTransaction(QDataStream* self) {

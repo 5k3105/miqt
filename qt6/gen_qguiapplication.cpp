@@ -256,6 +256,10 @@ struct miqt_string QGuiApplication_applicationDisplayName() {
 	return _ms;
 }
 
+void QGuiApplication_setBadgeNumber(QGuiApplication* self, long long number) {
+	self->setBadgeNumber(static_cast<qint64>(number));
+}
+
 void QGuiApplication_setDesktopFileName(struct miqt_string name) {
 	QString name_QString = QString::fromUtf8(name.data, name.len);
 	QGuiApplication::setDesktopFileName(name_QString);

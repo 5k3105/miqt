@@ -42,6 +42,10 @@ void QSqlIndex_operatorAssign(QSqlIndex* self, QSqlIndex* other) {
 	self->operator=(*other);
 }
 
+void QSqlIndex_swap(QSqlIndex* self, QSqlIndex* other) {
+	self->swap(*other);
+}
+
 void QSqlIndex_setCursorName(QSqlIndex* self, struct miqt_string cursorName) {
 	QString cursorName_QString = QString::fromUtf8(cursorName.data, cursorName.len);
 	self->setCursorName(cursorName_QString);

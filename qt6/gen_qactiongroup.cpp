@@ -241,9 +241,8 @@ bool QActionGroup_isVisible(const QActionGroup* self) {
 	return self->isVisible();
 }
 
-int QActionGroup_exclusionPolicy(const QActionGroup* self) {
-	QActionGroup::ExclusionPolicy _ret = self->exclusionPolicy();
-	return static_cast<int>(_ret);
+ExclusionPolicy QActionGroup_exclusionPolicy(const QActionGroup* self) {
+	return self->exclusionPolicy();
 }
 
 void QActionGroup_setEnabled(QActionGroup* self, bool enabled) {
@@ -262,8 +261,8 @@ void QActionGroup_setExclusive(QActionGroup* self, bool exclusive) {
 	self->setExclusive(exclusive);
 }
 
-void QActionGroup_setExclusionPolicy(QActionGroup* self, int policy) {
-	self->setExclusionPolicy(static_cast<QActionGroup::ExclusionPolicy>(policy));
+void QActionGroup_setExclusionPolicy(QActionGroup* self, ExclusionPolicy policy) {
+	self->setExclusionPolicy(policy);
 }
 
 void QActionGroup_triggered(QActionGroup* self, QAction* param1) {

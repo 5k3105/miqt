@@ -34,59 +34,24 @@ QChar* QChar_new() {
 	return new (std::nothrow) QChar();
 }
 
-QChar* QChar_new2(unsigned short rc) {
-	return new (std::nothrow) QChar(static_cast<ushort>(rc));
-}
-
-QChar* QChar_new3(unsigned char c, unsigned char r) {
+QChar* QChar_new2(unsigned char c, unsigned char r) {
 	return new (std::nothrow) QChar(static_cast<uchar>(c), static_cast<uchar>(r));
 }
 
-QChar* QChar_new4(short rc) {
-	return new (std::nothrow) QChar(static_cast<short>(rc));
-}
-
-QChar* QChar_new5(unsigned int rc) {
-	return new (std::nothrow) QChar(static_cast<uint>(rc));
-}
-
-QChar* QChar_new6(int rc) {
-	return new (std::nothrow) QChar(static_cast<int>(rc));
-}
-
-QChar* QChar_new7(int s) {
-	return new (std::nothrow) QChar(static_cast<QChar::SpecialCharacter>(s));
-}
-
-QChar* QChar_new8(QLatin1Char* ch) {
-	return new (std::nothrow) QChar(*ch);
-}
-
-QChar* QChar_new9(char c) {
-	return new (std::nothrow) QChar(static_cast<char>(c));
-}
-
-QChar* QChar_new10(unsigned char c) {
-	return new (std::nothrow) QChar(static_cast<uchar>(c));
-}
-
-QChar* QChar_new11(QChar* param1) {
+QChar* QChar_new3(QChar* param1) {
 	return new (std::nothrow) QChar(*param1);
 }
 
-int QChar_category(const QChar* self) {
-	QChar::Category _ret = self->category();
-	return static_cast<int>(_ret);
+Category QChar_category(const QChar* self) {
+	return self->category();
 }
 
-int QChar_direction(const QChar* self) {
-	QChar::Direction _ret = self->direction();
-	return static_cast<int>(_ret);
+Direction QChar_direction(const QChar* self) {
+	return self->direction();
 }
 
-int QChar_joiningType(const QChar* self) {
-	QChar::JoiningType _ret = self->joiningType();
-	return static_cast<int>(_ret);
+JoiningType QChar_joiningType(const QChar* self) {
+	return self->joiningType();
 }
 
 unsigned char QChar_combiningClass(const QChar* self) {
@@ -112,9 +77,8 @@ struct miqt_string QChar_decomposition(const QChar* self) {
 	return _ms;
 }
 
-int QChar_decompositionTag(const QChar* self) {
-	QChar::Decomposition _ret = self->decompositionTag();
-	return static_cast<int>(_ret);
+Decomposition QChar_decompositionTag(const QChar* self) {
+	return self->decompositionTag();
 }
 
 int QChar_digitValue(const QChar* self) {
@@ -137,14 +101,12 @@ QChar* QChar_toCaseFolded(const QChar* self) {
 	return new QChar(self->toCaseFolded());
 }
 
-int QChar_script(const QChar* self) {
-	QChar::Script _ret = self->script();
-	return static_cast<int>(_ret);
+Script QChar_script(const QChar* self) {
+	return self->script();
 }
 
-int QChar_unicodeVersion(const QChar* self) {
-	QChar::UnicodeVersion _ret = self->unicodeVersion();
-	return static_cast<int>(_ret);
+UnicodeVersion QChar_unicodeVersion(const QChar* self) {
+	return self->unicodeVersion();
 }
 
 char QChar_toLatin1(const QChar* self) {
@@ -241,9 +203,8 @@ void QChar_setRow(QChar* self, unsigned char arow) {
 	self->setRow(static_cast<uchar>(arow));
 }
 
-int QChar_currentUnicodeVersion() {
-	QChar::UnicodeVersion _ret = QChar::currentUnicodeVersion();
-	return static_cast<int>(_ret);
+UnicodeVersion QChar_currentUnicodeVersion() {
+	return QChar::currentUnicodeVersion();
 }
 
 void QChar_delete(QChar* self) {

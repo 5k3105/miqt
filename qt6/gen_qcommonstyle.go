@@ -75,56 +75,56 @@ func QCommonStyle_Tr(s string) string {
 	return _ret
 }
 
-func (this *QCommonStyle) DrawPrimitive(pe QStyle__PrimitiveElement, opt *QStyleOption, p *QPainter, w *QWidget) {
-	C.QCommonStyle_drawPrimitive(this.h, (C.int)(pe), opt.cPointer(), p.cPointer(), w.cPointer())
+func (this *QCommonStyle) DrawPrimitive(pe PrimitiveElement, opt *QStyleOption, p *QPainter, w *QWidget) {
+	C.QCommonStyle_drawPrimitive(this.h, pe, opt.cPointer(), p.cPointer(), w.cPointer())
 }
 
-func (this *QCommonStyle) DrawControl(element QStyle__ControlElement, opt *QStyleOption, p *QPainter, w *QWidget) {
-	C.QCommonStyle_drawControl(this.h, (C.int)(element), opt.cPointer(), p.cPointer(), w.cPointer())
+func (this *QCommonStyle) DrawControl(element ControlElement, opt *QStyleOption, p *QPainter, w *QWidget) {
+	C.QCommonStyle_drawControl(this.h, element, opt.cPointer(), p.cPointer(), w.cPointer())
 }
 
-func (this *QCommonStyle) SubElementRect(r QStyle__SubElement, opt *QStyleOption, widget *QWidget) *QRect {
-	_goptr := newQRect(C.QCommonStyle_subElementRect(this.h, (C.int)(r), opt.cPointer(), widget.cPointer()))
+func (this *QCommonStyle) SubElementRect(r SubElement, opt *QStyleOption, widget *QWidget) *QRect {
+	_goptr := newQRect(C.QCommonStyle_subElementRect(this.h, r, opt.cPointer(), widget.cPointer()))
 	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
 	return _goptr
 }
 
-func (this *QCommonStyle) DrawComplexControl(cc QStyle__ComplexControl, opt *QStyleOptionComplex, p *QPainter, w *QWidget) {
-	C.QCommonStyle_drawComplexControl(this.h, (C.int)(cc), opt.cPointer(), p.cPointer(), w.cPointer())
+func (this *QCommonStyle) DrawComplexControl(cc ComplexControl, opt *QStyleOptionComplex, p *QPainter, w *QWidget) {
+	C.QCommonStyle_drawComplexControl(this.h, cc, opt.cPointer(), p.cPointer(), w.cPointer())
 }
 
-func (this *QCommonStyle) HitTestComplexControl(cc QStyle__ComplexControl, opt *QStyleOptionComplex, pt *QPoint, w *QWidget) QStyle__SubControl {
-	return (QStyle__SubControl)(C.QCommonStyle_hitTestComplexControl(this.h, (C.int)(cc), opt.cPointer(), pt.cPointer(), w.cPointer()))
+func (this *QCommonStyle) HitTestComplexControl(cc ComplexControl, opt *QStyleOptionComplex, pt *QPoint, w *QWidget) SubControl {
+	int /* TODO  */
 }
 
-func (this *QCommonStyle) SubControlRect(cc QStyle__ComplexControl, opt *QStyleOptionComplex, sc QStyle__SubControl, w *QWidget) *QRect {
-	_goptr := newQRect(C.QCommonStyle_subControlRect(this.h, (C.int)(cc), opt.cPointer(), (C.int)(sc), w.cPointer()))
+func (this *QCommonStyle) SubControlRect(cc ComplexControl, opt *QStyleOptionComplex, sc SubControl, w *QWidget) *QRect {
+	_goptr := newQRect(C.QCommonStyle_subControlRect(this.h, cc, opt.cPointer(), sc, w.cPointer()))
 	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
 	return _goptr
 }
 
-func (this *QCommonStyle) SizeFromContents(ct QStyle__ContentsType, opt *QStyleOption, contentsSize *QSize, widget *QWidget) *QSize {
-	_goptr := newQSize(C.QCommonStyle_sizeFromContents(this.h, (C.int)(ct), opt.cPointer(), contentsSize.cPointer(), widget.cPointer()))
+func (this *QCommonStyle) SizeFromContents(ct ContentsType, opt *QStyleOption, contentsSize *QSize, widget *QWidget) *QSize {
+	_goptr := newQSize(C.QCommonStyle_sizeFromContents(this.h, ct, opt.cPointer(), contentsSize.cPointer(), widget.cPointer()))
 	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
 	return _goptr
 }
 
-func (this *QCommonStyle) PixelMetric(m QStyle__PixelMetric, opt *QStyleOption, widget *QWidget) int {
-	return (int)(C.QCommonStyle_pixelMetric(this.h, (C.int)(m), opt.cPointer(), widget.cPointer()))
+func (this *QCommonStyle) PixelMetric(m PixelMetric, opt *QStyleOption, widget *QWidget) int {
+	return (int)(C.QCommonStyle_pixelMetric(this.h, m, opt.cPointer(), widget.cPointer()))
 }
 
-func (this *QCommonStyle) StyleHint(sh QStyle__StyleHint, opt *QStyleOption, w *QWidget, shret *QStyleHintReturn) int {
-	return (int)(C.QCommonStyle_styleHint(this.h, (C.int)(sh), opt.cPointer(), w.cPointer(), shret.cPointer()))
+func (this *QCommonStyle) StyleHint(sh StyleHint, opt *QStyleOption, w *QWidget, shret *QStyleHintReturn) int {
+	return (int)(C.QCommonStyle_styleHint(this.h, sh, opt.cPointer(), w.cPointer(), shret.cPointer()))
 }
 
-func (this *QCommonStyle) StandardIcon(standardIcon QStyle__StandardPixmap, opt *QStyleOption, widget *QWidget) *QIcon {
-	_goptr := newQIcon(C.QCommonStyle_standardIcon(this.h, (C.int)(standardIcon), opt.cPointer(), widget.cPointer()))
+func (this *QCommonStyle) StandardIcon(standardIcon StandardPixmap, opt *QStyleOption, widget *QWidget) *QIcon {
+	_goptr := newQIcon(C.QCommonStyle_standardIcon(this.h, standardIcon, opt.cPointer(), widget.cPointer()))
 	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
 	return _goptr
 }
 
-func (this *QCommonStyle) StandardPixmap(sp QStyle__StandardPixmap, opt *QStyleOption, widget *QWidget) *QPixmap {
-	_goptr := newQPixmap(C.QCommonStyle_standardPixmap(this.h, (C.int)(sp), opt.cPointer(), widget.cPointer()))
+func (this *QCommonStyle) StandardPixmap(sp StandardPixmap, opt *QStyleOption, widget *QWidget) *QPixmap {
+	_goptr := newQPixmap(C.QCommonStyle_standardPixmap(this.h, sp, opt.cPointer(), widget.cPointer()))
 	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
 	return _goptr
 }
@@ -239,12 +239,12 @@ func (this *QCommonStyle) IsSignalConnected(signal *QMetaMethod) bool {
 
 }
 
-func (this *QCommonStyle) callVirtualBase_DrawPrimitive(pe QStyle__PrimitiveElement, opt *QStyleOption, p *QPainter, w *QWidget) {
+func (this *QCommonStyle) callVirtualBase_DrawPrimitive(pe PrimitiveElement, opt *QStyleOption, p *QPainter, w *QWidget) {
 
-	C.QCommonStyle_virtualbase_drawPrimitive(unsafe.Pointer(this.h), (C.int)(pe), opt.cPointer(), p.cPointer(), w.cPointer())
+	C.QCommonStyle_virtualbase_drawPrimitive(unsafe.Pointer(this.h), pe, opt.cPointer(), p.cPointer(), w.cPointer())
 
 }
-func (this *QCommonStyle) OnDrawPrimitive(slot func(super func(pe QStyle__PrimitiveElement, opt *QStyleOption, p *QPainter, w *QWidget), pe QStyle__PrimitiveElement, opt *QStyleOption, p *QPainter, w *QWidget)) {
+func (this *QCommonStyle) OnDrawPrimitive(slot func(super func(pe PrimitiveElement, opt *QStyleOption, p *QPainter, w *QWidget), pe PrimitiveElement, opt *QStyleOption, p *QPainter, w *QWidget)) {
 	ok := C.QCommonStyle_override_virtual_drawPrimitive(unsafe.Pointer(this.h), C.intptr_t(cgo.NewHandle(slot)))
 	if !ok {
 		panic("miqt: can only override virtual methods for directly constructed types")
@@ -252,15 +252,14 @@ func (this *QCommonStyle) OnDrawPrimitive(slot func(super func(pe QStyle__Primit
 }
 
 //export miqt_exec_callback_QCommonStyle_drawPrimitive
-func miqt_exec_callback_QCommonStyle_drawPrimitive(self *C.QCommonStyle, cb C.intptr_t, pe C.int, opt *C.QStyleOption, p *C.QPainter, w *C.QWidget) {
-	gofunc, ok := cgo.Handle(cb).Value().(func(super func(pe QStyle__PrimitiveElement, opt *QStyleOption, p *QPainter, w *QWidget), pe QStyle__PrimitiveElement, opt *QStyleOption, p *QPainter, w *QWidget))
+func miqt_exec_callback_QCommonStyle_drawPrimitive(self *C.QCommonStyle, cb C.intptr_t, pe C.PrimitiveElement, opt *C.QStyleOption, p *C.QPainter, w *C.QWidget) {
+	gofunc, ok := cgo.Handle(cb).Value().(func(super func(pe PrimitiveElement, opt *QStyleOption, p *QPainter, w *QWidget), pe PrimitiveElement, opt *QStyleOption, p *QPainter, w *QWidget))
 	if !ok {
 		panic("miqt: callback of non-callback type (heap corruption?)")
 	}
 
 	// Convert all CABI parameters to Go parameters
-	slotval1 := (QStyle__PrimitiveElement)(pe)
-
+	int /* TODO  */
 	slotval2 := newQStyleOption(opt)
 
 	slotval3 := newQPainter(p)
@@ -271,12 +270,12 @@ func miqt_exec_callback_QCommonStyle_drawPrimitive(self *C.QCommonStyle, cb C.in
 
 }
 
-func (this *QCommonStyle) callVirtualBase_DrawControl(element QStyle__ControlElement, opt *QStyleOption, p *QPainter, w *QWidget) {
+func (this *QCommonStyle) callVirtualBase_DrawControl(element ControlElement, opt *QStyleOption, p *QPainter, w *QWidget) {
 
-	C.QCommonStyle_virtualbase_drawControl(unsafe.Pointer(this.h), (C.int)(element), opt.cPointer(), p.cPointer(), w.cPointer())
+	C.QCommonStyle_virtualbase_drawControl(unsafe.Pointer(this.h), element, opt.cPointer(), p.cPointer(), w.cPointer())
 
 }
-func (this *QCommonStyle) OnDrawControl(slot func(super func(element QStyle__ControlElement, opt *QStyleOption, p *QPainter, w *QWidget), element QStyle__ControlElement, opt *QStyleOption, p *QPainter, w *QWidget)) {
+func (this *QCommonStyle) OnDrawControl(slot func(super func(element ControlElement, opt *QStyleOption, p *QPainter, w *QWidget), element ControlElement, opt *QStyleOption, p *QPainter, w *QWidget)) {
 	ok := C.QCommonStyle_override_virtual_drawControl(unsafe.Pointer(this.h), C.intptr_t(cgo.NewHandle(slot)))
 	if !ok {
 		panic("miqt: can only override virtual methods for directly constructed types")
@@ -284,15 +283,14 @@ func (this *QCommonStyle) OnDrawControl(slot func(super func(element QStyle__Con
 }
 
 //export miqt_exec_callback_QCommonStyle_drawControl
-func miqt_exec_callback_QCommonStyle_drawControl(self *C.QCommonStyle, cb C.intptr_t, element C.int, opt *C.QStyleOption, p *C.QPainter, w *C.QWidget) {
-	gofunc, ok := cgo.Handle(cb).Value().(func(super func(element QStyle__ControlElement, opt *QStyleOption, p *QPainter, w *QWidget), element QStyle__ControlElement, opt *QStyleOption, p *QPainter, w *QWidget))
+func miqt_exec_callback_QCommonStyle_drawControl(self *C.QCommonStyle, cb C.intptr_t, element C.ControlElement, opt *C.QStyleOption, p *C.QPainter, w *C.QWidget) {
+	gofunc, ok := cgo.Handle(cb).Value().(func(super func(element ControlElement, opt *QStyleOption, p *QPainter, w *QWidget), element ControlElement, opt *QStyleOption, p *QPainter, w *QWidget))
 	if !ok {
 		panic("miqt: callback of non-callback type (heap corruption?)")
 	}
 
 	// Convert all CABI parameters to Go parameters
-	slotval1 := (QStyle__ControlElement)(element)
-
+	int /* TODO  */
 	slotval2 := newQStyleOption(opt)
 
 	slotval3 := newQPainter(p)
@@ -303,14 +301,14 @@ func miqt_exec_callback_QCommonStyle_drawControl(self *C.QCommonStyle, cb C.intp
 
 }
 
-func (this *QCommonStyle) callVirtualBase_SubElementRect(r QStyle__SubElement, opt *QStyleOption, widget *QWidget) *QRect {
+func (this *QCommonStyle) callVirtualBase_SubElementRect(r SubElement, opt *QStyleOption, widget *QWidget) *QRect {
 
-	_goptr := newQRect(C.QCommonStyle_virtualbase_subElementRect(unsafe.Pointer(this.h), (C.int)(r), opt.cPointer(), widget.cPointer()))
+	_goptr := newQRect(C.QCommonStyle_virtualbase_subElementRect(unsafe.Pointer(this.h), r, opt.cPointer(), widget.cPointer()))
 	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
 	return _goptr
 
 }
-func (this *QCommonStyle) OnSubElementRect(slot func(super func(r QStyle__SubElement, opt *QStyleOption, widget *QWidget) *QRect, r QStyle__SubElement, opt *QStyleOption, widget *QWidget) *QRect) {
+func (this *QCommonStyle) OnSubElementRect(slot func(super func(r SubElement, opt *QStyleOption, widget *QWidget) *QRect, r SubElement, opt *QStyleOption, widget *QWidget) *QRect) {
 	ok := C.QCommonStyle_override_virtual_subElementRect(unsafe.Pointer(this.h), C.intptr_t(cgo.NewHandle(slot)))
 	if !ok {
 		panic("miqt: can only override virtual methods for directly constructed types")
@@ -318,15 +316,14 @@ func (this *QCommonStyle) OnSubElementRect(slot func(super func(r QStyle__SubEle
 }
 
 //export miqt_exec_callback_QCommonStyle_subElementRect
-func miqt_exec_callback_QCommonStyle_subElementRect(self *C.QCommonStyle, cb C.intptr_t, r C.int, opt *C.QStyleOption, widget *C.QWidget) *C.QRect {
-	gofunc, ok := cgo.Handle(cb).Value().(func(super func(r QStyle__SubElement, opt *QStyleOption, widget *QWidget) *QRect, r QStyle__SubElement, opt *QStyleOption, widget *QWidget) *QRect)
+func miqt_exec_callback_QCommonStyle_subElementRect(self *C.QCommonStyle, cb C.intptr_t, r C.SubElement, opt *C.QStyleOption, widget *C.QWidget) *C.QRect {
+	gofunc, ok := cgo.Handle(cb).Value().(func(super func(r SubElement, opt *QStyleOption, widget *QWidget) *QRect, r SubElement, opt *QStyleOption, widget *QWidget) *QRect)
 	if !ok {
 		panic("miqt: callback of non-callback type (heap corruption?)")
 	}
 
 	// Convert all CABI parameters to Go parameters
-	slotval1 := (QStyle__SubElement)(r)
-
+	int /* TODO  */
 	slotval2 := newQStyleOption(opt)
 
 	slotval3 := newQWidget(widget)
@@ -337,12 +334,12 @@ func miqt_exec_callback_QCommonStyle_subElementRect(self *C.QCommonStyle, cb C.i
 
 }
 
-func (this *QCommonStyle) callVirtualBase_DrawComplexControl(cc QStyle__ComplexControl, opt *QStyleOptionComplex, p *QPainter, w *QWidget) {
+func (this *QCommonStyle) callVirtualBase_DrawComplexControl(cc ComplexControl, opt *QStyleOptionComplex, p *QPainter, w *QWidget) {
 
-	C.QCommonStyle_virtualbase_drawComplexControl(unsafe.Pointer(this.h), (C.int)(cc), opt.cPointer(), p.cPointer(), w.cPointer())
+	C.QCommonStyle_virtualbase_drawComplexControl(unsafe.Pointer(this.h), cc, opt.cPointer(), p.cPointer(), w.cPointer())
 
 }
-func (this *QCommonStyle) OnDrawComplexControl(slot func(super func(cc QStyle__ComplexControl, opt *QStyleOptionComplex, p *QPainter, w *QWidget), cc QStyle__ComplexControl, opt *QStyleOptionComplex, p *QPainter, w *QWidget)) {
+func (this *QCommonStyle) OnDrawComplexControl(slot func(super func(cc ComplexControl, opt *QStyleOptionComplex, p *QPainter, w *QWidget), cc ComplexControl, opt *QStyleOptionComplex, p *QPainter, w *QWidget)) {
 	ok := C.QCommonStyle_override_virtual_drawComplexControl(unsafe.Pointer(this.h), C.intptr_t(cgo.NewHandle(slot)))
 	if !ok {
 		panic("miqt: can only override virtual methods for directly constructed types")
@@ -350,15 +347,14 @@ func (this *QCommonStyle) OnDrawComplexControl(slot func(super func(cc QStyle__C
 }
 
 //export miqt_exec_callback_QCommonStyle_drawComplexControl
-func miqt_exec_callback_QCommonStyle_drawComplexControl(self *C.QCommonStyle, cb C.intptr_t, cc C.int, opt *C.QStyleOptionComplex, p *C.QPainter, w *C.QWidget) {
-	gofunc, ok := cgo.Handle(cb).Value().(func(super func(cc QStyle__ComplexControl, opt *QStyleOptionComplex, p *QPainter, w *QWidget), cc QStyle__ComplexControl, opt *QStyleOptionComplex, p *QPainter, w *QWidget))
+func miqt_exec_callback_QCommonStyle_drawComplexControl(self *C.QCommonStyle, cb C.intptr_t, cc C.ComplexControl, opt *C.QStyleOptionComplex, p *C.QPainter, w *C.QWidget) {
+	gofunc, ok := cgo.Handle(cb).Value().(func(super func(cc ComplexControl, opt *QStyleOptionComplex, p *QPainter, w *QWidget), cc ComplexControl, opt *QStyleOptionComplex, p *QPainter, w *QWidget))
 	if !ok {
 		panic("miqt: callback of non-callback type (heap corruption?)")
 	}
 
 	// Convert all CABI parameters to Go parameters
-	slotval1 := (QStyle__ComplexControl)(cc)
-
+	int /* TODO  */
 	slotval2 := newQStyleOptionComplex(opt)
 
 	slotval3 := newQPainter(p)
@@ -369,12 +365,11 @@ func miqt_exec_callback_QCommonStyle_drawComplexControl(self *C.QCommonStyle, cb
 
 }
 
-func (this *QCommonStyle) callVirtualBase_HitTestComplexControl(cc QStyle__ComplexControl, opt *QStyleOptionComplex, pt *QPoint, w *QWidget) QStyle__SubControl {
+func (this *QCommonStyle) callVirtualBase_HitTestComplexControl(cc ComplexControl, opt *QStyleOptionComplex, pt *QPoint, w *QWidget) SubControl {
 
-	return (QStyle__SubControl)(C.QCommonStyle_virtualbase_hitTestComplexControl(unsafe.Pointer(this.h), (C.int)(cc), opt.cPointer(), pt.cPointer(), w.cPointer()))
-
+	int /* TODO  */
 }
-func (this *QCommonStyle) OnHitTestComplexControl(slot func(super func(cc QStyle__ComplexControl, opt *QStyleOptionComplex, pt *QPoint, w *QWidget) QStyle__SubControl, cc QStyle__ComplexControl, opt *QStyleOptionComplex, pt *QPoint, w *QWidget) QStyle__SubControl) {
+func (this *QCommonStyle) OnHitTestComplexControl(slot func(super func(cc ComplexControl, opt *QStyleOptionComplex, pt *QPoint, w *QWidget) SubControl, cc ComplexControl, opt *QStyleOptionComplex, pt *QPoint, w *QWidget) SubControl) {
 	ok := C.QCommonStyle_override_virtual_hitTestComplexControl(unsafe.Pointer(this.h), C.intptr_t(cgo.NewHandle(slot)))
 	if !ok {
 		panic("miqt: can only override virtual methods for directly constructed types")
@@ -382,15 +377,14 @@ func (this *QCommonStyle) OnHitTestComplexControl(slot func(super func(cc QStyle
 }
 
 //export miqt_exec_callback_QCommonStyle_hitTestComplexControl
-func miqt_exec_callback_QCommonStyle_hitTestComplexControl(self *C.QCommonStyle, cb C.intptr_t, cc C.int, opt *C.QStyleOptionComplex, pt *C.QPoint, w *C.QWidget) C.int {
-	gofunc, ok := cgo.Handle(cb).Value().(func(super func(cc QStyle__ComplexControl, opt *QStyleOptionComplex, pt *QPoint, w *QWidget) QStyle__SubControl, cc QStyle__ComplexControl, opt *QStyleOptionComplex, pt *QPoint, w *QWidget) QStyle__SubControl)
+func miqt_exec_callback_QCommonStyle_hitTestComplexControl(self *C.QCommonStyle, cb C.intptr_t, cc C.ComplexControl, opt *C.QStyleOptionComplex, pt *C.QPoint, w *C.QWidget) C.SubControl {
+	gofunc, ok := cgo.Handle(cb).Value().(func(super func(cc ComplexControl, opt *QStyleOptionComplex, pt *QPoint, w *QWidget) SubControl, cc ComplexControl, opt *QStyleOptionComplex, pt *QPoint, w *QWidget) SubControl)
 	if !ok {
 		panic("miqt: callback of non-callback type (heap corruption?)")
 	}
 
 	// Convert all CABI parameters to Go parameters
-	slotval1 := (QStyle__ComplexControl)(cc)
-
+	int /* TODO  */
 	slotval2 := newQStyleOptionComplex(opt)
 
 	slotval3 := newQPoint(pt)
@@ -399,18 +393,18 @@ func miqt_exec_callback_QCommonStyle_hitTestComplexControl(self *C.QCommonStyle,
 
 	virtualReturn := gofunc((&QCommonStyle{h: self}).callVirtualBase_HitTestComplexControl, slotval1, slotval2, slotval3, slotval4)
 
-	return (C.int)(virtualReturn)
+	return virtualReturn
 
 }
 
-func (this *QCommonStyle) callVirtualBase_SubControlRect(cc QStyle__ComplexControl, opt *QStyleOptionComplex, sc QStyle__SubControl, w *QWidget) *QRect {
+func (this *QCommonStyle) callVirtualBase_SubControlRect(cc ComplexControl, opt *QStyleOptionComplex, sc SubControl, w *QWidget) *QRect {
 
-	_goptr := newQRect(C.QCommonStyle_virtualbase_subControlRect(unsafe.Pointer(this.h), (C.int)(cc), opt.cPointer(), (C.int)(sc), w.cPointer()))
+	_goptr := newQRect(C.QCommonStyle_virtualbase_subControlRect(unsafe.Pointer(this.h), cc, opt.cPointer(), sc, w.cPointer()))
 	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
 	return _goptr
 
 }
-func (this *QCommonStyle) OnSubControlRect(slot func(super func(cc QStyle__ComplexControl, opt *QStyleOptionComplex, sc QStyle__SubControl, w *QWidget) *QRect, cc QStyle__ComplexControl, opt *QStyleOptionComplex, sc QStyle__SubControl, w *QWidget) *QRect) {
+func (this *QCommonStyle) OnSubControlRect(slot func(super func(cc ComplexControl, opt *QStyleOptionComplex, sc SubControl, w *QWidget) *QRect, cc ComplexControl, opt *QStyleOptionComplex, sc SubControl, w *QWidget) *QRect) {
 	ok := C.QCommonStyle_override_virtual_subControlRect(unsafe.Pointer(this.h), C.intptr_t(cgo.NewHandle(slot)))
 	if !ok {
 		panic("miqt: can only override virtual methods for directly constructed types")
@@ -418,19 +412,17 @@ func (this *QCommonStyle) OnSubControlRect(slot func(super func(cc QStyle__Compl
 }
 
 //export miqt_exec_callback_QCommonStyle_subControlRect
-func miqt_exec_callback_QCommonStyle_subControlRect(self *C.QCommonStyle, cb C.intptr_t, cc C.int, opt *C.QStyleOptionComplex, sc C.int, w *C.QWidget) *C.QRect {
-	gofunc, ok := cgo.Handle(cb).Value().(func(super func(cc QStyle__ComplexControl, opt *QStyleOptionComplex, sc QStyle__SubControl, w *QWidget) *QRect, cc QStyle__ComplexControl, opt *QStyleOptionComplex, sc QStyle__SubControl, w *QWidget) *QRect)
+func miqt_exec_callback_QCommonStyle_subControlRect(self *C.QCommonStyle, cb C.intptr_t, cc C.ComplexControl, opt *C.QStyleOptionComplex, sc C.SubControl, w *C.QWidget) *C.QRect {
+	gofunc, ok := cgo.Handle(cb).Value().(func(super func(cc ComplexControl, opt *QStyleOptionComplex, sc SubControl, w *QWidget) *QRect, cc ComplexControl, opt *QStyleOptionComplex, sc SubControl, w *QWidget) *QRect)
 	if !ok {
 		panic("miqt: callback of non-callback type (heap corruption?)")
 	}
 
 	// Convert all CABI parameters to Go parameters
-	slotval1 := (QStyle__ComplexControl)(cc)
-
+	int /* TODO  */
 	slotval2 := newQStyleOptionComplex(opt)
 
-	slotval3 := (QStyle__SubControl)(sc)
-
+	int /* TODO  */
 	slotval4 := newQWidget(w)
 
 	virtualReturn := gofunc((&QCommonStyle{h: self}).callVirtualBase_SubControlRect, slotval1, slotval2, slotval3, slotval4)
@@ -439,14 +431,14 @@ func miqt_exec_callback_QCommonStyle_subControlRect(self *C.QCommonStyle, cb C.i
 
 }
 
-func (this *QCommonStyle) callVirtualBase_SizeFromContents(ct QStyle__ContentsType, opt *QStyleOption, contentsSize *QSize, widget *QWidget) *QSize {
+func (this *QCommonStyle) callVirtualBase_SizeFromContents(ct ContentsType, opt *QStyleOption, contentsSize *QSize, widget *QWidget) *QSize {
 
-	_goptr := newQSize(C.QCommonStyle_virtualbase_sizeFromContents(unsafe.Pointer(this.h), (C.int)(ct), opt.cPointer(), contentsSize.cPointer(), widget.cPointer()))
+	_goptr := newQSize(C.QCommonStyle_virtualbase_sizeFromContents(unsafe.Pointer(this.h), ct, opt.cPointer(), contentsSize.cPointer(), widget.cPointer()))
 	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
 	return _goptr
 
 }
-func (this *QCommonStyle) OnSizeFromContents(slot func(super func(ct QStyle__ContentsType, opt *QStyleOption, contentsSize *QSize, widget *QWidget) *QSize, ct QStyle__ContentsType, opt *QStyleOption, contentsSize *QSize, widget *QWidget) *QSize) {
+func (this *QCommonStyle) OnSizeFromContents(slot func(super func(ct ContentsType, opt *QStyleOption, contentsSize *QSize, widget *QWidget) *QSize, ct ContentsType, opt *QStyleOption, contentsSize *QSize, widget *QWidget) *QSize) {
 	ok := C.QCommonStyle_override_virtual_sizeFromContents(unsafe.Pointer(this.h), C.intptr_t(cgo.NewHandle(slot)))
 	if !ok {
 		panic("miqt: can only override virtual methods for directly constructed types")
@@ -454,15 +446,14 @@ func (this *QCommonStyle) OnSizeFromContents(slot func(super func(ct QStyle__Con
 }
 
 //export miqt_exec_callback_QCommonStyle_sizeFromContents
-func miqt_exec_callback_QCommonStyle_sizeFromContents(self *C.QCommonStyle, cb C.intptr_t, ct C.int, opt *C.QStyleOption, contentsSize *C.QSize, widget *C.QWidget) *C.QSize {
-	gofunc, ok := cgo.Handle(cb).Value().(func(super func(ct QStyle__ContentsType, opt *QStyleOption, contentsSize *QSize, widget *QWidget) *QSize, ct QStyle__ContentsType, opt *QStyleOption, contentsSize *QSize, widget *QWidget) *QSize)
+func miqt_exec_callback_QCommonStyle_sizeFromContents(self *C.QCommonStyle, cb C.intptr_t, ct C.ContentsType, opt *C.QStyleOption, contentsSize *C.QSize, widget *C.QWidget) *C.QSize {
+	gofunc, ok := cgo.Handle(cb).Value().(func(super func(ct ContentsType, opt *QStyleOption, contentsSize *QSize, widget *QWidget) *QSize, ct ContentsType, opt *QStyleOption, contentsSize *QSize, widget *QWidget) *QSize)
 	if !ok {
 		panic("miqt: callback of non-callback type (heap corruption?)")
 	}
 
 	// Convert all CABI parameters to Go parameters
-	slotval1 := (QStyle__ContentsType)(ct)
-
+	int /* TODO  */
 	slotval2 := newQStyleOption(opt)
 
 	slotval3 := newQSize(contentsSize)
@@ -475,12 +466,12 @@ func miqt_exec_callback_QCommonStyle_sizeFromContents(self *C.QCommonStyle, cb C
 
 }
 
-func (this *QCommonStyle) callVirtualBase_PixelMetric(m QStyle__PixelMetric, opt *QStyleOption, widget *QWidget) int {
+func (this *QCommonStyle) callVirtualBase_PixelMetric(m PixelMetric, opt *QStyleOption, widget *QWidget) int {
 
-	return (int)(C.QCommonStyle_virtualbase_pixelMetric(unsafe.Pointer(this.h), (C.int)(m), opt.cPointer(), widget.cPointer()))
+	return (int)(C.QCommonStyle_virtualbase_pixelMetric(unsafe.Pointer(this.h), m, opt.cPointer(), widget.cPointer()))
 
 }
-func (this *QCommonStyle) OnPixelMetric(slot func(super func(m QStyle__PixelMetric, opt *QStyleOption, widget *QWidget) int, m QStyle__PixelMetric, opt *QStyleOption, widget *QWidget) int) {
+func (this *QCommonStyle) OnPixelMetric(slot func(super func(m PixelMetric, opt *QStyleOption, widget *QWidget) int, m PixelMetric, opt *QStyleOption, widget *QWidget) int) {
 	ok := C.QCommonStyle_override_virtual_pixelMetric(unsafe.Pointer(this.h), C.intptr_t(cgo.NewHandle(slot)))
 	if !ok {
 		panic("miqt: can only override virtual methods for directly constructed types")
@@ -488,15 +479,14 @@ func (this *QCommonStyle) OnPixelMetric(slot func(super func(m QStyle__PixelMetr
 }
 
 //export miqt_exec_callback_QCommonStyle_pixelMetric
-func miqt_exec_callback_QCommonStyle_pixelMetric(self *C.QCommonStyle, cb C.intptr_t, m C.int, opt *C.QStyleOption, widget *C.QWidget) C.int {
-	gofunc, ok := cgo.Handle(cb).Value().(func(super func(m QStyle__PixelMetric, opt *QStyleOption, widget *QWidget) int, m QStyle__PixelMetric, opt *QStyleOption, widget *QWidget) int)
+func miqt_exec_callback_QCommonStyle_pixelMetric(self *C.QCommonStyle, cb C.intptr_t, m C.PixelMetric, opt *C.QStyleOption, widget *C.QWidget) C.int {
+	gofunc, ok := cgo.Handle(cb).Value().(func(super func(m PixelMetric, opt *QStyleOption, widget *QWidget) int, m PixelMetric, opt *QStyleOption, widget *QWidget) int)
 	if !ok {
 		panic("miqt: callback of non-callback type (heap corruption?)")
 	}
 
 	// Convert all CABI parameters to Go parameters
-	slotval1 := (QStyle__PixelMetric)(m)
-
+	int /* TODO  */
 	slotval2 := newQStyleOption(opt)
 
 	slotval3 := newQWidget(widget)
@@ -507,12 +497,12 @@ func miqt_exec_callback_QCommonStyle_pixelMetric(self *C.QCommonStyle, cb C.intp
 
 }
 
-func (this *QCommonStyle) callVirtualBase_StyleHint(sh QStyle__StyleHint, opt *QStyleOption, w *QWidget, shret *QStyleHintReturn) int {
+func (this *QCommonStyle) callVirtualBase_StyleHint(sh StyleHint, opt *QStyleOption, w *QWidget, shret *QStyleHintReturn) int {
 
-	return (int)(C.QCommonStyle_virtualbase_styleHint(unsafe.Pointer(this.h), (C.int)(sh), opt.cPointer(), w.cPointer(), shret.cPointer()))
+	return (int)(C.QCommonStyle_virtualbase_styleHint(unsafe.Pointer(this.h), sh, opt.cPointer(), w.cPointer(), shret.cPointer()))
 
 }
-func (this *QCommonStyle) OnStyleHint(slot func(super func(sh QStyle__StyleHint, opt *QStyleOption, w *QWidget, shret *QStyleHintReturn) int, sh QStyle__StyleHint, opt *QStyleOption, w *QWidget, shret *QStyleHintReturn) int) {
+func (this *QCommonStyle) OnStyleHint(slot func(super func(sh StyleHint, opt *QStyleOption, w *QWidget, shret *QStyleHintReturn) int, sh StyleHint, opt *QStyleOption, w *QWidget, shret *QStyleHintReturn) int) {
 	ok := C.QCommonStyle_override_virtual_styleHint(unsafe.Pointer(this.h), C.intptr_t(cgo.NewHandle(slot)))
 	if !ok {
 		panic("miqt: can only override virtual methods for directly constructed types")
@@ -520,15 +510,14 @@ func (this *QCommonStyle) OnStyleHint(slot func(super func(sh QStyle__StyleHint,
 }
 
 //export miqt_exec_callback_QCommonStyle_styleHint
-func miqt_exec_callback_QCommonStyle_styleHint(self *C.QCommonStyle, cb C.intptr_t, sh C.int, opt *C.QStyleOption, w *C.QWidget, shret *C.QStyleHintReturn) C.int {
-	gofunc, ok := cgo.Handle(cb).Value().(func(super func(sh QStyle__StyleHint, opt *QStyleOption, w *QWidget, shret *QStyleHintReturn) int, sh QStyle__StyleHint, opt *QStyleOption, w *QWidget, shret *QStyleHintReturn) int)
+func miqt_exec_callback_QCommonStyle_styleHint(self *C.QCommonStyle, cb C.intptr_t, sh C.StyleHint, opt *C.QStyleOption, w *C.QWidget, shret *C.QStyleHintReturn) C.int {
+	gofunc, ok := cgo.Handle(cb).Value().(func(super func(sh StyleHint, opt *QStyleOption, w *QWidget, shret *QStyleHintReturn) int, sh StyleHint, opt *QStyleOption, w *QWidget, shret *QStyleHintReturn) int)
 	if !ok {
 		panic("miqt: callback of non-callback type (heap corruption?)")
 	}
 
 	// Convert all CABI parameters to Go parameters
-	slotval1 := (QStyle__StyleHint)(sh)
-
+	int /* TODO  */
 	slotval2 := newQStyleOption(opt)
 
 	slotval3 := newQWidget(w)
@@ -541,14 +530,14 @@ func miqt_exec_callback_QCommonStyle_styleHint(self *C.QCommonStyle, cb C.intptr
 
 }
 
-func (this *QCommonStyle) callVirtualBase_StandardIcon(standardIcon QStyle__StandardPixmap, opt *QStyleOption, widget *QWidget) *QIcon {
+func (this *QCommonStyle) callVirtualBase_StandardIcon(standardIcon StandardPixmap, opt *QStyleOption, widget *QWidget) *QIcon {
 
-	_goptr := newQIcon(C.QCommonStyle_virtualbase_standardIcon(unsafe.Pointer(this.h), (C.int)(standardIcon), opt.cPointer(), widget.cPointer()))
+	_goptr := newQIcon(C.QCommonStyle_virtualbase_standardIcon(unsafe.Pointer(this.h), standardIcon, opt.cPointer(), widget.cPointer()))
 	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
 	return _goptr
 
 }
-func (this *QCommonStyle) OnStandardIcon(slot func(super func(standardIcon QStyle__StandardPixmap, opt *QStyleOption, widget *QWidget) *QIcon, standardIcon QStyle__StandardPixmap, opt *QStyleOption, widget *QWidget) *QIcon) {
+func (this *QCommonStyle) OnStandardIcon(slot func(super func(standardIcon StandardPixmap, opt *QStyleOption, widget *QWidget) *QIcon, standardIcon StandardPixmap, opt *QStyleOption, widget *QWidget) *QIcon) {
 	ok := C.QCommonStyle_override_virtual_standardIcon(unsafe.Pointer(this.h), C.intptr_t(cgo.NewHandle(slot)))
 	if !ok {
 		panic("miqt: can only override virtual methods for directly constructed types")
@@ -556,15 +545,14 @@ func (this *QCommonStyle) OnStandardIcon(slot func(super func(standardIcon QStyl
 }
 
 //export miqt_exec_callback_QCommonStyle_standardIcon
-func miqt_exec_callback_QCommonStyle_standardIcon(self *C.QCommonStyle, cb C.intptr_t, standardIcon C.int, opt *C.QStyleOption, widget *C.QWidget) *C.QIcon {
-	gofunc, ok := cgo.Handle(cb).Value().(func(super func(standardIcon QStyle__StandardPixmap, opt *QStyleOption, widget *QWidget) *QIcon, standardIcon QStyle__StandardPixmap, opt *QStyleOption, widget *QWidget) *QIcon)
+func miqt_exec_callback_QCommonStyle_standardIcon(self *C.QCommonStyle, cb C.intptr_t, standardIcon C.StandardPixmap, opt *C.QStyleOption, widget *C.QWidget) *C.QIcon {
+	gofunc, ok := cgo.Handle(cb).Value().(func(super func(standardIcon StandardPixmap, opt *QStyleOption, widget *QWidget) *QIcon, standardIcon StandardPixmap, opt *QStyleOption, widget *QWidget) *QIcon)
 	if !ok {
 		panic("miqt: callback of non-callback type (heap corruption?)")
 	}
 
 	// Convert all CABI parameters to Go parameters
-	slotval1 := (QStyle__StandardPixmap)(standardIcon)
-
+	int /* TODO  */
 	slotval2 := newQStyleOption(opt)
 
 	slotval3 := newQWidget(widget)
@@ -575,14 +563,14 @@ func miqt_exec_callback_QCommonStyle_standardIcon(self *C.QCommonStyle, cb C.int
 
 }
 
-func (this *QCommonStyle) callVirtualBase_StandardPixmap(sp QStyle__StandardPixmap, opt *QStyleOption, widget *QWidget) *QPixmap {
+func (this *QCommonStyle) callVirtualBase_StandardPixmap(sp StandardPixmap, opt *QStyleOption, widget *QWidget) *QPixmap {
 
-	_goptr := newQPixmap(C.QCommonStyle_virtualbase_standardPixmap(unsafe.Pointer(this.h), (C.int)(sp), opt.cPointer(), widget.cPointer()))
+	_goptr := newQPixmap(C.QCommonStyle_virtualbase_standardPixmap(unsafe.Pointer(this.h), sp, opt.cPointer(), widget.cPointer()))
 	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
 	return _goptr
 
 }
-func (this *QCommonStyle) OnStandardPixmap(slot func(super func(sp QStyle__StandardPixmap, opt *QStyleOption, widget *QWidget) *QPixmap, sp QStyle__StandardPixmap, opt *QStyleOption, widget *QWidget) *QPixmap) {
+func (this *QCommonStyle) OnStandardPixmap(slot func(super func(sp StandardPixmap, opt *QStyleOption, widget *QWidget) *QPixmap, sp StandardPixmap, opt *QStyleOption, widget *QWidget) *QPixmap) {
 	ok := C.QCommonStyle_override_virtual_standardPixmap(unsafe.Pointer(this.h), C.intptr_t(cgo.NewHandle(slot)))
 	if !ok {
 		panic("miqt: can only override virtual methods for directly constructed types")
@@ -590,15 +578,14 @@ func (this *QCommonStyle) OnStandardPixmap(slot func(super func(sp QStyle__Stand
 }
 
 //export miqt_exec_callback_QCommonStyle_standardPixmap
-func miqt_exec_callback_QCommonStyle_standardPixmap(self *C.QCommonStyle, cb C.intptr_t, sp C.int, opt *C.QStyleOption, widget *C.QWidget) *C.QPixmap {
-	gofunc, ok := cgo.Handle(cb).Value().(func(super func(sp QStyle__StandardPixmap, opt *QStyleOption, widget *QWidget) *QPixmap, sp QStyle__StandardPixmap, opt *QStyleOption, widget *QWidget) *QPixmap)
+func miqt_exec_callback_QCommonStyle_standardPixmap(self *C.QCommonStyle, cb C.intptr_t, sp C.StandardPixmap, opt *C.QStyleOption, widget *C.QWidget) *C.QPixmap {
+	gofunc, ok := cgo.Handle(cb).Value().(func(super func(sp StandardPixmap, opt *QStyleOption, widget *QWidget) *QPixmap, sp StandardPixmap, opt *QStyleOption, widget *QWidget) *QPixmap)
 	if !ok {
 		panic("miqt: callback of non-callback type (heap corruption?)")
 	}
 
 	// Convert all CABI parameters to Go parameters
-	slotval1 := (QStyle__StandardPixmap)(sp)
-
+	int /* TODO  */
 	slotval2 := newQStyleOption(opt)
 
 	slotval3 := newQWidget(widget)

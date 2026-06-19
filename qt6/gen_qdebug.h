@@ -46,6 +46,8 @@ int QDebug_verbosity2(const QDebug* self);
 void QDebug_setVerbosity(QDebug* self, int verbosityLevel);
 bool QDebug_autoInsertSpaces(const QDebug* self);
 void QDebug_setAutoInsertSpaces(QDebug* self, bool b);
+bool QDebug_quoteStrings(const QDebug* self);
+void QDebug_setQuoteStrings(QDebug* self, bool b);
 QDebug* QDebug_quote(QDebug* self);
 QDebug* QDebug_noquote(QDebug* self);
 QDebug* QDebug_maybeQuote(QDebug* self);

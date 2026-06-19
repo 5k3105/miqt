@@ -72,23 +72,16 @@ func (this *QCborStreamWriter) AppendWithQCborNegativeInteger(n QCborNegativeInt
 	C.QCborStreamWriter_appendWithQCborNegativeInteger(this.h, (C.uint64_t)(n))
 }
 
-func (this *QCborStreamWriter) AppendWithBa(ba []byte) {
-	ba_alias := C.struct_miqt_string{}
-	if len(ba) > 0 {
-		ba_alias.data = (*C.char)(unsafe.Pointer(&ba[0]))
-	} else {
-		ba_alias.data = (*C.char)(unsafe.Pointer(nil))
-	}
-	ba_alias.len = C.size_t(len(ba))
-	C.QCborStreamWriter_appendWithBa(this.h, ba_alias)
+func (this *QCborStreamWriter) AppendWithBa(ba qt6.QByteArrayView) {
+	C.QCborStreamWriter_appendWithBa(this.h, (*C.QByteArrayView)(ba.UnsafePointer()))
 }
 
 func (this *QCborStreamWriter) AppendWithTag(tag QCborTag) {
 	C.QCborStreamWriter_appendWithTag(this.h, (C.uint64_t)(tag))
 }
 
-func (this *QCborStreamWriter) Append3(tag QCborKnownTags) {
-	C.QCborStreamWriter_append3(this.h, (C.int)(tag))
+func (this *QCborStreamWriter) Append4(tag QCborKnownTags) {
+	C.QCborStreamWriter_append4(this.h, (C.int)(tag))
 }
 
 func (this *QCborStreamWriter) AppendWithSt(st QCborSimpleType) {
@@ -135,10 +128,10 @@ func (this *QCborStreamWriter) AppendWithUint(u uint) {
 	C.QCborStreamWriter_appendWithUint(this.h, (C.uint)(u))
 }
 
-func (this *QCborStreamWriter) Append4(str string) {
+func (this *QCborStreamWriter) Append5(str string) {
 	str_Cstring := C.CString(str)
 	defer C.free(unsafe.Pointer(str_Cstring))
-	C.QCborStreamWriter_append4(this.h, str_Cstring)
+	C.QCborStreamWriter_append5(this.h, str_Cstring)
 }
 
 func (this *QCborStreamWriter) StartArray() {
@@ -165,10 +158,10 @@ func (this *QCborStreamWriter) EndMap() bool {
 	return (bool)(C.QCborStreamWriter_endMap(this.h))
 }
 
-func (this *QCborStreamWriter) Append5(str string, size int64) {
+func (this *QCborStreamWriter) Append6(str string, size int64) {
 	str_Cstring := C.CString(str)
 	defer C.free(unsafe.Pointer(str_Cstring))
-	C.QCborStreamWriter_append5(this.h, str_Cstring, (C.ptrdiff_t)(size))
+	C.QCborStreamWriter_append6(this.h, str_Cstring, (C.ptrdiff_t)(size))
 }
 
 // Delete this object from C++ memory.

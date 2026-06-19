@@ -19,8 +19,8 @@ QEventPoint* QEventPoint_new() {
 	return new (std::nothrow) QEventPoint();
 }
 
-QEventPoint* QEventPoint_new2(int pointId, uint8_t state, QPointF* scenePosition, QPointF* globalPosition) {
-	return new (std::nothrow) QEventPoint(static_cast<int>(pointId), static_cast<QEventPoint::State>(state), *scenePosition, *globalPosition);
+QEventPoint* QEventPoint_new2(int pointId, State state, QPointF* scenePosition, QPointF* globalPosition) {
+	return new (std::nothrow) QEventPoint(static_cast<int>(pointId), state, *scenePosition, *globalPosition);
 }
 
 QEventPoint* QEventPoint_new3(QEventPoint* other) {
@@ -155,9 +155,8 @@ QVector2D* QEventPoint_velocity(const QEventPoint* self) {
 	return new QVector2D(self->velocity());
 }
 
-uint8_t QEventPoint_state(const QEventPoint* self) {
-	QEventPoint::State _ret = self->state();
-	return static_cast<uint8_t>(_ret);
+State QEventPoint_state(const QEventPoint* self) {
+	return self->state();
 }
 
 QPointingDevice* QEventPoint_device(const QEventPoint* self) {

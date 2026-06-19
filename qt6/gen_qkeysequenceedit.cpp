@@ -12,9 +12,11 @@
 #include <QFocusEvent>
 #include <QHideEvent>
 #include <QInputMethodEvent>
+#include <QKeyCombination>
 #include <QKeyEvent>
 #include <QKeySequence>
 #include <QKeySequenceEdit>
+#include <QList>
 #include <QMetaMethod>
 #include <QMetaObject>
 #include <QMouseEvent>
@@ -80,7 +82,7 @@ void miqt_exec_callback_QKeySequenceEdit_showEvent(QKeySequenceEdit*, intptr_t, 
 void miqt_exec_callback_QKeySequenceEdit_hideEvent(QKeySequenceEdit*, intptr_t, QHideEvent*);
 bool miqt_exec_callback_QKeySequenceEdit_nativeEvent(QKeySequenceEdit*, intptr_t, struct miqt_string, void*, intptr_t*);
 void miqt_exec_callback_QKeySequenceEdit_changeEvent(QKeySequenceEdit*, intptr_t, QEvent*);
-int miqt_exec_callback_QKeySequenceEdit_metric(const QKeySequenceEdit*, intptr_t, int);
+int miqt_exec_callback_QKeySequenceEdit_metric(const QKeySequenceEdit*, intptr_t, PaintDeviceMetric);
 void miqt_exec_callback_QKeySequenceEdit_initPainter(const QKeySequenceEdit*, intptr_t, QPainter*);
 QPaintDevice* miqt_exec_callback_QKeySequenceEdit_redirected(const QKeySequenceEdit*, intptr_t, QPoint*);
 QPainter* miqt_exec_callback_QKeySequenceEdit_sharedPainter(const QKeySequenceEdit*, intptr_t);
@@ -700,18 +702,17 @@ public:
 	intptr_t handle__metric = 0;
 
 	// Subclass to allow providing a Go implementation
-	virtual int metric(QPaintDevice::PaintDeviceMetric param1) const override {
+	virtual int metric(PaintDeviceMetric param1) const override {
 		if (handle__metric == 0) {
 			return QKeySequenceEdit::metric(param1);
 		}
 
-		QPaintDevice::PaintDeviceMetric param1_ret = param1;
-		int sigval1 = static_cast<int>(param1_ret);
+		PaintDeviceMetric sigval1 = param1;
 		int callback_return_value = miqt_exec_callback_QKeySequenceEdit_metric(this, handle__metric, sigval1);
 		return static_cast<int>(callback_return_value);
 	}
 
-	friend int QKeySequenceEdit_virtualbase_metric(const void* self, int param1);
+	friend int QKeySequenceEdit_virtualbase_metric(const void* self, PaintDeviceMetric param1);
 
 	// cgo.Handle value for overwritten implementation
 	intptr_t handle__initPainter = 0;
@@ -910,6 +911,7 @@ public:
 	friend int QKeySequenceEdit_protectedbase_senderSignalIndex(bool* _dynamic_cast_ok, const void* self);
 	friend int QKeySequenceEdit_protectedbase_receivers(bool* _dynamic_cast_ok, const void* self, const char* signal);
 	friend bool QKeySequenceEdit_protectedbase_isSignalConnected(bool* _dynamic_cast_ok, const void* self, QMetaMethod* signal);
+	friend double QKeySequenceEdit_protectedbase_getDecodedMetricF(bool* _dynamic_cast_ok, const void* self, PaintDeviceMetric metricA, PaintDeviceMetric metricB);
 };
 
 QKeySequenceEdit* QKeySequenceEdit_new(QWidget* parent) {
@@ -955,6 +957,11 @@ QKeySequence* QKeySequenceEdit_keySequence(const QKeySequenceEdit* self) {
 	return new QKeySequence(self->keySequence());
 }
 
+ptrdiff_t QKeySequenceEdit_maximumSequenceLength(const QKeySequenceEdit* self) {
+	qsizetype _ret = self->maximumSequenceLength();
+	return static_cast<ptrdiff_t>(_ret);
+}
+
 void QKeySequenceEdit_setClearButtonEnabled(QKeySequenceEdit* self, bool enable) {
 	self->setClearButtonEnabled(enable);
 }
@@ -963,12 +970,39 @@ bool QKeySequenceEdit_isClearButtonEnabled(const QKeySequenceEdit* self) {
 	return self->isClearButtonEnabled();
 }
 
+void QKeySequenceEdit_setFinishingKeyCombinations(QKeySequenceEdit* self, struct miqt_array /* of QKeyCombination* */  finishingKeyCombinations) {
+	QList<QKeyCombination> finishingKeyCombinations_QList;
+	finishingKeyCombinations_QList.reserve(finishingKeyCombinations.len);
+	QKeyCombination** finishingKeyCombinations_arr = static_cast<QKeyCombination**>(finishingKeyCombinations.data);
+	for(size_t i = 0; i < finishingKeyCombinations.len; ++i) {
+		finishingKeyCombinations_QList.push_back(*(finishingKeyCombinations_arr[i]));
+	}
+	self->setFinishingKeyCombinations(finishingKeyCombinations_QList);
+}
+
+struct miqt_array /* of QKeyCombination* */  QKeySequenceEdit_finishingKeyCombinations(const QKeySequenceEdit* self) {
+	QList<QKeyCombination> _ret = self->finishingKeyCombinations();
+	// Convert QList<> from C++ memory to manually-managed C memory
+	QKeyCombination** _arr = static_cast<QKeyCombination**>(malloc(sizeof(QKeyCombination*) * _ret.length()));
+	for (size_t i = 0, e = _ret.length(); i < e; ++i) {
+		_arr[i] = new QKeyCombination(_ret[i]);
+	}
+	struct miqt_array _out;
+	_out.len = _ret.length();
+	_out.data = static_cast<void*>(_arr);
+	return _out;
+}
+
 void QKeySequenceEdit_setKeySequence(QKeySequenceEdit* self, QKeySequence* keySequence) {
 	self->setKeySequence(*keySequence);
 }
 
 void QKeySequenceEdit_clear(QKeySequenceEdit* self) {
 	self->clear();
+}
+
+void QKeySequenceEdit_setMaximumSequenceLength(QKeySequenceEdit* self, ptrdiff_t count) {
+	self->setMaximumSequenceLength((qsizetype)(count));
 }
 
 void QKeySequenceEdit_editingFinished(QKeySequenceEdit* self) {
@@ -1517,8 +1551,8 @@ bool QKeySequenceEdit_override_virtual_metric(void* self, intptr_t slot) {
 	return true;
 }
 
-int QKeySequenceEdit_virtualbase_metric(const void* self, int param1) {
-	return static_cast<const MiqtVirtualQKeySequenceEdit*>(self)->QKeySequenceEdit::metric(static_cast<MiqtVirtualQKeySequenceEdit::PaintDeviceMetric>(param1));
+int QKeySequenceEdit_virtualbase_metric(const void* self, PaintDeviceMetric param1) {
+	return static_cast<const MiqtVirtualQKeySequenceEdit*>(self)->QKeySequenceEdit::metric(param1);
 }
 
 bool QKeySequenceEdit_override_virtual_initPainter(void* self, intptr_t slot) {
@@ -1772,6 +1806,17 @@ bool QKeySequenceEdit_protectedbase_isSignalConnected(bool* _dynamic_cast_ok, co
 
 	*_dynamic_cast_ok = true;
 	return self_cast->isSignalConnected(*signal);
+}
+
+double QKeySequenceEdit_protectedbase_getDecodedMetricF(bool* _dynamic_cast_ok, const void* self, PaintDeviceMetric metricA, PaintDeviceMetric metricB) {
+	MiqtVirtualQKeySequenceEdit* self_cast = dynamic_cast<MiqtVirtualQKeySequenceEdit*>( (QKeySequenceEdit*)(self) );
+	if (self_cast == nullptr) {
+		*_dynamic_cast_ok = false;
+		return 0;
+	}
+
+	*_dynamic_cast_ok = true;
+	return self_cast->getDecodedMetricF(metricA, metricB);
 }
 
 void QKeySequenceEdit_delete(QKeySequenceEdit* self) {

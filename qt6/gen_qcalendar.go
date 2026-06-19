@@ -70,9 +70,9 @@ func NewQCalendar() *QCalendar {
 }
 
 // NewQCalendar2 constructs a new QCalendar object.
-func NewQCalendar2(system QCalendar__System) *QCalendar {
+func NewQCalendar2(system System) *QCalendar {
 
-	return newQCalendar(C.QCalendar_new2((C.int)(system)))
+	return newQCalendar(C.QCalendar_new2(system))
 }
 
 // NewQCalendar3 constructs a new QCalendar object.
@@ -82,9 +82,9 @@ func NewQCalendar3(name QAnyStringView) *QCalendar {
 }
 
 // NewQCalendar4 constructs a new QCalendar object.
-func NewQCalendar4(id QCalendar__SystemId) *QCalendar {
+func NewQCalendar4(id SystemId) *QCalendar {
 
-	return newQCalendar(C.QCalendar_new4(id.cPointer()))
+	return newQCalendar(C.QCalendar_new4(id))
 }
 
 func (this *QCalendar) IsValid() bool {
@@ -160,16 +160,20 @@ func (this *QCalendar) DateFromParts(year int, month int, day int) *QDate {
 	return _goptr
 }
 
-func (this *QCalendar) DateFromPartsWithParts(parts *QCalendar__YearMonthDay) *QDate {
-	_goptr := newQDate(C.QCalendar_dateFromPartsWithParts(this.h, parts.cPointer()))
+func (this *QCalendar) DateFromPartsWithParts(parts *YearMonthDay) *QDate {
+	_goptr := newQDate(C.QCalendar_dateFromPartsWithParts(this.h, parts))
 	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
 	return _goptr
 }
 
-func (this *QCalendar) PartsFromDate(date QDate) *QCalendar__YearMonthDay {
-	_goptr := newQCalendar__YearMonthDay(C.QCalendar_partsFromDate(this.h, date.cPointer()))
+func (this *QCalendar) MatchCenturyToWeekday(parts *YearMonthDay, dow int) *QDate {
+	_goptr := newQDate(C.QCalendar_matchCenturyToWeekday(this.h, parts, (C.int)(dow)))
 	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
 	return _goptr
+}
+
+func (this *QCalendar) PartsFromDate(date QDate) YearMonthDay {
+	int /* TODO  */
 }
 
 func (this *QCalendar) DayOfWeek(date QDate) int {

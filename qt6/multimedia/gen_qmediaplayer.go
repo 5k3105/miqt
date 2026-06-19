@@ -53,6 +53,14 @@ const (
 	QMediaPlayer__Once     QMediaPlayer__Loops = 1
 )
 
+type QMediaPlayer__PitchCompensationAvailability int
+
+const (
+	QMediaPlayer__AlwaysOn    QMediaPlayer__PitchCompensationAvailability = 0
+	QMediaPlayer__Available   QMediaPlayer__PitchCompensationAvailability = 1
+	QMediaPlayer__Unavailable QMediaPlayer__PitchCompensationAvailability = 2
+)
+
 type QMediaPlayer struct {
 	h *C.QMediaPlayer
 	*qt6.QObject
@@ -180,6 +188,14 @@ func (this *QMediaPlayer) SetActiveSubtitleTrack(index int) {
 	C.QMediaPlayer_setActiveSubtitleTrack(this.h, (C.int)(index))
 }
 
+func (this *QMediaPlayer) SetAudioBufferOutput(output *QAudioBufferOutput) {
+	C.QMediaPlayer_setAudioBufferOutput(this.h, output.cPointer())
+}
+
+func (this *QMediaPlayer) AudioBufferOutput() *QAudioBufferOutput {
+	return newQAudioBufferOutput(C.QMediaPlayer_audioBufferOutput(this.h))
+}
+
 func (this *QMediaPlayer) SetAudioOutput(output *QAudioOutput) {
 	C.QMediaPlayer_setAudioOutput(this.h, output.cPointer())
 }
@@ -214,12 +230,12 @@ func (this *QMediaPlayer) SourceDevice() *qt6.QIODevice {
 	return qt6.UnsafeNewQIODevice(unsafe.Pointer(C.QMediaPlayer_sourceDevice(this.h)))
 }
 
-func (this *QMediaPlayer) PlaybackState() QMediaPlayer__PlaybackState {
-	return (QMediaPlayer__PlaybackState)(C.QMediaPlayer_playbackState(this.h))
+func (this *QMediaPlayer) PlaybackState() PlaybackState {
+	int /* TODO  */
 }
 
-func (this *QMediaPlayer) MediaStatus() QMediaPlayer__MediaStatus {
-	return (QMediaPlayer__MediaStatus)(C.QMediaPlayer_mediaStatus(this.h))
+func (this *QMediaPlayer) MediaStatus() MediaStatus {
+	int /* TODO  */
 }
 
 func (this *QMediaPlayer) Duration() int64 {
@@ -256,6 +272,10 @@ func (this *QMediaPlayer) PlaybackRate() float64 {
 	return (float64)(C.QMediaPlayer_playbackRate(this.h))
 }
 
+func (this *QMediaPlayer) IsPlaying() bool {
+	return (bool)(C.QMediaPlayer_isPlaying(this.h))
+}
+
 func (this *QMediaPlayer) Loops() int {
 	return (int)(C.QMediaPlayer_loops(this.h))
 }
@@ -264,8 +284,8 @@ func (this *QMediaPlayer) SetLoops(loops int) {
 	C.QMediaPlayer_setLoops(this.h, (C.int)(loops))
 }
 
-func (this *QMediaPlayer) Error() QMediaPlayer__Error {
-	return (QMediaPlayer__Error)(C.QMediaPlayer_error(this.h))
+func (this *QMediaPlayer) Error() Error {
+	int /* TODO  */
 }
 
 func (this *QMediaPlayer) ErrorString() string {
@@ -281,6 +301,20 @@ func (this *QMediaPlayer) IsAvailable() bool {
 
 func (this *QMediaPlayer) MetaData() *QMediaMetaData {
 	_goptr := newQMediaMetaData(C.QMediaPlayer_metaData(this.h))
+	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
+	return _goptr
+}
+
+func (this *QMediaPlayer) PitchCompensationAvailability() PitchCompensationAvailability {
+	int /* TODO  */
+}
+
+func (this *QMediaPlayer) PitchCompensation() bool {
+	return (bool)(C.QMediaPlayer_pitchCompensation(this.h))
+}
+
+func (this *QMediaPlayer) PlaybackOptions() *QPlaybackOptions {
+	_goptr := newQPlaybackOptions(C.QMediaPlayer_playbackOptions(this.h))
 	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
 	return _goptr
 }
@@ -311,6 +345,18 @@ func (this *QMediaPlayer) SetSource(source *qt6.QUrl) {
 
 func (this *QMediaPlayer) SetSourceDevice(device *qt6.QIODevice) {
 	C.QMediaPlayer_setSourceDevice(this.h, (*C.QIODevice)(device.UnsafePointer()))
+}
+
+func (this *QMediaPlayer) SetPitchCompensation(pitchCompensation bool) {
+	C.QMediaPlayer_setPitchCompensation(this.h, (C.bool)(pitchCompensation))
+}
+
+func (this *QMediaPlayer) SetPlaybackOptions(options *QPlaybackOptions) {
+	C.QMediaPlayer_setPlaybackOptions(this.h, options.cPointer())
+}
+
+func (this *QMediaPlayer) ResetPlaybackOptions() {
+	C.QMediaPlayer_resetPlaybackOptions(this.h)
 }
 
 func (this *QMediaPlayer) SourceChanged(media *qt6.QUrl) {
@@ -493,6 +539,26 @@ func miqt_exec_callback_QMediaPlayer_seekableChanged(cb C.intptr_t, seekable C.b
 	gofunc(slotval1)
 }
 
+func (this *QMediaPlayer) PlayingChanged(playing bool) {
+	C.QMediaPlayer_playingChanged(this.h, (C.bool)(playing))
+}
+func (this *QMediaPlayer) OnPlayingChanged(slot func(playing bool)) {
+	C.QMediaPlayer_connect_playingChanged(this.h, C.intptr_t(cgo.NewHandle(slot)))
+}
+
+//export miqt_exec_callback_QMediaPlayer_playingChanged
+func miqt_exec_callback_QMediaPlayer_playingChanged(cb C.intptr_t, playing C.bool) {
+	gofunc, ok := cgo.Handle(cb).Value().(func(playing bool))
+	if !ok {
+		panic("miqt: callback of non-callback type (heap corruption?)")
+	}
+
+	// Convert all CABI parameters to Go parameters
+	slotval1 := (bool)(playing)
+
+	gofunc(slotval1)
+}
+
 func (this *QMediaPlayer) PlaybackRateChanged(rate float64) {
 	C.QMediaPlayer_playbackRateChanged(this.h, (C.double)(rate))
 }
@@ -581,6 +647,23 @@ func miqt_exec_callback_QMediaPlayer_audioOutputChanged(cb C.intptr_t) {
 	gofunc()
 }
 
+func (this *QMediaPlayer) AudioBufferOutputChanged() {
+	C.QMediaPlayer_audioBufferOutputChanged(this.h)
+}
+func (this *QMediaPlayer) OnAudioBufferOutputChanged(slot func()) {
+	C.QMediaPlayer_connect_audioBufferOutputChanged(this.h, C.intptr_t(cgo.NewHandle(slot)))
+}
+
+//export miqt_exec_callback_QMediaPlayer_audioBufferOutputChanged
+func miqt_exec_callback_QMediaPlayer_audioBufferOutputChanged(cb C.intptr_t) {
+	gofunc, ok := cgo.Handle(cb).Value().(func())
+	if !ok {
+		panic("miqt: callback of non-callback type (heap corruption?)")
+	}
+
+	gofunc()
+}
+
 func (this *QMediaPlayer) TracksChanged() {
 	C.QMediaPlayer_tracksChanged(this.h)
 }
@@ -659,6 +742,43 @@ func miqt_exec_callback_QMediaPlayer_errorOccurred(cb C.intptr_t, error C.int, e
 	slotval2 := errorString_ret
 
 	gofunc(slotval1, slotval2)
+}
+
+func (this *QMediaPlayer) PitchCompensationChanged(param1 bool) {
+	C.QMediaPlayer_pitchCompensationChanged(this.h, (C.bool)(param1))
+}
+func (this *QMediaPlayer) OnPitchCompensationChanged(slot func(param1 bool)) {
+	C.QMediaPlayer_connect_pitchCompensationChanged(this.h, C.intptr_t(cgo.NewHandle(slot)))
+}
+
+//export miqt_exec_callback_QMediaPlayer_pitchCompensationChanged
+func miqt_exec_callback_QMediaPlayer_pitchCompensationChanged(cb C.intptr_t, param1 C.bool) {
+	gofunc, ok := cgo.Handle(cb).Value().(func(param1 bool))
+	if !ok {
+		panic("miqt: callback of non-callback type (heap corruption?)")
+	}
+
+	// Convert all CABI parameters to Go parameters
+	slotval1 := (bool)(param1)
+
+	gofunc(slotval1)
+}
+
+func (this *QMediaPlayer) PlaybackOptionsChanged() {
+	C.QMediaPlayer_playbackOptionsChanged(this.h)
+}
+func (this *QMediaPlayer) OnPlaybackOptionsChanged(slot func()) {
+	C.QMediaPlayer_connect_playbackOptionsChanged(this.h, C.intptr_t(cgo.NewHandle(slot)))
+}
+
+//export miqt_exec_callback_QMediaPlayer_playbackOptionsChanged
+func miqt_exec_callback_QMediaPlayer_playbackOptionsChanged(cb C.intptr_t) {
+	gofunc, ok := cgo.Handle(cb).Value().(func())
+	if !ok {
+		panic("miqt: callback of non-callback type (heap corruption?)")
+	}
+
+	gofunc()
 }
 
 func QMediaPlayer_Tr2(s string, c string) string {

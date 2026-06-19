@@ -169,11 +169,11 @@ void QGraphicsSvgItem_virtualbase_inputMethodEvent(void* self, QInputMethodEvent
 bool QGraphicsSvgItem_override_virtual_inputMethodQuery(void* self, intptr_t slot);
 QVariant* QGraphicsSvgItem_virtualbase_inputMethodQuery(const void* self, int query);
 bool QGraphicsSvgItem_override_virtual_itemChange(void* self, intptr_t slot);
-QVariant* QGraphicsSvgItem_virtualbase_itemChange(void* self, int change, QVariant* value);
+QVariant* QGraphicsSvgItem_virtualbase_itemChange(void* self, GraphicsItemChange change, QVariant* value);
 bool QGraphicsSvgItem_override_virtual_supportsExtension(void* self, intptr_t slot);
-bool QGraphicsSvgItem_virtualbase_supportsExtension(const void* self, int extension);
+bool QGraphicsSvgItem_virtualbase_supportsExtension(const void* self, Extension extension);
 bool QGraphicsSvgItem_override_virtual_setExtension(void* self, intptr_t slot);
-void QGraphicsSvgItem_virtualbase_setExtension(void* self, int extension, QVariant* variant);
+void QGraphicsSvgItem_virtualbase_setExtension(void* self, Extension extension, QVariant* variant);
 bool QGraphicsSvgItem_override_virtual_extension(void* self, intptr_t slot);
 QVariant* QGraphicsSvgItem_virtualbase_extension(const void* self, QVariant* variant);
 

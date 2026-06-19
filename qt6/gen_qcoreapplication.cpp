@@ -2,11 +2,13 @@
 #include <QAbstractNativeEventFilter>
 #include <QChildEvent>
 #include <QCoreApplication>
+#include <QDeadlineTimer>
 #include <QEvent>
 #include <QList>
 #include <QMetaMethod>
 #include <QMetaObject>
 #include <QObject>
+#include <QPermission>
 #include <QString>
 #include <QByteArray>
 #include <cstring>
@@ -25,7 +27,6 @@ void miqt_exec_callback_QCoreApplication_organizationNameChanged(intptr_t);
 void miqt_exec_callback_QCoreApplication_organizationDomainChanged(intptr_t);
 void miqt_exec_callback_QCoreApplication_applicationNameChanged(intptr_t);
 void miqt_exec_callback_QCoreApplication_applicationVersionChanged(intptr_t);
-void miqt_exec_callback_QCoreApplication_aboutToQuit(intptr_t);
 bool miqt_exec_callback_QCoreApplication_notify(QCoreApplication*, intptr_t, QObject*, QEvent*);
 bool miqt_exec_callback_QCoreApplication_event(QCoreApplication*, intptr_t, QEvent*);
 bool miqt_exec_callback_QCoreApplication_eventFilter(QCoreApplication*, intptr_t, QObject*, QEvent*);
@@ -328,6 +329,10 @@ QCoreApplication* QCoreApplication_instance() {
 	return QCoreApplication::instance();
 }
 
+bool QCoreApplication_instanceExists() {
+	return QCoreApplication::instanceExists();
+}
+
 int QCoreApplication_exec() {
 	return QCoreApplication::exec();
 }
@@ -338,6 +343,10 @@ void QCoreApplication_processEvents() {
 
 void QCoreApplication_processEvents2(int flags, int maxtime) {
 	QCoreApplication::processEvents(static_cast<QEventLoop::ProcessEventsFlags>(flags), static_cast<int>(maxtime));
+}
+
+void QCoreApplication_processEvents3(int flags, QDeadlineTimer* deadline) {
+	QCoreApplication::processEvents(static_cast<QEventLoop::ProcessEventsFlags>(flags), *deadline);
 }
 
 bool QCoreApplication_sendEvent(QObject* receiver, QEvent* event) {
@@ -401,6 +410,11 @@ struct miqt_string QCoreApplication_applicationFilePath() {
 long long QCoreApplication_applicationPid() {
 	qint64 _ret = QCoreApplication::applicationPid();
 	return static_cast<long long>(_ret);
+}
+
+int QCoreApplication_checkPermission(QCoreApplication* self, QPermission* permission) {
+	Qt::PermissionStatus _ret = self->checkPermission(*permission);
+	return static_cast<int>(_ret);
 }
 
 void QCoreApplication_setLibraryPaths(struct miqt_array /* of struct miqt_string */  libraryPaths) {
@@ -778,12 +792,6 @@ bool QCoreApplication_protectedbase_isSignalConnected(bool* _dynamic_cast_ok, co
 
 	*_dynamic_cast_ok = true;
 	return self_cast->isSignalConnected(*signal);
-}
-
-void QCoreApplication_connect_aboutToQuit(QCoreApplication* self, intptr_t slot) {
-	QCoreApplication::connect(self, &QCoreApplication::aboutToQuit, self, [=]() {
-		miqt_exec_callback_QCoreApplication_aboutToQuit(slot);
-	});
 }
 
 void QCoreApplication_delete(QCoreApplication* self) {

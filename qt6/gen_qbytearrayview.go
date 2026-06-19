@@ -68,14 +68,12 @@ func (this *QByteArrayView) Size() int64 {
 	return (int64)(C.QByteArrayView_size(this.h))
 }
 
-func (this *QByteArrayView) Data() string {
-	_ret := C.QByteArrayView_data(this.h)
-	return C.GoString(_ret)
+func (this *QByteArrayView) Data() const_pointer {
+	int /* TODO  */
 }
 
-func (this *QByteArrayView) ConstData() string {
-	_ret := C.QByteArrayView_constData(this.h)
-	return C.GoString(_ret)
+func (this *QByteArrayView) ConstData() const_pointer {
+	int /* TODO  */
 }
 
 func (this *QByteArrayView) OperatorSubscript(n int64) int8 {
@@ -110,8 +108,34 @@ func (this *QByteArrayView) Sliced2(pos int64, n int64) *QByteArrayView {
 	return _goptr
 }
 
+func (this *QByteArrayView) Slice(pos int64) *QByteArrayView {
+	return newQByteArrayView(C.QByteArrayView_slice(this.h, (C.ptrdiff_t)(pos)))
+}
+
+func (this *QByteArrayView) Slice2(pos int64, n int64) *QByteArrayView {
+	return newQByteArrayView(C.QByteArrayView_slice2(this.h, (C.ptrdiff_t)(pos), (C.ptrdiff_t)(n)))
+}
+
 func (this *QByteArrayView) Chopped(lenVal int64) *QByteArrayView {
 	_goptr := newQByteArrayView(C.QByteArrayView_chopped(this.h, (C.ptrdiff_t)(lenVal)))
+	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
+	return _goptr
+}
+
+func (this *QByteArrayView) Left(n int64) *QByteArrayView {
+	_goptr := newQByteArrayView(C.QByteArrayView_left(this.h, (C.ptrdiff_t)(n)))
+	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
+	return _goptr
+}
+
+func (this *QByteArrayView) Right(n int64) *QByteArrayView {
+	_goptr := newQByteArrayView(C.QByteArrayView_right(this.h, (C.ptrdiff_t)(n)))
+	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
+	return _goptr
+}
+
+func (this *QByteArrayView) Mid(pos int64) *QByteArrayView {
+	_goptr := newQByteArrayView(C.QByteArrayView_mid(this.h, (C.ptrdiff_t)(pos)))
 	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
 	return _goptr
 }
@@ -230,24 +254,36 @@ func (this *QByteArrayView) IsValidUtf8() bool {
 	return (bool)(C.QByteArrayView_isValidUtf8(this.h))
 }
 
-func (this *QByteArrayView) Begin() string {
-	_ret := C.QByteArrayView_begin(this.h)
-	return C.GoString(_ret)
+func (this *QByteArrayView) Begin() const_iterator {
+	int /* TODO  */
 }
 
-func (this *QByteArrayView) End() string {
-	_ret := C.QByteArrayView_end(this.h)
-	return C.GoString(_ret)
+func (this *QByteArrayView) End() const_iterator {
+	int /* TODO  */
 }
 
-func (this *QByteArrayView) Cbegin() string {
-	_ret := C.QByteArrayView_cbegin(this.h)
-	return C.GoString(_ret)
+func (this *QByteArrayView) Cbegin() const_iterator {
+	int /* TODO  */
 }
 
-func (this *QByteArrayView) Cend() string {
-	_ret := C.QByteArrayView_cend(this.h)
-	return C.GoString(_ret)
+func (this *QByteArrayView) Cend() const_iterator {
+	int /* TODO  */
+}
+
+func (this *QByteArrayView) Rbegin() const_reverse_iterator {
+	int /* TODO  */
+}
+
+func (this *QByteArrayView) Rend() const_reverse_iterator {
+	int /* TODO  */
+}
+
+func (this *QByteArrayView) Crbegin() const_reverse_iterator {
+	int /* TODO  */
+}
+
+func (this *QByteArrayView) Crend() const_reverse_iterator {
+	int /* TODO  */
 }
 
 func (this *QByteArrayView) Empty() bool {
@@ -260,6 +296,10 @@ func (this *QByteArrayView) Front() int8 {
 
 func (this *QByteArrayView) Back() int8 {
 	return (int8)(C.QByteArrayView_back(this.h))
+}
+
+func (this *QByteArrayView) MaxSize() int64 {
+	return (int64)(C.QByteArrayView_maxSize(this.h))
 }
 
 func (this *QByteArrayView) IsNull() bool {
@@ -280,6 +320,20 @@ func (this *QByteArrayView) First2() int8 {
 
 func (this *QByteArrayView) Last2() int8 {
 	return (int8)(C.QByteArrayView_last2(this.h))
+}
+
+func QByteArrayView_MaxSize2() int64 {
+	return (int64)(C.QByteArrayView_maxSize2())
+}
+
+func (this *QByteArrayView) OperatorAssign(param1 *QByteArrayView) {
+	C.QByteArrayView_operatorAssign(this.h, param1.cPointer())
+}
+
+func (this *QByteArrayView) Mid2(pos int64, n int64) *QByteArrayView {
+	_goptr := newQByteArrayView(C.QByteArrayView_mid2(this.h, (C.ptrdiff_t)(pos), (C.ptrdiff_t)(n)))
+	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
+	return _goptr
 }
 
 func (this *QByteArrayView) ToShortWithOk(ok *bool) int16 {

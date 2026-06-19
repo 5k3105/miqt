@@ -62,9 +62,9 @@ func NewQEventPoint() *QEventPoint {
 }
 
 // NewQEventPoint2 constructs a new QEventPoint object.
-func NewQEventPoint2(pointId int, state QEventPoint__State, scenePosition *QPointF, globalPosition *QPointF) *QEventPoint {
+func NewQEventPoint2(pointId int, state State, scenePosition *QPointF, globalPosition *QPointF) *QEventPoint {
 
-	return newQEventPoint(C.QEventPoint_new2((C.int)(pointId), (C.uint8_t)(state), scenePosition.cPointer(), globalPosition.cPointer()))
+	return newQEventPoint(C.QEventPoint_new2((C.int)(pointId), state, scenePosition.cPointer(), globalPosition.cPointer()))
 }
 
 // NewQEventPoint3 constructs a new QEventPoint object.
@@ -257,8 +257,8 @@ func (this *QEventPoint) Velocity() *QVector2D {
 	return _goptr
 }
 
-func (this *QEventPoint) State() QEventPoint__State {
-	return (QEventPoint__State)(C.QEventPoint_state(this.h))
+func (this *QEventPoint) State() State {
+	int /* TODO  */
 }
 
 func (this *QEventPoint) Device() *QPointingDevice {

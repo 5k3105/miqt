@@ -99,10 +99,10 @@ struct miqt_string QColorDialog_tr(const char* s);
 void QColorDialog_setCurrentColor(QColorDialog* self, QColor* color);
 QColor* QColorDialog_currentColor(const QColorDialog* self);
 QColor* QColorDialog_selectedColor(const QColorDialog* self);
-void QColorDialog_setOption(QColorDialog* self, int option);
-bool QColorDialog_testOption(const QColorDialog* self, int option);
-void QColorDialog_setOptions(QColorDialog* self, int options);
-int QColorDialog_options(const QColorDialog* self);
+void QColorDialog_setOption(QColorDialog* self, ColorDialogOption option);
+bool QColorDialog_testOption(const QColorDialog* self, ColorDialogOption option);
+void QColorDialog_setOptions(QColorDialog* self, ColorDialogOptions options);
+ColorDialogOptions QColorDialog_options(const QColorDialog* self);
 void QColorDialog_setVisible(QColorDialog* self, bool visible);
 QColor* QColorDialog_getColor();
 int QColorDialog_customCount();
@@ -118,11 +118,11 @@ void QColorDialog_changeEvent(QColorDialog* self, QEvent* event);
 void QColorDialog_done(QColorDialog* self, int result);
 struct miqt_string QColorDialog_tr2(const char* s, const char* c);
 struct miqt_string QColorDialog_tr3(const char* s, const char* c, int n);
-void QColorDialog_setOption2(QColorDialog* self, int option, bool on);
+void QColorDialog_setOption2(QColorDialog* self, ColorDialogOption option, bool on);
 QColor* QColorDialog_getColorWithInitial(QColor* initial);
 QColor* QColorDialog_getColor2(QColor* initial, QWidget* parent);
 QColor* QColorDialog_getColor3(QColor* initial, QWidget* parent, struct miqt_string title);
-QColor* QColorDialog_getColor4(QColor* initial, QWidget* parent, struct miqt_string title, int options);
+QColor* QColorDialog_getColor4(QColor* initial, QWidget* parent, struct miqt_string title, ColorDialogOptions options);
 
 bool QColorDialog_override_virtual_setVisible(void* self, intptr_t slot);
 void QColorDialog_virtualbase_setVisible(void* self, bool visible);
@@ -205,7 +205,7 @@ void QColorDialog_virtualbase_hideEvent(void* self, QHideEvent* event);
 bool QColorDialog_override_virtual_nativeEvent(void* self, intptr_t slot);
 bool QColorDialog_virtualbase_nativeEvent(void* self, struct miqt_string eventType, void* message, intptr_t* result);
 bool QColorDialog_override_virtual_metric(void* self, intptr_t slot);
-int QColorDialog_virtualbase_metric(const void* self, int param1);
+int QColorDialog_virtualbase_metric(const void* self, PaintDeviceMetric param1);
 bool QColorDialog_override_virtual_initPainter(void* self, intptr_t slot);
 void QColorDialog_virtualbase_initPainter(const void* self, QPainter* painter);
 bool QColorDialog_override_virtual_redirected(void* self, intptr_t slot);
@@ -239,6 +239,7 @@ QObject* QColorDialog_protectedbase_sender(bool* _dynamic_cast_ok, const void* s
 int QColorDialog_protectedbase_senderSignalIndex(bool* _dynamic_cast_ok, const void* self);
 int QColorDialog_protectedbase_receivers(bool* _dynamic_cast_ok, const void* self, const char* signal);
 bool QColorDialog_protectedbase_isSignalConnected(bool* _dynamic_cast_ok, const void* self, QMetaMethod* signal);
+double QColorDialog_protectedbase_getDecodedMetricF(bool* _dynamic_cast_ok, const void* self, PaintDeviceMetric metricA, PaintDeviceMetric metricB);
 
 void QColorDialog_delete(QColorDialog* self);
 

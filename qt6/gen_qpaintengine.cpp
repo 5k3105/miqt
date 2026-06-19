@@ -40,19 +40,27 @@ void miqt_exec_callback_QPaintEngine_drawEllipseWithQRect(QPaintEngine*, intptr_
 void miqt_exec_callback_QPaintEngine_drawPath(QPaintEngine*, intptr_t, QPainterPath*);
 void miqt_exec_callback_QPaintEngine_drawPoints(QPaintEngine*, intptr_t, QPointF*, int);
 void miqt_exec_callback_QPaintEngine_drawPoints2(QPaintEngine*, intptr_t, QPoint*, int);
-void miqt_exec_callback_QPaintEngine_drawPolygon(QPaintEngine*, intptr_t, QPointF*, int, int);
-void miqt_exec_callback_QPaintEngine_drawPolygon2(QPaintEngine*, intptr_t, QPoint*, int, int);
+void miqt_exec_callback_QPaintEngine_drawPolygon(QPaintEngine*, intptr_t, QPointF*, int, PolygonDrawMode);
+void miqt_exec_callback_QPaintEngine_drawPolygon2(QPaintEngine*, intptr_t, QPoint*, int, PolygonDrawMode);
 void miqt_exec_callback_QPaintEngine_drawPixmap(QPaintEngine*, intptr_t, QRectF*, QPixmap*, QRectF*);
 void miqt_exec_callback_QPaintEngine_drawTextItem(QPaintEngine*, intptr_t, QPointF*, QTextItem*);
 void miqt_exec_callback_QPaintEngine_drawTiledPixmap(QPaintEngine*, intptr_t, QRectF*, QPixmap*, QPointF*);
 void miqt_exec_callback_QPaintEngine_drawImage(QPaintEngine*, intptr_t, QRectF*, QImage*, QRectF*, int);
 QPoint* miqt_exec_callback_QPaintEngine_coordinateOffset(const QPaintEngine*, intptr_t);
-int miqt_exec_callback_QPaintEngine_type(const QPaintEngine*, intptr_t);
+Type miqt_exec_callback_QPaintEngine_type(const QPaintEngine*, intptr_t);
 QPixmap* miqt_exec_callback_QPaintEngine_createPixmap(QPaintEngine*, intptr_t, QSize*);
 QPixmap* miqt_exec_callback_QPaintEngine_createPixmapFromImage(QPaintEngine*, intptr_t, QImage*, int);
 #ifdef __cplusplus
 } /* extern C */
 #endif
+
+QTextItem* QTextItem_new() {
+	return new (std::nothrow) QTextItem();
+}
+
+QTextItem* QTextItem_new2(QTextItem* param1) {
+	return new (std::nothrow) QTextItem(*param1);
+}
 
 double QTextItem_descent(const QTextItem* self) {
 	qreal _ret = self->descent();
@@ -69,9 +77,8 @@ double QTextItem_width(const QTextItem* self) {
 	return static_cast<double>(_ret);
 }
 
-int QTextItem_renderFlags(const QTextItem* self) {
-	QTextItem::RenderFlags _ret = self->renderFlags();
-	return static_cast<int>(_ret);
+RenderFlags QTextItem_renderFlags(const QTextItem* self) {
+	return self->renderFlags();
 }
 
 struct miqt_string QTextItem_text(const QTextItem* self) {
@@ -97,7 +104,7 @@ class MiqtVirtualQPaintEngine final : public QPaintEngine {
 public:
 
 	MiqtVirtualQPaintEngine(): QPaintEngine() {}
-	MiqtVirtualQPaintEngine(QPaintEngine::PaintEngineFeatures features): QPaintEngine(features) {}
+	MiqtVirtualQPaintEngine(PaintEngineFeatures features): QPaintEngine(features) {}
 
 	virtual ~MiqtVirtualQPaintEngine() override = default;
 
@@ -313,7 +320,7 @@ public:
 	intptr_t handle__drawPolygon = 0;
 
 	// Subclass to allow providing a Go implementation
-	virtual void drawPolygon(const QPointF* points, int pointCount, QPaintEngine::PolygonDrawMode mode) override {
+	virtual void drawPolygon(const QPointF* points, int pointCount, PolygonDrawMode mode) override {
 		if (handle__drawPolygon == 0) {
 			QPaintEngine::drawPolygon(points, pointCount, mode);
 			return;
@@ -321,19 +328,18 @@ public:
 
 		QPointF* sigval1 = (QPointF*) points;
 		int sigval2 = pointCount;
-		QPaintEngine::PolygonDrawMode mode_ret = mode;
-		int sigval3 = static_cast<int>(mode_ret);
+		PolygonDrawMode sigval3 = mode;
 		miqt_exec_callback_QPaintEngine_drawPolygon(this, handle__drawPolygon, sigval1, sigval2, sigval3);
 
 	}
 
-	friend void QPaintEngine_virtualbase_drawPolygon(void* self, QPointF* points, int pointCount, int mode);
+	friend void QPaintEngine_virtualbase_drawPolygon(void* self, QPointF* points, int pointCount, PolygonDrawMode mode);
 
 	// cgo.Handle value for overwritten implementation
 	intptr_t handle__drawPolygon2 = 0;
 
 	// Subclass to allow providing a Go implementation
-	virtual void drawPolygon(const QPoint* points, int pointCount, QPaintEngine::PolygonDrawMode mode) override {
+	virtual void drawPolygon(const QPoint* points, int pointCount, PolygonDrawMode mode) override {
 		if (handle__drawPolygon2 == 0) {
 			QPaintEngine::drawPolygon(points, pointCount, mode);
 			return;
@@ -341,13 +347,12 @@ public:
 
 		QPoint* sigval1 = (QPoint*) points;
 		int sigval2 = pointCount;
-		QPaintEngine::PolygonDrawMode mode_ret = mode;
-		int sigval3 = static_cast<int>(mode_ret);
+		PolygonDrawMode sigval3 = mode;
 		miqt_exec_callback_QPaintEngine_drawPolygon2(this, handle__drawPolygon2, sigval1, sigval2, sigval3);
 
 	}
 
-	friend void QPaintEngine_virtualbase_drawPolygon2(void* self, QPoint* points, int pointCount, int mode);
+	friend void QPaintEngine_virtualbase_drawPolygon2(void* self, QPoint* points, int pointCount, PolygonDrawMode mode);
 
 	// cgo.Handle value for overwritten implementation
 	intptr_t handle__drawPixmap = 0;
@@ -464,13 +469,13 @@ public:
 	intptr_t handle__type = 0;
 
 	// Subclass to allow providing a Go implementation
-	virtual QPaintEngine::Type type() const override {
+	virtual Type type() const override {
 		if (handle__type == 0) {
-			return (QPaintEngine::Type)(0); // Pure virtual, there is no base we can call
+			return Type(); // Pure virtual, there is no base we can call
 		}
 
-		int callback_return_value = miqt_exec_callback_QPaintEngine_type(this, handle__type);
-		return static_cast<QPaintEngine::Type>(callback_return_value);
+		Type callback_return_value = miqt_exec_callback_QPaintEngine_type(this, handle__type);
+		return callback_return_value;
 	}
 
 	// cgo.Handle value for overwritten implementation
@@ -513,8 +518,8 @@ QPaintEngine* QPaintEngine_new() {
 	return new (std::nothrow) MiqtVirtualQPaintEngine();
 }
 
-QPaintEngine* QPaintEngine_new2(int features) {
-	return new (std::nothrow) MiqtVirtualQPaintEngine(static_cast<QPaintEngine::PaintEngineFeatures>(features));
+QPaintEngine* QPaintEngine_new2(PaintEngineFeatures features) {
+	return new (std::nothrow) MiqtVirtualQPaintEngine(features);
 }
 
 bool QPaintEngine_isActive(const QPaintEngine* self) {
@@ -573,12 +578,12 @@ void QPaintEngine_drawPoints2(QPaintEngine* self, QPoint* points, int pointCount
 	self->drawPoints(points, static_cast<int>(pointCount));
 }
 
-void QPaintEngine_drawPolygon(QPaintEngine* self, QPointF* points, int pointCount, int mode) {
-	self->drawPolygon(points, static_cast<int>(pointCount), static_cast<QPaintEngine::PolygonDrawMode>(mode));
+void QPaintEngine_drawPolygon(QPaintEngine* self, QPointF* points, int pointCount, PolygonDrawMode mode) {
+	self->drawPolygon(points, static_cast<int>(pointCount), mode);
 }
 
-void QPaintEngine_drawPolygon2(QPaintEngine* self, QPoint* points, int pointCount, int mode) {
-	self->drawPolygon(points, static_cast<int>(pointCount), static_cast<QPaintEngine::PolygonDrawMode>(mode));
+void QPaintEngine_drawPolygon2(QPaintEngine* self, QPoint* points, int pointCount, PolygonDrawMode mode) {
+	self->drawPolygon(points, static_cast<int>(pointCount), mode);
 }
 
 void QPaintEngine_drawPixmap(QPaintEngine* self, QRectF* r, QPixmap* pm, QRectF* sr) {
@@ -625,29 +630,28 @@ QPoint* QPaintEngine_coordinateOffset(const QPaintEngine* self) {
 	return new QPoint(self->coordinateOffset());
 }
 
-int QPaintEngine_type(const QPaintEngine* self) {
-	QPaintEngine::Type _ret = self->type();
-	return static_cast<int>(_ret);
+Type QPaintEngine_type(const QPaintEngine* self) {
+	return self->type();
 }
 
 void QPaintEngine_fixNegRect(QPaintEngine* self, int* x, int* y, int* w, int* h) {
 	self->fix_neg_rect(static_cast<int*>(x), static_cast<int*>(y), static_cast<int*>(w), static_cast<int*>(h));
 }
 
-bool QPaintEngine_testDirty(QPaintEngine* self, int df) {
-	return self->testDirty(static_cast<QPaintEngine::DirtyFlags>(df));
+bool QPaintEngine_testDirty(QPaintEngine* self, DirtyFlags df) {
+	return self->testDirty(df);
 }
 
-void QPaintEngine_setDirty(QPaintEngine* self, int df) {
-	self->setDirty(static_cast<QPaintEngine::DirtyFlags>(df));
+void QPaintEngine_setDirty(QPaintEngine* self, DirtyFlags df) {
+	self->setDirty(df);
 }
 
-void QPaintEngine_clearDirty(QPaintEngine* self, int df) {
-	self->clearDirty(static_cast<QPaintEngine::DirtyFlags>(df));
+void QPaintEngine_clearDirty(QPaintEngine* self, DirtyFlags df) {
+	self->clearDirty(df);
 }
 
-bool QPaintEngine_hasFeature(const QPaintEngine* self, int feature) {
-	return self->hasFeature(static_cast<QPaintEngine::PaintEngineFeatures>(feature));
+bool QPaintEngine_hasFeature(const QPaintEngine* self, PaintEngineFeatures feature) {
+	return self->hasFeature(feature);
 }
 
 QPainter* QPaintEngine_painter(const QPaintEngine* self) {
@@ -836,8 +840,8 @@ bool QPaintEngine_override_virtual_drawPolygon(void* self, intptr_t slot) {
 	return true;
 }
 
-void QPaintEngine_virtualbase_drawPolygon(void* self, QPointF* points, int pointCount, int mode) {
-	static_cast<MiqtVirtualQPaintEngine*>(self)->QPaintEngine::drawPolygon(points, static_cast<int>(pointCount), static_cast<MiqtVirtualQPaintEngine::PolygonDrawMode>(mode));
+void QPaintEngine_virtualbase_drawPolygon(void* self, QPointF* points, int pointCount, PolygonDrawMode mode) {
+	static_cast<MiqtVirtualQPaintEngine*>(self)->QPaintEngine::drawPolygon(points, static_cast<int>(pointCount), mode);
 }
 
 bool QPaintEngine_override_virtual_drawPolygon2(void* self, intptr_t slot) {
@@ -850,8 +854,8 @@ bool QPaintEngine_override_virtual_drawPolygon2(void* self, intptr_t slot) {
 	return true;
 }
 
-void QPaintEngine_virtualbase_drawPolygon2(void* self, QPoint* points, int pointCount, int mode) {
-	static_cast<MiqtVirtualQPaintEngine*>(self)->QPaintEngine::drawPolygon(points, static_cast<int>(pointCount), static_cast<MiqtVirtualQPaintEngine::PolygonDrawMode>(mode));
+void QPaintEngine_virtualbase_drawPolygon2(void* self, QPoint* points, int pointCount, PolygonDrawMode mode) {
+	static_cast<MiqtVirtualQPaintEngine*>(self)->QPaintEngine::drawPolygon(points, static_cast<int>(pointCount), mode);
 }
 
 bool QPaintEngine_override_virtual_drawPixmap(void* self, intptr_t slot) {

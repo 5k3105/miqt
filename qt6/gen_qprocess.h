@@ -23,6 +23,11 @@ class QMetaMethod;
 class QMetaObject;
 class QObject;
 class QProcess;
+#if defined(WORKAROUND_INNER_CLASS_DEFINITION_QProcess__UnixProcessParameters)
+typedef QProcess::UnixProcessParameters QProcess__UnixProcessParameters;
+#else
+class QProcess__UnixProcessParameters;
+#endif
 class QProcessEnvironment;
 class QTimerEvent;
 #else
@@ -34,17 +39,16 @@ typedef struct QMetaMethod QMetaMethod;
 typedef struct QMetaObject QMetaObject;
 typedef struct QObject QObject;
 typedef struct QProcess QProcess;
+typedef struct QProcess__UnixProcessParameters QProcess__UnixProcessParameters;
 typedef struct QProcessEnvironment QProcessEnvironment;
 typedef struct QTimerEvent QTimerEvent;
 #endif
 
 QProcessEnvironment* QProcessEnvironment_new();
-QProcessEnvironment* QProcessEnvironment_new2(int param1);
+QProcessEnvironment* QProcessEnvironment_new2(Initialization param1);
 QProcessEnvironment* QProcessEnvironment_new3(QProcessEnvironment* other);
 void QProcessEnvironment_operatorAssign(QProcessEnvironment* self, QProcessEnvironment* other);
 void QProcessEnvironment_swap(QProcessEnvironment* self, QProcessEnvironment* other);
-bool QProcessEnvironment_operatorEqual(const QProcessEnvironment* self, QProcessEnvironment* other);
-bool QProcessEnvironment_operatorNotEqual(const QProcessEnvironment* self, QProcessEnvironment* other);
 bool QProcessEnvironment_isEmpty(const QProcessEnvironment* self);
 bool QProcessEnvironment_inheritsFromParent(const QProcessEnvironment* self);
 void QProcessEnvironment_clear(QProcessEnvironment* self);
@@ -70,23 +74,27 @@ void QProcess_start(QProcess* self, struct miqt_string program);
 void QProcess_start2(QProcess* self);
 void QProcess_startCommand(QProcess* self, struct miqt_string command);
 bool QProcess_startDetached(QProcess* self);
-bool QProcess_open(QProcess* self, int mode);
+bool QProcess_open(QProcess* self, OpenMode mode);
 struct miqt_string QProcess_program(const QProcess* self);
 void QProcess_setProgram(QProcess* self, struct miqt_string program);
 struct miqt_array /* of struct miqt_string */  QProcess_arguments(const QProcess* self);
 void QProcess_setArguments(QProcess* self, struct miqt_array /* of struct miqt_string */  arguments);
-int QProcess_processChannelMode(const QProcess* self);
-void QProcess_setProcessChannelMode(QProcess* self, int mode);
-int QProcess_inputChannelMode(const QProcess* self);
-void QProcess_setInputChannelMode(QProcess* self, int mode);
-int QProcess_readChannel(const QProcess* self);
-void QProcess_setReadChannel(QProcess* self, int channel);
-void QProcess_closeReadChannel(QProcess* self, int channel);
+ProcessChannelMode QProcess_processChannelMode(const QProcess* self);
+void QProcess_setProcessChannelMode(QProcess* self, ProcessChannelMode mode);
+InputChannelMode QProcess_inputChannelMode(const QProcess* self);
+void QProcess_setInputChannelMode(QProcess* self, InputChannelMode mode);
+ProcessChannel QProcess_readChannel(const QProcess* self);
+void QProcess_setReadChannel(QProcess* self, ProcessChannel channel);
+void QProcess_closeReadChannel(QProcess* self, ProcessChannel channel);
 void QProcess_closeWriteChannel(QProcess* self);
 void QProcess_setStandardInputFile(QProcess* self, struct miqt_string fileName);
 void QProcess_setStandardOutputFile(QProcess* self, struct miqt_string fileName);
 void QProcess_setStandardErrorFile(QProcess* self, struct miqt_string fileName);
 void QProcess_setStandardOutputProcess(QProcess* self, QProcess* destination);
+void QProcess_failChildProcessModifier(QProcess* self, const char* description);
+UnixProcessParameters QProcess_unixProcessParameters(const QProcess* self);
+void QProcess_setUnixProcessParameters(QProcess* self, const UnixProcessParameters* params);
+void QProcess_setUnixProcessParametersWithFlagsOnly(QProcess* self, UnixProcessFlags flagsOnly);
 struct miqt_string QProcess_workingDirectory(const QProcess* self);
 void QProcess_setWorkingDirectory(QProcess* self, struct miqt_string dir);
 void QProcess_setEnvironment(QProcess* self, struct miqt_array /* of struct miqt_string */  environment);
@@ -122,12 +130,13 @@ long long QProcess_writeData(QProcess* self, const char* data, long long len);
 struct miqt_string QProcess_tr2(const char* s, const char* c);
 struct miqt_string QProcess_tr3(const char* s, const char* c, int n);
 void QProcess_start3(QProcess* self, struct miqt_string program, struct miqt_array /* of struct miqt_string */  arguments);
-void QProcess_start4(QProcess* self, struct miqt_string program, struct miqt_array /* of struct miqt_string */  arguments, int mode);
-void QProcess_startWithMode(QProcess* self, int mode);
-void QProcess_startCommand2(QProcess* self, struct miqt_string command, int mode);
+void QProcess_start4(QProcess* self, struct miqt_string program, struct miqt_array /* of struct miqt_string */  arguments, OpenMode mode);
+void QProcess_startWithMode(QProcess* self, OpenMode mode);
+void QProcess_startCommand2(QProcess* self, struct miqt_string command, OpenMode mode);
 bool QProcess_startDetachedWithPid(QProcess* self, long long* pid);
-void QProcess_setStandardOutputFile2(QProcess* self, struct miqt_string fileName, int mode);
-void QProcess_setStandardErrorFile2(QProcess* self, struct miqt_string fileName, int mode);
+void QProcess_setStandardOutputFile2(QProcess* self, struct miqt_string fileName, OpenMode mode);
+void QProcess_setStandardErrorFile2(QProcess* self, struct miqt_string fileName, OpenMode mode);
+void QProcess_failChildProcessModifier2(QProcess* self, const char* description, int error);
 bool QProcess_waitForStartedWithMsecs(QProcess* self, int msecs);
 bool QProcess_waitForFinishedWithMsecs(QProcess* self, int msecs);
 int QProcess_execute2(struct miqt_string program, struct miqt_array /* of struct miqt_string */  arguments);
@@ -138,7 +147,7 @@ void QProcess_finished2(QProcess* self, int exitCode, int exitStatus);
 void QProcess_connect_finished2(QProcess* self, intptr_t slot);
 
 bool QProcess_override_virtual_open(void* self, intptr_t slot);
-bool QProcess_virtualbase_open(void* self, int mode);
+bool QProcess_virtualbase_open(void* self, OpenMode mode);
 bool QProcess_override_virtual_waitForReadyRead(void* self, intptr_t slot);
 bool QProcess_virtualbase_waitForReadyRead(void* self, int msecs);
 bool QProcess_override_virtual_waitForBytesWritten(void* self, intptr_t slot);
@@ -186,7 +195,7 @@ void QProcess_virtualbase_connectNotify(void* self, QMetaMethod* signal);
 bool QProcess_override_virtual_disconnectNotify(void* self, intptr_t slot);
 void QProcess_virtualbase_disconnectNotify(void* self, QMetaMethod* signal);
 
-void QProcess_protectedbase_setProcessState(bool* _dynamic_cast_ok, void* self, int state);
+void QProcess_protectedbase_setProcessState(bool* _dynamic_cast_ok, void* self, ProcessState state);
 void QProcess_protectedbase_setOpenMode(bool* _dynamic_cast_ok, void* self, int openMode);
 void QProcess_protectedbase_setErrorString(bool* _dynamic_cast_ok, void* self, struct miqt_string errorString);
 QObject* QProcess_protectedbase_sender(bool* _dynamic_cast_ok, const void* self);
@@ -194,12 +203,16 @@ int QProcess_protectedbase_senderSignalIndex(bool* _dynamic_cast_ok, const void*
 int QProcess_protectedbase_receivers(bool* _dynamic_cast_ok, const void* self, const char* signal);
 bool QProcess_protectedbase_isSignalConnected(bool* _dynamic_cast_ok, const void* self, QMetaMethod* signal);
 
-void QProcess_connect_started(QProcess* self, intptr_t slot);
-void QProcess_connect_stateChanged(QProcess* self, intptr_t slot);
-void QProcess_connect_readyReadStandardOutput(QProcess* self, intptr_t slot);
-void QProcess_connect_readyReadStandardError(QProcess* self, intptr_t slot);
-
 void QProcess_delete(QProcess* self);
+
+UnixProcessFlags QProcess__UnixProcessParameters_flags(const QProcess__UnixProcessParameters* self);
+void QProcess__UnixProcessParameters_setFlags(QProcess__UnixProcessParameters* self, UnixProcessFlags flags);
+int QProcess__UnixProcessParameters_lowestFileDescriptorToClose(const QProcess__UnixProcessParameters* self);
+void QProcess__UnixProcessParameters_setLowestFileDescriptorToClose(QProcess__UnixProcessParameters* self, int lowestFileDescriptorToClose);
+quint32[6] QProcess__UnixProcessParameters_Reserved(const QProcess__UnixProcessParameters* self);
+void QProcess__UnixProcessParameters_setReserved(QProcess__UnixProcessParameters* self, quint32[6] _reserved);
+
+void QProcess__UnixProcessParameters_delete(QProcess__UnixProcessParameters* self);
 
 #ifdef __cplusplus
 } /* extern C */

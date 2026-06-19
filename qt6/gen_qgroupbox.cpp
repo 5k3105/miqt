@@ -82,7 +82,7 @@ void miqt_exec_callback_QGroupBox_dropEvent(QGroupBox*, intptr_t, QDropEvent*);
 void miqt_exec_callback_QGroupBox_showEvent(QGroupBox*, intptr_t, QShowEvent*);
 void miqt_exec_callback_QGroupBox_hideEvent(QGroupBox*, intptr_t, QHideEvent*);
 bool miqt_exec_callback_QGroupBox_nativeEvent(QGroupBox*, intptr_t, struct miqt_string, void*, intptr_t*);
-int miqt_exec_callback_QGroupBox_metric(const QGroupBox*, intptr_t, int);
+int miqt_exec_callback_QGroupBox_metric(const QGroupBox*, intptr_t, PaintDeviceMetric);
 void miqt_exec_callback_QGroupBox_initPainter(const QGroupBox*, intptr_t, QPainter*);
 QPaintDevice* miqt_exec_callback_QGroupBox_redirected(const QGroupBox*, intptr_t, QPoint*);
 QPainter* miqt_exec_callback_QGroupBox_sharedPainter(const QGroupBox*, intptr_t);
@@ -719,18 +719,17 @@ public:
 	intptr_t handle__metric = 0;
 
 	// Subclass to allow providing a Go implementation
-	virtual int metric(QPaintDevice::PaintDeviceMetric param1) const override {
+	virtual int metric(PaintDeviceMetric param1) const override {
 		if (handle__metric == 0) {
 			return QGroupBox::metric(param1);
 		}
 
-		QPaintDevice::PaintDeviceMetric param1_ret = param1;
-		int sigval1 = static_cast<int>(param1_ret);
+		PaintDeviceMetric sigval1 = param1;
 		int callback_return_value = miqt_exec_callback_QGroupBox_metric(this, handle__metric, sigval1);
 		return static_cast<int>(callback_return_value);
 	}
 
-	friend int QGroupBox_virtualbase_metric(const void* self, int param1);
+	friend int QGroupBox_virtualbase_metric(const void* self, PaintDeviceMetric param1);
 
 	// cgo.Handle value for overwritten implementation
 	intptr_t handle__initPainter = 0;
@@ -929,6 +928,7 @@ public:
 	friend int QGroupBox_protectedbase_senderSignalIndex(bool* _dynamic_cast_ok, const void* self);
 	friend int QGroupBox_protectedbase_receivers(bool* _dynamic_cast_ok, const void* self, const char* signal);
 	friend bool QGroupBox_protectedbase_isSignalConnected(bool* _dynamic_cast_ok, const void* self, QMetaMethod* signal);
+	friend double QGroupBox_protectedbase_getDecodedMetricF(bool* _dynamic_cast_ok, const void* self, PaintDeviceMetric metricA, PaintDeviceMetric metricB);
 };
 
 QGroupBox* QGroupBox_new(QWidget* parent) {
@@ -1594,8 +1594,8 @@ bool QGroupBox_override_virtual_metric(void* self, intptr_t slot) {
 	return true;
 }
 
-int QGroupBox_virtualbase_metric(const void* self, int param1) {
-	return static_cast<const MiqtVirtualQGroupBox*>(self)->QGroupBox::metric(static_cast<MiqtVirtualQGroupBox::PaintDeviceMetric>(param1));
+int QGroupBox_virtualbase_metric(const void* self, PaintDeviceMetric param1) {
+	return static_cast<const MiqtVirtualQGroupBox*>(self)->QGroupBox::metric(param1);
 }
 
 bool QGroupBox_override_virtual_initPainter(void* self, intptr_t slot) {
@@ -1849,6 +1849,17 @@ bool QGroupBox_protectedbase_isSignalConnected(bool* _dynamic_cast_ok, const voi
 
 	*_dynamic_cast_ok = true;
 	return self_cast->isSignalConnected(*signal);
+}
+
+double QGroupBox_protectedbase_getDecodedMetricF(bool* _dynamic_cast_ok, const void* self, PaintDeviceMetric metricA, PaintDeviceMetric metricB) {
+	MiqtVirtualQGroupBox* self_cast = dynamic_cast<MiqtVirtualQGroupBox*>( (QGroupBox*)(self) );
+	if (self_cast == nullptr) {
+		*_dynamic_cast_ok = false;
+		return 0;
+	}
+
+	*_dynamic_cast_ok = true;
+	return self_cast->getDecodedMetricF(metricA, metricB);
 }
 
 void QGroupBox_delete(QGroupBox* self) {

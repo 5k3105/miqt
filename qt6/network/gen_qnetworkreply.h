@@ -15,6 +15,9 @@ extern "C" {
 #endif
 
 #ifdef __cplusplus
+class QAnyStringView;
+class QByteArrayView;
+class QHttpHeaders;
 class QIODevice;
 class QIODeviceBase;
 class QMetaMethod;
@@ -29,6 +32,9 @@ class QSslPreSharedKeyAuthenticator;
 class QUrl;
 class QVariant;
 #else
+typedef struct QAnyStringView QAnyStringView;
+typedef struct QByteArrayView QByteArrayView;
+typedef struct QHttpHeaders QHttpHeaders;
 typedef struct QIODevice QIODevice;
 typedef struct QIODeviceBase QIODeviceBase;
 typedef struct QMetaMethod QMetaMethod;
@@ -55,15 +61,16 @@ void QNetworkReply_setReadBufferSize(QNetworkReply* self, long long size);
 QNetworkAccessManager* QNetworkReply_manager(const QNetworkReply* self);
 int QNetworkReply_operation(const QNetworkReply* self);
 QNetworkRequest* QNetworkReply_request(const QNetworkReply* self);
-int QNetworkReply_error(const QNetworkReply* self);
+NetworkError QNetworkReply_error(const QNetworkReply* self);
 bool QNetworkReply_isFinished(const QNetworkReply* self);
 bool QNetworkReply_isRunning(const QNetworkReply* self);
 QUrl* QNetworkReply_url(const QNetworkReply* self);
 QVariant* QNetworkReply_header(const QNetworkReply* self, int header);
-bool QNetworkReply_hasRawHeader(const QNetworkReply* self, struct miqt_string headerName);
+bool QNetworkReply_hasRawHeader(const QNetworkReply* self, QAnyStringView* headerName);
 struct miqt_array /* of struct miqt_string */  QNetworkReply_rawHeaderList(const QNetworkReply* self);
-struct miqt_string QNetworkReply_rawHeader(const QNetworkReply* self, struct miqt_string headerName);
-struct miqt_array /* of struct miqt_map  tuple of struct miqt_string and struct miqt_string   */  QNetworkReply_rawHeaderPairs(const QNetworkReply* self);
+struct miqt_string QNetworkReply_rawHeader(const QNetworkReply* self, QAnyStringView* headerName);
+struct miqt_array /* of RawHeaderPair */  QNetworkReply_rawHeaderPairs(const QNetworkReply* self);
+QHttpHeaders* QNetworkReply_headers(const QNetworkReply* self);
 QVariant* QNetworkReply_attribute(const QNetworkReply* self, int code);
 QSslConfiguration* QNetworkReply_sslConfiguration(const QNetworkReply* self);
 void QNetworkReply_setSslConfiguration(QNetworkReply* self, QSslConfiguration* configuration);

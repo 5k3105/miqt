@@ -105,20 +105,22 @@ int QCalendarWidget_yearShown(const QCalendarWidget* self);
 int QCalendarWidget_monthShown(const QCalendarWidget* self);
 QDate* QCalendarWidget_minimumDate(const QCalendarWidget* self);
 void QCalendarWidget_setMinimumDate(QCalendarWidget* self, QDate* date);
+void QCalendarWidget_clearMinimumDate(QCalendarWidget* self);
 QDate* QCalendarWidget_maximumDate(const QCalendarWidget* self);
 void QCalendarWidget_setMaximumDate(QCalendarWidget* self, QDate* date);
+void QCalendarWidget_clearMaximumDate(QCalendarWidget* self);
 int QCalendarWidget_firstDayOfWeek(const QCalendarWidget* self);
 void QCalendarWidget_setFirstDayOfWeek(QCalendarWidget* self, int dayOfWeek);
 bool QCalendarWidget_isNavigationBarVisible(const QCalendarWidget* self);
 bool QCalendarWidget_isGridVisible(const QCalendarWidget* self);
 QCalendar* QCalendarWidget_calendar(const QCalendarWidget* self);
 void QCalendarWidget_setCalendar(QCalendarWidget* self, QCalendar* calendar);
-int QCalendarWidget_selectionMode(const QCalendarWidget* self);
-void QCalendarWidget_setSelectionMode(QCalendarWidget* self, int mode);
-int QCalendarWidget_horizontalHeaderFormat(const QCalendarWidget* self);
-void QCalendarWidget_setHorizontalHeaderFormat(QCalendarWidget* self, int format);
-int QCalendarWidget_verticalHeaderFormat(const QCalendarWidget* self);
-void QCalendarWidget_setVerticalHeaderFormat(QCalendarWidget* self, int format);
+SelectionMode QCalendarWidget_selectionMode(const QCalendarWidget* self);
+void QCalendarWidget_setSelectionMode(QCalendarWidget* self, SelectionMode mode);
+HorizontalHeaderFormat QCalendarWidget_horizontalHeaderFormat(const QCalendarWidget* self);
+void QCalendarWidget_setHorizontalHeaderFormat(QCalendarWidget* self, HorizontalHeaderFormat format);
+VerticalHeaderFormat QCalendarWidget_verticalHeaderFormat(const QCalendarWidget* self);
+void QCalendarWidget_setVerticalHeaderFormat(QCalendarWidget* self, VerticalHeaderFormat format);
 QTextCharFormat* QCalendarWidget_headerTextFormat(const QCalendarWidget* self);
 void QCalendarWidget_setHeaderTextFormat(QCalendarWidget* self, QTextCharFormat* format);
 QTextCharFormat* QCalendarWidget_weekdayTextFormat(const QCalendarWidget* self, int dayOfWeek);
@@ -231,7 +233,7 @@ bool QCalendarWidget_virtualbase_nativeEvent(void* self, struct miqt_string even
 bool QCalendarWidget_override_virtual_changeEvent(void* self, intptr_t slot);
 void QCalendarWidget_virtualbase_changeEvent(void* self, QEvent* param1);
 bool QCalendarWidget_override_virtual_metric(void* self, intptr_t slot);
-int QCalendarWidget_virtualbase_metric(const void* self, int param1);
+int QCalendarWidget_virtualbase_metric(const void* self, PaintDeviceMetric param1);
 bool QCalendarWidget_override_virtual_initPainter(void* self, intptr_t slot);
 void QCalendarWidget_virtualbase_initPainter(const void* self, QPainter* painter);
 bool QCalendarWidget_override_virtual_redirected(void* self, intptr_t slot);
@@ -266,6 +268,7 @@ QObject* QCalendarWidget_protectedbase_sender(bool* _dynamic_cast_ok, const void
 int QCalendarWidget_protectedbase_senderSignalIndex(bool* _dynamic_cast_ok, const void* self);
 int QCalendarWidget_protectedbase_receivers(bool* _dynamic_cast_ok, const void* self, const char* signal);
 bool QCalendarWidget_protectedbase_isSignalConnected(bool* _dynamic_cast_ok, const void* self, QMetaMethod* signal);
+double QCalendarWidget_protectedbase_getDecodedMetricF(bool* _dynamic_cast_ok, const void* self, PaintDeviceMetric metricA, PaintDeviceMetric metricB);
 
 void QCalendarWidget_delete(QCalendarWidget* self);
 

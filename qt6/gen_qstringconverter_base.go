@@ -38,6 +38,14 @@ const (
 	QStringConverter__LastEncoding QStringConverter__Encoding = 8
 )
 
+type QStringConverter__FinalizeResultError byte
+
+const (
+	QStringConverter__NoError           QStringConverter__FinalizeResultError = 0
+	QStringConverter__InvalidCharacters QStringConverter__FinalizeResultError = 1
+	QStringConverter__NotEnoughSpace    QStringConverter__FinalizeResultError = 2
+)
+
 type QStringConverter struct {
 	h *C.QStringConverter
 }
@@ -87,7 +95,20 @@ func (this *QStringConverter) Name() string {
 	return C.GoString(_ret)
 }
 
-func QStringConverter_NameForEncoding(e QStringConverter__Encoding) string {
-	_ret := C.QStringConverter_nameForEncoding((C.int)(e))
+func QStringConverter_NameForEncoding(e Encoding) string {
+	_ret := C.QStringConverter_nameForEncoding(e)
 	return C.GoString(_ret)
+}
+
+func QStringConverter_AvailableCodecs() []string {
+	var _ma C.struct_miqt_array = C.QStringConverter_availableCodecs()
+	_ret := make([]string, int(_ma.len))
+	_outCast := (*[0xffff]C.struct_miqt_string)(unsafe.Pointer(_ma.data)) // hey ya
+	for i := 0; i < int(_ma.len); i++ {
+		var _lv_ms C.struct_miqt_string = _outCast[i]
+		_lv_ret := C.GoStringN(_lv_ms.data, C.int(int64(_lv_ms.len)))
+		C.free(unsafe.Pointer(_lv_ms.data))
+		_ret[i] = _lv_ret
+	}
+	return _ret
 }

@@ -32,9 +32,8 @@ void QColormap_operatorAssign(QColormap* self, QColormap* colormap) {
 	self->operator=(*colormap);
 }
 
-int QColormap_mode(const QColormap* self) {
-	QColormap::Mode _ret = self->mode();
-	return static_cast<int>(_ret);
+Mode QColormap_mode(const QColormap* self) {
+	return self->mode();
 }
 
 int QColormap_depth(const QColormap* self) {

@@ -67,9 +67,8 @@ bool QTransform_isTranslating(const QTransform* self) {
 	return self->isTranslating();
 }
 
-int QTransform_type(const QTransform* self) {
-	QTransform::TransformationType _ret = self->type();
-	return static_cast<int>(_ret);
+TransformationType QTransform_type(const QTransform* self) {
+	return self->type();
 }
 
 double QTransform_determinant(const QTransform* self) {
@@ -166,13 +165,25 @@ QTransform* QTransform_shear(QTransform* self, double sh, double sv) {
 	return &_ret;
 }
 
-QTransform* QTransform_rotate(QTransform* self, double a) {
+QTransform* QTransform_rotate(QTransform* self, double a, int axis, double distanceToPlane) {
+	QTransform& _ret = self->rotate(static_cast<qreal>(a), static_cast<Qt::Axis>(axis), static_cast<qreal>(distanceToPlane));
+	// Cast returned reference into pointer
+	return &_ret;
+}
+
+QTransform* QTransform_rotateWithQreal(QTransform* self, double a) {
 	QTransform& _ret = self->rotate(static_cast<qreal>(a));
 	// Cast returned reference into pointer
 	return &_ret;
 }
 
-QTransform* QTransform_rotateRadians(QTransform* self, double a) {
+QTransform* QTransform_rotateRadians(QTransform* self, double a, int axis, double distanceToPlane) {
+	QTransform& _ret = self->rotateRadians(static_cast<qreal>(a), static_cast<Qt::Axis>(axis), static_cast<qreal>(distanceToPlane));
+	// Cast returned reference into pointer
+	return &_ret;
+}
+
+QTransform* QTransform_rotateRadiansWithQreal(QTransform* self, double a) {
 	QTransform& _ret = self->rotateRadians(static_cast<qreal>(a));
 	// Cast returned reference into pointer
 	return &_ret;
@@ -274,6 +285,10 @@ QTransform* QTransform_fromTranslate(double dx, double dy) {
 
 QTransform* QTransform_fromScale(double dx, double dy) {
 	return new QTransform(QTransform::fromScale(static_cast<qreal>(dx), static_cast<qreal>(dy)));
+}
+
+Affine QTransform_asAffineMatrix(QTransform* self) {
+	return self->asAffineMatrix();
 }
 
 QTransform* QTransform_invertedWithInvertible(const QTransform* self, bool* invertible) {

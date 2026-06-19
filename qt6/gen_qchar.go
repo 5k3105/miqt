@@ -234,7 +234,20 @@ const (
 	QChar__Script_Tangsa                QChar__Script = 159
 	QChar__Script_Toto                  QChar__Script = 160
 	QChar__Script_Vithkuqi              QChar__Script = 161
-	QChar__ScriptCount                  QChar__Script = 162
+	QChar__Script_Kawi                  QChar__Script = 162
+	QChar__Script_NagMundari            QChar__Script = 163
+	QChar__Script_Garay                 QChar__Script = 164
+	QChar__Script_GurungKhema           QChar__Script = 165
+	QChar__Script_KiratRai              QChar__Script = 166
+	QChar__Script_OlOnal                QChar__Script = 167
+	QChar__Script_Sunuwar               QChar__Script = 168
+	QChar__Script_Todhri                QChar__Script = 169
+	QChar__Script_TuluTigalari          QChar__Script = 170
+	QChar__Script_Sidetic               QChar__Script = 171
+	QChar__Script_TaiYo                 QChar__Script = 172
+	QChar__Script_TolongSiki            QChar__Script = 173
+	QChar__Script_BeriaErfe             QChar__Script = 174
+	QChar__ScriptCount                  QChar__Script = 175
 )
 
 type QChar__Direction int
@@ -351,6 +364,10 @@ const (
 	QChar__Unicode_12_1       QChar__UnicodeVersion = 22
 	QChar__Unicode_13_0       QChar__UnicodeVersion = 23
 	QChar__Unicode_14_0       QChar__UnicodeVersion = 24
+	QChar__Unicode_15_0       QChar__UnicodeVersion = 25
+	QChar__Unicode_15_1       QChar__UnicodeVersion = 26
+	QChar__Unicode_16_0       QChar__UnicodeVersion = 27
+	QChar__Unicode_17_0       QChar__UnicodeVersion = 28
 )
 
 type QLatin1Char struct {
@@ -454,75 +471,27 @@ func NewQChar() *QChar {
 }
 
 // NewQChar2 constructs a new QChar object.
-func NewQChar2(rc uint16) *QChar {
+func NewQChar2(c byte, r byte) *QChar {
 
-	return newQChar(C.QChar_new2((C.ushort)(rc)))
+	return newQChar(C.QChar_new2((C.uchar)(c), (C.uchar)(r)))
 }
 
 // NewQChar3 constructs a new QChar object.
-func NewQChar3(c byte, r byte) *QChar {
+func NewQChar3(param1 *QChar) *QChar {
 
-	return newQChar(C.QChar_new3((C.uchar)(c), (C.uchar)(r)))
+	return newQChar(C.QChar_new3(param1.cPointer()))
 }
 
-// NewQChar4 constructs a new QChar object.
-func NewQChar4(rc int16) *QChar {
-
-	return newQChar(C.QChar_new4((C.short)(rc)))
+func (this *QChar) Category() Category {
+	int /* TODO  */
 }
 
-// NewQChar5 constructs a new QChar object.
-func NewQChar5(rc uint) *QChar {
-
-	return newQChar(C.QChar_new5((C.uint)(rc)))
+func (this *QChar) Direction() Direction {
+	int /* TODO  */
 }
 
-// NewQChar6 constructs a new QChar object.
-func NewQChar6(rc int) *QChar {
-
-	return newQChar(C.QChar_new6((C.int)(rc)))
-}
-
-// NewQChar7 constructs a new QChar object.
-func NewQChar7(s QChar__SpecialCharacter) *QChar {
-
-	return newQChar(C.QChar_new7((C.int)(s)))
-}
-
-// NewQChar8 constructs a new QChar object.
-func NewQChar8(ch QLatin1Char) *QChar {
-
-	return newQChar(C.QChar_new8(ch.cPointer()))
-}
-
-// NewQChar9 constructs a new QChar object.
-func NewQChar9(c int8) *QChar {
-
-	return newQChar(C.QChar_new9((C.char)(c)))
-}
-
-// NewQChar10 constructs a new QChar object.
-func NewQChar10(c byte) *QChar {
-
-	return newQChar(C.QChar_new10((C.uchar)(c)))
-}
-
-// NewQChar11 constructs a new QChar object.
-func NewQChar11(param1 *QChar) *QChar {
-
-	return newQChar(C.QChar_new11(param1.cPointer()))
-}
-
-func (this *QChar) Category() QChar__Category {
-	return (QChar__Category)(C.QChar_category(this.h))
-}
-
-func (this *QChar) Direction() QChar__Direction {
-	return (QChar__Direction)(C.QChar_direction(this.h))
-}
-
-func (this *QChar) JoiningType() QChar__JoiningType {
-	return (QChar__JoiningType)(C.QChar_joiningType(this.h))
+func (this *QChar) JoiningType() JoiningType {
+	int /* TODO  */
 }
 
 func (this *QChar) CombiningClass() byte {
@@ -546,8 +515,8 @@ func (this *QChar) Decomposition() string {
 	return _ret
 }
 
-func (this *QChar) DecompositionTag() QChar__Decomposition {
-	return (QChar__Decomposition)(C.QChar_decompositionTag(this.h))
+func (this *QChar) DecompositionTag() Decomposition {
+	int /* TODO  */
 }
 
 func (this *QChar) DigitValue() int {
@@ -578,12 +547,12 @@ func (this *QChar) ToCaseFolded() *QChar {
 	return _goptr
 }
 
-func (this *QChar) Script() QChar__Script {
-	return (QChar__Script)(C.QChar_script(this.h))
+func (this *QChar) Script() Script {
+	int /* TODO  */
 }
 
-func (this *QChar) UnicodeVersion() QChar__UnicodeVersion {
-	return (QChar__UnicodeVersion)(C.QChar_unicodeVersion(this.h))
+func (this *QChar) UnicodeVersion() UnicodeVersion {
+	int /* TODO  */
 }
 
 func (this *QChar) ToLatin1() int8 {
@@ -680,8 +649,8 @@ func (this *QChar) SetRow(arow byte) {
 	C.QChar_setRow(this.h, (C.uchar)(arow))
 }
 
-func QChar_CurrentUnicodeVersion() QChar__UnicodeVersion {
-	return (QChar__UnicodeVersion)(C.QChar_currentUnicodeVersion())
+func QChar_CurrentUnicodeVersion() UnicodeVersion {
+	int /* TODO  */
 }
 
 // Delete this object from C++ memory.

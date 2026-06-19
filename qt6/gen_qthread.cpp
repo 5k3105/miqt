@@ -17,8 +17,6 @@
 extern "C" {
 #endif
 
-void miqt_exec_callback_QThread_started(intptr_t);
-void miqt_exec_callback_QThread_finished(intptr_t);
 bool miqt_exec_callback_QThread_event(QThread*, intptr_t, QEvent*);
 void miqt_exec_callback_QThread_run(QThread*, intptr_t);
 bool miqt_exec_callback_QThread_eventFilter(QThread*, intptr_t, QObject*, QEvent*);
@@ -225,6 +223,10 @@ QThread* QThread_currentThread() {
 	return QThread::currentThread();
 }
 
+bool QThread_isMainThread() {
+	return QThread::isMainThread();
+}
+
 int QThread_idealThreadCount() {
 	return QThread::idealThreadCount();
 }
@@ -233,13 +235,12 @@ void QThread_yieldCurrentThread() {
 	QThread::yieldCurrentThread();
 }
 
-void QThread_setPriority(QThread* self, int priority) {
-	self->setPriority(static_cast<QThread::Priority>(priority));
+void QThread_setPriority(QThread* self, Priority priority) {
+	self->setPriority(priority);
 }
 
-int QThread_priority(const QThread* self) {
-	QThread::Priority _ret = self->priority();
-	return static_cast<int>(_ret);
+Priority QThread_priority(const QThread* self) {
+	return self->priority();
 }
 
 bool QThread_isFinished(const QThread* self) {
@@ -281,6 +282,18 @@ bool QThread_event(QThread* self, QEvent* event) {
 
 int QThread_loopLevel(const QThread* self) {
 	return self->loopLevel();
+}
+
+bool QThread_isCurrentThread(const QThread* self) {
+	return self->isCurrentThread();
+}
+
+void QThread_setServiceLevel(QThread* self, QualityOfService serviceLevel) {
+	self->setServiceLevel(serviceLevel);
+}
+
+QualityOfService QThread_serviceLevel(const QThread* self) {
+	return self->serviceLevel();
 }
 
 void QThread_start(QThread* self) {
@@ -341,8 +354,8 @@ struct miqt_string QThread_tr3(const char* s, const char* c, int n) {
 	return _ms;
 }
 
-void QThread_startWithQThreadPriority(QThread* self, int param1) {
-	self->start(static_cast<QThread::Priority>(param1));
+void QThread_startWithPriority(QThread* self, Priority param1) {
+	self->start(param1);
 }
 
 void QThread_exitWithRetcode(QThread* self, int retcode) {
@@ -518,18 +531,6 @@ bool QThread_protectedbase_isSignalConnected(bool* _dynamic_cast_ok, const void*
 
 	*_dynamic_cast_ok = true;
 	return self_cast->isSignalConnected(*signal);
-}
-
-void QThread_connect_started(QThread* self, intptr_t slot) {
-	QThread::connect(self, &QThread::started, self, [=]() {
-		miqt_exec_callback_QThread_started(slot);
-	});
-}
-
-void QThread_connect_finished(QThread* self, intptr_t slot) {
-	QThread::connect(self, &QThread::finished, self, [=]() {
-		miqt_exec_callback_QThread_finished(slot);
-	});
 }
 
 void QThread_delete(QThread* self) {

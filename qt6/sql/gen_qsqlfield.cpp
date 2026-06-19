@@ -54,6 +54,10 @@ void QSqlField_operatorAssign(QSqlField* self, QSqlField* other) {
 	self->operator=(*other);
 }
 
+void QSqlField_swap(QSqlField* self, QSqlField* other) {
+	self->swap(*other);
+}
+
 bool QSqlField_operatorEqual(const QSqlField* self, QSqlField* other) {
 	return (*self == *other);
 }
@@ -139,8 +143,8 @@ void QSqlField_setType(QSqlField* self, int type) {
 	self->setType(static_cast<QVariant::Type>(type));
 }
 
-void QSqlField_setRequiredStatus(QSqlField* self, int status) {
-	self->setRequiredStatus(static_cast<QSqlField::RequiredStatus>(status));
+void QSqlField_setRequiredStatus(QSqlField* self, RequiredStatus status) {
+	self->setRequiredStatus(status);
 }
 
 void QSqlField_setRequired(QSqlField* self, bool required) {
@@ -171,9 +175,8 @@ void QSqlField_setAutoValue(QSqlField* self, bool autoVal) {
 	self->setAutoValue(autoVal);
 }
 
-int QSqlField_requiredStatus(const QSqlField* self) {
-	QSqlField::RequiredStatus _ret = self->requiredStatus();
-	return static_cast<int>(_ret);
+RequiredStatus QSqlField_requiredStatus(const QSqlField* self) {
+	return self->requiredStatus();
 }
 
 int QSqlField_length(const QSqlField* self) {

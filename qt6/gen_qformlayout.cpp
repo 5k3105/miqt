@@ -592,22 +592,20 @@ struct miqt_string QFormLayout_tr(const char* s) {
 	return _ms;
 }
 
-void QFormLayout_setFieldGrowthPolicy(QFormLayout* self, int policy) {
-	self->setFieldGrowthPolicy(static_cast<QFormLayout::FieldGrowthPolicy>(policy));
+void QFormLayout_setFieldGrowthPolicy(QFormLayout* self, FieldGrowthPolicy policy) {
+	self->setFieldGrowthPolicy(policy);
 }
 
-int QFormLayout_fieldGrowthPolicy(const QFormLayout* self) {
-	QFormLayout::FieldGrowthPolicy _ret = self->fieldGrowthPolicy();
-	return static_cast<int>(_ret);
+FieldGrowthPolicy QFormLayout_fieldGrowthPolicy(const QFormLayout* self) {
+	return self->fieldGrowthPolicy();
 }
 
-void QFormLayout_setRowWrapPolicy(QFormLayout* self, int policy) {
-	self->setRowWrapPolicy(static_cast<QFormLayout::RowWrapPolicy>(policy));
+void QFormLayout_setRowWrapPolicy(QFormLayout* self, RowWrapPolicy policy) {
+	self->setRowWrapPolicy(policy);
 }
 
-int QFormLayout_rowWrapPolicy(const QFormLayout* self) {
-	QFormLayout::RowWrapPolicy _ret = self->rowWrapPolicy();
-	return static_cast<int>(_ret);
+RowWrapPolicy QFormLayout_rowWrapPolicy(const QFormLayout* self) {
+	return self->rowWrapPolicy();
 }
 
 void QFormLayout_setLabelAlignment(QFormLayout* self, int alignment) {
@@ -716,28 +714,28 @@ void QFormLayout_removeRowWithLayout(QFormLayout* self, QLayout* layout) {
 	self->removeRow(layout);
 }
 
-QFormLayout__TakeRowResult* QFormLayout_takeRow(QFormLayout* self, int row) {
-	return new QFormLayout::TakeRowResult(self->takeRow(static_cast<int>(row)));
+TakeRowResult QFormLayout_takeRow(QFormLayout* self, int row) {
+	return self->takeRow(static_cast<int>(row));
 }
 
-QFormLayout__TakeRowResult* QFormLayout_takeRowWithWidget(QFormLayout* self, QWidget* widget) {
-	return new QFormLayout::TakeRowResult(self->takeRow(widget));
+TakeRowResult QFormLayout_takeRowWithWidget(QFormLayout* self, QWidget* widget) {
+	return self->takeRow(widget);
 }
 
-QFormLayout__TakeRowResult* QFormLayout_takeRowWithLayout(QFormLayout* self, QLayout* layout) {
-	return new QFormLayout::TakeRowResult(self->takeRow(layout));
+TakeRowResult QFormLayout_takeRowWithLayout(QFormLayout* self, QLayout* layout) {
+	return self->takeRow(layout);
 }
 
-void QFormLayout_setItem(QFormLayout* self, int row, int role, QLayoutItem* item) {
-	self->setItem(static_cast<int>(row), static_cast<QFormLayout::ItemRole>(role), item);
+void QFormLayout_setItem(QFormLayout* self, int row, ItemRole role, QLayoutItem* item) {
+	self->setItem(static_cast<int>(row), role, item);
 }
 
-void QFormLayout_setWidget(QFormLayout* self, int row, int role, QWidget* widget) {
-	self->setWidget(static_cast<int>(row), static_cast<QFormLayout::ItemRole>(role), widget);
+void QFormLayout_setWidget(QFormLayout* self, int row, ItemRole role, QWidget* widget) {
+	self->setWidget(static_cast<int>(row), role, widget);
 }
 
-void QFormLayout_setLayout(QFormLayout* self, int row, int role, QLayout* layout) {
-	self->setLayout(static_cast<int>(row), static_cast<QFormLayout::ItemRole>(role), layout);
+void QFormLayout_setLayout(QFormLayout* self, int row, ItemRole role, QLayout* layout) {
+	self->setLayout(static_cast<int>(row), role, layout);
 }
 
 void QFormLayout_setRowVisible(QFormLayout* self, int row, bool on) {
@@ -764,8 +762,20 @@ bool QFormLayout_isRowVisibleWithLayout(const QFormLayout* self, QLayout* layout
 	return self->isRowVisible(layout);
 }
 
-QLayoutItem* QFormLayout_itemAt(const QFormLayout* self, int row, int role) {
-	return self->itemAt(static_cast<int>(row), static_cast<QFormLayout::ItemRole>(role));
+QLayoutItem* QFormLayout_itemAt(const QFormLayout* self, int row, ItemRole role) {
+	return self->itemAt(static_cast<int>(row), role);
+}
+
+void QFormLayout_getItemPosition(const QFormLayout* self, int index, int* rowPtr, ItemRole* rolePtr) {
+	self->getItemPosition(static_cast<int>(index), static_cast<int*>(rowPtr), rolePtr);
+}
+
+void QFormLayout_getWidgetPosition(const QFormLayout* self, QWidget* widget, int* rowPtr, ItemRole* rolePtr) {
+	self->getWidgetPosition(widget, static_cast<int*>(rowPtr), rolePtr);
+}
+
+void QFormLayout_getLayoutPosition(const QFormLayout* self, QLayout* layout, int* rowPtr, ItemRole* rolePtr) {
+	self->getLayoutPosition(layout, static_cast<int*>(rowPtr), rolePtr);
 }
 
 QWidget* QFormLayout_labelForField(const QFormLayout* self, QWidget* field) {
@@ -1370,6 +1380,14 @@ bool QFormLayout_protectedbase_isSignalConnected(bool* _dynamic_cast_ok, const v
 
 void QFormLayout_delete(QFormLayout* self) {
 	delete self;
+}
+
+QFormLayout__TakeRowResult* QFormLayout__TakeRowResult_new() {
+	return new (std::nothrow) QFormLayout::TakeRowResult();
+}
+
+QFormLayout__TakeRowResult* QFormLayout__TakeRowResult_new2(const TakeRowResult* param1) {
+	return new (std::nothrow) QFormLayout::TakeRowResult(*param1);
 }
 
 QLayoutItem* QFormLayout__TakeRowResult_labelItem(const QFormLayout__TakeRowResult* self) {

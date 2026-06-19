@@ -139,12 +139,32 @@ func (this *QLayout) SetAlignment2(l *QLayout, alignment AlignmentFlag) bool {
 	return (bool)(C.QLayout_setAlignment2(this.h, l.cPointer(), (C.int)(alignment)))
 }
 
-func (this *QLayout) SetSizeConstraint(sizeConstraint QLayout__SizeConstraint) {
-	C.QLayout_setSizeConstraint(this.h, (C.int)(sizeConstraint))
+func (this *QLayout) SetSizeConstraint(constraint SizeConstraint) {
+	C.QLayout_setSizeConstraint(this.h, constraint)
 }
 
-func (this *QLayout) SizeConstraint() QLayout__SizeConstraint {
-	return (QLayout__SizeConstraint)(C.QLayout_sizeConstraint(this.h))
+func (this *QLayout) SizeConstraint() SizeConstraint {
+	int /* TODO  */
+}
+
+func (this *QLayout) SetSizeConstraints(horizontal SizeConstraint, vertical SizeConstraint) {
+	C.QLayout_setSizeConstraints(this.h, horizontal, vertical)
+}
+
+func (this *QLayout) SetHorizontalSizeConstraint(constraint SizeConstraint) {
+	C.QLayout_setHorizontalSizeConstraint(this.h, constraint)
+}
+
+func (this *QLayout) HorizontalSizeConstraint() SizeConstraint {
+	int /* TODO  */
+}
+
+func (this *QLayout) SetVerticalSizeConstraint(constraint SizeConstraint) {
+	C.QLayout_setVerticalSizeConstraint(this.h, constraint)
+}
+
+func (this *QLayout) VerticalSizeConstraint() SizeConstraint {
+	int /* TODO  */
 }
 
 func (this *QLayout) SetMenuBar(w *QWidget) {
@@ -237,8 +257,8 @@ func (this *QLayout) IsEmpty() bool {
 	return (bool)(C.QLayout_isEmpty(this.h))
 }
 
-func (this *QLayout) ControlTypes() QSizePolicy__ControlType {
-	return (QSizePolicy__ControlType)(C.QLayout_controlTypes(this.h))
+func (this *QLayout) ControlTypes() ControlType {
+	return (ControlType)(C.QLayout_controlTypes(this.h))
 }
 
 func (this *QLayout) ReplaceWidget(from *QWidget, to *QWidget, options FindChildOption) *QLayoutItem {
@@ -805,12 +825,12 @@ func miqt_exec_callback_QLayout_isEmpty(self *C.QLayout, cb C.intptr_t) C.bool {
 
 }
 
-func (this *QLayout) callVirtualBase_ControlTypes() QSizePolicy__ControlType {
+func (this *QLayout) callVirtualBase_ControlTypes() ControlType {
 
-	return (QSizePolicy__ControlType)(C.QLayout_virtualbase_controlTypes(unsafe.Pointer(this.h)))
+	return (ControlType)(C.QLayout_virtualbase_controlTypes(unsafe.Pointer(this.h)))
 
 }
-func (this *QLayout) OnControlTypes(slot func(super func() QSizePolicy__ControlType) QSizePolicy__ControlType) {
+func (this *QLayout) OnControlTypes(slot func(super func() ControlType) ControlType) {
 	ok := C.QLayout_override_virtual_controlTypes(unsafe.Pointer(this.h), C.intptr_t(cgo.NewHandle(slot)))
 	if !ok {
 		panic("miqt: can only override virtual methods for directly constructed types")
@@ -819,7 +839,7 @@ func (this *QLayout) OnControlTypes(slot func(super func() QSizePolicy__ControlT
 
 //export miqt_exec_callback_QLayout_controlTypes
 func miqt_exec_callback_QLayout_controlTypes(self *C.QLayout, cb C.intptr_t) C.int {
-	gofunc, ok := cgo.Handle(cb).Value().(func(super func() QSizePolicy__ControlType) QSizePolicy__ControlType)
+	gofunc, ok := cgo.Handle(cb).Value().(func(super func() ControlType) ControlType)
 	if !ok {
 		panic("miqt: callback of non-callback type (heap corruption?)")
 	}

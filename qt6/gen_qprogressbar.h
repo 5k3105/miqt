@@ -197,7 +197,7 @@ bool QProgressBar_virtualbase_nativeEvent(void* self, struct miqt_string eventTy
 bool QProgressBar_override_virtual_changeEvent(void* self, intptr_t slot);
 void QProgressBar_virtualbase_changeEvent(void* self, QEvent* param1);
 bool QProgressBar_override_virtual_metric(void* self, intptr_t slot);
-int QProgressBar_virtualbase_metric(const void* self, int param1);
+int QProgressBar_virtualbase_metric(const void* self, PaintDeviceMetric param1);
 bool QProgressBar_override_virtual_initPainter(void* self, intptr_t slot);
 void QProgressBar_virtualbase_initPainter(const void* self, QPainter* painter);
 bool QProgressBar_override_virtual_redirected(void* self, intptr_t slot);
@@ -232,6 +232,7 @@ QObject* QProgressBar_protectedbase_sender(bool* _dynamic_cast_ok, const void* s
 int QProgressBar_protectedbase_senderSignalIndex(bool* _dynamic_cast_ok, const void* self);
 int QProgressBar_protectedbase_receivers(bool* _dynamic_cast_ok, const void* self, const char* signal);
 bool QProgressBar_protectedbase_isSignalConnected(bool* _dynamic_cast_ok, const void* self, QMetaMethod* signal);
+double QProgressBar_protectedbase_getDecodedMetricF(bool* _dynamic_cast_ok, const void* self, PaintDeviceMetric metricA, PaintDeviceMetric metricB);
 
 void QProgressBar_delete(QProgressBar* self);
 

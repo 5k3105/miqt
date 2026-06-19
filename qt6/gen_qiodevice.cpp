@@ -1,4 +1,5 @@
 #include <QByteArray>
+#include <QByteArrayView>
 #include <QChildEvent>
 #include <QEvent>
 #include <QIODevice>
@@ -619,6 +620,18 @@ struct miqt_string QIODevice_readLine2(QIODevice* self) {
 	_ms.data = static_cast<char*>(malloc(_ms.len));
 	memcpy(_ms.data, _qb.data(), _ms.len);
 	return _ms;
+}
+
+QByteArrayView* QIODevice_readLineIntoWithBuffer(QIODevice* self, QSpan<char> buffer) {
+	return new QByteArrayView(self->readLineInto(buffer));
+}
+
+QByteArrayView* QIODevice_readLineInto2(QIODevice* self, QSpan<uchar> buffer) {
+	return new QByteArrayView(self->readLineInto(buffer));
+}
+
+QByteArrayView* QIODevice_readLineInto3(QIODevice* self, QSpan<std::byte> buffer) {
+	return new QByteArrayView(self->readLineInto(buffer));
 }
 
 bool QIODevice_canReadLine(const QIODevice* self) {

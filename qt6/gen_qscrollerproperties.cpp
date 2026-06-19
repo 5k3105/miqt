@@ -39,12 +39,12 @@ void QScrollerProperties_unsetDefaultScrollerProperties() {
 	QScrollerProperties::unsetDefaultScrollerProperties();
 }
 
-QVariant* QScrollerProperties_scrollMetric(const QScrollerProperties* self, int metric) {
-	return new QVariant(self->scrollMetric(static_cast<QScrollerProperties::ScrollMetric>(metric)));
+QVariant* QScrollerProperties_scrollMetric(const QScrollerProperties* self, ScrollMetric metric) {
+	return new QVariant(self->scrollMetric(metric));
 }
 
-void QScrollerProperties_setScrollMetric(QScrollerProperties* self, int metric, QVariant* value) {
-	self->setScrollMetric(static_cast<QScrollerProperties::ScrollMetric>(metric), *value);
+void QScrollerProperties_setScrollMetric(QScrollerProperties* self, ScrollMetric metric, QVariant* value) {
+	self->setScrollMetric(metric, *value);
 }
 
 void QScrollerProperties_delete(QScrollerProperties* self) {

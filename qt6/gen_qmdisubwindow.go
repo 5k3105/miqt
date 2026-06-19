@@ -128,12 +128,12 @@ func (this *QMdiSubWindow) IsShaded() bool {
 	return (bool)(C.QMdiSubWindow_isShaded(this.h))
 }
 
-func (this *QMdiSubWindow) SetOption(option QMdiSubWindow__SubWindowOption) {
-	C.QMdiSubWindow_setOption(this.h, (C.int)(option))
+func (this *QMdiSubWindow) SetOption(option SubWindowOption) {
+	C.QMdiSubWindow_setOption(this.h, option)
 }
 
-func (this *QMdiSubWindow) TestOption(param1 QMdiSubWindow__SubWindowOption) bool {
-	return (bool)(C.QMdiSubWindow_testOption(this.h, (C.int)(param1)))
+func (this *QMdiSubWindow) TestOption(param1 SubWindowOption) bool {
+	return (bool)(C.QMdiSubWindow_testOption(this.h, param1))
 }
 
 func (this *QMdiSubWindow) SetKeyboardSingleStep(step int) {
@@ -233,8 +233,8 @@ func QMdiSubWindow_Tr3(s string, c string, n int) string {
 	return _ret
 }
 
-func (this *QMdiSubWindow) SetOption2(option QMdiSubWindow__SubWindowOption, on bool) {
-	C.QMdiSubWindow_setOption2(this.h, (C.int)(option), (C.bool)(on))
+func (this *QMdiSubWindow) SetOption2(option SubWindowOption, on bool) {
+	C.QMdiSubWindow_setOption2(this.h, option, (C.bool)(on))
 }
 
 // UpdateMicroFocus can only be called from a QMdiSubWindow that was directly constructed.
@@ -350,6 +350,20 @@ func (this *QMdiSubWindow) IsSignalConnected(signal *QMetaMethod) bool {
 
 	var _dynamic_cast_ok C.bool = false
 	_method_ret := (bool)(C.QMdiSubWindow_protectedbase_isSignalConnected(&_dynamic_cast_ok, unsafe.Pointer(this.h), signal.cPointer()))
+
+	if !_dynamic_cast_ok {
+		panic("miqt: can only call protected methods for directly constructed types")
+	}
+
+	return _method_ret
+
+}
+
+// GetDecodedMetricF can only be called from a QMdiSubWindow that was directly constructed.
+func (this *QMdiSubWindow) GetDecodedMetricF(metricA PaintDeviceMetric, metricB PaintDeviceMetric) float64 {
+
+	var _dynamic_cast_ok C.bool = false
+	_method_ret := (float64)(C.QMdiSubWindow_protectedbase_getDecodedMetricF(&_dynamic_cast_ok, unsafe.Pointer(this.h), metricA, metricB))
 
 	if !_dynamic_cast_ok {
 		panic("miqt: can only call protected methods for directly constructed types")
@@ -1343,12 +1357,12 @@ func miqt_exec_callback_QMdiSubWindow_nativeEvent(self *C.QMdiSubWindow, cb C.in
 
 }
 
-func (this *QMdiSubWindow) callVirtualBase_Metric(param1 QPaintDevice__PaintDeviceMetric) int {
+func (this *QMdiSubWindow) callVirtualBase_Metric(param1 PaintDeviceMetric) int {
 
-	return (int)(C.QMdiSubWindow_virtualbase_metric(unsafe.Pointer(this.h), (C.int)(param1)))
+	return (int)(C.QMdiSubWindow_virtualbase_metric(unsafe.Pointer(this.h), param1))
 
 }
-func (this *QMdiSubWindow) OnMetric(slot func(super func(param1 QPaintDevice__PaintDeviceMetric) int, param1 QPaintDevice__PaintDeviceMetric) int) {
+func (this *QMdiSubWindow) OnMetric(slot func(super func(param1 PaintDeviceMetric) int, param1 PaintDeviceMetric) int) {
 	ok := C.QMdiSubWindow_override_virtual_metric(unsafe.Pointer(this.h), C.intptr_t(cgo.NewHandle(slot)))
 	if !ok {
 		panic("miqt: can only override virtual methods for directly constructed types")
@@ -1356,14 +1370,14 @@ func (this *QMdiSubWindow) OnMetric(slot func(super func(param1 QPaintDevice__Pa
 }
 
 //export miqt_exec_callback_QMdiSubWindow_metric
-func miqt_exec_callback_QMdiSubWindow_metric(self *C.QMdiSubWindow, cb C.intptr_t, param1 C.int) C.int {
-	gofunc, ok := cgo.Handle(cb).Value().(func(super func(param1 QPaintDevice__PaintDeviceMetric) int, param1 QPaintDevice__PaintDeviceMetric) int)
+func miqt_exec_callback_QMdiSubWindow_metric(self *C.QMdiSubWindow, cb C.intptr_t, param1 C.PaintDeviceMetric) C.int {
+	gofunc, ok := cgo.Handle(cb).Value().(func(super func(param1 PaintDeviceMetric) int, param1 PaintDeviceMetric) int)
 	if !ok {
 		panic("miqt: callback of non-callback type (heap corruption?)")
 	}
 
 	// Convert all CABI parameters to Go parameters
-	slotval1 := (QPaintDevice__PaintDeviceMetric)(param1)
+	int /* TODO  */
 
 	virtualReturn := gofunc((&QMdiSubWindow{h: self}).callVirtualBase_Metric, slotval1)
 

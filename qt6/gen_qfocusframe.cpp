@@ -79,7 +79,7 @@ void miqt_exec_callback_QFocusFrame_showEvent(QFocusFrame*, intptr_t, QShowEvent
 void miqt_exec_callback_QFocusFrame_hideEvent(QFocusFrame*, intptr_t, QHideEvent*);
 bool miqt_exec_callback_QFocusFrame_nativeEvent(QFocusFrame*, intptr_t, struct miqt_string, void*, intptr_t*);
 void miqt_exec_callback_QFocusFrame_changeEvent(QFocusFrame*, intptr_t, QEvent*);
-int miqt_exec_callback_QFocusFrame_metric(const QFocusFrame*, intptr_t, int);
+int miqt_exec_callback_QFocusFrame_metric(const QFocusFrame*, intptr_t, PaintDeviceMetric);
 void miqt_exec_callback_QFocusFrame_initPainter(const QFocusFrame*, intptr_t, QPainter*);
 QPaintDevice* miqt_exec_callback_QFocusFrame_redirected(const QFocusFrame*, intptr_t, QPoint*);
 QPainter* miqt_exec_callback_QFocusFrame_sharedPainter(const QFocusFrame*, intptr_t);
@@ -714,18 +714,17 @@ public:
 	intptr_t handle__metric = 0;
 
 	// Subclass to allow providing a Go implementation
-	virtual int metric(QPaintDevice::PaintDeviceMetric param1) const override {
+	virtual int metric(PaintDeviceMetric param1) const override {
 		if (handle__metric == 0) {
 			return QFocusFrame::metric(param1);
 		}
 
-		QPaintDevice::PaintDeviceMetric param1_ret = param1;
-		int sigval1 = static_cast<int>(param1_ret);
+		PaintDeviceMetric sigval1 = param1;
 		int callback_return_value = miqt_exec_callback_QFocusFrame_metric(this, handle__metric, sigval1);
 		return static_cast<int>(callback_return_value);
 	}
 
-	friend int QFocusFrame_virtualbase_metric(const void* self, int param1);
+	friend int QFocusFrame_virtualbase_metric(const void* self, PaintDeviceMetric param1);
 
 	// cgo.Handle value for overwritten implementation
 	intptr_t handle__initPainter = 0;
@@ -924,6 +923,7 @@ public:
 	friend int QFocusFrame_protectedbase_senderSignalIndex(bool* _dynamic_cast_ok, const void* self);
 	friend int QFocusFrame_protectedbase_receivers(bool* _dynamic_cast_ok, const void* self, const char* signal);
 	friend bool QFocusFrame_protectedbase_isSignalConnected(bool* _dynamic_cast_ok, const void* self, QMetaMethod* signal);
+	friend double QFocusFrame_protectedbase_getDecodedMetricF(bool* _dynamic_cast_ok, const void* self, PaintDeviceMetric metricA, PaintDeviceMetric metricB);
 };
 
 QFocusFrame* QFocusFrame_new(QWidget* parent) {
@@ -1502,8 +1502,8 @@ bool QFocusFrame_override_virtual_metric(void* self, intptr_t slot) {
 	return true;
 }
 
-int QFocusFrame_virtualbase_metric(const void* self, int param1) {
-	return static_cast<const MiqtVirtualQFocusFrame*>(self)->QFocusFrame::metric(static_cast<MiqtVirtualQFocusFrame::PaintDeviceMetric>(param1));
+int QFocusFrame_virtualbase_metric(const void* self, PaintDeviceMetric param1) {
+	return static_cast<const MiqtVirtualQFocusFrame*>(self)->QFocusFrame::metric(param1);
 }
 
 bool QFocusFrame_override_virtual_initPainter(void* self, intptr_t slot) {
@@ -1757,6 +1757,17 @@ bool QFocusFrame_protectedbase_isSignalConnected(bool* _dynamic_cast_ok, const v
 
 	*_dynamic_cast_ok = true;
 	return self_cast->isSignalConnected(*signal);
+}
+
+double QFocusFrame_protectedbase_getDecodedMetricF(bool* _dynamic_cast_ok, const void* self, PaintDeviceMetric metricA, PaintDeviceMetric metricB) {
+	MiqtVirtualQFocusFrame* self_cast = dynamic_cast<MiqtVirtualQFocusFrame*>( (QFocusFrame*)(self) );
+	if (self_cast == nullptr) {
+		*_dynamic_cast_ok = false;
+		return 0;
+	}
+
+	*_dynamic_cast_ok = true;
+	return self_cast->getDecodedMetricF(metricA, metricB);
 }
 
 void QFocusFrame_delete(QFocusFrame* self) {

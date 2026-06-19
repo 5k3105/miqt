@@ -61,8 +61,8 @@ func QPixmapCache_Find(key string, pixmap *QPixmap) bool {
 	return (bool)(C.QPixmapCache_find(key_ms, pixmap.cPointer()))
 }
 
-func QPixmapCache_Find2(key *QPixmapCache__Key, pixmap *QPixmap) bool {
-	return (bool)(C.QPixmapCache_find2(key.cPointer(), pixmap.cPointer()))
+func QPixmapCache_Find2(key *Key, pixmap *QPixmap) bool {
+	return (bool)(C.QPixmapCache_find2(key, pixmap.cPointer()))
 }
 
 func QPixmapCache_Insert(key string, pixmap *QPixmap) bool {
@@ -73,14 +73,12 @@ func QPixmapCache_Insert(key string, pixmap *QPixmap) bool {
 	return (bool)(C.QPixmapCache_insert(key_ms, pixmap.cPointer()))
 }
 
-func QPixmapCache_InsertWithPixmap(pixmap *QPixmap) *QPixmapCache__Key {
-	_goptr := newQPixmapCache__Key(C.QPixmapCache_insertWithPixmap(pixmap.cPointer()))
-	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
-	return _goptr
+func QPixmapCache_InsertWithPixmap(pixmap *QPixmap) Key {
+	int /* TODO  */
 }
 
-func QPixmapCache_Replace(key *QPixmapCache__Key, pixmap *QPixmap) bool {
-	return (bool)(C.QPixmapCache_replace(key.cPointer(), pixmap.cPointer()))
+func QPixmapCache_Replace(key *Key, pixmap *QPixmap) bool {
+	return (bool)(C.QPixmapCache_replace(key, pixmap.cPointer()))
 }
 
 func QPixmapCache_Remove(key string) {
@@ -91,8 +89,8 @@ func QPixmapCache_Remove(key string) {
 	C.QPixmapCache_remove(key_ms)
 }
 
-func QPixmapCache_RemoveWithKey(key *QPixmapCache__Key) {
-	C.QPixmapCache_removeWithKey(key.cPointer())
+func QPixmapCache_RemoveWithKey(key *Key) {
+	C.QPixmapCache_removeWithKey(key)
 }
 
 func QPixmapCache_Clear() {
@@ -152,25 +150,25 @@ func NewQPixmapCache__Key() *QPixmapCache__Key {
 }
 
 // NewQPixmapCache__Key2 constructs a new QPixmapCache::Key object.
-func NewQPixmapCache__Key2(other *QPixmapCache__Key) *QPixmapCache__Key {
+func NewQPixmapCache__Key2(other *Key) *QPixmapCache__Key {
 
-	return newQPixmapCache__Key(C.QPixmapCache__Key_new2(other.cPointer()))
+	return newQPixmapCache__Key(C.QPixmapCache__Key_new2(other))
 }
 
-func (this *QPixmapCache__Key) OperatorEqual(key *QPixmapCache__Key) bool {
-	return (bool)(C.QPixmapCache__Key_operatorEqual(this.h, key.cPointer()))
+func (this *QPixmapCache__Key) OperatorEqual(key *Key) bool {
+	return (bool)(C.QPixmapCache__Key_operatorEqual(this.h, key))
 }
 
-func (this *QPixmapCache__Key) OperatorNotEqual(key *QPixmapCache__Key) bool {
-	return (bool)(C.QPixmapCache__Key_operatorNotEqual(this.h, key.cPointer()))
+func (this *QPixmapCache__Key) OperatorNotEqual(key *Key) bool {
+	return (bool)(C.QPixmapCache__Key_operatorNotEqual(this.h, key))
 }
 
-func (this *QPixmapCache__Key) OperatorAssign(other *QPixmapCache__Key) {
-	C.QPixmapCache__Key_operatorAssign(this.h, other.cPointer())
+func (this *QPixmapCache__Key) OperatorAssign(other *Key) {
+	C.QPixmapCache__Key_operatorAssign(this.h, other)
 }
 
-func (this *QPixmapCache__Key) Swap(other *QPixmapCache__Key) {
-	C.QPixmapCache__Key_swap(this.h, other.cPointer())
+func (this *QPixmapCache__Key) Swap(other *Key) {
+	C.QPixmapCache__Key_swap(this.h, other)
 }
 
 func (this *QPixmapCache__Key) IsValid() bool {

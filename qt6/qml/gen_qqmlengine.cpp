@@ -25,6 +25,7 @@
 extern "C" {
 #endif
 
+void miqt_exec_callback_QQmlEngine_offlineStoragePathChanged(intptr_t);
 void miqt_exec_callback_QQmlEngine_quit(intptr_t);
 void miqt_exec_callback_QQmlEngine_exit(intptr_t, int);
 void miqt_exec_callback_QQmlEngine_warnings(intptr_t, struct miqt_array /* of QQmlError* */ );
@@ -62,14 +63,12 @@ struct miqt_string QQmlImageProviderBase_tr(const char* s) {
 	return _ms;
 }
 
-int QQmlImageProviderBase_imageType(const QQmlImageProviderBase* self) {
-	QQmlImageProviderBase::ImageType _ret = self->imageType();
-	return static_cast<int>(_ret);
+ImageType QQmlImageProviderBase_imageType(const QQmlImageProviderBase* self) {
+	return self->imageType();
 }
 
-int QQmlImageProviderBase_flags(const QQmlImageProviderBase* self) {
-	QQmlImageProviderBase::Flags _ret = self->flags();
-	return static_cast<int>(_ret);
+Flags QQmlImageProviderBase_flags(const QQmlImageProviderBase* self) {
+	return self->flags();
 }
 
 struct miqt_string QQmlImageProviderBase_tr2(const char* s, const char* c) {
@@ -480,12 +479,26 @@ void QQmlEngine_setOutputWarningsToStandardError(QQmlEngine* self, bool outputWa
 	self->setOutputWarningsToStandardError(outputWarningsToStandardError);
 }
 
+void QQmlEngine_markCurrentFunctionAsTranslationBinding(QQmlEngine* self) {
+	self->markCurrentFunctionAsTranslationBinding();
+}
+
 void QQmlEngine_captureProperty(const QQmlEngine* self, QObject* object, QMetaProperty* property) {
 	self->captureProperty(object, *property);
 }
 
 void QQmlEngine_retranslate(QQmlEngine* self) {
 	self->retranslate();
+}
+
+void QQmlEngine_offlineStoragePathChanged(QQmlEngine* self) {
+	self->offlineStoragePathChanged();
+}
+
+void QQmlEngine_connect_offlineStoragePathChanged(QQmlEngine* self, intptr_t slot) {
+	QQmlEngine::connect(self, static_cast<void (QQmlEngine::*)()>(&QQmlEngine::offlineStoragePathChanged), self, [=]() {
+		miqt_exec_callback_QQmlEngine_offlineStoragePathChanged(slot);
+	});
 }
 
 QQmlContext* QQmlEngine_contextForObject(QObject* param1) {

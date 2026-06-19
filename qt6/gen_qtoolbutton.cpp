@@ -86,7 +86,7 @@ void miqt_exec_callback_QToolButton_dropEvent(QToolButton*, intptr_t, QDropEvent
 void miqt_exec_callback_QToolButton_showEvent(QToolButton*, intptr_t, QShowEvent*);
 void miqt_exec_callback_QToolButton_hideEvent(QToolButton*, intptr_t, QHideEvent*);
 bool miqt_exec_callback_QToolButton_nativeEvent(QToolButton*, intptr_t, struct miqt_string, void*, intptr_t*);
-int miqt_exec_callback_QToolButton_metric(const QToolButton*, intptr_t, int);
+int miqt_exec_callback_QToolButton_metric(const QToolButton*, intptr_t, PaintDeviceMetric);
 void miqt_exec_callback_QToolButton_initPainter(const QToolButton*, intptr_t, QPainter*);
 QPaintDevice* miqt_exec_callback_QToolButton_redirected(const QToolButton*, intptr_t, QPoint*);
 QPainter* miqt_exec_callback_QToolButton_sharedPainter(const QToolButton*, intptr_t);
@@ -771,18 +771,17 @@ public:
 	intptr_t handle__metric = 0;
 
 	// Subclass to allow providing a Go implementation
-	virtual int metric(QPaintDevice::PaintDeviceMetric param1) const override {
+	virtual int metric(PaintDeviceMetric param1) const override {
 		if (handle__metric == 0) {
 			return QToolButton::metric(param1);
 		}
 
-		QPaintDevice::PaintDeviceMetric param1_ret = param1;
-		int sigval1 = static_cast<int>(param1_ret);
+		PaintDeviceMetric sigval1 = param1;
 		int callback_return_value = miqt_exec_callback_QToolButton_metric(this, handle__metric, sigval1);
 		return static_cast<int>(callback_return_value);
 	}
 
-	friend int QToolButton_virtualbase_metric(const void* self, int param1);
+	friend int QToolButton_virtualbase_metric(const void* self, PaintDeviceMetric param1);
 
 	// cgo.Handle value for overwritten implementation
 	intptr_t handle__initPainter = 0;
@@ -981,6 +980,7 @@ public:
 	friend int QToolButton_protectedbase_senderSignalIndex(bool* _dynamic_cast_ok, const void* self);
 	friend int QToolButton_protectedbase_receivers(bool* _dynamic_cast_ok, const void* self, const char* signal);
 	friend bool QToolButton_protectedbase_isSignalConnected(bool* _dynamic_cast_ok, const void* self, QMetaMethod* signal);
+	friend double QToolButton_protectedbase_getDecodedMetricF(bool* _dynamic_cast_ok, const void* self, PaintDeviceMetric metricA, PaintDeviceMetric metricB);
 };
 
 QToolButton* QToolButton_new(QWidget* parent) {
@@ -1044,13 +1044,12 @@ QMenu* QToolButton_menu(const QToolButton* self) {
 	return self->menu();
 }
 
-void QToolButton_setPopupMode(QToolButton* self, int mode) {
-	self->setPopupMode(static_cast<QToolButton::ToolButtonPopupMode>(mode));
+void QToolButton_setPopupMode(QToolButton* self, ToolButtonPopupMode mode) {
+	self->setPopupMode(mode);
 }
 
-int QToolButton_popupMode(const QToolButton* self) {
-	QToolButton::ToolButtonPopupMode _ret = self->popupMode();
-	return static_cast<int>(_ret);
+ToolButtonPopupMode QToolButton_popupMode(const QToolButton* self) {
+	return self->popupMode();
 }
 
 QAction* QToolButton_defaultAction(const QToolButton* self) {
@@ -1667,8 +1666,8 @@ bool QToolButton_override_virtual_metric(void* self, intptr_t slot) {
 	return true;
 }
 
-int QToolButton_virtualbase_metric(const void* self, int param1) {
-	return static_cast<const MiqtVirtualQToolButton*>(self)->QToolButton::metric(static_cast<MiqtVirtualQToolButton::PaintDeviceMetric>(param1));
+int QToolButton_virtualbase_metric(const void* self, PaintDeviceMetric param1) {
+	return static_cast<const MiqtVirtualQToolButton*>(self)->QToolButton::metric(param1);
 }
 
 bool QToolButton_override_virtual_initPainter(void* self, intptr_t slot) {
@@ -1922,6 +1921,17 @@ bool QToolButton_protectedbase_isSignalConnected(bool* _dynamic_cast_ok, const v
 
 	*_dynamic_cast_ok = true;
 	return self_cast->isSignalConnected(*signal);
+}
+
+double QToolButton_protectedbase_getDecodedMetricF(bool* _dynamic_cast_ok, const void* self, PaintDeviceMetric metricA, PaintDeviceMetric metricB) {
+	MiqtVirtualQToolButton* self_cast = dynamic_cast<MiqtVirtualQToolButton*>( (QToolButton*)(self) );
+	if (self_cast == nullptr) {
+		*_dynamic_cast_ok = false;
+		return 0;
+	}
+
+	*_dynamic_cast_ok = true;
+	return self_cast->getDecodedMetricF(metricA, metricB);
 }
 
 void QToolButton_delete(QToolButton* self) {

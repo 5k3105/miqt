@@ -15,6 +15,7 @@ extern "C" {
 #endif
 
 #ifdef __cplusplus
+class QAnyStringView;
 class QChildEvent;
 class QEvent;
 class QMetaMethod;
@@ -29,6 +30,7 @@ class QTimerEvent;
 class QUrl;
 class QVariant;
 #else
+typedef struct QAnyStringView QAnyStringView;
 typedef struct QChildEvent QChildEvent;
 typedef struct QEvent QEvent;
 typedef struct QMetaMethod QMetaMethod;
@@ -47,20 +49,24 @@ typedef struct QVariant QVariant;
 QQmlComponent* QQmlComponent_new();
 QQmlComponent* QQmlComponent_new2(QQmlEngine* param1);
 QQmlComponent* QQmlComponent_new3(QQmlEngine* param1, struct miqt_string fileName);
-QQmlComponent* QQmlComponent_new4(QQmlEngine* param1, struct miqt_string fileName, int mode);
+QQmlComponent* QQmlComponent_new4(QQmlEngine* param1, struct miqt_string fileName, CompilationMode mode);
 QQmlComponent* QQmlComponent_new5(QQmlEngine* param1, QUrl* url);
-QQmlComponent* QQmlComponent_new6(QQmlEngine* param1, QUrl* url, int mode);
-QQmlComponent* QQmlComponent_new7(QObject* parent);
-QQmlComponent* QQmlComponent_new8(QQmlEngine* param1, QObject* parent);
-QQmlComponent* QQmlComponent_new9(QQmlEngine* param1, struct miqt_string fileName, QObject* parent);
-QQmlComponent* QQmlComponent_new10(QQmlEngine* param1, struct miqt_string fileName, int mode, QObject* parent);
-QQmlComponent* QQmlComponent_new11(QQmlEngine* param1, QUrl* url, QObject* parent);
-QQmlComponent* QQmlComponent_new12(QQmlEngine* param1, QUrl* url, int mode, QObject* parent);
+QQmlComponent* QQmlComponent_new6(QQmlEngine* param1, QUrl* url, CompilationMode mode);
+QQmlComponent* QQmlComponent_new7(QQmlEngine* engine, QAnyStringView* uri, QAnyStringView* typeName);
+QQmlComponent* QQmlComponent_new8(QQmlEngine* engine, QAnyStringView* uri, QAnyStringView* typeName, CompilationMode mode);
+QQmlComponent* QQmlComponent_new9(QObject* parent);
+QQmlComponent* QQmlComponent_new10(QQmlEngine* param1, QObject* parent);
+QQmlComponent* QQmlComponent_new11(QQmlEngine* param1, struct miqt_string fileName, QObject* parent);
+QQmlComponent* QQmlComponent_new12(QQmlEngine* param1, struct miqt_string fileName, CompilationMode mode, QObject* parent);
+QQmlComponent* QQmlComponent_new13(QQmlEngine* param1, QUrl* url, QObject* parent);
+QQmlComponent* QQmlComponent_new14(QQmlEngine* param1, QUrl* url, CompilationMode mode, QObject* parent);
+QQmlComponent* QQmlComponent_new15(QQmlEngine* engine, QAnyStringView* uri, QAnyStringView* typeName, QObject* parent);
+QQmlComponent* QQmlComponent_new16(QQmlEngine* engine, QAnyStringView* uri, QAnyStringView* typeName, CompilationMode mode, QObject* parent);
 void QQmlComponent_virtbase(QQmlComponent* src, QObject** outptr_QObject);
 QMetaObject* QQmlComponent_metaObject(const QQmlComponent* self);
 void* QQmlComponent_metacast(QQmlComponent* self, const char* param1);
 struct miqt_string QQmlComponent_tr(const char* s);
-int QQmlComponent_status(const QQmlComponent* self);
+Status QQmlComponent_status(const QQmlComponent* self);
 bool QQmlComponent_isNull(const QQmlComponent* self);
 bool QQmlComponent_isReady(const QQmlComponent* self);
 bool QQmlComponent_isError(const QQmlComponent* self);
@@ -79,7 +85,8 @@ void QQmlComponent_createWithQQmlIncubator(QQmlComponent* self, QQmlIncubator* p
 QQmlContext* QQmlComponent_creationContext(const QQmlComponent* self);
 QQmlEngine* QQmlComponent_engine(const QQmlComponent* self);
 void QQmlComponent_loadUrl(QQmlComponent* self, QUrl* url);
-void QQmlComponent_loadUrl2(QQmlComponent* self, QUrl* url, int mode);
+void QQmlComponent_loadUrl2(QQmlComponent* self, QUrl* url, CompilationMode mode);
+void QQmlComponent_loadFromModule(QQmlComponent* self, QAnyStringView* uri, QAnyStringView* typeName);
 void QQmlComponent_setData(QQmlComponent* self, struct miqt_string param1, QUrl* baseUrl);
 void QQmlComponent_statusChanged(QQmlComponent* self, int param1);
 void QQmlComponent_connect_statusChanged(QQmlComponent* self, intptr_t slot);
@@ -90,6 +97,7 @@ struct miqt_string QQmlComponent_tr3(const char* s, const char* c, int n);
 QObject* QQmlComponent_createWithInitialProperties2(QQmlComponent* self, struct miqt_map /* of struct miqt_string to QVariant* */  initialProperties, QQmlContext* context);
 void QQmlComponent_create2(QQmlComponent* self, QQmlIncubator* param1, QQmlContext* context);
 void QQmlComponent_create3(QQmlComponent* self, QQmlIncubator* param1, QQmlContext* context, QQmlContext* forContext);
+void QQmlComponent_loadFromModule2(QQmlComponent* self, QAnyStringView* uri, QAnyStringView* typeName, int mode);
 
 bool QQmlComponent_override_virtual_create(void* self, intptr_t slot);
 QObject* QQmlComponent_virtualbase_create(void* self, QQmlContext* context);

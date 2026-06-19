@@ -106,14 +106,12 @@ func QDtlsClientVerifier_Tr(s string) string {
 	return _ret
 }
 
-func (this *QDtlsClientVerifier) SetCookieGeneratorParameters(params *QDtlsClientVerifier__GeneratorParameters) bool {
-	return (bool)(C.QDtlsClientVerifier_setCookieGeneratorParameters(this.h, params.cPointer()))
+func (this *QDtlsClientVerifier) SetCookieGeneratorParameters(params *GeneratorParameters) bool {
+	return (bool)(C.QDtlsClientVerifier_setCookieGeneratorParameters(this.h, params))
 }
 
-func (this *QDtlsClientVerifier) CookieGeneratorParameters() *QDtlsClientVerifier__GeneratorParameters {
-	_goptr := newQDtlsClientVerifier__GeneratorParameters(C.QDtlsClientVerifier_cookieGeneratorParameters(this.h))
-	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
-	return _goptr
+func (this *QDtlsClientVerifier) CookieGeneratorParameters() GeneratorParameters {
+	int /* TODO  */
 }
 
 func (this *QDtlsClientVerifier) VerifyClient(socket *network.QUdpSocket, dgram []byte, address *network.QHostAddress, port uint16) bool {
@@ -535,14 +533,12 @@ func (this *QDtls) MtuHint() uint16 {
 	return (uint16)(C.QDtls_mtuHint(this.h))
 }
 
-func (this *QDtls) SetCookieGeneratorParameters(params *QDtlsClientVerifier__GeneratorParameters) bool {
-	return (bool)(C.QDtls_setCookieGeneratorParameters(this.h, params.cPointer()))
+func (this *QDtls) SetCookieGeneratorParameters(params *GeneratorParameters) bool {
+	return (bool)(C.QDtls_setCookieGeneratorParameters(this.h, params))
 }
 
-func (this *QDtls) CookieGeneratorParameters() *QDtlsClientVerifier__GeneratorParameters {
-	_goptr := newQDtlsClientVerifier__GeneratorParameters(C.QDtls_cookieGeneratorParameters(this.h))
-	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
-	return _goptr
+func (this *QDtls) CookieGeneratorParameters() GeneratorParameters {
+	int /* TODO  */
 }
 
 func (this *QDtls) SetDtlsConfiguration(configuration *network.QSslConfiguration) bool {
@@ -555,8 +551,8 @@ func (this *QDtls) DtlsConfiguration() *network.QSslConfiguration {
 	return _goptr
 }
 
-func (this *QDtls) HandshakeState() QDtls__HandshakeState {
-	return (QDtls__HandshakeState)(C.QDtls_handshakeState(this.h))
+func (this *QDtls) HandshakeState() HandshakeState {
+	int /* TODO  */
 }
 
 func (this *QDtls) DoHandshake(socket *network.QUdpSocket) bool {
@@ -1041,9 +1037,9 @@ func NewQDtlsClientVerifier__GeneratorParameters2(a qt6.QCryptographicHash__Algo
 }
 
 // NewQDtlsClientVerifier__GeneratorParameters3 constructs a new QDtlsClientVerifier::GeneratorParameters object.
-func NewQDtlsClientVerifier__GeneratorParameters3(param1 *QDtlsClientVerifier__GeneratorParameters) *QDtlsClientVerifier__GeneratorParameters {
+func NewQDtlsClientVerifier__GeneratorParameters3(param1 *GeneratorParameters) *QDtlsClientVerifier__GeneratorParameters {
 
-	return newQDtlsClientVerifier__GeneratorParameters(C.QDtlsClientVerifier__GeneratorParameters_new3(param1.cPointer()))
+	return newQDtlsClientVerifier__GeneratorParameters(C.QDtlsClientVerifier__GeneratorParameters_new3(param1))
 }
 
 func (this *QDtlsClientVerifier__GeneratorParameters) Hash() qt6.QCryptographicHash__Algorithm {
@@ -1072,8 +1068,8 @@ func (this *QDtlsClientVerifier__GeneratorParameters) SetSecret(secret []byte) {
 	C.QDtlsClientVerifier__GeneratorParameters_setSecret(this.h, secret_alias)
 }
 
-func (this *QDtlsClientVerifier__GeneratorParameters) OperatorAssign(param1 *QDtlsClientVerifier__GeneratorParameters) {
-	C.QDtlsClientVerifier__GeneratorParameters_operatorAssign(this.h, param1.cPointer())
+func (this *QDtlsClientVerifier__GeneratorParameters) OperatorAssign(param1 *GeneratorParameters) {
+	C.QDtlsClientVerifier__GeneratorParameters_operatorAssign(this.h, param1)
 }
 
 // Delete this object from C++ memory.

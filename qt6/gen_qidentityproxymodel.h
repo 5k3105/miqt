@@ -75,6 +75,8 @@ bool QIdentityProxyModel_removeColumns(QIdentityProxyModel* self, int column, in
 bool QIdentityProxyModel_removeRows(QIdentityProxyModel* self, int row, int count, QModelIndex* parent);
 bool QIdentityProxyModel_moveRows(QIdentityProxyModel* self, QModelIndex* sourceParent, int sourceRow, int count, QModelIndex* destinationParent, int destinationChild);
 bool QIdentityProxyModel_moveColumns(QIdentityProxyModel* self, QModelIndex* sourceParent, int sourceColumn, int count, QModelIndex* destinationParent, int destinationChild);
+bool QIdentityProxyModel_handleSourceLayoutChanges(const QIdentityProxyModel* self);
+bool QIdentityProxyModel_handleSourceDataChanges(const QIdentityProxyModel* self);
 struct miqt_string QIdentityProxyModel_tr2(const char* s, const char* c);
 struct miqt_string QIdentityProxyModel_tr3(const char* s, const char* c, int n);
 
@@ -177,6 +179,8 @@ void QIdentityProxyModel_virtualbase_connectNotify(void* self, QMetaMethod* sign
 bool QIdentityProxyModel_override_virtual_disconnectNotify(void* self, intptr_t slot);
 void QIdentityProxyModel_virtualbase_disconnectNotify(void* self, QMetaMethod* signal);
 
+void QIdentityProxyModel_protectedbase_setHandleSourceLayoutChanges(bool* _dynamic_cast_ok, void* self, bool handleSourceLayoutChanges);
+void QIdentityProxyModel_protectedbase_setHandleSourceDataChanges(bool* _dynamic_cast_ok, void* self, bool handleSourceDataChanges);
 QModelIndex* QIdentityProxyModel_protectedbase_createSourceIndex(bool* _dynamic_cast_ok, const void* self, int row, int col, void* internalPtr);
 QModelIndex* QIdentityProxyModel_protectedbase_createIndex(bool* _dynamic_cast_ok, const void* self, int row, int column);
 void QIdentityProxyModel_protectedbase_encodeData(bool* _dynamic_cast_ok, const void* self, struct miqt_array /* of QModelIndex* */  indexes, QDataStream* stream);

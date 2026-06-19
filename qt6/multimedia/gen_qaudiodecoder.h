@@ -54,7 +54,7 @@ QIODevice* QAudioDecoder_sourceDevice(const QAudioDecoder* self);
 void QAudioDecoder_setSourceDevice(QAudioDecoder* self, QIODevice* device);
 QAudioFormat* QAudioDecoder_audioFormat(const QAudioDecoder* self);
 void QAudioDecoder_setAudioFormat(QAudioDecoder* self, QAudioFormat* format);
-int QAudioDecoder_error(const QAudioDecoder* self);
+Error QAudioDecoder_error(const QAudioDecoder* self);
 struct miqt_string QAudioDecoder_errorString(const QAudioDecoder* self);
 QAudioBuffer* QAudioDecoder_read(const QAudioDecoder* self);
 bool QAudioDecoder_bufferAvailable(const QAudioDecoder* self);

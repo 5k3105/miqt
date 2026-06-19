@@ -46,12 +46,12 @@ QColor* QColor_new7(const char* aname) {
 	return new (std::nothrow) QColor(aname);
 }
 
-QColor* QColor_new8(int spec) {
-	return new (std::nothrow) QColor(static_cast<QColor::Spec>(spec));
+QColor* QColor_new8(Spec spec) {
+	return new (std::nothrow) QColor(spec);
 }
 
-QColor* QColor_new9(int spec, unsigned short a1, unsigned short a2, unsigned short a3, unsigned short a4) {
-	return new (std::nothrow) QColor(static_cast<QColor::Spec>(spec), static_cast<ushort>(a1), static_cast<ushort>(a2), static_cast<ushort>(a3), static_cast<ushort>(a4));
+QColor* QColor_new9(Spec spec, unsigned short a1, unsigned short a2, unsigned short a3, unsigned short a4) {
+	return new (std::nothrow) QColor(spec, static_cast<ushort>(a1), static_cast<ushort>(a2), static_cast<ushort>(a3), static_cast<ushort>(a4));
 }
 
 QColor* QColor_new10(QColor* param1) {
@@ -62,8 +62,8 @@ QColor* QColor_new11(int r, int g, int b, int a) {
 	return new (std::nothrow) QColor(static_cast<int>(r), static_cast<int>(g), static_cast<int>(b), static_cast<int>(a));
 }
 
-QColor* QColor_new12(int spec, unsigned short a1, unsigned short a2, unsigned short a3, unsigned short a4, unsigned short a5) {
-	return new (std::nothrow) QColor(static_cast<QColor::Spec>(spec), static_cast<ushort>(a1), static_cast<ushort>(a2), static_cast<ushort>(a3), static_cast<ushort>(a4), static_cast<ushort>(a5));
+QColor* QColor_new12(Spec spec, unsigned short a1, unsigned short a2, unsigned short a3, unsigned short a4, unsigned short a5) {
+	return new (std::nothrow) QColor(spec, static_cast<ushort>(a1), static_cast<ushort>(a2), static_cast<ushort>(a3), static_cast<ushort>(a4), static_cast<ushort>(a5));
 }
 
 QColor* QColor_fromString(QAnyStringView* name) {
@@ -114,9 +114,8 @@ struct miqt_array /* of struct miqt_string */  QColor_colorNames() {
 	return _out;
 }
 
-int QColor_spec(const QColor* self) {
-	QColor::Spec _ret = self->spec();
-	return static_cast<int>(_ret);
+Spec QColor_spec(const QColor* self) {
+	return self->spec();
 }
 
 int QColor_alpha(const QColor* self) {
@@ -389,8 +388,8 @@ QColor* QColor_toExtendedRgb(const QColor* self) {
 	return new QColor(self->toExtendedRgb());
 }
 
-QColor* QColor_convertTo(const QColor* self, int colorSpec) {
-	return new QColor(self->convertTo(static_cast<QColor::Spec>(colorSpec)));
+QColor* QColor_convertTo(const QColor* self, Spec colorSpec) {
+	return new QColor(self->convertTo(colorSpec));
 }
 
 QColor* QColor_fromRgb(unsigned int rgb) {
@@ -470,8 +469,8 @@ bool QColor_isValidColorName(QAnyStringView* param1) {
 	return QColor::isValidColorName(*param1);
 }
 
-struct miqt_string QColor_nameWithFormat(const QColor* self, int format) {
-	QString _ret = self->name(static_cast<QColor::NameFormat>(format));
+struct miqt_string QColor_nameWithFormat(const QColor* self, NameFormat format) {
+	QString _ret = self->name(format);
 	// Convert QString from UTF-16 in C++ RAII memory to UTF-8 in manually-managed C memory
 	QByteArray _b = _ret.toUtf8();
 	struct miqt_string _ms;

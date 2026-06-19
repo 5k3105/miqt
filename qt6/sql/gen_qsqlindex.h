@@ -30,6 +30,7 @@ QSqlIndex* QSqlIndex_new3(struct miqt_string cursorName);
 QSqlIndex* QSqlIndex_new4(struct miqt_string cursorName, struct miqt_string name);
 void QSqlIndex_virtbase(QSqlIndex* src, QSqlRecord** outptr_QSqlRecord);
 void QSqlIndex_operatorAssign(QSqlIndex* self, QSqlIndex* other);
+void QSqlIndex_swap(QSqlIndex* self, QSqlIndex* other);
 void QSqlIndex_setCursorName(QSqlIndex* self, struct miqt_string cursorName);
 struct miqt_string QSqlIndex_cursorName(const QSqlIndex* self);
 void QSqlIndex_setName(QSqlIndex* self, struct miqt_string name);

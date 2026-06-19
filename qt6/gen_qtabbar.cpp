@@ -92,7 +92,7 @@ void miqt_exec_callback_QTabBar_dragMoveEvent(QTabBar*, intptr_t, QDragMoveEvent
 void miqt_exec_callback_QTabBar_dragLeaveEvent(QTabBar*, intptr_t, QDragLeaveEvent*);
 void miqt_exec_callback_QTabBar_dropEvent(QTabBar*, intptr_t, QDropEvent*);
 bool miqt_exec_callback_QTabBar_nativeEvent(QTabBar*, intptr_t, struct miqt_string, void*, intptr_t*);
-int miqt_exec_callback_QTabBar_metric(const QTabBar*, intptr_t, int);
+int miqt_exec_callback_QTabBar_metric(const QTabBar*, intptr_t, PaintDeviceMetric);
 void miqt_exec_callback_QTabBar_initPainter(const QTabBar*, intptr_t, QPainter*);
 QPaintDevice* miqt_exec_callback_QTabBar_redirected(const QTabBar*, intptr_t, QPoint*);
 QPainter* miqt_exec_callback_QTabBar_sharedPainter(const QTabBar*, intptr_t);
@@ -810,18 +810,17 @@ public:
 	intptr_t handle__metric = 0;
 
 	// Subclass to allow providing a Go implementation
-	virtual int metric(QPaintDevice::PaintDeviceMetric param1) const override {
+	virtual int metric(PaintDeviceMetric param1) const override {
 		if (handle__metric == 0) {
 			return QTabBar::metric(param1);
 		}
 
-		QPaintDevice::PaintDeviceMetric param1_ret = param1;
-		int sigval1 = static_cast<int>(param1_ret);
+		PaintDeviceMetric sigval1 = param1;
 		int callback_return_value = miqt_exec_callback_QTabBar_metric(this, handle__metric, sigval1);
 		return static_cast<int>(callback_return_value);
 	}
 
-	friend int QTabBar_virtualbase_metric(const void* self, int param1);
+	friend int QTabBar_virtualbase_metric(const void* self, PaintDeviceMetric param1);
 
 	// cgo.Handle value for overwritten implementation
 	intptr_t handle__initPainter = 0;
@@ -1020,6 +1019,7 @@ public:
 	friend int QTabBar_protectedbase_senderSignalIndex(bool* _dynamic_cast_ok, const void* self);
 	friend int QTabBar_protectedbase_receivers(bool* _dynamic_cast_ok, const void* self, const char* signal);
 	friend bool QTabBar_protectedbase_isSignalConnected(bool* _dynamic_cast_ok, const void* self, QMetaMethod* signal);
+	friend double QTabBar_protectedbase_getDecodedMetricF(bool* _dynamic_cast_ok, const void* self, PaintDeviceMetric metricA, PaintDeviceMetric metricB);
 };
 
 QTabBar* QTabBar_new(QWidget* parent) {
@@ -1053,13 +1053,12 @@ struct miqt_string QTabBar_tr(const char* s) {
 	return _ms;
 }
 
-int QTabBar_shape(const QTabBar* self) {
-	QTabBar::Shape _ret = self->shape();
-	return static_cast<int>(_ret);
+Shape QTabBar_shape(const QTabBar* self) {
+	return self->shape();
 }
 
-void QTabBar_setShape(QTabBar* self, int shape) {
-	self->setShape(static_cast<QTabBar::Shape>(shape));
+void QTabBar_setShape(QTabBar* self, Shape shape) {
+	self->setShape(shape);
 }
 
 int QTabBar_addTab(QTabBar* self, struct miqt_string text) {
@@ -1243,21 +1242,20 @@ void QTabBar_setTabsClosable(QTabBar* self, bool closable) {
 	self->setTabsClosable(closable);
 }
 
-void QTabBar_setTabButton(QTabBar* self, int index, int position, QWidget* widget) {
-	self->setTabButton(static_cast<int>(index), static_cast<QTabBar::ButtonPosition>(position), widget);
+void QTabBar_setTabButton(QTabBar* self, int index, ButtonPosition position, QWidget* widget) {
+	self->setTabButton(static_cast<int>(index), position, widget);
 }
 
-QWidget* QTabBar_tabButton(const QTabBar* self, int index, int position) {
-	return self->tabButton(static_cast<int>(index), static_cast<QTabBar::ButtonPosition>(position));
+QWidget* QTabBar_tabButton(const QTabBar* self, int index, ButtonPosition position) {
+	return self->tabButton(static_cast<int>(index), position);
 }
 
-int QTabBar_selectionBehaviorOnRemove(const QTabBar* self) {
-	QTabBar::SelectionBehavior _ret = self->selectionBehaviorOnRemove();
-	return static_cast<int>(_ret);
+SelectionBehavior QTabBar_selectionBehaviorOnRemove(const QTabBar* self) {
+	return self->selectionBehaviorOnRemove();
 }
 
-void QTabBar_setSelectionBehaviorOnRemove(QTabBar* self, int behavior) {
-	self->setSelectionBehaviorOnRemove(static_cast<QTabBar::SelectionBehavior>(behavior));
+void QTabBar_setSelectionBehaviorOnRemove(QTabBar* self, SelectionBehavior behavior) {
+	self->setSelectionBehaviorOnRemove(behavior);
 }
 
 bool QTabBar_expanding(const QTabBar* self) {
@@ -1983,8 +1981,8 @@ bool QTabBar_override_virtual_metric(void* self, intptr_t slot) {
 	return true;
 }
 
-int QTabBar_virtualbase_metric(const void* self, int param1) {
-	return static_cast<const MiqtVirtualQTabBar*>(self)->QTabBar::metric(static_cast<MiqtVirtualQTabBar::PaintDeviceMetric>(param1));
+int QTabBar_virtualbase_metric(const void* self, PaintDeviceMetric param1) {
+	return static_cast<const MiqtVirtualQTabBar*>(self)->QTabBar::metric(param1);
 }
 
 bool QTabBar_override_virtual_initPainter(void* self, intptr_t slot) {
@@ -2238,6 +2236,17 @@ bool QTabBar_protectedbase_isSignalConnected(bool* _dynamic_cast_ok, const void*
 
 	*_dynamic_cast_ok = true;
 	return self_cast->isSignalConnected(*signal);
+}
+
+double QTabBar_protectedbase_getDecodedMetricF(bool* _dynamic_cast_ok, const void* self, PaintDeviceMetric metricA, PaintDeviceMetric metricB) {
+	MiqtVirtualQTabBar* self_cast = dynamic_cast<MiqtVirtualQTabBar*>( (QTabBar*)(self) );
+	if (self_cast == nullptr) {
+		*_dynamic_cast_ok = false;
+		return 0;
+	}
+
+	*_dynamic_cast_ok = true;
+	return self_cast->getDecodedMetricF(metricA, metricB);
 }
 
 void QTabBar_delete(QTabBar* self) {

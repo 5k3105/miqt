@@ -29,6 +29,7 @@ const char* QLoggingCategory_categoryName(const QLoggingCategory* self);
 QLoggingCategory* QLoggingCategory_operatorCall(QLoggingCategory* self);
 QLoggingCategory* QLoggingCategory_operatorCall2(const QLoggingCategory* self);
 QLoggingCategory* QLoggingCategory_defaultCategory();
+CategoryFilter QLoggingCategory_installFilter(CategoryFilter param1);
 void QLoggingCategory_setFilterRules(struct miqt_string rules);
 
 void QLoggingCategory_delete(QLoggingCategory* self);

@@ -153,13 +153,13 @@ func NewQPointingDevice() *QPointingDevice {
 }
 
 // NewQPointingDevice2 constructs a new QPointingDevice object.
-func NewQPointingDevice2(name string, systemId int64, devType QInputDevice__DeviceType, pType QPointingDevice__PointerType, caps QInputDevice__Capability, maxPoints int, buttonCount int) *QPointingDevice {
+func NewQPointingDevice2(name string, systemId int64, devType QInputDevice__DeviceType, pType PointerType, caps Capabilities, maxPoints int, buttonCount int) *QPointingDevice {
 	name_ms := C.struct_miqt_string{}
 	name_ms.data = C.CString(name)
 	name_ms.len = C.size_t(len(name))
 	defer C.free(unsafe.Pointer(name_ms.data))
 
-	return newQPointingDevice(C.QPointingDevice_new2(name_ms, (C.longlong)(systemId), (C.int)(devType), (C.int)(pType), (C.int)(caps), (C.int)(maxPoints), (C.int)(buttonCount)))
+	return newQPointingDevice(C.QPointingDevice_new2(name_ms, (C.longlong)(systemId), (C.int)(devType), pType, caps, (C.int)(maxPoints), (C.int)(buttonCount)))
 }
 
 // NewQPointingDevice3 constructs a new QPointingDevice object.
@@ -169,7 +169,7 @@ func NewQPointingDevice3(parent *QObject) *QPointingDevice {
 }
 
 // NewQPointingDevice4 constructs a new QPointingDevice object.
-func NewQPointingDevice4(name string, systemId int64, devType QInputDevice__DeviceType, pType QPointingDevice__PointerType, caps QInputDevice__Capability, maxPoints int, buttonCount int, seatName string) *QPointingDevice {
+func NewQPointingDevice4(name string, systemId int64, devType QInputDevice__DeviceType, pType PointerType, caps Capabilities, maxPoints int, buttonCount int, seatName string) *QPointingDevice {
 	name_ms := C.struct_miqt_string{}
 	name_ms.data = C.CString(name)
 	name_ms.len = C.size_t(len(name))
@@ -179,11 +179,11 @@ func NewQPointingDevice4(name string, systemId int64, devType QInputDevice__Devi
 	seatName_ms.len = C.size_t(len(seatName))
 	defer C.free(unsafe.Pointer(seatName_ms.data))
 
-	return newQPointingDevice(C.QPointingDevice_new4(name_ms, (C.longlong)(systemId), (C.int)(devType), (C.int)(pType), (C.int)(caps), (C.int)(maxPoints), (C.int)(buttonCount), seatName_ms))
+	return newQPointingDevice(C.QPointingDevice_new4(name_ms, (C.longlong)(systemId), (C.int)(devType), pType, caps, (C.int)(maxPoints), (C.int)(buttonCount), seatName_ms))
 }
 
 // NewQPointingDevice5 constructs a new QPointingDevice object.
-func NewQPointingDevice5(name string, systemId int64, devType QInputDevice__DeviceType, pType QPointingDevice__PointerType, caps QInputDevice__Capability, maxPoints int, buttonCount int, seatName string, uniqueId QPointingDeviceUniqueId) *QPointingDevice {
+func NewQPointingDevice5(name string, systemId int64, devType QInputDevice__DeviceType, pType PointerType, caps Capabilities, maxPoints int, buttonCount int, seatName string, uniqueId QPointingDeviceUniqueId) *QPointingDevice {
 	name_ms := C.struct_miqt_string{}
 	name_ms.data = C.CString(name)
 	name_ms.len = C.size_t(len(name))
@@ -193,11 +193,11 @@ func NewQPointingDevice5(name string, systemId int64, devType QInputDevice__Devi
 	seatName_ms.len = C.size_t(len(seatName))
 	defer C.free(unsafe.Pointer(seatName_ms.data))
 
-	return newQPointingDevice(C.QPointingDevice_new5(name_ms, (C.longlong)(systemId), (C.int)(devType), (C.int)(pType), (C.int)(caps), (C.int)(maxPoints), (C.int)(buttonCount), seatName_ms, uniqueId.cPointer()))
+	return newQPointingDevice(C.QPointingDevice_new5(name_ms, (C.longlong)(systemId), (C.int)(devType), pType, caps, (C.int)(maxPoints), (C.int)(buttonCount), seatName_ms, uniqueId.cPointer()))
 }
 
 // NewQPointingDevice6 constructs a new QPointingDevice object.
-func NewQPointingDevice6(name string, systemId int64, devType QInputDevice__DeviceType, pType QPointingDevice__PointerType, caps QInputDevice__Capability, maxPoints int, buttonCount int, seatName string, uniqueId QPointingDeviceUniqueId, parent *QObject) *QPointingDevice {
+func NewQPointingDevice6(name string, systemId int64, devType QInputDevice__DeviceType, pType PointerType, caps Capabilities, maxPoints int, buttonCount int, seatName string, uniqueId QPointingDeviceUniqueId, parent *QObject) *QPointingDevice {
 	name_ms := C.struct_miqt_string{}
 	name_ms.data = C.CString(name)
 	name_ms.len = C.size_t(len(name))
@@ -207,7 +207,7 @@ func NewQPointingDevice6(name string, systemId int64, devType QInputDevice__Devi
 	seatName_ms.len = C.size_t(len(seatName))
 	defer C.free(unsafe.Pointer(seatName_ms.data))
 
-	return newQPointingDevice(C.QPointingDevice_new6(name_ms, (C.longlong)(systemId), (C.int)(devType), (C.int)(pType), (C.int)(caps), (C.int)(maxPoints), (C.int)(buttonCount), seatName_ms, uniqueId.cPointer(), parent.cPointer()))
+	return newQPointingDevice(C.QPointingDevice_new6(name_ms, (C.longlong)(systemId), (C.int)(devType), pType, caps, (C.int)(maxPoints), (C.int)(buttonCount), seatName_ms, uniqueId.cPointer(), parent.cPointer()))
 }
 
 func (this *QPointingDevice) MetaObject() *QMetaObject {
@@ -229,11 +229,11 @@ func QPointingDevice_Tr(s string) string {
 	return _ret
 }
 
-func (this *QPointingDevice) SetType(devType QInputDevice__DeviceType) {
-	C.QPointingDevice_setType(this.h, (C.int)(devType))
+func (this *QPointingDevice) SetType(devType DeviceType) {
+	C.QPointingDevice_setType(this.h, devType)
 }
 
-func (this *QPointingDevice) SetCapabilities(caps QInputDevice__Capability) {
+func (this *QPointingDevice) SetCapabilities(caps Capability) {
 	C.QPointingDevice_setCapabilities(this.h, (C.int)(caps))
 }
 
@@ -241,8 +241,8 @@ func (this *QPointingDevice) SetMaximumTouchPoints(c int) {
 	C.QPointingDevice_setMaximumTouchPoints(this.h, (C.int)(c))
 }
 
-func (this *QPointingDevice) PointerType() QPointingDevice__PointerType {
-	return (QPointingDevice__PointerType)(C.QPointingDevice_pointerType(this.h))
+func (this *QPointingDevice) PointerType() PointerType {
+	int /* TODO  */
 }
 
 func (this *QPointingDevice) MaximumPoints() int {
@@ -267,16 +267,16 @@ func (this *QPointingDevice) OperatorEqual(other *QPointingDevice) bool {
 	return (bool)(C.QPointingDevice_operatorEqual(this.h, other.cPointer()))
 }
 
-func (this *QPointingDevice) GrabChanged(grabber *QObject, transition QPointingDevice__GrabTransition, event *QPointerEvent, point *QEventPoint) {
-	C.QPointingDevice_grabChanged(this.h, grabber.cPointer(), (C.int)(transition), event.cPointer(), point.cPointer())
+func (this *QPointingDevice) GrabChanged(grabber *QObject, transition GrabTransition, event *QPointerEvent, point *QEventPoint) {
+	C.QPointingDevice_grabChanged(this.h, grabber.cPointer(), transition, event.cPointer(), point.cPointer())
 }
-func (this *QPointingDevice) OnGrabChanged(slot func(grabber *QObject, transition QPointingDevice__GrabTransition, event *QPointerEvent, point *QEventPoint)) {
+func (this *QPointingDevice) OnGrabChanged(slot func(grabber *QObject, transition GrabTransition, event *QPointerEvent, point *QEventPoint)) {
 	C.QPointingDevice_connect_grabChanged(this.h, C.intptr_t(cgo.NewHandle(slot)))
 }
 
 //export miqt_exec_callback_QPointingDevice_grabChanged
-func miqt_exec_callback_QPointingDevice_grabChanged(cb C.intptr_t, grabber *C.QObject, transition C.int, event *C.QPointerEvent, point *C.QEventPoint) {
-	gofunc, ok := cgo.Handle(cb).Value().(func(grabber *QObject, transition QPointingDevice__GrabTransition, event *QPointerEvent, point *QEventPoint))
+func miqt_exec_callback_QPointingDevice_grabChanged(cb C.intptr_t, grabber *C.QObject, transition C.GrabTransition, event *C.QPointerEvent, point *C.QEventPoint) {
+	gofunc, ok := cgo.Handle(cb).Value().(func(grabber *QObject, transition GrabTransition, event *QPointerEvent, point *QEventPoint))
 	if !ok {
 		panic("miqt: callback of non-callback type (heap corruption?)")
 	}
@@ -284,8 +284,7 @@ func miqt_exec_callback_QPointingDevice_grabChanged(cb C.intptr_t, grabber *C.QO
 	// Convert all CABI parameters to Go parameters
 	slotval1 := newQObject(grabber)
 
-	slotval2 := (QPointingDevice__GrabTransition)(transition)
-
+	int /* TODO  */
 	slotval3 := newQPointerEvent(event)
 
 	slotval4 := newQEventPoint(point)

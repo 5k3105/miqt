@@ -86,7 +86,7 @@ QMimeData* miqt_exec_callback_QListWidget_mimeData(const QListWidget*, intptr_t,
 bool miqt_exec_callback_QListWidget_dropMimeData(QListWidget*, intptr_t, int, QMimeData*, int);
 int miqt_exec_callback_QListWidget_supportedDropActions(const QListWidget*, intptr_t);
 QRect* miqt_exec_callback_QListWidget_visualRect(const QListWidget*, intptr_t, QModelIndex*);
-void miqt_exec_callback_QListWidget_scrollTo(QListWidget*, intptr_t, QModelIndex*, int);
+void miqt_exec_callback_QListWidget_scrollTo(QListWidget*, intptr_t, QModelIndex*, ScrollHint);
 QModelIndex* miqt_exec_callback_QListWidget_indexAt(const QListWidget*, intptr_t, QPoint*);
 void miqt_exec_callback_QListWidget_doItemsLayout(QListWidget*, intptr_t);
 void miqt_exec_callback_QListWidget_reset(QListWidget*, intptr_t);
@@ -107,7 +107,7 @@ void miqt_exec_callback_QListWidget_initViewItemOption(const QListWidget*, intpt
 void miqt_exec_callback_QListWidget_paintEvent(QListWidget*, intptr_t, QPaintEvent*);
 int miqt_exec_callback_QListWidget_horizontalOffset(const QListWidget*, intptr_t);
 int miqt_exec_callback_QListWidget_verticalOffset(const QListWidget*, intptr_t);
-QModelIndex* miqt_exec_callback_QListWidget_moveCursor(QListWidget*, intptr_t, int, int);
+QModelIndex* miqt_exec_callback_QListWidget_moveCursor(QListWidget*, intptr_t, CursorAction, int);
 void miqt_exec_callback_QListWidget_setSelection(QListWidget*, intptr_t, QRect*, int);
 QRegion* miqt_exec_callback_QListWidget_visualRegionForSelection(const QListWidget*, intptr_t, QItemSelection*);
 struct miqt_array /* of QModelIndex* */  miqt_exec_callback_QListWidget_selectedIndexes(const QListWidget*, intptr_t);
@@ -131,7 +131,7 @@ void miqt_exec_callback_QListWidget_horizontalScrollbarValueChanged(QListWidget*
 void miqt_exec_callback_QListWidget_closeEditor(QListWidget*, intptr_t, QWidget*, int);
 void miqt_exec_callback_QListWidget_commitData(QListWidget*, intptr_t, QWidget*);
 void miqt_exec_callback_QListWidget_editorDestroyed(QListWidget*, intptr_t, QObject*);
-bool miqt_exec_callback_QListWidget_edit2(QListWidget*, intptr_t, QModelIndex*, int, QEvent*);
+bool miqt_exec_callback_QListWidget_edit2(QListWidget*, intptr_t, QModelIndex*, EditTrigger, QEvent*);
 int miqt_exec_callback_QListWidget_selectionCommand(const QListWidget*, intptr_t, QModelIndex*, QEvent*);
 bool miqt_exec_callback_QListWidget_focusNextPrevChild(QListWidget*, intptr_t, bool);
 bool miqt_exec_callback_QListWidget_viewportEvent(QListWidget*, intptr_t, QEvent*);
@@ -164,7 +164,7 @@ void miqt_exec_callback_QListWidget_actionEvent(QListWidget*, intptr_t, QActionE
 void miqt_exec_callback_QListWidget_showEvent(QListWidget*, intptr_t, QShowEvent*);
 void miqt_exec_callback_QListWidget_hideEvent(QListWidget*, intptr_t, QHideEvent*);
 bool miqt_exec_callback_QListWidget_nativeEvent(QListWidget*, intptr_t, struct miqt_string, void*, intptr_t*);
-int miqt_exec_callback_QListWidget_metric(const QListWidget*, intptr_t, int);
+int miqt_exec_callback_QListWidget_metric(const QListWidget*, intptr_t, PaintDeviceMetric);
 void miqt_exec_callback_QListWidget_initPainter(const QListWidget*, intptr_t, QPainter*);
 QPaintDevice* miqt_exec_callback_QListWidget_redirected(const QListWidget*, intptr_t, QPoint*);
 QPainter* miqt_exec_callback_QListWidget_sharedPainter(const QListWidget*, intptr_t);
@@ -791,7 +791,7 @@ public:
 	intptr_t handle__scrollTo = 0;
 
 	// Subclass to allow providing a Go implementation
-	virtual void scrollTo(const QModelIndex& index, QAbstractItemView::ScrollHint hint) override {
+	virtual void scrollTo(const QModelIndex& index, ScrollHint hint) override {
 		if (handle__scrollTo == 0) {
 			QListWidget::scrollTo(index, hint);
 			return;
@@ -800,13 +800,12 @@ public:
 		const QModelIndex& index_ret = index;
 		// Cast returned reference into pointer
 		QModelIndex* sigval1 = const_cast<QModelIndex*>(&index_ret);
-		QAbstractItemView::ScrollHint hint_ret = hint;
-		int sigval2 = static_cast<int>(hint_ret);
+		ScrollHint sigval2 = hint;
 		miqt_exec_callback_QListWidget_scrollTo(this, handle__scrollTo, sigval1, sigval2);
 
 	}
 
-	friend void QListWidget_virtualbase_scrollTo(void* self, QModelIndex* index, int hint);
+	friend void QListWidget_virtualbase_scrollTo(void* self, QModelIndex* index, ScrollHint hint);
 
 	// cgo.Handle value for overwritten implementation
 	intptr_t handle__indexAt = 0;
@@ -1174,20 +1173,19 @@ public:
 	intptr_t handle__moveCursor = 0;
 
 	// Subclass to allow providing a Go implementation
-	virtual QModelIndex moveCursor(QAbstractItemView::CursorAction cursorAction, Qt::KeyboardModifiers modifiers) override {
+	virtual QModelIndex moveCursor(CursorAction cursorAction, Qt::KeyboardModifiers modifiers) override {
 		if (handle__moveCursor == 0) {
 			return QListWidget::moveCursor(cursorAction, modifiers);
 		}
 
-		QAbstractItemView::CursorAction cursorAction_ret = cursorAction;
-		int sigval1 = static_cast<int>(cursorAction_ret);
+		CursorAction sigval1 = cursorAction;
 		Qt::KeyboardModifiers modifiers_ret = modifiers;
 		int sigval2 = static_cast<int>(modifiers_ret);
 		QModelIndex* callback_return_value = miqt_exec_callback_QListWidget_moveCursor(this, handle__moveCursor, sigval1, sigval2);
 		return *callback_return_value;
 	}
 
-	friend QModelIndex* QListWidget_virtualbase_moveCursor(void* self, int cursorAction, int modifiers);
+	friend QModelIndex* QListWidget_virtualbase_moveCursor(void* self, CursorAction cursorAction, int modifiers);
 
 	// cgo.Handle value for overwritten implementation
 	intptr_t handle__setSelection = 0;
@@ -1607,7 +1605,7 @@ public:
 	intptr_t handle__edit2 = 0;
 
 	// Subclass to allow providing a Go implementation
-	virtual bool edit(const QModelIndex& index, QAbstractItemView::EditTrigger trigger, QEvent* event) override {
+	virtual bool edit(const QModelIndex& index, EditTrigger trigger, QEvent* event) override {
 		if (handle__edit2 == 0) {
 			return QListWidget::edit(index, trigger, event);
 		}
@@ -1615,14 +1613,13 @@ public:
 		const QModelIndex& index_ret = index;
 		// Cast returned reference into pointer
 		QModelIndex* sigval1 = const_cast<QModelIndex*>(&index_ret);
-		QAbstractItemView::EditTrigger trigger_ret = trigger;
-		int sigval2 = static_cast<int>(trigger_ret);
+		EditTrigger sigval2 = trigger;
 		QEvent* sigval3 = event;
 		bool callback_return_value = miqt_exec_callback_QListWidget_edit2(this, handle__edit2, sigval1, sigval2, sigval3);
 		return callback_return_value;
 	}
 
-	friend bool QListWidget_virtualbase_edit2(void* self, QModelIndex* index, int trigger, QEvent* event);
+	friend bool QListWidget_virtualbase_edit2(void* self, QModelIndex* index, EditTrigger trigger, QEvent* event);
 
 	// cgo.Handle value for overwritten implementation
 	intptr_t handle__selectionCommand = 0;
@@ -2168,18 +2165,17 @@ public:
 	intptr_t handle__metric = 0;
 
 	// Subclass to allow providing a Go implementation
-	virtual int metric(QPaintDevice::PaintDeviceMetric param1) const override {
+	virtual int metric(PaintDeviceMetric param1) const override {
 		if (handle__metric == 0) {
 			return QListWidget::metric(param1);
 		}
 
-		QPaintDevice::PaintDeviceMetric param1_ret = param1;
-		int sigval1 = static_cast<int>(param1_ret);
+		PaintDeviceMetric sigval1 = param1;
 		int callback_return_value = miqt_exec_callback_QListWidget_metric(this, handle__metric, sigval1);
 		return static_cast<int>(callback_return_value);
 	}
 
-	friend int QListWidget_virtualbase_metric(const void* self, int param1);
+	friend int QListWidget_virtualbase_metric(const void* self, PaintDeviceMetric param1);
 
 	// cgo.Handle value for overwritten implementation
 	intptr_t handle__initPainter = 0;
@@ -2306,8 +2302,8 @@ public:
 	friend QSize* QListWidget_protectedbase_contentsSize(bool* _dynamic_cast_ok, const void* self);
 	friend QRect* QListWidget_protectedbase_rectForIndex(bool* _dynamic_cast_ok, const void* self, QModelIndex* index);
 	friend void QListWidget_protectedbase_setPositionForIndex(bool* _dynamic_cast_ok, void* self, QPoint* position, QModelIndex* index);
-	friend int QListWidget_protectedbase_state(bool* _dynamic_cast_ok, const void* self);
-	friend void QListWidget_protectedbase_setState(bool* _dynamic_cast_ok, void* self, int state);
+	friend State QListWidget_protectedbase_state(bool* _dynamic_cast_ok, const void* self);
+	friend void QListWidget_protectedbase_setState(bool* _dynamic_cast_ok, void* self, State state);
 	friend void QListWidget_protectedbase_scheduleDelayedItemsLayout(bool* _dynamic_cast_ok, void* self);
 	friend void QListWidget_protectedbase_executeDelayedItemsLayout(bool* _dynamic_cast_ok, void* self);
 	friend void QListWidget_protectedbase_setDirtyRegion(bool* _dynamic_cast_ok, void* self, QRegion* region);
@@ -2316,7 +2312,7 @@ public:
 	friend void QListWidget_protectedbase_startAutoScroll(bool* _dynamic_cast_ok, void* self);
 	friend void QListWidget_protectedbase_stopAutoScroll(bool* _dynamic_cast_ok, void* self);
 	friend void QListWidget_protectedbase_doAutoScroll(bool* _dynamic_cast_ok, void* self);
-	friend int QListWidget_protectedbase_dropIndicatorPosition(bool* _dynamic_cast_ok, const void* self);
+	friend DropIndicatorPosition QListWidget_protectedbase_dropIndicatorPosition(bool* _dynamic_cast_ok, const void* self);
 	friend void QListWidget_protectedbase_setViewportMargins(bool* _dynamic_cast_ok, void* self, int left, int top, int right, int bottom);
 	friend QMargins* QListWidget_protectedbase_viewportMargins(bool* _dynamic_cast_ok, const void* self);
 	friend void QListWidget_protectedbase_drawFrame(bool* _dynamic_cast_ok, void* self, QPainter* param1);
@@ -2329,6 +2325,7 @@ public:
 	friend int QListWidget_protectedbase_senderSignalIndex(bool* _dynamic_cast_ok, const void* self);
 	friend int QListWidget_protectedbase_receivers(bool* _dynamic_cast_ok, const void* self, const char* signal);
 	friend bool QListWidget_protectedbase_isSignalConnected(bool* _dynamic_cast_ok, const void* self, QMetaMethod* signal);
+	friend double QListWidget_protectedbase_getDecodedMetricF(bool* _dynamic_cast_ok, const void* self, PaintDeviceMetric metricA, PaintDeviceMetric metricB);
 };
 
 QListWidget* QListWidget_new(QWidget* parent) {
@@ -2544,6 +2541,15 @@ QModelIndex* QListWidget_indexFromItem(const QListWidget* self, QListWidgetItem*
 
 QListWidgetItem* QListWidget_itemFromIndex(const QListWidget* self, QModelIndex* index) {
 	return self->itemFromIndex(*index);
+}
+
+void QListWidget_setSupportedDragActions(QListWidget* self, int actions) {
+	self->setSupportedDragActions(static_cast<Qt::DropActions>(actions));
+}
+
+int QListWidget_supportedDragActions(const QListWidget* self) {
+	Qt::DropActions _ret = self->supportedDragActions();
+	return static_cast<int>(_ret);
 }
 
 void QListWidget_scrollToItem(QListWidget* self, QListWidgetItem* item) {
@@ -2847,8 +2853,8 @@ bool QListWidget_override_virtual_scrollTo(void* self, intptr_t slot) {
 	return true;
 }
 
-void QListWidget_virtualbase_scrollTo(void* self, QModelIndex* index, int hint) {
-	static_cast<MiqtVirtualQListWidget*>(self)->QListWidget::scrollTo(*index, static_cast<MiqtVirtualQListWidget::ScrollHint>(hint));
+void QListWidget_virtualbase_scrollTo(void* self, QModelIndex* index, ScrollHint hint) {
+	static_cast<MiqtVirtualQListWidget*>(self)->QListWidget::scrollTo(*index, hint);
 }
 
 bool QListWidget_override_virtual_indexAt(void* self, intptr_t slot) {
@@ -3147,8 +3153,8 @@ bool QListWidget_override_virtual_moveCursor(void* self, intptr_t slot) {
 	return true;
 }
 
-QModelIndex* QListWidget_virtualbase_moveCursor(void* self, int cursorAction, int modifiers) {
-	return new QModelIndex(static_cast<MiqtVirtualQListWidget*>(self)->QListWidget::moveCursor(static_cast<MiqtVirtualQListWidget::CursorAction>(cursorAction), static_cast<Qt::KeyboardModifiers>(modifiers)));
+QModelIndex* QListWidget_virtualbase_moveCursor(void* self, CursorAction cursorAction, int modifiers) {
+	return new QModelIndex(static_cast<MiqtVirtualQListWidget*>(self)->QListWidget::moveCursor(cursorAction, static_cast<Qt::KeyboardModifiers>(modifiers)));
 }
 
 bool QListWidget_override_virtual_setSelection(void* self, intptr_t slot) {
@@ -3493,8 +3499,8 @@ bool QListWidget_override_virtual_edit2(void* self, intptr_t slot) {
 	return true;
 }
 
-bool QListWidget_virtualbase_edit2(void* self, QModelIndex* index, int trigger, QEvent* event) {
-	return static_cast<MiqtVirtualQListWidget*>(self)->QListWidget::edit(*index, static_cast<MiqtVirtualQListWidget::EditTrigger>(trigger), event);
+bool QListWidget_virtualbase_edit2(void* self, QModelIndex* index, EditTrigger trigger, QEvent* event) {
+	return static_cast<MiqtVirtualQListWidget*>(self)->QListWidget::edit(*index, trigger, event);
 }
 
 bool QListWidget_override_virtual_selectionCommand(void* self, intptr_t slot) {
@@ -3957,8 +3963,8 @@ bool QListWidget_override_virtual_metric(void* self, intptr_t slot) {
 	return true;
 }
 
-int QListWidget_virtualbase_metric(const void* self, int param1) {
-	return static_cast<const MiqtVirtualQListWidget*>(self)->QListWidget::metric(static_cast<MiqtVirtualQListWidget::PaintDeviceMetric>(param1));
+int QListWidget_virtualbase_metric(const void* self, PaintDeviceMetric param1) {
+	return static_cast<const MiqtVirtualQListWidget*>(self)->QListWidget::metric(param1);
 }
 
 bool QListWidget_override_virtual_initPainter(void* self, intptr_t slot) {
@@ -4103,19 +4109,18 @@ void QListWidget_protectedbase_setPositionForIndex(bool* _dynamic_cast_ok, void*
 	self_cast->setPositionForIndex(*position, *index);
 }
 
-int QListWidget_protectedbase_state(bool* _dynamic_cast_ok, const void* self) {
+State QListWidget_protectedbase_state(bool* _dynamic_cast_ok, const void* self) {
 	MiqtVirtualQListWidget* self_cast = dynamic_cast<MiqtVirtualQListWidget*>( (QListWidget*)(self) );
 	if (self_cast == nullptr) {
 		*_dynamic_cast_ok = false;
-		return (int)(0);
+		return nullptr;
 	}
 
 	*_dynamic_cast_ok = true;
-	MiqtVirtualQListWidget::State _ret = self_cast->state();
-	return static_cast<int>(_ret);
+	return self_cast->state();
 }
 
-void QListWidget_protectedbase_setState(bool* _dynamic_cast_ok, void* self, int state) {
+void QListWidget_protectedbase_setState(bool* _dynamic_cast_ok, void* self, State state) {
 	MiqtVirtualQListWidget* self_cast = dynamic_cast<MiqtVirtualQListWidget*>( (QListWidget*)(self) );
 	if (self_cast == nullptr) {
 		*_dynamic_cast_ok = false;
@@ -4123,7 +4128,7 @@ void QListWidget_protectedbase_setState(bool* _dynamic_cast_ok, void* self, int 
 	}
 
 	*_dynamic_cast_ok = true;
-	self_cast->setState(static_cast<MiqtVirtualQListWidget::State>(state));
+	self_cast->setState(state);
 }
 
 void QListWidget_protectedbase_scheduleDelayedItemsLayout(bool* _dynamic_cast_ok, void* self) {
@@ -4214,16 +4219,15 @@ void QListWidget_protectedbase_doAutoScroll(bool* _dynamic_cast_ok, void* self) 
 	self_cast->doAutoScroll();
 }
 
-int QListWidget_protectedbase_dropIndicatorPosition(bool* _dynamic_cast_ok, const void* self) {
+DropIndicatorPosition QListWidget_protectedbase_dropIndicatorPosition(bool* _dynamic_cast_ok, const void* self) {
 	MiqtVirtualQListWidget* self_cast = dynamic_cast<MiqtVirtualQListWidget*>( (QListWidget*)(self) );
 	if (self_cast == nullptr) {
 		*_dynamic_cast_ok = false;
-		return (int)(0);
+		return nullptr;
 	}
 
 	*_dynamic_cast_ok = true;
-	MiqtVirtualQListWidget::DropIndicatorPosition _ret = self_cast->dropIndicatorPosition();
-	return static_cast<int>(_ret);
+	return self_cast->dropIndicatorPosition();
 }
 
 void QListWidget_protectedbase_setViewportMargins(bool* _dynamic_cast_ok, void* self, int left, int top, int right, int bottom) {
@@ -4356,6 +4360,17 @@ bool QListWidget_protectedbase_isSignalConnected(bool* _dynamic_cast_ok, const v
 
 	*_dynamic_cast_ok = true;
 	return self_cast->isSignalConnected(*signal);
+}
+
+double QListWidget_protectedbase_getDecodedMetricF(bool* _dynamic_cast_ok, const void* self, PaintDeviceMetric metricA, PaintDeviceMetric metricB) {
+	MiqtVirtualQListWidget* self_cast = dynamic_cast<MiqtVirtualQListWidget*>( (QListWidget*)(self) );
+	if (self_cast == nullptr) {
+		*_dynamic_cast_ok = false;
+		return 0;
+	}
+
+	*_dynamic_cast_ok = true;
+	return self_cast->getDecodedMetricF(metricA, metricB);
 }
 
 void QListWidget_delete(QListWidget* self) {

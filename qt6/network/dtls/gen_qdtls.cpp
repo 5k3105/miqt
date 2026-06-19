@@ -213,12 +213,12 @@ struct miqt_string QDtlsClientVerifier_tr(const char* s) {
 	return _ms;
 }
 
-bool QDtlsClientVerifier_setCookieGeneratorParameters(QDtlsClientVerifier* self, QDtlsClientVerifier__GeneratorParameters* params) {
+bool QDtlsClientVerifier_setCookieGeneratorParameters(QDtlsClientVerifier* self, const GeneratorParameters* params) {
 	return self->setCookieGeneratorParameters(*params);
 }
 
-QDtlsClientVerifier__GeneratorParameters* QDtlsClientVerifier_cookieGeneratorParameters(const QDtlsClientVerifier* self) {
-	return new QDtlsClientVerifier::GeneratorParameters(self->cookieGeneratorParameters());
+GeneratorParameters QDtlsClientVerifier_cookieGeneratorParameters(const QDtlsClientVerifier* self) {
+	return self->cookieGeneratorParameters();
 }
 
 bool QDtlsClientVerifier_verifyClient(QDtlsClientVerifier* self, QUdpSocket* socket, struct miqt_string dgram, QHostAddress* address, unsigned short port) {
@@ -630,12 +630,12 @@ unsigned short QDtls_mtuHint(const QDtls* self) {
 	return static_cast<unsigned short>(_ret);
 }
 
-bool QDtls_setCookieGeneratorParameters(QDtls* self, QDtlsClientVerifier__GeneratorParameters* params) {
+bool QDtls_setCookieGeneratorParameters(QDtls* self, const GeneratorParameters* params) {
 	return self->setCookieGeneratorParameters(*params);
 }
 
-QDtlsClientVerifier__GeneratorParameters* QDtls_cookieGeneratorParameters(const QDtls* self) {
-	return new QDtlsClientVerifier::GeneratorParameters(self->cookieGeneratorParameters());
+GeneratorParameters QDtls_cookieGeneratorParameters(const QDtls* self) {
+	return self->cookieGeneratorParameters();
 }
 
 bool QDtls_setDtlsConfiguration(QDtls* self, QSslConfiguration* configuration) {
@@ -646,9 +646,8 @@ QSslConfiguration* QDtls_dtlsConfiguration(const QDtls* self) {
 	return new QSslConfiguration(self->dtlsConfiguration());
 }
 
-int QDtls_handshakeState(const QDtls* self) {
-	QDtls::HandshakeState _ret = self->handshakeState();
-	return static_cast<int>(_ret);
+HandshakeState QDtls_handshakeState(const QDtls* self) {
+	return self->handshakeState();
 }
 
 bool QDtls_doHandshake(QDtls* self, QUdpSocket* socket) {
@@ -947,7 +946,7 @@ QDtlsClientVerifier__GeneratorParameters* QDtlsClientVerifier__GeneratorParamete
 	return new (std::nothrow) QDtlsClientVerifier::GeneratorParameters(static_cast<QCryptographicHash::Algorithm>(a), s_QByteArray);
 }
 
-QDtlsClientVerifier__GeneratorParameters* QDtlsClientVerifier__GeneratorParameters_new3(QDtlsClientVerifier__GeneratorParameters* param1) {
+QDtlsClientVerifier__GeneratorParameters* QDtlsClientVerifier__GeneratorParameters_new3(const GeneratorParameters* param1) {
 	return new (std::nothrow) QDtlsClientVerifier::GeneratorParameters(*param1);
 }
 
@@ -974,7 +973,7 @@ void QDtlsClientVerifier__GeneratorParameters_setSecret(QDtlsClientVerifier__Gen
 	self->secret = secret_QByteArray;
 }
 
-void QDtlsClientVerifier__GeneratorParameters_operatorAssign(QDtlsClientVerifier__GeneratorParameters* self, QDtlsClientVerifier__GeneratorParameters* param1) {
+void QDtlsClientVerifier__GeneratorParameters_operatorAssign(QDtlsClientVerifier__GeneratorParameters* self, const GeneratorParameters* param1) {
 	self->operator=(*param1);
 }
 

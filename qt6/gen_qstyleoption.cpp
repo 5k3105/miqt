@@ -30,6 +30,7 @@
 #include <QStyleOptionHeader>
 #include <QStyleOptionHeaderV2>
 #include <QStyleOptionMenuItem>
+#include <QStyleOptionMenuItemV2>
 #include <QStyleOptionProgressBar>
 #include <QStyleOptionRubberBand>
 #include <QStyleOptionSizeGrip>
@@ -207,13 +208,12 @@ void QStyleOptionFrame_setMidLineWidth(QStyleOptionFrame* self, int midLineWidth
 	self->midLineWidth = static_cast<int>(midLineWidth);
 }
 
-int QStyleOptionFrame_features(const QStyleOptionFrame* self) {
-	QStyleOptionFrame::FrameFeatures features_ret = self->features;
-	return static_cast<int>(features_ret);
+FrameFeatures QStyleOptionFrame_features(const QStyleOptionFrame* self) {
+	return self->features;
 }
 
-void QStyleOptionFrame_setFeatures(QStyleOptionFrame* self, int features) {
-	self->features = static_cast<QStyleOptionFrame::FrameFeatures>(features);
+void QStyleOptionFrame_setFeatures(QStyleOptionFrame* self, FrameFeatures features) {
+	self->features = features;
 }
 
 int QStyleOptionFrame_frameShape(const QStyleOptionFrame* self) {
@@ -433,31 +433,28 @@ void QStyleOptionHeader_setIconAlignment(QStyleOptionHeader* self, int iconAlign
 	self->iconAlignment = static_cast<Qt::Alignment>(iconAlignment);
 }
 
-int QStyleOptionHeader_position(const QStyleOptionHeader* self) {
-	QStyleOptionHeader::SectionPosition position_ret = self->position;
-	return static_cast<int>(position_ret);
+SectionPosition QStyleOptionHeader_position(const QStyleOptionHeader* self) {
+	return self->position;
 }
 
-void QStyleOptionHeader_setPosition(QStyleOptionHeader* self, int position) {
-	self->position = static_cast<QStyleOptionHeader::SectionPosition>(position);
+void QStyleOptionHeader_setPosition(QStyleOptionHeader* self, SectionPosition position) {
+	self->position = position;
 }
 
-int QStyleOptionHeader_selectedPosition(const QStyleOptionHeader* self) {
-	QStyleOptionHeader::SelectedPosition selectedPosition_ret = self->selectedPosition;
-	return static_cast<int>(selectedPosition_ret);
+SelectedPosition QStyleOptionHeader_selectedPosition(const QStyleOptionHeader* self) {
+	return self->selectedPosition;
 }
 
-void QStyleOptionHeader_setSelectedPosition(QStyleOptionHeader* self, int selectedPosition) {
-	self->selectedPosition = static_cast<QStyleOptionHeader::SelectedPosition>(selectedPosition);
+void QStyleOptionHeader_setSelectedPosition(QStyleOptionHeader* self, SelectedPosition selectedPosition) {
+	self->selectedPosition = selectedPosition;
 }
 
-int QStyleOptionHeader_sortIndicator(const QStyleOptionHeader* self) {
-	QStyleOptionHeader::SortIndicator sortIndicator_ret = self->sortIndicator;
-	return static_cast<int>(sortIndicator_ret);
+SortIndicator QStyleOptionHeader_sortIndicator(const QStyleOptionHeader* self) {
+	return self->sortIndicator;
 }
 
-void QStyleOptionHeader_setSortIndicator(QStyleOptionHeader* self, int sortIndicator) {
-	self->sortIndicator = static_cast<QStyleOptionHeader::SortIndicator>(sortIndicator);
+void QStyleOptionHeader_setSortIndicator(QStyleOptionHeader* self, SortIndicator sortIndicator) {
+	self->sortIndicator = sortIndicator;
 }
 
 int QStyleOptionHeader_orientation(const QStyleOptionHeader* self) {
@@ -534,13 +531,12 @@ void QStyleOptionButton_virtbase(QStyleOptionButton* src, QStyleOption** outptr_
 	*outptr_QStyleOption = static_cast<QStyleOption*>(src);
 }
 
-int QStyleOptionButton_features(const QStyleOptionButton* self) {
-	QStyleOptionButton::ButtonFeatures features_ret = self->features;
-	return static_cast<int>(features_ret);
+ButtonFeatures QStyleOptionButton_features(const QStyleOptionButton* self) {
+	return self->features;
 }
 
-void QStyleOptionButton_setFeatures(QStyleOptionButton* self, int features) {
-	self->features = static_cast<QStyleOptionButton::ButtonFeatures>(features);
+void QStyleOptionButton_setFeatures(QStyleOptionButton* self, ButtonFeatures features) {
+	self->features = features;
 }
 
 struct miqt_string QStyleOptionButton_text(const QStyleOptionButton* self) {
@@ -636,31 +632,28 @@ void QStyleOptionTab_setRow(QStyleOptionTab* self, int row) {
 	self->row = static_cast<int>(row);
 }
 
-int QStyleOptionTab_position(const QStyleOptionTab* self) {
-	QStyleOptionTab::TabPosition position_ret = self->position;
-	return static_cast<int>(position_ret);
+TabPosition QStyleOptionTab_position(const QStyleOptionTab* self) {
+	return self->position;
 }
 
-void QStyleOptionTab_setPosition(QStyleOptionTab* self, int position) {
-	self->position = static_cast<QStyleOptionTab::TabPosition>(position);
+void QStyleOptionTab_setPosition(QStyleOptionTab* self, TabPosition position) {
+	self->position = position;
 }
 
-int QStyleOptionTab_selectedPosition(const QStyleOptionTab* self) {
-	QStyleOptionTab::SelectedPosition selectedPosition_ret = self->selectedPosition;
-	return static_cast<int>(selectedPosition_ret);
+SelectedPosition QStyleOptionTab_selectedPosition(const QStyleOptionTab* self) {
+	return self->selectedPosition;
 }
 
-void QStyleOptionTab_setSelectedPosition(QStyleOptionTab* self, int selectedPosition) {
-	self->selectedPosition = static_cast<QStyleOptionTab::SelectedPosition>(selectedPosition);
+void QStyleOptionTab_setSelectedPosition(QStyleOptionTab* self, SelectedPosition selectedPosition) {
+	self->selectedPosition = selectedPosition;
 }
 
-int QStyleOptionTab_cornerWidgets(const QStyleOptionTab* self) {
-	QStyleOptionTab::CornerWidgets cornerWidgets_ret = self->cornerWidgets;
-	return static_cast<int>(cornerWidgets_ret);
+CornerWidgets QStyleOptionTab_cornerWidgets(const QStyleOptionTab* self) {
+	return self->cornerWidgets;
 }
 
-void QStyleOptionTab_setCornerWidgets(QStyleOptionTab* self, int cornerWidgets) {
-	self->cornerWidgets = static_cast<QStyleOptionTab::CornerWidgets>(cornerWidgets);
+void QStyleOptionTab_setCornerWidgets(QStyleOptionTab* self, CornerWidgets cornerWidgets) {
+	self->cornerWidgets = cornerWidgets;
 }
 
 QSize* QStyleOptionTab_iconSize(const QStyleOptionTab* self) {
@@ -695,13 +688,12 @@ void QStyleOptionTab_setRightButtonSize(QStyleOptionTab* self, QSize* rightButto
 	self->rightButtonSize = *rightButtonSize;
 }
 
-int QStyleOptionTab_features(const QStyleOptionTab* self) {
-	QStyleOptionTab::TabFeatures features_ret = self->features;
-	return static_cast<int>(features_ret);
+TabFeatures QStyleOptionTab_features(const QStyleOptionTab* self) {
+	return self->features;
 }
 
-void QStyleOptionTab_setFeatures(QStyleOptionTab* self, int features) {
-	self->features = static_cast<QStyleOptionTab::TabFeatures>(features);
+void QStyleOptionTab_setFeatures(QStyleOptionTab* self, TabFeatures features) {
+	self->features = features;
 }
 
 int QStyleOptionTab_tabIndex(const QStyleOptionTab* self) {
@@ -732,22 +724,20 @@ void QStyleOptionToolBar_virtbase(QStyleOptionToolBar* src, QStyleOption** outpt
 	*outptr_QStyleOption = static_cast<QStyleOption*>(src);
 }
 
-int QStyleOptionToolBar_positionOfLine(const QStyleOptionToolBar* self) {
-	QStyleOptionToolBar::ToolBarPosition positionOfLine_ret = self->positionOfLine;
-	return static_cast<int>(positionOfLine_ret);
+ToolBarPosition QStyleOptionToolBar_positionOfLine(const QStyleOptionToolBar* self) {
+	return self->positionOfLine;
 }
 
-void QStyleOptionToolBar_setPositionOfLine(QStyleOptionToolBar* self, int positionOfLine) {
-	self->positionOfLine = static_cast<QStyleOptionToolBar::ToolBarPosition>(positionOfLine);
+void QStyleOptionToolBar_setPositionOfLine(QStyleOptionToolBar* self, ToolBarPosition positionOfLine) {
+	self->positionOfLine = positionOfLine;
 }
 
-int QStyleOptionToolBar_positionWithinLine(const QStyleOptionToolBar* self) {
-	QStyleOptionToolBar::ToolBarPosition positionWithinLine_ret = self->positionWithinLine;
-	return static_cast<int>(positionWithinLine_ret);
+ToolBarPosition QStyleOptionToolBar_positionWithinLine(const QStyleOptionToolBar* self) {
+	return self->positionWithinLine;
 }
 
-void QStyleOptionToolBar_setPositionWithinLine(QStyleOptionToolBar* self, int positionWithinLine) {
-	self->positionWithinLine = static_cast<QStyleOptionToolBar::ToolBarPosition>(positionWithinLine);
+void QStyleOptionToolBar_setPositionWithinLine(QStyleOptionToolBar* self, ToolBarPosition positionWithinLine) {
+	self->positionWithinLine = positionWithinLine;
 }
 
 int QStyleOptionToolBar_toolBarArea(const QStyleOptionToolBar* self) {
@@ -759,13 +749,12 @@ void QStyleOptionToolBar_setToolBarArea(QStyleOptionToolBar* self, int toolBarAr
 	self->toolBarArea = static_cast<Qt::ToolBarArea>(toolBarArea);
 }
 
-int QStyleOptionToolBar_features(const QStyleOptionToolBar* self) {
-	QStyleOptionToolBar::ToolBarFeatures features_ret = self->features;
-	return static_cast<int>(features_ret);
+ToolBarFeatures QStyleOptionToolBar_features(const QStyleOptionToolBar* self) {
+	return self->features;
 }
 
-void QStyleOptionToolBar_setFeatures(QStyleOptionToolBar* self, int features) {
-	self->features = static_cast<QStyleOptionToolBar::ToolBarFeatures>(features);
+void QStyleOptionToolBar_setFeatures(QStyleOptionToolBar* self, ToolBarFeatures features) {
+	self->features = features;
 }
 
 int QStyleOptionToolBar_lineWidth(const QStyleOptionToolBar* self) {
@@ -897,22 +886,20 @@ void QStyleOptionMenuItem_virtbase(QStyleOptionMenuItem* src, QStyleOption** out
 	*outptr_QStyleOption = static_cast<QStyleOption*>(src);
 }
 
-int QStyleOptionMenuItem_menuItemType(const QStyleOptionMenuItem* self) {
-	QStyleOptionMenuItem::MenuItemType menuItemType_ret = self->menuItemType;
-	return static_cast<int>(menuItemType_ret);
+MenuItemType QStyleOptionMenuItem_menuItemType(const QStyleOptionMenuItem* self) {
+	return self->menuItemType;
 }
 
-void QStyleOptionMenuItem_setMenuItemType(QStyleOptionMenuItem* self, int menuItemType) {
-	self->menuItemType = static_cast<QStyleOptionMenuItem::MenuItemType>(menuItemType);
+void QStyleOptionMenuItem_setMenuItemType(QStyleOptionMenuItem* self, MenuItemType menuItemType) {
+	self->menuItemType = menuItemType;
 }
 
-int QStyleOptionMenuItem_checkType(const QStyleOptionMenuItem* self) {
-	QStyleOptionMenuItem::CheckType checkType_ret = self->checkType;
-	return static_cast<int>(checkType_ret);
+CheckType QStyleOptionMenuItem_checkType(const QStyleOptionMenuItem* self) {
+	return self->checkType;
 }
 
-void QStyleOptionMenuItem_setCheckType(QStyleOptionMenuItem* self, int checkType) {
-	self->checkType = static_cast<QStyleOptionMenuItem::CheckType>(checkType);
+void QStyleOptionMenuItem_setCheckType(QStyleOptionMenuItem* self, CheckType checkType) {
+	self->checkType = checkType;
 }
 
 bool QStyleOptionMenuItem_checked(const QStyleOptionMenuItem* self) {
@@ -992,6 +979,42 @@ void QStyleOptionMenuItem_operatorAssign(QStyleOptionMenuItem* self, QStyleOptio
 }
 
 void QStyleOptionMenuItem_delete(QStyleOptionMenuItem* self) {
+	delete self;
+}
+
+QStyleOptionMenuItemV2* QStyleOptionMenuItemV2_new() {
+	return new (std::nothrow) QStyleOptionMenuItemV2();
+}
+
+QStyleOptionMenuItemV2* QStyleOptionMenuItemV2_new2(QStyleOptionMenuItemV2* other) {
+	return new (std::nothrow) QStyleOptionMenuItemV2(*other);
+}
+
+void QStyleOptionMenuItemV2_virtbase(QStyleOptionMenuItemV2* src, QStyleOptionMenuItem** outptr_QStyleOptionMenuItem) {
+	*outptr_QStyleOptionMenuItem = static_cast<QStyleOptionMenuItem*>(src);
+}
+
+void QStyleOptionMenuItemV2_operatorAssign(QStyleOptionMenuItemV2* self, QStyleOptionMenuItemV2* param1) {
+	self->operator=(*param1);
+}
+
+bool QStyleOptionMenuItemV2_mouseDown(const QStyleOptionMenuItemV2* self) {
+	return self->mouseDown;
+}
+
+void QStyleOptionMenuItemV2_setMouseDown(QStyleOptionMenuItemV2* self, bool mouseDown) {
+	self->mouseDown = mouseDown;
+}
+
+int QStyleOptionMenuItemV2_unused(const QStyleOptionMenuItemV2* self) {
+	return self->unused;
+}
+
+void QStyleOptionMenuItemV2_setUnused(QStyleOptionMenuItemV2* self, int unused) {
+	self->unused = static_cast<int>(unused);
+}
+
+void QStyleOptionMenuItemV2_delete(QStyleOptionMenuItemV2* self) {
 	delete self;
 }
 
@@ -1102,13 +1125,12 @@ void QStyleOptionViewItem_setTextElideMode(QStyleOptionViewItem* self, int textE
 	self->textElideMode = static_cast<Qt::TextElideMode>(textElideMode);
 }
 
-int QStyleOptionViewItem_decorationPosition(const QStyleOptionViewItem* self) {
-	QStyleOptionViewItem::Position decorationPosition_ret = self->decorationPosition;
-	return static_cast<int>(decorationPosition_ret);
+Position QStyleOptionViewItem_decorationPosition(const QStyleOptionViewItem* self) {
+	return self->decorationPosition;
 }
 
-void QStyleOptionViewItem_setDecorationPosition(QStyleOptionViewItem* self, int decorationPosition) {
-	self->decorationPosition = static_cast<QStyleOptionViewItem::Position>(decorationPosition);
+void QStyleOptionViewItem_setDecorationPosition(QStyleOptionViewItem* self, Position decorationPosition) {
+	self->decorationPosition = decorationPosition;
 }
 
 QSize* QStyleOptionViewItem_decorationSize(const QStyleOptionViewItem* self) {
@@ -1135,13 +1157,12 @@ void QStyleOptionViewItem_setShowDecorationSelected(QStyleOptionViewItem* self, 
 	self->showDecorationSelected = showDecorationSelected;
 }
 
-int QStyleOptionViewItem_features(const QStyleOptionViewItem* self) {
-	QStyleOptionViewItem::ViewItemFeatures features_ret = self->features;
-	return static_cast<int>(features_ret);
+ViewItemFeatures QStyleOptionViewItem_features(const QStyleOptionViewItem* self) {
+	return self->features;
 }
 
-void QStyleOptionViewItem_setFeatures(QStyleOptionViewItem* self, int features) {
-	self->features = static_cast<QStyleOptionViewItem::ViewItemFeatures>(features);
+void QStyleOptionViewItem_setFeatures(QStyleOptionViewItem* self, ViewItemFeatures features) {
+	self->features = features;
 }
 
 QLocale* QStyleOptionViewItem_locale(const QStyleOptionViewItem* self) {
@@ -1201,13 +1222,12 @@ void QStyleOptionViewItem_setText(QStyleOptionViewItem* self, struct miqt_string
 	self->text = text_QString;
 }
 
-int QStyleOptionViewItem_viewItemPosition(const QStyleOptionViewItem* self) {
-	QStyleOptionViewItem::ViewItemPosition viewItemPosition_ret = self->viewItemPosition;
-	return static_cast<int>(viewItemPosition_ret);
+ViewItemPosition QStyleOptionViewItem_viewItemPosition(const QStyleOptionViewItem* self) {
+	return self->viewItemPosition;
 }
 
-void QStyleOptionViewItem_setViewItemPosition(QStyleOptionViewItem* self, int viewItemPosition) {
-	self->viewItemPosition = static_cast<QStyleOptionViewItem::ViewItemPosition>(viewItemPosition);
+void QStyleOptionViewItem_setViewItemPosition(QStyleOptionViewItem* self, ViewItemPosition viewItemPosition) {
+	self->viewItemPosition = viewItemPosition;
 }
 
 QBrush* QStyleOptionViewItem_backgroundBrush(const QStyleOptionViewItem* self) {
@@ -1262,22 +1282,20 @@ void QStyleOptionToolBox_setIcon(QStyleOptionToolBox* self, QIcon* icon) {
 	self->icon = *icon;
 }
 
-int QStyleOptionToolBox_position(const QStyleOptionToolBox* self) {
-	QStyleOptionToolBox::TabPosition position_ret = self->position;
-	return static_cast<int>(position_ret);
+TabPosition QStyleOptionToolBox_position(const QStyleOptionToolBox* self) {
+	return self->position;
 }
 
-void QStyleOptionToolBox_setPosition(QStyleOptionToolBox* self, int position) {
-	self->position = static_cast<QStyleOptionToolBox::TabPosition>(position);
+void QStyleOptionToolBox_setPosition(QStyleOptionToolBox* self, TabPosition position) {
+	self->position = position;
 }
 
-int QStyleOptionToolBox_selectedPosition(const QStyleOptionToolBox* self) {
-	QStyleOptionToolBox::SelectedPosition selectedPosition_ret = self->selectedPosition;
-	return static_cast<int>(selectedPosition_ret);
+SelectedPosition QStyleOptionToolBox_selectedPosition(const QStyleOptionToolBox* self) {
+	return self->selectedPosition;
 }
 
-void QStyleOptionToolBox_setSelectedPosition(QStyleOptionToolBox* self, int selectedPosition) {
-	self->selectedPosition = static_cast<QStyleOptionToolBox::SelectedPosition>(selectedPosition);
+void QStyleOptionToolBox_setSelectedPosition(QStyleOptionToolBox* self, SelectedPosition selectedPosition) {
+	self->selectedPosition = selectedPosition;
 }
 
 void QStyleOptionToolBox_operatorAssign(QStyleOptionToolBox* self, QStyleOptionToolBox* param1) {
@@ -1557,13 +1575,12 @@ void QStyleOptionToolButton_virtbase(QStyleOptionToolButton* src, QStyleOptionCo
 	*outptr_QStyleOptionComplex = static_cast<QStyleOptionComplex*>(src);
 }
 
-int QStyleOptionToolButton_features(const QStyleOptionToolButton* self) {
-	QStyleOptionToolButton::ToolButtonFeatures features_ret = self->features;
-	return static_cast<int>(features_ret);
+ToolButtonFeatures QStyleOptionToolButton_features(const QStyleOptionToolButton* self) {
+	return self->features;
 }
 
-void QStyleOptionToolButton_setFeatures(QStyleOptionToolButton* self, int features) {
-	self->features = static_cast<QStyleOptionToolButton::ToolButtonFeatures>(features);
+void QStyleOptionToolButton_setFeatures(QStyleOptionToolButton* self, ToolButtonFeatures features) {
+	self->features = features;
 }
 
 QIcon* QStyleOptionToolButton_icon(const QStyleOptionToolButton* self) {

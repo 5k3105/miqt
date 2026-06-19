@@ -26,8 +26,8 @@ typedef struct QCoreApplication QCoreApplication;
 
 QCommandLineParser* QCommandLineParser_new();
 struct miqt_string QCommandLineParser_tr(const char* sourceText);
-void QCommandLineParser_setSingleDashWordOptionMode(QCommandLineParser* self, int parsingMode);
-void QCommandLineParser_setOptionsAfterPositionalArgumentsMode(QCommandLineParser* self, int mode);
+void QCommandLineParser_setSingleDashWordOptionMode(QCommandLineParser* self, SingleDashWordOptionMode parsingMode);
+void QCommandLineParser_setOptionsAfterPositionalArgumentsMode(QCommandLineParser* self, OptionsAfterPositionalArgumentsMode mode);
 bool QCommandLineParser_addOption(QCommandLineParser* self, QCommandLineOption* commandLineOption);
 bool QCommandLineParser_addOptions(QCommandLineParser* self, struct miqt_array /* of QCommandLineOption* */  options);
 QCommandLineOption* QCommandLineParser_addVersionOption(QCommandLineParser* self);
@@ -52,10 +52,12 @@ struct miqt_array /* of struct miqt_string */  QCommandLineParser_unknownOptionN
 void QCommandLineParser_showVersion(QCommandLineParser* self);
 void QCommandLineParser_showHelp(QCommandLineParser* self);
 struct miqt_string QCommandLineParser_helpText(const QCommandLineParser* self);
+void QCommandLineParser_showMessageAndExit(MessageType type, struct miqt_string message);
 struct miqt_string QCommandLineParser_tr2(const char* sourceText, const char* disambiguation);
 struct miqt_string QCommandLineParser_tr3(const char* sourceText, const char* disambiguation, int n);
 void QCommandLineParser_addPositionalArgument2(QCommandLineParser* self, struct miqt_string name, struct miqt_string description, struct miqt_string syntax);
 void QCommandLineParser_showHelpWithExitCode(QCommandLineParser* self, int exitCode);
+void QCommandLineParser_showMessageAndExit2(MessageType type, struct miqt_string message, int exitCode);
 
 void QCommandLineParser_delete(QCommandLineParser* self);
 

@@ -83,12 +83,12 @@ func UnsafeNewQPrintEngine(h unsafe.Pointer) *QPrintEngine {
 	return newQPrintEngine((*C.QPrintEngine)(h))
 }
 
-func (this *QPrintEngine) SetProperty(key QPrintEngine__PrintEnginePropertyKey, value *qt6.QVariant) {
-	C.QPrintEngine_setProperty(this.h, (C.int)(key), (*C.QVariant)(value.UnsafePointer()))
+func (this *QPrintEngine) SetProperty(key PrintEnginePropertyKey, value *qt6.QVariant) {
+	C.QPrintEngine_setProperty(this.h, key, (*C.QVariant)(value.UnsafePointer()))
 }
 
-func (this *QPrintEngine) Property(key QPrintEngine__PrintEnginePropertyKey) *qt6.QVariant {
-	_goptr := qt6.UnsafeNewQVariant(unsafe.Pointer(C.QPrintEngine_property(this.h, (C.int)(key))))
+func (this *QPrintEngine) Property(key PrintEnginePropertyKey) *qt6.QVariant {
+	_goptr := qt6.UnsafeNewQVariant(unsafe.Pointer(C.QPrintEngine_property(this.h, key)))
 	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
 	return _goptr
 }

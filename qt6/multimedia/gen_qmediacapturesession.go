@@ -90,6 +90,14 @@ func (this *QMediaCaptureSession) SetAudioInput(input *QAudioInput) {
 	C.QMediaCaptureSession_setAudioInput(this.h, input.cPointer())
 }
 
+func (this *QMediaCaptureSession) AudioBufferInput() *QAudioBufferInput {
+	return newQAudioBufferInput(C.QMediaCaptureSession_audioBufferInput(this.h))
+}
+
+func (this *QMediaCaptureSession) SetAudioBufferInput(input *QAudioBufferInput) {
+	C.QMediaCaptureSession_setAudioBufferInput(this.h, input.cPointer())
+}
+
 func (this *QMediaCaptureSession) Camera() *QCamera {
 	return newQCamera(C.QMediaCaptureSession_camera(this.h))
 }
@@ -104,6 +112,30 @@ func (this *QMediaCaptureSession) ImageCapture() *QImageCapture {
 
 func (this *QMediaCaptureSession) SetImageCapture(imageCapture *QImageCapture) {
 	C.QMediaCaptureSession_setImageCapture(this.h, imageCapture.cPointer())
+}
+
+func (this *QMediaCaptureSession) ScreenCapture() *QScreenCapture {
+	return newQScreenCapture(C.QMediaCaptureSession_screenCapture(this.h))
+}
+
+func (this *QMediaCaptureSession) SetScreenCapture(screenCapture *QScreenCapture) {
+	C.QMediaCaptureSession_setScreenCapture(this.h, screenCapture.cPointer())
+}
+
+func (this *QMediaCaptureSession) WindowCapture() *QWindowCapture {
+	return newQWindowCapture(C.QMediaCaptureSession_windowCapture(this.h))
+}
+
+func (this *QMediaCaptureSession) SetWindowCapture(windowCapture *QWindowCapture) {
+	C.QMediaCaptureSession_setWindowCapture(this.h, windowCapture.cPointer())
+}
+
+func (this *QMediaCaptureSession) VideoFrameInput() *QVideoFrameInput {
+	return newQVideoFrameInput(C.QMediaCaptureSession_videoFrameInput(this.h))
+}
+
+func (this *QMediaCaptureSession) SetVideoFrameInput(input *QVideoFrameInput) {
+	C.QMediaCaptureSession_setVideoFrameInput(this.h, input.cPointer())
 }
 
 func (this *QMediaCaptureSession) Recorder() *QMediaRecorder {
@@ -155,6 +187,23 @@ func miqt_exec_callback_QMediaCaptureSession_audioInputChanged(cb C.intptr_t) {
 	gofunc()
 }
 
+func (this *QMediaCaptureSession) AudioBufferInputChanged() {
+	C.QMediaCaptureSession_audioBufferInputChanged(this.h)
+}
+func (this *QMediaCaptureSession) OnAudioBufferInputChanged(slot func()) {
+	C.QMediaCaptureSession_connect_audioBufferInputChanged(this.h, C.intptr_t(cgo.NewHandle(slot)))
+}
+
+//export miqt_exec_callback_QMediaCaptureSession_audioBufferInputChanged
+func miqt_exec_callback_QMediaCaptureSession_audioBufferInputChanged(cb C.intptr_t) {
+	gofunc, ok := cgo.Handle(cb).Value().(func())
+	if !ok {
+		panic("miqt: callback of non-callback type (heap corruption?)")
+	}
+
+	gofunc()
+}
+
 func (this *QMediaCaptureSession) CameraChanged() {
 	C.QMediaCaptureSession_cameraChanged(this.h)
 }
@@ -164,6 +213,57 @@ func (this *QMediaCaptureSession) OnCameraChanged(slot func()) {
 
 //export miqt_exec_callback_QMediaCaptureSession_cameraChanged
 func miqt_exec_callback_QMediaCaptureSession_cameraChanged(cb C.intptr_t) {
+	gofunc, ok := cgo.Handle(cb).Value().(func())
+	if !ok {
+		panic("miqt: callback of non-callback type (heap corruption?)")
+	}
+
+	gofunc()
+}
+
+func (this *QMediaCaptureSession) ScreenCaptureChanged() {
+	C.QMediaCaptureSession_screenCaptureChanged(this.h)
+}
+func (this *QMediaCaptureSession) OnScreenCaptureChanged(slot func()) {
+	C.QMediaCaptureSession_connect_screenCaptureChanged(this.h, C.intptr_t(cgo.NewHandle(slot)))
+}
+
+//export miqt_exec_callback_QMediaCaptureSession_screenCaptureChanged
+func miqt_exec_callback_QMediaCaptureSession_screenCaptureChanged(cb C.intptr_t) {
+	gofunc, ok := cgo.Handle(cb).Value().(func())
+	if !ok {
+		panic("miqt: callback of non-callback type (heap corruption?)")
+	}
+
+	gofunc()
+}
+
+func (this *QMediaCaptureSession) WindowCaptureChanged() {
+	C.QMediaCaptureSession_windowCaptureChanged(this.h)
+}
+func (this *QMediaCaptureSession) OnWindowCaptureChanged(slot func()) {
+	C.QMediaCaptureSession_connect_windowCaptureChanged(this.h, C.intptr_t(cgo.NewHandle(slot)))
+}
+
+//export miqt_exec_callback_QMediaCaptureSession_windowCaptureChanged
+func miqt_exec_callback_QMediaCaptureSession_windowCaptureChanged(cb C.intptr_t) {
+	gofunc, ok := cgo.Handle(cb).Value().(func())
+	if !ok {
+		panic("miqt: callback of non-callback type (heap corruption?)")
+	}
+
+	gofunc()
+}
+
+func (this *QMediaCaptureSession) VideoFrameInputChanged() {
+	C.QMediaCaptureSession_videoFrameInputChanged(this.h)
+}
+func (this *QMediaCaptureSession) OnVideoFrameInputChanged(slot func()) {
+	C.QMediaCaptureSession_connect_videoFrameInputChanged(this.h, C.intptr_t(cgo.NewHandle(slot)))
+}
+
+//export miqt_exec_callback_QMediaCaptureSession_videoFrameInputChanged
+func miqt_exec_callback_QMediaCaptureSession_videoFrameInputChanged(cb C.intptr_t) {
 	gofunc, ok := cgo.Handle(cb).Value().(func())
 	if !ok {
 		panic("miqt: callback of non-callback type (heap corruption?)")

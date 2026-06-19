@@ -82,15 +82,18 @@ void QRasterWindow_virtbase(QRasterWindow* src, QPaintDeviceWindow** outptr_QPai
 QMetaObject* QRasterWindow_metaObject(const QRasterWindow* self);
 void* QRasterWindow_metacast(QRasterWindow* self, const char* param1);
 struct miqt_string QRasterWindow_tr(const char* s);
-int QRasterWindow_metric(const QRasterWindow* self, int metric);
+int QRasterWindow_metric(const QRasterWindow* self, PaintDeviceMetric metric);
 QPaintDevice* QRasterWindow_redirected(const QRasterWindow* self, QPoint* param1);
+void QRasterWindow_resizeEvent(QRasterWindow* self, QResizeEvent* event);
 struct miqt_string QRasterWindow_tr2(const char* s, const char* c);
 struct miqt_string QRasterWindow_tr3(const char* s, const char* c, int n);
 
 bool QRasterWindow_override_virtual_metric(void* self, intptr_t slot);
-int QRasterWindow_virtualbase_metric(const void* self, int metric);
+int QRasterWindow_virtualbase_metric(const void* self, PaintDeviceMetric metric);
 bool QRasterWindow_override_virtual_redirected(void* self, intptr_t slot);
 QPaintDevice* QRasterWindow_virtualbase_redirected(const void* self, QPoint* param1);
+bool QRasterWindow_override_virtual_resizeEvent(void* self, intptr_t slot);
+void QRasterWindow_virtualbase_resizeEvent(void* self, QResizeEvent* event);
 bool QRasterWindow_override_virtual_exposeEvent(void* self, intptr_t slot);
 void QRasterWindow_virtualbase_exposeEvent(void* self, QExposeEvent* param1);
 bool QRasterWindow_override_virtual_paintEvent(void* self, intptr_t slot);
@@ -98,7 +101,7 @@ void QRasterWindow_virtualbase_paintEvent(void* self, QPaintEvent* event);
 bool QRasterWindow_override_virtual_event(void* self, intptr_t slot);
 bool QRasterWindow_virtualbase_event(void* self, QEvent* event);
 bool QRasterWindow_override_virtual_surfaceType(void* self, intptr_t slot);
-int QRasterWindow_virtualbase_surfaceType(const void* self);
+SurfaceType QRasterWindow_virtualbase_surfaceType(const void* self);
 bool QRasterWindow_override_virtual_format(void* self, intptr_t slot);
 QSurfaceFormat* QRasterWindow_virtualbase_format(const void* self);
 bool QRasterWindow_override_virtual_size(void* self, intptr_t slot);
@@ -107,8 +110,6 @@ bool QRasterWindow_override_virtual_accessibleRoot(void* self, intptr_t slot);
 QAccessibleInterface* QRasterWindow_virtualbase_accessibleRoot(const void* self);
 bool QRasterWindow_override_virtual_focusObject(void* self, intptr_t slot);
 QObject* QRasterWindow_virtualbase_focusObject(const void* self);
-bool QRasterWindow_override_virtual_resizeEvent(void* self, intptr_t slot);
-void QRasterWindow_virtualbase_resizeEvent(void* self, QResizeEvent* param1);
 bool QRasterWindow_override_virtual_moveEvent(void* self, intptr_t slot);
 void QRasterWindow_virtualbase_moveEvent(void* self, QMoveEvent* param1);
 bool QRasterWindow_override_virtual_focusInEvent(void* self, intptr_t slot);
@@ -165,6 +166,7 @@ QObject* QRasterWindow_protectedbase_sender(bool* _dynamic_cast_ok, const void* 
 int QRasterWindow_protectedbase_senderSignalIndex(bool* _dynamic_cast_ok, const void* self);
 int QRasterWindow_protectedbase_receivers(bool* _dynamic_cast_ok, const void* self, const char* signal);
 bool QRasterWindow_protectedbase_isSignalConnected(bool* _dynamic_cast_ok, const void* self, QMetaMethod* signal);
+double QRasterWindow_protectedbase_getDecodedMetricF(bool* _dynamic_cast_ok, const void* self, PaintDeviceMetric metricA, PaintDeviceMetric metricB);
 
 void QRasterWindow_delete(QRasterWindow* self);
 

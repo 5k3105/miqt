@@ -7,7 +7,7 @@
 extern "C" {
 #endif
 
-QUrl* miqt_exec_callback_QQmlAbstractUrlInterceptor_intercept(QQmlAbstractUrlInterceptor*, intptr_t, QUrl*, int);
+QUrl* miqt_exec_callback_QQmlAbstractUrlInterceptor_intercept(QQmlAbstractUrlInterceptor*, intptr_t, QUrl*, DataType);
 #ifdef __cplusplus
 } /* extern C */
 #endif
@@ -23,7 +23,7 @@ public:
 	intptr_t handle__intercept = 0;
 
 	// Subclass to allow providing a Go implementation
-	virtual QUrl intercept(const QUrl& path, QQmlAbstractUrlInterceptor::DataType type) override {
+	virtual QUrl intercept(const QUrl& path, DataType type) override {
 		if (handle__intercept == 0) {
 			return QUrl(); // Pure virtual, there is no base we can call
 		}
@@ -31,8 +31,7 @@ public:
 		const QUrl& path_ret = path;
 		// Cast returned reference into pointer
 		QUrl* sigval1 = const_cast<QUrl*>(&path_ret);
-		QQmlAbstractUrlInterceptor::DataType type_ret = type;
-		int sigval2 = static_cast<int>(type_ret);
+		DataType sigval2 = type;
 		QUrl* callback_return_value = miqt_exec_callback_QQmlAbstractUrlInterceptor_intercept(this, handle__intercept, sigval1, sigval2);
 		return *callback_return_value;
 	}
@@ -43,8 +42,8 @@ QQmlAbstractUrlInterceptor* QQmlAbstractUrlInterceptor_new() {
 	return new (std::nothrow) MiqtVirtualQQmlAbstractUrlInterceptor();
 }
 
-QUrl* QQmlAbstractUrlInterceptor_intercept(QQmlAbstractUrlInterceptor* self, QUrl* path, int type) {
-	return new QUrl(self->intercept(*path, static_cast<QQmlAbstractUrlInterceptor::DataType>(type)));
+QUrl* QQmlAbstractUrlInterceptor_intercept(QQmlAbstractUrlInterceptor* self, QUrl* path, DataType type) {
+	return new QUrl(self->intercept(*path, type));
 }
 
 void QQmlAbstractUrlInterceptor_operatorAssign(QQmlAbstractUrlInterceptor* self, QQmlAbstractUrlInterceptor* param1) {

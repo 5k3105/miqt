@@ -1129,9 +1129,12 @@ public:
 	friend void QSortFilterProxyModel_virtualbase_disconnectNotify(void* self, QMetaMethod* signal);
 
 	// Wrappers to allow calling protected methods:
+	friend void QSortFilterProxyModel_protectedbase_beginFilterChange(bool* _dynamic_cast_ok, void* self);
+	friend void QSortFilterProxyModel_protectedbase_endFilterChange(bool* _dynamic_cast_ok, void* self);
 	friend void QSortFilterProxyModel_protectedbase_invalidateFilter(bool* _dynamic_cast_ok, void* self);
 	friend void QSortFilterProxyModel_protectedbase_invalidateRowsFilter(bool* _dynamic_cast_ok, void* self);
 	friend void QSortFilterProxyModel_protectedbase_invalidateColumnsFilter(bool* _dynamic_cast_ok, void* self);
+	friend void QSortFilterProxyModel_protectedbase_endFilterChangeWithDirections(bool* _dynamic_cast_ok, void* self, Directions directions);
 	friend QModelIndex* QSortFilterProxyModel_protectedbase_createSourceIndex(bool* _dynamic_cast_ok, const void* self, int row, int col, void* internalPtr);
 	friend QModelIndex* QSortFilterProxyModel_protectedbase_createIndex(bool* _dynamic_cast_ok, const void* self, int row, int column);
 	friend void QSortFilterProxyModel_protectedbase_encodeData(bool* _dynamic_cast_ok, const void* self, struct miqt_array /* of QModelIndex* */  indexes, QDataStream* stream);
@@ -2366,6 +2369,28 @@ void QSortFilterProxyModel_virtualbase_disconnectNotify(void* self, QMetaMethod*
 	static_cast<MiqtVirtualQSortFilterProxyModel*>(self)->QSortFilterProxyModel::disconnectNotify(*signal);
 }
 
+void QSortFilterProxyModel_protectedbase_beginFilterChange(bool* _dynamic_cast_ok, void* self) {
+	MiqtVirtualQSortFilterProxyModel* self_cast = dynamic_cast<MiqtVirtualQSortFilterProxyModel*>( (QSortFilterProxyModel*)(self) );
+	if (self_cast == nullptr) {
+		*_dynamic_cast_ok = false;
+		return ;
+	}
+
+	*_dynamic_cast_ok = true;
+	self_cast->beginFilterChange();
+}
+
+void QSortFilterProxyModel_protectedbase_endFilterChange(bool* _dynamic_cast_ok, void* self) {
+	MiqtVirtualQSortFilterProxyModel* self_cast = dynamic_cast<MiqtVirtualQSortFilterProxyModel*>( (QSortFilterProxyModel*)(self) );
+	if (self_cast == nullptr) {
+		*_dynamic_cast_ok = false;
+		return ;
+	}
+
+	*_dynamic_cast_ok = true;
+	self_cast->endFilterChange();
+}
+
 void QSortFilterProxyModel_protectedbase_invalidateFilter(bool* _dynamic_cast_ok, void* self) {
 	MiqtVirtualQSortFilterProxyModel* self_cast = dynamic_cast<MiqtVirtualQSortFilterProxyModel*>( (QSortFilterProxyModel*)(self) );
 	if (self_cast == nullptr) {
@@ -2397,6 +2422,17 @@ void QSortFilterProxyModel_protectedbase_invalidateColumnsFilter(bool* _dynamic_
 
 	*_dynamic_cast_ok = true;
 	self_cast->invalidateColumnsFilter();
+}
+
+void QSortFilterProxyModel_protectedbase_endFilterChangeWithDirections(bool* _dynamic_cast_ok, void* self, Directions directions) {
+	MiqtVirtualQSortFilterProxyModel* self_cast = dynamic_cast<MiqtVirtualQSortFilterProxyModel*>( (QSortFilterProxyModel*)(self) );
+	if (self_cast == nullptr) {
+		*_dynamic_cast_ok = false;
+		return ;
+	}
+
+	*_dynamic_cast_ok = true;
+	self_cast->endFilterChange(directions);
 }
 
 QModelIndex* QSortFilterProxyModel_protectedbase_createSourceIndex(bool* _dynamic_cast_ok, const void* self, int row, int col, void* internalPtr) {

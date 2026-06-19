@@ -15,6 +15,13 @@ import (
 	"unsafe"
 )
 
+type QSvgGenerator__SvgVersion int
+
+const (
+	QSvgGenerator__SvgTiny12 QSvgGenerator__SvgVersion = 0
+	QSvgGenerator__Svg11     QSvgGenerator__SvgVersion = 1
+)
+
 type QSvgGenerator struct {
 	h *C.QSvgGenerator
 	*qt6.QPaintDevice
@@ -55,6 +62,12 @@ func UnsafeNewQSvgGenerator(h unsafe.Pointer) *QSvgGenerator {
 func NewQSvgGenerator() *QSvgGenerator {
 
 	return newQSvgGenerator(C.QSvgGenerator_new())
+}
+
+// NewQSvgGenerator2 constructs a new QSvgGenerator object.
+func NewQSvgGenerator2(version SvgVersion) *QSvgGenerator {
+
+	return newQSvgGenerator(C.QSvgGenerator_new2(version))
 }
 
 func (this *QSvgGenerator) Title() string {
@@ -148,6 +161,24 @@ func (this *QSvgGenerator) Resolution() int {
 	return (int)(C.QSvgGenerator_resolution(this.h))
 }
 
+func (this *QSvgGenerator) SvgVersion() SvgVersion {
+	int /* TODO  */
+}
+
+// GetDecodedMetricF can only be called from a QSvgGenerator that was directly constructed.
+func (this *QSvgGenerator) GetDecodedMetricF(metricA PaintDeviceMetric, metricB PaintDeviceMetric) float64 {
+
+	var _dynamic_cast_ok C.bool = false
+	_method_ret := (float64)(C.QSvgGenerator_protectedbase_getDecodedMetricF(&_dynamic_cast_ok, unsafe.Pointer(this.h), metricA, metricB))
+
+	if !_dynamic_cast_ok {
+		panic("miqt: can only call protected methods for directly constructed types")
+	}
+
+	return _method_ret
+
+}
+
 func (this *QSvgGenerator) callVirtualBase_PaintEngine() *qt6.QPaintEngine {
 
 	return qt6.UnsafeNewQPaintEngine(unsafe.Pointer(C.QSvgGenerator_virtualbase_paintEngine(unsafe.Pointer(this.h))))
@@ -201,6 +232,32 @@ func miqt_exec_callback_QSvgGenerator_metric(self *C.QSvgGenerator, cb C.intptr_
 
 }
 
+func (this *QSvgGenerator) callVirtualBase_InitPainter(param1 *qt6.QPainter) {
+
+	C.QSvgGenerator_virtualbase_initPainter(unsafe.Pointer(this.h), (*C.QPainter)(param1.UnsafePointer()))
+
+}
+func (this *QSvgGenerator) OnInitPainter(slot func(super func(param1 *qt6.QPainter), param1 *qt6.QPainter)) {
+	ok := C.QSvgGenerator_override_virtual_initPainter(unsafe.Pointer(this.h), C.intptr_t(cgo.NewHandle(slot)))
+	if !ok {
+		panic("miqt: can only override virtual methods for directly constructed types")
+	}
+}
+
+//export miqt_exec_callback_QSvgGenerator_initPainter
+func miqt_exec_callback_QSvgGenerator_initPainter(self *C.QSvgGenerator, cb C.intptr_t, param1 *C.QPainter) {
+	gofunc, ok := cgo.Handle(cb).Value().(func(super func(param1 *qt6.QPainter), param1 *qt6.QPainter))
+	if !ok {
+		panic("miqt: callback of non-callback type (heap corruption?)")
+	}
+
+	// Convert all CABI parameters to Go parameters
+	slotval1 := qt6.UnsafeNewQPainter(unsafe.Pointer(param1))
+
+	gofunc((&QSvgGenerator{h: self}).callVirtualBase_InitPainter, slotval1)
+
+}
+
 func (this *QSvgGenerator) callVirtualBase_DevType() int {
 
 	return (int)(C.QSvgGenerator_virtualbase_devType(unsafe.Pointer(this.h)))
@@ -223,32 +280,6 @@ func miqt_exec_callback_QSvgGenerator_devType(self *C.QSvgGenerator, cb C.intptr
 	virtualReturn := gofunc((&QSvgGenerator{h: self}).callVirtualBase_DevType)
 
 	return (C.int)(virtualReturn)
-
-}
-
-func (this *QSvgGenerator) callVirtualBase_InitPainter(painter *qt6.QPainter) {
-
-	C.QSvgGenerator_virtualbase_initPainter(unsafe.Pointer(this.h), (*C.QPainter)(painter.UnsafePointer()))
-
-}
-func (this *QSvgGenerator) OnInitPainter(slot func(super func(painter *qt6.QPainter), painter *qt6.QPainter)) {
-	ok := C.QSvgGenerator_override_virtual_initPainter(unsafe.Pointer(this.h), C.intptr_t(cgo.NewHandle(slot)))
-	if !ok {
-		panic("miqt: can only override virtual methods for directly constructed types")
-	}
-}
-
-//export miqt_exec_callback_QSvgGenerator_initPainter
-func miqt_exec_callback_QSvgGenerator_initPainter(self *C.QSvgGenerator, cb C.intptr_t, painter *C.QPainter) {
-	gofunc, ok := cgo.Handle(cb).Value().(func(super func(painter *qt6.QPainter), painter *qt6.QPainter))
-	if !ok {
-		panic("miqt: callback of non-callback type (heap corruption?)")
-	}
-
-	// Convert all CABI parameters to Go parameters
-	slotval1 := qt6.UnsafeNewQPainter(unsafe.Pointer(painter))
-
-	gofunc((&QSvgGenerator{h: self}).callVirtualBase_InitPainter, slotval1)
 
 }
 

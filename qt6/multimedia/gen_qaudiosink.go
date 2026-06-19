@@ -148,8 +148,20 @@ func (this *QAudioSink) BufferSize() int64 {
 	return (int64)(C.QAudioSink_bufferSize(this.h))
 }
 
+func (this *QAudioSink) SetBufferFrameCount(framesCount int64) {
+	C.QAudioSink_setBufferFrameCount(this.h, (C.ptrdiff_t)(framesCount))
+}
+
+func (this *QAudioSink) BufferFrameCount() int64 {
+	return (int64)(C.QAudioSink_bufferFrameCount(this.h))
+}
+
 func (this *QAudioSink) BytesFree() int64 {
 	return (int64)(C.QAudioSink_bytesFree(this.h))
+}
+
+func (this *QAudioSink) FramesFree() int64 {
+	return (int64)(C.QAudioSink_framesFree(this.h))
 }
 
 func (this *QAudioSink) ProcessedUSecs() int64 {

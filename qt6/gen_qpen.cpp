@@ -54,6 +54,14 @@ void QPen_swap(QPen* self, QPen* other) {
 	self->swap(*other);
 }
 
+void QPen_operatorAssignWithColor(QPen* self, QColor* color) {
+	self->operator=(*color);
+}
+
+void QPen_operatorAssignWithStyle(QPen* self, int style) {
+	self->operator=(static_cast<Qt::PenStyle>(style));
+}
+
 int QPen_style(const QPen* self) {
 	Qt::PenStyle _ret = self->style();
 	return static_cast<int>(_ret);
@@ -181,6 +189,10 @@ QVariant* QPen_ToQVariant(const QPen* self) {
 
 bool QPen_isDetached(QPen* self) {
 	return self->isDetached();
+}
+
+DataPtr* QPen_dataPtr(QPen* self) {
+	return &self->data_ptr();
 }
 
 void QPen_delete(QPen* self) {

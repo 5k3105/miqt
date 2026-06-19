@@ -44,10 +44,11 @@ void* QThread_metacast(QThread* self, const char* param1);
 struct miqt_string QThread_tr(const char* s);
 void* QThread_currentThreadId();
 QThread* QThread_currentThread();
+bool QThread_isMainThread();
 int QThread_idealThreadCount();
 void QThread_yieldCurrentThread();
-void QThread_setPriority(QThread* self, int priority);
-int QThread_priority(const QThread* self);
+void QThread_setPriority(QThread* self, Priority priority);
+Priority QThread_priority(const QThread* self);
 bool QThread_isFinished(const QThread* self);
 bool QThread_isRunning(const QThread* self);
 void QThread_requestInterruption(QThread* self);
@@ -58,6 +59,9 @@ QAbstractEventDispatcher* QThread_eventDispatcher(const QThread* self);
 void QThread_setEventDispatcher(QThread* self, QAbstractEventDispatcher* eventDispatcher);
 bool QThread_event(QThread* self, QEvent* event);
 int QThread_loopLevel(const QThread* self);
+bool QThread_isCurrentThread(const QThread* self);
+void QThread_setServiceLevel(QThread* self, QualityOfService serviceLevel);
+QualityOfService QThread_serviceLevel(const QThread* self);
 void QThread_start(QThread* self);
 void QThread_terminate(QThread* self);
 void QThread_exit(QThread* self);
@@ -70,7 +74,7 @@ void QThread_usleep(unsigned long param1);
 void QThread_run(QThread* self);
 struct miqt_string QThread_tr2(const char* s, const char* c);
 struct miqt_string QThread_tr3(const char* s, const char* c, int n);
-void QThread_startWithQThreadPriority(QThread* self, int param1);
+void QThread_startWithPriority(QThread* self, Priority param1);
 void QThread_exitWithRetcode(QThread* self, int retcode);
 bool QThread_waitWithDeadline(QThread* self, QDeadlineTimer* deadline);
 
@@ -96,9 +100,6 @@ QObject* QThread_protectedbase_sender(bool* _dynamic_cast_ok, const void* self);
 int QThread_protectedbase_senderSignalIndex(bool* _dynamic_cast_ok, const void* self);
 int QThread_protectedbase_receivers(bool* _dynamic_cast_ok, const void* self, const char* signal);
 bool QThread_protectedbase_isSignalConnected(bool* _dynamic_cast_ok, const void* self, QMetaMethod* signal);
-
-void QThread_connect_started(QThread* self, intptr_t slot);
-void QThread_connect_finished(QThread* self, intptr_t slot);
 
 void QThread_delete(QThread* self);
 

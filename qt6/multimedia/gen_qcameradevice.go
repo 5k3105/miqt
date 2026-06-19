@@ -192,8 +192,8 @@ func (this *QCameraDevice) IsDefault() bool {
 	return (bool)(C.QCameraDevice_isDefault(this.h))
 }
 
-func (this *QCameraDevice) Position() QCameraDevice__Position {
-	return (QCameraDevice__Position)(C.QCameraDevice_position(this.h))
+func (this *QCameraDevice) Position() Position {
+	int /* TODO  */
 }
 
 func (this *QCameraDevice) PhotoResolutions() []qt6.QSize {
@@ -218,6 +218,10 @@ func (this *QCameraDevice) VideoFormats() []QCameraFormat {
 		_ret[i] = *_lv_goptr
 	}
 	return _ret
+}
+
+func (this *QCameraDevice) CorrectionAngle() QtVideo__Rotation {
+	return (QtVideo__Rotation)(C.QCameraDevice_correctionAngle(this.h))
 }
 
 // Delete this object from C++ memory.

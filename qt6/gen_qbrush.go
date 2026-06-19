@@ -332,6 +332,18 @@ func (this *QBrush) Swap(other *QBrush) {
 	C.QBrush_swap(this.h, other.cPointer())
 }
 
+func (this *QBrush) OperatorAssignWithStyle(style BrushStyle) {
+	C.QBrush_operatorAssignWithStyle(this.h, (C.int)(style))
+}
+
+func (this *QBrush) OperatorAssignWithColor(color QColor) {
+	C.QBrush_operatorAssignWithColor(this.h, color.cPointer())
+}
+
+func (this *QBrush) OperatorAssign2(color GlobalColor) {
+	C.QBrush_operatorAssign2(this.h, (C.int)(color))
+}
+
 func (this *QBrush) ToQVariant() *QVariant {
 	_goptr := newQVariant(C.QBrush_ToQVariant(this.h))
 	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
@@ -408,6 +420,10 @@ func (this *QBrush) IsDetached() bool {
 	return (bool)(C.QBrush_isDetached(this.h))
 }
 
+func (this *QBrush) DataPtr() *DataPtr {
+	int /* TODO  */
+}
+
 // Delete this object from C++ memory.
 func (this *QBrush) Delete() {
 	C.QBrush_delete(this.h)
@@ -461,9 +477,9 @@ func NewQGradient() *QGradient {
 }
 
 // NewQGradient2 constructs a new QGradient object.
-func NewQGradient2(param1 QGradient__Preset) *QGradient {
+func NewQGradient2(param1 Preset) *QGradient {
 
-	return newQGradient(C.QGradient_new2((C.int)(param1)))
+	return newQGradient(C.QGradient_new2(param1))
 }
 
 // NewQGradient3 constructs a new QGradient object.
@@ -472,88 +488,36 @@ func NewQGradient3(param1 *QGradient) *QGradient {
 	return newQGradient(C.QGradient_new3(param1.cPointer()))
 }
 
-func (this *QGradient) Type() QGradient__Type {
-	return (QGradient__Type)(C.QGradient_type(this.h))
+func (this *QGradient) Type() Type {
+	int /* TODO  */
 }
 
-func (this *QGradient) SetSpread(spread QGradient__Spread) {
-	C.QGradient_setSpread(this.h, (C.int)(spread))
+func (this *QGradient) SetSpread(spread Spread) {
+	C.QGradient_setSpread(this.h, spread)
 }
 
-func (this *QGradient) Spread() QGradient__Spread {
-	return (QGradient__Spread)(C.QGradient_spread(this.h))
+func (this *QGradient) Spread() Spread {
+	int /* TODO  */
 }
 
 func (this *QGradient) SetColorAt(pos float64, color *QColor) {
 	C.QGradient_setColorAt(this.h, (C.double)(pos), color.cPointer())
 }
 
-func (this *QGradient) SetStops(stops []struct {
-	First  float64
-	Second QColor
-}) {
-	stops_CArray := (*[0xffff]C.struct_miqt_map)(C.malloc(C.size_t(8 * len(stops))))
-	defer C.free(unsafe.Pointer(stops_CArray))
-	for i := range stops {
-		stops_i_First_CArray := (*[0xffff]C.double)(C.malloc(C.size_t(8)))
-		defer C.free(unsafe.Pointer(stops_i_First_CArray))
-		stops_i_Second_CArray := (*[0xffff]*C.QColor)(C.malloc(C.size_t(8)))
-		defer C.free(unsafe.Pointer(stops_i_Second_CArray))
-		stops_i_First_CArray[0] = (C.double)(stops[i].First)
-		stops_i_Second_CArray[0] = stops[i].Second.cPointer()
-		stops_i_pair := C.struct_miqt_map{
-			len:    1,
-			keys:   unsafe.Pointer(stops_i_First_CArray),
-			values: unsafe.Pointer(stops_i_Second_CArray),
-		}
-		stops_CArray[i] = stops_i_pair
-	}
-	stops_ma := C.struct_miqt_array{len: C.size_t(len(stops)), data: unsafe.Pointer(stops_CArray)}
-	C.QGradient_setStops(this.h, stops_ma)
+func (this *QGradient) CoordinateMode() CoordinateMode {
+	int /* TODO  */
 }
 
-func (this *QGradient) Stops() []struct {
-	First  float64
-	Second QColor
-} {
-	var _ma C.struct_miqt_array = C.QGradient_stops(this.h)
-	_ret := make([]struct {
-		First  float64
-		Second QColor
-	}, int(_ma.len))
-	_outCast := (*[0xffff]C.struct_miqt_map)(unsafe.Pointer(_ma.data)) // hey ya
-	for i := 0; i < int(_ma.len); i++ {
-		var _lv_mm C.struct_miqt_map = _outCast[i]
-		_lv_First_CArray := (*[0xffff]C.double)(unsafe.Pointer(_lv_mm.keys))
-		_lv_Second_CArray := (*[0xffff]*C.QColor)(unsafe.Pointer(_lv_mm.values))
-		_lv_entry_First := (float64)(_lv_First_CArray[0])
-
-		_lv_second_goptr := newQColor(_lv_Second_CArray[0])
-		_lv_second_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
-		_lv_entry_Second := *_lv_second_goptr
-
-		_ret[i] = struct {
-			First  float64
-			Second QColor
-		}{First: _lv_entry_First, Second: _lv_entry_Second}
-	}
-	return _ret
+func (this *QGradient) SetCoordinateMode(mode CoordinateMode) {
+	C.QGradient_setCoordinateMode(this.h, mode)
 }
 
-func (this *QGradient) CoordinateMode() QGradient__CoordinateMode {
-	return (QGradient__CoordinateMode)(C.QGradient_coordinateMode(this.h))
+func (this *QGradient) InterpolationMode() InterpolationMode {
+	int /* TODO  */
 }
 
-func (this *QGradient) SetCoordinateMode(mode QGradient__CoordinateMode) {
-	C.QGradient_setCoordinateMode(this.h, (C.int)(mode))
-}
-
-func (this *QGradient) InterpolationMode() QGradient__InterpolationMode {
-	return (QGradient__InterpolationMode)(C.QGradient_interpolationMode(this.h))
-}
-
-func (this *QGradient) SetInterpolationMode(mode QGradient__InterpolationMode) {
-	C.QGradient_setInterpolationMode(this.h, (C.int)(mode))
+func (this *QGradient) SetInterpolationMode(mode InterpolationMode) {
+	C.QGradient_setInterpolationMode(this.h, mode)
 }
 
 func (this *QGradient) OperatorEqual(gradient *QGradient) bool {
@@ -959,9 +923,9 @@ func UnsafeNewQGradient__QGradientData(h unsafe.Pointer) *QGradient__QGradientDa
 }
 
 // NewQGradient__QGradientData constructs a new QGradient::QGradientData object.
-func NewQGradient__QGradientData(param1 *QGradient__QGradientData) *QGradient__QGradientData {
+func NewQGradient__QGradientData(param1 *QGradientData) *QGradient__QGradientData {
 
-	return newQGradient__QGradientData(C.QGradient__QGradientData_new(param1.cPointer()))
+	return newQGradient__QGradientData(C.QGradient__QGradientData_new(param1))
 }
 
 // Delete this object from C++ memory.

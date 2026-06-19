@@ -2,6 +2,9 @@
 #include <QCborError>
 #include <QCborStreamReader>
 #include <QIODevice>
+#include <QString>
+#include <QByteArray>
+#include <cstring>
 #include <qcborstreamreader.h>
 #include "gen_qcborstreamreader.h"
 
@@ -67,7 +70,7 @@ void QCborStreamReader_reset(QCborStreamReader* self) {
 	self->reset();
 }
 
-QCborError* QCborStreamReader_lastError(QCborStreamReader* self) {
+QCborError* QCborStreamReader_lastError(const QCborStreamReader* self) {
 	return new QCborError(self->lastError());
 }
 
@@ -97,9 +100,8 @@ bool QCborStreamReader_next(QCborStreamReader* self) {
 	return self->next();
 }
 
-uint8_t QCborStreamReader_type(const QCborStreamReader* self) {
-	QCborStreamReader::Type _ret = self->type();
-	return static_cast<uint8_t>(_ret);
+Type QCborStreamReader_type(const QCborStreamReader* self) {
+	return self->type();
 }
 
 bool QCborStreamReader_isUnsignedInteger(const QCborStreamReader* self) {
@@ -199,6 +201,21 @@ bool QCborStreamReader_leaveContainer(QCborStreamReader* self) {
 	return self->leaveContainer();
 }
 
+bool QCborStreamReader_readAndAppendToString(QCborStreamReader* self, struct miqt_string dst) {
+	QString dst_QString = QString::fromUtf8(dst.data, dst.len);
+	return self->readAndAppendToString(dst_QString);
+}
+
+bool QCborStreamReader_readAndAppendToUtf8String(QCborStreamReader* self, struct miqt_string dst) {
+	QByteArray dst_QByteArray(dst.data, dst.len);
+	return self->readAndAppendToUtf8String(dst_QByteArray);
+}
+
+bool QCborStreamReader_readAndAppendToByteArray(QCborStreamReader* self, struct miqt_string dst) {
+	QByteArray dst_QByteArray(dst.data, dst.len);
+	return self->readAndAppendToByteArray(dst_QByteArray);
+}
+
 ptrdiff_t QCborStreamReader_currentStringChunkSize(const QCborStreamReader* self) {
 	qsizetype _ret = self->currentStringChunkSize();
 	return static_cast<ptrdiff_t>(_ret);
@@ -239,6 +256,35 @@ double QCborStreamReader_toDouble(const QCborStreamReader* self) {
 long long QCborStreamReader_toInteger(const QCborStreamReader* self) {
 	qint64 _ret = self->toInteger();
 	return static_cast<long long>(_ret);
+}
+
+struct miqt_string QCborStreamReader_readAllString(QCborStreamReader* self) {
+	QString _ret = self->readAllString();
+	// Convert QString from UTF-16 in C++ RAII memory to UTF-8 in manually-managed C memory
+	QByteArray _b = _ret.toUtf8();
+	struct miqt_string _ms;
+	_ms.len = _b.length();
+	_ms.data = static_cast<char*>(malloc(_ms.len));
+	memcpy(_ms.data, _b.data(), _ms.len);
+	return _ms;
+}
+
+struct miqt_string QCborStreamReader_readAllUtf8String(QCborStreamReader* self) {
+	QByteArray _qb = self->readAllUtf8String();
+	struct miqt_string _ms;
+	_ms.len = _qb.length();
+	_ms.data = static_cast<char*>(malloc(_ms.len));
+	memcpy(_ms.data, _qb.data(), _ms.len);
+	return _ms;
+}
+
+struct miqt_string QCborStreamReader_readAllByteArray(QCborStreamReader* self) {
+	QByteArray _qb = self->readAllByteArray();
+	struct miqt_string _ms;
+	_ms.len = _qb.length();
+	_ms.data = static_cast<char*>(malloc(_ms.len));
+	memcpy(_ms.data, _qb.data(), _ms.len);
+	return _ms;
 }
 
 bool QCborStreamReader_nextWithMaxRecursion(QCborStreamReader* self, int maxRecursion) {

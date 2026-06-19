@@ -31,7 +31,7 @@ typedef struct QVector2D QVector2D;
 #endif
 
 QEventPoint* QEventPoint_new();
-QEventPoint* QEventPoint_new2(int pointId, uint8_t state, QPointF* scenePosition, QPointF* globalPosition);
+QEventPoint* QEventPoint_new2(int pointId, State state, QPointF* scenePosition, QPointF* globalPosition);
 QEventPoint* QEventPoint_new3(QEventPoint* other);
 QEventPoint* QEventPoint_new4(int id);
 QEventPoint* QEventPoint_new5(int id, QPointingDevice* device);
@@ -65,7 +65,7 @@ QPointF* QEventPoint_lastScenePos(const QEventPoint* self);
 QPointF* QEventPoint_lastScreenPos(const QEventPoint* self);
 QPointF* QEventPoint_lastNormalizedPos(const QEventPoint* self);
 QVector2D* QEventPoint_velocity(const QEventPoint* self);
-uint8_t QEventPoint_state(const QEventPoint* self);
+State QEventPoint_state(const QEventPoint* self);
 QPointingDevice* QEventPoint_device(const QEventPoint* self);
 int QEventPoint_id(const QEventPoint* self);
 QPointingDeviceUniqueId* QEventPoint_uniqueId(const QEventPoint* self);

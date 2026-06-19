@@ -86,7 +86,7 @@ void miqt_exec_callback_QColorDialog_dragLeaveEvent(QColorDialog*, intptr_t, QDr
 void miqt_exec_callback_QColorDialog_dropEvent(QColorDialog*, intptr_t, QDropEvent*);
 void miqt_exec_callback_QColorDialog_hideEvent(QColorDialog*, intptr_t, QHideEvent*);
 bool miqt_exec_callback_QColorDialog_nativeEvent(QColorDialog*, intptr_t, struct miqt_string, void*, intptr_t*);
-int miqt_exec_callback_QColorDialog_metric(const QColorDialog*, intptr_t, int);
+int miqt_exec_callback_QColorDialog_metric(const QColorDialog*, intptr_t, PaintDeviceMetric);
 void miqt_exec_callback_QColorDialog_initPainter(const QColorDialog*, intptr_t, QPainter*);
 QPaintDevice* miqt_exec_callback_QColorDialog_redirected(const QColorDialog*, intptr_t, QPoint*);
 QPainter* miqt_exec_callback_QColorDialog_sharedPainter(const QColorDialog*, intptr_t);
@@ -786,18 +786,17 @@ public:
 	intptr_t handle__metric = 0;
 
 	// Subclass to allow providing a Go implementation
-	virtual int metric(QPaintDevice::PaintDeviceMetric param1) const override {
+	virtual int metric(PaintDeviceMetric param1) const override {
 		if (handle__metric == 0) {
 			return QColorDialog::metric(param1);
 		}
 
-		QPaintDevice::PaintDeviceMetric param1_ret = param1;
-		int sigval1 = static_cast<int>(param1_ret);
+		PaintDeviceMetric sigval1 = param1;
 		int callback_return_value = miqt_exec_callback_QColorDialog_metric(this, handle__metric, sigval1);
 		return static_cast<int>(callback_return_value);
 	}
 
-	friend int QColorDialog_virtualbase_metric(const void* self, int param1);
+	friend int QColorDialog_virtualbase_metric(const void* self, PaintDeviceMetric param1);
 
 	// cgo.Handle value for overwritten implementation
 	intptr_t handle__initPainter = 0;
@@ -997,6 +996,7 @@ public:
 	friend int QColorDialog_protectedbase_senderSignalIndex(bool* _dynamic_cast_ok, const void* self);
 	friend int QColorDialog_protectedbase_receivers(bool* _dynamic_cast_ok, const void* self, const char* signal);
 	friend bool QColorDialog_protectedbase_isSignalConnected(bool* _dynamic_cast_ok, const void* self, QMetaMethod* signal);
+	friend double QColorDialog_protectedbase_getDecodedMetricF(bool* _dynamic_cast_ok, const void* self, PaintDeviceMetric metricA, PaintDeviceMetric metricB);
 };
 
 QColorDialog* QColorDialog_new(QWidget* parent) {
@@ -1050,21 +1050,20 @@ QColor* QColorDialog_selectedColor(const QColorDialog* self) {
 	return new QColor(self->selectedColor());
 }
 
-void QColorDialog_setOption(QColorDialog* self, int option) {
-	self->setOption(static_cast<QColorDialog::ColorDialogOption>(option));
+void QColorDialog_setOption(QColorDialog* self, ColorDialogOption option) {
+	self->setOption(option);
 }
 
-bool QColorDialog_testOption(const QColorDialog* self, int option) {
-	return self->testOption(static_cast<QColorDialog::ColorDialogOption>(option));
+bool QColorDialog_testOption(const QColorDialog* self, ColorDialogOption option) {
+	return self->testOption(option);
 }
 
-void QColorDialog_setOptions(QColorDialog* self, int options) {
-	self->setOptions(static_cast<QColorDialog::ColorDialogOptions>(options));
+void QColorDialog_setOptions(QColorDialog* self, ColorDialogOptions options) {
+	self->setOptions(options);
 }
 
-int QColorDialog_options(const QColorDialog* self) {
-	QColorDialog::ColorDialogOptions _ret = self->options();
-	return static_cast<int>(_ret);
+ColorDialogOptions QColorDialog_options(const QColorDialog* self) {
+	return self->options();
 }
 
 void QColorDialog_setVisible(QColorDialog* self, bool visible) {
@@ -1143,8 +1142,8 @@ struct miqt_string QColorDialog_tr3(const char* s, const char* c, int n) {
 	return _ms;
 }
 
-void QColorDialog_setOption2(QColorDialog* self, int option, bool on) {
-	self->setOption(static_cast<QColorDialog::ColorDialogOption>(option), on);
+void QColorDialog_setOption2(QColorDialog* self, ColorDialogOption option, bool on) {
+	self->setOption(option, on);
 }
 
 QColor* QColorDialog_getColorWithInitial(QColor* initial) {
@@ -1160,9 +1159,9 @@ QColor* QColorDialog_getColor3(QColor* initial, QWidget* parent, struct miqt_str
 	return new QColor(QColorDialog::getColor(*initial, parent, title_QString));
 }
 
-QColor* QColorDialog_getColor4(QColor* initial, QWidget* parent, struct miqt_string title, int options) {
+QColor* QColorDialog_getColor4(QColor* initial, QWidget* parent, struct miqt_string title, ColorDialogOptions options) {
 	QString title_QString = QString::fromUtf8(title.data, title.len);
-	return new QColor(QColorDialog::getColor(*initial, parent, title_QString, static_cast<QColorDialog::ColorDialogOptions>(options)));
+	return new QColor(QColorDialog::getColor(*initial, parent, title_QString, options));
 }
 
 bool QColorDialog_override_virtual_setVisible(void* self, intptr_t slot) {
@@ -1736,8 +1735,8 @@ bool QColorDialog_override_virtual_metric(void* self, intptr_t slot) {
 	return true;
 }
 
-int QColorDialog_virtualbase_metric(const void* self, int param1) {
-	return static_cast<const MiqtVirtualQColorDialog*>(self)->QColorDialog::metric(static_cast<MiqtVirtualQColorDialog::PaintDeviceMetric>(param1));
+int QColorDialog_virtualbase_metric(const void* self, PaintDeviceMetric param1) {
+	return static_cast<const MiqtVirtualQColorDialog*>(self)->QColorDialog::metric(param1);
 }
 
 bool QColorDialog_override_virtual_initPainter(void* self, intptr_t slot) {
@@ -2002,6 +2001,17 @@ bool QColorDialog_protectedbase_isSignalConnected(bool* _dynamic_cast_ok, const 
 
 	*_dynamic_cast_ok = true;
 	return self_cast->isSignalConnected(*signal);
+}
+
+double QColorDialog_protectedbase_getDecodedMetricF(bool* _dynamic_cast_ok, const void* self, PaintDeviceMetric metricA, PaintDeviceMetric metricB) {
+	MiqtVirtualQColorDialog* self_cast = dynamic_cast<MiqtVirtualQColorDialog*>( (QColorDialog*)(self) );
+	if (self_cast == nullptr) {
+		*_dynamic_cast_ok = false;
+		return 0;
+	}
+
+	*_dynamic_cast_ok = true;
+	return self_cast->getDecodedMetricF(metricA, metricB);
 }
 
 void QColorDialog_delete(QColorDialog* self) {

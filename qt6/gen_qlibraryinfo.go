@@ -74,21 +74,38 @@ func QLibraryInfo_IsDebugBuild() bool {
 	return (bool)(C.QLibraryInfo_isDebugBuild())
 }
 
+func QLibraryInfo_IsSharedBuild() bool {
+	return (bool)(C.QLibraryInfo_isSharedBuild())
+}
+
 func QLibraryInfo_Version() *QVersionNumber {
 	_goptr := newQVersionNumber(C.QLibraryInfo_version())
 	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
 	return _goptr
 }
 
-func QLibraryInfo_Path(p QLibraryInfo__LibraryPath) string {
-	var _ms C.struct_miqt_string = C.QLibraryInfo_path((C.int)(p))
+func QLibraryInfo_Path(p LibraryPath) string {
+	var _ms C.struct_miqt_string = C.QLibraryInfo_path(p)
 	_ret := C.GoStringN(_ms.data, C.int(int64(_ms.len)))
 	C.free(unsafe.Pointer(_ms.data))
 	return _ret
 }
 
-func QLibraryInfo_Location(location QLibraryInfo__LibraryPath) string {
-	var _ms C.struct_miqt_string = C.QLibraryInfo_location((C.int)(location))
+func QLibraryInfo_Paths(p LibraryPath) []string {
+	var _ma C.struct_miqt_array = C.QLibraryInfo_paths(p)
+	_ret := make([]string, int(_ma.len))
+	_outCast := (*[0xffff]C.struct_miqt_string)(unsafe.Pointer(_ma.data)) // hey ya
+	for i := 0; i < int(_ma.len); i++ {
+		var _lv_ms C.struct_miqt_string = _outCast[i]
+		_lv_ret := C.GoStringN(_lv_ms.data, C.int(int64(_lv_ms.len)))
+		C.free(unsafe.Pointer(_lv_ms.data))
+		_ret[i] = _lv_ret
+	}
+	return _ret
+}
+
+func QLibraryInfo_Location(location LibraryLocation) string {
+	var _ms C.struct_miqt_string = C.QLibraryInfo_location(location)
 	_ret := C.GoStringN(_ms.data, C.int(int64(_ms.len)))
 	C.free(unsafe.Pointer(_ms.data))
 	return _ret

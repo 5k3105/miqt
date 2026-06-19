@@ -106,12 +106,12 @@ func (this *QSessionManager) Cancel() {
 	C.QSessionManager_cancel(this.h)
 }
 
-func (this *QSessionManager) SetRestartHint(restartHint QSessionManager__RestartHint) {
-	C.QSessionManager_setRestartHint(this.h, (C.int)(restartHint))
+func (this *QSessionManager) SetRestartHint(restartHint RestartHint) {
+	C.QSessionManager_setRestartHint(this.h, restartHint)
 }
 
-func (this *QSessionManager) RestartHint() QSessionManager__RestartHint {
-	return (QSessionManager__RestartHint)(C.QSessionManager_restartHint(this.h))
+func (this *QSessionManager) RestartHint() RestartHint {
+	int /* TODO  */
 }
 
 func (this *QSessionManager) SetRestartCommand(restartCommand []string) {

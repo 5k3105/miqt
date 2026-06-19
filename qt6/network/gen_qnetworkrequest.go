@@ -30,6 +30,7 @@ const (
 	QNetworkRequest__ETagHeader               QNetworkRequest__KnownHeaders = 10
 	QNetworkRequest__IfMatchHeader            QNetworkRequest__KnownHeaders = 11
 	QNetworkRequest__IfNoneMatchHeader        QNetworkRequest__KnownHeaders = 12
+	QNetworkRequest__NumKnownHeaders          QNetworkRequest__KnownHeaders = 13
 )
 
 type QNetworkRequest__Attribute int
@@ -63,6 +64,8 @@ const (
 	QNetworkRequest__AutoDeleteReplyOnFinishAttribute             QNetworkRequest__Attribute = 25
 	QNetworkRequest__ConnectionCacheExpiryTimeoutSecondsAttribute QNetworkRequest__Attribute = 26
 	QNetworkRequest__Http2CleartextAllowedAttribute               QNetworkRequest__Attribute = 27
+	QNetworkRequest__UseCredentialsAttribute                      QNetworkRequest__Attribute = 28
+	QNetworkRequest__FullLocalServerNameAttribute                 QNetworkRequest__Attribute = 29
 	QNetworkRequest__User                                         QNetworkRequest__Attribute = 1000
 	QNetworkRequest__UserMax                                      QNetworkRequest__Attribute = 32767
 )
@@ -182,25 +185,28 @@ func (this *QNetworkRequest) SetUrl(url *qt6.QUrl) {
 	C.QNetworkRequest_setUrl(this.h, (*C.QUrl)(url.UnsafePointer()))
 }
 
-func (this *QNetworkRequest) Header(header QNetworkRequest__KnownHeaders) *qt6.QVariant {
-	_goptr := qt6.UnsafeNewQVariant(unsafe.Pointer(C.QNetworkRequest_header(this.h, (C.int)(header))))
+func (this *QNetworkRequest) Headers() *QHttpHeaders {
+	_goptr := newQHttpHeaders(C.QNetworkRequest_headers(this.h))
 	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
 	return _goptr
 }
 
-func (this *QNetworkRequest) SetHeader(header QNetworkRequest__KnownHeaders, value *qt6.QVariant) {
-	C.QNetworkRequest_setHeader(this.h, (C.int)(header), (*C.QVariant)(value.UnsafePointer()))
+func (this *QNetworkRequest) SetHeaders(newHeaders *QHttpHeaders) {
+	C.QNetworkRequest_setHeaders(this.h, newHeaders.cPointer())
 }
 
-func (this *QNetworkRequest) HasRawHeader(headerName []byte) bool {
-	headerName_alias := C.struct_miqt_string{}
-	if len(headerName) > 0 {
-		headerName_alias.data = (*C.char)(unsafe.Pointer(&headerName[0]))
-	} else {
-		headerName_alias.data = (*C.char)(unsafe.Pointer(nil))
-	}
-	headerName_alias.len = C.size_t(len(headerName))
-	return (bool)(C.QNetworkRequest_hasRawHeader(this.h, headerName_alias))
+func (this *QNetworkRequest) Header(header KnownHeaders) *qt6.QVariant {
+	_goptr := qt6.UnsafeNewQVariant(unsafe.Pointer(C.QNetworkRequest_header(this.h, header)))
+	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
+	return _goptr
+}
+
+func (this *QNetworkRequest) SetHeader(header KnownHeaders, value *qt6.QVariant) {
+	C.QNetworkRequest_setHeader(this.h, header, (*C.QVariant)(value.UnsafePointer()))
+}
+
+func (this *QNetworkRequest) HasRawHeader(headerName qt6.QAnyStringView) bool {
+	return (bool)(C.QNetworkRequest_hasRawHeader(this.h, (*C.QAnyStringView)(headerName.UnsafePointer())))
 }
 
 func (this *QNetworkRequest) RawHeaderList() [][]byte {
@@ -216,15 +222,8 @@ func (this *QNetworkRequest) RawHeaderList() [][]byte {
 	return _ret
 }
 
-func (this *QNetworkRequest) RawHeader(headerName []byte) []byte {
-	headerName_alias := C.struct_miqt_string{}
-	if len(headerName) > 0 {
-		headerName_alias.data = (*C.char)(unsafe.Pointer(&headerName[0]))
-	} else {
-		headerName_alias.data = (*C.char)(unsafe.Pointer(nil))
-	}
-	headerName_alias.len = C.size_t(len(headerName))
-	var _bytearray C.struct_miqt_string = C.QNetworkRequest_rawHeader(this.h, headerName_alias)
+func (this *QNetworkRequest) RawHeader(headerName qt6.QAnyStringView) []byte {
+	var _bytearray C.struct_miqt_string = C.QNetworkRequest_rawHeader(this.h, (*C.QAnyStringView)(headerName.UnsafePointer()))
 	_ret := C.GoBytes(unsafe.Pointer(_bytearray.data), C.int(int64(_bytearray.len)))
 	C.free(unsafe.Pointer(_bytearray.data))
 	return _ret
@@ -248,14 +247,14 @@ func (this *QNetworkRequest) SetRawHeader(headerName []byte, value []byte) {
 	C.QNetworkRequest_setRawHeader(this.h, headerName_alias, value_alias)
 }
 
-func (this *QNetworkRequest) Attribute(code QNetworkRequest__Attribute) *qt6.QVariant {
-	_goptr := qt6.UnsafeNewQVariant(unsafe.Pointer(C.QNetworkRequest_attribute(this.h, (C.int)(code))))
+func (this *QNetworkRequest) Attribute(code Attribute) *qt6.QVariant {
+	_goptr := qt6.UnsafeNewQVariant(unsafe.Pointer(C.QNetworkRequest_attribute(this.h, code)))
 	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
 	return _goptr
 }
 
-func (this *QNetworkRequest) SetAttribute(code QNetworkRequest__Attribute, value *qt6.QVariant) {
-	C.QNetworkRequest_setAttribute(this.h, (C.int)(code), (*C.QVariant)(value.UnsafePointer()))
+func (this *QNetworkRequest) SetAttribute(code Attribute, value *qt6.QVariant) {
+	C.QNetworkRequest_setAttribute(this.h, code, (*C.QVariant)(value.UnsafePointer()))
 }
 
 func (this *QNetworkRequest) SslConfiguration() *QSslConfiguration {
@@ -276,12 +275,12 @@ func (this *QNetworkRequest) OriginatingObject() *qt6.QObject {
 	return qt6.UnsafeNewQObject(unsafe.Pointer(C.QNetworkRequest_originatingObject(this.h)))
 }
 
-func (this *QNetworkRequest) Priority() QNetworkRequest__Priority {
-	return (QNetworkRequest__Priority)(C.QNetworkRequest_priority(this.h))
+func (this *QNetworkRequest) Priority() Priority {
+	int /* TODO  */
 }
 
-func (this *QNetworkRequest) SetPriority(priority QNetworkRequest__Priority) {
-	C.QNetworkRequest_setPriority(this.h, (C.int)(priority))
+func (this *QNetworkRequest) SetPriority(priority Priority) {
+	C.QNetworkRequest_setPriority(this.h, priority)
 }
 
 func (this *QNetworkRequest) MaximumRedirectsAllowed() int {
@@ -307,6 +306,16 @@ func (this *QNetworkRequest) SetPeerVerifyName(peerName string) {
 	C.QNetworkRequest_setPeerVerifyName(this.h, peerName_ms)
 }
 
+func (this *QNetworkRequest) Http1Configuration() *QHttp1Configuration {
+	_goptr := newQHttp1Configuration(C.QNetworkRequest_http1Configuration(this.h))
+	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
+	return _goptr
+}
+
+func (this *QNetworkRequest) SetHttp1Configuration(configuration *QHttp1Configuration) {
+	C.QNetworkRequest_setHttp1Configuration(this.h, configuration.cPointer())
+}
+
 func (this *QNetworkRequest) Http2Configuration() *QHttp2Configuration {
 	_goptr := newQHttp2Configuration(C.QNetworkRequest_http2Configuration(this.h))
 	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
@@ -325,22 +334,30 @@ func (this *QNetworkRequest) SetDecompressedSafetyCheckThreshold(threshold int64
 	C.QNetworkRequest_setDecompressedSafetyCheckThreshold(this.h, (C.longlong)(threshold))
 }
 
+func (this *QNetworkRequest) TcpKeepAliveProbeCount() int {
+	return (int)(C.QNetworkRequest_tcpKeepAliveProbeCount(this.h))
+}
+
+func (this *QNetworkRequest) SetTcpKeepAliveProbeCount(probes int) {
+	C.QNetworkRequest_setTcpKeepAliveProbeCount(this.h, (C.int)(probes))
+}
+
 func (this *QNetworkRequest) TransferTimeout() int {
 	return (int)(C.QNetworkRequest_transferTimeout(this.h))
 }
 
-func (this *QNetworkRequest) SetTransferTimeout() {
-	C.QNetworkRequest_setTransferTimeout(this.h)
+func (this *QNetworkRequest) SetTransferTimeout(timeout int) {
+	C.QNetworkRequest_setTransferTimeout(this.h, (C.int)(timeout))
 }
 
-func (this *QNetworkRequest) Attribute2(code QNetworkRequest__Attribute, defaultValue *qt6.QVariant) *qt6.QVariant {
-	_goptr := qt6.UnsafeNewQVariant(unsafe.Pointer(C.QNetworkRequest_attribute2(this.h, (C.int)(code), (*C.QVariant)(defaultValue.UnsafePointer()))))
+func (this *QNetworkRequest) SetTransferTimeout2() {
+	C.QNetworkRequest_setTransferTimeout2(this.h)
+}
+
+func (this *QNetworkRequest) Attribute2(code Attribute, defaultValue *qt6.QVariant) *qt6.QVariant {
+	_goptr := qt6.UnsafeNewQVariant(unsafe.Pointer(C.QNetworkRequest_attribute2(this.h, code, (*C.QVariant)(defaultValue.UnsafePointer()))))
 	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
 	return _goptr
-}
-
-func (this *QNetworkRequest) SetTransferTimeoutWithTimeout(timeout int) {
-	C.QNetworkRequest_setTransferTimeoutWithTimeout(this.h, (C.int)(timeout))
 }
 
 // Delete this object from C++ memory.

@@ -73,6 +73,7 @@ bool QSqlQueryModel_insertColumns(QSqlQueryModel* self, int column, int count, Q
 bool QSqlQueryModel_removeColumns(QSqlQueryModel* self, int column, int count, QModelIndex* parent);
 void QSqlQueryModel_setQuery(QSqlQueryModel* self, QSqlQuery* query);
 void QSqlQueryModel_setQueryWithQuery(QSqlQueryModel* self, struct miqt_string query);
+void QSqlQueryModel_refresh(QSqlQueryModel* self);
 QSqlQuery* QSqlQueryModel_query(const QSqlQueryModel* self);
 void QSqlQueryModel_clear(QSqlQueryModel* self);
 QSqlError* QSqlQueryModel_lastError(const QSqlQueryModel* self);

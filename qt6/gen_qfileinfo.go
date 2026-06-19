@@ -91,14 +91,6 @@ func (this *QFileInfo) Swap(other *QFileInfo) {
 	C.QFileInfo_swap(this.h, other.cPointer())
 }
 
-func (this *QFileInfo) OperatorEqual(fileinfo *QFileInfo) bool {
-	return (bool)(C.QFileInfo_operatorEqual(this.h, fileinfo.cPointer()))
-}
-
-func (this *QFileInfo) OperatorNotEqual(fileinfo *QFileInfo) bool {
-	return (bool)(C.QFileInfo_operatorNotEqual(this.h, fileinfo.cPointer()))
-}
-
 func (this *QFileInfo) SetFile(file string) {
 	file_ms := C.struct_miqt_string{}
 	file_ms.data = C.CString(file)
@@ -279,6 +271,10 @@ func (this *QFileInfo) IsSymbolicLink() bool {
 	return (bool)(C.QFileInfo_isSymbolicLink(this.h))
 }
 
+func (this *QFileInfo) IsOther() bool {
+	return (bool)(C.QFileInfo_isOther(this.h))
+}
+
 func (this *QFileInfo) IsShortcut() bool {
 	return (bool)(C.QFileInfo_isShortcut(this.h))
 }
@@ -301,6 +297,13 @@ func (this *QFileInfo) IsBundle() bool {
 
 func (this *QFileInfo) SymLinkTarget() string {
 	var _ms C.struct_miqt_string = C.QFileInfo_symLinkTarget(this.h)
+	_ret := C.GoStringN(_ms.data, C.int(int64(_ms.len)))
+	C.free(unsafe.Pointer(_ms.data))
+	return _ret
+}
+
+func (this *QFileInfo) ReadSymLink() string {
+	var _ms C.struct_miqt_string = C.QFileInfo_readSymLink(this.h)
 	_ret := C.GoStringN(_ms.data, C.int(int64(_ms.len)))
 	C.free(unsafe.Pointer(_ms.data))
 	return _ret
@@ -335,12 +338,12 @@ func (this *QFileInfo) GroupId() uint {
 	return (uint)(C.QFileInfo_groupId(this.h))
 }
 
-func (this *QFileInfo) Permission(permissions QFileDevice__Permission) bool {
+func (this *QFileInfo) Permission(permissions Permission) bool {
 	return (bool)(C.QFileInfo_permission(this.h, (C.int)(permissions)))
 }
 
-func (this *QFileInfo) Permissions() QFileDevice__Permission {
-	return (QFileDevice__Permission)(C.QFileInfo_permissions(this.h))
+func (this *QFileInfo) Permissions() Permission {
+	return (Permission)(C.QFileInfo_permissions(this.h))
 }
 
 func (this *QFileInfo) Size() int64 {
@@ -373,6 +376,36 @@ func (this *QFileInfo) LastRead() *QDateTime {
 
 func (this *QFileInfo) FileTime(time QFileDevice__FileTime) *QDateTime {
 	_goptr := newQDateTime(C.QFileInfo_fileTime(this.h, (C.int)(time)))
+	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
+	return _goptr
+}
+
+func (this *QFileInfo) BirthTimeWithTz(tz *QTimeZone) *QDateTime {
+	_goptr := newQDateTime(C.QFileInfo_birthTimeWithTz(this.h, tz.cPointer()))
+	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
+	return _goptr
+}
+
+func (this *QFileInfo) MetadataChangeTimeWithTz(tz *QTimeZone) *QDateTime {
+	_goptr := newQDateTime(C.QFileInfo_metadataChangeTimeWithTz(this.h, tz.cPointer()))
+	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
+	return _goptr
+}
+
+func (this *QFileInfo) LastModifiedWithTz(tz *QTimeZone) *QDateTime {
+	_goptr := newQDateTime(C.QFileInfo_lastModifiedWithTz(this.h, tz.cPointer()))
+	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
+	return _goptr
+}
+
+func (this *QFileInfo) LastReadWithTz(tz *QTimeZone) *QDateTime {
+	_goptr := newQDateTime(C.QFileInfo_lastReadWithTz(this.h, tz.cPointer()))
+	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
+	return _goptr
+}
+
+func (this *QFileInfo) FileTime2(time QFileDevice__FileTime, tz *QTimeZone) *QDateTime {
+	_goptr := newQDateTime(C.QFileInfo_fileTime2(this.h, (C.int)(time), tz.cPointer()))
 	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
 	return _goptr
 }

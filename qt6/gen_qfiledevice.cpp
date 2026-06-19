@@ -42,9 +42,8 @@ struct miqt_string QFileDevice_tr(const char* s) {
 	return _ms;
 }
 
-int QFileDevice_error(const QFileDevice* self) {
-	QFileDevice::FileError _ret = self->error();
-	return static_cast<int>(_ret);
+FileError QFileDevice_error(const QFileDevice* self) {
+	return self->error();
 }
 
 void QFileDevice_unsetError(QFileDevice* self) {
@@ -100,13 +99,12 @@ bool QFileDevice_resize(QFileDevice* self, long long sz) {
 	return self->resize(static_cast<qint64>(sz));
 }
 
-int QFileDevice_permissions(const QFileDevice* self) {
-	QFileDevice::Permissions _ret = self->permissions();
-	return static_cast<int>(_ret);
+Permissions QFileDevice_permissions(const QFileDevice* self) {
+	return self->permissions();
 }
 
-bool QFileDevice_setPermissions(QFileDevice* self, int permissionSpec) {
-	return self->setPermissions(static_cast<QFileDevice::Permissions>(permissionSpec));
+bool QFileDevice_setPermissions(QFileDevice* self, Permissions permissionSpec) {
+	return self->setPermissions(permissionSpec);
 }
 
 unsigned char* QFileDevice_map(QFileDevice* self, long long offset, long long size) {
@@ -148,8 +146,8 @@ struct miqt_string QFileDevice_tr3(const char* s, const char* c, int n) {
 	return _ms;
 }
 
-unsigned char* QFileDevice_map2(QFileDevice* self, long long offset, long long size, int flags) {
-	uchar* _ret = self->map(static_cast<qint64>(offset), static_cast<qint64>(size), static_cast<QFileDevice::MemoryMapFlags>(flags));
+unsigned char* QFileDevice_map2(QFileDevice* self, long long offset, long long size, MemoryMapFlags flags) {
+	uchar* _ret = self->map(static_cast<qint64>(offset), static_cast<qint64>(size), flags);
 	return static_cast<unsigned char*>(_ret);
 }
 

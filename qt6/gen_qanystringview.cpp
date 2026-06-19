@@ -29,12 +29,60 @@ QAnyStringView* QAnyStringView_new3(struct miqt_string str) {
 	return new (std::nothrow) QAnyStringView(str_QString);
 }
 
-QAnyStringView* QAnyStringView_new4(QChar* c) {
-	return new (std::nothrow) QAnyStringView(*c);
+QAnyStringView* QAnyStringView_new4(QAnyStringView* param1) {
+	return new (std::nothrow) QAnyStringView(*param1);
 }
 
-QAnyStringView* QAnyStringView_new5(QAnyStringView* param1) {
-	return new (std::nothrow) QAnyStringView(*param1);
+QAnyStringView* QAnyStringView_mid(const QAnyStringView* self, ptrdiff_t pos) {
+	return new QAnyStringView(self->mid((qsizetype)(pos)));
+}
+
+QAnyStringView* QAnyStringView_left(const QAnyStringView* self, ptrdiff_t n) {
+	return new QAnyStringView(self->left((qsizetype)(n)));
+}
+
+QAnyStringView* QAnyStringView_right(const QAnyStringView* self, ptrdiff_t n) {
+	return new QAnyStringView(self->right((qsizetype)(n)));
+}
+
+QAnyStringView* QAnyStringView_sliced(const QAnyStringView* self, ptrdiff_t pos) {
+	return new QAnyStringView(self->sliced((qsizetype)(pos)));
+}
+
+QAnyStringView* QAnyStringView_sliced2(const QAnyStringView* self, ptrdiff_t pos, ptrdiff_t n) {
+	return new QAnyStringView(self->sliced((qsizetype)(pos), (qsizetype)(n)));
+}
+
+QAnyStringView* QAnyStringView_first(const QAnyStringView* self, ptrdiff_t n) {
+	return new QAnyStringView(self->first((qsizetype)(n)));
+}
+
+QAnyStringView* QAnyStringView_last(const QAnyStringView* self, ptrdiff_t n) {
+	return new QAnyStringView(self->last((qsizetype)(n)));
+}
+
+QAnyStringView* QAnyStringView_chopped(const QAnyStringView* self, ptrdiff_t n) {
+	return new QAnyStringView(self->chopped((qsizetype)(n)));
+}
+
+QAnyStringView* QAnyStringView_slice(QAnyStringView* self, ptrdiff_t pos) {
+	QAnyStringView& _ret = self->slice((qsizetype)(pos));
+	// Cast returned reference into pointer
+	return &_ret;
+}
+
+QAnyStringView* QAnyStringView_slice2(QAnyStringView* self, ptrdiff_t pos, ptrdiff_t n) {
+	QAnyStringView& _ret = self->slice((qsizetype)(pos), (qsizetype)(n));
+	// Cast returned reference into pointer
+	return &_ret;
+}
+
+void QAnyStringView_truncate(QAnyStringView* self, ptrdiff_t n) {
+	self->truncate((qsizetype)(n));
+}
+
+void QAnyStringView_chop(QAnyStringView* self, ptrdiff_t n) {
+	self->chop((qsizetype)(n));
 }
 
 struct miqt_string QAnyStringView_toString(const QAnyStringView* self) {
@@ -82,6 +130,11 @@ ptrdiff_t QAnyStringView_sizeBytes(const QAnyStringView* self) {
 	return static_cast<ptrdiff_t>(_ret);
 }
 
+ptrdiff_t QAnyStringView_maxSize(const QAnyStringView* self) {
+	qsizetype _ret = self->max_size();
+	return static_cast<ptrdiff_t>(_ret);
+}
+
 bool QAnyStringView_isNull(const QAnyStringView* self) {
 	return self->isNull();
 }
@@ -93,6 +146,14 @@ bool QAnyStringView_isEmpty(const QAnyStringView* self) {
 ptrdiff_t QAnyStringView_length(const QAnyStringView* self) {
 	qsizetype _ret = self->length();
 	return static_cast<ptrdiff_t>(_ret);
+}
+
+void QAnyStringView_operatorAssign(QAnyStringView* self, QAnyStringView* param1) {
+	self->operator=(*param1);
+}
+
+QAnyStringView* QAnyStringView_mid2(const QAnyStringView* self, ptrdiff_t pos, ptrdiff_t n) {
+	return new QAnyStringView(self->mid((qsizetype)(pos), (qsizetype)(n)));
 }
 
 int QAnyStringView_compare2(QAnyStringView* lhs, QAnyStringView* rhs, int cs) {

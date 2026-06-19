@@ -98,8 +98,12 @@ func (this *QEventLoop) ProcessEvents() bool {
 	return (bool)(C.QEventLoop_processEvents(this.h))
 }
 
-func (this *QEventLoop) ProcessEvents2(flags QEventLoop__ProcessEventsFlag, maximumTime int) {
-	C.QEventLoop_processEvents2(this.h, (C.int)(flags), (C.int)(maximumTime))
+func (this *QEventLoop) ProcessEvents2(flags ProcessEventsFlags, maximumTime int) {
+	C.QEventLoop_processEvents2(this.h, flags, (C.int)(maximumTime))
+}
+
+func (this *QEventLoop) ProcessEvents3(flags ProcessEventsFlags, deadline QDeadlineTimer) {
+	C.QEventLoop_processEvents3(this.h, flags, deadline.cPointer())
 }
 
 func (this *QEventLoop) Exec() int {
@@ -148,12 +152,12 @@ func QEventLoop_Tr3(s string, c string, n int) string {
 	return _ret
 }
 
-func (this *QEventLoop) ProcessEventsWithFlags(flags QEventLoop__ProcessEventsFlag) bool {
-	return (bool)(C.QEventLoop_processEventsWithFlags(this.h, (C.int)(flags)))
+func (this *QEventLoop) ProcessEventsWithFlags(flags ProcessEventsFlags) bool {
+	return (bool)(C.QEventLoop_processEventsWithFlags(this.h, flags))
 }
 
-func (this *QEventLoop) ExecWithFlags(flags QEventLoop__ProcessEventsFlag) int {
-	return (int)(C.QEventLoop_execWithFlags(this.h, (C.int)(flags)))
+func (this *QEventLoop) ExecWithFlags(flags ProcessEventsFlags) int {
+	return (int)(C.QEventLoop_execWithFlags(this.h, flags))
 }
 
 func (this *QEventLoop) ExitWithReturnCode(returnCode int) {
@@ -468,6 +472,10 @@ func NewQEventLoopLocker2(loop *QEventLoop) *QEventLoopLocker {
 func NewQEventLoopLocker3(thread *QThread) *QEventLoopLocker {
 
 	return newQEventLoopLocker(C.QEventLoopLocker_new3(thread.cPointer()))
+}
+
+func (this *QEventLoopLocker) Swap(other *QEventLoopLocker) {
+	C.QEventLoopLocker_swap(this.h, other.cPointer())
 }
 
 // Delete this object from C++ memory.

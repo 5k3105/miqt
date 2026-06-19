@@ -75,8 +75,8 @@ func (this *QLockFile) Lock() bool {
 	return (bool)(C.QLockFile_lock(this.h))
 }
 
-func (this *QLockFile) TryLock() bool {
-	return (bool)(C.QLockFile_tryLock(this.h))
+func (this *QLockFile) TryLock(timeout int) bool {
+	return (bool)(C.QLockFile_tryLock(this.h, (C.int)(timeout)))
 }
 
 func (this *QLockFile) Unlock() {
@@ -91,6 +91,10 @@ func (this *QLockFile) StaleLockTime() int {
 	return (int)(C.QLockFile_staleLockTime(this.h))
 }
 
+func (this *QLockFile) TryLock2() bool {
+	return (bool)(C.QLockFile_tryLock2(this.h))
+}
+
 func (this *QLockFile) IsLocked() bool {
 	return (bool)(C.QLockFile_isLocked(this.h))
 }
@@ -99,12 +103,8 @@ func (this *QLockFile) RemoveStaleLockFile() bool {
 	return (bool)(C.QLockFile_removeStaleLockFile(this.h))
 }
 
-func (this *QLockFile) Error() QLockFile__LockError {
-	return (QLockFile__LockError)(C.QLockFile_error(this.h))
-}
-
-func (this *QLockFile) TryLock2(timeout int) bool {
-	return (bool)(C.QLockFile_tryLock2(this.h, (C.int)(timeout)))
+func (this *QLockFile) Error() LockError {
+	int /* TODO  */
 }
 
 // Delete this object from C++ memory.

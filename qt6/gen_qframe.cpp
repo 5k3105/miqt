@@ -79,7 +79,7 @@ void miqt_exec_callback_QFrame_dropEvent(QFrame*, intptr_t, QDropEvent*);
 void miqt_exec_callback_QFrame_showEvent(QFrame*, intptr_t, QShowEvent*);
 void miqt_exec_callback_QFrame_hideEvent(QFrame*, intptr_t, QHideEvent*);
 bool miqt_exec_callback_QFrame_nativeEvent(QFrame*, intptr_t, struct miqt_string, void*, intptr_t*);
-int miqt_exec_callback_QFrame_metric(const QFrame*, intptr_t, int);
+int miqt_exec_callback_QFrame_metric(const QFrame*, intptr_t, PaintDeviceMetric);
 void miqt_exec_callback_QFrame_initPainter(const QFrame*, intptr_t, QPainter*);
 QPaintDevice* miqt_exec_callback_QFrame_redirected(const QFrame*, intptr_t, QPoint*);
 QPainter* miqt_exec_callback_QFrame_sharedPainter(const QFrame*, intptr_t);
@@ -699,18 +699,17 @@ public:
 	intptr_t handle__metric = 0;
 
 	// Subclass to allow providing a Go implementation
-	virtual int metric(QPaintDevice::PaintDeviceMetric param1) const override {
+	virtual int metric(PaintDeviceMetric param1) const override {
 		if (handle__metric == 0) {
 			return QFrame::metric(param1);
 		}
 
-		QPaintDevice::PaintDeviceMetric param1_ret = param1;
-		int sigval1 = static_cast<int>(param1_ret);
+		PaintDeviceMetric sigval1 = param1;
 		int callback_return_value = miqt_exec_callback_QFrame_metric(this, handle__metric, sigval1);
 		return static_cast<int>(callback_return_value);
 	}
 
-	friend int QFrame_virtualbase_metric(const void* self, int param1);
+	friend int QFrame_virtualbase_metric(const void* self, PaintDeviceMetric param1);
 
 	// cgo.Handle value for overwritten implementation
 	intptr_t handle__initPainter = 0;
@@ -927,6 +926,7 @@ public:
 	friend int QFrame_protectedbase_senderSignalIndex(bool* _dynamic_cast_ok, const void* self);
 	friend int QFrame_protectedbase_receivers(bool* _dynamic_cast_ok, const void* self, const char* signal);
 	friend bool QFrame_protectedbase_isSignalConnected(bool* _dynamic_cast_ok, const void* self, QMetaMethod* signal);
+	friend double QFrame_protectedbase_getDecodedMetricF(bool* _dynamic_cast_ok, const void* self, PaintDeviceMetric metricA, PaintDeviceMetric metricB);
 };
 
 QFrame* QFrame_new(QWidget* parent) {
@@ -980,22 +980,20 @@ QSize* QFrame_sizeHint(const QFrame* self) {
 	return new QSize(self->sizeHint());
 }
 
-int QFrame_frameShape(const QFrame* self) {
-	QFrame::Shape _ret = self->frameShape();
-	return static_cast<int>(_ret);
+Shape QFrame_frameShape(const QFrame* self) {
+	return self->frameShape();
 }
 
-void QFrame_setFrameShape(QFrame* self, int frameShape) {
-	self->setFrameShape(static_cast<QFrame::Shape>(frameShape));
+void QFrame_setFrameShape(QFrame* self, Shape frameShape) {
+	self->setFrameShape(frameShape);
 }
 
-int QFrame_frameShadow(const QFrame* self) {
-	QFrame::Shadow _ret = self->frameShadow();
-	return static_cast<int>(_ret);
+Shadow QFrame_frameShadow(const QFrame* self) {
+	return self->frameShadow();
 }
 
-void QFrame_setFrameShadow(QFrame* self, int frameShadow) {
-	self->setFrameShadow(static_cast<QFrame::Shadow>(frameShadow));
+void QFrame_setFrameShadow(QFrame* self, Shadow frameShadow) {
+	self->setFrameShadow(frameShadow);
 }
 
 int QFrame_lineWidth(const QFrame* self) {
@@ -1545,8 +1543,8 @@ bool QFrame_override_virtual_metric(void* self, intptr_t slot) {
 	return true;
 }
 
-int QFrame_virtualbase_metric(const void* self, int param1) {
-	return static_cast<const MiqtVirtualQFrame*>(self)->QFrame::metric(static_cast<MiqtVirtualQFrame::PaintDeviceMetric>(param1));
+int QFrame_virtualbase_metric(const void* self, PaintDeviceMetric param1) {
+	return static_cast<const MiqtVirtualQFrame*>(self)->QFrame::metric(param1);
 }
 
 bool QFrame_override_virtual_initPainter(void* self, intptr_t slot) {
@@ -1825,6 +1823,17 @@ bool QFrame_protectedbase_isSignalConnected(bool* _dynamic_cast_ok, const void* 
 
 	*_dynamic_cast_ok = true;
 	return self_cast->isSignalConnected(*signal);
+}
+
+double QFrame_protectedbase_getDecodedMetricF(bool* _dynamic_cast_ok, const void* self, PaintDeviceMetric metricA, PaintDeviceMetric metricB) {
+	MiqtVirtualQFrame* self_cast = dynamic_cast<MiqtVirtualQFrame*>( (QFrame*)(self) );
+	if (self_cast == nullptr) {
+		*_dynamic_cast_ok = false;
+		return 0;
+	}
+
+	*_dynamic_cast_ok = true;
+	return self_cast->getDecodedMetricF(metricA, metricB);
 }
 
 void QFrame_delete(QFrame* self) {

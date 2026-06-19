@@ -64,9 +64,8 @@ void QJSManagedValue_setPrototype(QJSManagedValue* self, QJSManagedValue* protot
 	self->setPrototype(*prototype);
 }
 
-int QJSManagedValue_type(const QJSManagedValue* self) {
-	QJSManagedValue::Type _ret = self->type();
-	return static_cast<int>(_ret);
+Type QJSManagedValue_type(const QJSManagedValue* self) {
+	return self->type();
 }
 
 bool QJSManagedValue_isUndefined(const QJSManagedValue* self) {

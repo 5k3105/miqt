@@ -638,13 +638,32 @@ bool QLayout_setAlignment2(QLayout* self, QLayout* l, int alignment) {
 	return self->setAlignment(l, static_cast<Qt::Alignment>(alignment));
 }
 
-void QLayout_setSizeConstraint(QLayout* self, int sizeConstraint) {
-	self->setSizeConstraint(static_cast<QLayout::SizeConstraint>(sizeConstraint));
+void QLayout_setSizeConstraint(QLayout* self, SizeConstraint constraint) {
+	self->setSizeConstraint(constraint);
 }
 
-int QLayout_sizeConstraint(const QLayout* self) {
-	QLayout::SizeConstraint _ret = self->sizeConstraint();
-	return static_cast<int>(_ret);
+SizeConstraint QLayout_sizeConstraint(const QLayout* self) {
+	return self->sizeConstraint();
+}
+
+void QLayout_setSizeConstraints(QLayout* self, SizeConstraint horizontal, SizeConstraint vertical) {
+	self->setSizeConstraints(horizontal, vertical);
+}
+
+void QLayout_setHorizontalSizeConstraint(QLayout* self, SizeConstraint constraint) {
+	self->setHorizontalSizeConstraint(constraint);
+}
+
+SizeConstraint QLayout_horizontalSizeConstraint(const QLayout* self) {
+	return self->horizontalSizeConstraint();
+}
+
+void QLayout_setVerticalSizeConstraint(QLayout* self, SizeConstraint constraint) {
+	self->setVerticalSizeConstraint(constraint);
+}
+
+SizeConstraint QLayout_verticalSizeConstraint(const QLayout* self) {
+	return self->verticalSizeConstraint();
 }
 
 void QLayout_setMenuBar(QLayout* self, QWidget* w) {

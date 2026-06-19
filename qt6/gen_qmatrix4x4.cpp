@@ -265,13 +265,16 @@ QVariant* QMatrix4x4_ToQVariant(const QMatrix4x4* self) {
 	return new QVariant(self->operator QVariant());
 }
 
-void QMatrix4x4_projectedRotate(QMatrix4x4* self, float angle, float x, float y, float z) {
+void QMatrix4x4_projectedRotate(QMatrix4x4* self, float angle, float x, float y, float z, float distanceToPlane) {
+	self->projectedRotate(static_cast<float>(angle), static_cast<float>(x), static_cast<float>(y), static_cast<float>(z), static_cast<float>(distanceToPlane));
+}
+
+void QMatrix4x4_projectedRotate2(QMatrix4x4* self, float angle, float x, float y, float z) {
 	self->projectedRotate(static_cast<float>(angle), static_cast<float>(x), static_cast<float>(y), static_cast<float>(z));
 }
 
-int QMatrix4x4_flags(const QMatrix4x4* self) {
-	QMatrix4x4::Flags _ret = self->flags();
-	return static_cast<int>(_ret);
+Flags QMatrix4x4_flags(const QMatrix4x4* self) {
+	return self->flags();
 }
 
 QMatrix4x4* QMatrix4x4_invertedWithInvertible(const QMatrix4x4* self, bool* invertible) {

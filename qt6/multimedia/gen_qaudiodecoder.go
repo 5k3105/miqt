@@ -128,8 +128,8 @@ func (this *QAudioDecoder) SetAudioFormat(format *QAudioFormat) {
 	C.QAudioDecoder_setAudioFormat(this.h, format.cPointer())
 }
 
-func (this *QAudioDecoder) Error() QAudioDecoder__Error {
-	return (QAudioDecoder__Error)(C.QAudioDecoder_error(this.h))
+func (this *QAudioDecoder) Error() Error {
+	int /* TODO  */
 }
 
 func (this *QAudioDecoder) ErrorString() string {

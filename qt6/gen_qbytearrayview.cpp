@@ -33,14 +33,12 @@ ptrdiff_t QByteArrayView_size(const QByteArrayView* self) {
 	return static_cast<ptrdiff_t>(_ret);
 }
 
-const char* QByteArrayView_data(const QByteArrayView* self) {
-	QByteArrayView::const_pointer _ret = self->data();
-	return const_cast<const char*>(static_cast<const char*>(_ret));
+const_pointer QByteArrayView_data(const QByteArrayView* self) {
+	return self->data();
 }
 
-const char* QByteArrayView_constData(const QByteArrayView* self) {
-	QByteArrayView::const_pointer _ret = self->constData();
-	return const_cast<const char*>(static_cast<const char*>(_ret));
+const_pointer QByteArrayView_constData(const QByteArrayView* self) {
+	return self->constData();
 }
 
 char QByteArrayView_operatorSubscript(const QByteArrayView* self, ptrdiff_t n) {
@@ -67,8 +65,32 @@ QByteArrayView* QByteArrayView_sliced2(const QByteArrayView* self, ptrdiff_t pos
 	return new QByteArrayView(self->sliced((qsizetype)(pos), (qsizetype)(n)));
 }
 
+QByteArrayView* QByteArrayView_slice(QByteArrayView* self, ptrdiff_t pos) {
+	QByteArrayView& _ret = self->slice((qsizetype)(pos));
+	// Cast returned reference into pointer
+	return &_ret;
+}
+
+QByteArrayView* QByteArrayView_slice2(QByteArrayView* self, ptrdiff_t pos, ptrdiff_t n) {
+	QByteArrayView& _ret = self->slice((qsizetype)(pos), (qsizetype)(n));
+	// Cast returned reference into pointer
+	return &_ret;
+}
+
 QByteArrayView* QByteArrayView_chopped(const QByteArrayView* self, ptrdiff_t len) {
 	return new QByteArrayView(self->chopped((qsizetype)(len)));
+}
+
+QByteArrayView* QByteArrayView_left(const QByteArrayView* self, ptrdiff_t n) {
+	return new QByteArrayView(self->left((qsizetype)(n)));
+}
+
+QByteArrayView* QByteArrayView_right(const QByteArrayView* self, ptrdiff_t n) {
+	return new QByteArrayView(self->right((qsizetype)(n)));
+}
+
+QByteArrayView* QByteArrayView_mid(const QByteArrayView* self, ptrdiff_t pos) {
+	return new QByteArrayView(self->mid((qsizetype)(pos)));
 }
 
 void QByteArrayView_truncate(QByteArrayView* self, ptrdiff_t n) {
@@ -195,24 +217,36 @@ bool QByteArrayView_isValidUtf8(const QByteArrayView* self) {
 	return self->isValidUtf8();
 }
 
-const char* QByteArrayView_begin(const QByteArrayView* self) {
-	QByteArrayView::const_iterator _ret = self->begin();
-	return const_cast<const char*>(static_cast<const char*>(_ret));
+const_iterator QByteArrayView_begin(const QByteArrayView* self) {
+	return self->begin();
 }
 
-const char* QByteArrayView_end(const QByteArrayView* self) {
-	QByteArrayView::const_iterator _ret = self->end();
-	return const_cast<const char*>(static_cast<const char*>(_ret));
+const_iterator QByteArrayView_end(const QByteArrayView* self) {
+	return self->end();
 }
 
-const char* QByteArrayView_cbegin(const QByteArrayView* self) {
-	QByteArrayView::const_iterator _ret = self->cbegin();
-	return const_cast<const char*>(static_cast<const char*>(_ret));
+const_iterator QByteArrayView_cbegin(const QByteArrayView* self) {
+	return self->cbegin();
 }
 
-const char* QByteArrayView_cend(const QByteArrayView* self) {
-	QByteArrayView::const_iterator _ret = self->cend();
-	return const_cast<const char*>(static_cast<const char*>(_ret));
+const_iterator QByteArrayView_cend(const QByteArrayView* self) {
+	return self->cend();
+}
+
+const_reverse_iterator QByteArrayView_rbegin(const QByteArrayView* self) {
+	return self->rbegin();
+}
+
+const_reverse_iterator QByteArrayView_rend(const QByteArrayView* self) {
+	return self->rend();
+}
+
+const_reverse_iterator QByteArrayView_crbegin(const QByteArrayView* self) {
+	return self->crbegin();
+}
+
+const_reverse_iterator QByteArrayView_crend(const QByteArrayView* self) {
+	return self->crend();
 }
 
 bool QByteArrayView_empty(const QByteArrayView* self) {
@@ -225,6 +259,11 @@ char QByteArrayView_front(const QByteArrayView* self) {
 
 char QByteArrayView_back(const QByteArrayView* self) {
 	return self->back();
+}
+
+ptrdiff_t QByteArrayView_maxSize(const QByteArrayView* self) {
+	qsizetype _ret = self->max_size();
+	return static_cast<ptrdiff_t>(_ret);
 }
 
 bool QByteArrayView_isNull(const QByteArrayView* self) {
@@ -246,6 +285,19 @@ char QByteArrayView_first2(const QByteArrayView* self) {
 
 char QByteArrayView_last2(const QByteArrayView* self) {
 	return self->last();
+}
+
+ptrdiff_t QByteArrayView_maxSize2() {
+	qsizetype _ret = QByteArrayView::maxSize();
+	return static_cast<ptrdiff_t>(_ret);
+}
+
+void QByteArrayView_operatorAssign(QByteArrayView* self, QByteArrayView* param1) {
+	self->operator=(*param1);
+}
+
+QByteArrayView* QByteArrayView_mid2(const QByteArrayView* self, ptrdiff_t pos, ptrdiff_t n) {
+	return new QByteArrayView(self->mid((qsizetype)(pos), (qsizetype)(n)));
 }
 
 short QByteArrayView_toShortWithOk(const QByteArrayView* self, bool* ok) {

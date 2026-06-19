@@ -47,22 +47,20 @@ int QTextOption_textDirection(const QTextOption* self) {
 	return static_cast<int>(_ret);
 }
 
-void QTextOption_setWrapMode(QTextOption* self, int wrap) {
-	self->setWrapMode(static_cast<QTextOption::WrapMode>(wrap));
+void QTextOption_setWrapMode(QTextOption* self, WrapMode wrap) {
+	self->setWrapMode(wrap);
 }
 
-int QTextOption_wrapMode(const QTextOption* self) {
-	QTextOption::WrapMode _ret = self->wrapMode();
-	return static_cast<int>(_ret);
+WrapMode QTextOption_wrapMode(const QTextOption* self) {
+	return self->wrapMode();
 }
 
-void QTextOption_setFlags(QTextOption* self, int flags) {
-	self->setFlags(static_cast<QTextOption::Flags>(flags));
+void QTextOption_setFlags(QTextOption* self, Flags flags) {
+	self->setFlags(flags);
 }
 
-int QTextOption_flags(const QTextOption* self) {
-	QTextOption::Flags _ret = self->flags();
-	return static_cast<int>(_ret);
+Flags QTextOption_flags(const QTextOption* self) {
+	return self->flags();
 }
 
 void QTextOption_setTabStopDistance(QTextOption* self, double tabStopDistance) {
@@ -97,22 +95,22 @@ struct miqt_array /* of double */  QTextOption_tabArray(const QTextOption* self)
 	return _out;
 }
 
-void QTextOption_setTabs(QTextOption* self, struct miqt_array /* of QTextOption__Tab* */  tabStops) {
-	QList<QTextOption::Tab> tabStops_QList;
+void QTextOption_setTabs(QTextOption* self, struct miqt_array /* of Tab */  tabStops) {
+	QList<Tab> tabStops_QList;
 	tabStops_QList.reserve(tabStops.len);
-	QTextOption__Tab** tabStops_arr = static_cast<QTextOption__Tab**>(tabStops.data);
+	Tab* tabStops_arr = static_cast<Tab*>(tabStops.data);
 	for(size_t i = 0; i < tabStops.len; ++i) {
-		tabStops_QList.push_back(*(tabStops_arr[i]));
+		tabStops_QList.push_back(tabStops_arr[i]);
 	}
 	self->setTabs(tabStops_QList);
 }
 
-struct miqt_array /* of QTextOption__Tab* */  QTextOption_tabs(const QTextOption* self) {
-	QList<QTextOption::Tab> _ret = self->tabs();
+struct miqt_array /* of Tab */  QTextOption_tabs(const QTextOption* self) {
+	QList<Tab> _ret = self->tabs();
 	// Convert QList<> from C++ memory to manually-managed C memory
-	QTextOption__Tab** _arr = static_cast<QTextOption__Tab**>(malloc(sizeof(QTextOption__Tab*) * _ret.length()));
+	Tab* _arr = static_cast<Tab*>(malloc(sizeof(Tab) * _ret.length()));
 	for (size_t i = 0, e = _ret.length(); i < e; ++i) {
-		_arr[i] = new QTextOption::Tab(_ret[i]);
+		_arr[i] = _ret[i];
 	}
 	struct miqt_array _out;
 	_out.len = _ret.length();
@@ -136,19 +134,19 @@ QTextOption__Tab* QTextOption__Tab_new() {
 	return new (std::nothrow) QTextOption::Tab();
 }
 
-QTextOption__Tab* QTextOption__Tab_new2(double pos, int tabType) {
-	return new (std::nothrow) QTextOption::Tab(static_cast<qreal>(pos), static_cast<QTextOption::TabType>(tabType));
+QTextOption__Tab* QTextOption__Tab_new2(double pos, TabType tabType) {
+	return new (std::nothrow) QTextOption::Tab(static_cast<qreal>(pos), tabType);
 }
 
-QTextOption__Tab* QTextOption__Tab_new3(double pos, int tabType, QChar* delim) {
-	return new (std::nothrow) QTextOption::Tab(static_cast<qreal>(pos), static_cast<QTextOption::TabType>(tabType), *delim);
+QTextOption__Tab* QTextOption__Tab_new3(double pos, TabType tabType, QChar* delim) {
+	return new (std::nothrow) QTextOption::Tab(static_cast<qreal>(pos), tabType, *delim);
 }
 
-bool QTextOption__Tab_operatorEqual(const QTextOption__Tab* self, QTextOption__Tab* other) {
+bool QTextOption__Tab_operatorEqual(const QTextOption__Tab* self, const Tab* other) {
 	return (*self == *other);
 }
 
-bool QTextOption__Tab_operatorNotEqual(const QTextOption__Tab* self, QTextOption__Tab* other) {
+bool QTextOption__Tab_operatorNotEqual(const QTextOption__Tab* self, const Tab* other) {
 	return (*self != *other);
 }
 
@@ -161,13 +159,12 @@ void QTextOption__Tab_setPosition(QTextOption__Tab* self, double position) {
 	self->position = static_cast<qreal>(position);
 }
 
-int QTextOption__Tab_type(const QTextOption__Tab* self) {
-	QTextOption::TabType type_ret = self->type;
-	return static_cast<int>(type_ret);
+TabType QTextOption__Tab_type(const QTextOption__Tab* self) {
+	return self->type;
 }
 
-void QTextOption__Tab_setType(QTextOption__Tab* self, int type) {
-	self->type = static_cast<QTextOption::TabType>(type);
+void QTextOption__Tab_setType(QTextOption__Tab* self, TabType type) {
+	self->type = type;
 }
 
 QChar* QTextOption__Tab_delimiter(const QTextOption__Tab* self) {

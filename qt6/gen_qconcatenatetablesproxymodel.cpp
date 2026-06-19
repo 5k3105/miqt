@@ -41,6 +41,7 @@ QMimeData* miqt_exec_callback_QConcatenateTablesProxyModel_mimeData(const QConca
 bool miqt_exec_callback_QConcatenateTablesProxyModel_canDropMimeData(const QConcatenateTablesProxyModel*, intptr_t, QMimeData*, int, int, int, QModelIndex*);
 bool miqt_exec_callback_QConcatenateTablesProxyModel_dropMimeData(QConcatenateTablesProxyModel*, intptr_t, QMimeData*, int, int, int, QModelIndex*);
 QSize* miqt_exec_callback_QConcatenateTablesProxyModel_span(const QConcatenateTablesProxyModel*, intptr_t, QModelIndex*);
+struct miqt_map /* of int to struct miqt_string */  miqt_exec_callback_QConcatenateTablesProxyModel_roleNames(const QConcatenateTablesProxyModel*, intptr_t);
 QModelIndex* miqt_exec_callback_QConcatenateTablesProxyModel_sibling(const QConcatenateTablesProxyModel*, intptr_t, int, int, QModelIndex*);
 bool miqt_exec_callback_QConcatenateTablesProxyModel_hasChildren(const QConcatenateTablesProxyModel*, intptr_t, QModelIndex*);
 bool miqt_exec_callback_QConcatenateTablesProxyModel_setHeaderData(QConcatenateTablesProxyModel*, intptr_t, int, int, QVariant*, int);
@@ -58,7 +59,6 @@ bool miqt_exec_callback_QConcatenateTablesProxyModel_canFetchMore(const QConcate
 void miqt_exec_callback_QConcatenateTablesProxyModel_sort(QConcatenateTablesProxyModel*, intptr_t, int, int);
 QModelIndex* miqt_exec_callback_QConcatenateTablesProxyModel_buddy(const QConcatenateTablesProxyModel*, intptr_t, QModelIndex*);
 struct miqt_array /* of QModelIndex* */  miqt_exec_callback_QConcatenateTablesProxyModel_match(const QConcatenateTablesProxyModel*, intptr_t, QModelIndex*, int, QVariant*, int, int);
-struct miqt_map /* of int to struct miqt_string */  miqt_exec_callback_QConcatenateTablesProxyModel_roleNames(const QConcatenateTablesProxyModel*, intptr_t);
 void miqt_exec_callback_QConcatenateTablesProxyModel_multiData(const QConcatenateTablesProxyModel*, intptr_t, QModelIndex*, QModelRoleDataSpan*);
 bool miqt_exec_callback_QConcatenateTablesProxyModel_submit(QConcatenateTablesProxyModel*, intptr_t);
 void miqt_exec_callback_QConcatenateTablesProxyModel_revert(QConcatenateTablesProxyModel*, intptr_t);
@@ -408,6 +408,29 @@ public:
 	friend QSize* QConcatenateTablesProxyModel_virtualbase_span(const void* self, QModelIndex* index);
 
 	// cgo.Handle value for overwritten implementation
+	intptr_t handle__roleNames = 0;
+
+	// Subclass to allow providing a Go implementation
+	virtual QHash<int, QByteArray> roleNames() const override {
+		if (handle__roleNames == 0) {
+			return QConcatenateTablesProxyModel::roleNames();
+		}
+
+		struct miqt_map /* of int to struct miqt_string */  callback_return_value = miqt_exec_callback_QConcatenateTablesProxyModel_roleNames(this, handle__roleNames);
+		QHash<int, QByteArray> callback_return_value_QMap;
+		callback_return_value_QMap.reserve(callback_return_value.len);
+		int* callback_return_value_karr = static_cast<int*>(callback_return_value.keys);
+		struct miqt_string* callback_return_value_varr = static_cast<struct miqt_string*>(callback_return_value.values);
+		for(size_t i = 0; i < callback_return_value.len; ++i) {
+			QByteArray callback_return_value_varr_i_QByteArray(callback_return_value_varr[i].data, callback_return_value_varr[i].len);
+			callback_return_value_QMap[static_cast<int>(callback_return_value_karr[i])] = callback_return_value_varr_i_QByteArray;
+		}
+		return callback_return_value_QMap;
+	}
+
+	friend struct miqt_map /* of int to struct miqt_string */  QConcatenateTablesProxyModel_virtualbase_roleNames(const void* self);
+
+	// cgo.Handle value for overwritten implementation
 	intptr_t handle__sibling = 0;
 
 	// Subclass to allow providing a Go implementation
@@ -748,29 +771,6 @@ public:
 	}
 
 	friend struct miqt_array /* of QModelIndex* */  QConcatenateTablesProxyModel_virtualbase_match(const void* self, QModelIndex* start, int role, QVariant* value, int hits, int flags);
-
-	// cgo.Handle value for overwritten implementation
-	intptr_t handle__roleNames = 0;
-
-	// Subclass to allow providing a Go implementation
-	virtual QHash<int, QByteArray> roleNames() const override {
-		if (handle__roleNames == 0) {
-			return QConcatenateTablesProxyModel::roleNames();
-		}
-
-		struct miqt_map /* of int to struct miqt_string */  callback_return_value = miqt_exec_callback_QConcatenateTablesProxyModel_roleNames(this, handle__roleNames);
-		QHash<int, QByteArray> callback_return_value_QMap;
-		callback_return_value_QMap.reserve(callback_return_value.len);
-		int* callback_return_value_karr = static_cast<int*>(callback_return_value.keys);
-		struct miqt_string* callback_return_value_varr = static_cast<struct miqt_string*>(callback_return_value.values);
-		for(size_t i = 0; i < callback_return_value.len; ++i) {
-			QByteArray callback_return_value_varr_i_QByteArray(callback_return_value_varr[i].data, callback_return_value_varr[i].len);
-			callback_return_value_QMap[static_cast<int>(callback_return_value_karr[i])] = callback_return_value_varr_i_QByteArray;
-		}
-		return callback_return_value_QMap;
-	}
-
-	friend struct miqt_map /* of int to struct miqt_string */  QConcatenateTablesProxyModel_virtualbase_roleNames(const void* self);
 
 	// cgo.Handle value for overwritten implementation
 	intptr_t handle__multiData = 0;
@@ -1151,6 +1151,29 @@ QSize* QConcatenateTablesProxyModel_span(const QConcatenateTablesProxyModel* sel
 	return new QSize(self->span(*index));
 }
 
+struct miqt_map /* of int to struct miqt_string */  QConcatenateTablesProxyModel_roleNames(const QConcatenateTablesProxyModel* self) {
+	QHash<int, QByteArray> _ret = self->roleNames();
+	// Convert QMap<> from C++ memory to manually-managed C memory
+	int* _karr = static_cast<int*>(malloc(sizeof(int) * _ret.size()));
+	struct miqt_string* _varr = static_cast<struct miqt_string*>(malloc(sizeof(struct miqt_string) * _ret.size()));
+	int _ctr = 0;
+	for (auto _itr = _ret.keyValueBegin(); _itr != _ret.keyValueEnd(); ++_itr) {
+		_karr[_ctr] = _itr->first;
+		QByteArray _hashval_qb = _itr->second;
+		struct miqt_string _hashval_ms;
+		_hashval_ms.len = _hashval_qb.length();
+		_hashval_ms.data = static_cast<char*>(malloc(_hashval_ms.len));
+		memcpy(_hashval_ms.data, _hashval_qb.data(), _hashval_ms.len);
+		_varr[_ctr] = _hashval_ms;
+		_ctr++;
+	}
+	struct miqt_map _out;
+	_out.len = _ret.size();
+	_out.keys = static_cast<void*>(_karr);
+	_out.values = static_cast<void*>(_varr);
+	return _out;
+}
+
 struct miqt_string QConcatenateTablesProxyModel_tr2(const char* s, const char* c) {
 	QString _ret = QConcatenateTablesProxyModel::tr(s, c);
 	// Convert QString from UTF-16 in C++ RAII memory to UTF-8 in manually-managed C memory
@@ -1426,6 +1449,39 @@ QSize* QConcatenateTablesProxyModel_virtualbase_span(const void* self, QModelInd
 	return new QSize(static_cast<const MiqtVirtualQConcatenateTablesProxyModel*>(self)->QConcatenateTablesProxyModel::span(*index));
 }
 
+bool QConcatenateTablesProxyModel_override_virtual_roleNames(void* self, intptr_t slot) {
+	MiqtVirtualQConcatenateTablesProxyModel* self_cast = dynamic_cast<MiqtVirtualQConcatenateTablesProxyModel*>( (QConcatenateTablesProxyModel*)(self) );
+	if (self_cast == nullptr) {
+		return false;
+	}
+
+	self_cast->handle__roleNames = slot;
+	return true;
+}
+
+struct miqt_map /* of int to struct miqt_string */  QConcatenateTablesProxyModel_virtualbase_roleNames(const void* self) {
+	QHash<int, QByteArray> _ret = static_cast<const MiqtVirtualQConcatenateTablesProxyModel*>(self)->QConcatenateTablesProxyModel::roleNames();
+	// Convert QMap<> from C++ memory to manually-managed C memory
+	int* _karr = static_cast<int*>(malloc(sizeof(int) * _ret.size()));
+	struct miqt_string* _varr = static_cast<struct miqt_string*>(malloc(sizeof(struct miqt_string) * _ret.size()));
+	int _ctr = 0;
+	for (auto _itr = _ret.keyValueBegin(); _itr != _ret.keyValueEnd(); ++_itr) {
+		_karr[_ctr] = _itr->first;
+		QByteArray _hashval_qb = _itr->second;
+		struct miqt_string _hashval_ms;
+		_hashval_ms.len = _hashval_qb.length();
+		_hashval_ms.data = static_cast<char*>(malloc(_hashval_ms.len));
+		memcpy(_hashval_ms.data, _hashval_qb.data(), _hashval_ms.len);
+		_varr[_ctr] = _hashval_ms;
+		_ctr++;
+	}
+	struct miqt_map _out;
+	_out.len = _ret.size();
+	_out.keys = static_cast<void*>(_karr);
+	_out.values = static_cast<void*>(_varr);
+	return _out;
+}
+
 bool QConcatenateTablesProxyModel_override_virtual_sibling(void* self, intptr_t slot) {
 	MiqtVirtualQConcatenateTablesProxyModel* self_cast = dynamic_cast<MiqtVirtualQConcatenateTablesProxyModel*>( (QConcatenateTablesProxyModel*)(self) );
 	if (self_cast == nullptr) {
@@ -1672,39 +1728,6 @@ struct miqt_array /* of QModelIndex* */  QConcatenateTablesProxyModel_virtualbas
 	struct miqt_array _out;
 	_out.len = _ret.length();
 	_out.data = static_cast<void*>(_arr);
-	return _out;
-}
-
-bool QConcatenateTablesProxyModel_override_virtual_roleNames(void* self, intptr_t slot) {
-	MiqtVirtualQConcatenateTablesProxyModel* self_cast = dynamic_cast<MiqtVirtualQConcatenateTablesProxyModel*>( (QConcatenateTablesProxyModel*)(self) );
-	if (self_cast == nullptr) {
-		return false;
-	}
-
-	self_cast->handle__roleNames = slot;
-	return true;
-}
-
-struct miqt_map /* of int to struct miqt_string */  QConcatenateTablesProxyModel_virtualbase_roleNames(const void* self) {
-	QHash<int, QByteArray> _ret = static_cast<const MiqtVirtualQConcatenateTablesProxyModel*>(self)->QConcatenateTablesProxyModel::roleNames();
-	// Convert QMap<> from C++ memory to manually-managed C memory
-	int* _karr = static_cast<int*>(malloc(sizeof(int) * _ret.size()));
-	struct miqt_string* _varr = static_cast<struct miqt_string*>(malloc(sizeof(struct miqt_string) * _ret.size()));
-	int _ctr = 0;
-	for (auto _itr = _ret.keyValueBegin(); _itr != _ret.keyValueEnd(); ++_itr) {
-		_karr[_ctr] = _itr->first;
-		QByteArray _hashval_qb = _itr->second;
-		struct miqt_string _hashval_ms;
-		_hashval_ms.len = _hashval_qb.length();
-		_hashval_ms.data = static_cast<char*>(malloc(_hashval_ms.len));
-		memcpy(_hashval_ms.data, _hashval_qb.data(), _hashval_ms.len);
-		_varr[_ctr] = _hashval_ms;
-		_ctr++;
-	}
-	struct miqt_map _out;
-	_out.len = _ret.size();
-	_out.keys = static_cast<void*>(_karr);
-	_out.values = static_cast<void*>(_varr);
 	return _out;
 }
 

@@ -22,34 +22,37 @@ QTextBoundaryFinder* QTextBoundaryFinder_new2(QTextBoundaryFinder* other) {
 	return new (std::nothrow) QTextBoundaryFinder(*other);
 }
 
-QTextBoundaryFinder* QTextBoundaryFinder_new3(int type, struct miqt_string string) {
+QTextBoundaryFinder* QTextBoundaryFinder_new3(BoundaryType type, struct miqt_string string) {
 	QString string_QString = QString::fromUtf8(string.data, string.len);
-	return new (std::nothrow) QTextBoundaryFinder(static_cast<QTextBoundaryFinder::BoundaryType>(type), string_QString);
+	return new (std::nothrow) QTextBoundaryFinder(type, string_QString);
 }
 
-QTextBoundaryFinder* QTextBoundaryFinder_new4(int type, QChar* chars, ptrdiff_t length) {
-	return new (std::nothrow) QTextBoundaryFinder(static_cast<QTextBoundaryFinder::BoundaryType>(type), chars, (qsizetype)(length));
+QTextBoundaryFinder* QTextBoundaryFinder_new4(BoundaryType type, QChar* chars, ptrdiff_t length) {
+	return new (std::nothrow) QTextBoundaryFinder(type, chars, (qsizetype)(length));
 }
 
-QTextBoundaryFinder* QTextBoundaryFinder_new5(int type, QChar* chars, ptrdiff_t length, unsigned char* buffer) {
-	return new (std::nothrow) QTextBoundaryFinder(static_cast<QTextBoundaryFinder::BoundaryType>(type), chars, (qsizetype)(length), static_cast<unsigned char*>(buffer));
+QTextBoundaryFinder* QTextBoundaryFinder_new5(BoundaryType type, QChar* chars, ptrdiff_t length, unsigned char* buffer) {
+	return new (std::nothrow) QTextBoundaryFinder(type, chars, (qsizetype)(length), static_cast<unsigned char*>(buffer));
 }
 
-QTextBoundaryFinder* QTextBoundaryFinder_new6(int type, QChar* chars, ptrdiff_t length, unsigned char* buffer, ptrdiff_t bufferSize) {
-	return new (std::nothrow) QTextBoundaryFinder(static_cast<QTextBoundaryFinder::BoundaryType>(type), chars, (qsizetype)(length), static_cast<unsigned char*>(buffer), (qsizetype)(bufferSize));
+QTextBoundaryFinder* QTextBoundaryFinder_new6(BoundaryType type, QChar* chars, ptrdiff_t length, unsigned char* buffer, ptrdiff_t bufferSize) {
+	return new (std::nothrow) QTextBoundaryFinder(type, chars, (qsizetype)(length), static_cast<unsigned char*>(buffer), (qsizetype)(bufferSize));
 }
 
 void QTextBoundaryFinder_operatorAssign(QTextBoundaryFinder* self, QTextBoundaryFinder* other) {
 	self->operator=(*other);
 }
 
+void QTextBoundaryFinder_swap(QTextBoundaryFinder* self, QTextBoundaryFinder* other) {
+	self->swap(*other);
+}
+
 bool QTextBoundaryFinder_isValid(const QTextBoundaryFinder* self) {
 	return self->isValid();
 }
 
-int QTextBoundaryFinder_type(const QTextBoundaryFinder* self) {
-	QTextBoundaryFinder::BoundaryType _ret = self->type();
-	return static_cast<int>(_ret);
+BoundaryType QTextBoundaryFinder_type(const QTextBoundaryFinder* self) {
+	return self->type();
 }
 
 struct miqt_string QTextBoundaryFinder_string(const QTextBoundaryFinder* self) {
@@ -94,9 +97,8 @@ bool QTextBoundaryFinder_isAtBoundary(const QTextBoundaryFinder* self) {
 	return self->isAtBoundary();
 }
 
-int QTextBoundaryFinder_boundaryReasons(const QTextBoundaryFinder* self) {
-	QTextBoundaryFinder::BoundaryReasons _ret = self->boundaryReasons();
-	return static_cast<int>(_ret);
+BoundaryReasons QTextBoundaryFinder_boundaryReasons(const QTextBoundaryFinder* self) {
+	return self->boundaryReasons();
 }
 
 void QTextBoundaryFinder_delete(QTextBoundaryFinder* self) {

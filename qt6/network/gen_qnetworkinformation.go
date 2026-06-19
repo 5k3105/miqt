@@ -98,16 +98,16 @@ func QNetworkInformation_Tr(s string) string {
 	return _ret
 }
 
-func (this *QNetworkInformation) Reachability() QNetworkInformation__Reachability {
-	return (QNetworkInformation__Reachability)(C.QNetworkInformation_reachability(this.h))
+func (this *QNetworkInformation) Reachability() Reachability {
+	int /* TODO  */
 }
 
 func (this *QNetworkInformation) IsBehindCaptivePortal() bool {
 	return (bool)(C.QNetworkInformation_isBehindCaptivePortal(this.h))
 }
 
-func (this *QNetworkInformation) TransportMedium() QNetworkInformation__TransportMedium {
-	return (QNetworkInformation__TransportMedium)(C.QNetworkInformation_transportMedium(this.h))
+func (this *QNetworkInformation) TransportMedium() TransportMedium {
+	int /* TODO  */
 }
 
 func (this *QNetworkInformation) IsMetered() bool {
@@ -121,24 +121,24 @@ func (this *QNetworkInformation) BackendName() string {
 	return _ret
 }
 
-func (this *QNetworkInformation) Supports(features QNetworkInformation__Feature) bool {
-	return (bool)(C.QNetworkInformation_supports(this.h, (C.int)(features)))
+func (this *QNetworkInformation) Supports(features Features) bool {
+	return (bool)(C.QNetworkInformation_supports(this.h, features))
 }
 
-func (this *QNetworkInformation) SupportedFeatures() QNetworkInformation__Feature {
-	return (QNetworkInformation__Feature)(C.QNetworkInformation_supportedFeatures(this.h))
+func (this *QNetworkInformation) SupportedFeatures() Features {
+	int /* TODO  */
 }
 
 func QNetworkInformation_LoadDefaultBackend() bool {
 	return (bool)(C.QNetworkInformation_loadDefaultBackend())
 }
 
-func QNetworkInformation_LoadBackendByFeatures(features QNetworkInformation__Feature) bool {
-	return (bool)(C.QNetworkInformation_loadBackendByFeatures((C.int)(features)))
+func QNetworkInformation_LoadBackendByFeatures(features Features) bool {
+	return (bool)(C.QNetworkInformation_loadBackendByFeatures(features))
 }
 
-func QNetworkInformation_LoadWithFeatures(features QNetworkInformation__Feature) bool {
-	return (bool)(C.QNetworkInformation_loadWithFeatures((C.int)(features)))
+func QNetworkInformation_LoadWithFeatures(features Features) bool {
+	return (bool)(C.QNetworkInformation_loadWithFeatures(features))
 }
 
 func QNetworkInformation_AvailableBackends() []string {

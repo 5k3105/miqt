@@ -11,6 +11,10 @@ extern "C" {
 } /* extern C */
 #endif
 
+QStaticPlugin* QStaticPlugin_new(QStaticPlugin* param1) {
+	return new (std::nothrow) QStaticPlugin(*param1);
+}
+
 QJsonObject* QStaticPlugin_metaData(const QStaticPlugin* self) {
 	return new QJsonObject(self->metaData());
 }

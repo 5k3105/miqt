@@ -95,15 +95,15 @@ func NewQSslError() *QSslError {
 }
 
 // NewQSslError2 constructs a new QSslError object.
-func NewQSslError2(error QSslError__SslError) *QSslError {
+func NewQSslError2(error SslError) *QSslError {
 
-	return newQSslError(C.QSslError_new2((C.int)(error)))
+	return newQSslError(C.QSslError_new2(error))
 }
 
 // NewQSslError3 constructs a new QSslError object.
-func NewQSslError3(error QSslError__SslError, certificate *QSslCertificate) *QSslError {
+func NewQSslError3(error SslError, certificate *QSslCertificate) *QSslError {
 
-	return newQSslError(C.QSslError_new3((C.int)(error), certificate.cPointer()))
+	return newQSslError(C.QSslError_new3(error, certificate.cPointer()))
 }
 
 // NewQSslError4 constructs a new QSslError object.
@@ -128,8 +128,8 @@ func (this *QSslError) OperatorNotEqual(other *QSslError) bool {
 	return (bool)(C.QSslError_operatorNotEqual(this.h, other.cPointer()))
 }
 
-func (this *QSslError) Error() QSslError__SslError {
-	return (QSslError__SslError)(C.QSslError_error(this.h))
+func (this *QSslError) Error() SslError {
+	int /* TODO  */
 }
 
 func (this *QSslError) ErrorString() string {

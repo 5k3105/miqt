@@ -52,15 +52,15 @@ void QHttpPart_setBodyDevice(QHttpPart* self, QIODevice* device);
 void QHttpPart_delete(QHttpPart* self);
 
 QHttpMultiPart* QHttpMultiPart_new();
-QHttpMultiPart* QHttpMultiPart_new2(int contentType);
+QHttpMultiPart* QHttpMultiPart_new2(ContentType contentType);
 QHttpMultiPart* QHttpMultiPart_new3(QObject* parent);
-QHttpMultiPart* QHttpMultiPart_new4(int contentType, QObject* parent);
+QHttpMultiPart* QHttpMultiPart_new4(ContentType contentType, QObject* parent);
 void QHttpMultiPart_virtbase(QHttpMultiPart* src, QObject** outptr_QObject);
 QMetaObject* QHttpMultiPart_metaObject(const QHttpMultiPart* self);
 void* QHttpMultiPart_metacast(QHttpMultiPart* self, const char* param1);
 struct miqt_string QHttpMultiPart_tr(const char* s);
 void QHttpMultiPart_append(QHttpMultiPart* self, QHttpPart* httpPart);
-void QHttpMultiPart_setContentType(QHttpMultiPart* self, int contentType);
+void QHttpMultiPart_setContentType(QHttpMultiPart* self, ContentType contentType);
 struct miqt_string QHttpMultiPart_boundary(const QHttpMultiPart* self);
 void QHttpMultiPart_setBoundary(QHttpMultiPart* self, struct miqt_string boundary);
 struct miqt_string QHttpMultiPart_tr2(const char* s, const char* c);

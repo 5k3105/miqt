@@ -21,6 +21,7 @@ class QPropertyBindingSourceLocation;
 class QPropertyNotifier;
 class QPropertyObserver;
 class QPropertyObserverBase;
+class QScopedPropertyUpdateGroup;
 class QUntypedBindable;
 class QUntypedPropertyBinding;
 class QUntypedPropertyData;
@@ -31,10 +32,14 @@ typedef struct QPropertyBindingSourceLocation QPropertyBindingSourceLocation;
 typedef struct QPropertyNotifier QPropertyNotifier;
 typedef struct QPropertyObserver QPropertyObserver;
 typedef struct QPropertyObserverBase QPropertyObserverBase;
+typedef struct QScopedPropertyUpdateGroup QScopedPropertyUpdateGroup;
 typedef struct QUntypedBindable QUntypedBindable;
 typedef struct QUntypedPropertyBinding QUntypedPropertyBinding;
 typedef struct QUntypedPropertyData QUntypedPropertyData;
 #endif
+
+QScopedPropertyUpdateGroup* QScopedPropertyUpdateGroup_new();
+void QScopedPropertyUpdateGroup_delete(QScopedPropertyUpdateGroup* self);
 
 QPropertyBindingSourceLocation* QPropertyBindingSourceLocation_new();
 QPropertyBindingSourceLocation* QPropertyBindingSourceLocation_new2(QPropertyBindingSourceLocation* param1);
@@ -50,18 +55,19 @@ void QPropertyBindingSourceLocation_setColumn(QPropertyBindingSourceLocation* se
 void QPropertyBindingSourceLocation_delete(QPropertyBindingSourceLocation* self);
 
 QPropertyBindingError* QPropertyBindingError_new();
-QPropertyBindingError* QPropertyBindingError_new2(int type);
+QPropertyBindingError* QPropertyBindingError_new2(Type type);
 QPropertyBindingError* QPropertyBindingError_new3(QPropertyBindingError* other);
-QPropertyBindingError* QPropertyBindingError_new4(int type, struct miqt_string description);
+QPropertyBindingError* QPropertyBindingError_new4(Type type, struct miqt_string description);
 void QPropertyBindingError_operatorAssign(QPropertyBindingError* self, QPropertyBindingError* other);
 bool QPropertyBindingError_hasError(const QPropertyBindingError* self);
-int QPropertyBindingError_type(const QPropertyBindingError* self);
+Type QPropertyBindingError_type(const QPropertyBindingError* self);
 struct miqt_string QPropertyBindingError_description(const QPropertyBindingError* self);
 
 void QPropertyBindingError_delete(QPropertyBindingError* self);
 
 QUntypedPropertyBinding* QUntypedPropertyBinding_new();
-QUntypedPropertyBinding* QUntypedPropertyBinding_new2(QUntypedPropertyBinding* other);
+QUntypedPropertyBinding* QUntypedPropertyBinding_new2(QMetaType* metaType, const BindingFunctionVTable* vtable, void* function, QPropertyBindingSourceLocation* location);
+QUntypedPropertyBinding* QUntypedPropertyBinding_new3(QUntypedPropertyBinding* other);
 void QUntypedPropertyBinding_operatorAssign(QUntypedPropertyBinding* self, QUntypedPropertyBinding* other);
 bool QUntypedPropertyBinding_isNull(const QUntypedPropertyBinding* self);
 QPropertyBindingError* QUntypedPropertyBinding_error(const QUntypedPropertyBinding* self);

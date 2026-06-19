@@ -103,12 +103,12 @@ func QInputDialog_Tr(s string) string {
 	return _ret
 }
 
-func (this *QInputDialog) SetInputMode(mode QInputDialog__InputMode) {
-	C.QInputDialog_setInputMode(this.h, (C.int)(mode))
+func (this *QInputDialog) SetInputMode(mode InputMode) {
+	C.QInputDialog_setInputMode(this.h, mode)
 }
 
-func (this *QInputDialog) InputMode() QInputDialog__InputMode {
-	return (QInputDialog__InputMode)(C.QInputDialog_inputMode(this.h))
+func (this *QInputDialog) InputMode() InputMode {
+	int /* TODO  */
 }
 
 func (this *QInputDialog) SetLabelText(text string) {
@@ -126,20 +126,20 @@ func (this *QInputDialog) LabelText() string {
 	return _ret
 }
 
-func (this *QInputDialog) SetOption(option QInputDialog__InputDialogOption) {
-	C.QInputDialog_setOption(this.h, (C.int)(option))
+func (this *QInputDialog) SetOption(option InputDialogOption) {
+	C.QInputDialog_setOption(this.h, option)
 }
 
-func (this *QInputDialog) TestOption(option QInputDialog__InputDialogOption) bool {
-	return (bool)(C.QInputDialog_testOption(this.h, (C.int)(option)))
+func (this *QInputDialog) TestOption(option InputDialogOption) bool {
+	return (bool)(C.QInputDialog_testOption(this.h, option))
 }
 
-func (this *QInputDialog) SetOptions(options QInputDialog__InputDialogOption) {
-	C.QInputDialog_setOptions(this.h, (C.int)(options))
+func (this *QInputDialog) SetOptions(options InputDialogOptions) {
+	C.QInputDialog_setOptions(this.h, options)
 }
 
-func (this *QInputDialog) Options() QInputDialog__InputDialogOption {
-	return (QInputDialog__InputDialogOption)(C.QInputDialog_options(this.h))
+func (this *QInputDialog) Options() InputDialogOptions {
+	int /* TODO  */
 }
 
 func (this *QInputDialog) SetTextValue(text string) {
@@ -565,8 +565,8 @@ func QInputDialog_Tr3(s string, c string, n int) string {
 	return _ret
 }
 
-func (this *QInputDialog) SetOption2(option QInputDialog__InputDialogOption, on bool) {
-	C.QInputDialog_setOption2(this.h, (C.int)(option), (C.bool)(on))
+func (this *QInputDialog) SetOption2(option InputDialogOption, on bool) {
+	C.QInputDialog_setOption2(this.h, option, (C.bool)(on))
 }
 
 func QInputDialog_GetText2(parent *QWidget, title string, label string, echo QLineEdit__EchoMode) string {
@@ -1142,6 +1142,20 @@ func (this *QInputDialog) IsSignalConnected(signal *QMetaMethod) bool {
 
 	var _dynamic_cast_ok C.bool = false
 	_method_ret := (bool)(C.QInputDialog_protectedbase_isSignalConnected(&_dynamic_cast_ok, unsafe.Pointer(this.h), signal.cPointer()))
+
+	if !_dynamic_cast_ok {
+		panic("miqt: can only call protected methods for directly constructed types")
+	}
+
+	return _method_ret
+
+}
+
+// GetDecodedMetricF can only be called from a QInputDialog that was directly constructed.
+func (this *QInputDialog) GetDecodedMetricF(metricA PaintDeviceMetric, metricB PaintDeviceMetric) float64 {
+
+	var _dynamic_cast_ok C.bool = false
+	_method_ret := (float64)(C.QInputDialog_protectedbase_getDecodedMetricF(&_dynamic_cast_ok, unsafe.Pointer(this.h), metricA, metricB))
 
 	if !_dynamic_cast_ok {
 		panic("miqt: can only call protected methods for directly constructed types")
@@ -2203,12 +2217,12 @@ func miqt_exec_callback_QInputDialog_changeEvent(self *C.QInputDialog, cb C.intp
 
 }
 
-func (this *QInputDialog) callVirtualBase_Metric(param1 QPaintDevice__PaintDeviceMetric) int {
+func (this *QInputDialog) callVirtualBase_Metric(param1 PaintDeviceMetric) int {
 
-	return (int)(C.QInputDialog_virtualbase_metric(unsafe.Pointer(this.h), (C.int)(param1)))
+	return (int)(C.QInputDialog_virtualbase_metric(unsafe.Pointer(this.h), param1))
 
 }
-func (this *QInputDialog) OnMetric(slot func(super func(param1 QPaintDevice__PaintDeviceMetric) int, param1 QPaintDevice__PaintDeviceMetric) int) {
+func (this *QInputDialog) OnMetric(slot func(super func(param1 PaintDeviceMetric) int, param1 PaintDeviceMetric) int) {
 	ok := C.QInputDialog_override_virtual_metric(unsafe.Pointer(this.h), C.intptr_t(cgo.NewHandle(slot)))
 	if !ok {
 		panic("miqt: can only override virtual methods for directly constructed types")
@@ -2216,14 +2230,14 @@ func (this *QInputDialog) OnMetric(slot func(super func(param1 QPaintDevice__Pai
 }
 
 //export miqt_exec_callback_QInputDialog_metric
-func miqt_exec_callback_QInputDialog_metric(self *C.QInputDialog, cb C.intptr_t, param1 C.int) C.int {
-	gofunc, ok := cgo.Handle(cb).Value().(func(super func(param1 QPaintDevice__PaintDeviceMetric) int, param1 QPaintDevice__PaintDeviceMetric) int)
+func miqt_exec_callback_QInputDialog_metric(self *C.QInputDialog, cb C.intptr_t, param1 C.PaintDeviceMetric) C.int {
+	gofunc, ok := cgo.Handle(cb).Value().(func(super func(param1 PaintDeviceMetric) int, param1 PaintDeviceMetric) int)
 	if !ok {
 		panic("miqt: callback of non-callback type (heap corruption?)")
 	}
 
 	// Convert all CABI parameters to Go parameters
-	slotval1 := (QPaintDevice__PaintDeviceMetric)(param1)
+	int /* TODO  */
 
 	virtualReturn := gofunc((&QInputDialog{h: self}).callVirtualBase_Metric, slotval1)
 

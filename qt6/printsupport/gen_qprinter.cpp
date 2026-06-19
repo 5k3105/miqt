@@ -25,7 +25,7 @@ extern "C" {
 int miqt_exec_callback_QPrinter_devType(const QPrinter*, intptr_t);
 bool miqt_exec_callback_QPrinter_newPage(QPrinter*, intptr_t);
 QPaintEngine* miqt_exec_callback_QPrinter_paintEngine(const QPrinter*, intptr_t);
-int miqt_exec_callback_QPrinter_metric(const QPrinter*, intptr_t, int);
+int miqt_exec_callback_QPrinter_metric(const QPrinter*, intptr_t, PaintDeviceMetric);
 bool miqt_exec_callback_QPrinter_setPageLayout(QPrinter*, intptr_t, QPageLayout*);
 bool miqt_exec_callback_QPrinter_setPageSize(QPrinter*, intptr_t, QPageSize*);
 bool miqt_exec_callback_QPrinter_setPageOrientation(QPrinter*, intptr_t, int);
@@ -43,8 +43,8 @@ public:
 
 	MiqtVirtualQPrinter(): QPrinter() {}
 	MiqtVirtualQPrinter(const QPrinterInfo& printer): QPrinter(printer) {}
-	MiqtVirtualQPrinter(QPrinter::PrinterMode mode): QPrinter(mode) {}
-	MiqtVirtualQPrinter(const QPrinterInfo& printer, QPrinter::PrinterMode mode): QPrinter(printer, mode) {}
+	MiqtVirtualQPrinter(PrinterMode mode): QPrinter(mode) {}
+	MiqtVirtualQPrinter(const QPrinterInfo& printer, PrinterMode mode): QPrinter(printer, mode) {}
 
 	virtual ~MiqtVirtualQPrinter() override = default;
 
@@ -97,18 +97,17 @@ public:
 	intptr_t handle__metric = 0;
 
 	// Subclass to allow providing a Go implementation
-	virtual int metric(QPaintDevice::PaintDeviceMetric param1) const override {
+	virtual int metric(PaintDeviceMetric param1) const override {
 		if (handle__metric == 0) {
 			return QPrinter::metric(param1);
 		}
 
-		QPaintDevice::PaintDeviceMetric param1_ret = param1;
-		int sigval1 = static_cast<int>(param1_ret);
+		PaintDeviceMetric sigval1 = param1;
 		int callback_return_value = miqt_exec_callback_QPrinter_metric(this, handle__metric, sigval1);
 		return static_cast<int>(callback_return_value);
 	}
 
-	friend int QPrinter_virtualbase_metric(const void* self, int param1);
+	friend int QPrinter_virtualbase_metric(const void* self, PaintDeviceMetric param1);
 
 	// cgo.Handle value for overwritten implementation
 	intptr_t handle__setPageLayout = 0;
@@ -252,6 +251,7 @@ public:
 
 	// Wrappers to allow calling protected methods:
 	friend void QPrinter_protectedbase_setEngines(bool* _dynamic_cast_ok, void* self, QPrintEngine* printEngine, QPaintEngine* paintEngine);
+	friend double QPrinter_protectedbase_getDecodedMetricF(bool* _dynamic_cast_ok, const void* self, PaintDeviceMetric metricA, PaintDeviceMetric metricB);
 };
 
 QPrinter* QPrinter_new() {
@@ -262,12 +262,12 @@ QPrinter* QPrinter_new2(QPrinterInfo* printer) {
 	return new (std::nothrow) MiqtVirtualQPrinter(*printer);
 }
 
-QPrinter* QPrinter_new3(int mode) {
-	return new (std::nothrow) MiqtVirtualQPrinter(static_cast<QPrinter::PrinterMode>(mode));
+QPrinter* QPrinter_new3(PrinterMode mode) {
+	return new (std::nothrow) MiqtVirtualQPrinter(mode);
 }
 
-QPrinter* QPrinter_new4(QPrinterInfo* printer, int mode) {
-	return new (std::nothrow) MiqtVirtualQPrinter(*printer, static_cast<QPrinter::PrinterMode>(mode));
+QPrinter* QPrinter_new4(QPrinterInfo* printer, PrinterMode mode) {
+	return new (std::nothrow) MiqtVirtualQPrinter(*printer, mode);
 }
 
 void QPrinter_virtbase(QPrinter* src, QPagedPaintDevice** outptr_QPagedPaintDevice) {
@@ -278,22 +278,20 @@ int QPrinter_devType(const QPrinter* self) {
 	return self->devType();
 }
 
-void QPrinter_setOutputFormat(QPrinter* self, int format) {
-	self->setOutputFormat(static_cast<QPrinter::OutputFormat>(format));
+void QPrinter_setOutputFormat(QPrinter* self, OutputFormat format) {
+	self->setOutputFormat(format);
 }
 
-int QPrinter_outputFormat(const QPrinter* self) {
-	QPrinter::OutputFormat _ret = self->outputFormat();
-	return static_cast<int>(_ret);
+OutputFormat QPrinter_outputFormat(const QPrinter* self) {
+	return self->outputFormat();
 }
 
-void QPrinter_setPdfVersion(QPrinter* self, int version) {
-	self->setPdfVersion(static_cast<QPagedPaintDevice::PdfVersion>(version));
+void QPrinter_setPdfVersion(QPrinter* self, PdfVersion version) {
+	self->setPdfVersion(version);
 }
 
-int QPrinter_pdfVersion(const QPrinter* self) {
-	QPagedPaintDevice::PdfVersion _ret = self->pdfVersion();
-	return static_cast<int>(_ret);
+PdfVersion QPrinter_pdfVersion(const QPrinter* self) {
+	return self->pdfVersion();
 }
 
 void QPrinter_setPrinterName(QPrinter* self, struct miqt_string printerName) {
@@ -380,13 +378,12 @@ struct miqt_string QPrinter_creator(const QPrinter* self) {
 	return _ms;
 }
 
-void QPrinter_setPageOrder(QPrinter* self, int pageOrder) {
-	self->setPageOrder(static_cast<QPrinter::PageOrder>(pageOrder));
+void QPrinter_setPageOrder(QPrinter* self, PageOrder pageOrder) {
+	self->setPageOrder(pageOrder);
 }
 
-int QPrinter_pageOrder(const QPrinter* self) {
-	QPrinter::PageOrder _ret = self->pageOrder();
-	return static_cast<int>(_ret);
+PageOrder QPrinter_pageOrder(const QPrinter* self) {
+	return self->pageOrder();
 }
 
 void QPrinter_setResolution(QPrinter* self, int resolution) {
@@ -397,13 +394,12 @@ int QPrinter_resolution(const QPrinter* self) {
 	return self->resolution();
 }
 
-void QPrinter_setColorMode(QPrinter* self, int colorMode) {
-	self->setColorMode(static_cast<QPrinter::ColorMode>(colorMode));
+void QPrinter_setColorMode(QPrinter* self, ColorMode colorMode) {
+	self->setColorMode(colorMode);
 }
 
-int QPrinter_colorMode(const QPrinter* self) {
-	QPrinter::ColorMode _ret = self->colorMode();
-	return static_cast<int>(_ret);
+ColorMode QPrinter_colorMode(const QPrinter* self) {
+	return self->colorMode();
 }
 
 void QPrinter_setCollateCopies(QPrinter* self, bool collate) {
@@ -434,22 +430,20 @@ bool QPrinter_supportsMultipleCopies(const QPrinter* self) {
 	return self->supportsMultipleCopies();
 }
 
-void QPrinter_setPaperSource(QPrinter* self, int paperSource) {
-	self->setPaperSource(static_cast<QPrinter::PaperSource>(paperSource));
+void QPrinter_setPaperSource(QPrinter* self, PaperSource paperSource) {
+	self->setPaperSource(paperSource);
 }
 
-int QPrinter_paperSource(const QPrinter* self) {
-	QPrinter::PaperSource _ret = self->paperSource();
-	return static_cast<int>(_ret);
+PaperSource QPrinter_paperSource(const QPrinter* self) {
+	return self->paperSource();
 }
 
-void QPrinter_setDuplex(QPrinter* self, int duplex) {
-	self->setDuplex(static_cast<QPrinter::DuplexMode>(duplex));
+void QPrinter_setDuplex(QPrinter* self, DuplexMode duplex) {
+	self->setDuplex(duplex);
 }
 
-int QPrinter_duplex(const QPrinter* self) {
-	QPrinter::DuplexMode _ret = self->duplex();
-	return static_cast<int>(_ret);
+DuplexMode QPrinter_duplex(const QPrinter* self) {
+	return self->duplex();
 }
 
 struct miqt_array /* of int */  QPrinter_supportedResolutions(const QPrinter* self) {
@@ -473,12 +467,12 @@ bool QPrinter_fontEmbeddingEnabled(const QPrinter* self) {
 	return self->fontEmbeddingEnabled();
 }
 
-QRectF* QPrinter_paperRect(const QPrinter* self, int param1) {
-	return new QRectF(self->paperRect(static_cast<QPrinter::Unit>(param1)));
+QRectF* QPrinter_paperRect(const QPrinter* self, Unit param1) {
+	return new QRectF(self->paperRect(param1));
 }
 
-QRectF* QPrinter_pageRect(const QPrinter* self, int param1) {
-	return new QRectF(self->pageRect(static_cast<QPrinter::Unit>(param1)));
+QRectF* QPrinter_pageRect(const QPrinter* self, Unit param1) {
+	return new QRectF(self->pageRect(param1));
 }
 
 struct miqt_string QPrinter_printerSelectionOption(const QPrinter* self) {
@@ -505,9 +499,8 @@ bool QPrinter_abort(QPrinter* self) {
 	return self->abort();
 }
 
-int QPrinter_printerState(const QPrinter* self) {
-	QPrinter::PrinterState _ret = self->printerState();
-	return static_cast<int>(_ret);
+PrinterState QPrinter_printerState(const QPrinter* self) {
+	return self->printerState();
 }
 
 QPaintEngine* QPrinter_paintEngine(const QPrinter* self) {
@@ -530,13 +523,12 @@ int QPrinter_toPage(const QPrinter* self) {
 	return self->toPage();
 }
 
-void QPrinter_setPrintRange(QPrinter* self, int range) {
-	self->setPrintRange(static_cast<QPrinter::PrintRange>(range));
+void QPrinter_setPrintRange(QPrinter* self, PrintRange range) {
+	self->setPrintRange(range);
 }
 
-int QPrinter_printRange(const QPrinter* self) {
-	QPrinter::PrintRange _ret = self->printRange();
-	return static_cast<int>(_ret);
+PrintRange QPrinter_printRange(const QPrinter* self) {
+	return self->printRange();
 }
 
 bool QPrinter_override_virtual_devType(void* self, intptr_t slot) {
@@ -591,8 +583,8 @@ bool QPrinter_override_virtual_metric(void* self, intptr_t slot) {
 	return true;
 }
 
-int QPrinter_virtualbase_metric(const void* self, int param1) {
-	return static_cast<const MiqtVirtualQPrinter*>(self)->QPrinter::metric(static_cast<MiqtVirtualQPrinter::PaintDeviceMetric>(param1));
+int QPrinter_virtualbase_metric(const void* self, PaintDeviceMetric param1) {
+	return static_cast<const MiqtVirtualQPrinter*>(self)->QPrinter::metric(param1);
 }
 
 bool QPrinter_override_virtual_setPageLayout(void* self, intptr_t slot) {
@@ -716,6 +708,17 @@ void QPrinter_protectedbase_setEngines(bool* _dynamic_cast_ok, void* self, QPrin
 
 	*_dynamic_cast_ok = true;
 	self_cast->setEngines(printEngine, paintEngine);
+}
+
+double QPrinter_protectedbase_getDecodedMetricF(bool* _dynamic_cast_ok, const void* self, PaintDeviceMetric metricA, PaintDeviceMetric metricB) {
+	MiqtVirtualQPrinter* self_cast = dynamic_cast<MiqtVirtualQPrinter*>( (QPrinter*)(self) );
+	if (self_cast == nullptr) {
+		*_dynamic_cast_ok = false;
+		return 0;
+	}
+
+	*_dynamic_cast_ok = true;
+	return self_cast->getDecodedMetricF(metricA, metricB);
 }
 
 void QPrinter_delete(QPrinter* self) {

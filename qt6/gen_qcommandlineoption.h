@@ -39,8 +39,8 @@ struct miqt_string QCommandLineOption_description(const QCommandLineOption* self
 void QCommandLineOption_setDefaultValue(QCommandLineOption* self, struct miqt_string defaultValue);
 void QCommandLineOption_setDefaultValues(QCommandLineOption* self, struct miqt_array /* of struct miqt_string */  defaultValues);
 struct miqt_array /* of struct miqt_string */  QCommandLineOption_defaultValues(const QCommandLineOption* self);
-int QCommandLineOption_flags(const QCommandLineOption* self);
-void QCommandLineOption_setFlags(QCommandLineOption* self, int aflags);
+Flags QCommandLineOption_flags(const QCommandLineOption* self);
+void QCommandLineOption_setFlags(QCommandLineOption* self, Flags aflags);
 
 void QCommandLineOption_delete(QCommandLineOption* self);
 

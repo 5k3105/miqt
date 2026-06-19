@@ -135,7 +135,7 @@ func QTextDocumentFragment_FromMarkdown(markdown string) *QTextDocumentFragment 
 	return _goptr
 }
 
-func (this *QTextDocumentFragment) ToMarkdownWithFeatures(features QTextDocument__MarkdownFeature) string {
+func (this *QTextDocumentFragment) ToMarkdownWithFeatures(features MarkdownFeature) string {
 	var _ms C.struct_miqt_string = C.QTextDocumentFragment_toMarkdownWithFeatures(this.h, (C.int)(features))
 	_ret := C.GoStringN(_ms.data, C.int(int64(_ms.len)))
 	C.free(unsafe.Pointer(_ms.data))
@@ -152,7 +152,7 @@ func QTextDocumentFragment_FromHtml2(html string, resourceProvider *QTextDocumen
 	return _goptr
 }
 
-func QTextDocumentFragment_FromMarkdown2(markdown string, features QTextDocument__MarkdownFeature) *QTextDocumentFragment {
+func QTextDocumentFragment_FromMarkdown2(markdown string, features MarkdownFeature) *QTextDocumentFragment {
 	markdown_ms := C.struct_miqt_string{}
 	markdown_ms.data = C.CString(markdown)
 	markdown_ms.len = C.size_t(len(markdown))

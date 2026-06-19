@@ -122,8 +122,8 @@ func (this *QImageCapture) CaptureSession() *QMediaCaptureSession {
 	return newQMediaCaptureSession(C.QImageCapture_captureSession(this.h))
 }
 
-func (this *QImageCapture) Error() QImageCapture__Error {
-	return (QImageCapture__Error)(C.QImageCapture_error(this.h))
+func (this *QImageCapture) Error() Error {
+	int /* TODO  */
 }
 
 func (this *QImageCapture) ErrorString() string {
@@ -137,33 +137,33 @@ func (this *QImageCapture) IsReadyForCapture() bool {
 	return (bool)(C.QImageCapture_isReadyForCapture(this.h))
 }
 
-func (this *QImageCapture) FileFormat() QImageCapture__FileFormat {
-	return (QImageCapture__FileFormat)(C.QImageCapture_fileFormat(this.h))
+func (this *QImageCapture) FileFormat() FileFormat {
+	int /* TODO  */
 }
 
-func (this *QImageCapture) SetFileFormat(format QImageCapture__FileFormat) {
-	C.QImageCapture_setFileFormat(this.h, (C.int)(format))
+func (this *QImageCapture) SetFileFormat(format FileFormat) {
+	C.QImageCapture_setFileFormat(this.h, format)
 }
 
-func QImageCapture_SupportedFormats() []QImageCapture__FileFormat {
+func QImageCapture_SupportedFormats() []FileFormat {
 	var _ma C.struct_miqt_array = C.QImageCapture_supportedFormats()
-	_ret := make([]QImageCapture__FileFormat, int(_ma.len))
-	_outCast := (*[0xffff]C.int)(unsafe.Pointer(_ma.data)) // hey ya
+	_ret := make([]FileFormat, int(_ma.len))
+	_outCast := (*[0xffff]C.FileFormat)(unsafe.Pointer(_ma.data)) // hey ya
 	for i := 0; i < int(_ma.len); i++ {
-		_ret[i] = (QImageCapture__FileFormat)(_outCast[i])
+		int /* TODO  */
 	}
 	return _ret
 }
 
-func QImageCapture_FileFormatName(c QImageCapture__FileFormat) string {
-	var _ms C.struct_miqt_string = C.QImageCapture_fileFormatName((C.int)(c))
+func QImageCapture_FileFormatName(c FileFormat) string {
+	var _ms C.struct_miqt_string = C.QImageCapture_fileFormatName(c)
 	_ret := C.GoStringN(_ms.data, C.int(int64(_ms.len)))
 	C.free(unsafe.Pointer(_ms.data))
 	return _ret
 }
 
-func QImageCapture_FileFormatDescription(c QImageCapture__FileFormat) string {
-	var _ms C.struct_miqt_string = C.QImageCapture_fileFormatDescription((C.int)(c))
+func QImageCapture_FileFormatDescription(c FileFormat) string {
+	var _ms C.struct_miqt_string = C.QImageCapture_fileFormatDescription(c)
 	_ret := C.GoStringN(_ms.data, C.int(int64(_ms.len)))
 	C.free(unsafe.Pointer(_ms.data))
 	return _ret
@@ -183,12 +183,12 @@ func (this *QImageCapture) SetResolution2(width int, height int) {
 	C.QImageCapture_setResolution2(this.h, (C.int)(width), (C.int)(height))
 }
 
-func (this *QImageCapture) Quality() QImageCapture__Quality {
-	return (QImageCapture__Quality)(C.QImageCapture_quality(this.h))
+func (this *QImageCapture) Quality() Quality {
+	int /* TODO  */
 }
 
-func (this *QImageCapture) SetQuality(quality QImageCapture__Quality) {
-	C.QImageCapture_setQuality(this.h, (C.int)(quality))
+func (this *QImageCapture) SetQuality(quality Quality) {
+	C.QImageCapture_setQuality(this.h, quality)
 }
 
 func (this *QImageCapture) MetaData() *QMediaMetaData {

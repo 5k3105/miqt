@@ -111,7 +111,7 @@ void miqt_exec_callback_QTextBrowser_tabletEvent(QTextBrowser*, intptr_t, QTable
 void miqt_exec_callback_QTextBrowser_actionEvent(QTextBrowser*, intptr_t, QActionEvent*);
 void miqt_exec_callback_QTextBrowser_hideEvent(QTextBrowser*, intptr_t, QHideEvent*);
 bool miqt_exec_callback_QTextBrowser_nativeEvent(QTextBrowser*, intptr_t, struct miqt_string, void*, intptr_t*);
-int miqt_exec_callback_QTextBrowser_metric(const QTextBrowser*, intptr_t, int);
+int miqt_exec_callback_QTextBrowser_metric(const QTextBrowser*, intptr_t, PaintDeviceMetric);
 void miqt_exec_callback_QTextBrowser_initPainter(const QTextBrowser*, intptr_t, QPainter*);
 QPaintDevice* miqt_exec_callback_QTextBrowser_redirected(const QTextBrowser*, intptr_t, QPoint*);
 QPainter* miqt_exec_callback_QTextBrowser_sharedPainter(const QTextBrowser*, intptr_t);
@@ -1046,18 +1046,17 @@ public:
 	intptr_t handle__metric = 0;
 
 	// Subclass to allow providing a Go implementation
-	virtual int metric(QPaintDevice::PaintDeviceMetric param1) const override {
+	virtual int metric(PaintDeviceMetric param1) const override {
 		if (handle__metric == 0) {
 			return QTextBrowser::metric(param1);
 		}
 
-		QPaintDevice::PaintDeviceMetric param1_ret = param1;
-		int sigval1 = static_cast<int>(param1_ret);
+		PaintDeviceMetric sigval1 = param1;
 		int callback_return_value = miqt_exec_callback_QTextBrowser_metric(this, handle__metric, sigval1);
 		return static_cast<int>(callback_return_value);
 	}
 
-	friend int QTextBrowser_virtualbase_metric(const void* self, int param1);
+	friend int QTextBrowser_virtualbase_metric(const void* self, PaintDeviceMetric param1);
 
 	// cgo.Handle value for overwritten implementation
 	intptr_t handle__initPainter = 0;
@@ -1193,6 +1192,7 @@ public:
 	friend int QTextBrowser_protectedbase_senderSignalIndex(bool* _dynamic_cast_ok, const void* self);
 	friend int QTextBrowser_protectedbase_receivers(bool* _dynamic_cast_ok, const void* self, const char* signal);
 	friend bool QTextBrowser_protectedbase_isSignalConnected(bool* _dynamic_cast_ok, const void* self, QMetaMethod* signal);
+	friend double QTextBrowser_protectedbase_getDecodedMetricF(bool* _dynamic_cast_ok, const void* self, PaintDeviceMetric metricA, PaintDeviceMetric metricB);
 };
 
 QTextBrowser* QTextBrowser_new(QWidget* parent) {
@@ -2205,8 +2205,8 @@ bool QTextBrowser_override_virtual_metric(void* self, intptr_t slot) {
 	return true;
 }
 
-int QTextBrowser_virtualbase_metric(const void* self, int param1) {
-	return static_cast<const MiqtVirtualQTextBrowser*>(self)->QTextBrowser::metric(static_cast<MiqtVirtualQTextBrowser::PaintDeviceMetric>(param1));
+int QTextBrowser_virtualbase_metric(const void* self, PaintDeviceMetric param1) {
+	return static_cast<const MiqtVirtualQTextBrowser*>(self)->QTextBrowser::metric(param1);
 }
 
 bool QTextBrowser_override_virtual_initPainter(void* self, intptr_t slot) {
@@ -2448,6 +2448,17 @@ bool QTextBrowser_protectedbase_isSignalConnected(bool* _dynamic_cast_ok, const 
 
 	*_dynamic_cast_ok = true;
 	return self_cast->isSignalConnected(*signal);
+}
+
+double QTextBrowser_protectedbase_getDecodedMetricF(bool* _dynamic_cast_ok, const void* self, PaintDeviceMetric metricA, PaintDeviceMetric metricB) {
+	MiqtVirtualQTextBrowser* self_cast = dynamic_cast<MiqtVirtualQTextBrowser*>( (QTextBrowser*)(self) );
+	if (self_cast == nullptr) {
+		*_dynamic_cast_ok = false;
+		return 0;
+	}
+
+	*_dynamic_cast_ok = true;
+	return self_cast->getDecodedMetricF(metricA, metricB);
 }
 
 void QTextBrowser_delete(QTextBrowser* self) {

@@ -25,13 +25,13 @@ QAudioFormat* QAudioFormat_new2(QAudioFormat* param1);
 bool QAudioFormat_isValid(const QAudioFormat* self);
 void QAudioFormat_setSampleRate(QAudioFormat* self, int sampleRate);
 int QAudioFormat_sampleRate(const QAudioFormat* self);
-void QAudioFormat_setChannelConfig(QAudioFormat* self, uint32_t config);
-uint32_t QAudioFormat_channelConfig(const QAudioFormat* self);
+void QAudioFormat_setChannelConfig(QAudioFormat* self, ChannelConfig config);
+ChannelConfig QAudioFormat_channelConfig(const QAudioFormat* self);
 void QAudioFormat_setChannelCount(QAudioFormat* self, int channelCount);
 int QAudioFormat_channelCount(const QAudioFormat* self);
-int QAudioFormat_channelOffset(const QAudioFormat* self, int channel);
-void QAudioFormat_setSampleFormat(QAudioFormat* self, uint16_t f);
-uint16_t QAudioFormat_sampleFormat(const QAudioFormat* self);
+int QAudioFormat_channelOffset(const QAudioFormat* self, AudioChannelPosition channel);
+void QAudioFormat_setSampleFormat(QAudioFormat* self, SampleFormat f);
+SampleFormat QAudioFormat_sampleFormat(const QAudioFormat* self);
 int QAudioFormat_bytesForDuration(const QAudioFormat* self, long long microseconds);
 long long QAudioFormat_durationForBytes(const QAudioFormat* self, int byteCount);
 int QAudioFormat_bytesForFrames(const QAudioFormat* self, int frameCount);
@@ -41,7 +41,7 @@ long long QAudioFormat_durationForFrames(const QAudioFormat* self, int frameCoun
 int QAudioFormat_bytesPerFrame(const QAudioFormat* self);
 int QAudioFormat_bytesPerSample(const QAudioFormat* self);
 float QAudioFormat_normalizedSampleValue(const QAudioFormat* self, const void* sample);
-uint32_t QAudioFormat_defaultChannelConfigForChannelCount(int channelCount);
+ChannelConfig QAudioFormat_defaultChannelConfigForChannelCount(int channelCount);
 
 void QAudioFormat_delete(QAudioFormat* self);
 

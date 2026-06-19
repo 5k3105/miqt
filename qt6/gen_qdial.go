@@ -144,10 +144,10 @@ func QDial_Tr3(s string, c string, n int) string {
 }
 
 // SetRepeatAction can only be called from a QDial that was directly constructed.
-func (this *QDial) SetRepeatAction(action QAbstractSlider__SliderAction) {
+func (this *QDial) SetRepeatAction(action SliderAction) {
 
 	var _dynamic_cast_ok C.bool = false
-	C.QDial_protectedbase_setRepeatAction(&_dynamic_cast_ok, unsafe.Pointer(this.h), (C.int)(action))
+	C.QDial_protectedbase_setRepeatAction(&_dynamic_cast_ok, unsafe.Pointer(this.h), action)
 
 	if !_dynamic_cast_ok {
 		panic("miqt: can only call protected methods for directly constructed types")
@@ -156,11 +156,10 @@ func (this *QDial) SetRepeatAction(action QAbstractSlider__SliderAction) {
 }
 
 // RepeatAction can only be called from a QDial that was directly constructed.
-func (this *QDial) RepeatAction() QAbstractSlider__SliderAction {
+func (this *QDial) RepeatAction() SliderAction {
 
 	var _dynamic_cast_ok C.bool = false
-	_method_ret := (QAbstractSlider__SliderAction)(C.QDial_protectedbase_repeatAction(&_dynamic_cast_ok, unsafe.Pointer(this.h)))
-
+	int /* TODO  */
 	if !_dynamic_cast_ok {
 		panic("miqt: can only call protected methods for directly constructed types")
 	}
@@ -282,6 +281,20 @@ func (this *QDial) IsSignalConnected(signal *QMetaMethod) bool {
 
 	var _dynamic_cast_ok C.bool = false
 	_method_ret := (bool)(C.QDial_protectedbase_isSignalConnected(&_dynamic_cast_ok, unsafe.Pointer(this.h), signal.cPointer()))
+
+	if !_dynamic_cast_ok {
+		panic("miqt: can only call protected methods for directly constructed types")
+	}
+
+	return _method_ret
+
+}
+
+// GetDecodedMetricF can only be called from a QDial that was directly constructed.
+func (this *QDial) GetDecodedMetricF(metricA PaintDeviceMetric, metricB PaintDeviceMetric) float64 {
+
+	var _dynamic_cast_ok C.bool = false
+	_method_ret := (float64)(C.QDial_protectedbase_getDecodedMetricF(&_dynamic_cast_ok, unsafe.Pointer(this.h), metricA, metricB))
 
 	if !_dynamic_cast_ok {
 		panic("miqt: can only call protected methods for directly constructed types")
@@ -503,12 +516,12 @@ func miqt_exec_callback_QDial_mouseMoveEvent(self *C.QDial, cb C.intptr_t, me *C
 
 }
 
-func (this *QDial) callVirtualBase_SliderChange(change QAbstractSlider__SliderChange) {
+func (this *QDial) callVirtualBase_SliderChange(change SliderChange) {
 
-	C.QDial_virtualbase_sliderChange(unsafe.Pointer(this.h), (C.int)(change))
+	C.QDial_virtualbase_sliderChange(unsafe.Pointer(this.h), change)
 
 }
-func (this *QDial) OnSliderChange(slot func(super func(change QAbstractSlider__SliderChange), change QAbstractSlider__SliderChange)) {
+func (this *QDial) OnSliderChange(slot func(super func(change SliderChange), change SliderChange)) {
 	ok := C.QDial_override_virtual_sliderChange(unsafe.Pointer(this.h), C.intptr_t(cgo.NewHandle(slot)))
 	if !ok {
 		panic("miqt: can only override virtual methods for directly constructed types")
@@ -516,14 +529,14 @@ func (this *QDial) OnSliderChange(slot func(super func(change QAbstractSlider__S
 }
 
 //export miqt_exec_callback_QDial_sliderChange
-func miqt_exec_callback_QDial_sliderChange(self *C.QDial, cb C.intptr_t, change C.int) {
-	gofunc, ok := cgo.Handle(cb).Value().(func(super func(change QAbstractSlider__SliderChange), change QAbstractSlider__SliderChange))
+func miqt_exec_callback_QDial_sliderChange(self *C.QDial, cb C.intptr_t, change C.SliderChange) {
+	gofunc, ok := cgo.Handle(cb).Value().(func(super func(change SliderChange), change SliderChange))
 	if !ok {
 		panic("miqt: callback of non-callback type (heap corruption?)")
 	}
 
 	// Convert all CABI parameters to Go parameters
-	slotval1 := (QAbstractSlider__SliderChange)(change)
+	int /* TODO  */
 
 	gofunc((&QDial{h: self}).callVirtualBase_SliderChange, slotval1)
 
@@ -1271,12 +1284,12 @@ func miqt_exec_callback_QDial_nativeEvent(self *C.QDial, cb C.intptr_t, eventTyp
 
 }
 
-func (this *QDial) callVirtualBase_Metric(param1 QPaintDevice__PaintDeviceMetric) int {
+func (this *QDial) callVirtualBase_Metric(param1 PaintDeviceMetric) int {
 
-	return (int)(C.QDial_virtualbase_metric(unsafe.Pointer(this.h), (C.int)(param1)))
+	return (int)(C.QDial_virtualbase_metric(unsafe.Pointer(this.h), param1))
 
 }
-func (this *QDial) OnMetric(slot func(super func(param1 QPaintDevice__PaintDeviceMetric) int, param1 QPaintDevice__PaintDeviceMetric) int) {
+func (this *QDial) OnMetric(slot func(super func(param1 PaintDeviceMetric) int, param1 PaintDeviceMetric) int) {
 	ok := C.QDial_override_virtual_metric(unsafe.Pointer(this.h), C.intptr_t(cgo.NewHandle(slot)))
 	if !ok {
 		panic("miqt: can only override virtual methods for directly constructed types")
@@ -1284,14 +1297,14 @@ func (this *QDial) OnMetric(slot func(super func(param1 QPaintDevice__PaintDevic
 }
 
 //export miqt_exec_callback_QDial_metric
-func miqt_exec_callback_QDial_metric(self *C.QDial, cb C.intptr_t, param1 C.int) C.int {
-	gofunc, ok := cgo.Handle(cb).Value().(func(super func(param1 QPaintDevice__PaintDeviceMetric) int, param1 QPaintDevice__PaintDeviceMetric) int)
+func miqt_exec_callback_QDial_metric(self *C.QDial, cb C.intptr_t, param1 C.PaintDeviceMetric) C.int {
+	gofunc, ok := cgo.Handle(cb).Value().(func(super func(param1 PaintDeviceMetric) int, param1 PaintDeviceMetric) int)
 	if !ok {
 		panic("miqt: callback of non-callback type (heap corruption?)")
 	}
 
 	// Convert all CABI parameters to Go parameters
-	slotval1 := (QPaintDevice__PaintDeviceMetric)(param1)
+	int /* TODO  */
 
 	virtualReturn := gofunc((&QDial{h: self}).callVirtualBase_Metric, slotval1)
 

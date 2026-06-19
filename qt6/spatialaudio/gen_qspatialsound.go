@@ -145,12 +145,12 @@ func (this *QSpatialSound) Volume() float32 {
 	return (float32)(C.QSpatialSound_volume(this.h))
 }
 
-func (this *QSpatialSound) SetDistanceModel(model QSpatialSound__DistanceModel) {
-	C.QSpatialSound_setDistanceModel(this.h, (C.int)(model))
+func (this *QSpatialSound) SetDistanceModel(model DistanceModel) {
+	C.QSpatialSound_setDistanceModel(this.h, model)
 }
 
-func (this *QSpatialSound) DistanceModel() QSpatialSound__DistanceModel {
-	return (QSpatialSound__DistanceModel)(C.QSpatialSound_distanceModel(this.h))
+func (this *QSpatialSound) DistanceModel() DistanceModel {
+	int /* TODO  */
 }
 
 func (this *QSpatialSound) SetSize(size float32) {

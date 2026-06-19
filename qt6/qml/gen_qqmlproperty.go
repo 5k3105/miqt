@@ -135,8 +135,8 @@ func (this *QQmlProperty) OperatorEqual(param1 *QQmlProperty) bool {
 	return (bool)(C.QQmlProperty_operatorEqual(this.h, param1.cPointer()))
 }
 
-func (this *QQmlProperty) Type() QQmlProperty__Type {
-	return (QQmlProperty__Type)(C.QQmlProperty_type(this.h))
+func (this *QQmlProperty) Type() Type {
+	int /* TODO  */
 }
 
 func (this *QQmlProperty) IsValid() bool {
@@ -161,8 +161,8 @@ func (this *QQmlProperty) PropertyMetaType() *qt6.QMetaType {
 	return _goptr
 }
 
-func (this *QQmlProperty) PropertyTypeCategory() QQmlProperty__PropertyTypeCategory {
-	return (QQmlProperty__PropertyTypeCategory)(C.QQmlProperty_propertyTypeCategory(this.h))
+func (this *QQmlProperty) PropertyTypeCategory() PropertyTypeCategory {
+	int /* TODO  */
 }
 
 func (this *QQmlProperty) PropertyTypeName() string {

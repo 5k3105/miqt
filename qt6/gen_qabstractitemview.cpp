@@ -66,7 +66,7 @@ void miqt_exec_callback_QAbstractItemView_setModel(QAbstractItemView*, intptr_t,
 void miqt_exec_callback_QAbstractItemView_setSelectionModel(QAbstractItemView*, intptr_t, QItemSelectionModel*);
 void miqt_exec_callback_QAbstractItemView_keyboardSearch(QAbstractItemView*, intptr_t, struct miqt_string);
 QRect* miqt_exec_callback_QAbstractItemView_visualRect(const QAbstractItemView*, intptr_t, QModelIndex*);
-void miqt_exec_callback_QAbstractItemView_scrollTo(QAbstractItemView*, intptr_t, QModelIndex*, int);
+void miqt_exec_callback_QAbstractItemView_scrollTo(QAbstractItemView*, intptr_t, QModelIndex*, ScrollHint);
 QModelIndex* miqt_exec_callback_QAbstractItemView_indexAt(const QAbstractItemView*, intptr_t, QPoint*);
 int miqt_exec_callback_QAbstractItemView_sizeHintForRow(const QAbstractItemView*, intptr_t, int);
 int miqt_exec_callback_QAbstractItemView_sizeHintForColumn(const QAbstractItemView*, intptr_t, int);
@@ -91,14 +91,14 @@ void miqt_exec_callback_QAbstractItemView_horizontalScrollbarValueChanged(QAbstr
 void miqt_exec_callback_QAbstractItemView_closeEditor(QAbstractItemView*, intptr_t, QWidget*, int);
 void miqt_exec_callback_QAbstractItemView_commitData(QAbstractItemView*, intptr_t, QWidget*);
 void miqt_exec_callback_QAbstractItemView_editorDestroyed(QAbstractItemView*, intptr_t, QObject*);
-QModelIndex* miqt_exec_callback_QAbstractItemView_moveCursor(QAbstractItemView*, intptr_t, int, int);
+QModelIndex* miqt_exec_callback_QAbstractItemView_moveCursor(QAbstractItemView*, intptr_t, CursorAction, int);
 int miqt_exec_callback_QAbstractItemView_horizontalOffset(const QAbstractItemView*, intptr_t);
 int miqt_exec_callback_QAbstractItemView_verticalOffset(const QAbstractItemView*, intptr_t);
 bool miqt_exec_callback_QAbstractItemView_isIndexHidden(const QAbstractItemView*, intptr_t, QModelIndex*);
 void miqt_exec_callback_QAbstractItemView_setSelection(QAbstractItemView*, intptr_t, QRect*, int);
 QRegion* miqt_exec_callback_QAbstractItemView_visualRegionForSelection(const QAbstractItemView*, intptr_t, QItemSelection*);
 struct miqt_array /* of QModelIndex* */  miqt_exec_callback_QAbstractItemView_selectedIndexes(const QAbstractItemView*, intptr_t);
-bool miqt_exec_callback_QAbstractItemView_edit2(QAbstractItemView*, intptr_t, QModelIndex*, int, QEvent*);
+bool miqt_exec_callback_QAbstractItemView_edit2(QAbstractItemView*, intptr_t, QModelIndex*, EditTrigger, QEvent*);
 int miqt_exec_callback_QAbstractItemView_selectionCommand(const QAbstractItemView*, intptr_t, QModelIndex*, QEvent*);
 void miqt_exec_callback_QAbstractItemView_startDrag(QAbstractItemView*, intptr_t, int);
 void miqt_exec_callback_QAbstractItemView_initViewItemOption(const QAbstractItemView*, intptr_t, QStyleOptionViewItem*);
@@ -145,7 +145,7 @@ void miqt_exec_callback_QAbstractItemView_actionEvent(QAbstractItemView*, intptr
 void miqt_exec_callback_QAbstractItemView_showEvent(QAbstractItemView*, intptr_t, QShowEvent*);
 void miqt_exec_callback_QAbstractItemView_hideEvent(QAbstractItemView*, intptr_t, QHideEvent*);
 bool miqt_exec_callback_QAbstractItemView_nativeEvent(QAbstractItemView*, intptr_t, struct miqt_string, void*, intptr_t*);
-int miqt_exec_callback_QAbstractItemView_metric(const QAbstractItemView*, intptr_t, int);
+int miqt_exec_callback_QAbstractItemView_metric(const QAbstractItemView*, intptr_t, PaintDeviceMetric);
 void miqt_exec_callback_QAbstractItemView_initPainter(const QAbstractItemView*, intptr_t, QPainter*);
 QPaintDevice* miqt_exec_callback_QAbstractItemView_redirected(const QAbstractItemView*, intptr_t, QPoint*);
 QPainter* miqt_exec_callback_QAbstractItemView_sharedPainter(const QAbstractItemView*, intptr_t);
@@ -243,7 +243,7 @@ public:
 	intptr_t handle__scrollTo = 0;
 
 	// Subclass to allow providing a Go implementation
-	virtual void scrollTo(const QModelIndex& index, QAbstractItemView::ScrollHint hint) override {
+	virtual void scrollTo(const QModelIndex& index, ScrollHint hint) override {
 		if (handle__scrollTo == 0) {
 			return; // Pure virtual, there is no base we can call
 		}
@@ -251,8 +251,7 @@ public:
 		const QModelIndex& index_ret = index;
 		// Cast returned reference into pointer
 		QModelIndex* sigval1 = const_cast<QModelIndex*>(&index_ret);
-		QAbstractItemView::ScrollHint hint_ret = hint;
-		int sigval2 = static_cast<int>(hint_ret);
+		ScrollHint sigval2 = hint;
 		miqt_exec_callback_QAbstractItemView_scrollTo(this, handle__scrollTo, sigval1, sigval2);
 
 	}
@@ -698,13 +697,12 @@ public:
 	intptr_t handle__moveCursor = 0;
 
 	// Subclass to allow providing a Go implementation
-	virtual QModelIndex moveCursor(QAbstractItemView::CursorAction cursorAction, Qt::KeyboardModifiers modifiers) override {
+	virtual QModelIndex moveCursor(CursorAction cursorAction, Qt::KeyboardModifiers modifiers) override {
 		if (handle__moveCursor == 0) {
 			return QModelIndex(); // Pure virtual, there is no base we can call
 		}
 
-		QAbstractItemView::CursorAction cursorAction_ret = cursorAction;
-		int sigval1 = static_cast<int>(cursorAction_ret);
+		CursorAction sigval1 = cursorAction;
 		Qt::KeyboardModifiers modifiers_ret = modifiers;
 		int sigval2 = static_cast<int>(modifiers_ret);
 		QModelIndex* callback_return_value = miqt_exec_callback_QAbstractItemView_moveCursor(this, handle__moveCursor, sigval1, sigval2);
@@ -813,7 +811,7 @@ public:
 	intptr_t handle__edit2 = 0;
 
 	// Subclass to allow providing a Go implementation
-	virtual bool edit(const QModelIndex& index, QAbstractItemView::EditTrigger trigger, QEvent* event) override {
+	virtual bool edit(const QModelIndex& index, EditTrigger trigger, QEvent* event) override {
 		if (handle__edit2 == 0) {
 			return QAbstractItemView::edit(index, trigger, event);
 		}
@@ -821,14 +819,13 @@ public:
 		const QModelIndex& index_ret = index;
 		// Cast returned reference into pointer
 		QModelIndex* sigval1 = const_cast<QModelIndex*>(&index_ret);
-		QAbstractItemView::EditTrigger trigger_ret = trigger;
-		int sigval2 = static_cast<int>(trigger_ret);
+		EditTrigger sigval2 = trigger;
 		QEvent* sigval3 = event;
 		bool callback_return_value = miqt_exec_callback_QAbstractItemView_edit2(this, handle__edit2, sigval1, sigval2, sigval3);
 		return callback_return_value;
 	}
 
-	friend bool QAbstractItemView_virtualbase_edit2(void* self, QModelIndex* index, int trigger, QEvent* event);
+	friend bool QAbstractItemView_virtualbase_edit2(void* self, QModelIndex* index, EditTrigger trigger, QEvent* event);
 
 	// cgo.Handle value for overwritten implementation
 	intptr_t handle__selectionCommand = 0;
@@ -1611,18 +1608,17 @@ public:
 	intptr_t handle__metric = 0;
 
 	// Subclass to allow providing a Go implementation
-	virtual int metric(QPaintDevice::PaintDeviceMetric param1) const override {
+	virtual int metric(PaintDeviceMetric param1) const override {
 		if (handle__metric == 0) {
 			return QAbstractItemView::metric(param1);
 		}
 
-		QPaintDevice::PaintDeviceMetric param1_ret = param1;
-		int sigval1 = static_cast<int>(param1_ret);
+		PaintDeviceMetric sigval1 = param1;
 		int callback_return_value = miqt_exec_callback_QAbstractItemView_metric(this, handle__metric, sigval1);
 		return static_cast<int>(callback_return_value);
 	}
 
-	friend int QAbstractItemView_virtualbase_metric(const void* self, int param1);
+	friend int QAbstractItemView_virtualbase_metric(const void* self, PaintDeviceMetric param1);
 
 	// cgo.Handle value for overwritten implementation
 	intptr_t handle__initPainter = 0;
@@ -1745,8 +1741,8 @@ public:
 	friend void QAbstractItemView_virtualbase_disconnectNotify(void* self, QMetaMethod* signal);
 
 	// Wrappers to allow calling protected methods:
-	friend int QAbstractItemView_protectedbase_state(bool* _dynamic_cast_ok, const void* self);
-	friend void QAbstractItemView_protectedbase_setState(bool* _dynamic_cast_ok, void* self, int state);
+	friend State QAbstractItemView_protectedbase_state(bool* _dynamic_cast_ok, const void* self);
+	friend void QAbstractItemView_protectedbase_setState(bool* _dynamic_cast_ok, void* self, State state);
 	friend void QAbstractItemView_protectedbase_scheduleDelayedItemsLayout(bool* _dynamic_cast_ok, void* self);
 	friend void QAbstractItemView_protectedbase_executeDelayedItemsLayout(bool* _dynamic_cast_ok, void* self);
 	friend void QAbstractItemView_protectedbase_setDirtyRegion(bool* _dynamic_cast_ok, void* self, QRegion* region);
@@ -1755,7 +1751,7 @@ public:
 	friend void QAbstractItemView_protectedbase_startAutoScroll(bool* _dynamic_cast_ok, void* self);
 	friend void QAbstractItemView_protectedbase_stopAutoScroll(bool* _dynamic_cast_ok, void* self);
 	friend void QAbstractItemView_protectedbase_doAutoScroll(bool* _dynamic_cast_ok, void* self);
-	friend int QAbstractItemView_protectedbase_dropIndicatorPosition(bool* _dynamic_cast_ok, const void* self);
+	friend DropIndicatorPosition QAbstractItemView_protectedbase_dropIndicatorPosition(bool* _dynamic_cast_ok, const void* self);
 	friend void QAbstractItemView_protectedbase_setViewportMargins(bool* _dynamic_cast_ok, void* self, int left, int top, int right, int bottom);
 	friend QMargins* QAbstractItemView_protectedbase_viewportMargins(bool* _dynamic_cast_ok, const void* self);
 	friend void QAbstractItemView_protectedbase_drawFrame(bool* _dynamic_cast_ok, void* self, QPainter* param1);
@@ -1768,6 +1764,7 @@ public:
 	friend int QAbstractItemView_protectedbase_senderSignalIndex(bool* _dynamic_cast_ok, const void* self);
 	friend int QAbstractItemView_protectedbase_receivers(bool* _dynamic_cast_ok, const void* self, const char* signal);
 	friend bool QAbstractItemView_protectedbase_isSignalConnected(bool* _dynamic_cast_ok, const void* self, QMetaMethod* signal);
+	friend double QAbstractItemView_protectedbase_getDecodedMetricF(bool* _dynamic_cast_ok, const void* self, PaintDeviceMetric metricA, PaintDeviceMetric metricB);
 };
 
 QAbstractItemView* QAbstractItemView_new(QWidget* parent) {
@@ -1851,35 +1848,32 @@ QModelIndex* QAbstractItemView_rootIndex(const QAbstractItemView* self) {
 	return new QModelIndex(self->rootIndex());
 }
 
-void QAbstractItemView_setEditTriggers(QAbstractItemView* self, int triggers) {
-	self->setEditTriggers(static_cast<QAbstractItemView::EditTriggers>(triggers));
+void QAbstractItemView_setEditTriggers(QAbstractItemView* self, EditTriggers triggers) {
+	self->setEditTriggers(triggers);
 }
 
-int QAbstractItemView_editTriggers(const QAbstractItemView* self) {
-	QAbstractItemView::EditTriggers _ret = self->editTriggers();
-	return static_cast<int>(_ret);
+EditTriggers QAbstractItemView_editTriggers(const QAbstractItemView* self) {
+	return self->editTriggers();
 }
 
-void QAbstractItemView_setVerticalScrollMode(QAbstractItemView* self, int mode) {
-	self->setVerticalScrollMode(static_cast<QAbstractItemView::ScrollMode>(mode));
+void QAbstractItemView_setVerticalScrollMode(QAbstractItemView* self, ScrollMode mode) {
+	self->setVerticalScrollMode(mode);
 }
 
-int QAbstractItemView_verticalScrollMode(const QAbstractItemView* self) {
-	QAbstractItemView::ScrollMode _ret = self->verticalScrollMode();
-	return static_cast<int>(_ret);
+ScrollMode QAbstractItemView_verticalScrollMode(const QAbstractItemView* self) {
+	return self->verticalScrollMode();
 }
 
 void QAbstractItemView_resetVerticalScrollMode(QAbstractItemView* self) {
 	self->resetVerticalScrollMode();
 }
 
-void QAbstractItemView_setHorizontalScrollMode(QAbstractItemView* self, int mode) {
-	self->setHorizontalScrollMode(static_cast<QAbstractItemView::ScrollMode>(mode));
+void QAbstractItemView_setHorizontalScrollMode(QAbstractItemView* self, ScrollMode mode) {
+	self->setHorizontalScrollMode(mode);
 }
 
-int QAbstractItemView_horizontalScrollMode(const QAbstractItemView* self) {
-	QAbstractItemView::ScrollMode _ret = self->horizontalScrollMode();
-	return static_cast<int>(_ret);
+ScrollMode QAbstractItemView_horizontalScrollMode(const QAbstractItemView* self) {
+	return self->horizontalScrollMode();
 }
 
 void QAbstractItemView_resetHorizontalScrollMode(QAbstractItemView* self) {
@@ -1934,13 +1928,12 @@ bool QAbstractItemView_dragDropOverwriteMode(const QAbstractItemView* self) {
 	return self->dragDropOverwriteMode();
 }
 
-void QAbstractItemView_setDragDropMode(QAbstractItemView* self, int behavior) {
-	self->setDragDropMode(static_cast<QAbstractItemView::DragDropMode>(behavior));
+void QAbstractItemView_setDragDropMode(QAbstractItemView* self, DragDropMode behavior) {
+	self->setDragDropMode(behavior);
 }
 
-int QAbstractItemView_dragDropMode(const QAbstractItemView* self) {
-	QAbstractItemView::DragDropMode _ret = self->dragDropMode();
-	return static_cast<int>(_ret);
+DragDropMode QAbstractItemView_dragDropMode(const QAbstractItemView* self) {
+	return self->dragDropMode();
 }
 
 void QAbstractItemView_setDefaultDropAction(QAbstractItemView* self, int dropAction) {
@@ -1986,8 +1979,8 @@ QRect* QAbstractItemView_visualRect(const QAbstractItemView* self, QModelIndex* 
 	return new QRect(self->visualRect(*index));
 }
 
-void QAbstractItemView_scrollTo(QAbstractItemView* self, QModelIndex* index, int hint) {
-	self->scrollTo(*index, static_cast<QAbstractItemView::ScrollHint>(hint));
+void QAbstractItemView_scrollTo(QAbstractItemView* self, QModelIndex* index, ScrollHint hint) {
+	self->scrollTo(*index, hint);
 }
 
 QModelIndex* QAbstractItemView_indexAt(const QAbstractItemView* self, QPoint* point) {
@@ -2004,6 +1997,23 @@ int QAbstractItemView_sizeHintForRow(const QAbstractItemView* self, int row) {
 
 int QAbstractItemView_sizeHintForColumn(const QAbstractItemView* self, int column) {
 	return self->sizeHintForColumn(static_cast<int>(column));
+}
+
+int QAbstractItemView_updateThreshold(const QAbstractItemView* self) {
+	return self->updateThreshold();
+}
+
+void QAbstractItemView_setUpdateThreshold(QAbstractItemView* self, int threshold) {
+	self->setUpdateThreshold(static_cast<int>(threshold));
+}
+
+int QAbstractItemView_keyboardSearchFlags(const QAbstractItemView* self) {
+	Qt::MatchFlags _ret = self->keyboardSearchFlags();
+	return static_cast<int>(_ret);
+}
+
+void QAbstractItemView_setKeyboardSearchFlags(QAbstractItemView* self, int searchFlags) {
+	self->setKeyboardSearchFlags(static_cast<Qt::MatchFlags>(searchFlags));
 }
 
 void QAbstractItemView_openPersistentEditor(QAbstractItemView* self, QModelIndex* index) {
@@ -2698,8 +2708,8 @@ bool QAbstractItemView_override_virtual_edit2(void* self, intptr_t slot) {
 	return true;
 }
 
-bool QAbstractItemView_virtualbase_edit2(void* self, QModelIndex* index, int trigger, QEvent* event) {
-	return static_cast<MiqtVirtualQAbstractItemView*>(self)->QAbstractItemView::edit(*index, static_cast<MiqtVirtualQAbstractItemView::EditTrigger>(trigger), event);
+bool QAbstractItemView_virtualbase_edit2(void* self, QModelIndex* index, EditTrigger trigger, QEvent* event) {
+	return static_cast<MiqtVirtualQAbstractItemView*>(self)->QAbstractItemView::edit(*index, trigger, event);
 }
 
 bool QAbstractItemView_override_virtual_selectionCommand(void* self, intptr_t slot) {
@@ -3358,8 +3368,8 @@ bool QAbstractItemView_override_virtual_metric(void* self, intptr_t slot) {
 	return true;
 }
 
-int QAbstractItemView_virtualbase_metric(const void* self, int param1) {
-	return static_cast<const MiqtVirtualQAbstractItemView*>(self)->QAbstractItemView::metric(static_cast<MiqtVirtualQAbstractItemView::PaintDeviceMetric>(param1));
+int QAbstractItemView_virtualbase_metric(const void* self, PaintDeviceMetric param1) {
+	return static_cast<const MiqtVirtualQAbstractItemView*>(self)->QAbstractItemView::metric(param1);
 }
 
 bool QAbstractItemView_override_virtual_initPainter(void* self, intptr_t slot) {
@@ -3460,19 +3470,18 @@ void QAbstractItemView_virtualbase_disconnectNotify(void* self, QMetaMethod* sig
 	static_cast<MiqtVirtualQAbstractItemView*>(self)->QAbstractItemView::disconnectNotify(*signal);
 }
 
-int QAbstractItemView_protectedbase_state(bool* _dynamic_cast_ok, const void* self) {
+State QAbstractItemView_protectedbase_state(bool* _dynamic_cast_ok, const void* self) {
 	MiqtVirtualQAbstractItemView* self_cast = dynamic_cast<MiqtVirtualQAbstractItemView*>( (QAbstractItemView*)(self) );
 	if (self_cast == nullptr) {
 		*_dynamic_cast_ok = false;
-		return (int)(0);
+		return nullptr;
 	}
 
 	*_dynamic_cast_ok = true;
-	MiqtVirtualQAbstractItemView::State _ret = self_cast->state();
-	return static_cast<int>(_ret);
+	return self_cast->state();
 }
 
-void QAbstractItemView_protectedbase_setState(bool* _dynamic_cast_ok, void* self, int state) {
+void QAbstractItemView_protectedbase_setState(bool* _dynamic_cast_ok, void* self, State state) {
 	MiqtVirtualQAbstractItemView* self_cast = dynamic_cast<MiqtVirtualQAbstractItemView*>( (QAbstractItemView*)(self) );
 	if (self_cast == nullptr) {
 		*_dynamic_cast_ok = false;
@@ -3480,7 +3489,7 @@ void QAbstractItemView_protectedbase_setState(bool* _dynamic_cast_ok, void* self
 	}
 
 	*_dynamic_cast_ok = true;
-	self_cast->setState(static_cast<MiqtVirtualQAbstractItemView::State>(state));
+	self_cast->setState(state);
 }
 
 void QAbstractItemView_protectedbase_scheduleDelayedItemsLayout(bool* _dynamic_cast_ok, void* self) {
@@ -3571,16 +3580,15 @@ void QAbstractItemView_protectedbase_doAutoScroll(bool* _dynamic_cast_ok, void* 
 	self_cast->doAutoScroll();
 }
 
-int QAbstractItemView_protectedbase_dropIndicatorPosition(bool* _dynamic_cast_ok, const void* self) {
+DropIndicatorPosition QAbstractItemView_protectedbase_dropIndicatorPosition(bool* _dynamic_cast_ok, const void* self) {
 	MiqtVirtualQAbstractItemView* self_cast = dynamic_cast<MiqtVirtualQAbstractItemView*>( (QAbstractItemView*)(self) );
 	if (self_cast == nullptr) {
 		*_dynamic_cast_ok = false;
-		return (int)(0);
+		return nullptr;
 	}
 
 	*_dynamic_cast_ok = true;
-	MiqtVirtualQAbstractItemView::DropIndicatorPosition _ret = self_cast->dropIndicatorPosition();
-	return static_cast<int>(_ret);
+	return self_cast->dropIndicatorPosition();
 }
 
 void QAbstractItemView_protectedbase_setViewportMargins(bool* _dynamic_cast_ok, void* self, int left, int top, int right, int bottom) {
@@ -3713,6 +3721,17 @@ bool QAbstractItemView_protectedbase_isSignalConnected(bool* _dynamic_cast_ok, c
 
 	*_dynamic_cast_ok = true;
 	return self_cast->isSignalConnected(*signal);
+}
+
+double QAbstractItemView_protectedbase_getDecodedMetricF(bool* _dynamic_cast_ok, const void* self, PaintDeviceMetric metricA, PaintDeviceMetric metricB) {
+	MiqtVirtualQAbstractItemView* self_cast = dynamic_cast<MiqtVirtualQAbstractItemView*>( (QAbstractItemView*)(self) );
+	if (self_cast == nullptr) {
+		*_dynamic_cast_ok = false;
+		return 0;
+	}
+
+	*_dynamic_cast_ok = true;
+	return self_cast->getDecodedMetricF(metricA, metricB);
 }
 
 void QAbstractItemView_delete(QAbstractItemView* self) {

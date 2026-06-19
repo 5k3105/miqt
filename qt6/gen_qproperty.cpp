@@ -4,6 +4,7 @@
 #include <QPropertyNotifier>
 #include <QPropertyObserver>
 #include <QPropertyObserverBase>
+#include <QScopedPropertyUpdateGroup>
 #include <QString>
 #include <QByteArray>
 #include <cstring>
@@ -20,6 +21,14 @@ extern "C" {
 #ifdef __cplusplus
 } /* extern C */
 #endif
+
+QScopedPropertyUpdateGroup* QScopedPropertyUpdateGroup_new() {
+	return new (std::nothrow) QScopedPropertyUpdateGroup();
+}
+
+void QScopedPropertyUpdateGroup_delete(QScopedPropertyUpdateGroup* self) {
+	delete self;
+}
 
 QPropertyBindingSourceLocation* QPropertyBindingSourceLocation_new() {
 	return new (std::nothrow) QPropertyBindingSourceLocation();
@@ -71,17 +80,17 @@ QPropertyBindingError* QPropertyBindingError_new() {
 	return new (std::nothrow) QPropertyBindingError();
 }
 
-QPropertyBindingError* QPropertyBindingError_new2(int type) {
-	return new (std::nothrow) QPropertyBindingError(static_cast<QPropertyBindingError::Type>(type));
+QPropertyBindingError* QPropertyBindingError_new2(Type type) {
+	return new (std::nothrow) QPropertyBindingError(type);
 }
 
 QPropertyBindingError* QPropertyBindingError_new3(QPropertyBindingError* other) {
 	return new (std::nothrow) QPropertyBindingError(*other);
 }
 
-QPropertyBindingError* QPropertyBindingError_new4(int type, struct miqt_string description) {
+QPropertyBindingError* QPropertyBindingError_new4(Type type, struct miqt_string description) {
 	QString description_QString = QString::fromUtf8(description.data, description.len);
-	return new (std::nothrow) QPropertyBindingError(static_cast<QPropertyBindingError::Type>(type), description_QString);
+	return new (std::nothrow) QPropertyBindingError(type, description_QString);
 }
 
 void QPropertyBindingError_operatorAssign(QPropertyBindingError* self, QPropertyBindingError* other) {
@@ -92,9 +101,8 @@ bool QPropertyBindingError_hasError(const QPropertyBindingError* self) {
 	return self->hasError();
 }
 
-int QPropertyBindingError_type(const QPropertyBindingError* self) {
-	QPropertyBindingError::Type _ret = self->type();
-	return static_cast<int>(_ret);
+Type QPropertyBindingError_type(const QPropertyBindingError* self) {
+	return self->type();
 }
 
 struct miqt_string QPropertyBindingError_description(const QPropertyBindingError* self) {
@@ -116,7 +124,11 @@ QUntypedPropertyBinding* QUntypedPropertyBinding_new() {
 	return new (std::nothrow) QUntypedPropertyBinding();
 }
 
-QUntypedPropertyBinding* QUntypedPropertyBinding_new2(QUntypedPropertyBinding* other) {
+QUntypedPropertyBinding* QUntypedPropertyBinding_new2(QMetaType* metaType, const BindingFunctionVTable* vtable, void* function, QPropertyBindingSourceLocation* location) {
+	return new (std::nothrow) QUntypedPropertyBinding(*metaType, vtable, function, *location);
+}
+
+QUntypedPropertyBinding* QUntypedPropertyBinding_new3(QUntypedPropertyBinding* other) {
 	return new (std::nothrow) QUntypedPropertyBinding(*other);
 }
 

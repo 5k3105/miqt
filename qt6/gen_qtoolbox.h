@@ -202,7 +202,7 @@ void QToolBox_virtualbase_hideEvent(void* self, QHideEvent* event);
 bool QToolBox_override_virtual_nativeEvent(void* self, intptr_t slot);
 bool QToolBox_virtualbase_nativeEvent(void* self, struct miqt_string eventType, void* message, intptr_t* result);
 bool QToolBox_override_virtual_metric(void* self, intptr_t slot);
-int QToolBox_virtualbase_metric(const void* self, int param1);
+int QToolBox_virtualbase_metric(const void* self, PaintDeviceMetric param1);
 bool QToolBox_override_virtual_initPainter(void* self, intptr_t slot);
 void QToolBox_virtualbase_initPainter(const void* self, QPainter* painter);
 bool QToolBox_override_virtual_redirected(void* self, intptr_t slot);
@@ -238,6 +238,7 @@ QObject* QToolBox_protectedbase_sender(bool* _dynamic_cast_ok, const void* self)
 int QToolBox_protectedbase_senderSignalIndex(bool* _dynamic_cast_ok, const void* self);
 int QToolBox_protectedbase_receivers(bool* _dynamic_cast_ok, const void* self, const char* signal);
 bool QToolBox_protectedbase_isSignalConnected(bool* _dynamic_cast_ok, const void* self, QMetaMethod* signal);
+double QToolBox_protectedbase_getDecodedMetricF(bool* _dynamic_cast_ok, const void* self, PaintDeviceMetric metricA, PaintDeviceMetric metricB);
 
 void QToolBox_delete(QToolBox* self);
 

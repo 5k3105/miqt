@@ -14,6 +14,15 @@ import (
 	"unsafe"
 )
 
+type QPdfWriter__ColorModel int
+
+const (
+	QPdfWriter__RGB       QPdfWriter__ColorModel = 0
+	QPdfWriter__Grayscale QPdfWriter__ColorModel = 1
+	QPdfWriter__CMYK      QPdfWriter__ColorModel = 2
+	QPdfWriter__Auto      QPdfWriter__ColorModel = 3
+)
+
 type QPdfWriter struct {
 	h *C.QPdfWriter
 	*QObject
@@ -88,12 +97,12 @@ func QPdfWriter_Tr(s string) string {
 	return _ret
 }
 
-func (this *QPdfWriter) SetPdfVersion(version QPagedPaintDevice__PdfVersion) {
-	C.QPdfWriter_setPdfVersion(this.h, (C.int)(version))
+func (this *QPdfWriter) SetPdfVersion(version PdfVersion) {
+	C.QPdfWriter_setPdfVersion(this.h, version)
 }
 
-func (this *QPdfWriter) PdfVersion() QPagedPaintDevice__PdfVersion {
-	return (QPagedPaintDevice__PdfVersion)(C.QPdfWriter_pdfVersion(this.h))
+func (this *QPdfWriter) PdfVersion() PdfVersion {
+	int /* TODO  */
 }
 
 func (this *QPdfWriter) Title() string {
@@ -124,6 +133,31 @@ func (this *QPdfWriter) SetCreator(creator string) {
 	creator_ms.len = C.size_t(len(creator))
 	defer C.free(unsafe.Pointer(creator_ms.data))
 	C.QPdfWriter_setCreator(this.h, creator_ms)
+}
+
+func (this *QPdfWriter) DocumentId() *QUuid {
+	_goptr := newQUuid(C.QPdfWriter_documentId(this.h))
+	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
+	return _goptr
+}
+
+func (this *QPdfWriter) SetDocumentId(documentId QUuid) {
+	C.QPdfWriter_setDocumentId(this.h, documentId.cPointer())
+}
+
+func (this *QPdfWriter) Author() string {
+	var _ms C.struct_miqt_string = C.QPdfWriter_author(this.h)
+	_ret := C.GoStringN(_ms.data, C.int(int64(_ms.len)))
+	C.free(unsafe.Pointer(_ms.data))
+	return _ret
+}
+
+func (this *QPdfWriter) SetAuthor(author string) {
+	author_ms := C.struct_miqt_string{}
+	author_ms.data = C.CString(author)
+	author_ms.len = C.size_t(len(author))
+	defer C.free(unsafe.Pointer(author_ms.data))
+	C.QPdfWriter_setAuthor(this.h, author_ms)
 }
 
 func (this *QPdfWriter) NewPage() bool {
@@ -169,6 +203,24 @@ func (this *QPdfWriter) AddFileAttachment(fileName string, data []byte) {
 	}
 	data_alias.len = C.size_t(len(data))
 	C.QPdfWriter_addFileAttachment(this.h, fileName_ms, data_alias)
+}
+
+func (this *QPdfWriter) ColorModel() ColorModel {
+	int /* TODO  */
+}
+
+func (this *QPdfWriter) SetColorModel(model ColorModel) {
+	C.QPdfWriter_setColorModel(this.h, model)
+}
+
+func (this *QPdfWriter) OutputIntent() *QPdfOutputIntent {
+	_goptr := newQPdfOutputIntent(C.QPdfWriter_outputIntent(this.h))
+	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
+	return _goptr
+}
+
+func (this *QPdfWriter) SetOutputIntent(intent *QPdfOutputIntent) {
+	C.QPdfWriter_setOutputIntent(this.h, intent.cPointer())
 }
 
 func QPdfWriter_Tr2(s string, c string) string {
@@ -270,6 +322,20 @@ func (this *QPdfWriter) IsSignalConnected(signal *QMetaMethod) bool {
 
 }
 
+// GetDecodedMetricF can only be called from a QPdfWriter that was directly constructed.
+func (this *QPdfWriter) GetDecodedMetricF(metricA PaintDeviceMetric, metricB PaintDeviceMetric) float64 {
+
+	var _dynamic_cast_ok C.bool = false
+	_method_ret := (float64)(C.QPdfWriter_protectedbase_getDecodedMetricF(&_dynamic_cast_ok, unsafe.Pointer(this.h), metricA, metricB))
+
+	if !_dynamic_cast_ok {
+		panic("miqt: can only call protected methods for directly constructed types")
+	}
+
+	return _method_ret
+
+}
+
 func (this *QPdfWriter) callVirtualBase_NewPage() bool {
 
 	return (bool)(C.QPdfWriter_virtualbase_newPage(unsafe.Pointer(this.h)))
@@ -320,12 +386,12 @@ func miqt_exec_callback_QPdfWriter_paintEngine(self *C.QPdfWriter, cb C.intptr_t
 
 }
 
-func (this *QPdfWriter) callVirtualBase_Metric(id QPaintDevice__PaintDeviceMetric) int {
+func (this *QPdfWriter) callVirtualBase_Metric(id PaintDeviceMetric) int {
 
-	return (int)(C.QPdfWriter_virtualbase_metric(unsafe.Pointer(this.h), (C.int)(id)))
+	return (int)(C.QPdfWriter_virtualbase_metric(unsafe.Pointer(this.h), id))
 
 }
-func (this *QPdfWriter) OnMetric(slot func(super func(id QPaintDevice__PaintDeviceMetric) int, id QPaintDevice__PaintDeviceMetric) int) {
+func (this *QPdfWriter) OnMetric(slot func(super func(id PaintDeviceMetric) int, id PaintDeviceMetric) int) {
 	ok := C.QPdfWriter_override_virtual_metric(unsafe.Pointer(this.h), C.intptr_t(cgo.NewHandle(slot)))
 	if !ok {
 		panic("miqt: can only override virtual methods for directly constructed types")
@@ -333,14 +399,14 @@ func (this *QPdfWriter) OnMetric(slot func(super func(id QPaintDevice__PaintDevi
 }
 
 //export miqt_exec_callback_QPdfWriter_metric
-func miqt_exec_callback_QPdfWriter_metric(self *C.QPdfWriter, cb C.intptr_t, id C.int) C.int {
-	gofunc, ok := cgo.Handle(cb).Value().(func(super func(id QPaintDevice__PaintDeviceMetric) int, id QPaintDevice__PaintDeviceMetric) int)
+func miqt_exec_callback_QPdfWriter_metric(self *C.QPdfWriter, cb C.intptr_t, id C.PaintDeviceMetric) C.int {
+	gofunc, ok := cgo.Handle(cb).Value().(func(super func(id PaintDeviceMetric) int, id PaintDeviceMetric) int)
 	if !ok {
 		panic("miqt: callback of non-callback type (heap corruption?)")
 	}
 
 	// Convert all CABI parameters to Go parameters
-	slotval1 := (QPaintDevice__PaintDeviceMetric)(id)
+	int /* TODO  */
 
 	virtualReturn := gofunc((&QPdfWriter{h: self}).callVirtualBase_Metric, slotval1)
 

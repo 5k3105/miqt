@@ -38,6 +38,13 @@ const (
 	QPageLayout__FullPageMode QPageLayout__Mode = 1
 )
 
+type QPageLayout__OutOfBoundsPolicy int
+
+const (
+	QPageLayout__Reject QPageLayout__OutOfBoundsPolicy = 0
+	QPageLayout__Clamp  QPageLayout__OutOfBoundsPolicy = 1
+)
+
 type QPageLayout struct {
 	h *C.QPageLayout
 }
@@ -77,9 +84,9 @@ func NewQPageLayout() *QPageLayout {
 }
 
 // NewQPageLayout2 constructs a new QPageLayout object.
-func NewQPageLayout2(pageSize *QPageSize, orientation QPageLayout__Orientation, margins *QMarginsF) *QPageLayout {
+func NewQPageLayout2(pageSize *QPageSize, orientation Orientation, margins *QMarginsF) *QPageLayout {
 
-	return newQPageLayout(C.QPageLayout_new2(pageSize.cPointer(), (C.int)(orientation), margins.cPointer()))
+	return newQPageLayout(C.QPageLayout_new2(pageSize.cPointer(), orientation, margins.cPointer()))
 }
 
 // NewQPageLayout3 constructs a new QPageLayout object.
@@ -89,15 +96,15 @@ func NewQPageLayout3(other *QPageLayout) *QPageLayout {
 }
 
 // NewQPageLayout4 constructs a new QPageLayout object.
-func NewQPageLayout4(pageSize *QPageSize, orientation QPageLayout__Orientation, margins *QMarginsF, units QPageLayout__Unit) *QPageLayout {
+func NewQPageLayout4(pageSize *QPageSize, orientation Orientation, margins *QMarginsF, units Unit) *QPageLayout {
 
-	return newQPageLayout(C.QPageLayout_new4(pageSize.cPointer(), (C.int)(orientation), margins.cPointer(), (C.int)(units)))
+	return newQPageLayout(C.QPageLayout_new4(pageSize.cPointer(), orientation, margins.cPointer(), units))
 }
 
 // NewQPageLayout5 constructs a new QPageLayout object.
-func NewQPageLayout5(pageSize *QPageSize, orientation QPageLayout__Orientation, margins *QMarginsF, units QPageLayout__Unit, minMargins *QMarginsF) *QPageLayout {
+func NewQPageLayout5(pageSize *QPageSize, orientation Orientation, margins *QMarginsF, units Unit, minMargins *QMarginsF) *QPageLayout {
 
-	return newQPageLayout(C.QPageLayout_new5(pageSize.cPointer(), (C.int)(orientation), margins.cPointer(), (C.int)(units), minMargins.cPointer()))
+	return newQPageLayout(C.QPageLayout_new5(pageSize.cPointer(), orientation, margins.cPointer(), units, minMargins.cPointer()))
 }
 
 func (this *QPageLayout) OperatorAssign(other *QPageLayout) {
@@ -116,12 +123,12 @@ func (this *QPageLayout) IsValid() bool {
 	return (bool)(C.QPageLayout_isValid(this.h))
 }
 
-func (this *QPageLayout) SetMode(mode QPageLayout__Mode) {
-	C.QPageLayout_setMode(this.h, (C.int)(mode))
+func (this *QPageLayout) SetMode(mode Mode) {
+	C.QPageLayout_setMode(this.h, mode)
 }
 
-func (this *QPageLayout) Mode() QPageLayout__Mode {
-	return (QPageLayout__Mode)(C.QPageLayout_mode(this.h))
+func (this *QPageLayout) Mode() Mode {
+	int /* TODO  */
 }
 
 func (this *QPageLayout) SetPageSize(pageSize *QPageSize) {
@@ -134,20 +141,20 @@ func (this *QPageLayout) PageSize() *QPageSize {
 	return _goptr
 }
 
-func (this *QPageLayout) SetOrientation(orientation QPageLayout__Orientation) {
-	C.QPageLayout_setOrientation(this.h, (C.int)(orientation))
+func (this *QPageLayout) SetOrientation(orientation Orientation) {
+	C.QPageLayout_setOrientation(this.h, orientation)
 }
 
-func (this *QPageLayout) Orientation() QPageLayout__Orientation {
-	return (QPageLayout__Orientation)(C.QPageLayout_orientation(this.h))
+func (this *QPageLayout) Orientation() Orientation {
+	int /* TODO  */
 }
 
-func (this *QPageLayout) SetUnits(units QPageLayout__Unit) {
-	C.QPageLayout_setUnits(this.h, (C.int)(units))
+func (this *QPageLayout) SetUnits(units Unit) {
+	C.QPageLayout_setUnits(this.h, units)
 }
 
-func (this *QPageLayout) Units() QPageLayout__Unit {
-	return (QPageLayout__Unit)(C.QPageLayout_units(this.h))
+func (this *QPageLayout) Units() Unit {
+	int /* TODO  */
 }
 
 func (this *QPageLayout) SetMargins(margins *QMarginsF) bool {
@@ -176,8 +183,8 @@ func (this *QPageLayout) Margins() *QMarginsF {
 	return _goptr
 }
 
-func (this *QPageLayout) MarginsWithUnits(units QPageLayout__Unit) *QMarginsF {
-	_goptr := newQMarginsF(C.QPageLayout_marginsWithUnits(this.h, (C.int)(units)))
+func (this *QPageLayout) MarginsWithUnits(units Unit) *QMarginsF {
+	_goptr := newQMarginsF(C.QPageLayout_marginsWithUnits(this.h, units))
 	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
 	return _goptr
 }
@@ -216,8 +223,8 @@ func (this *QPageLayout) FullRect() *QRectF {
 	return _goptr
 }
 
-func (this *QPageLayout) FullRectWithUnits(units QPageLayout__Unit) *QRectF {
-	_goptr := newQRectF(C.QPageLayout_fullRectWithUnits(this.h, (C.int)(units)))
+func (this *QPageLayout) FullRectWithUnits(units Unit) *QRectF {
+	_goptr := newQRectF(C.QPageLayout_fullRectWithUnits(this.h, units))
 	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
 	return _goptr
 }
@@ -240,8 +247,8 @@ func (this *QPageLayout) PaintRect() *QRectF {
 	return _goptr
 }
 
-func (this *QPageLayout) PaintRectWithUnits(units QPageLayout__Unit) *QRectF {
-	_goptr := newQRectF(C.QPageLayout_paintRectWithUnits(this.h, (C.int)(units)))
+func (this *QPageLayout) PaintRectWithUnits(units Unit) *QRectF {
+	_goptr := newQRectF(C.QPageLayout_paintRectWithUnits(this.h, units))
 	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
 	return _goptr
 }
@@ -260,6 +267,26 @@ func (this *QPageLayout) PaintRectPixels(resolution int) *QRect {
 
 func (this *QPageLayout) SetPageSize2(pageSize *QPageSize, minMargins *QMarginsF) {
 	C.QPageLayout_setPageSize2(this.h, pageSize.cPointer(), minMargins.cPointer())
+}
+
+func (this *QPageLayout) SetMargins2(margins *QMarginsF, outOfBoundsPolicy OutOfBoundsPolicy) bool {
+	return (bool)(C.QPageLayout_setMargins2(this.h, margins.cPointer(), outOfBoundsPolicy))
+}
+
+func (this *QPageLayout) SetLeftMargin2(leftMargin float64, outOfBoundsPolicy OutOfBoundsPolicy) bool {
+	return (bool)(C.QPageLayout_setLeftMargin2(this.h, (C.double)(leftMargin), outOfBoundsPolicy))
+}
+
+func (this *QPageLayout) SetRightMargin2(rightMargin float64, outOfBoundsPolicy OutOfBoundsPolicy) bool {
+	return (bool)(C.QPageLayout_setRightMargin2(this.h, (C.double)(rightMargin), outOfBoundsPolicy))
+}
+
+func (this *QPageLayout) SetTopMargin2(topMargin float64, outOfBoundsPolicy OutOfBoundsPolicy) bool {
+	return (bool)(C.QPageLayout_setTopMargin2(this.h, (C.double)(topMargin), outOfBoundsPolicy))
+}
+
+func (this *QPageLayout) SetBottomMargin2(bottomMargin float64, outOfBoundsPolicy OutOfBoundsPolicy) bool {
+	return (bool)(C.QPageLayout_setBottomMargin2(this.h, (C.double)(bottomMargin), outOfBoundsPolicy))
 }
 
 // Delete this object from C++ memory.

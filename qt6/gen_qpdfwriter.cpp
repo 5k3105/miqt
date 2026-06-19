@@ -13,12 +13,14 @@
 #include <QPaintDevice>
 #include <QPaintEngine>
 #include <QPainter>
+#include <QPdfOutputIntent>
 #include <QPdfWriter>
 #include <QPoint>
 #include <QString>
 #include <QByteArray>
 #include <cstring>
 #include <QTimerEvent>
+#include <QUuid>
 #include <qpdfwriter.h>
 #include "gen_qpdfwriter.h"
 
@@ -28,7 +30,7 @@ extern "C" {
 
 bool miqt_exec_callback_QPdfWriter_newPage(QPdfWriter*, intptr_t);
 QPaintEngine* miqt_exec_callback_QPdfWriter_paintEngine(const QPdfWriter*, intptr_t);
-int miqt_exec_callback_QPdfWriter_metric(const QPdfWriter*, intptr_t, int);
+int miqt_exec_callback_QPdfWriter_metric(const QPdfWriter*, intptr_t, PaintDeviceMetric);
 bool miqt_exec_callback_QPdfWriter_event(QPdfWriter*, intptr_t, QEvent*);
 bool miqt_exec_callback_QPdfWriter_eventFilter(QPdfWriter*, intptr_t, QObject*, QEvent*);
 void miqt_exec_callback_QPdfWriter_timerEvent(QPdfWriter*, intptr_t, QTimerEvent*);
@@ -91,18 +93,17 @@ public:
 	intptr_t handle__metric = 0;
 
 	// Subclass to allow providing a Go implementation
-	virtual int metric(QPaintDevice::PaintDeviceMetric id) const override {
+	virtual int metric(PaintDeviceMetric id) const override {
 		if (handle__metric == 0) {
 			return QPdfWriter::metric(id);
 		}
 
-		QPaintDevice::PaintDeviceMetric id_ret = id;
-		int sigval1 = static_cast<int>(id_ret);
+		PaintDeviceMetric sigval1 = id;
 		int callback_return_value = miqt_exec_callback_QPdfWriter_metric(this, handle__metric, sigval1);
 		return static_cast<int>(callback_return_value);
 	}
 
-	friend int QPdfWriter_virtualbase_metric(const void* self, int id);
+	friend int QPdfWriter_virtualbase_metric(const void* self, PaintDeviceMetric id);
 
 	// cgo.Handle value for overwritten implementation
 	intptr_t handle__event = 0;
@@ -386,6 +387,7 @@ public:
 	friend int QPdfWriter_protectedbase_senderSignalIndex(bool* _dynamic_cast_ok, const void* self);
 	friend int QPdfWriter_protectedbase_receivers(bool* _dynamic_cast_ok, const void* self, const char* signal);
 	friend bool QPdfWriter_protectedbase_isSignalConnected(bool* _dynamic_cast_ok, const void* self, QMetaMethod* signal);
+	friend double QPdfWriter_protectedbase_getDecodedMetricF(bool* _dynamic_cast_ok, const void* self, PaintDeviceMetric metricA, PaintDeviceMetric metricB);
 };
 
 QPdfWriter* QPdfWriter_new(struct miqt_string filename) {
@@ -421,13 +423,12 @@ struct miqt_string QPdfWriter_tr(const char* s) {
 	return _ms;
 }
 
-void QPdfWriter_setPdfVersion(QPdfWriter* self, int version) {
-	self->setPdfVersion(static_cast<QPagedPaintDevice::PdfVersion>(version));
+void QPdfWriter_setPdfVersion(QPdfWriter* self, PdfVersion version) {
+	self->setPdfVersion(version);
 }
 
-int QPdfWriter_pdfVersion(const QPdfWriter* self) {
-	QPagedPaintDevice::PdfVersion _ret = self->pdfVersion();
-	return static_cast<int>(_ret);
+PdfVersion QPdfWriter_pdfVersion(const QPdfWriter* self) {
+	return self->pdfVersion();
 }
 
 struct miqt_string QPdfWriter_title(const QPdfWriter* self) {
@@ -462,6 +463,30 @@ void QPdfWriter_setCreator(QPdfWriter* self, struct miqt_string creator) {
 	self->setCreator(creator_QString);
 }
 
+QUuid* QPdfWriter_documentId(const QPdfWriter* self) {
+	return new QUuid(self->documentId());
+}
+
+void QPdfWriter_setDocumentId(QPdfWriter* self, QUuid* documentId) {
+	self->setDocumentId(*documentId);
+}
+
+struct miqt_string QPdfWriter_author(const QPdfWriter* self) {
+	QString _ret = self->author();
+	// Convert QString from UTF-16 in C++ RAII memory to UTF-8 in manually-managed C memory
+	QByteArray _b = _ret.toUtf8();
+	struct miqt_string _ms;
+	_ms.len = _b.length();
+	_ms.data = static_cast<char*>(malloc(_ms.len));
+	memcpy(_ms.data, _b.data(), _ms.len);
+	return _ms;
+}
+
+void QPdfWriter_setAuthor(QPdfWriter* self, struct miqt_string author) {
+	QString author_QString = QString::fromUtf8(author.data, author.len);
+	self->setAuthor(author_QString);
+}
+
 bool QPdfWriter_newPage(QPdfWriter* self) {
 	return self->newPage();
 }
@@ -492,6 +517,22 @@ void QPdfWriter_addFileAttachment(QPdfWriter* self, struct miqt_string fileName,
 	QString fileName_QString = QString::fromUtf8(fileName.data, fileName.len);
 	QByteArray data_QByteArray(data.data, data.len);
 	self->addFileAttachment(fileName_QString, data_QByteArray);
+}
+
+ColorModel QPdfWriter_colorModel(const QPdfWriter* self) {
+	return self->colorModel();
+}
+
+void QPdfWriter_setColorModel(QPdfWriter* self, ColorModel model) {
+	self->setColorModel(model);
+}
+
+QPdfOutputIntent* QPdfWriter_outputIntent(const QPdfWriter* self) {
+	return new QPdfOutputIntent(self->outputIntent());
+}
+
+void QPdfWriter_setOutputIntent(QPdfWriter* self, QPdfOutputIntent* intent) {
+	self->setOutputIntent(*intent);
 }
 
 struct miqt_string QPdfWriter_tr2(const char* s, const char* c) {
@@ -561,8 +602,8 @@ bool QPdfWriter_override_virtual_metric(void* self, intptr_t slot) {
 	return true;
 }
 
-int QPdfWriter_virtualbase_metric(const void* self, int id) {
-	return static_cast<const MiqtVirtualQPdfWriter*>(self)->QPdfWriter::metric(static_cast<MiqtVirtualQPdfWriter::PaintDeviceMetric>(id));
+int QPdfWriter_virtualbase_metric(const void* self, PaintDeviceMetric id) {
+	return static_cast<const MiqtVirtualQPdfWriter*>(self)->QPdfWriter::metric(id);
 }
 
 bool QPdfWriter_override_virtual_event(void* self, intptr_t slot) {
@@ -831,6 +872,17 @@ bool QPdfWriter_protectedbase_isSignalConnected(bool* _dynamic_cast_ok, const vo
 
 	*_dynamic_cast_ok = true;
 	return self_cast->isSignalConnected(*signal);
+}
+
+double QPdfWriter_protectedbase_getDecodedMetricF(bool* _dynamic_cast_ok, const void* self, PaintDeviceMetric metricA, PaintDeviceMetric metricB) {
+	MiqtVirtualQPdfWriter* self_cast = dynamic_cast<MiqtVirtualQPdfWriter*>( (QPdfWriter*)(self) );
+	if (self_cast == nullptr) {
+		*_dynamic_cast_ok = false;
+		return 0;
+	}
+
+	*_dynamic_cast_ok = true;
+	return self_cast->getDecodedMetricF(metricA, metricB);
 }
 
 void QPdfWriter_delete(QPdfWriter* self) {

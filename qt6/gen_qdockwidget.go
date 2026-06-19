@@ -137,12 +137,12 @@ func (this *QDockWidget) SetWidget(widget *QWidget) {
 	C.QDockWidget_setWidget(this.h, widget.cPointer())
 }
 
-func (this *QDockWidget) SetFeatures(features QDockWidget__DockWidgetFeature) {
-	C.QDockWidget_setFeatures(this.h, (C.int)(features))
+func (this *QDockWidget) SetFeatures(features DockWidgetFeatures) {
+	C.QDockWidget_setFeatures(this.h, features)
 }
 
-func (this *QDockWidget) Features() QDockWidget__DockWidgetFeature {
-	return (QDockWidget__DockWidgetFeature)(C.QDockWidget_features(this.h))
+func (this *QDockWidget) Features() DockWidgetFeatures {
+	int /* TODO  */
 }
 
 func (this *QDockWidget) SetFloating(floating bool) {
@@ -169,6 +169,14 @@ func (this *QDockWidget) TitleBarWidget() *QWidget {
 	return newQWidget(C.QDockWidget_titleBarWidget(this.h))
 }
 
+func (this *QDockWidget) SetDockLocation(area DockWidgetArea) {
+	C.QDockWidget_setDockLocation(this.h, (C.int)(area))
+}
+
+func (this *QDockWidget) DockLocation() DockWidgetArea {
+	return (DockWidgetArea)(C.QDockWidget_dockLocation(this.h))
+}
+
 func (this *QDockWidget) IsAreaAllowed(area DockWidgetArea) bool {
 	return (bool)(C.QDockWidget_isAreaAllowed(this.h, (C.int)(area)))
 }
@@ -177,22 +185,22 @@ func (this *QDockWidget) ToggleViewAction() *QAction {
 	return newQAction(C.QDockWidget_toggleViewAction(this.h))
 }
 
-func (this *QDockWidget) FeaturesChanged(features QDockWidget__DockWidgetFeature) {
+func (this *QDockWidget) FeaturesChanged(features DockWidgetFeature) {
 	C.QDockWidget_featuresChanged(this.h, (C.int)(features))
 }
-func (this *QDockWidget) OnFeaturesChanged(slot func(features QDockWidget__DockWidgetFeature)) {
+func (this *QDockWidget) OnFeaturesChanged(slot func(features DockWidgetFeature)) {
 	C.QDockWidget_connect_featuresChanged(this.h, C.intptr_t(cgo.NewHandle(slot)))
 }
 
 //export miqt_exec_callback_QDockWidget_featuresChanged
 func miqt_exec_callback_QDockWidget_featuresChanged(cb C.intptr_t, features C.int) {
-	gofunc, ok := cgo.Handle(cb).Value().(func(features QDockWidget__DockWidgetFeature))
+	gofunc, ok := cgo.Handle(cb).Value().(func(features DockWidgetFeature))
 	if !ok {
 		panic("miqt: callback of non-callback type (heap corruption?)")
 	}
 
 	// Convert all CABI parameters to Go parameters
-	slotval1 := (QDockWidget__DockWidgetFeature)(features)
+	slotval1 := (DockWidgetFeature)(features)
 
 	gofunc(slotval1)
 }
@@ -412,6 +420,20 @@ func (this *QDockWidget) IsSignalConnected(signal *QMetaMethod) bool {
 
 	var _dynamic_cast_ok C.bool = false
 	_method_ret := (bool)(C.QDockWidget_protectedbase_isSignalConnected(&_dynamic_cast_ok, unsafe.Pointer(this.h), signal.cPointer()))
+
+	if !_dynamic_cast_ok {
+		panic("miqt: can only call protected methods for directly constructed types")
+	}
+
+	return _method_ret
+
+}
+
+// GetDecodedMetricF can only be called from a QDockWidget that was directly constructed.
+func (this *QDockWidget) GetDecodedMetricF(metricA PaintDeviceMetric, metricB PaintDeviceMetric) float64 {
+
+	var _dynamic_cast_ok C.bool = false
+	_method_ret := (float64)(C.QDockWidget_protectedbase_getDecodedMetricF(&_dynamic_cast_ok, unsafe.Pointer(this.h), metricA, metricB))
 
 	if !_dynamic_cast_ok {
 		panic("miqt: can only call protected methods for directly constructed types")
@@ -1349,12 +1371,12 @@ func miqt_exec_callback_QDockWidget_nativeEvent(self *C.QDockWidget, cb C.intptr
 
 }
 
-func (this *QDockWidget) callVirtualBase_Metric(param1 QPaintDevice__PaintDeviceMetric) int {
+func (this *QDockWidget) callVirtualBase_Metric(param1 PaintDeviceMetric) int {
 
-	return (int)(C.QDockWidget_virtualbase_metric(unsafe.Pointer(this.h), (C.int)(param1)))
+	return (int)(C.QDockWidget_virtualbase_metric(unsafe.Pointer(this.h), param1))
 
 }
-func (this *QDockWidget) OnMetric(slot func(super func(param1 QPaintDevice__PaintDeviceMetric) int, param1 QPaintDevice__PaintDeviceMetric) int) {
+func (this *QDockWidget) OnMetric(slot func(super func(param1 PaintDeviceMetric) int, param1 PaintDeviceMetric) int) {
 	ok := C.QDockWidget_override_virtual_metric(unsafe.Pointer(this.h), C.intptr_t(cgo.NewHandle(slot)))
 	if !ok {
 		panic("miqt: can only override virtual methods for directly constructed types")
@@ -1362,14 +1384,14 @@ func (this *QDockWidget) OnMetric(slot func(super func(param1 QPaintDevice__Pain
 }
 
 //export miqt_exec_callback_QDockWidget_metric
-func miqt_exec_callback_QDockWidget_metric(self *C.QDockWidget, cb C.intptr_t, param1 C.int) C.int {
-	gofunc, ok := cgo.Handle(cb).Value().(func(super func(param1 QPaintDevice__PaintDeviceMetric) int, param1 QPaintDevice__PaintDeviceMetric) int)
+func miqt_exec_callback_QDockWidget_metric(self *C.QDockWidget, cb C.intptr_t, param1 C.PaintDeviceMetric) C.int {
+	gofunc, ok := cgo.Handle(cb).Value().(func(super func(param1 PaintDeviceMetric) int, param1 PaintDeviceMetric) int)
 	if !ok {
 		panic("miqt: callback of non-callback type (heap corruption?)")
 	}
 
 	// Convert all CABI parameters to Go parameters
-	slotval1 := (QPaintDevice__PaintDeviceMetric)(param1)
+	int /* TODO  */
 
 	virtualReturn := gofunc((&QDockWidget{h: self}).callVirtualBase_Metric, slotval1)
 

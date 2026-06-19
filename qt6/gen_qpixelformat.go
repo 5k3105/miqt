@@ -125,9 +125,9 @@ func NewQPixelFormat() *QPixelFormat {
 }
 
 // NewQPixelFormat2 constructs a new QPixelFormat object.
-func NewQPixelFormat2(colorModel QPixelFormat__ColorModel, firstSize byte, secondSize byte, thirdSize byte, fourthSize byte, fifthSize byte, alphaSize byte, alphaUsage QPixelFormat__AlphaUsage, alphaPosition QPixelFormat__AlphaPosition, premultiplied QPixelFormat__AlphaPremultiplied, typeInterpretation QPixelFormat__TypeInterpretation) *QPixelFormat {
+func NewQPixelFormat2(colorModel ColorModel, firstSize byte, secondSize byte, thirdSize byte, fourthSize byte, fifthSize byte, alphaSize byte, alphaUsage AlphaUsage, alphaPosition AlphaPosition, premultiplied AlphaPremultiplied, typeInterpretation TypeInterpretation) *QPixelFormat {
 
-	return newQPixelFormat(C.QPixelFormat_new2((C.int)(colorModel), (C.uchar)(firstSize), (C.uchar)(secondSize), (C.uchar)(thirdSize), (C.uchar)(fourthSize), (C.uchar)(fifthSize), (C.uchar)(alphaSize), (C.int)(alphaUsage), (C.int)(alphaPosition), (C.int)(premultiplied), (C.int)(typeInterpretation)))
+	return newQPixelFormat(C.QPixelFormat_new2(colorModel, (C.uchar)(firstSize), (C.uchar)(secondSize), (C.uchar)(thirdSize), (C.uchar)(fourthSize), (C.uchar)(fifthSize), (C.uchar)(alphaSize), alphaUsage, alphaPosition, premultiplied, typeInterpretation))
 }
 
 // NewQPixelFormat3 constructs a new QPixelFormat object.
@@ -137,19 +137,19 @@ func NewQPixelFormat3(param1 *QPixelFormat) *QPixelFormat {
 }
 
 // NewQPixelFormat4 constructs a new QPixelFormat object.
-func NewQPixelFormat4(colorModel QPixelFormat__ColorModel, firstSize byte, secondSize byte, thirdSize byte, fourthSize byte, fifthSize byte, alphaSize byte, alphaUsage QPixelFormat__AlphaUsage, alphaPosition QPixelFormat__AlphaPosition, premultiplied QPixelFormat__AlphaPremultiplied, typeInterpretation QPixelFormat__TypeInterpretation, byteOrder QPixelFormat__ByteOrder) *QPixelFormat {
+func NewQPixelFormat4(colorModel ColorModel, firstSize byte, secondSize byte, thirdSize byte, fourthSize byte, fifthSize byte, alphaSize byte, alphaUsage AlphaUsage, alphaPosition AlphaPosition, premultiplied AlphaPremultiplied, typeInterpretation TypeInterpretation, byteOrder ByteOrder) *QPixelFormat {
 
-	return newQPixelFormat(C.QPixelFormat_new4((C.int)(colorModel), (C.uchar)(firstSize), (C.uchar)(secondSize), (C.uchar)(thirdSize), (C.uchar)(fourthSize), (C.uchar)(fifthSize), (C.uchar)(alphaSize), (C.int)(alphaUsage), (C.int)(alphaPosition), (C.int)(premultiplied), (C.int)(typeInterpretation), (C.int)(byteOrder)))
+	return newQPixelFormat(C.QPixelFormat_new4(colorModel, (C.uchar)(firstSize), (C.uchar)(secondSize), (C.uchar)(thirdSize), (C.uchar)(fourthSize), (C.uchar)(fifthSize), (C.uchar)(alphaSize), alphaUsage, alphaPosition, premultiplied, typeInterpretation, byteOrder))
 }
 
 // NewQPixelFormat5 constructs a new QPixelFormat object.
-func NewQPixelFormat5(colorModel QPixelFormat__ColorModel, firstSize byte, secondSize byte, thirdSize byte, fourthSize byte, fifthSize byte, alphaSize byte, alphaUsage QPixelFormat__AlphaUsage, alphaPosition QPixelFormat__AlphaPosition, premultiplied QPixelFormat__AlphaPremultiplied, typeInterpretation QPixelFormat__TypeInterpretation, byteOrder QPixelFormat__ByteOrder, subEnum byte) *QPixelFormat {
+func NewQPixelFormat5(colorModel ColorModel, firstSize byte, secondSize byte, thirdSize byte, fourthSize byte, fifthSize byte, alphaSize byte, alphaUsage AlphaUsage, alphaPosition AlphaPosition, premultiplied AlphaPremultiplied, typeInterpretation TypeInterpretation, byteOrder ByteOrder, subEnum byte) *QPixelFormat {
 
-	return newQPixelFormat(C.QPixelFormat_new5((C.int)(colorModel), (C.uchar)(firstSize), (C.uchar)(secondSize), (C.uchar)(thirdSize), (C.uchar)(fourthSize), (C.uchar)(fifthSize), (C.uchar)(alphaSize), (C.int)(alphaUsage), (C.int)(alphaPosition), (C.int)(premultiplied), (C.int)(typeInterpretation), (C.int)(byteOrder), (C.uchar)(subEnum)))
+	return newQPixelFormat(C.QPixelFormat_new5(colorModel, (C.uchar)(firstSize), (C.uchar)(secondSize), (C.uchar)(thirdSize), (C.uchar)(fourthSize), (C.uchar)(fifthSize), (C.uchar)(alphaSize), alphaUsage, alphaPosition, premultiplied, typeInterpretation, byteOrder, (C.uchar)(subEnum)))
 }
 
-func (this *QPixelFormat) ColorModel() QPixelFormat__ColorModel {
-	return (QPixelFormat__ColorModel)(C.QPixelFormat_colorModel(this.h))
+func (this *QPixelFormat) ColorModel() ColorModel {
+	int /* TODO  */
 }
 
 func (this *QPixelFormat) ChannelCount() byte {
@@ -208,28 +208,28 @@ func (this *QPixelFormat) BitsPerPixel() byte {
 	return (byte)(C.QPixelFormat_bitsPerPixel(this.h))
 }
 
-func (this *QPixelFormat) AlphaUsage() QPixelFormat__AlphaUsage {
-	return (QPixelFormat__AlphaUsage)(C.QPixelFormat_alphaUsage(this.h))
+func (this *QPixelFormat) AlphaUsage() AlphaUsage {
+	int /* TODO  */
 }
 
-func (this *QPixelFormat) AlphaPosition() QPixelFormat__AlphaPosition {
-	return (QPixelFormat__AlphaPosition)(C.QPixelFormat_alphaPosition(this.h))
+func (this *QPixelFormat) AlphaPosition() AlphaPosition {
+	int /* TODO  */
 }
 
-func (this *QPixelFormat) Premultiplied() QPixelFormat__AlphaPremultiplied {
-	return (QPixelFormat__AlphaPremultiplied)(C.QPixelFormat_premultiplied(this.h))
+func (this *QPixelFormat) Premultiplied() AlphaPremultiplied {
+	int /* TODO  */
 }
 
-func (this *QPixelFormat) TypeInterpretation() QPixelFormat__TypeInterpretation {
-	return (QPixelFormat__TypeInterpretation)(C.QPixelFormat_typeInterpretation(this.h))
+func (this *QPixelFormat) TypeInterpretation() TypeInterpretation {
+	int /* TODO  */
 }
 
-func (this *QPixelFormat) ByteOrder() QPixelFormat__ByteOrder {
-	return (QPixelFormat__ByteOrder)(C.QPixelFormat_byteOrder(this.h))
+func (this *QPixelFormat) ByteOrder() ByteOrder {
+	int /* TODO  */
 }
 
-func (this *QPixelFormat) YuvLayout() QPixelFormat__YUVLayout {
-	return (QPixelFormat__YUVLayout)(C.QPixelFormat_yuvLayout(this.h))
+func (this *QPixelFormat) YuvLayout() YUVLayout {
+	int /* TODO  */
 }
 
 func (this *QPixelFormat) SubEnum() byte {

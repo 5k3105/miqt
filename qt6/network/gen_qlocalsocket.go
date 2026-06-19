@@ -172,16 +172,16 @@ func (this *QLocalSocket) CanReadLine() bool {
 	return (bool)(C.QLocalSocket_canReadLine(this.h))
 }
 
-func (this *QLocalSocket) Open(openMode qt6.QIODeviceBase__OpenModeFlag) bool {
-	return (bool)(C.QLocalSocket_open(this.h, (C.int)(openMode)))
+func (this *QLocalSocket) Open(openMode OpenMode) bool {
+	return (bool)(C.QLocalSocket_open(this.h, openMode))
 }
 
 func (this *QLocalSocket) Close() {
 	C.QLocalSocket_close(this.h)
 }
 
-func (this *QLocalSocket) Error() QLocalSocket__LocalSocketError {
-	return (QLocalSocket__LocalSocketError)(C.QLocalSocket_error(this.h))
+func (this *QLocalSocket) Error() LocalSocketError {
+	int /* TODO  */
 }
 
 func (this *QLocalSocket) Flush() bool {
@@ -208,16 +208,16 @@ func (this *QLocalSocket) SocketDescriptor() uintptr {
 	return (uintptr)(C.QLocalSocket_socketDescriptor(this.h))
 }
 
-func (this *QLocalSocket) SetSocketOptions(option QLocalSocket__SocketOption) {
-	C.QLocalSocket_setSocketOptions(this.h, (C.int)(option))
+func (this *QLocalSocket) SetSocketOptions(option SocketOptions) {
+	C.QLocalSocket_setSocketOptions(this.h, option)
 }
 
-func (this *QLocalSocket) SocketOptions() QLocalSocket__SocketOption {
-	return (QLocalSocket__SocketOption)(C.QLocalSocket_socketOptions(this.h))
+func (this *QLocalSocket) SocketOptions() SocketOptions {
+	int /* TODO  */
 }
 
-func (this *QLocalSocket) State() QLocalSocket__LocalSocketState {
-	return (QLocalSocket__LocalSocketState)(C.QLocalSocket_state(this.h))
+func (this *QLocalSocket) State() LocalSocketState {
+	int /* TODO  */
 }
 
 func (this *QLocalSocket) WaitForBytesWritten(msecs int) bool {
@@ -332,24 +332,24 @@ func QLocalSocket_Tr3(s string, c string, n int) string {
 	return _ret
 }
 
-func (this *QLocalSocket) ConnectToServerWithOpenMode(openMode qt6.QIODeviceBase__OpenModeFlag) {
-	C.QLocalSocket_connectToServerWithOpenMode(this.h, (C.int)(openMode))
+func (this *QLocalSocket) ConnectToServerWithOpenMode(openMode OpenMode) {
+	C.QLocalSocket_connectToServerWithOpenMode(this.h, openMode)
 }
 
-func (this *QLocalSocket) ConnectToServer2(name string, openMode qt6.QIODeviceBase__OpenModeFlag) {
+func (this *QLocalSocket) ConnectToServer2(name string, openMode OpenMode) {
 	name_ms := C.struct_miqt_string{}
 	name_ms.data = C.CString(name)
 	name_ms.len = C.size_t(len(name))
 	defer C.free(unsafe.Pointer(name_ms.data))
-	C.QLocalSocket_connectToServer2(this.h, name_ms, (C.int)(openMode))
+	C.QLocalSocket_connectToServer2(this.h, name_ms, openMode)
 }
 
-func (this *QLocalSocket) SetSocketDescriptor2(socketDescriptor uintptr, socketState QLocalSocket__LocalSocketState) bool {
-	return (bool)(C.QLocalSocket_setSocketDescriptor2(this.h, (C.intptr_t)(socketDescriptor), (C.int)(socketState)))
+func (this *QLocalSocket) SetSocketDescriptor2(socketDescriptor uintptr, socketState LocalSocketState) bool {
+	return (bool)(C.QLocalSocket_setSocketDescriptor2(this.h, (C.intptr_t)(socketDescriptor), socketState))
 }
 
-func (this *QLocalSocket) SetSocketDescriptor3(socketDescriptor uintptr, socketState QLocalSocket__LocalSocketState, openMode qt6.QIODeviceBase__OpenModeFlag) bool {
-	return (bool)(C.QLocalSocket_setSocketDescriptor3(this.h, (C.intptr_t)(socketDescriptor), (C.int)(socketState), (C.int)(openMode)))
+func (this *QLocalSocket) SetSocketDescriptor3(socketDescriptor uintptr, socketState LocalSocketState, openMode OpenMode) bool {
+	return (bool)(C.QLocalSocket_setSocketDescriptor3(this.h, (C.intptr_t)(socketDescriptor), socketState, openMode))
 }
 
 func (this *QLocalSocket) WaitForConnectedWithMsecs(msecs int) bool {
@@ -361,7 +361,7 @@ func (this *QLocalSocket) WaitForDisconnectedWithMsecs(msecs int) bool {
 }
 
 // SetOpenMode can only be called from a QLocalSocket that was directly constructed.
-func (this *QLocalSocket) SetOpenMode(openMode qt6.QIODeviceBase__OpenModeFlag) {
+func (this *QLocalSocket) SetOpenMode(openMode OpenModeFlag) {
 
 	var _dynamic_cast_ok C.bool = false
 	C.QLocalSocket_protectedbase_setOpenMode(&_dynamic_cast_ok, unsafe.Pointer(this.h), (C.int)(openMode))
@@ -546,12 +546,12 @@ func miqt_exec_callback_QLocalSocket_canReadLine(self *C.QLocalSocket, cb C.intp
 
 }
 
-func (this *QLocalSocket) callVirtualBase_Open(openMode qt6.QIODeviceBase__OpenModeFlag) bool {
+func (this *QLocalSocket) callVirtualBase_Open(openMode OpenMode) bool {
 
-	return (bool)(C.QLocalSocket_virtualbase_open(unsafe.Pointer(this.h), (C.int)(openMode)))
+	return (bool)(C.QLocalSocket_virtualbase_open(unsafe.Pointer(this.h), openMode))
 
 }
-func (this *QLocalSocket) OnOpen(slot func(super func(openMode qt6.QIODeviceBase__OpenModeFlag) bool, openMode qt6.QIODeviceBase__OpenModeFlag) bool) {
+func (this *QLocalSocket) OnOpen(slot func(super func(openMode OpenMode) bool, openMode OpenMode) bool) {
 	ok := C.QLocalSocket_override_virtual_open(unsafe.Pointer(this.h), C.intptr_t(cgo.NewHandle(slot)))
 	if !ok {
 		panic("miqt: can only override virtual methods for directly constructed types")
@@ -559,14 +559,14 @@ func (this *QLocalSocket) OnOpen(slot func(super func(openMode qt6.QIODeviceBase
 }
 
 //export miqt_exec_callback_QLocalSocket_open
-func miqt_exec_callback_QLocalSocket_open(self *C.QLocalSocket, cb C.intptr_t, openMode C.int) C.bool {
-	gofunc, ok := cgo.Handle(cb).Value().(func(super func(openMode qt6.QIODeviceBase__OpenModeFlag) bool, openMode qt6.QIODeviceBase__OpenModeFlag) bool)
+func miqt_exec_callback_QLocalSocket_open(self *C.QLocalSocket, cb C.intptr_t, openMode C.OpenMode) C.bool {
+	gofunc, ok := cgo.Handle(cb).Value().(func(super func(openMode OpenMode) bool, openMode OpenMode) bool)
 	if !ok {
 		panic("miqt: callback of non-callback type (heap corruption?)")
 	}
 
 	// Convert all CABI parameters to Go parameters
-	slotval1 := (qt6.QIODeviceBase__OpenModeFlag)(openMode)
+	int /* TODO  */
 
 	virtualReturn := gofunc((&QLocalSocket{h: self}).callVirtualBase_Open, slotval1)
 

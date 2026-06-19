@@ -110,9 +110,8 @@ bool QCameraDevice_isDefault(const QCameraDevice* self) {
 	return self->isDefault();
 }
 
-int QCameraDevice_position(const QCameraDevice* self) {
-	QCameraDevice::Position _ret = self->position();
-	return static_cast<int>(_ret);
+Position QCameraDevice_position(const QCameraDevice* self) {
+	return self->position();
 }
 
 struct miqt_array /* of QSize* */  QCameraDevice_photoResolutions(const QCameraDevice* self) {
@@ -139,6 +138,11 @@ struct miqt_array /* of QCameraFormat* */  QCameraDevice_videoFormats(const QCam
 	_out.len = _ret.length();
 	_out.data = static_cast<void*>(_arr);
 	return _out;
+}
+
+int QCameraDevice_correctionAngle(const QCameraDevice* self) {
+	QtVideo::Rotation _ret = self->correctionAngle();
+	return static_cast<int>(_ret);
 }
 
 void QCameraDevice_delete(QCameraDevice* self) {

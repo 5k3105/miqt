@@ -118,16 +118,8 @@ void QBitArray_operatorBitwiseNotAssign(QBitArray* self, QBitArray* param1) {
 	self->operator^=(*param1);
 }
 
-bool QBitArray_operatorEqual(const QBitArray* self, QBitArray* other) {
-	return (*self == *other);
-}
-
-bool QBitArray_operatorNotEqual(const QBitArray* self, QBitArray* other) {
-	return (*self != *other);
-}
-
-bool QBitArray_fill(QBitArray* self, bool val) {
-	return self->fill(val);
+bool QBitArray_fill(QBitArray* self, bool aval) {
+	return self->fill(aval);
 }
 
 void QBitArray_fill2(QBitArray* self, bool val, ptrdiff_t first, ptrdiff_t last) {
@@ -151,8 +143,16 @@ unsigned int QBitArray_toUInt32(const QBitArray* self, int endianness) {
 	return static_cast<unsigned int>(_ret);
 }
 
-bool QBitArray_fill3(QBitArray* self, bool val, ptrdiff_t size) {
-	return self->fill(val, (qsizetype)(size));
+DataPtr* QBitArray_dataPtr(QBitArray* self) {
+	return &self->data_ptr();
+}
+
+const DataPtr* QBitArray_dataPtr2(const QBitArray* self) {
+	return (const DataPtr*) self->data_ptr();
+}
+
+bool QBitArray_fill3(QBitArray* self, bool aval, ptrdiff_t asize) {
+	return self->fill(aval, (qsizetype)(asize));
 }
 
 unsigned int QBitArray_toUInt322(const QBitArray* self, int endianness, bool* ok) {

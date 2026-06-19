@@ -27,6 +27,15 @@ const (
 	QFutureInterfaceBase__Pending    QFutureInterfaceBase__State = 128
 )
 
+type QFutureInterfaceBase__ContinuationType byte
+
+const (
+	QFutureInterfaceBase__Unknown    QFutureInterfaceBase__ContinuationType = 0
+	QFutureInterfaceBase__Then       QFutureInterfaceBase__ContinuationType = 1
+	QFutureInterfaceBase__OnFailed   QFutureInterfaceBase__ContinuationType = 2
+	QFutureInterfaceBase__OnCanceled QFutureInterfaceBase__ContinuationType = 3
+)
+
 type QFutureInterfaceBase__CancelMode int
 
 const (
@@ -79,9 +88,9 @@ func NewQFutureInterfaceBase2(other *QFutureInterfaceBase) *QFutureInterfaceBase
 }
 
 // NewQFutureInterfaceBase3 constructs a new QFutureInterfaceBase object.
-func NewQFutureInterfaceBase3(initialState QFutureInterfaceBase__State) *QFutureInterfaceBase {
+func NewQFutureInterfaceBase3(initialState State) *QFutureInterfaceBase {
 
-	return newQFutureInterfaceBase(C.QFutureInterfaceBase_new3((C.int)(initialState)))
+	return newQFutureInterfaceBase(C.QFutureInterfaceBase_new3(initialState))
 }
 
 func (this *QFutureInterfaceBase) OperatorAssign(other *QFutureInterfaceBase) {
@@ -171,8 +180,8 @@ func (this *QFutureInterfaceBase) ResultCount() int {
 	return (int)(C.QFutureInterfaceBase_resultCount(this.h))
 }
 
-func (this *QFutureInterfaceBase) QueryState(state QFutureInterfaceBase__State) bool {
-	return (bool)(C.QFutureInterfaceBase_queryState(this.h, (C.int)(state)))
+func (this *QFutureInterfaceBase) QueryState(state State) bool {
+	return (bool)(C.QFutureInterfaceBase_queryState(this.h, state))
 }
 
 func (this *QFutureInterfaceBase) IsRunning() bool {
@@ -233,6 +242,18 @@ func (this *QFutureInterfaceBase) Cancel() {
 
 func (this *QFutureInterfaceBase) CancelAndFinish() {
 	C.QFutureInterfaceBase_cancelAndFinish(this.h)
+}
+
+func (this *QFutureInterfaceBase) CancelChain() {
+	C.QFutureInterfaceBase_cancelChain(this.h)
+}
+
+func (this *QFutureInterfaceBase) SetAddResultsIfCanceledEnabled(enable bool) {
+	C.QFutureInterfaceBase_setAddResultsIfCanceledEnabled(this.h, (C.bool)(enable))
+}
+
+func (this *QFutureInterfaceBase) IsAddResultsIfCanceledEnabled() bool {
+	return (bool)(C.QFutureInterfaceBase_isAddResultsIfCanceledEnabled(this.h))
 }
 
 func (this *QFutureInterfaceBase) SetSuspended(suspend bool) {

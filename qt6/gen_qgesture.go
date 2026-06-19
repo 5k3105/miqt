@@ -132,12 +132,12 @@ func (this *QGesture) UnsetHotSpot() {
 	C.QGesture_unsetHotSpot(this.h)
 }
 
-func (this *QGesture) SetGestureCancelPolicy(policy QGesture__GestureCancelPolicy) {
-	C.QGesture_setGestureCancelPolicy(this.h, (C.int)(policy))
+func (this *QGesture) SetGestureCancelPolicy(policy GestureCancelPolicy) {
+	C.QGesture_setGestureCancelPolicy(this.h, policy)
 }
 
-func (this *QGesture) GestureCancelPolicy() QGesture__GestureCancelPolicy {
-	return (QGesture__GestureCancelPolicy)(C.QGesture_gestureCancelPolicy(this.h))
+func (this *QGesture) GestureCancelPolicy() GestureCancelPolicy {
+	int /* TODO  */
 }
 
 func QGesture_Tr2(s string, c string) string {
@@ -872,20 +872,20 @@ func QPinchGesture_Tr(s string) string {
 	return _ret
 }
 
-func (this *QPinchGesture) TotalChangeFlags() QPinchGesture__ChangeFlag {
-	return (QPinchGesture__ChangeFlag)(C.QPinchGesture_totalChangeFlags(this.h))
+func (this *QPinchGesture) TotalChangeFlags() ChangeFlags {
+	int /* TODO  */
 }
 
-func (this *QPinchGesture) SetTotalChangeFlags(value QPinchGesture__ChangeFlag) {
-	C.QPinchGesture_setTotalChangeFlags(this.h, (C.int)(value))
+func (this *QPinchGesture) SetTotalChangeFlags(value ChangeFlags) {
+	C.QPinchGesture_setTotalChangeFlags(this.h, value)
 }
 
-func (this *QPinchGesture) ChangeFlags() QPinchGesture__ChangeFlag {
-	return (QPinchGesture__ChangeFlag)(C.QPinchGesture_changeFlags(this.h))
+func (this *QPinchGesture) ChangeFlags() ChangeFlags {
+	int /* TODO  */
 }
 
-func (this *QPinchGesture) SetChangeFlags(value QPinchGesture__ChangeFlag) {
-	C.QPinchGesture_setChangeFlags(this.h, (C.int)(value))
+func (this *QPinchGesture) SetChangeFlags(value ChangeFlags) {
+	C.QPinchGesture_setChangeFlags(this.h, value)
 }
 
 func (this *QPinchGesture) StartCenterPoint() *QPointF {
@@ -1315,12 +1315,12 @@ func QSwipeGesture_Tr(s string) string {
 	return _ret
 }
 
-func (this *QSwipeGesture) HorizontalDirection() QSwipeGesture__SwipeDirection {
-	return (QSwipeGesture__SwipeDirection)(C.QSwipeGesture_horizontalDirection(this.h))
+func (this *QSwipeGesture) HorizontalDirection() SwipeDirection {
+	int /* TODO  */
 }
 
-func (this *QSwipeGesture) VerticalDirection() QSwipeGesture__SwipeDirection {
-	return (QSwipeGesture__SwipeDirection)(C.QSwipeGesture_verticalDirection(this.h))
+func (this *QSwipeGesture) VerticalDirection() SwipeDirection {
+	int /* TODO  */
 }
 
 func (this *QSwipeGesture) SwipeAngle() float64 {

@@ -1,3 +1,4 @@
+#include <QAudioBufferOutput>
 #include <QAudioOutput>
 #include <QChildEvent>
 #include <QEvent>
@@ -9,6 +10,7 @@
 #include <QMetaMethod>
 #include <QMetaObject>
 #include <QObject>
+#include <QPlaybackOptions>
 #include <QString>
 #include <QByteArray>
 #include <cstring>
@@ -31,15 +33,19 @@ void miqt_exec_callback_QMediaPlayer_hasAudioChanged(intptr_t, bool);
 void miqt_exec_callback_QMediaPlayer_hasVideoChanged(intptr_t, bool);
 void miqt_exec_callback_QMediaPlayer_bufferProgressChanged(intptr_t, float);
 void miqt_exec_callback_QMediaPlayer_seekableChanged(intptr_t, bool);
+void miqt_exec_callback_QMediaPlayer_playingChanged(intptr_t, bool);
 void miqt_exec_callback_QMediaPlayer_playbackRateChanged(intptr_t, double);
 void miqt_exec_callback_QMediaPlayer_loopsChanged(intptr_t);
 void miqt_exec_callback_QMediaPlayer_metaDataChanged(intptr_t);
 void miqt_exec_callback_QMediaPlayer_videoOutputChanged(intptr_t);
 void miqt_exec_callback_QMediaPlayer_audioOutputChanged(intptr_t);
+void miqt_exec_callback_QMediaPlayer_audioBufferOutputChanged(intptr_t);
 void miqt_exec_callback_QMediaPlayer_tracksChanged(intptr_t);
 void miqt_exec_callback_QMediaPlayer_activeTracksChanged(intptr_t);
 void miqt_exec_callback_QMediaPlayer_errorChanged(intptr_t);
 void miqt_exec_callback_QMediaPlayer_errorOccurred(intptr_t, int, struct miqt_string);
+void miqt_exec_callback_QMediaPlayer_pitchCompensationChanged(intptr_t, bool);
+void miqt_exec_callback_QMediaPlayer_playbackOptionsChanged(intptr_t);
 bool miqt_exec_callback_QMediaPlayer_event(QMediaPlayer*, intptr_t, QEvent*);
 bool miqt_exec_callback_QMediaPlayer_eventFilter(QMediaPlayer*, intptr_t, QObject*, QEvent*);
 void miqt_exec_callback_QMediaPlayer_timerEvent(QMediaPlayer*, intptr_t, QTimerEvent*);
@@ -282,6 +288,14 @@ void QMediaPlayer_setActiveSubtitleTrack(QMediaPlayer* self, int index) {
 	self->setActiveSubtitleTrack(static_cast<int>(index));
 }
 
+void QMediaPlayer_setAudioBufferOutput(QMediaPlayer* self, QAudioBufferOutput* output) {
+	self->setAudioBufferOutput(output);
+}
+
+QAudioBufferOutput* QMediaPlayer_audioBufferOutput(const QMediaPlayer* self) {
+	return self->audioBufferOutput();
+}
+
 void QMediaPlayer_setAudioOutput(QMediaPlayer* self, QAudioOutput* output) {
 	self->setAudioOutput(output);
 }
@@ -314,14 +328,12 @@ QIODevice* QMediaPlayer_sourceDevice(const QMediaPlayer* self) {
 	return (QIODevice*) self->sourceDevice();
 }
 
-int QMediaPlayer_playbackState(const QMediaPlayer* self) {
-	QMediaPlayer::PlaybackState _ret = self->playbackState();
-	return static_cast<int>(_ret);
+PlaybackState QMediaPlayer_playbackState(const QMediaPlayer* self) {
+	return self->playbackState();
 }
 
-int QMediaPlayer_mediaStatus(const QMediaPlayer* self) {
-	QMediaPlayer::MediaStatus _ret = self->mediaStatus();
-	return static_cast<int>(_ret);
+MediaStatus QMediaPlayer_mediaStatus(const QMediaPlayer* self) {
+	return self->mediaStatus();
 }
 
 long long QMediaPlayer_duration(const QMediaPlayer* self) {
@@ -359,6 +371,10 @@ double QMediaPlayer_playbackRate(const QMediaPlayer* self) {
 	return static_cast<double>(_ret);
 }
 
+bool QMediaPlayer_isPlaying(const QMediaPlayer* self) {
+	return self->isPlaying();
+}
+
 int QMediaPlayer_loops(const QMediaPlayer* self) {
 	return self->loops();
 }
@@ -367,9 +383,8 @@ void QMediaPlayer_setLoops(QMediaPlayer* self, int loops) {
 	self->setLoops(static_cast<int>(loops));
 }
 
-int QMediaPlayer_error(const QMediaPlayer* self) {
-	QMediaPlayer::Error _ret = self->error();
-	return static_cast<int>(_ret);
+Error QMediaPlayer_error(const QMediaPlayer* self) {
+	return self->error();
 }
 
 struct miqt_string QMediaPlayer_errorString(const QMediaPlayer* self) {
@@ -389,6 +404,18 @@ bool QMediaPlayer_isAvailable(const QMediaPlayer* self) {
 
 QMediaMetaData* QMediaPlayer_metaData(const QMediaPlayer* self) {
 	return new QMediaMetaData(self->metaData());
+}
+
+PitchCompensationAvailability QMediaPlayer_pitchCompensationAvailability(const QMediaPlayer* self) {
+	return self->pitchCompensationAvailability();
+}
+
+bool QMediaPlayer_pitchCompensation(const QMediaPlayer* self) {
+	return self->pitchCompensation();
+}
+
+QPlaybackOptions* QMediaPlayer_playbackOptions(const QMediaPlayer* self) {
+	return new QPlaybackOptions(self->playbackOptions());
 }
 
 void QMediaPlayer_play(QMediaPlayer* self) {
@@ -417,6 +444,18 @@ void QMediaPlayer_setSource(QMediaPlayer* self, QUrl* source) {
 
 void QMediaPlayer_setSourceDevice(QMediaPlayer* self, QIODevice* device) {
 	self->setSourceDevice(device);
+}
+
+void QMediaPlayer_setPitchCompensation(const QMediaPlayer* self, bool pitchCompensation) {
+	self->setPitchCompensation(pitchCompensation);
+}
+
+void QMediaPlayer_setPlaybackOptions(QMediaPlayer* self, QPlaybackOptions* options) {
+	self->setPlaybackOptions(*options);
+}
+
+void QMediaPlayer_resetPlaybackOptions(QMediaPlayer* self) {
+	self->resetPlaybackOptions();
 }
 
 void QMediaPlayer_sourceChanged(QMediaPlayer* self, QUrl* media) {
@@ -524,6 +563,17 @@ void QMediaPlayer_connect_seekableChanged(QMediaPlayer* self, intptr_t slot) {
 	});
 }
 
+void QMediaPlayer_playingChanged(QMediaPlayer* self, bool playing) {
+	self->playingChanged(playing);
+}
+
+void QMediaPlayer_connect_playingChanged(QMediaPlayer* self, intptr_t slot) {
+	QMediaPlayer::connect(self, static_cast<void (QMediaPlayer::*)(bool)>(&QMediaPlayer::playingChanged), self, [=](bool playing) {
+		bool sigval1 = playing;
+		miqt_exec_callback_QMediaPlayer_playingChanged(slot, sigval1);
+	});
+}
+
 void QMediaPlayer_playbackRateChanged(QMediaPlayer* self, double rate) {
 	self->playbackRateChanged(static_cast<qreal>(rate));
 }
@@ -576,6 +626,16 @@ void QMediaPlayer_connect_audioOutputChanged(QMediaPlayer* self, intptr_t slot) 
 	});
 }
 
+void QMediaPlayer_audioBufferOutputChanged(QMediaPlayer* self) {
+	self->audioBufferOutputChanged();
+}
+
+void QMediaPlayer_connect_audioBufferOutputChanged(QMediaPlayer* self, intptr_t slot) {
+	QMediaPlayer::connect(self, static_cast<void (QMediaPlayer::*)()>(&QMediaPlayer::audioBufferOutputChanged), self, [=]() {
+		miqt_exec_callback_QMediaPlayer_audioBufferOutputChanged(slot);
+	});
+}
+
 void QMediaPlayer_tracksChanged(QMediaPlayer* self) {
 	self->tracksChanged();
 }
@@ -624,6 +684,27 @@ void QMediaPlayer_connect_errorOccurred(QMediaPlayer* self, intptr_t slot) {
 		memcpy(errorString_ms.data, errorString_b.data(), errorString_ms.len);
 		struct miqt_string sigval2 = errorString_ms;
 		miqt_exec_callback_QMediaPlayer_errorOccurred(slot, sigval1, sigval2);
+	});
+}
+
+void QMediaPlayer_pitchCompensationChanged(QMediaPlayer* self, bool param1) {
+	self->pitchCompensationChanged(param1);
+}
+
+void QMediaPlayer_connect_pitchCompensationChanged(QMediaPlayer* self, intptr_t slot) {
+	QMediaPlayer::connect(self, static_cast<void (QMediaPlayer::*)(bool)>(&QMediaPlayer::pitchCompensationChanged), self, [=](bool param1) {
+		bool sigval1 = param1;
+		miqt_exec_callback_QMediaPlayer_pitchCompensationChanged(slot, sigval1);
+	});
+}
+
+void QMediaPlayer_playbackOptionsChanged(QMediaPlayer* self) {
+	self->playbackOptionsChanged();
+}
+
+void QMediaPlayer_connect_playbackOptionsChanged(QMediaPlayer* self, intptr_t slot) {
+	QMediaPlayer::connect(self, static_cast<void (QMediaPlayer::*)()>(&QMediaPlayer::playbackOptionsChanged), self, [=]() {
+		miqt_exec_callback_QMediaPlayer_playbackOptionsChanged(slot);
 	});
 }
 

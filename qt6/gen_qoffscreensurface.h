@@ -47,7 +47,7 @@ void QOffscreenSurface_virtbase(QOffscreenSurface* src, QObject** outptr_QObject
 QMetaObject* QOffscreenSurface_metaObject(const QOffscreenSurface* self);
 void* QOffscreenSurface_metacast(QOffscreenSurface* self, const char* param1);
 struct miqt_string QOffscreenSurface_tr(const char* s);
-int QOffscreenSurface_surfaceType(const QOffscreenSurface* self);
+SurfaceType QOffscreenSurface_surfaceType(const QOffscreenSurface* self);
 void QOffscreenSurface_create(QOffscreenSurface* self);
 void QOffscreenSurface_destroy(QOffscreenSurface* self);
 bool QOffscreenSurface_isValid(const QOffscreenSurface* self);
@@ -63,7 +63,7 @@ struct miqt_string QOffscreenSurface_tr2(const char* s, const char* c);
 struct miqt_string QOffscreenSurface_tr3(const char* s, const char* c, int n);
 
 bool QOffscreenSurface_override_virtual_surfaceType(void* self, intptr_t slot);
-int QOffscreenSurface_virtualbase_surfaceType(const void* self);
+SurfaceType QOffscreenSurface_virtualbase_surfaceType(const void* self);
 bool QOffscreenSurface_override_virtual_format(void* self, intptr_t slot);
 QSurfaceFormat* QOffscreenSurface_virtualbase_format(const void* self);
 bool QOffscreenSurface_override_virtual_size(void* self, intptr_t slot);

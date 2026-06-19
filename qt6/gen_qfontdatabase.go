@@ -111,26 +111,26 @@ func QFontDatabase_StandardSizes() []int {
 	return _ret
 }
 
-func QFontDatabase_WritingSystems() []QFontDatabase__WritingSystem {
+func QFontDatabase_WritingSystems() []WritingSystem {
 	var _ma C.struct_miqt_array = C.QFontDatabase_writingSystems()
-	_ret := make([]QFontDatabase__WritingSystem, int(_ma.len))
-	_outCast := (*[0xffff]C.int)(unsafe.Pointer(_ma.data)) // hey ya
+	_ret := make([]WritingSystem, int(_ma.len))
+	_outCast := (*[0xffff]C.WritingSystem)(unsafe.Pointer(_ma.data)) // hey ya
 	for i := 0; i < int(_ma.len); i++ {
-		_ret[i] = (QFontDatabase__WritingSystem)(_outCast[i])
+		int /* TODO  */
 	}
 	return _ret
 }
 
-func QFontDatabase_WritingSystemsWithFamily(family string) []QFontDatabase__WritingSystem {
+func QFontDatabase_WritingSystemsWithFamily(family string) []WritingSystem {
 	family_ms := C.struct_miqt_string{}
 	family_ms.data = C.CString(family)
 	family_ms.len = C.size_t(len(family))
 	defer C.free(unsafe.Pointer(family_ms.data))
 	var _ma C.struct_miqt_array = C.QFontDatabase_writingSystemsWithFamily(family_ms)
-	_ret := make([]QFontDatabase__WritingSystem, int(_ma.len))
-	_outCast := (*[0xffff]C.int)(unsafe.Pointer(_ma.data)) // hey ya
+	_ret := make([]WritingSystem, int(_ma.len))
+	_outCast := (*[0xffff]C.WritingSystem)(unsafe.Pointer(_ma.data)) // hey ya
 	for i := 0; i < int(_ma.len); i++ {
-		_ret[i] = (QFontDatabase__WritingSystem)(_outCast[i])
+		int /* TODO  */
 	}
 	return _ret
 }
@@ -309,15 +309,15 @@ func QFontDatabase_IsPrivateFamily(family string) bool {
 	return (bool)(C.QFontDatabase_isPrivateFamily(family_ms))
 }
 
-func QFontDatabase_WritingSystemName(writingSystem QFontDatabase__WritingSystem) string {
-	var _ms C.struct_miqt_string = C.QFontDatabase_writingSystemName((C.int)(writingSystem))
+func QFontDatabase_WritingSystemName(writingSystem WritingSystem) string {
+	var _ms C.struct_miqt_string = C.QFontDatabase_writingSystemName(writingSystem)
 	_ret := C.GoStringN(_ms.data, C.int(int64(_ms.len)))
 	C.free(unsafe.Pointer(_ms.data))
 	return _ret
 }
 
-func QFontDatabase_WritingSystemSample(writingSystem QFontDatabase__WritingSystem) string {
-	var _ms C.struct_miqt_string = C.QFontDatabase_writingSystemSample((C.int)(writingSystem))
+func QFontDatabase_WritingSystemSample(writingSystem WritingSystem) string {
+	var _ms C.struct_miqt_string = C.QFontDatabase_writingSystemSample(writingSystem)
 	_ret := C.GoStringN(_ms.data, C.int(int64(_ms.len)))
 	C.free(unsafe.Pointer(_ms.data))
 	return _ret
@@ -363,14 +363,100 @@ func QFontDatabase_RemoveAllApplicationFonts() bool {
 	return (bool)(C.QFontDatabase_removeAllApplicationFonts())
 }
 
-func QFontDatabase_SystemFont(typeVal QFontDatabase__SystemFont) *QFont {
-	_goptr := newQFont(C.QFontDatabase_systemFont((C.int)(typeVal)))
+func QFontDatabase_AddApplicationFallbackFontFamily(script QChar__Script, familyName string) {
+	familyName_ms := C.struct_miqt_string{}
+	familyName_ms.data = C.CString(familyName)
+	familyName_ms.len = C.size_t(len(familyName))
+	defer C.free(unsafe.Pointer(familyName_ms.data))
+	C.QFontDatabase_addApplicationFallbackFontFamily((C.int)(script), familyName_ms)
+}
+
+func QFontDatabase_RemoveApplicationFallbackFontFamily(script QChar__Script, familyName string) bool {
+	familyName_ms := C.struct_miqt_string{}
+	familyName_ms.data = C.CString(familyName)
+	familyName_ms.len = C.size_t(len(familyName))
+	defer C.free(unsafe.Pointer(familyName_ms.data))
+	return (bool)(C.QFontDatabase_removeApplicationFallbackFontFamily((C.int)(script), familyName_ms))
+}
+
+func QFontDatabase_SetApplicationFallbackFontFamilies(param1 QChar__Script, familyNames []string) {
+	familyNames_CArray := (*[0xffff]C.struct_miqt_string)(C.malloc(C.size_t(int(unsafe.Sizeof(C.struct_miqt_string{})) * len(familyNames))))
+	defer C.free(unsafe.Pointer(familyNames_CArray))
+	for i := range familyNames {
+		familyNames_i_ms := C.struct_miqt_string{}
+		familyNames_i_ms.data = C.CString(familyNames[i])
+		familyNames_i_ms.len = C.size_t(len(familyNames[i]))
+		defer C.free(unsafe.Pointer(familyNames_i_ms.data))
+		familyNames_CArray[i] = familyNames_i_ms
+	}
+	familyNames_ma := C.struct_miqt_array{len: C.size_t(len(familyNames)), data: unsafe.Pointer(familyNames_CArray)}
+	C.QFontDatabase_setApplicationFallbackFontFamilies((C.int)(param1), familyNames_ma)
+}
+
+func QFontDatabase_ApplicationFallbackFontFamilies(script QChar__Script) []string {
+	var _ma C.struct_miqt_array = C.QFontDatabase_applicationFallbackFontFamilies((C.int)(script))
+	_ret := make([]string, int(_ma.len))
+	_outCast := (*[0xffff]C.struct_miqt_string)(unsafe.Pointer(_ma.data)) // hey ya
+	for i := 0; i < int(_ma.len); i++ {
+		var _lv_ms C.struct_miqt_string = _outCast[i]
+		_lv_ret := C.GoStringN(_lv_ms.data, C.int(int64(_lv_ms.len)))
+		C.free(unsafe.Pointer(_lv_ms.data))
+		_ret[i] = _lv_ret
+	}
+	return _ret
+}
+
+func QFontDatabase_AddApplicationEmojiFontFamily(familyName string) {
+	familyName_ms := C.struct_miqt_string{}
+	familyName_ms.data = C.CString(familyName)
+	familyName_ms.len = C.size_t(len(familyName))
+	defer C.free(unsafe.Pointer(familyName_ms.data))
+	C.QFontDatabase_addApplicationEmojiFontFamily(familyName_ms)
+}
+
+func QFontDatabase_RemoveApplicationEmojiFontFamily(familyName string) bool {
+	familyName_ms := C.struct_miqt_string{}
+	familyName_ms.data = C.CString(familyName)
+	familyName_ms.len = C.size_t(len(familyName))
+	defer C.free(unsafe.Pointer(familyName_ms.data))
+	return (bool)(C.QFontDatabase_removeApplicationEmojiFontFamily(familyName_ms))
+}
+
+func QFontDatabase_SetApplicationEmojiFontFamilies(familyNames []string) {
+	familyNames_CArray := (*[0xffff]C.struct_miqt_string)(C.malloc(C.size_t(int(unsafe.Sizeof(C.struct_miqt_string{})) * len(familyNames))))
+	defer C.free(unsafe.Pointer(familyNames_CArray))
+	for i := range familyNames {
+		familyNames_i_ms := C.struct_miqt_string{}
+		familyNames_i_ms.data = C.CString(familyNames[i])
+		familyNames_i_ms.len = C.size_t(len(familyNames[i]))
+		defer C.free(unsafe.Pointer(familyNames_i_ms.data))
+		familyNames_CArray[i] = familyNames_i_ms
+	}
+	familyNames_ma := C.struct_miqt_array{len: C.size_t(len(familyNames)), data: unsafe.Pointer(familyNames_CArray)}
+	C.QFontDatabase_setApplicationEmojiFontFamilies(familyNames_ma)
+}
+
+func QFontDatabase_ApplicationEmojiFontFamilies() []string {
+	var _ma C.struct_miqt_array = C.QFontDatabase_applicationEmojiFontFamilies()
+	_ret := make([]string, int(_ma.len))
+	_outCast := (*[0xffff]C.struct_miqt_string)(unsafe.Pointer(_ma.data)) // hey ya
+	for i := 0; i < int(_ma.len); i++ {
+		var _lv_ms C.struct_miqt_string = _outCast[i]
+		_lv_ret := C.GoStringN(_lv_ms.data, C.int(int64(_lv_ms.len)))
+		C.free(unsafe.Pointer(_lv_ms.data))
+		_ret[i] = _lv_ret
+	}
+	return _ret
+}
+
+func QFontDatabase_SystemFont(typeVal SystemFont) *QFont {
+	_goptr := newQFont(C.QFontDatabase_systemFont(typeVal))
 	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
 	return _goptr
 }
 
-func QFontDatabase_FamiliesWithWritingSystem(writingSystem QFontDatabase__WritingSystem) []string {
-	var _ma C.struct_miqt_array = C.QFontDatabase_familiesWithWritingSystem((C.int)(writingSystem))
+func QFontDatabase_FamiliesWithWritingSystem(writingSystem WritingSystem) []string {
+	var _ma C.struct_miqt_array = C.QFontDatabase_familiesWithWritingSystem(writingSystem)
 	_ret := make([]string, int(_ma.len))
 	_outCast := (*[0xffff]C.struct_miqt_string)(unsafe.Pointer(_ma.data)) // hey ya
 	for i := 0; i < int(_ma.len); i++ {

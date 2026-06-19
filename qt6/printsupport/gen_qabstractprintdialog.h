@@ -95,8 +95,8 @@ QMetaObject* QAbstractPrintDialog_metaObject(const QAbstractPrintDialog* self);
 void* QAbstractPrintDialog_metacast(QAbstractPrintDialog* self, const char* param1);
 struct miqt_string QAbstractPrintDialog_tr(const char* s);
 void QAbstractPrintDialog_setOptionTabs(QAbstractPrintDialog* self, struct miqt_array /* of QWidget* */  tabs);
-void QAbstractPrintDialog_setPrintRange(QAbstractPrintDialog* self, int range);
-int QAbstractPrintDialog_printRange(const QAbstractPrintDialog* self);
+void QAbstractPrintDialog_setPrintRange(QAbstractPrintDialog* self, PrintRange range);
+PrintRange QAbstractPrintDialog_printRange(const QAbstractPrintDialog* self);
 void QAbstractPrintDialog_setMinMax(QAbstractPrintDialog* self, int min, int max);
 int QAbstractPrintDialog_minPage(const QAbstractPrintDialog* self);
 int QAbstractPrintDialog_maxPage(const QAbstractPrintDialog* self);
@@ -188,7 +188,7 @@ bool QAbstractPrintDialog_virtualbase_nativeEvent(void* self, struct miqt_string
 bool QAbstractPrintDialog_override_virtual_changeEvent(void* self, intptr_t slot);
 void QAbstractPrintDialog_virtualbase_changeEvent(void* self, QEvent* param1);
 bool QAbstractPrintDialog_override_virtual_metric(void* self, intptr_t slot);
-int QAbstractPrintDialog_virtualbase_metric(const void* self, int param1);
+int QAbstractPrintDialog_virtualbase_metric(const void* self, PaintDeviceMetric param1);
 bool QAbstractPrintDialog_override_virtual_initPainter(void* self, intptr_t slot);
 void QAbstractPrintDialog_virtualbase_initPainter(const void* self, QPainter* painter);
 bool QAbstractPrintDialog_override_virtual_redirected(void* self, intptr_t slot);
@@ -222,6 +222,7 @@ QObject* QAbstractPrintDialog_protectedbase_sender(bool* _dynamic_cast_ok, const
 int QAbstractPrintDialog_protectedbase_senderSignalIndex(bool* _dynamic_cast_ok, const void* self);
 int QAbstractPrintDialog_protectedbase_receivers(bool* _dynamic_cast_ok, const void* self, const char* signal);
 bool QAbstractPrintDialog_protectedbase_isSignalConnected(bool* _dynamic_cast_ok, const void* self, QMetaMethod* signal);
+double QAbstractPrintDialog_protectedbase_getDecodedMetricF(bool* _dynamic_cast_ok, const void* self, PaintDeviceMetric metricA, PaintDeviceMetric metricB);
 
 void QAbstractPrintDialog_delete(QAbstractPrintDialog* self);
 

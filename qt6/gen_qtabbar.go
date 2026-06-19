@@ -109,12 +109,12 @@ func QTabBar_Tr(s string) string {
 	return _ret
 }
 
-func (this *QTabBar) Shape() QTabBar__Shape {
-	return (QTabBar__Shape)(C.QTabBar_shape(this.h))
+func (this *QTabBar) Shape() Shape {
+	int /* TODO  */
 }
 
-func (this *QTabBar) SetShape(shape QTabBar__Shape) {
-	C.QTabBar_setShape(this.h, (C.int)(shape))
+func (this *QTabBar) SetShape(shape Shape) {
+	C.QTabBar_setShape(this.h, shape)
 }
 
 func (this *QTabBar) AddTab(text string) int {
@@ -320,20 +320,20 @@ func (this *QTabBar) SetTabsClosable(closable bool) {
 	C.QTabBar_setTabsClosable(this.h, (C.bool)(closable))
 }
 
-func (this *QTabBar) SetTabButton(index int, position QTabBar__ButtonPosition, widget *QWidget) {
-	C.QTabBar_setTabButton(this.h, (C.int)(index), (C.int)(position), widget.cPointer())
+func (this *QTabBar) SetTabButton(index int, position ButtonPosition, widget *QWidget) {
+	C.QTabBar_setTabButton(this.h, (C.int)(index), position, widget.cPointer())
 }
 
-func (this *QTabBar) TabButton(index int, position QTabBar__ButtonPosition) *QWidget {
-	return newQWidget(C.QTabBar_tabButton(this.h, (C.int)(index), (C.int)(position)))
+func (this *QTabBar) TabButton(index int, position ButtonPosition) *QWidget {
+	return newQWidget(C.QTabBar_tabButton(this.h, (C.int)(index), position))
 }
 
-func (this *QTabBar) SelectionBehaviorOnRemove() QTabBar__SelectionBehavior {
-	return (QTabBar__SelectionBehavior)(C.QTabBar_selectionBehaviorOnRemove(this.h))
+func (this *QTabBar) SelectionBehaviorOnRemove() SelectionBehavior {
+	int /* TODO  */
 }
 
-func (this *QTabBar) SetSelectionBehaviorOnRemove(behavior QTabBar__SelectionBehavior) {
-	C.QTabBar_setSelectionBehaviorOnRemove(this.h, (C.int)(behavior))
+func (this *QTabBar) SetSelectionBehaviorOnRemove(behavior SelectionBehavior) {
+	C.QTabBar_setSelectionBehaviorOnRemove(this.h, behavior)
 }
 
 func (this *QTabBar) Expanding() bool {
@@ -632,6 +632,20 @@ func (this *QTabBar) IsSignalConnected(signal *QMetaMethod) bool {
 
 	var _dynamic_cast_ok C.bool = false
 	_method_ret := (bool)(C.QTabBar_protectedbase_isSignalConnected(&_dynamic_cast_ok, unsafe.Pointer(this.h), signal.cPointer()))
+
+	if !_dynamic_cast_ok {
+		panic("miqt: can only call protected methods for directly constructed types")
+	}
+
+	return _method_ret
+
+}
+
+// GetDecodedMetricF can only be called from a QTabBar that was directly constructed.
+func (this *QTabBar) GetDecodedMetricF(metricA PaintDeviceMetric, metricB PaintDeviceMetric) float64 {
+
+	var _dynamic_cast_ok C.bool = false
+	_method_ret := (float64)(C.QTabBar_protectedbase_getDecodedMetricF(&_dynamic_cast_ok, unsafe.Pointer(this.h), metricA, metricB))
 
 	if !_dynamic_cast_ok {
 		panic("miqt: can only call protected methods for directly constructed types")
@@ -1732,12 +1746,12 @@ func miqt_exec_callback_QTabBar_nativeEvent(self *C.QTabBar, cb C.intptr_t, even
 
 }
 
-func (this *QTabBar) callVirtualBase_Metric(param1 QPaintDevice__PaintDeviceMetric) int {
+func (this *QTabBar) callVirtualBase_Metric(param1 PaintDeviceMetric) int {
 
-	return (int)(C.QTabBar_virtualbase_metric(unsafe.Pointer(this.h), (C.int)(param1)))
+	return (int)(C.QTabBar_virtualbase_metric(unsafe.Pointer(this.h), param1))
 
 }
-func (this *QTabBar) OnMetric(slot func(super func(param1 QPaintDevice__PaintDeviceMetric) int, param1 QPaintDevice__PaintDeviceMetric) int) {
+func (this *QTabBar) OnMetric(slot func(super func(param1 PaintDeviceMetric) int, param1 PaintDeviceMetric) int) {
 	ok := C.QTabBar_override_virtual_metric(unsafe.Pointer(this.h), C.intptr_t(cgo.NewHandle(slot)))
 	if !ok {
 		panic("miqt: can only override virtual methods for directly constructed types")
@@ -1745,14 +1759,14 @@ func (this *QTabBar) OnMetric(slot func(super func(param1 QPaintDevice__PaintDev
 }
 
 //export miqt_exec_callback_QTabBar_metric
-func miqt_exec_callback_QTabBar_metric(self *C.QTabBar, cb C.intptr_t, param1 C.int) C.int {
-	gofunc, ok := cgo.Handle(cb).Value().(func(super func(param1 QPaintDevice__PaintDeviceMetric) int, param1 QPaintDevice__PaintDeviceMetric) int)
+func miqt_exec_callback_QTabBar_metric(self *C.QTabBar, cb C.intptr_t, param1 C.PaintDeviceMetric) C.int {
+	gofunc, ok := cgo.Handle(cb).Value().(func(super func(param1 PaintDeviceMetric) int, param1 PaintDeviceMetric) int)
 	if !ok {
 		panic("miqt: callback of non-callback type (heap corruption?)")
 	}
 
 	// Convert all CABI parameters to Go parameters
-	slotval1 := (QPaintDevice__PaintDeviceMetric)(param1)
+	int /* TODO  */
 
 	virtualReturn := gofunc((&QTabBar{h: self}).callVirtualBase_Metric, slotval1)
 

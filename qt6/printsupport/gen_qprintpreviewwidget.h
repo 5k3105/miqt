@@ -98,8 +98,8 @@ void* QPrintPreviewWidget_metacast(QPrintPreviewWidget* self, const char* param1
 struct miqt_string QPrintPreviewWidget_tr(const char* s);
 double QPrintPreviewWidget_zoomFactor(const QPrintPreviewWidget* self);
 int QPrintPreviewWidget_orientation(const QPrintPreviewWidget* self);
-int QPrintPreviewWidget_viewMode(const QPrintPreviewWidget* self);
-int QPrintPreviewWidget_zoomMode(const QPrintPreviewWidget* self);
+ViewMode QPrintPreviewWidget_viewMode(const QPrintPreviewWidget* self);
+ZoomMode QPrintPreviewWidget_zoomMode(const QPrintPreviewWidget* self);
 int QPrintPreviewWidget_currentPage(const QPrintPreviewWidget* self);
 int QPrintPreviewWidget_pageCount(const QPrintPreviewWidget* self);
 void QPrintPreviewWidget_setVisible(QPrintPreviewWidget* self, bool visible);
@@ -108,8 +108,8 @@ void QPrintPreviewWidget_zoomIn(QPrintPreviewWidget* self);
 void QPrintPreviewWidget_zoomOut(QPrintPreviewWidget* self);
 void QPrintPreviewWidget_setZoomFactor(QPrintPreviewWidget* self, double zoomFactor);
 void QPrintPreviewWidget_setOrientation(QPrintPreviewWidget* self, int orientation);
-void QPrintPreviewWidget_setViewMode(QPrintPreviewWidget* self, int viewMode);
-void QPrintPreviewWidget_setZoomMode(QPrintPreviewWidget* self, int zoomMode);
+void QPrintPreviewWidget_setViewMode(QPrintPreviewWidget* self, ViewMode viewMode);
+void QPrintPreviewWidget_setZoomMode(QPrintPreviewWidget* self, ZoomMode zoomMode);
 void QPrintPreviewWidget_setCurrentPage(QPrintPreviewWidget* self, int pageNumber);
 void QPrintPreviewWidget_fitToWidth(QPrintPreviewWidget* self);
 void QPrintPreviewWidget_fitInView(QPrintPreviewWidget* self);
@@ -197,7 +197,7 @@ bool QPrintPreviewWidget_virtualbase_nativeEvent(void* self, struct miqt_string 
 bool QPrintPreviewWidget_override_virtual_changeEvent(void* self, intptr_t slot);
 void QPrintPreviewWidget_virtualbase_changeEvent(void* self, QEvent* param1);
 bool QPrintPreviewWidget_override_virtual_metric(void* self, intptr_t slot);
-int QPrintPreviewWidget_virtualbase_metric(const void* self, int param1);
+int QPrintPreviewWidget_virtualbase_metric(const void* self, PaintDeviceMetric param1);
 bool QPrintPreviewWidget_override_virtual_initPainter(void* self, intptr_t slot);
 void QPrintPreviewWidget_virtualbase_initPainter(const void* self, QPainter* painter);
 bool QPrintPreviewWidget_override_virtual_redirected(void* self, intptr_t slot);
@@ -232,6 +232,7 @@ QObject* QPrintPreviewWidget_protectedbase_sender(bool* _dynamic_cast_ok, const 
 int QPrintPreviewWidget_protectedbase_senderSignalIndex(bool* _dynamic_cast_ok, const void* self);
 int QPrintPreviewWidget_protectedbase_receivers(bool* _dynamic_cast_ok, const void* self, const char* signal);
 bool QPrintPreviewWidget_protectedbase_isSignalConnected(bool* _dynamic_cast_ok, const void* self, QMetaMethod* signal);
+double QPrintPreviewWidget_protectedbase_getDecodedMetricF(bool* _dynamic_cast_ok, const void* self, PaintDeviceMetric metricA, PaintDeviceMetric metricB);
 
 void QPrintPreviewWidget_delete(QPrintPreviewWidget* self);
 

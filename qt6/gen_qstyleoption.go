@@ -204,6 +204,7 @@ const (
 	QStyleOptionTab__Middle     QStyleOptionTab__TabPosition = 1
 	QStyleOptionTab__End        QStyleOptionTab__TabPosition = 2
 	QStyleOptionTab__OnlyOneTab QStyleOptionTab__TabPosition = 3
+	QStyleOptionTab__Moving     QStyleOptionTab__TabPosition = 4
 )
 
 type QStyleOptionTab__SelectedPosition int
@@ -225,8 +226,9 @@ const (
 type QStyleOptionTab__TabFeature int
 
 const (
-	QStyleOptionTab__None     QStyleOptionTab__TabFeature = 0
-	QStyleOptionTab__HasFrame QStyleOptionTab__TabFeature = 1
+	QStyleOptionTab__None            QStyleOptionTab__TabFeature = 0
+	QStyleOptionTab__HasFrame        QStyleOptionTab__TabFeature = 1
+	QStyleOptionTab__MinimumSizeHint QStyleOptionTab__TabFeature = 2
 )
 
 type QStyleOptionToolBar__StyleOptionType int
@@ -290,7 +292,6 @@ const (
 	QStyleOptionMenuItem__SubMenu     QStyleOptionMenuItem__MenuItemType = 3
 	QStyleOptionMenuItem__Scroller    QStyleOptionMenuItem__MenuItemType = 4
 	QStyleOptionMenuItem__TearOff     QStyleOptionMenuItem__MenuItemType = 5
-	QStyleOptionMenuItem__Margin      QStyleOptionMenuItem__MenuItemType = 6
 	QStyleOptionMenuItem__EmptyArea   QStyleOptionMenuItem__MenuItemType = 7
 )
 
@@ -300,6 +301,12 @@ const (
 	QStyleOptionMenuItem__NotCheckable QStyleOptionMenuItem__CheckType = 0
 	QStyleOptionMenuItem__Exclusive    QStyleOptionMenuItem__CheckType = 1
 	QStyleOptionMenuItem__NonExclusive QStyleOptionMenuItem__CheckType = 2
+)
+
+type QStyleOptionMenuItemV2__StyleOptionVersion int
+
+const (
+	QStyleOptionMenuItemV2__Version QStyleOptionMenuItemV2__StyleOptionVersion = 2
 )
 
 type QStyleOptionDockWidget__StyleOptionType int
@@ -338,12 +345,14 @@ const (
 type QStyleOptionViewItem__ViewItemFeature int
 
 const (
-	QStyleOptionViewItem__None              QStyleOptionViewItem__ViewItemFeature = 0
-	QStyleOptionViewItem__WrapText          QStyleOptionViewItem__ViewItemFeature = 1
-	QStyleOptionViewItem__Alternate         QStyleOptionViewItem__ViewItemFeature = 2
-	QStyleOptionViewItem__HasCheckIndicator QStyleOptionViewItem__ViewItemFeature = 4
-	QStyleOptionViewItem__HasDisplay        QStyleOptionViewItem__ViewItemFeature = 8
-	QStyleOptionViewItem__HasDecoration     QStyleOptionViewItem__ViewItemFeature = 16
+	QStyleOptionViewItem__None                      QStyleOptionViewItem__ViewItemFeature = 0
+	QStyleOptionViewItem__WrapText                  QStyleOptionViewItem__ViewItemFeature = 1
+	QStyleOptionViewItem__Alternate                 QStyleOptionViewItem__ViewItemFeature = 2
+	QStyleOptionViewItem__HasCheckIndicator         QStyleOptionViewItem__ViewItemFeature = 4
+	QStyleOptionViewItem__HasDisplay                QStyleOptionViewItem__ViewItemFeature = 8
+	QStyleOptionViewItem__HasDecoration             QStyleOptionViewItem__ViewItemFeature = 16
+	QStyleOptionViewItem__IsDecoratedRootColumn     QStyleOptionViewItem__ViewItemFeature = 32
+	QStyleOptionViewItem__IsDecorationForRootColumn QStyleOptionViewItem__ViewItemFeature = 64
 )
 
 type QStyleOptionViewItem__ViewItemPosition int
@@ -632,11 +641,11 @@ func (this *QStyleOption) SetType(typeVal int) {
 	C.QStyleOption_setType(this.h, (C.int)(typeVal))
 }
 
-func (this *QStyleOption) State() QStyle__StateFlag {
-	return (QStyle__StateFlag)(C.QStyleOption_state(this.h))
+func (this *QStyleOption) State() StateFlag {
+	return (StateFlag)(C.QStyleOption_state(this.h))
 }
 
-func (this *QStyleOption) SetState(state QStyle__StateFlag) {
+func (this *QStyleOption) SetState(state StateFlag) {
 	C.QStyleOption_setState(this.h, (C.int)(state))
 }
 
@@ -848,12 +857,12 @@ func (this *QStyleOptionFrame) SetMidLineWidth(midLineWidth int) {
 	C.QStyleOptionFrame_setMidLineWidth(this.h, (C.int)(midLineWidth))
 }
 
-func (this *QStyleOptionFrame) Features() QStyleOptionFrame__FrameFeature {
-	return (QStyleOptionFrame__FrameFeature)(C.QStyleOptionFrame_features(this.h))
+func (this *QStyleOptionFrame) Features() FrameFeatures {
+	int /* TODO  */
 }
 
-func (this *QStyleOptionFrame) SetFeatures(features QStyleOptionFrame__FrameFeature) {
-	C.QStyleOptionFrame_setFeatures(this.h, (C.int)(features))
+func (this *QStyleOptionFrame) SetFeatures(features FrameFeatures) {
+	C.QStyleOptionFrame_setFeatures(this.h, features)
 }
 
 func (this *QStyleOptionFrame) FrameShape() QFrame__Shape {
@@ -1221,28 +1230,28 @@ func (this *QStyleOptionHeader) SetIconAlignment(iconAlignment AlignmentFlag) {
 	C.QStyleOptionHeader_setIconAlignment(this.h, (C.int)(iconAlignment))
 }
 
-func (this *QStyleOptionHeader) Position() QStyleOptionHeader__SectionPosition {
-	return (QStyleOptionHeader__SectionPosition)(C.QStyleOptionHeader_position(this.h))
+func (this *QStyleOptionHeader) Position() SectionPosition {
+	int /* TODO  */
 }
 
-func (this *QStyleOptionHeader) SetPosition(position QStyleOptionHeader__SectionPosition) {
-	C.QStyleOptionHeader_setPosition(this.h, (C.int)(position))
+func (this *QStyleOptionHeader) SetPosition(position SectionPosition) {
+	C.QStyleOptionHeader_setPosition(this.h, position)
 }
 
-func (this *QStyleOptionHeader) SelectedPosition() QStyleOptionHeader__SelectedPosition {
-	return (QStyleOptionHeader__SelectedPosition)(C.QStyleOptionHeader_selectedPosition(this.h))
+func (this *QStyleOptionHeader) SelectedPosition() SelectedPosition {
+	int /* TODO  */
 }
 
-func (this *QStyleOptionHeader) SetSelectedPosition(selectedPosition QStyleOptionHeader__SelectedPosition) {
-	C.QStyleOptionHeader_setSelectedPosition(this.h, (C.int)(selectedPosition))
+func (this *QStyleOptionHeader) SetSelectedPosition(selectedPosition SelectedPosition) {
+	C.QStyleOptionHeader_setSelectedPosition(this.h, selectedPosition)
 }
 
-func (this *QStyleOptionHeader) SortIndicator() QStyleOptionHeader__SortIndicator {
-	return (QStyleOptionHeader__SortIndicator)(C.QStyleOptionHeader_sortIndicator(this.h))
+func (this *QStyleOptionHeader) SortIndicator() SortIndicator {
+	int /* TODO  */
 }
 
-func (this *QStyleOptionHeader) SetSortIndicator(sortIndicator QStyleOptionHeader__SortIndicator) {
-	C.QStyleOptionHeader_setSortIndicator(this.h, (C.int)(sortIndicator))
+func (this *QStyleOptionHeader) SetSortIndicator(sortIndicator SortIndicator) {
+	C.QStyleOptionHeader_setSortIndicator(this.h, sortIndicator)
 }
 
 func (this *QStyleOptionHeader) Orientation() Orientation {
@@ -1409,12 +1418,12 @@ func NewQStyleOptionButton2(other *QStyleOptionButton) *QStyleOptionButton {
 	return newQStyleOptionButton(C.QStyleOptionButton_new2(other.cPointer()))
 }
 
-func (this *QStyleOptionButton) Features() QStyleOptionButton__ButtonFeature {
-	return (QStyleOptionButton__ButtonFeature)(C.QStyleOptionButton_features(this.h))
+func (this *QStyleOptionButton) Features() ButtonFeatures {
+	int /* TODO  */
 }
 
-func (this *QStyleOptionButton) SetFeatures(features QStyleOptionButton__ButtonFeature) {
-	C.QStyleOptionButton_setFeatures(this.h, (C.int)(features))
+func (this *QStyleOptionButton) SetFeatures(features ButtonFeatures) {
+	C.QStyleOptionButton_setFeatures(this.h, features)
 }
 
 func (this *QStyleOptionButton) Text() string {
@@ -1559,28 +1568,28 @@ func (this *QStyleOptionTab) SetRow(row int) {
 	C.QStyleOptionTab_setRow(this.h, (C.int)(row))
 }
 
-func (this *QStyleOptionTab) Position() QStyleOptionTab__TabPosition {
-	return (QStyleOptionTab__TabPosition)(C.QStyleOptionTab_position(this.h))
+func (this *QStyleOptionTab) Position() TabPosition {
+	int /* TODO  */
 }
 
-func (this *QStyleOptionTab) SetPosition(position QStyleOptionTab__TabPosition) {
-	C.QStyleOptionTab_setPosition(this.h, (C.int)(position))
+func (this *QStyleOptionTab) SetPosition(position TabPosition) {
+	C.QStyleOptionTab_setPosition(this.h, position)
 }
 
-func (this *QStyleOptionTab) SelectedPosition() QStyleOptionTab__SelectedPosition {
-	return (QStyleOptionTab__SelectedPosition)(C.QStyleOptionTab_selectedPosition(this.h))
+func (this *QStyleOptionTab) SelectedPosition() SelectedPosition {
+	int /* TODO  */
 }
 
-func (this *QStyleOptionTab) SetSelectedPosition(selectedPosition QStyleOptionTab__SelectedPosition) {
-	C.QStyleOptionTab_setSelectedPosition(this.h, (C.int)(selectedPosition))
+func (this *QStyleOptionTab) SetSelectedPosition(selectedPosition SelectedPosition) {
+	C.QStyleOptionTab_setSelectedPosition(this.h, selectedPosition)
 }
 
-func (this *QStyleOptionTab) CornerWidgets() QStyleOptionTab__CornerWidget {
-	return (QStyleOptionTab__CornerWidget)(C.QStyleOptionTab_cornerWidgets(this.h))
+func (this *QStyleOptionTab) CornerWidgets() CornerWidgets {
+	int /* TODO  */
 }
 
-func (this *QStyleOptionTab) SetCornerWidgets(cornerWidgets QStyleOptionTab__CornerWidget) {
-	C.QStyleOptionTab_setCornerWidgets(this.h, (C.int)(cornerWidgets))
+func (this *QStyleOptionTab) SetCornerWidgets(cornerWidgets CornerWidgets) {
+	C.QStyleOptionTab_setCornerWidgets(this.h, cornerWidgets)
 }
 
 func (this *QStyleOptionTab) IconSize() *QSize {
@@ -1621,12 +1630,12 @@ func (this *QStyleOptionTab) SetRightButtonSize(rightButtonSize QSize) {
 	C.QStyleOptionTab_setRightButtonSize(this.h, rightButtonSize.cPointer())
 }
 
-func (this *QStyleOptionTab) Features() QStyleOptionTab__TabFeature {
-	return (QStyleOptionTab__TabFeature)(C.QStyleOptionTab_features(this.h))
+func (this *QStyleOptionTab) Features() TabFeatures {
+	int /* TODO  */
 }
 
-func (this *QStyleOptionTab) SetFeatures(features QStyleOptionTab__TabFeature) {
-	C.QStyleOptionTab_setFeatures(this.h, (C.int)(features))
+func (this *QStyleOptionTab) SetFeatures(features TabFeatures) {
+	C.QStyleOptionTab_setFeatures(this.h, features)
 }
 
 func (this *QStyleOptionTab) TabIndex() int {
@@ -1703,20 +1712,20 @@ func NewQStyleOptionToolBar2(other *QStyleOptionToolBar) *QStyleOptionToolBar {
 	return newQStyleOptionToolBar(C.QStyleOptionToolBar_new2(other.cPointer()))
 }
 
-func (this *QStyleOptionToolBar) PositionOfLine() QStyleOptionToolBar__ToolBarPosition {
-	return (QStyleOptionToolBar__ToolBarPosition)(C.QStyleOptionToolBar_positionOfLine(this.h))
+func (this *QStyleOptionToolBar) PositionOfLine() ToolBarPosition {
+	int /* TODO  */
 }
 
-func (this *QStyleOptionToolBar) SetPositionOfLine(positionOfLine QStyleOptionToolBar__ToolBarPosition) {
-	C.QStyleOptionToolBar_setPositionOfLine(this.h, (C.int)(positionOfLine))
+func (this *QStyleOptionToolBar) SetPositionOfLine(positionOfLine ToolBarPosition) {
+	C.QStyleOptionToolBar_setPositionOfLine(this.h, positionOfLine)
 }
 
-func (this *QStyleOptionToolBar) PositionWithinLine() QStyleOptionToolBar__ToolBarPosition {
-	return (QStyleOptionToolBar__ToolBarPosition)(C.QStyleOptionToolBar_positionWithinLine(this.h))
+func (this *QStyleOptionToolBar) PositionWithinLine() ToolBarPosition {
+	int /* TODO  */
 }
 
-func (this *QStyleOptionToolBar) SetPositionWithinLine(positionWithinLine QStyleOptionToolBar__ToolBarPosition) {
-	C.QStyleOptionToolBar_setPositionWithinLine(this.h, (C.int)(positionWithinLine))
+func (this *QStyleOptionToolBar) SetPositionWithinLine(positionWithinLine ToolBarPosition) {
+	C.QStyleOptionToolBar_setPositionWithinLine(this.h, positionWithinLine)
 }
 
 func (this *QStyleOptionToolBar) ToolBarArea() ToolBarArea {
@@ -1727,12 +1736,12 @@ func (this *QStyleOptionToolBar) SetToolBarArea(toolBarArea ToolBarArea) {
 	C.QStyleOptionToolBar_setToolBarArea(this.h, (C.int)(toolBarArea))
 }
 
-func (this *QStyleOptionToolBar) Features() QStyleOptionToolBar__ToolBarFeature {
-	return (QStyleOptionToolBar__ToolBarFeature)(C.QStyleOptionToolBar_features(this.h))
+func (this *QStyleOptionToolBar) Features() ToolBarFeatures {
+	int /* TODO  */
 }
 
-func (this *QStyleOptionToolBar) SetFeatures(features QStyleOptionToolBar__ToolBarFeature) {
-	C.QStyleOptionToolBar_setFeatures(this.h, (C.int)(features))
+func (this *QStyleOptionToolBar) SetFeatures(features ToolBarFeatures) {
+	C.QStyleOptionToolBar_setFeatures(this.h, features)
 }
 
 func (this *QStyleOptionToolBar) LineWidth() int {
@@ -1954,20 +1963,20 @@ func NewQStyleOptionMenuItem2(other *QStyleOptionMenuItem) *QStyleOptionMenuItem
 	return newQStyleOptionMenuItem(C.QStyleOptionMenuItem_new2(other.cPointer()))
 }
 
-func (this *QStyleOptionMenuItem) MenuItemType() QStyleOptionMenuItem__MenuItemType {
-	return (QStyleOptionMenuItem__MenuItemType)(C.QStyleOptionMenuItem_menuItemType(this.h))
+func (this *QStyleOptionMenuItem) MenuItemType() MenuItemType {
+	int /* TODO  */
 }
 
-func (this *QStyleOptionMenuItem) SetMenuItemType(menuItemType QStyleOptionMenuItem__MenuItemType) {
-	C.QStyleOptionMenuItem_setMenuItemType(this.h, (C.int)(menuItemType))
+func (this *QStyleOptionMenuItem) SetMenuItemType(menuItemType MenuItemType) {
+	C.QStyleOptionMenuItem_setMenuItemType(this.h, menuItemType)
 }
 
-func (this *QStyleOptionMenuItem) CheckType() QStyleOptionMenuItem__CheckType {
-	return (QStyleOptionMenuItem__CheckType)(C.QStyleOptionMenuItem_checkType(this.h))
+func (this *QStyleOptionMenuItem) CheckType() CheckType {
+	int /* TODO  */
 }
 
-func (this *QStyleOptionMenuItem) SetCheckType(checkType QStyleOptionMenuItem__CheckType) {
-	C.QStyleOptionMenuItem_setCheckType(this.h, (C.int)(checkType))
+func (this *QStyleOptionMenuItem) SetCheckType(checkType CheckType) {
+	C.QStyleOptionMenuItem_setCheckType(this.h, checkType)
 }
 
 func (this *QStyleOptionMenuItem) Checked() bool {
@@ -2060,6 +2069,88 @@ func (this *QStyleOptionMenuItem) Delete() {
 // from C++ memory once it is unreachable from Go memory.
 func (this *QStyleOptionMenuItem) GoGC() {
 	runtime.SetFinalizer(this, func(this *QStyleOptionMenuItem) {
+		this.Delete()
+		runtime.KeepAlive(this.h)
+	})
+}
+
+type QStyleOptionMenuItemV2 struct {
+	h *C.QStyleOptionMenuItemV2
+	*QStyleOptionMenuItem
+}
+
+func (this *QStyleOptionMenuItemV2) cPointer() *C.QStyleOptionMenuItemV2 {
+	if this == nil {
+		return nil
+	}
+	return this.h
+}
+
+func (this *QStyleOptionMenuItemV2) UnsafePointer() unsafe.Pointer {
+	if this == nil {
+		return nil
+	}
+	return unsafe.Pointer(this.h)
+}
+
+// newQStyleOptionMenuItemV2 constructs the type using only CGO pointers.
+func newQStyleOptionMenuItemV2(h *C.QStyleOptionMenuItemV2) *QStyleOptionMenuItemV2 {
+	if h == nil {
+		return nil
+	}
+	var outptr_QStyleOptionMenuItem *C.QStyleOptionMenuItem = nil
+	C.QStyleOptionMenuItemV2_virtbase(h, &outptr_QStyleOptionMenuItem)
+
+	return &QStyleOptionMenuItemV2{h: h,
+		QStyleOptionMenuItem: newQStyleOptionMenuItem(outptr_QStyleOptionMenuItem)}
+}
+
+// UnsafeNewQStyleOptionMenuItemV2 constructs the type using only unsafe pointers.
+func UnsafeNewQStyleOptionMenuItemV2(h unsafe.Pointer) *QStyleOptionMenuItemV2 {
+	return newQStyleOptionMenuItemV2((*C.QStyleOptionMenuItemV2)(h))
+}
+
+// NewQStyleOptionMenuItemV2 constructs a new QStyleOptionMenuItemV2 object.
+func NewQStyleOptionMenuItemV2() *QStyleOptionMenuItemV2 {
+
+	return newQStyleOptionMenuItemV2(C.QStyleOptionMenuItemV2_new())
+}
+
+// NewQStyleOptionMenuItemV22 constructs a new QStyleOptionMenuItemV2 object.
+func NewQStyleOptionMenuItemV22(other *QStyleOptionMenuItemV2) *QStyleOptionMenuItemV2 {
+
+	return newQStyleOptionMenuItemV2(C.QStyleOptionMenuItemV2_new2(other.cPointer()))
+}
+
+func (this *QStyleOptionMenuItemV2) OperatorAssign(param1 *QStyleOptionMenuItemV2) {
+	C.QStyleOptionMenuItemV2_operatorAssign(this.h, param1.cPointer())
+}
+
+func (this *QStyleOptionMenuItemV2) MouseDown() bool {
+	return (bool)(C.QStyleOptionMenuItemV2_mouseDown(this.h))
+}
+
+func (this *QStyleOptionMenuItemV2) SetMouseDown(mouseDown bool) {
+	C.QStyleOptionMenuItemV2_setMouseDown(this.h, (C.bool)(mouseDown))
+}
+
+func (this *QStyleOptionMenuItemV2) Unused() int {
+	return (int)(C.QStyleOptionMenuItemV2_unused(this.h))
+}
+
+func (this *QStyleOptionMenuItemV2) SetUnused(unused int) {
+	C.QStyleOptionMenuItemV2_setUnused(this.h, (C.int)(unused))
+}
+
+// Delete this object from C++ memory.
+func (this *QStyleOptionMenuItemV2) Delete() {
+	C.QStyleOptionMenuItemV2_delete(this.h)
+}
+
+// GoGC adds a Go Finalizer to this pointer, so that it will be deleted
+// from C++ memory once it is unreachable from Go memory.
+func (this *QStyleOptionMenuItemV2) GoGC() {
+	runtime.SetFinalizer(this, func(this *QStyleOptionMenuItemV2) {
 		this.Delete()
 		runtime.KeepAlive(this.h)
 	})
@@ -2250,12 +2341,12 @@ func (this *QStyleOptionViewItem) SetTextElideMode(textElideMode TextElideMode) 
 	C.QStyleOptionViewItem_setTextElideMode(this.h, (C.int)(textElideMode))
 }
 
-func (this *QStyleOptionViewItem) DecorationPosition() QStyleOptionViewItem__Position {
-	return (QStyleOptionViewItem__Position)(C.QStyleOptionViewItem_decorationPosition(this.h))
+func (this *QStyleOptionViewItem) DecorationPosition() Position {
+	int /* TODO  */
 }
 
-func (this *QStyleOptionViewItem) SetDecorationPosition(decorationPosition QStyleOptionViewItem__Position) {
-	C.QStyleOptionViewItem_setDecorationPosition(this.h, (C.int)(decorationPosition))
+func (this *QStyleOptionViewItem) SetDecorationPosition(decorationPosition Position) {
+	C.QStyleOptionViewItem_setDecorationPosition(this.h, decorationPosition)
 }
 
 func (this *QStyleOptionViewItem) DecorationSize() *QSize {
@@ -2286,12 +2377,12 @@ func (this *QStyleOptionViewItem) SetShowDecorationSelected(showDecorationSelect
 	C.QStyleOptionViewItem_setShowDecorationSelected(this.h, (C.bool)(showDecorationSelected))
 }
 
-func (this *QStyleOptionViewItem) Features() QStyleOptionViewItem__ViewItemFeature {
-	return (QStyleOptionViewItem__ViewItemFeature)(C.QStyleOptionViewItem_features(this.h))
+func (this *QStyleOptionViewItem) Features() ViewItemFeatures {
+	int /* TODO  */
 }
 
-func (this *QStyleOptionViewItem) SetFeatures(features QStyleOptionViewItem__ViewItemFeature) {
-	C.QStyleOptionViewItem_setFeatures(this.h, (C.int)(features))
+func (this *QStyleOptionViewItem) SetFeatures(features ViewItemFeatures) {
+	C.QStyleOptionViewItem_setFeatures(this.h, features)
 }
 
 func (this *QStyleOptionViewItem) Locale() *QLocale {
@@ -2355,12 +2446,12 @@ func (this *QStyleOptionViewItem) SetText(text string) {
 	C.QStyleOptionViewItem_setText(this.h, text_ms)
 }
 
-func (this *QStyleOptionViewItem) ViewItemPosition() QStyleOptionViewItem__ViewItemPosition {
-	return (QStyleOptionViewItem__ViewItemPosition)(C.QStyleOptionViewItem_viewItemPosition(this.h))
+func (this *QStyleOptionViewItem) ViewItemPosition() ViewItemPosition {
+	int /* TODO  */
 }
 
-func (this *QStyleOptionViewItem) SetViewItemPosition(viewItemPosition QStyleOptionViewItem__ViewItemPosition) {
-	C.QStyleOptionViewItem_setViewItemPosition(this.h, (C.int)(viewItemPosition))
+func (this *QStyleOptionViewItem) SetViewItemPosition(viewItemPosition ViewItemPosition) {
+	C.QStyleOptionViewItem_setViewItemPosition(this.h, viewItemPosition)
 }
 
 func (this *QStyleOptionViewItem) BackgroundBrush() *QBrush {
@@ -2464,20 +2555,20 @@ func (this *QStyleOptionToolBox) SetIcon(icon QIcon) {
 	C.QStyleOptionToolBox_setIcon(this.h, icon.cPointer())
 }
 
-func (this *QStyleOptionToolBox) Position() QStyleOptionToolBox__TabPosition {
-	return (QStyleOptionToolBox__TabPosition)(C.QStyleOptionToolBox_position(this.h))
+func (this *QStyleOptionToolBox) Position() TabPosition {
+	int /* TODO  */
 }
 
-func (this *QStyleOptionToolBox) SetPosition(position QStyleOptionToolBox__TabPosition) {
-	C.QStyleOptionToolBox_setPosition(this.h, (C.int)(position))
+func (this *QStyleOptionToolBox) SetPosition(position TabPosition) {
+	C.QStyleOptionToolBox_setPosition(this.h, position)
 }
 
-func (this *QStyleOptionToolBox) SelectedPosition() QStyleOptionToolBox__SelectedPosition {
-	return (QStyleOptionToolBox__SelectedPosition)(C.QStyleOptionToolBox_selectedPosition(this.h))
+func (this *QStyleOptionToolBox) SelectedPosition() SelectedPosition {
+	int /* TODO  */
 }
 
-func (this *QStyleOptionToolBox) SetSelectedPosition(selectedPosition QStyleOptionToolBox__SelectedPosition) {
-	C.QStyleOptionToolBox_setSelectedPosition(this.h, (C.int)(selectedPosition))
+func (this *QStyleOptionToolBox) SetSelectedPosition(selectedPosition SelectedPosition) {
+	C.QStyleOptionToolBox_setSelectedPosition(this.h, selectedPosition)
 }
 
 func (this *QStyleOptionToolBox) OperatorAssign(param1 *QStyleOptionToolBox) {
@@ -2640,19 +2731,19 @@ func NewQStyleOptionComplex4(version int, typeVal int) *QStyleOptionComplex {
 	return newQStyleOptionComplex(C.QStyleOptionComplex_new4((C.int)(version), (C.int)(typeVal)))
 }
 
-func (this *QStyleOptionComplex) SubControls() QStyle__SubControl {
-	return (QStyle__SubControl)(C.QStyleOptionComplex_subControls(this.h))
+func (this *QStyleOptionComplex) SubControls() SubControl {
+	return (SubControl)(C.QStyleOptionComplex_subControls(this.h))
 }
 
-func (this *QStyleOptionComplex) SetSubControls(subControls QStyle__SubControl) {
+func (this *QStyleOptionComplex) SetSubControls(subControls SubControl) {
 	C.QStyleOptionComplex_setSubControls(this.h, (C.int)(subControls))
 }
 
-func (this *QStyleOptionComplex) ActiveSubControls() QStyle__SubControl {
-	return (QStyle__SubControl)(C.QStyleOptionComplex_activeSubControls(this.h))
+func (this *QStyleOptionComplex) ActiveSubControls() SubControl {
+	return (SubControl)(C.QStyleOptionComplex_activeSubControls(this.h))
 }
 
-func (this *QStyleOptionComplex) SetActiveSubControls(activeSubControls QStyle__SubControl) {
+func (this *QStyleOptionComplex) SetActiveSubControls(activeSubControls SubControl) {
 	C.QStyleOptionComplex_setActiveSubControls(this.h, (C.int)(activeSubControls))
 }
 
@@ -2900,11 +2991,11 @@ func (this *QStyleOptionSpinBox) SetButtonSymbols(buttonSymbols QAbstractSpinBox
 	C.QStyleOptionSpinBox_setButtonSymbols(this.h, (C.int)(buttonSymbols))
 }
 
-func (this *QStyleOptionSpinBox) StepEnabled() QAbstractSpinBox__StepEnabledFlag {
-	return (QAbstractSpinBox__StepEnabledFlag)(C.QStyleOptionSpinBox_stepEnabled(this.h))
+func (this *QStyleOptionSpinBox) StepEnabled() StepEnabledFlag {
+	return (StepEnabledFlag)(C.QStyleOptionSpinBox_stepEnabled(this.h))
 }
 
-func (this *QStyleOptionSpinBox) SetStepEnabled(stepEnabled QAbstractSpinBox__StepEnabledFlag) {
+func (this *QStyleOptionSpinBox) SetStepEnabled(stepEnabled StepEnabledFlag) {
 	C.QStyleOptionSpinBox_setStepEnabled(this.h, (C.int)(stepEnabled))
 }
 
@@ -2982,12 +3073,12 @@ func NewQStyleOptionToolButton2(other *QStyleOptionToolButton) *QStyleOptionTool
 	return newQStyleOptionToolButton(C.QStyleOptionToolButton_new2(other.cPointer()))
 }
 
-func (this *QStyleOptionToolButton) Features() QStyleOptionToolButton__ToolButtonFeature {
-	return (QStyleOptionToolButton__ToolButtonFeature)(C.QStyleOptionToolButton_features(this.h))
+func (this *QStyleOptionToolButton) Features() ToolButtonFeatures {
+	int /* TODO  */
 }
 
-func (this *QStyleOptionToolButton) SetFeatures(features QStyleOptionToolButton__ToolButtonFeature) {
-	C.QStyleOptionToolButton_setFeatures(this.h, (C.int)(features))
+func (this *QStyleOptionToolButton) SetFeatures(features ToolButtonFeatures) {
+	C.QStyleOptionToolButton_setFeatures(this.h, features)
 }
 
 func (this *QStyleOptionToolButton) Icon() *QIcon {
@@ -3369,11 +3460,11 @@ func NewQStyleOptionGroupBox2(other *QStyleOptionGroupBox) *QStyleOptionGroupBox
 	return newQStyleOptionGroupBox(C.QStyleOptionGroupBox_new2(other.cPointer()))
 }
 
-func (this *QStyleOptionGroupBox) Features() QStyleOptionFrame__FrameFeature {
-	return (QStyleOptionFrame__FrameFeature)(C.QStyleOptionGroupBox_features(this.h))
+func (this *QStyleOptionGroupBox) Features() FrameFeature {
+	return (FrameFeature)(C.QStyleOptionGroupBox_features(this.h))
 }
 
-func (this *QStyleOptionGroupBox) SetFeatures(features QStyleOptionFrame__FrameFeature) {
+func (this *QStyleOptionGroupBox) SetFeatures(features FrameFeature) {
 	C.QStyleOptionGroupBox_setFeatures(this.h, (C.int)(features))
 }
 

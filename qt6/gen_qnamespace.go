@@ -38,6 +38,21 @@ const (
 	Transparent GlobalColor = 19
 )
 
+type ColorScheme int
+
+const (
+	Unknown ColorScheme = 0
+	Light   ColorScheme = 1
+	Dark    ColorScheme = 2
+)
+
+type ContrastPreference int
+
+const (
+	NoPreference ContrastPreference = 0
+	HighContrast ContrastPreference = 1
+)
+
 type MouseButton int
 
 const (
@@ -222,6 +237,8 @@ const (
 	WindowOverridesSystemGestures       WindowType = 1048576
 	WindowDoesNotAcceptFocus            WindowType = 2097152
 	MaximizeUsingFullscreenGeometryHint WindowType = 4194304
+	ExpandedClientAreaHint              WindowType = 4194304
+	NoTitleBarBackgroundHint            WindowType = 8388608
 	CustomizeWindowHint                 WindowType = 33554432
 	WindowStaysOnBottomHint             WindowType = 67108864
 	WindowCloseButtonHint               WindowType = 134217728
@@ -370,6 +387,7 @@ const (
 type ApplicationAttribute int
 
 const (
+	AA_QtQuickUseDefaultSizePolicy             ApplicationAttribute = 1
 	AA_DontShowIconsInMenus                    ApplicationAttribute = 2
 	AA_NativeWindows                           ApplicationAttribute = 3
 	AA_DontCreateNativeWidgetSiblings          ApplicationAttribute = 4
@@ -378,6 +396,7 @@ const (
 	AA_MacDontSwapCtrlAndMeta                  ApplicationAttribute = 7
 	AA_Use96Dpi                                ApplicationAttribute = 8
 	AA_DisableNativeVirtualKeyboard            ApplicationAttribute = 9
+	AA_DontUseNativeMenuWindows                ApplicationAttribute = 10
 	AA_SynthesizeTouchForUnhandledMouseEvents  ApplicationAttribute = 11
 	AA_SynthesizeMouseForUnhandledTouchEvents  ApplicationAttribute = 12
 	AA_UseHighDpiPixmaps                       ApplicationAttribute = 13
@@ -526,6 +545,7 @@ const (
 	Key_twosuperior             Key = 178
 	Key_threesuperior           Key = 179
 	Key_acute                   Key = 180
+	Key_micro                   Key = 181
 	Key_mu                      Key = 181
 	Key_paragraph               Key = 182
 	Key_periodcentered          Key = 183
@@ -875,6 +895,7 @@ const (
 	Key_Settings                Key = 16777500
 	Key_MicVolumeUp             Key = 16777501
 	Key_MicVolumeDown           Key = 16777502
+	Key_Keyboard                Key = 16777503
 	Key_New                     Key = 16777504
 	Key_Open                    Key = 16777505
 	Key_Find                    Key = 16777506
@@ -1255,6 +1276,13 @@ const (
 	PreventContextMenu ContextMenuPolicy = 4
 )
 
+type ContextMenuTrigger int
+
+const (
+	Press   ContextMenuTrigger = 0
+	Release ContextMenuTrigger = 1
+)
+
 type InputMethodQuery int
 
 const (
@@ -1396,7 +1424,12 @@ const (
 	ToolTipPropertyRole       ItemDataRole = 29
 	StatusTipPropertyRole     ItemDataRole = 30
 	WhatsThisPropertyRole     ItemDataRole = 31
+	RangeModelDataRole        ItemDataRole = 40
+	RangeModelAdapterRole     ItemDataRole = 41
 	UserRole                  ItemDataRole = 256
+	StandardItemFlagsRole     ItemDataRole = 255
+	FileInfoRole              ItemDataRole = 252
+	RemoteObjectsCacheRole    ItemDataRole = 255
 )
 
 type ItemFlag int
@@ -1573,6 +1606,12 @@ const (
 	VeryCoarseTimer TimerType = 2
 )
 
+type TimerId int
+
+const (
+	Invalid TimerId = 0
+)
+
 type ScrollPhase int
 
 const (
@@ -1618,6 +1657,14 @@ const (
 	PassThrough      HighDpiScaleFactorRoundingPolicy = 5
 )
 
+type PermissionStatus int
+
+const (
+	Undetermined PermissionStatus = 0
+	Granted      PermissionStatus = 1
+	Denied       PermissionStatus = 2
+)
+
 type ReturnByValueConstant int
 
 const (
@@ -1656,6 +1703,20 @@ const (
 	QInternal__TopDock    QInternal__DockPosition = 2
 	QInternal__BottomDock QInternal__DockPosition = 3
 	QInternal__DockCount  QInternal__DockPosition = 4
+)
+
+type QInternal__CallMode int
+
+const (
+	QInternal__Testing QInternal__CallMode = 0
+	QInternal__Live    QInternal__CallMode = 1
+)
+
+type QInternal__SaveStateRule int
+
+const (
+	QInternal__KeepSavedState  QInternal__SaveStateRule = 0
+	QInternal__ClearSavedState QInternal__SaveStateRule = 1
 )
 
 type QInternal__Callback int

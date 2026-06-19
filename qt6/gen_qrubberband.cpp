@@ -79,7 +79,7 @@ void miqt_exec_callback_QRubberBand_dragLeaveEvent(QRubberBand*, intptr_t, QDrag
 void miqt_exec_callback_QRubberBand_dropEvent(QRubberBand*, intptr_t, QDropEvent*);
 void miqt_exec_callback_QRubberBand_hideEvent(QRubberBand*, intptr_t, QHideEvent*);
 bool miqt_exec_callback_QRubberBand_nativeEvent(QRubberBand*, intptr_t, struct miqt_string, void*, intptr_t*);
-int miqt_exec_callback_QRubberBand_metric(const QRubberBand*, intptr_t, int);
+int miqt_exec_callback_QRubberBand_metric(const QRubberBand*, intptr_t, PaintDeviceMetric);
 void miqt_exec_callback_QRubberBand_initPainter(const QRubberBand*, intptr_t, QPainter*);
 QPaintDevice* miqt_exec_callback_QRubberBand_redirected(const QRubberBand*, intptr_t, QPoint*);
 QPainter* miqt_exec_callback_QRubberBand_sharedPainter(const QRubberBand*, intptr_t);
@@ -99,8 +99,8 @@ void miqt_exec_callback_QRubberBand_disconnectNotify(QRubberBand*, intptr_t, QMe
 class MiqtVirtualQRubberBand final : public QRubberBand {
 public:
 
-	MiqtVirtualQRubberBand(QRubberBand::Shape param1): QRubberBand(param1) {}
-	MiqtVirtualQRubberBand(QRubberBand::Shape param1, QWidget* param2): QRubberBand(param1, param2) {}
+	MiqtVirtualQRubberBand(Shape param1): QRubberBand(param1) {}
+	MiqtVirtualQRubberBand(Shape param1, QWidget* param2): QRubberBand(param1, param2) {}
 
 	virtual ~MiqtVirtualQRubberBand() override = default;
 
@@ -698,18 +698,17 @@ public:
 	intptr_t handle__metric = 0;
 
 	// Subclass to allow providing a Go implementation
-	virtual int metric(QPaintDevice::PaintDeviceMetric param1) const override {
+	virtual int metric(PaintDeviceMetric param1) const override {
 		if (handle__metric == 0) {
 			return QRubberBand::metric(param1);
 		}
 
-		QPaintDevice::PaintDeviceMetric param1_ret = param1;
-		int sigval1 = static_cast<int>(param1_ret);
+		PaintDeviceMetric sigval1 = param1;
 		int callback_return_value = miqt_exec_callback_QRubberBand_metric(this, handle__metric, sigval1);
 		return static_cast<int>(callback_return_value);
 	}
 
-	friend int QRubberBand_virtualbase_metric(const void* self, int param1);
+	friend int QRubberBand_virtualbase_metric(const void* self, PaintDeviceMetric param1);
 
 	// cgo.Handle value for overwritten implementation
 	intptr_t handle__initPainter = 0;
@@ -925,14 +924,15 @@ public:
 	friend int QRubberBand_protectedbase_senderSignalIndex(bool* _dynamic_cast_ok, const void* self);
 	friend int QRubberBand_protectedbase_receivers(bool* _dynamic_cast_ok, const void* self, const char* signal);
 	friend bool QRubberBand_protectedbase_isSignalConnected(bool* _dynamic_cast_ok, const void* self, QMetaMethod* signal);
+	friend double QRubberBand_protectedbase_getDecodedMetricF(bool* _dynamic_cast_ok, const void* self, PaintDeviceMetric metricA, PaintDeviceMetric metricB);
 };
 
-QRubberBand* QRubberBand_new(int param1) {
-	return new (std::nothrow) MiqtVirtualQRubberBand(static_cast<QRubberBand::Shape>(param1));
+QRubberBand* QRubberBand_new(Shape param1) {
+	return new (std::nothrow) MiqtVirtualQRubberBand(param1);
 }
 
-QRubberBand* QRubberBand_new2(int param1, QWidget* param2) {
-	return new (std::nothrow) MiqtVirtualQRubberBand(static_cast<QRubberBand::Shape>(param1), param2);
+QRubberBand* QRubberBand_new2(Shape param1, QWidget* param2) {
+	return new (std::nothrow) MiqtVirtualQRubberBand(param1, param2);
 }
 
 void QRubberBand_virtbase(QRubberBand* src, QWidget** outptr_QWidget) {
@@ -958,9 +958,8 @@ struct miqt_string QRubberBand_tr(const char* s) {
 	return _ms;
 }
 
-int QRubberBand_shape(const QRubberBand* self) {
-	QRubberBand::Shape _ret = self->shape();
-	return static_cast<int>(_ret);
+Shape QRubberBand_shape(const QRubberBand* self) {
+	return self->shape();
 }
 
 void QRubberBand_setGeometry(QRubberBand* self, QRect* r) {
@@ -1510,8 +1509,8 @@ bool QRubberBand_override_virtual_metric(void* self, intptr_t slot) {
 	return true;
 }
 
-int QRubberBand_virtualbase_metric(const void* self, int param1) {
-	return static_cast<const MiqtVirtualQRubberBand*>(self)->QRubberBand::metric(static_cast<MiqtVirtualQRubberBand::PaintDeviceMetric>(param1));
+int QRubberBand_virtualbase_metric(const void* self, PaintDeviceMetric param1) {
+	return static_cast<const MiqtVirtualQRubberBand*>(self)->QRubberBand::metric(param1);
 }
 
 bool QRubberBand_override_virtual_initPainter(void* self, intptr_t slot) {
@@ -1779,6 +1778,17 @@ bool QRubberBand_protectedbase_isSignalConnected(bool* _dynamic_cast_ok, const v
 
 	*_dynamic_cast_ok = true;
 	return self_cast->isSignalConnected(*signal);
+}
+
+double QRubberBand_protectedbase_getDecodedMetricF(bool* _dynamic_cast_ok, const void* self, PaintDeviceMetric metricA, PaintDeviceMetric metricB) {
+	MiqtVirtualQRubberBand* self_cast = dynamic_cast<MiqtVirtualQRubberBand*>( (QRubberBand*)(self) );
+	if (self_cast == nullptr) {
+		*_dynamic_cast_ok = false;
+		return 0;
+	}
+
+	*_dynamic_cast_ok = true;
+	return self_cast->getDecodedMetricF(metricA, metricB);
 }
 
 void QRubberBand_delete(QRubberBand* self) {

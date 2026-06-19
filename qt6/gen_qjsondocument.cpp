@@ -19,38 +19,6 @@ extern "C" {
 } /* extern C */
 #endif
 
-struct miqt_string QJsonParseError_errorString(const QJsonParseError* self) {
-	QString _ret = self->errorString();
-	// Convert QString from UTF-16 in C++ RAII memory to UTF-8 in manually-managed C memory
-	QByteArray _b = _ret.toUtf8();
-	struct miqt_string _ms;
-	_ms.len = _b.length();
-	_ms.data = static_cast<char*>(malloc(_ms.len));
-	memcpy(_ms.data, _b.data(), _ms.len);
-	return _ms;
-}
-
-int QJsonParseError_offset(const QJsonParseError* self) {
-	return self->offset;
-}
-
-void QJsonParseError_setOffset(QJsonParseError* self, int offset) {
-	self->offset = static_cast<int>(offset);
-}
-
-int QJsonParseError_error(const QJsonParseError* self) {
-	QJsonParseError::ParseError error_ret = self->error;
-	return static_cast<int>(error_ret);
-}
-
-void QJsonParseError_setError(QJsonParseError* self, int error) {
-	self->error = static_cast<QJsonParseError::ParseError>(error);
-}
-
-void QJsonParseError_delete(QJsonParseError* self) {
-	delete self;
-}
-
 QJsonDocument* QJsonDocument_new() {
 	return new (std::nothrow) QJsonDocument();
 }
@@ -134,14 +102,6 @@ QJsonValue* QJsonDocument_operatorSubscriptWithQsizetype(const QJsonDocument* se
 	return new QJsonValue(self->operator[]((qsizetype)(i)));
 }
 
-bool QJsonDocument_operatorEqual(const QJsonDocument* self, QJsonDocument* other) {
-	return (*self == *other);
-}
-
-bool QJsonDocument_operatorNotEqual(const QJsonDocument* self, QJsonDocument* other) {
-	return (*self != *other);
-}
-
 bool QJsonDocument_isNull(const QJsonDocument* self) {
 	return self->isNull();
 }
@@ -151,8 +111,8 @@ QJsonDocument* QJsonDocument_fromJson2(struct miqt_string json, QJsonParseError*
 	return new QJsonDocument(QJsonDocument::fromJson(json_QByteArray, error));
 }
 
-struct miqt_string QJsonDocument_toJsonWithFormat(const QJsonDocument* self, int format) {
-	QByteArray _qb = self->toJson(static_cast<QJsonDocument::JsonFormat>(format));
+struct miqt_string QJsonDocument_toJsonWithFormat(const QJsonDocument* self, JsonFormat format) {
+	QByteArray _qb = self->toJson(format);
 	struct miqt_string _ms;
 	_ms.len = _qb.length();
 	_ms.data = static_cast<char*>(malloc(_ms.len));

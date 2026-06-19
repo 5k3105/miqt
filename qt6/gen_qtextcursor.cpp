@@ -84,8 +84,8 @@ void QTextCursor_insertText2(QTextCursor* self, struct miqt_string text, QTextCh
 	self->insertText(text_QString, *format);
 }
 
-bool QTextCursor_movePosition(QTextCursor* self, int op) {
-	return self->movePosition(static_cast<QTextCursor::MoveOperation>(op));
+bool QTextCursor_movePosition(QTextCursor* self, MoveOperation op) {
+	return self->movePosition(op);
 }
 
 bool QTextCursor_visualNavigation(const QTextCursor* self) {
@@ -120,8 +120,8 @@ void QTextCursor_deletePreviousChar(QTextCursor* self) {
 	self->deletePreviousChar();
 }
 
-void QTextCursor_select(QTextCursor* self, int selection) {
-	self->select(static_cast<QTextCursor::SelectionType>(selection));
+void QTextCursor_select(QTextCursor* self, SelectionType selection) {
+	self->select(selection);
 }
 
 bool QTextCursor_hasSelection(const QTextCursor* self) {
@@ -358,16 +358,16 @@ QTextDocument* QTextCursor_document(const QTextCursor* self) {
 	return self->document();
 }
 
-void QTextCursor_setPosition2(QTextCursor* self, int pos, int mode) {
-	self->setPosition(static_cast<int>(pos), static_cast<QTextCursor::MoveMode>(mode));
+void QTextCursor_setPosition2(QTextCursor* self, int pos, MoveMode mode) {
+	self->setPosition(static_cast<int>(pos), mode);
 }
 
-bool QTextCursor_movePosition2(QTextCursor* self, int op, int param2) {
-	return self->movePosition(static_cast<QTextCursor::MoveOperation>(op), static_cast<QTextCursor::MoveMode>(param2));
+bool QTextCursor_movePosition2(QTextCursor* self, MoveOperation op, MoveMode param2) {
+	return self->movePosition(op, param2);
 }
 
-bool QTextCursor_movePosition3(QTextCursor* self, int op, int param2, int n) {
-	return self->movePosition(static_cast<QTextCursor::MoveOperation>(op), static_cast<QTextCursor::MoveMode>(param2), static_cast<int>(n));
+bool QTextCursor_movePosition3(QTextCursor* self, MoveOperation op, MoveMode param2, int n) {
+	return self->movePosition(op, param2, static_cast<int>(n));
 }
 
 void QTextCursor_insertMarkdown2(QTextCursor* self, struct miqt_string markdown, int features) {

@@ -90,13 +90,13 @@ func NewQQmlComponent3(param1 *QQmlEngine, fileName string) *QQmlComponent {
 }
 
 // NewQQmlComponent4 constructs a new QQmlComponent object.
-func NewQQmlComponent4(param1 *QQmlEngine, fileName string, mode QQmlComponent__CompilationMode) *QQmlComponent {
+func NewQQmlComponent4(param1 *QQmlEngine, fileName string, mode CompilationMode) *QQmlComponent {
 	fileName_ms := C.struct_miqt_string{}
 	fileName_ms.data = C.CString(fileName)
 	fileName_ms.len = C.size_t(len(fileName))
 	defer C.free(unsafe.Pointer(fileName_ms.data))
 
-	return newQQmlComponent(C.QQmlComponent_new4(param1.cPointer(), fileName_ms, (C.int)(mode)))
+	return newQQmlComponent(C.QQmlComponent_new4(param1.cPointer(), fileName_ms, mode))
 }
 
 // NewQQmlComponent5 constructs a new QQmlComponent object.
@@ -106,53 +106,77 @@ func NewQQmlComponent5(param1 *QQmlEngine, url *qt6.QUrl) *QQmlComponent {
 }
 
 // NewQQmlComponent6 constructs a new QQmlComponent object.
-func NewQQmlComponent6(param1 *QQmlEngine, url *qt6.QUrl, mode QQmlComponent__CompilationMode) *QQmlComponent {
+func NewQQmlComponent6(param1 *QQmlEngine, url *qt6.QUrl, mode CompilationMode) *QQmlComponent {
 
-	return newQQmlComponent(C.QQmlComponent_new6(param1.cPointer(), (*C.QUrl)(url.UnsafePointer()), (C.int)(mode)))
+	return newQQmlComponent(C.QQmlComponent_new6(param1.cPointer(), (*C.QUrl)(url.UnsafePointer()), mode))
 }
 
 // NewQQmlComponent7 constructs a new QQmlComponent object.
-func NewQQmlComponent7(parent *qt6.QObject) *QQmlComponent {
+func NewQQmlComponent7(engine *QQmlEngine, uri qt6.QAnyStringView, typeName qt6.QAnyStringView) *QQmlComponent {
 
-	return newQQmlComponent(C.QQmlComponent_new7((*C.QObject)(parent.UnsafePointer())))
+	return newQQmlComponent(C.QQmlComponent_new7(engine.cPointer(), (*C.QAnyStringView)(uri.UnsafePointer()), (*C.QAnyStringView)(typeName.UnsafePointer())))
 }
 
 // NewQQmlComponent8 constructs a new QQmlComponent object.
-func NewQQmlComponent8(param1 *QQmlEngine, parent *qt6.QObject) *QQmlComponent {
+func NewQQmlComponent8(engine *QQmlEngine, uri qt6.QAnyStringView, typeName qt6.QAnyStringView, mode CompilationMode) *QQmlComponent {
 
-	return newQQmlComponent(C.QQmlComponent_new8(param1.cPointer(), (*C.QObject)(parent.UnsafePointer())))
+	return newQQmlComponent(C.QQmlComponent_new8(engine.cPointer(), (*C.QAnyStringView)(uri.UnsafePointer()), (*C.QAnyStringView)(typeName.UnsafePointer()), mode))
 }
 
 // NewQQmlComponent9 constructs a new QQmlComponent object.
-func NewQQmlComponent9(param1 *QQmlEngine, fileName string, parent *qt6.QObject) *QQmlComponent {
-	fileName_ms := C.struct_miqt_string{}
-	fileName_ms.data = C.CString(fileName)
-	fileName_ms.len = C.size_t(len(fileName))
-	defer C.free(unsafe.Pointer(fileName_ms.data))
+func NewQQmlComponent9(parent *qt6.QObject) *QQmlComponent {
 
-	return newQQmlComponent(C.QQmlComponent_new9(param1.cPointer(), fileName_ms, (*C.QObject)(parent.UnsafePointer())))
+	return newQQmlComponent(C.QQmlComponent_new9((*C.QObject)(parent.UnsafePointer())))
 }
 
 // NewQQmlComponent10 constructs a new QQmlComponent object.
-func NewQQmlComponent10(param1 *QQmlEngine, fileName string, mode QQmlComponent__CompilationMode, parent *qt6.QObject) *QQmlComponent {
+func NewQQmlComponent10(param1 *QQmlEngine, parent *qt6.QObject) *QQmlComponent {
+
+	return newQQmlComponent(C.QQmlComponent_new10(param1.cPointer(), (*C.QObject)(parent.UnsafePointer())))
+}
+
+// NewQQmlComponent11 constructs a new QQmlComponent object.
+func NewQQmlComponent11(param1 *QQmlEngine, fileName string, parent *qt6.QObject) *QQmlComponent {
 	fileName_ms := C.struct_miqt_string{}
 	fileName_ms.data = C.CString(fileName)
 	fileName_ms.len = C.size_t(len(fileName))
 	defer C.free(unsafe.Pointer(fileName_ms.data))
 
-	return newQQmlComponent(C.QQmlComponent_new10(param1.cPointer(), fileName_ms, (C.int)(mode), (*C.QObject)(parent.UnsafePointer())))
-}
-
-// NewQQmlComponent11 constructs a new QQmlComponent object.
-func NewQQmlComponent11(param1 *QQmlEngine, url *qt6.QUrl, parent *qt6.QObject) *QQmlComponent {
-
-	return newQQmlComponent(C.QQmlComponent_new11(param1.cPointer(), (*C.QUrl)(url.UnsafePointer()), (*C.QObject)(parent.UnsafePointer())))
+	return newQQmlComponent(C.QQmlComponent_new11(param1.cPointer(), fileName_ms, (*C.QObject)(parent.UnsafePointer())))
 }
 
 // NewQQmlComponent12 constructs a new QQmlComponent object.
-func NewQQmlComponent12(param1 *QQmlEngine, url *qt6.QUrl, mode QQmlComponent__CompilationMode, parent *qt6.QObject) *QQmlComponent {
+func NewQQmlComponent12(param1 *QQmlEngine, fileName string, mode CompilationMode, parent *qt6.QObject) *QQmlComponent {
+	fileName_ms := C.struct_miqt_string{}
+	fileName_ms.data = C.CString(fileName)
+	fileName_ms.len = C.size_t(len(fileName))
+	defer C.free(unsafe.Pointer(fileName_ms.data))
 
-	return newQQmlComponent(C.QQmlComponent_new12(param1.cPointer(), (*C.QUrl)(url.UnsafePointer()), (C.int)(mode), (*C.QObject)(parent.UnsafePointer())))
+	return newQQmlComponent(C.QQmlComponent_new12(param1.cPointer(), fileName_ms, mode, (*C.QObject)(parent.UnsafePointer())))
+}
+
+// NewQQmlComponent13 constructs a new QQmlComponent object.
+func NewQQmlComponent13(param1 *QQmlEngine, url *qt6.QUrl, parent *qt6.QObject) *QQmlComponent {
+
+	return newQQmlComponent(C.QQmlComponent_new13(param1.cPointer(), (*C.QUrl)(url.UnsafePointer()), (*C.QObject)(parent.UnsafePointer())))
+}
+
+// NewQQmlComponent14 constructs a new QQmlComponent object.
+func NewQQmlComponent14(param1 *QQmlEngine, url *qt6.QUrl, mode CompilationMode, parent *qt6.QObject) *QQmlComponent {
+
+	return newQQmlComponent(C.QQmlComponent_new14(param1.cPointer(), (*C.QUrl)(url.UnsafePointer()), mode, (*C.QObject)(parent.UnsafePointer())))
+}
+
+// NewQQmlComponent15 constructs a new QQmlComponent object.
+func NewQQmlComponent15(engine *QQmlEngine, uri qt6.QAnyStringView, typeName qt6.QAnyStringView, parent *qt6.QObject) *QQmlComponent {
+
+	return newQQmlComponent(C.QQmlComponent_new15(engine.cPointer(), (*C.QAnyStringView)(uri.UnsafePointer()), (*C.QAnyStringView)(typeName.UnsafePointer()), (*C.QObject)(parent.UnsafePointer())))
+}
+
+// NewQQmlComponent16 constructs a new QQmlComponent object.
+func NewQQmlComponent16(engine *QQmlEngine, uri qt6.QAnyStringView, typeName qt6.QAnyStringView, mode CompilationMode, parent *qt6.QObject) *QQmlComponent {
+
+	return newQQmlComponent(C.QQmlComponent_new16(engine.cPointer(), (*C.QAnyStringView)(uri.UnsafePointer()), (*C.QAnyStringView)(typeName.UnsafePointer()), mode, (*C.QObject)(parent.UnsafePointer())))
 }
 
 func (this *QQmlComponent) MetaObject() *qt6.QMetaObject {
@@ -174,8 +198,8 @@ func QQmlComponent_Tr(s string) string {
 	return _ret
 }
 
-func (this *QQmlComponent) Status() QQmlComponent__Status {
-	return (QQmlComponent__Status)(C.QQmlComponent_status(this.h))
+func (this *QQmlComponent) Status() Status {
+	int /* TODO  */
 }
 
 func (this *QQmlComponent) IsNull() bool {
@@ -301,8 +325,12 @@ func (this *QQmlComponent) LoadUrl(url *qt6.QUrl) {
 	C.QQmlComponent_loadUrl(this.h, (*C.QUrl)(url.UnsafePointer()))
 }
 
-func (this *QQmlComponent) LoadUrl2(url *qt6.QUrl, mode QQmlComponent__CompilationMode) {
-	C.QQmlComponent_loadUrl2(this.h, (*C.QUrl)(url.UnsafePointer()), (C.int)(mode))
+func (this *QQmlComponent) LoadUrl2(url *qt6.QUrl, mode CompilationMode) {
+	C.QQmlComponent_loadUrl2(this.h, (*C.QUrl)(url.UnsafePointer()), mode)
+}
+
+func (this *QQmlComponent) LoadFromModule(uri qt6.QAnyStringView, typeName qt6.QAnyStringView) {
+	C.QQmlComponent_loadFromModule(this.h, (*C.QAnyStringView)(uri.UnsafePointer()), (*C.QAnyStringView)(typeName.UnsafePointer()))
 }
 
 func (this *QQmlComponent) SetData(param1 []byte, baseUrl *qt6.QUrl) {
@@ -407,6 +435,10 @@ func (this *QQmlComponent) Create2(param1 *QQmlIncubator, context *QQmlContext) 
 
 func (this *QQmlComponent) Create3(param1 *QQmlIncubator, context *QQmlContext, forContext *QQmlContext) {
 	C.QQmlComponent_create3(this.h, param1.cPointer(), context.cPointer(), forContext.cPointer())
+}
+
+func (this *QQmlComponent) LoadFromModule2(uri qt6.QAnyStringView, typeName qt6.QAnyStringView, mode QQmlComponent__CompilationMode) {
+	C.QQmlComponent_loadFromModule2(this.h, (*C.QAnyStringView)(uri.UnsafePointer()), (*C.QAnyStringView)(typeName.UnsafePointer()), (C.int)(mode))
 }
 
 // CreateObject2 can only be called from a QQmlComponent that was directly constructed.

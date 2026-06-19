@@ -83,7 +83,7 @@ void miqt_exec_callback_QErrorMessage_dragLeaveEvent(QErrorMessage*, intptr_t, Q
 void miqt_exec_callback_QErrorMessage_dropEvent(QErrorMessage*, intptr_t, QDropEvent*);
 void miqt_exec_callback_QErrorMessage_hideEvent(QErrorMessage*, intptr_t, QHideEvent*);
 bool miqt_exec_callback_QErrorMessage_nativeEvent(QErrorMessage*, intptr_t, struct miqt_string, void*, intptr_t*);
-int miqt_exec_callback_QErrorMessage_metric(const QErrorMessage*, intptr_t, int);
+int miqt_exec_callback_QErrorMessage_metric(const QErrorMessage*, intptr_t, PaintDeviceMetric);
 void miqt_exec_callback_QErrorMessage_initPainter(const QErrorMessage*, intptr_t, QPainter*);
 QPaintDevice* miqt_exec_callback_QErrorMessage_redirected(const QErrorMessage*, intptr_t, QPoint*);
 QPainter* miqt_exec_callback_QErrorMessage_sharedPainter(const QErrorMessage*, intptr_t);
@@ -781,18 +781,17 @@ public:
 	intptr_t handle__metric = 0;
 
 	// Subclass to allow providing a Go implementation
-	virtual int metric(QPaintDevice::PaintDeviceMetric param1) const override {
+	virtual int metric(PaintDeviceMetric param1) const override {
 		if (handle__metric == 0) {
 			return QErrorMessage::metric(param1);
 		}
 
-		QPaintDevice::PaintDeviceMetric param1_ret = param1;
-		int sigval1 = static_cast<int>(param1_ret);
+		PaintDeviceMetric sigval1 = param1;
 		int callback_return_value = miqt_exec_callback_QErrorMessage_metric(this, handle__metric, sigval1);
 		return static_cast<int>(callback_return_value);
 	}
 
-	friend int QErrorMessage_virtualbase_metric(const void* self, int param1);
+	friend int QErrorMessage_virtualbase_metric(const void* self, PaintDeviceMetric param1);
 
 	// cgo.Handle value for overwritten implementation
 	intptr_t handle__initPainter = 0;
@@ -992,6 +991,7 @@ public:
 	friend int QErrorMessage_protectedbase_senderSignalIndex(bool* _dynamic_cast_ok, const void* self);
 	friend int QErrorMessage_protectedbase_receivers(bool* _dynamic_cast_ok, const void* self, const char* signal);
 	friend bool QErrorMessage_protectedbase_isSignalConnected(bool* _dynamic_cast_ok, const void* self, QMetaMethod* signal);
+	friend double QErrorMessage_protectedbase_getDecodedMetricF(bool* _dynamic_cast_ok, const void* self, PaintDeviceMetric metricA, PaintDeviceMetric metricB);
 };
 
 QErrorMessage* QErrorMessage_new(QWidget* parent) {
@@ -1633,8 +1633,8 @@ bool QErrorMessage_override_virtual_metric(void* self, intptr_t slot) {
 	return true;
 }
 
-int QErrorMessage_virtualbase_metric(const void* self, int param1) {
-	return static_cast<const MiqtVirtualQErrorMessage*>(self)->QErrorMessage::metric(static_cast<MiqtVirtualQErrorMessage::PaintDeviceMetric>(param1));
+int QErrorMessage_virtualbase_metric(const void* self, PaintDeviceMetric param1) {
+	return static_cast<const MiqtVirtualQErrorMessage*>(self)->QErrorMessage::metric(param1);
 }
 
 bool QErrorMessage_override_virtual_initPainter(void* self, intptr_t slot) {
@@ -1899,6 +1899,17 @@ bool QErrorMessage_protectedbase_isSignalConnected(bool* _dynamic_cast_ok, const
 
 	*_dynamic_cast_ok = true;
 	return self_cast->isSignalConnected(*signal);
+}
+
+double QErrorMessage_protectedbase_getDecodedMetricF(bool* _dynamic_cast_ok, const void* self, PaintDeviceMetric metricA, PaintDeviceMetric metricB) {
+	MiqtVirtualQErrorMessage* self_cast = dynamic_cast<MiqtVirtualQErrorMessage*>( (QErrorMessage*)(self) );
+	if (self_cast == nullptr) {
+		*_dynamic_cast_ok = false;
+		return 0;
+	}
+
+	*_dynamic_cast_ok = true;
+	return self_cast->getDecodedMetricF(metricA, metricB);
 }
 
 void QErrorMessage_delete(QErrorMessage* self) {

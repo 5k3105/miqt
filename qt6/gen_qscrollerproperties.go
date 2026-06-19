@@ -120,14 +120,14 @@ func QScrollerProperties_UnsetDefaultScrollerProperties() {
 	C.QScrollerProperties_unsetDefaultScrollerProperties()
 }
 
-func (this *QScrollerProperties) ScrollMetric(metric QScrollerProperties__ScrollMetric) *QVariant {
-	_goptr := newQVariant(C.QScrollerProperties_scrollMetric(this.h, (C.int)(metric)))
+func (this *QScrollerProperties) ScrollMetric(metric ScrollMetric) *QVariant {
+	_goptr := newQVariant(C.QScrollerProperties_scrollMetric(this.h, metric))
 	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
 	return _goptr
 }
 
-func (this *QScrollerProperties) SetScrollMetric(metric QScrollerProperties__ScrollMetric, value *QVariant) {
-	C.QScrollerProperties_setScrollMetric(this.h, (C.int)(metric), value.cPointer())
+func (this *QScrollerProperties) SetScrollMetric(metric ScrollMetric, value *QVariant) {
+	C.QScrollerProperties_setScrollMetric(this.h, metric, value.cPointer())
 }
 
 // Delete this object from C++ memory.

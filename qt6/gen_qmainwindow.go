@@ -148,12 +148,12 @@ func (this *QMainWindow) SetTabPosition(areas DockWidgetArea, tabPosition QTabWi
 	C.QMainWindow_setTabPosition(this.h, (C.int)(areas), (C.int)(tabPosition))
 }
 
-func (this *QMainWindow) SetDockOptions(options QMainWindow__DockOption) {
-	C.QMainWindow_setDockOptions(this.h, (C.int)(options))
+func (this *QMainWindow) SetDockOptions(options DockOptions) {
+	C.QMainWindow_setDockOptions(this.h, options)
 }
 
-func (this *QMainWindow) DockOptions() QMainWindow__DockOption {
-	return (QMainWindow__DockOption)(C.QMainWindow_dockOptions(this.h))
+func (this *QMainWindow) DockOptions() DockOptions {
+	int /* TODO  */
 }
 
 func (this *QMainWindow) IsSeparator(pos *QPoint) bool {
@@ -557,6 +557,20 @@ func (this *QMainWindow) IsSignalConnected(signal *QMetaMethod) bool {
 
 	var _dynamic_cast_ok C.bool = false
 	_method_ret := (bool)(C.QMainWindow_protectedbase_isSignalConnected(&_dynamic_cast_ok, unsafe.Pointer(this.h), signal.cPointer()))
+
+	if !_dynamic_cast_ok {
+		panic("miqt: can only call protected methods for directly constructed types")
+	}
+
+	return _method_ret
+
+}
+
+// GetDecodedMetricF can only be called from a QMainWindow that was directly constructed.
+func (this *QMainWindow) GetDecodedMetricF(metricA PaintDeviceMetric, metricB PaintDeviceMetric) float64 {
+
+	var _dynamic_cast_ok C.bool = false
+	_method_ret := (float64)(C.QMainWindow_protectedbase_getDecodedMetricF(&_dynamic_cast_ok, unsafe.Pointer(this.h), metricA, metricB))
 
 	if !_dynamic_cast_ok {
 		panic("miqt: can only call protected methods for directly constructed types")
@@ -1493,12 +1507,12 @@ func miqt_exec_callback_QMainWindow_changeEvent(self *C.QMainWindow, cb C.intptr
 
 }
 
-func (this *QMainWindow) callVirtualBase_Metric(param1 QPaintDevice__PaintDeviceMetric) int {
+func (this *QMainWindow) callVirtualBase_Metric(param1 PaintDeviceMetric) int {
 
-	return (int)(C.QMainWindow_virtualbase_metric(unsafe.Pointer(this.h), (C.int)(param1)))
+	return (int)(C.QMainWindow_virtualbase_metric(unsafe.Pointer(this.h), param1))
 
 }
-func (this *QMainWindow) OnMetric(slot func(super func(param1 QPaintDevice__PaintDeviceMetric) int, param1 QPaintDevice__PaintDeviceMetric) int) {
+func (this *QMainWindow) OnMetric(slot func(super func(param1 PaintDeviceMetric) int, param1 PaintDeviceMetric) int) {
 	ok := C.QMainWindow_override_virtual_metric(unsafe.Pointer(this.h), C.intptr_t(cgo.NewHandle(slot)))
 	if !ok {
 		panic("miqt: can only override virtual methods for directly constructed types")
@@ -1506,14 +1520,14 @@ func (this *QMainWindow) OnMetric(slot func(super func(param1 QPaintDevice__Pain
 }
 
 //export miqt_exec_callback_QMainWindow_metric
-func miqt_exec_callback_QMainWindow_metric(self *C.QMainWindow, cb C.intptr_t, param1 C.int) C.int {
-	gofunc, ok := cgo.Handle(cb).Value().(func(super func(param1 QPaintDevice__PaintDeviceMetric) int, param1 QPaintDevice__PaintDeviceMetric) int)
+func miqt_exec_callback_QMainWindow_metric(self *C.QMainWindow, cb C.intptr_t, param1 C.PaintDeviceMetric) C.int {
+	gofunc, ok := cgo.Handle(cb).Value().(func(super func(param1 PaintDeviceMetric) int, param1 PaintDeviceMetric) int)
 	if !ok {
 		panic("miqt: callback of non-callback type (heap corruption?)")
 	}
 
 	// Convert all CABI parameters to Go parameters
-	slotval1 := (QPaintDevice__PaintDeviceMetric)(param1)
+	int /* TODO  */
 
 	virtualReturn := gofunc((&QMainWindow{h: self}).callVirtualBase_Metric, slotval1)
 

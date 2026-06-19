@@ -30,22 +30,22 @@
 extern "C" {
 #endif
 
-void miqt_exec_callback_QProxyStyle_drawPrimitive(const QProxyStyle*, intptr_t, int, QStyleOption*, QPainter*, QWidget*);
-void miqt_exec_callback_QProxyStyle_drawControl(const QProxyStyle*, intptr_t, int, QStyleOption*, QPainter*, QWidget*);
-void miqt_exec_callback_QProxyStyle_drawComplexControl(const QProxyStyle*, intptr_t, int, QStyleOptionComplex*, QPainter*, QWidget*);
+void miqt_exec_callback_QProxyStyle_drawPrimitive(const QProxyStyle*, intptr_t, PrimitiveElement, QStyleOption*, QPainter*, QWidget*);
+void miqt_exec_callback_QProxyStyle_drawControl(const QProxyStyle*, intptr_t, ControlElement, QStyleOption*, QPainter*, QWidget*);
+void miqt_exec_callback_QProxyStyle_drawComplexControl(const QProxyStyle*, intptr_t, ComplexControl, QStyleOptionComplex*, QPainter*, QWidget*);
 void miqt_exec_callback_QProxyStyle_drawItemText(const QProxyStyle*, intptr_t, QPainter*, QRect*, int, QPalette*, bool, struct miqt_string, int);
 void miqt_exec_callback_QProxyStyle_drawItemPixmap(const QProxyStyle*, intptr_t, QPainter*, QRect*, int, QPixmap*);
-QSize* miqt_exec_callback_QProxyStyle_sizeFromContents(const QProxyStyle*, intptr_t, int, QStyleOption*, QSize*, QWidget*);
-QRect* miqt_exec_callback_QProxyStyle_subElementRect(const QProxyStyle*, intptr_t, int, QStyleOption*, QWidget*);
-QRect* miqt_exec_callback_QProxyStyle_subControlRect(const QProxyStyle*, intptr_t, int, QStyleOptionComplex*, int, QWidget*);
+QSize* miqt_exec_callback_QProxyStyle_sizeFromContents(const QProxyStyle*, intptr_t, ContentsType, QStyleOption*, QSize*, QWidget*);
+QRect* miqt_exec_callback_QProxyStyle_subElementRect(const QProxyStyle*, intptr_t, SubElement, QStyleOption*, QWidget*);
+QRect* miqt_exec_callback_QProxyStyle_subControlRect(const QProxyStyle*, intptr_t, ComplexControl, QStyleOptionComplex*, SubControl, QWidget*);
 QRect* miqt_exec_callback_QProxyStyle_itemTextRect(const QProxyStyle*, intptr_t, QFontMetrics*, QRect*, int, bool, struct miqt_string);
 QRect* miqt_exec_callback_QProxyStyle_itemPixmapRect(const QProxyStyle*, intptr_t, QRect*, int, QPixmap*);
-int miqt_exec_callback_QProxyStyle_hitTestComplexControl(const QProxyStyle*, intptr_t, int, QStyleOptionComplex*, QPoint*, QWidget*);
-int miqt_exec_callback_QProxyStyle_styleHint(const QProxyStyle*, intptr_t, int, QStyleOption*, QWidget*, QStyleHintReturn*);
-int miqt_exec_callback_QProxyStyle_pixelMetric(const QProxyStyle*, intptr_t, int, QStyleOption*, QWidget*);
+SubControl miqt_exec_callback_QProxyStyle_hitTestComplexControl(const QProxyStyle*, intptr_t, ComplexControl, QStyleOptionComplex*, QPoint*, QWidget*);
+int miqt_exec_callback_QProxyStyle_styleHint(const QProxyStyle*, intptr_t, StyleHint, QStyleOption*, QWidget*, QStyleHintReturn*);
+int miqt_exec_callback_QProxyStyle_pixelMetric(const QProxyStyle*, intptr_t, PixelMetric, QStyleOption*, QWidget*);
 int miqt_exec_callback_QProxyStyle_layoutSpacing(const QProxyStyle*, intptr_t, int, int, int, QStyleOption*, QWidget*);
-QIcon* miqt_exec_callback_QProxyStyle_standardIcon(const QProxyStyle*, intptr_t, int, QStyleOption*, QWidget*);
-QPixmap* miqt_exec_callback_QProxyStyle_standardPixmap(const QProxyStyle*, intptr_t, int, QStyleOption*, QWidget*);
+QIcon* miqt_exec_callback_QProxyStyle_standardIcon(const QProxyStyle*, intptr_t, StandardPixmap, QStyleOption*, QWidget*);
+QPixmap* miqt_exec_callback_QProxyStyle_standardPixmap(const QProxyStyle*, intptr_t, StandardPixmap, QStyleOption*, QWidget*);
 QPixmap* miqt_exec_callback_QProxyStyle_generatedIconPixmap(const QProxyStyle*, intptr_t, int, QPixmap*, QStyleOption*);
 QPalette* miqt_exec_callback_QProxyStyle_standardPalette(const QProxyStyle*, intptr_t);
 void miqt_exec_callback_QProxyStyle_polish(QProxyStyle*, intptr_t, QWidget*);
@@ -77,14 +77,13 @@ public:
 	intptr_t handle__drawPrimitive = 0;
 
 	// Subclass to allow providing a Go implementation
-	virtual void drawPrimitive(QStyle::PrimitiveElement element, const QStyleOption* option, QPainter* painter, const QWidget* widget) const override {
+	virtual void drawPrimitive(PrimitiveElement element, const QStyleOption* option, QPainter* painter, const QWidget* widget) const override {
 		if (handle__drawPrimitive == 0) {
 			QProxyStyle::drawPrimitive(element, option, painter, widget);
 			return;
 		}
 
-		QStyle::PrimitiveElement element_ret = element;
-		int sigval1 = static_cast<int>(element_ret);
+		PrimitiveElement sigval1 = element;
 		QStyleOption* sigval2 = (QStyleOption*) option;
 		QPainter* sigval3 = painter;
 		QWidget* sigval4 = (QWidget*) widget;
@@ -92,20 +91,19 @@ public:
 
 	}
 
-	friend void QProxyStyle_virtualbase_drawPrimitive(const void* self, int element, QStyleOption* option, QPainter* painter, QWidget* widget);
+	friend void QProxyStyle_virtualbase_drawPrimitive(const void* self, PrimitiveElement element, QStyleOption* option, QPainter* painter, QWidget* widget);
 
 	// cgo.Handle value for overwritten implementation
 	intptr_t handle__drawControl = 0;
 
 	// Subclass to allow providing a Go implementation
-	virtual void drawControl(QStyle::ControlElement element, const QStyleOption* option, QPainter* painter, const QWidget* widget) const override {
+	virtual void drawControl(ControlElement element, const QStyleOption* option, QPainter* painter, const QWidget* widget) const override {
 		if (handle__drawControl == 0) {
 			QProxyStyle::drawControl(element, option, painter, widget);
 			return;
 		}
 
-		QStyle::ControlElement element_ret = element;
-		int sigval1 = static_cast<int>(element_ret);
+		ControlElement sigval1 = element;
 		QStyleOption* sigval2 = (QStyleOption*) option;
 		QPainter* sigval3 = painter;
 		QWidget* sigval4 = (QWidget*) widget;
@@ -113,20 +111,19 @@ public:
 
 	}
 
-	friend void QProxyStyle_virtualbase_drawControl(const void* self, int element, QStyleOption* option, QPainter* painter, QWidget* widget);
+	friend void QProxyStyle_virtualbase_drawControl(const void* self, ControlElement element, QStyleOption* option, QPainter* painter, QWidget* widget);
 
 	// cgo.Handle value for overwritten implementation
 	intptr_t handle__drawComplexControl = 0;
 
 	// Subclass to allow providing a Go implementation
-	virtual void drawComplexControl(QStyle::ComplexControl control, const QStyleOptionComplex* option, QPainter* painter, const QWidget* widget) const override {
+	virtual void drawComplexControl(ComplexControl control, const QStyleOptionComplex* option, QPainter* painter, const QWidget* widget) const override {
 		if (handle__drawComplexControl == 0) {
 			QProxyStyle::drawComplexControl(control, option, painter, widget);
 			return;
 		}
 
-		QStyle::ComplexControl control_ret = control;
-		int sigval1 = static_cast<int>(control_ret);
+		ComplexControl sigval1 = control;
 		QStyleOptionComplex* sigval2 = (QStyleOptionComplex*) option;
 		QPainter* sigval3 = painter;
 		QWidget* sigval4 = (QWidget*) widget;
@@ -134,7 +131,7 @@ public:
 
 	}
 
-	friend void QProxyStyle_virtualbase_drawComplexControl(const void* self, int control, QStyleOptionComplex* option, QPainter* painter, QWidget* widget);
+	friend void QProxyStyle_virtualbase_drawComplexControl(const void* self, ComplexControl control, QStyleOptionComplex* option, QPainter* painter, QWidget* widget);
 
 	// cgo.Handle value for overwritten implementation
 	intptr_t handle__drawItemText = 0;
@@ -199,13 +196,12 @@ public:
 	intptr_t handle__sizeFromContents = 0;
 
 	// Subclass to allow providing a Go implementation
-	virtual QSize sizeFromContents(QStyle::ContentsType type, const QStyleOption* option, const QSize& size, const QWidget* widget) const override {
+	virtual QSize sizeFromContents(ContentsType type, const QStyleOption* option, const QSize& size, const QWidget* widget) const override {
 		if (handle__sizeFromContents == 0) {
 			return QProxyStyle::sizeFromContents(type, option, size, widget);
 		}
 
-		QStyle::ContentsType type_ret = type;
-		int sigval1 = static_cast<int>(type_ret);
+		ContentsType sigval1 = type;
 		QStyleOption* sigval2 = (QStyleOption*) option;
 		const QSize& size_ret = size;
 		// Cast returned reference into pointer
@@ -215,47 +211,44 @@ public:
 		return *callback_return_value;
 	}
 
-	friend QSize* QProxyStyle_virtualbase_sizeFromContents(const void* self, int type, QStyleOption* option, QSize* size, QWidget* widget);
+	friend QSize* QProxyStyle_virtualbase_sizeFromContents(const void* self, ContentsType type, QStyleOption* option, QSize* size, QWidget* widget);
 
 	// cgo.Handle value for overwritten implementation
 	intptr_t handle__subElementRect = 0;
 
 	// Subclass to allow providing a Go implementation
-	virtual QRect subElementRect(QStyle::SubElement element, const QStyleOption* option, const QWidget* widget) const override {
+	virtual QRect subElementRect(SubElement element, const QStyleOption* option, const QWidget* widget) const override {
 		if (handle__subElementRect == 0) {
 			return QProxyStyle::subElementRect(element, option, widget);
 		}
 
-		QStyle::SubElement element_ret = element;
-		int sigval1 = static_cast<int>(element_ret);
+		SubElement sigval1 = element;
 		QStyleOption* sigval2 = (QStyleOption*) option;
 		QWidget* sigval3 = (QWidget*) widget;
 		QRect* callback_return_value = miqt_exec_callback_QProxyStyle_subElementRect(this, handle__subElementRect, sigval1, sigval2, sigval3);
 		return *callback_return_value;
 	}
 
-	friend QRect* QProxyStyle_virtualbase_subElementRect(const void* self, int element, QStyleOption* option, QWidget* widget);
+	friend QRect* QProxyStyle_virtualbase_subElementRect(const void* self, SubElement element, QStyleOption* option, QWidget* widget);
 
 	// cgo.Handle value for overwritten implementation
 	intptr_t handle__subControlRect = 0;
 
 	// Subclass to allow providing a Go implementation
-	virtual QRect subControlRect(QStyle::ComplexControl cc, const QStyleOptionComplex* opt, QStyle::SubControl sc, const QWidget* widget) const override {
+	virtual QRect subControlRect(ComplexControl cc, const QStyleOptionComplex* opt, SubControl sc, const QWidget* widget) const override {
 		if (handle__subControlRect == 0) {
 			return QProxyStyle::subControlRect(cc, opt, sc, widget);
 		}
 
-		QStyle::ComplexControl cc_ret = cc;
-		int sigval1 = static_cast<int>(cc_ret);
+		ComplexControl sigval1 = cc;
 		QStyleOptionComplex* sigval2 = (QStyleOptionComplex*) opt;
-		QStyle::SubControl sc_ret = sc;
-		int sigval3 = static_cast<int>(sc_ret);
+		SubControl sigval3 = sc;
 		QWidget* sigval4 = (QWidget*) widget;
 		QRect* callback_return_value = miqt_exec_callback_QProxyStyle_subControlRect(this, handle__subControlRect, sigval1, sigval2, sigval3, sigval4);
 		return *callback_return_value;
 	}
 
-	friend QRect* QProxyStyle_virtualbase_subControlRect(const void* self, int cc, QStyleOptionComplex* opt, int sc, QWidget* widget);
+	friend QRect* QProxyStyle_virtualbase_subControlRect(const void* self, ComplexControl cc, QStyleOptionComplex* opt, SubControl sc, QWidget* widget);
 
 	// cgo.Handle value for overwritten implementation
 	intptr_t handle__itemTextRect = 0;
@@ -314,35 +307,33 @@ public:
 	intptr_t handle__hitTestComplexControl = 0;
 
 	// Subclass to allow providing a Go implementation
-	virtual QStyle::SubControl hitTestComplexControl(QStyle::ComplexControl control, const QStyleOptionComplex* option, const QPoint& pos, const QWidget* widget) const override {
+	virtual SubControl hitTestComplexControl(ComplexControl control, const QStyleOptionComplex* option, const QPoint& pos, const QWidget* widget) const override {
 		if (handle__hitTestComplexControl == 0) {
 			return QProxyStyle::hitTestComplexControl(control, option, pos, widget);
 		}
 
-		QStyle::ComplexControl control_ret = control;
-		int sigval1 = static_cast<int>(control_ret);
+		ComplexControl sigval1 = control;
 		QStyleOptionComplex* sigval2 = (QStyleOptionComplex*) option;
 		const QPoint& pos_ret = pos;
 		// Cast returned reference into pointer
 		QPoint* sigval3 = const_cast<QPoint*>(&pos_ret);
 		QWidget* sigval4 = (QWidget*) widget;
-		int callback_return_value = miqt_exec_callback_QProxyStyle_hitTestComplexControl(this, handle__hitTestComplexControl, sigval1, sigval2, sigval3, sigval4);
-		return static_cast<QStyle::SubControl>(callback_return_value);
+		SubControl callback_return_value = miqt_exec_callback_QProxyStyle_hitTestComplexControl(this, handle__hitTestComplexControl, sigval1, sigval2, sigval3, sigval4);
+		return callback_return_value;
 	}
 
-	friend int QProxyStyle_virtualbase_hitTestComplexControl(const void* self, int control, QStyleOptionComplex* option, QPoint* pos, QWidget* widget);
+	friend SubControl QProxyStyle_virtualbase_hitTestComplexControl(const void* self, ComplexControl control, QStyleOptionComplex* option, QPoint* pos, QWidget* widget);
 
 	// cgo.Handle value for overwritten implementation
 	intptr_t handle__styleHint = 0;
 
 	// Subclass to allow providing a Go implementation
-	virtual int styleHint(QStyle::StyleHint hint, const QStyleOption* option, const QWidget* widget, QStyleHintReturn* returnData) const override {
+	virtual int styleHint(StyleHint hint, const QStyleOption* option, const QWidget* widget, QStyleHintReturn* returnData) const override {
 		if (handle__styleHint == 0) {
 			return QProxyStyle::styleHint(hint, option, widget, returnData);
 		}
 
-		QStyle::StyleHint hint_ret = hint;
-		int sigval1 = static_cast<int>(hint_ret);
+		StyleHint sigval1 = hint;
 		QStyleOption* sigval2 = (QStyleOption*) option;
 		QWidget* sigval3 = (QWidget*) widget;
 		QStyleHintReturn* sigval4 = returnData;
@@ -350,26 +341,25 @@ public:
 		return static_cast<int>(callback_return_value);
 	}
 
-	friend int QProxyStyle_virtualbase_styleHint(const void* self, int hint, QStyleOption* option, QWidget* widget, QStyleHintReturn* returnData);
+	friend int QProxyStyle_virtualbase_styleHint(const void* self, StyleHint hint, QStyleOption* option, QWidget* widget, QStyleHintReturn* returnData);
 
 	// cgo.Handle value for overwritten implementation
 	intptr_t handle__pixelMetric = 0;
 
 	// Subclass to allow providing a Go implementation
-	virtual int pixelMetric(QStyle::PixelMetric metric, const QStyleOption* option, const QWidget* widget) const override {
+	virtual int pixelMetric(PixelMetric metric, const QStyleOption* option, const QWidget* widget) const override {
 		if (handle__pixelMetric == 0) {
 			return QProxyStyle::pixelMetric(metric, option, widget);
 		}
 
-		QStyle::PixelMetric metric_ret = metric;
-		int sigval1 = static_cast<int>(metric_ret);
+		PixelMetric sigval1 = metric;
 		QStyleOption* sigval2 = (QStyleOption*) option;
 		QWidget* sigval3 = (QWidget*) widget;
 		int callback_return_value = miqt_exec_callback_QProxyStyle_pixelMetric(this, handle__pixelMetric, sigval1, sigval2, sigval3);
 		return static_cast<int>(callback_return_value);
 	}
 
-	friend int QProxyStyle_virtualbase_pixelMetric(const void* self, int metric, QStyleOption* option, QWidget* widget);
+	friend int QProxyStyle_virtualbase_pixelMetric(const void* self, PixelMetric metric, QStyleOption* option, QWidget* widget);
 
 	// cgo.Handle value for overwritten implementation
 	intptr_t handle__layoutSpacing = 0;
@@ -398,39 +388,37 @@ public:
 	intptr_t handle__standardIcon = 0;
 
 	// Subclass to allow providing a Go implementation
-	virtual QIcon standardIcon(QStyle::StandardPixmap standardIcon, const QStyleOption* option, const QWidget* widget) const override {
+	virtual QIcon standardIcon(StandardPixmap standardIcon, const QStyleOption* option, const QWidget* widget) const override {
 		if (handle__standardIcon == 0) {
 			return QProxyStyle::standardIcon(standardIcon, option, widget);
 		}
 
-		QStyle::StandardPixmap standardIcon_ret = standardIcon;
-		int sigval1 = static_cast<int>(standardIcon_ret);
+		StandardPixmap sigval1 = standardIcon;
 		QStyleOption* sigval2 = (QStyleOption*) option;
 		QWidget* sigval3 = (QWidget*) widget;
 		QIcon* callback_return_value = miqt_exec_callback_QProxyStyle_standardIcon(this, handle__standardIcon, sigval1, sigval2, sigval3);
 		return *callback_return_value;
 	}
 
-	friend QIcon* QProxyStyle_virtualbase_standardIcon(const void* self, int standardIcon, QStyleOption* option, QWidget* widget);
+	friend QIcon* QProxyStyle_virtualbase_standardIcon(const void* self, StandardPixmap standardIcon, QStyleOption* option, QWidget* widget);
 
 	// cgo.Handle value for overwritten implementation
 	intptr_t handle__standardPixmap = 0;
 
 	// Subclass to allow providing a Go implementation
-	virtual QPixmap standardPixmap(QStyle::StandardPixmap standardPixmap, const QStyleOption* opt, const QWidget* widget) const override {
+	virtual QPixmap standardPixmap(StandardPixmap standardPixmap, const QStyleOption* opt, const QWidget* widget) const override {
 		if (handle__standardPixmap == 0) {
 			return QProxyStyle::standardPixmap(standardPixmap, opt, widget);
 		}
 
-		QStyle::StandardPixmap standardPixmap_ret = standardPixmap;
-		int sigval1 = static_cast<int>(standardPixmap_ret);
+		StandardPixmap sigval1 = standardPixmap;
 		QStyleOption* sigval2 = (QStyleOption*) opt;
 		QWidget* sigval3 = (QWidget*) widget;
 		QPixmap* callback_return_value = miqt_exec_callback_QProxyStyle_standardPixmap(this, handle__standardPixmap, sigval1, sigval2, sigval3);
 		return *callback_return_value;
 	}
 
-	friend QPixmap* QProxyStyle_virtualbase_standardPixmap(const void* self, int standardPixmap, QStyleOption* opt, QWidget* widget);
+	friend QPixmap* QProxyStyle_virtualbase_standardPixmap(const void* self, StandardPixmap standardPixmap, QStyleOption* opt, QWidget* widget);
 
 	// cgo.Handle value for overwritten implementation
 	intptr_t handle__generatedIconPixmap = 0;
@@ -728,16 +716,16 @@ void QProxyStyle_setBaseStyle(QProxyStyle* self, QStyle* style) {
 	self->setBaseStyle(style);
 }
 
-void QProxyStyle_drawPrimitive(const QProxyStyle* self, int element, QStyleOption* option, QPainter* painter, QWidget* widget) {
-	self->drawPrimitive(static_cast<QStyle::PrimitiveElement>(element), option, painter, widget);
+void QProxyStyle_drawPrimitive(const QProxyStyle* self, PrimitiveElement element, QStyleOption* option, QPainter* painter, QWidget* widget) {
+	self->drawPrimitive(element, option, painter, widget);
 }
 
-void QProxyStyle_drawControl(const QProxyStyle* self, int element, QStyleOption* option, QPainter* painter, QWidget* widget) {
-	self->drawControl(static_cast<QStyle::ControlElement>(element), option, painter, widget);
+void QProxyStyle_drawControl(const QProxyStyle* self, ControlElement element, QStyleOption* option, QPainter* painter, QWidget* widget) {
+	self->drawControl(element, option, painter, widget);
 }
 
-void QProxyStyle_drawComplexControl(const QProxyStyle* self, int control, QStyleOptionComplex* option, QPainter* painter, QWidget* widget) {
-	self->drawComplexControl(static_cast<QStyle::ComplexControl>(control), option, painter, widget);
+void QProxyStyle_drawComplexControl(const QProxyStyle* self, ComplexControl control, QStyleOptionComplex* option, QPainter* painter, QWidget* widget) {
+	self->drawComplexControl(control, option, painter, widget);
 }
 
 void QProxyStyle_drawItemText(const QProxyStyle* self, QPainter* painter, QRect* rect, int flags, QPalette* pal, bool enabled, struct miqt_string text, int textRole) {
@@ -749,16 +737,16 @@ void QProxyStyle_drawItemPixmap(const QProxyStyle* self, QPainter* painter, QRec
 	self->drawItemPixmap(painter, *rect, static_cast<int>(alignment), *pixmap);
 }
 
-QSize* QProxyStyle_sizeFromContents(const QProxyStyle* self, int type, QStyleOption* option, QSize* size, QWidget* widget) {
-	return new QSize(self->sizeFromContents(static_cast<QStyle::ContentsType>(type), option, *size, widget));
+QSize* QProxyStyle_sizeFromContents(const QProxyStyle* self, ContentsType type, QStyleOption* option, QSize* size, QWidget* widget) {
+	return new QSize(self->sizeFromContents(type, option, *size, widget));
 }
 
-QRect* QProxyStyle_subElementRect(const QProxyStyle* self, int element, QStyleOption* option, QWidget* widget) {
-	return new QRect(self->subElementRect(static_cast<QStyle::SubElement>(element), option, widget));
+QRect* QProxyStyle_subElementRect(const QProxyStyle* self, SubElement element, QStyleOption* option, QWidget* widget) {
+	return new QRect(self->subElementRect(element, option, widget));
 }
 
-QRect* QProxyStyle_subControlRect(const QProxyStyle* self, int cc, QStyleOptionComplex* opt, int sc, QWidget* widget) {
-	return new QRect(self->subControlRect(static_cast<QStyle::ComplexControl>(cc), opt, static_cast<QStyle::SubControl>(sc), widget));
+QRect* QProxyStyle_subControlRect(const QProxyStyle* self, ComplexControl cc, QStyleOptionComplex* opt, SubControl sc, QWidget* widget) {
+	return new QRect(self->subControlRect(cc, opt, sc, widget));
 }
 
 QRect* QProxyStyle_itemTextRect(const QProxyStyle* self, QFontMetrics* fm, QRect* r, int flags, bool enabled, struct miqt_string text) {
@@ -770,29 +758,28 @@ QRect* QProxyStyle_itemPixmapRect(const QProxyStyle* self, QRect* r, int flags, 
 	return new QRect(self->itemPixmapRect(*r, static_cast<int>(flags), *pixmap));
 }
 
-int QProxyStyle_hitTestComplexControl(const QProxyStyle* self, int control, QStyleOptionComplex* option, QPoint* pos, QWidget* widget) {
-	QStyle::SubControl _ret = self->hitTestComplexControl(static_cast<QStyle::ComplexControl>(control), option, *pos, widget);
-	return static_cast<int>(_ret);
+SubControl QProxyStyle_hitTestComplexControl(const QProxyStyle* self, ComplexControl control, QStyleOptionComplex* option, QPoint* pos, QWidget* widget) {
+	return self->hitTestComplexControl(control, option, *pos, widget);
 }
 
-int QProxyStyle_styleHint(const QProxyStyle* self, int hint, QStyleOption* option, QWidget* widget, QStyleHintReturn* returnData) {
-	return self->styleHint(static_cast<QStyle::StyleHint>(hint), option, widget, returnData);
+int QProxyStyle_styleHint(const QProxyStyle* self, StyleHint hint, QStyleOption* option, QWidget* widget, QStyleHintReturn* returnData) {
+	return self->styleHint(hint, option, widget, returnData);
 }
 
-int QProxyStyle_pixelMetric(const QProxyStyle* self, int metric, QStyleOption* option, QWidget* widget) {
-	return self->pixelMetric(static_cast<QStyle::PixelMetric>(metric), option, widget);
+int QProxyStyle_pixelMetric(const QProxyStyle* self, PixelMetric metric, QStyleOption* option, QWidget* widget) {
+	return self->pixelMetric(metric, option, widget);
 }
 
 int QProxyStyle_layoutSpacing(const QProxyStyle* self, int control1, int control2, int orientation, QStyleOption* option, QWidget* widget) {
 	return self->layoutSpacing(static_cast<QSizePolicy::ControlType>(control1), static_cast<QSizePolicy::ControlType>(control2), static_cast<Qt::Orientation>(orientation), option, widget);
 }
 
-QIcon* QProxyStyle_standardIcon(const QProxyStyle* self, int standardIcon, QStyleOption* option, QWidget* widget) {
-	return new QIcon(self->standardIcon(static_cast<QStyle::StandardPixmap>(standardIcon), option, widget));
+QIcon* QProxyStyle_standardIcon(const QProxyStyle* self, StandardPixmap standardIcon, QStyleOption* option, QWidget* widget) {
+	return new QIcon(self->standardIcon(standardIcon, option, widget));
 }
 
-QPixmap* QProxyStyle_standardPixmap(const QProxyStyle* self, int standardPixmap, QStyleOption* opt, QWidget* widget) {
-	return new QPixmap(self->standardPixmap(static_cast<QStyle::StandardPixmap>(standardPixmap), opt, widget));
+QPixmap* QProxyStyle_standardPixmap(const QProxyStyle* self, StandardPixmap standardPixmap, QStyleOption* opt, QWidget* widget) {
+	return new QPixmap(self->standardPixmap(standardPixmap, opt, widget));
 }
 
 QPixmap* QProxyStyle_generatedIconPixmap(const QProxyStyle* self, int iconMode, QPixmap* pixmap, QStyleOption* opt) {
@@ -855,8 +842,8 @@ bool QProxyStyle_override_virtual_drawPrimitive(void* self, intptr_t slot) {
 	return true;
 }
 
-void QProxyStyle_virtualbase_drawPrimitive(const void* self, int element, QStyleOption* option, QPainter* painter, QWidget* widget) {
-	static_cast<const MiqtVirtualQProxyStyle*>(self)->QProxyStyle::drawPrimitive(static_cast<MiqtVirtualQProxyStyle::PrimitiveElement>(element), option, painter, widget);
+void QProxyStyle_virtualbase_drawPrimitive(const void* self, PrimitiveElement element, QStyleOption* option, QPainter* painter, QWidget* widget) {
+	static_cast<const MiqtVirtualQProxyStyle*>(self)->QProxyStyle::drawPrimitive(element, option, painter, widget);
 }
 
 bool QProxyStyle_override_virtual_drawControl(void* self, intptr_t slot) {
@@ -869,8 +856,8 @@ bool QProxyStyle_override_virtual_drawControl(void* self, intptr_t slot) {
 	return true;
 }
 
-void QProxyStyle_virtualbase_drawControl(const void* self, int element, QStyleOption* option, QPainter* painter, QWidget* widget) {
-	static_cast<const MiqtVirtualQProxyStyle*>(self)->QProxyStyle::drawControl(static_cast<MiqtVirtualQProxyStyle::ControlElement>(element), option, painter, widget);
+void QProxyStyle_virtualbase_drawControl(const void* self, ControlElement element, QStyleOption* option, QPainter* painter, QWidget* widget) {
+	static_cast<const MiqtVirtualQProxyStyle*>(self)->QProxyStyle::drawControl(element, option, painter, widget);
 }
 
 bool QProxyStyle_override_virtual_drawComplexControl(void* self, intptr_t slot) {
@@ -883,8 +870,8 @@ bool QProxyStyle_override_virtual_drawComplexControl(void* self, intptr_t slot) 
 	return true;
 }
 
-void QProxyStyle_virtualbase_drawComplexControl(const void* self, int control, QStyleOptionComplex* option, QPainter* painter, QWidget* widget) {
-	static_cast<const MiqtVirtualQProxyStyle*>(self)->QProxyStyle::drawComplexControl(static_cast<MiqtVirtualQProxyStyle::ComplexControl>(control), option, painter, widget);
+void QProxyStyle_virtualbase_drawComplexControl(const void* self, ComplexControl control, QStyleOptionComplex* option, QPainter* painter, QWidget* widget) {
+	static_cast<const MiqtVirtualQProxyStyle*>(self)->QProxyStyle::drawComplexControl(control, option, painter, widget);
 }
 
 bool QProxyStyle_override_virtual_drawItemText(void* self, intptr_t slot) {
@@ -926,8 +913,8 @@ bool QProxyStyle_override_virtual_sizeFromContents(void* self, intptr_t slot) {
 	return true;
 }
 
-QSize* QProxyStyle_virtualbase_sizeFromContents(const void* self, int type, QStyleOption* option, QSize* size, QWidget* widget) {
-	return new QSize(static_cast<const MiqtVirtualQProxyStyle*>(self)->QProxyStyle::sizeFromContents(static_cast<MiqtVirtualQProxyStyle::ContentsType>(type), option, *size, widget));
+QSize* QProxyStyle_virtualbase_sizeFromContents(const void* self, ContentsType type, QStyleOption* option, QSize* size, QWidget* widget) {
+	return new QSize(static_cast<const MiqtVirtualQProxyStyle*>(self)->QProxyStyle::sizeFromContents(type, option, *size, widget));
 }
 
 bool QProxyStyle_override_virtual_subElementRect(void* self, intptr_t slot) {
@@ -940,8 +927,8 @@ bool QProxyStyle_override_virtual_subElementRect(void* self, intptr_t slot) {
 	return true;
 }
 
-QRect* QProxyStyle_virtualbase_subElementRect(const void* self, int element, QStyleOption* option, QWidget* widget) {
-	return new QRect(static_cast<const MiqtVirtualQProxyStyle*>(self)->QProxyStyle::subElementRect(static_cast<MiqtVirtualQProxyStyle::SubElement>(element), option, widget));
+QRect* QProxyStyle_virtualbase_subElementRect(const void* self, SubElement element, QStyleOption* option, QWidget* widget) {
+	return new QRect(static_cast<const MiqtVirtualQProxyStyle*>(self)->QProxyStyle::subElementRect(element, option, widget));
 }
 
 bool QProxyStyle_override_virtual_subControlRect(void* self, intptr_t slot) {
@@ -954,8 +941,8 @@ bool QProxyStyle_override_virtual_subControlRect(void* self, intptr_t slot) {
 	return true;
 }
 
-QRect* QProxyStyle_virtualbase_subControlRect(const void* self, int cc, QStyleOptionComplex* opt, int sc, QWidget* widget) {
-	return new QRect(static_cast<const MiqtVirtualQProxyStyle*>(self)->QProxyStyle::subControlRect(static_cast<MiqtVirtualQProxyStyle::ComplexControl>(cc), opt, static_cast<MiqtVirtualQProxyStyle::SubControl>(sc), widget));
+QRect* QProxyStyle_virtualbase_subControlRect(const void* self, ComplexControl cc, QStyleOptionComplex* opt, SubControl sc, QWidget* widget) {
+	return new QRect(static_cast<const MiqtVirtualQProxyStyle*>(self)->QProxyStyle::subControlRect(cc, opt, sc, widget));
 }
 
 bool QProxyStyle_override_virtual_itemTextRect(void* self, intptr_t slot) {
@@ -997,9 +984,8 @@ bool QProxyStyle_override_virtual_hitTestComplexControl(void* self, intptr_t slo
 	return true;
 }
 
-int QProxyStyle_virtualbase_hitTestComplexControl(const void* self, int control, QStyleOptionComplex* option, QPoint* pos, QWidget* widget) {
-	MiqtVirtualQProxyStyle::SubControl _ret = static_cast<const MiqtVirtualQProxyStyle*>(self)->QProxyStyle::hitTestComplexControl(static_cast<MiqtVirtualQProxyStyle::ComplexControl>(control), option, *pos, widget);
-	return static_cast<int>(_ret);
+SubControl QProxyStyle_virtualbase_hitTestComplexControl(const void* self, ComplexControl control, QStyleOptionComplex* option, QPoint* pos, QWidget* widget) {
+	return static_cast<const MiqtVirtualQProxyStyle*>(self)->QProxyStyle::hitTestComplexControl(control, option, *pos, widget);
 }
 
 bool QProxyStyle_override_virtual_styleHint(void* self, intptr_t slot) {
@@ -1012,8 +998,8 @@ bool QProxyStyle_override_virtual_styleHint(void* self, intptr_t slot) {
 	return true;
 }
 
-int QProxyStyle_virtualbase_styleHint(const void* self, int hint, QStyleOption* option, QWidget* widget, QStyleHintReturn* returnData) {
-	return static_cast<const MiqtVirtualQProxyStyle*>(self)->QProxyStyle::styleHint(static_cast<MiqtVirtualQProxyStyle::StyleHint>(hint), option, widget, returnData);
+int QProxyStyle_virtualbase_styleHint(const void* self, StyleHint hint, QStyleOption* option, QWidget* widget, QStyleHintReturn* returnData) {
+	return static_cast<const MiqtVirtualQProxyStyle*>(self)->QProxyStyle::styleHint(hint, option, widget, returnData);
 }
 
 bool QProxyStyle_override_virtual_pixelMetric(void* self, intptr_t slot) {
@@ -1026,8 +1012,8 @@ bool QProxyStyle_override_virtual_pixelMetric(void* self, intptr_t slot) {
 	return true;
 }
 
-int QProxyStyle_virtualbase_pixelMetric(const void* self, int metric, QStyleOption* option, QWidget* widget) {
-	return static_cast<const MiqtVirtualQProxyStyle*>(self)->QProxyStyle::pixelMetric(static_cast<MiqtVirtualQProxyStyle::PixelMetric>(metric), option, widget);
+int QProxyStyle_virtualbase_pixelMetric(const void* self, PixelMetric metric, QStyleOption* option, QWidget* widget) {
+	return static_cast<const MiqtVirtualQProxyStyle*>(self)->QProxyStyle::pixelMetric(metric, option, widget);
 }
 
 bool QProxyStyle_override_virtual_layoutSpacing(void* self, intptr_t slot) {
@@ -1054,8 +1040,8 @@ bool QProxyStyle_override_virtual_standardIcon(void* self, intptr_t slot) {
 	return true;
 }
 
-QIcon* QProxyStyle_virtualbase_standardIcon(const void* self, int standardIcon, QStyleOption* option, QWidget* widget) {
-	return new QIcon(static_cast<const MiqtVirtualQProxyStyle*>(self)->QProxyStyle::standardIcon(static_cast<MiqtVirtualQProxyStyle::StandardPixmap>(standardIcon), option, widget));
+QIcon* QProxyStyle_virtualbase_standardIcon(const void* self, StandardPixmap standardIcon, QStyleOption* option, QWidget* widget) {
+	return new QIcon(static_cast<const MiqtVirtualQProxyStyle*>(self)->QProxyStyle::standardIcon(standardIcon, option, widget));
 }
 
 bool QProxyStyle_override_virtual_standardPixmap(void* self, intptr_t slot) {
@@ -1068,8 +1054,8 @@ bool QProxyStyle_override_virtual_standardPixmap(void* self, intptr_t slot) {
 	return true;
 }
 
-QPixmap* QProxyStyle_virtualbase_standardPixmap(const void* self, int standardPixmap, QStyleOption* opt, QWidget* widget) {
-	return new QPixmap(static_cast<const MiqtVirtualQProxyStyle*>(self)->QProxyStyle::standardPixmap(static_cast<MiqtVirtualQProxyStyle::StandardPixmap>(standardPixmap), opt, widget));
+QPixmap* QProxyStyle_virtualbase_standardPixmap(const void* self, StandardPixmap standardPixmap, QStyleOption* opt, QWidget* widget) {
+	return new QPixmap(static_cast<const MiqtVirtualQProxyStyle*>(self)->QProxyStyle::standardPixmap(standardPixmap, opt, widget));
 }
 
 bool QProxyStyle_override_virtual_generatedIconPixmap(void* self, intptr_t slot) {

@@ -77,7 +77,7 @@ void miqt_exec_callback_QSvgWidget_showEvent(QSvgWidget*, intptr_t, QShowEvent*)
 void miqt_exec_callback_QSvgWidget_hideEvent(QSvgWidget*, intptr_t, QHideEvent*);
 bool miqt_exec_callback_QSvgWidget_nativeEvent(QSvgWidget*, intptr_t, struct miqt_string, void*, intptr_t*);
 void miqt_exec_callback_QSvgWidget_changeEvent(QSvgWidget*, intptr_t, QEvent*);
-int miqt_exec_callback_QSvgWidget_metric(const QSvgWidget*, intptr_t, int);
+int miqt_exec_callback_QSvgWidget_metric(const QSvgWidget*, intptr_t, PaintDeviceMetric);
 void miqt_exec_callback_QSvgWidget_initPainter(const QSvgWidget*, intptr_t, QPainter*);
 QPaintDevice* miqt_exec_callback_QSvgWidget_redirected(const QSvgWidget*, intptr_t, QPoint*);
 QPainter* miqt_exec_callback_QSvgWidget_sharedPainter(const QSvgWidget*, intptr_t);
@@ -681,18 +681,17 @@ public:
 	intptr_t handle__metric = 0;
 
 	// Subclass to allow providing a Go implementation
-	virtual int metric(QPaintDevice::PaintDeviceMetric param1) const override {
+	virtual int metric(PaintDeviceMetric param1) const override {
 		if (handle__metric == 0) {
 			return QSvgWidget::metric(param1);
 		}
 
-		QPaintDevice::PaintDeviceMetric param1_ret = param1;
-		int sigval1 = static_cast<int>(param1_ret);
+		PaintDeviceMetric sigval1 = param1;
 		int callback_return_value = miqt_exec_callback_QSvgWidget_metric(this, handle__metric, sigval1);
 		return static_cast<int>(callback_return_value);
 	}
 
-	friend int QSvgWidget_virtualbase_metric(const void* self, int param1);
+	friend int QSvgWidget_virtualbase_metric(const void* self, PaintDeviceMetric param1);
 
 	// cgo.Handle value for overwritten implementation
 	intptr_t handle__initPainter = 0;
@@ -908,6 +907,7 @@ public:
 	friend int QSvgWidget_protectedbase_senderSignalIndex(bool* _dynamic_cast_ok, const void* self);
 	friend int QSvgWidget_protectedbase_receivers(bool* _dynamic_cast_ok, const void* self, const char* signal);
 	friend bool QSvgWidget_protectedbase_isSignalConnected(bool* _dynamic_cast_ok, const void* self, QMetaMethod* signal);
+	friend double QSvgWidget_protectedbase_getDecodedMetricF(bool* _dynamic_cast_ok, const void* self, PaintDeviceMetric metricA, PaintDeviceMetric metricB);
 };
 
 QSvgWidget* QSvgWidget_new(QWidget* parent) {
@@ -957,6 +957,15 @@ QSvgRenderer* QSvgWidget_renderer(const QSvgWidget* self) {
 
 QSize* QSvgWidget_sizeHint(const QSvgWidget* self) {
 	return new QSize(self->sizeHint());
+}
+
+int QSvgWidget_options(const QSvgWidget* self) {
+	QtSvg::Options _ret = self->options();
+	return static_cast<int>(_ret);
+}
+
+void QSvgWidget_setOptions(QSvgWidget* self, int options) {
+	self->setOptions(static_cast<QtSvg::Options>(options));
 }
 
 void QSvgWidget_load(QSvgWidget* self, struct miqt_string file) {
@@ -1478,8 +1487,8 @@ bool QSvgWidget_override_virtual_metric(void* self, intptr_t slot) {
 	return true;
 }
 
-int QSvgWidget_virtualbase_metric(const void* self, int param1) {
-	return static_cast<const MiqtVirtualQSvgWidget*>(self)->QSvgWidget::metric(static_cast<MiqtVirtualQSvgWidget::PaintDeviceMetric>(param1));
+int QSvgWidget_virtualbase_metric(const void* self, PaintDeviceMetric param1) {
+	return static_cast<const MiqtVirtualQSvgWidget*>(self)->QSvgWidget::metric(param1);
 }
 
 bool QSvgWidget_override_virtual_initPainter(void* self, intptr_t slot) {
@@ -1747,6 +1756,17 @@ bool QSvgWidget_protectedbase_isSignalConnected(bool* _dynamic_cast_ok, const vo
 
 	*_dynamic_cast_ok = true;
 	return self_cast->isSignalConnected(*signal);
+}
+
+double QSvgWidget_protectedbase_getDecodedMetricF(bool* _dynamic_cast_ok, const void* self, PaintDeviceMetric metricA, PaintDeviceMetric metricB) {
+	MiqtVirtualQSvgWidget* self_cast = dynamic_cast<MiqtVirtualQSvgWidget*>( (QSvgWidget*)(self) );
+	if (self_cast == nullptr) {
+		*_dynamic_cast_ok = false;
+		return 0;
+	}
+
+	*_dynamic_cast_ok = true;
+	return self_cast->getDecodedMetricF(metricA, metricB);
 }
 
 void QSvgWidget_delete(QSvgWidget* self) {

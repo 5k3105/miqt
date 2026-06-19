@@ -64,6 +64,7 @@ void* QGuiApplication_metacast(QGuiApplication* self, const char* param1);
 struct miqt_string QGuiApplication_tr(const char* s);
 void QGuiApplication_setApplicationDisplayName(struct miqt_string name);
 struct miqt_string QGuiApplication_applicationDisplayName();
+void QGuiApplication_setBadgeNumber(QGuiApplication* self, long long number);
 void QGuiApplication_setDesktopFileName(struct miqt_string name);
 struct miqt_string QGuiApplication_desktopFileName();
 struct miqt_array /* of QWindow* */  QGuiApplication_allWindows();

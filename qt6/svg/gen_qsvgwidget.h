@@ -96,6 +96,8 @@ void* QSvgWidget_metacast(QSvgWidget* self, const char* param1);
 struct miqt_string QSvgWidget_tr(const char* s);
 QSvgRenderer* QSvgWidget_renderer(const QSvgWidget* self);
 QSize* QSvgWidget_sizeHint(const QSvgWidget* self);
+int QSvgWidget_options(const QSvgWidget* self);
+void QSvgWidget_setOptions(QSvgWidget* self, int options);
 void QSvgWidget_load(QSvgWidget* self, struct miqt_string file);
 void QSvgWidget_loadWithContents(QSvgWidget* self, struct miqt_string contents);
 void QSvgWidget_paintEvent(QSvgWidget* self, QPaintEvent* event);
@@ -171,7 +173,7 @@ bool QSvgWidget_virtualbase_nativeEvent(void* self, struct miqt_string eventType
 bool QSvgWidget_override_virtual_changeEvent(void* self, intptr_t slot);
 void QSvgWidget_virtualbase_changeEvent(void* self, QEvent* param1);
 bool QSvgWidget_override_virtual_metric(void* self, intptr_t slot);
-int QSvgWidget_virtualbase_metric(const void* self, int param1);
+int QSvgWidget_virtualbase_metric(const void* self, PaintDeviceMetric param1);
 bool QSvgWidget_override_virtual_initPainter(void* self, intptr_t slot);
 void QSvgWidget_virtualbase_initPainter(const void* self, QPainter* painter);
 bool QSvgWidget_override_virtual_redirected(void* self, intptr_t slot);
@@ -206,6 +208,7 @@ QObject* QSvgWidget_protectedbase_sender(bool* _dynamic_cast_ok, const void* sel
 int QSvgWidget_protectedbase_senderSignalIndex(bool* _dynamic_cast_ok, const void* self);
 int QSvgWidget_protectedbase_receivers(bool* _dynamic_cast_ok, const void* self, const char* signal);
 bool QSvgWidget_protectedbase_isSignalConnected(bool* _dynamic_cast_ok, const void* self, QMetaMethod* signal);
+double QSvgWidget_protectedbase_getDecodedMetricF(bool* _dynamic_cast_ok, const void* self, PaintDeviceMetric metricA, PaintDeviceMetric metricB);
 
 void QSvgWidget_delete(QSvgWidget* self);
 

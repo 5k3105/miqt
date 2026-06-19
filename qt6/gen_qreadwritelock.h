@@ -15,24 +15,40 @@ extern "C" {
 #endif
 
 #ifdef __cplusplus
+class QBasicReadWriteLock;
+class QDeadlineTimer;
 class QReadLocker;
 class QReadWriteLock;
 class QWriteLocker;
 #else
+typedef struct QBasicReadWriteLock QBasicReadWriteLock;
+typedef struct QDeadlineTimer QDeadlineTimer;
 typedef struct QReadLocker QReadLocker;
 typedef struct QReadWriteLock QReadWriteLock;
 typedef struct QWriteLocker QWriteLocker;
 #endif
 
+QBasicReadWriteLock* QBasicReadWriteLock_new();
+void QBasicReadWriteLock_lockForRead(QBasicReadWriteLock* self);
+bool QBasicReadWriteLock_tryLockForRead(QBasicReadWriteLock* self);
+bool QBasicReadWriteLock_tryLockForReadWithTimeout(QBasicReadWriteLock* self, QDeadlineTimer* timeout);
+void QBasicReadWriteLock_lockForWrite(QBasicReadWriteLock* self);
+bool QBasicReadWriteLock_tryLockForWrite(QBasicReadWriteLock* self);
+bool QBasicReadWriteLock_tryLockForWriteWithTimeout(QBasicReadWriteLock* self, QDeadlineTimer* timeout);
+void QBasicReadWriteLock_unlock(QBasicReadWriteLock* self);
+void QBasicReadWriteLock_lock(QBasicReadWriteLock* self);
+void QBasicReadWriteLock_lockShared(QBasicReadWriteLock* self);
+bool QBasicReadWriteLock_tryLock(QBasicReadWriteLock* self);
+bool QBasicReadWriteLock_tryLockShared(QBasicReadWriteLock* self);
+void QBasicReadWriteLock_unlockShared(QBasicReadWriteLock* self);
+
+void QBasicReadWriteLock_delete(QBasicReadWriteLock* self);
+
 QReadWriteLock* QReadWriteLock_new();
-QReadWriteLock* QReadWriteLock_new2(int recursionMode);
-void QReadWriteLock_lockForRead(QReadWriteLock* self);
-bool QReadWriteLock_tryLockForRead(QReadWriteLock* self);
-bool QReadWriteLock_tryLockForReadWithTimeout(QReadWriteLock* self, int timeout);
-void QReadWriteLock_lockForWrite(QReadWriteLock* self);
-bool QReadWriteLock_tryLockForWrite(QReadWriteLock* self);
-bool QReadWriteLock_tryLockForWriteWithTimeout(QReadWriteLock* self, int timeout);
-void QReadWriteLock_unlock(QReadWriteLock* self);
+QReadWriteLock* QReadWriteLock_new2(RecursionMode recursionMode);
+void QReadWriteLock_virtbase(QReadWriteLock* src, QBasicReadWriteLock** outptr_QBasicReadWriteLock);
+bool QReadWriteLock_tryLockForRead(QReadWriteLock* self, int timeout);
+bool QReadWriteLock_tryLockForWrite(QReadWriteLock* self, int timeout);
 
 void QReadWriteLock_delete(QReadWriteLock* self);
 

@@ -197,7 +197,7 @@ void QGroupBox_virtualbase_hideEvent(void* self, QHideEvent* event);
 bool QGroupBox_override_virtual_nativeEvent(void* self, intptr_t slot);
 bool QGroupBox_virtualbase_nativeEvent(void* self, struct miqt_string eventType, void* message, intptr_t* result);
 bool QGroupBox_override_virtual_metric(void* self, intptr_t slot);
-int QGroupBox_virtualbase_metric(const void* self, int param1);
+int QGroupBox_virtualbase_metric(const void* self, PaintDeviceMetric param1);
 bool QGroupBox_override_virtual_initPainter(void* self, intptr_t slot);
 void QGroupBox_virtualbase_initPainter(const void* self, QPainter* painter);
 bool QGroupBox_override_virtual_redirected(void* self, intptr_t slot);
@@ -230,6 +230,7 @@ QObject* QGroupBox_protectedbase_sender(bool* _dynamic_cast_ok, const void* self
 int QGroupBox_protectedbase_senderSignalIndex(bool* _dynamic_cast_ok, const void* self);
 int QGroupBox_protectedbase_receivers(bool* _dynamic_cast_ok, const void* self, const char* signal);
 bool QGroupBox_protectedbase_isSignalConnected(bool* _dynamic_cast_ok, const void* self, QMetaMethod* signal);
+double QGroupBox_protectedbase_getDecodedMetricF(bool* _dynamic_cast_ok, const void* self, PaintDeviceMetric metricA, PaintDeviceMetric metricB);
 
 void QGroupBox_delete(QGroupBox* self);
 

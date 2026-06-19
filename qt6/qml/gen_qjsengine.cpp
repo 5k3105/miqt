@@ -245,17 +245,16 @@ void QJSEngine_collectGarbage(QJSEngine* self) {
 	self->collectGarbage();
 }
 
-void QJSEngine_setObjectOwnership(QObject* param1, int param2) {
-	QJSEngine::setObjectOwnership(param1, static_cast<QJSEngine::ObjectOwnership>(param2));
+void QJSEngine_setObjectOwnership(QObject* param1, ObjectOwnership param2) {
+	QJSEngine::setObjectOwnership(param1, param2);
 }
 
-int QJSEngine_objectOwnership(QObject* param1) {
-	QJSEngine::ObjectOwnership _ret = QJSEngine::objectOwnership(param1);
-	return static_cast<int>(_ret);
+ObjectOwnership QJSEngine_objectOwnership(QObject* param1) {
+	return QJSEngine::objectOwnership(param1);
 }
 
-void QJSEngine_installExtensions(QJSEngine* self, int extensions) {
-	self->installExtensions(static_cast<QJSEngine::Extensions>(extensions));
+void QJSEngine_installExtensions(QJSEngine* self, Extensions extensions) {
+	self->installExtensions(extensions);
 }
 
 void QJSEngine_setInterrupted(QJSEngine* self, bool interrupted) {
@@ -369,8 +368,8 @@ QJSValue* QJSEngine_newErrorObject2(QJSEngine* self, int errorType, struct miqt_
 	return new QJSValue(self->newErrorObject(static_cast<QJSValue::ErrorType>(errorType), message_QString));
 }
 
-void QJSEngine_installExtensions2(QJSEngine* self, int extensions, QJSValue* object) {
-	self->installExtensions(static_cast<QJSEngine::Extensions>(extensions), *object);
+void QJSEngine_installExtensions2(QJSEngine* self, Extensions extensions, QJSValue* object) {
+	self->installExtensions(extensions, *object);
 }
 
 void QJSEngine_throwError2(QJSEngine* self, int errorType, struct miqt_string message) {

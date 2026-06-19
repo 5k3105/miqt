@@ -149,6 +149,26 @@ func miqt_exec_callback_QCheckBox_stateChanged(cb C.intptr_t, param1 C.int) {
 	gofunc(slotval1)
 }
 
+func (this *QCheckBox) CheckStateChanged(param1 CheckState) {
+	C.QCheckBox_checkStateChanged(this.h, (C.int)(param1))
+}
+func (this *QCheckBox) OnCheckStateChanged(slot func(param1 CheckState)) {
+	C.QCheckBox_connect_checkStateChanged(this.h, C.intptr_t(cgo.NewHandle(slot)))
+}
+
+//export miqt_exec_callback_QCheckBox_checkStateChanged
+func miqt_exec_callback_QCheckBox_checkStateChanged(cb C.intptr_t, param1 C.int) {
+	gofunc, ok := cgo.Handle(cb).Value().(func(param1 CheckState))
+	if !ok {
+		panic("miqt: callback of non-callback type (heap corruption?)")
+	}
+
+	// Convert all CABI parameters to Go parameters
+	slotval1 := (CheckState)(param1)
+
+	gofunc(slotval1)
+}
+
 func QCheckBox_Tr2(s string, c string) string {
 	s_Cstring := C.CString(s)
 	defer C.free(unsafe.Pointer(s_Cstring))
@@ -288,6 +308,20 @@ func (this *QCheckBox) IsSignalConnected(signal *QMetaMethod) bool {
 
 	var _dynamic_cast_ok C.bool = false
 	_method_ret := (bool)(C.QCheckBox_protectedbase_isSignalConnected(&_dynamic_cast_ok, unsafe.Pointer(this.h), signal.cPointer()))
+
+	if !_dynamic_cast_ok {
+		panic("miqt: can only call protected methods for directly constructed types")
+	}
+
+	return _method_ret
+
+}
+
+// GetDecodedMetricF can only be called from a QCheckBox that was directly constructed.
+func (this *QCheckBox) GetDecodedMetricF(metricA PaintDeviceMetric, metricB PaintDeviceMetric) float64 {
+
+	var _dynamic_cast_ok C.bool = false
+	_method_ret := (float64)(C.QCheckBox_protectedbase_getDecodedMetricF(&_dynamic_cast_ok, unsafe.Pointer(this.h), metricA, metricB))
 
 	if !_dynamic_cast_ok {
 		panic("miqt: can only call protected methods for directly constructed types")
@@ -1325,12 +1359,12 @@ func miqt_exec_callback_QCheckBox_nativeEvent(self *C.QCheckBox, cb C.intptr_t, 
 
 }
 
-func (this *QCheckBox) callVirtualBase_Metric(param1 QPaintDevice__PaintDeviceMetric) int {
+func (this *QCheckBox) callVirtualBase_Metric(param1 PaintDeviceMetric) int {
 
-	return (int)(C.QCheckBox_virtualbase_metric(unsafe.Pointer(this.h), (C.int)(param1)))
+	return (int)(C.QCheckBox_virtualbase_metric(unsafe.Pointer(this.h), param1))
 
 }
-func (this *QCheckBox) OnMetric(slot func(super func(param1 QPaintDevice__PaintDeviceMetric) int, param1 QPaintDevice__PaintDeviceMetric) int) {
+func (this *QCheckBox) OnMetric(slot func(super func(param1 PaintDeviceMetric) int, param1 PaintDeviceMetric) int) {
 	ok := C.QCheckBox_override_virtual_metric(unsafe.Pointer(this.h), C.intptr_t(cgo.NewHandle(slot)))
 	if !ok {
 		panic("miqt: can only override virtual methods for directly constructed types")
@@ -1338,14 +1372,14 @@ func (this *QCheckBox) OnMetric(slot func(super func(param1 QPaintDevice__PaintD
 }
 
 //export miqt_exec_callback_QCheckBox_metric
-func miqt_exec_callback_QCheckBox_metric(self *C.QCheckBox, cb C.intptr_t, param1 C.int) C.int {
-	gofunc, ok := cgo.Handle(cb).Value().(func(super func(param1 QPaintDevice__PaintDeviceMetric) int, param1 QPaintDevice__PaintDeviceMetric) int)
+func miqt_exec_callback_QCheckBox_metric(self *C.QCheckBox, cb C.intptr_t, param1 C.PaintDeviceMetric) C.int {
+	gofunc, ok := cgo.Handle(cb).Value().(func(super func(param1 PaintDeviceMetric) int, param1 PaintDeviceMetric) int)
 	if !ok {
 		panic("miqt: callback of non-callback type (heap corruption?)")
 	}
 
 	// Convert all CABI parameters to Go parameters
-	slotval1 := (QPaintDevice__PaintDeviceMetric)(param1)
+	int /* TODO  */
 
 	virtualReturn := gofunc((&QCheckBox{h: self}).callVirtualBase_Metric, slotval1)
 

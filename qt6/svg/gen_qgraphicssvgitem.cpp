@@ -72,9 +72,9 @@ void miqt_exec_callback_QGraphicsSvgItem_mouseDoubleClickEvent(QGraphicsSvgItem*
 void miqt_exec_callback_QGraphicsSvgItem_wheelEvent(QGraphicsSvgItem*, intptr_t, QGraphicsSceneWheelEvent*);
 void miqt_exec_callback_QGraphicsSvgItem_inputMethodEvent(QGraphicsSvgItem*, intptr_t, QInputMethodEvent*);
 QVariant* miqt_exec_callback_QGraphicsSvgItem_inputMethodQuery(const QGraphicsSvgItem*, intptr_t, int);
-QVariant* miqt_exec_callback_QGraphicsSvgItem_itemChange(QGraphicsSvgItem*, intptr_t, int, QVariant*);
-bool miqt_exec_callback_QGraphicsSvgItem_supportsExtension(const QGraphicsSvgItem*, intptr_t, int);
-void miqt_exec_callback_QGraphicsSvgItem_setExtension(QGraphicsSvgItem*, intptr_t, int, QVariant*);
+QVariant* miqt_exec_callback_QGraphicsSvgItem_itemChange(QGraphicsSvgItem*, intptr_t, GraphicsItemChange, QVariant*);
+bool miqt_exec_callback_QGraphicsSvgItem_supportsExtension(const QGraphicsSvgItem*, intptr_t, Extension);
+void miqt_exec_callback_QGraphicsSvgItem_setExtension(QGraphicsSvgItem*, intptr_t, Extension, QVariant*);
 QVariant* miqt_exec_callback_QGraphicsSvgItem_extension(const QGraphicsSvgItem*, intptr_t, QVariant*);
 #ifdef __cplusplus
 } /* extern C */
@@ -740,13 +740,12 @@ public:
 	intptr_t handle__itemChange = 0;
 
 	// Subclass to allow providing a Go implementation
-	virtual QVariant itemChange(QGraphicsItem::GraphicsItemChange change, const QVariant& value) override {
+	virtual QVariant itemChange(GraphicsItemChange change, const QVariant& value) override {
 		if (handle__itemChange == 0) {
 			return QGraphicsSvgItem::itemChange(change, value);
 		}
 
-		QGraphicsItem::GraphicsItemChange change_ret = change;
-		int sigval1 = static_cast<int>(change_ret);
+		GraphicsItemChange sigval1 = change;
 		const QVariant& value_ret = value;
 		// Cast returned reference into pointer
 		QVariant* sigval2 = const_cast<QVariant*>(&value_ret);
@@ -754,37 +753,35 @@ public:
 		return *callback_return_value;
 	}
 
-	friend QVariant* QGraphicsSvgItem_virtualbase_itemChange(void* self, int change, QVariant* value);
+	friend QVariant* QGraphicsSvgItem_virtualbase_itemChange(void* self, GraphicsItemChange change, QVariant* value);
 
 	// cgo.Handle value for overwritten implementation
 	intptr_t handle__supportsExtension = 0;
 
 	// Subclass to allow providing a Go implementation
-	virtual bool supportsExtension(QGraphicsItem::Extension extension) const override {
+	virtual bool supportsExtension(Extension extension) const override {
 		if (handle__supportsExtension == 0) {
 			return QGraphicsSvgItem::supportsExtension(extension);
 		}
 
-		QGraphicsItem::Extension extension_ret = extension;
-		int sigval1 = static_cast<int>(extension_ret);
+		Extension sigval1 = extension;
 		bool callback_return_value = miqt_exec_callback_QGraphicsSvgItem_supportsExtension(this, handle__supportsExtension, sigval1);
 		return callback_return_value;
 	}
 
-	friend bool QGraphicsSvgItem_virtualbase_supportsExtension(const void* self, int extension);
+	friend bool QGraphicsSvgItem_virtualbase_supportsExtension(const void* self, Extension extension);
 
 	// cgo.Handle value for overwritten implementation
 	intptr_t handle__setExtension = 0;
 
 	// Subclass to allow providing a Go implementation
-	virtual void setExtension(QGraphicsItem::Extension extension, const QVariant& variant) override {
+	virtual void setExtension(Extension extension, const QVariant& variant) override {
 		if (handle__setExtension == 0) {
 			QGraphicsSvgItem::setExtension(extension, variant);
 			return;
 		}
 
-		QGraphicsItem::Extension extension_ret = extension;
-		int sigval1 = static_cast<int>(extension_ret);
+		Extension sigval1 = extension;
 		const QVariant& variant_ret = variant;
 		// Cast returned reference into pointer
 		QVariant* sigval2 = const_cast<QVariant*>(&variant_ret);
@@ -792,7 +789,7 @@ public:
 
 	}
 
-	friend void QGraphicsSvgItem_virtualbase_setExtension(void* self, int extension, QVariant* variant);
+	friend void QGraphicsSvgItem_virtualbase_setExtension(void* self, Extension extension, QVariant* variant);
 
 	// cgo.Handle value for overwritten implementation
 	intptr_t handle__extension = 0;
@@ -1480,8 +1477,8 @@ bool QGraphicsSvgItem_override_virtual_itemChange(void* self, intptr_t slot) {
 	return true;
 }
 
-QVariant* QGraphicsSvgItem_virtualbase_itemChange(void* self, int change, QVariant* value) {
-	return new QVariant(static_cast<MiqtVirtualQGraphicsSvgItem*>(self)->QGraphicsSvgItem::itemChange(static_cast<MiqtVirtualQGraphicsSvgItem::GraphicsItemChange>(change), *value));
+QVariant* QGraphicsSvgItem_virtualbase_itemChange(void* self, GraphicsItemChange change, QVariant* value) {
+	return new QVariant(static_cast<MiqtVirtualQGraphicsSvgItem*>(self)->QGraphicsSvgItem::itemChange(change, *value));
 }
 
 bool QGraphicsSvgItem_override_virtual_supportsExtension(void* self, intptr_t slot) {
@@ -1494,8 +1491,8 @@ bool QGraphicsSvgItem_override_virtual_supportsExtension(void* self, intptr_t sl
 	return true;
 }
 
-bool QGraphicsSvgItem_virtualbase_supportsExtension(const void* self, int extension) {
-	return static_cast<const MiqtVirtualQGraphicsSvgItem*>(self)->QGraphicsSvgItem::supportsExtension(static_cast<MiqtVirtualQGraphicsSvgItem::Extension>(extension));
+bool QGraphicsSvgItem_virtualbase_supportsExtension(const void* self, Extension extension) {
+	return static_cast<const MiqtVirtualQGraphicsSvgItem*>(self)->QGraphicsSvgItem::supportsExtension(extension);
 }
 
 bool QGraphicsSvgItem_override_virtual_setExtension(void* self, intptr_t slot) {
@@ -1508,8 +1505,8 @@ bool QGraphicsSvgItem_override_virtual_setExtension(void* self, intptr_t slot) {
 	return true;
 }
 
-void QGraphicsSvgItem_virtualbase_setExtension(void* self, int extension, QVariant* variant) {
-	static_cast<MiqtVirtualQGraphicsSvgItem*>(self)->QGraphicsSvgItem::setExtension(static_cast<MiqtVirtualQGraphicsSvgItem::Extension>(extension), *variant);
+void QGraphicsSvgItem_virtualbase_setExtension(void* self, Extension extension, QVariant* variant) {
+	static_cast<MiqtVirtualQGraphicsSvgItem*>(self)->QGraphicsSvgItem::setExtension(extension, *variant);
 }
 
 bool QGraphicsSvgItem_override_virtual_extension(void* self, intptr_t slot) {

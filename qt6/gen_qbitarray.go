@@ -159,16 +159,8 @@ func (this *QBitArray) OperatorBitwiseNotAssign(param1 *QBitArray) {
 	C.QBitArray_operatorBitwiseNotAssign(this.h, param1.cPointer())
 }
 
-func (this *QBitArray) OperatorEqual(other *QBitArray) bool {
-	return (bool)(C.QBitArray_operatorEqual(this.h, other.cPointer()))
-}
-
-func (this *QBitArray) OperatorNotEqual(other *QBitArray) bool {
-	return (bool)(C.QBitArray_operatorNotEqual(this.h, other.cPointer()))
-}
-
-func (this *QBitArray) Fill(val bool) bool {
-	return (bool)(C.QBitArray_fill(this.h, (C.bool)(val)))
+func (this *QBitArray) Fill(aval bool) bool {
+	return (bool)(C.QBitArray_fill(this.h, (C.bool)(aval)))
 }
 
 func (this *QBitArray) Fill2(val bool, first int64, last int64) {
@@ -196,8 +188,16 @@ func (this *QBitArray) ToUInt32(endianness QSysInfo__Endian) uint {
 	return (uint)(C.QBitArray_toUInt32(this.h, (C.int)(endianness)))
 }
 
-func (this *QBitArray) Fill3(val bool, size int64) bool {
-	return (bool)(C.QBitArray_fill3(this.h, (C.bool)(val), (C.ptrdiff_t)(size)))
+func (this *QBitArray) DataPtr() *DataPtr {
+	int /* TODO  */
+}
+
+func (this *QBitArray) DataPtr2() *DataPtr {
+	int /* TODO  */
+}
+
+func (this *QBitArray) Fill3(aval bool, asize int64) bool {
+	return (bool)(C.QBitArray_fill3(this.h, (C.bool)(aval), (C.ptrdiff_t)(asize)))
 }
 
 func (this *QBitArray) ToUInt322(endianness QSysInfo__Endian, ok *bool) uint {

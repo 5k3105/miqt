@@ -33,6 +33,8 @@ bool QHttp2Configuration_setStreamReceiveWindowSize(QHttp2Configuration* self, u
 unsigned int QHttp2Configuration_streamReceiveWindowSize(const QHttp2Configuration* self);
 bool QHttp2Configuration_setMaxFrameSize(QHttp2Configuration* self, unsigned int size);
 unsigned int QHttp2Configuration_maxFrameSize(const QHttp2Configuration* self);
+void QHttp2Configuration_setMaxConcurrentStreams(QHttp2Configuration* self, unsigned int value);
+unsigned int QHttp2Configuration_maxConcurrentStreams(const QHttp2Configuration* self);
 void QHttp2Configuration_swap(QHttp2Configuration* self, QHttp2Configuration* other);
 
 void QHttp2Configuration_delete(QHttp2Configuration* self);

@@ -31,7 +31,7 @@ QSslDiffieHellmanParameters* QSslDiffieHellmanParameters_fromEncoded(struct miqt
 QSslDiffieHellmanParameters* QSslDiffieHellmanParameters_fromEncodedWithDevice(QIODevice* device);
 bool QSslDiffieHellmanParameters_isEmpty(const QSslDiffieHellmanParameters* self);
 bool QSslDiffieHellmanParameters_isValid(const QSslDiffieHellmanParameters* self);
-int QSslDiffieHellmanParameters_error(const QSslDiffieHellmanParameters* self);
+Error QSslDiffieHellmanParameters_error(const QSslDiffieHellmanParameters* self);
 struct miqt_string QSslDiffieHellmanParameters_errorString(const QSslDiffieHellmanParameters* self);
 QSslDiffieHellmanParameters* QSslDiffieHellmanParameters_fromEncoded2(struct miqt_string encoded, int format);
 QSslDiffieHellmanParameters* QSslDiffieHellmanParameters_fromEncoded3(QIODevice* device, int format);

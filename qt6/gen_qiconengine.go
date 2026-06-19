@@ -615,9 +615,9 @@ func UnsafeNewQIconEngine__ScaledPixmapArgument(h unsafe.Pointer) *QIconEngine__
 }
 
 // NewQIconEngine__ScaledPixmapArgument constructs a new QIconEngine::ScaledPixmapArgument object.
-func NewQIconEngine__ScaledPixmapArgument(param1 *QIconEngine__ScaledPixmapArgument) *QIconEngine__ScaledPixmapArgument {
+func NewQIconEngine__ScaledPixmapArgument(param1 *ScaledPixmapArgument) *QIconEngine__ScaledPixmapArgument {
 
-	return newQIconEngine__ScaledPixmapArgument(C.QIconEngine__ScaledPixmapArgument_new(param1.cPointer()))
+	return newQIconEngine__ScaledPixmapArgument(C.QIconEngine__ScaledPixmapArgument_new(param1))
 }
 
 func (this *QIconEngine__ScaledPixmapArgument) Size() *QSize {
@@ -664,8 +664,8 @@ func (this *QIconEngine__ScaledPixmapArgument) SetPixmap(pixmap QPixmap) {
 	C.QIconEngine__ScaledPixmapArgument_setPixmap(this.h, pixmap.cPointer())
 }
 
-func (this *QIconEngine__ScaledPixmapArgument) OperatorAssign(param1 *QIconEngine__ScaledPixmapArgument) {
-	C.QIconEngine__ScaledPixmapArgument_operatorAssign(this.h, param1.cPointer())
+func (this *QIconEngine__ScaledPixmapArgument) OperatorAssign(param1 *ScaledPixmapArgument) {
+	C.QIconEngine__ScaledPixmapArgument_operatorAssign(this.h, param1)
 }
 
 // Delete this object from C++ memory.

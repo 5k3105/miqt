@@ -133,12 +133,12 @@ func (this *QStaticText) Prepare() {
 	C.QStaticText_prepare(this.h)
 }
 
-func (this *QStaticText) SetPerformanceHint(performanceHint QStaticText__PerformanceHint) {
-	C.QStaticText_setPerformanceHint(this.h, (C.int)(performanceHint))
+func (this *QStaticText) SetPerformanceHint(performanceHint PerformanceHint) {
+	C.QStaticText_setPerformanceHint(this.h, performanceHint)
 }
 
-func (this *QStaticText) PerformanceHint() QStaticText__PerformanceHint {
-	return (QStaticText__PerformanceHint)(C.QStaticText_performanceHint(this.h))
+func (this *QStaticText) PerformanceHint() PerformanceHint {
+	int /* TODO  */
 }
 
 func (this *QStaticText) OperatorEqual(param1 *QStaticText) bool {

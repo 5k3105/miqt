@@ -45,7 +45,7 @@ QEvent* miqt_exec_callback_QGraphicsSceneMoveEvent_clone(const QGraphicsSceneMov
 class MiqtVirtualQGraphicsSceneEvent final : public QGraphicsSceneEvent {
 public:
 
-	MiqtVirtualQGraphicsSceneEvent(QEvent::Type type): QGraphicsSceneEvent(type) {}
+	MiqtVirtualQGraphicsSceneEvent(Type type): QGraphicsSceneEvent(type) {}
 
 	virtual ~MiqtVirtualQGraphicsSceneEvent() override = default;
 
@@ -83,8 +83,8 @@ public:
 
 };
 
-QGraphicsSceneEvent* QGraphicsSceneEvent_new(int type) {
-	return new (std::nothrow) MiqtVirtualQGraphicsSceneEvent(static_cast<QEvent::Type>(type));
+QGraphicsSceneEvent* QGraphicsSceneEvent_new(Type type) {
+	return new (std::nothrow) MiqtVirtualQGraphicsSceneEvent(type);
 }
 
 void QGraphicsSceneEvent_virtbase(QGraphicsSceneEvent* src, QEvent** outptr_QEvent) {
@@ -144,7 +144,7 @@ class MiqtVirtualQGraphicsSceneMouseEvent final : public QGraphicsSceneMouseEven
 public:
 
 	MiqtVirtualQGraphicsSceneMouseEvent(): QGraphicsSceneMouseEvent() {}
-	MiqtVirtualQGraphicsSceneMouseEvent(QEvent::Type type): QGraphicsSceneMouseEvent(type) {}
+	MiqtVirtualQGraphicsSceneMouseEvent(Type type): QGraphicsSceneMouseEvent(type) {}
 
 	virtual ~MiqtVirtualQGraphicsSceneMouseEvent() override = default;
 
@@ -186,8 +186,8 @@ QGraphicsSceneMouseEvent* QGraphicsSceneMouseEvent_new() {
 	return new (std::nothrow) MiqtVirtualQGraphicsSceneMouseEvent();
 }
 
-QGraphicsSceneMouseEvent* QGraphicsSceneMouseEvent_new2(int type) {
-	return new (std::nothrow) MiqtVirtualQGraphicsSceneMouseEvent(static_cast<QEvent::Type>(type));
+QGraphicsSceneMouseEvent* QGraphicsSceneMouseEvent_new2(Type type) {
+	return new (std::nothrow) MiqtVirtualQGraphicsSceneMouseEvent(type);
 }
 
 void QGraphicsSceneMouseEvent_virtbase(QGraphicsSceneMouseEvent* src, QGraphicsSceneEvent** outptr_QGraphicsSceneEvent) {
@@ -347,7 +347,7 @@ class MiqtVirtualQGraphicsSceneWheelEvent final : public QGraphicsSceneWheelEven
 public:
 
 	MiqtVirtualQGraphicsSceneWheelEvent(): QGraphicsSceneWheelEvent() {}
-	MiqtVirtualQGraphicsSceneWheelEvent(QEvent::Type type): QGraphicsSceneWheelEvent(type) {}
+	MiqtVirtualQGraphicsSceneWheelEvent(Type type): QGraphicsSceneWheelEvent(type) {}
 
 	virtual ~MiqtVirtualQGraphicsSceneWheelEvent() override = default;
 
@@ -389,8 +389,8 @@ QGraphicsSceneWheelEvent* QGraphicsSceneWheelEvent_new() {
 	return new (std::nothrow) MiqtVirtualQGraphicsSceneWheelEvent();
 }
 
-QGraphicsSceneWheelEvent* QGraphicsSceneWheelEvent_new2(int type) {
-	return new (std::nothrow) MiqtVirtualQGraphicsSceneWheelEvent(static_cast<QEvent::Type>(type));
+QGraphicsSceneWheelEvent* QGraphicsSceneWheelEvent_new2(Type type) {
+	return new (std::nothrow) MiqtVirtualQGraphicsSceneWheelEvent(type);
 }
 
 void QGraphicsSceneWheelEvent_virtbase(QGraphicsSceneWheelEvent* src, QGraphicsSceneEvent** outptr_QGraphicsSceneEvent) {
@@ -517,7 +517,7 @@ class MiqtVirtualQGraphicsSceneContextMenuEvent final : public QGraphicsSceneCon
 public:
 
 	MiqtVirtualQGraphicsSceneContextMenuEvent(): QGraphicsSceneContextMenuEvent() {}
-	MiqtVirtualQGraphicsSceneContextMenuEvent(QEvent::Type type): QGraphicsSceneContextMenuEvent(type) {}
+	MiqtVirtualQGraphicsSceneContextMenuEvent(Type type): QGraphicsSceneContextMenuEvent(type) {}
 
 	virtual ~MiqtVirtualQGraphicsSceneContextMenuEvent() override = default;
 
@@ -559,8 +559,8 @@ QGraphicsSceneContextMenuEvent* QGraphicsSceneContextMenuEvent_new() {
 	return new (std::nothrow) MiqtVirtualQGraphicsSceneContextMenuEvent();
 }
 
-QGraphicsSceneContextMenuEvent* QGraphicsSceneContextMenuEvent_new2(int type) {
-	return new (std::nothrow) MiqtVirtualQGraphicsSceneContextMenuEvent(static_cast<QEvent::Type>(type));
+QGraphicsSceneContextMenuEvent* QGraphicsSceneContextMenuEvent_new2(Type type) {
+	return new (std::nothrow) MiqtVirtualQGraphicsSceneContextMenuEvent(type);
 }
 
 void QGraphicsSceneContextMenuEvent_virtbase(QGraphicsSceneContextMenuEvent* src, QGraphicsSceneEvent** outptr_QGraphicsSceneEvent) {
@@ -600,13 +600,12 @@ void QGraphicsSceneContextMenuEvent_setModifiers(QGraphicsSceneContextMenuEvent*
 	self->setModifiers(static_cast<Qt::KeyboardModifiers>(modifiers));
 }
 
-int QGraphicsSceneContextMenuEvent_reason(const QGraphicsSceneContextMenuEvent* self) {
-	QGraphicsSceneContextMenuEvent::Reason _ret = self->reason();
-	return static_cast<int>(_ret);
+Reason QGraphicsSceneContextMenuEvent_reason(const QGraphicsSceneContextMenuEvent* self) {
+	return self->reason();
 }
 
-void QGraphicsSceneContextMenuEvent_setReason(QGraphicsSceneContextMenuEvent* self, int reason) {
-	self->setReason(static_cast<QGraphicsSceneContextMenuEvent::Reason>(reason));
+void QGraphicsSceneContextMenuEvent_setReason(QGraphicsSceneContextMenuEvent* self, Reason reason) {
+	self->setReason(reason);
 }
 
 bool QGraphicsSceneContextMenuEvent_override_virtual_setAccepted(void* self, intptr_t slot) {
@@ -645,7 +644,7 @@ class MiqtVirtualQGraphicsSceneHoverEvent final : public QGraphicsSceneHoverEven
 public:
 
 	MiqtVirtualQGraphicsSceneHoverEvent(): QGraphicsSceneHoverEvent() {}
-	MiqtVirtualQGraphicsSceneHoverEvent(QEvent::Type type): QGraphicsSceneHoverEvent(type) {}
+	MiqtVirtualQGraphicsSceneHoverEvent(Type type): QGraphicsSceneHoverEvent(type) {}
 
 	virtual ~MiqtVirtualQGraphicsSceneHoverEvent() override = default;
 
@@ -687,8 +686,8 @@ QGraphicsSceneHoverEvent* QGraphicsSceneHoverEvent_new() {
 	return new (std::nothrow) MiqtVirtualQGraphicsSceneHoverEvent();
 }
 
-QGraphicsSceneHoverEvent* QGraphicsSceneHoverEvent_new2(int type) {
-	return new (std::nothrow) MiqtVirtualQGraphicsSceneHoverEvent(static_cast<QEvent::Type>(type));
+QGraphicsSceneHoverEvent* QGraphicsSceneHoverEvent_new2(Type type) {
+	return new (std::nothrow) MiqtVirtualQGraphicsSceneHoverEvent(type);
 }
 
 void QGraphicsSceneHoverEvent_virtbase(QGraphicsSceneHoverEvent* src, QGraphicsSceneEvent** outptr_QGraphicsSceneEvent) {
@@ -788,7 +787,7 @@ class MiqtVirtualQGraphicsSceneHelpEvent final : public QGraphicsSceneHelpEvent 
 public:
 
 	MiqtVirtualQGraphicsSceneHelpEvent(): QGraphicsSceneHelpEvent() {}
-	MiqtVirtualQGraphicsSceneHelpEvent(QEvent::Type type): QGraphicsSceneHelpEvent(type) {}
+	MiqtVirtualQGraphicsSceneHelpEvent(Type type): QGraphicsSceneHelpEvent(type) {}
 
 	virtual ~MiqtVirtualQGraphicsSceneHelpEvent() override = default;
 
@@ -830,8 +829,8 @@ QGraphicsSceneHelpEvent* QGraphicsSceneHelpEvent_new() {
 	return new (std::nothrow) MiqtVirtualQGraphicsSceneHelpEvent();
 }
 
-QGraphicsSceneHelpEvent* QGraphicsSceneHelpEvent_new2(int type) {
-	return new (std::nothrow) MiqtVirtualQGraphicsSceneHelpEvent(static_cast<QEvent::Type>(type));
+QGraphicsSceneHelpEvent* QGraphicsSceneHelpEvent_new2(Type type) {
+	return new (std::nothrow) MiqtVirtualQGraphicsSceneHelpEvent(type);
 }
 
 void QGraphicsSceneHelpEvent_virtbase(QGraphicsSceneHelpEvent* src, QGraphicsSceneEvent** outptr_QGraphicsSceneEvent) {
@@ -890,7 +889,7 @@ class MiqtVirtualQGraphicsSceneDragDropEvent final : public QGraphicsSceneDragDr
 public:
 
 	MiqtVirtualQGraphicsSceneDragDropEvent(): QGraphicsSceneDragDropEvent() {}
-	MiqtVirtualQGraphicsSceneDragDropEvent(QEvent::Type type): QGraphicsSceneDragDropEvent(type) {}
+	MiqtVirtualQGraphicsSceneDragDropEvent(Type type): QGraphicsSceneDragDropEvent(type) {}
 
 	virtual ~MiqtVirtualQGraphicsSceneDragDropEvent() override = default;
 
@@ -932,8 +931,8 @@ QGraphicsSceneDragDropEvent* QGraphicsSceneDragDropEvent_new() {
 	return new (std::nothrow) MiqtVirtualQGraphicsSceneDragDropEvent();
 }
 
-QGraphicsSceneDragDropEvent* QGraphicsSceneDragDropEvent_new2(int type) {
-	return new (std::nothrow) MiqtVirtualQGraphicsSceneDragDropEvent(static_cast<QEvent::Type>(type));
+QGraphicsSceneDragDropEvent* QGraphicsSceneDragDropEvent_new2(Type type) {
+	return new (std::nothrow) MiqtVirtualQGraphicsSceneDragDropEvent(type);
 }
 
 void QGraphicsSceneDragDropEvent_virtbase(QGraphicsSceneDragDropEvent* src, QGraphicsSceneEvent** outptr_QGraphicsSceneEvent) {

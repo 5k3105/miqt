@@ -111,20 +111,20 @@ func QAbstractSpinBox_Tr(s string) string {
 	return _ret
 }
 
-func (this *QAbstractSpinBox) ButtonSymbols() QAbstractSpinBox__ButtonSymbols {
-	return (QAbstractSpinBox__ButtonSymbols)(C.QAbstractSpinBox_buttonSymbols(this.h))
+func (this *QAbstractSpinBox) ButtonSymbols() ButtonSymbols {
+	int /* TODO  */
 }
 
-func (this *QAbstractSpinBox) SetButtonSymbols(bs QAbstractSpinBox__ButtonSymbols) {
-	C.QAbstractSpinBox_setButtonSymbols(this.h, (C.int)(bs))
+func (this *QAbstractSpinBox) SetButtonSymbols(bs ButtonSymbols) {
+	C.QAbstractSpinBox_setButtonSymbols(this.h, bs)
 }
 
-func (this *QAbstractSpinBox) SetCorrectionMode(cm QAbstractSpinBox__CorrectionMode) {
-	C.QAbstractSpinBox_setCorrectionMode(this.h, (C.int)(cm))
+func (this *QAbstractSpinBox) SetCorrectionMode(cm CorrectionMode) {
+	C.QAbstractSpinBox_setCorrectionMode(this.h, cm)
 }
 
-func (this *QAbstractSpinBox) CorrectionMode() QAbstractSpinBox__CorrectionMode {
-	return (QAbstractSpinBox__CorrectionMode)(C.QAbstractSpinBox_correctionMode(this.h))
+func (this *QAbstractSpinBox) CorrectionMode() CorrectionMode {
+	int /* TODO  */
 }
 
 func (this *QAbstractSpinBox) HasAcceptableInput() bool {
@@ -280,6 +280,23 @@ func (this *QAbstractSpinBox) OnEditingFinished(slot func()) {
 
 //export miqt_exec_callback_QAbstractSpinBox_editingFinished
 func miqt_exec_callback_QAbstractSpinBox_editingFinished(cb C.intptr_t) {
+	gofunc, ok := cgo.Handle(cb).Value().(func())
+	if !ok {
+		panic("miqt: callback of non-callback type (heap corruption?)")
+	}
+
+	gofunc()
+}
+
+func (this *QAbstractSpinBox) ReturnPressed() {
+	C.QAbstractSpinBox_returnPressed(this.h)
+}
+func (this *QAbstractSpinBox) OnReturnPressed(slot func()) {
+	C.QAbstractSpinBox_connect_returnPressed(this.h, C.intptr_t(cgo.NewHandle(slot)))
+}
+
+//export miqt_exec_callback_QAbstractSpinBox_returnPressed
+func miqt_exec_callback_QAbstractSpinBox_returnPressed(cb C.intptr_t) {
 	gofunc, ok := cgo.Handle(cb).Value().(func())
 	if !ok {
 		panic("miqt: callback of non-callback type (heap corruption?)")
@@ -449,6 +466,20 @@ func (this *QAbstractSpinBox) IsSignalConnected(signal *QMetaMethod) bool {
 
 	var _dynamic_cast_ok C.bool = false
 	_method_ret := (bool)(C.QAbstractSpinBox_protectedbase_isSignalConnected(&_dynamic_cast_ok, unsafe.Pointer(this.h), signal.cPointer()))
+
+	if !_dynamic_cast_ok {
+		panic("miqt: can only call protected methods for directly constructed types")
+	}
+
+	return _method_ret
+
+}
+
+// GetDecodedMetricF can only be called from a QAbstractSpinBox that was directly constructed.
+func (this *QAbstractSpinBox) GetDecodedMetricF(metricA PaintDeviceMetric, metricB PaintDeviceMetric) float64 {
+
+	var _dynamic_cast_ok C.bool = false
+	_method_ret := (float64)(C.QAbstractSpinBox_protectedbase_getDecodedMetricF(&_dynamic_cast_ok, unsafe.Pointer(this.h), metricA, metricB))
 
 	if !_dynamic_cast_ok {
 		panic("miqt: can only call protected methods for directly constructed types")
@@ -1130,12 +1161,11 @@ func miqt_exec_callback_QAbstractSpinBox_initStyleOption(self *C.QAbstractSpinBo
 
 }
 
-func (this *QAbstractSpinBox) callVirtualBase_StepEnabled() QAbstractSpinBox__StepEnabledFlag {
+func (this *QAbstractSpinBox) callVirtualBase_StepEnabled() StepEnabled {
 
-	return (QAbstractSpinBox__StepEnabledFlag)(C.QAbstractSpinBox_virtualbase_stepEnabled(unsafe.Pointer(this.h)))
-
+	int /* TODO  */
 }
-func (this *QAbstractSpinBox) OnStepEnabled(slot func(super func() QAbstractSpinBox__StepEnabledFlag) QAbstractSpinBox__StepEnabledFlag) {
+func (this *QAbstractSpinBox) OnStepEnabled(slot func(super func() StepEnabled) StepEnabled) {
 	ok := C.QAbstractSpinBox_override_virtual_stepEnabled(unsafe.Pointer(this.h), C.intptr_t(cgo.NewHandle(slot)))
 	if !ok {
 		panic("miqt: can only override virtual methods for directly constructed types")
@@ -1143,15 +1173,15 @@ func (this *QAbstractSpinBox) OnStepEnabled(slot func(super func() QAbstractSpin
 }
 
 //export miqt_exec_callback_QAbstractSpinBox_stepEnabled
-func miqt_exec_callback_QAbstractSpinBox_stepEnabled(self *C.QAbstractSpinBox, cb C.intptr_t) C.int {
-	gofunc, ok := cgo.Handle(cb).Value().(func(super func() QAbstractSpinBox__StepEnabledFlag) QAbstractSpinBox__StepEnabledFlag)
+func miqt_exec_callback_QAbstractSpinBox_stepEnabled(self *C.QAbstractSpinBox, cb C.intptr_t) C.StepEnabled {
+	gofunc, ok := cgo.Handle(cb).Value().(func(super func() StepEnabled) StepEnabled)
 	if !ok {
 		panic("miqt: callback of non-callback type (heap corruption?)")
 	}
 
 	virtualReturn := gofunc((&QAbstractSpinBox{h: self}).callVirtualBase_StepEnabled)
 
-	return (C.int)(virtualReturn)
+	return virtualReturn
 
 }
 
@@ -1585,12 +1615,12 @@ func miqt_exec_callback_QAbstractSpinBox_nativeEvent(self *C.QAbstractSpinBox, c
 
 }
 
-func (this *QAbstractSpinBox) callVirtualBase_Metric(param1 QPaintDevice__PaintDeviceMetric) int {
+func (this *QAbstractSpinBox) callVirtualBase_Metric(param1 PaintDeviceMetric) int {
 
-	return (int)(C.QAbstractSpinBox_virtualbase_metric(unsafe.Pointer(this.h), (C.int)(param1)))
+	return (int)(C.QAbstractSpinBox_virtualbase_metric(unsafe.Pointer(this.h), param1))
 
 }
-func (this *QAbstractSpinBox) OnMetric(slot func(super func(param1 QPaintDevice__PaintDeviceMetric) int, param1 QPaintDevice__PaintDeviceMetric) int) {
+func (this *QAbstractSpinBox) OnMetric(slot func(super func(param1 PaintDeviceMetric) int, param1 PaintDeviceMetric) int) {
 	ok := C.QAbstractSpinBox_override_virtual_metric(unsafe.Pointer(this.h), C.intptr_t(cgo.NewHandle(slot)))
 	if !ok {
 		panic("miqt: can only override virtual methods for directly constructed types")
@@ -1598,14 +1628,14 @@ func (this *QAbstractSpinBox) OnMetric(slot func(super func(param1 QPaintDevice_
 }
 
 //export miqt_exec_callback_QAbstractSpinBox_metric
-func miqt_exec_callback_QAbstractSpinBox_metric(self *C.QAbstractSpinBox, cb C.intptr_t, param1 C.int) C.int {
-	gofunc, ok := cgo.Handle(cb).Value().(func(super func(param1 QPaintDevice__PaintDeviceMetric) int, param1 QPaintDevice__PaintDeviceMetric) int)
+func miqt_exec_callback_QAbstractSpinBox_metric(self *C.QAbstractSpinBox, cb C.intptr_t, param1 C.PaintDeviceMetric) C.int {
+	gofunc, ok := cgo.Handle(cb).Value().(func(super func(param1 PaintDeviceMetric) int, param1 PaintDeviceMetric) int)
 	if !ok {
 		panic("miqt: callback of non-callback type (heap corruption?)")
 	}
 
 	// Convert all CABI parameters to Go parameters
-	slotval1 := (QPaintDevice__PaintDeviceMetric)(param1)
+	int /* TODO  */
 
 	virtualReturn := gofunc((&QAbstractSpinBox{h: self}).callVirtualBase_Metric, slotval1)
 

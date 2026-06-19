@@ -147,8 +147,8 @@ func (this *QRandomGenerator) Generate2(begin *uint, end *uint) {
 	C.QRandomGenerator_generate2(this.h, (*C.uint)(unsafe.Pointer(begin)), (*C.uint)(unsafe.Pointer(end)))
 }
 
-func (this *QRandomGenerator) OperatorCall() uint {
-	return (uint)(C.QRandomGenerator_operatorCall(this.h))
+func (this *QRandomGenerator) OperatorCall() result_type {
+	int /* TODO  */
 }
 
 func (this *QRandomGenerator) Seed() {
@@ -159,12 +159,12 @@ func (this *QRandomGenerator) Discard(z uint64) {
 	C.QRandomGenerator_discard(this.h, (C.ulonglong)(z))
 }
 
-func QRandomGenerator_Min() uint {
-	return (uint)(C.QRandomGenerator_min())
+func QRandomGenerator_Min() result_type {
+	int /* TODO  */
 }
 
-func QRandomGenerator_Max() uint {
-	return (uint)(C.QRandomGenerator_max())
+func QRandomGenerator_Max() result_type {
+	int /* TODO  */
 }
 
 func QRandomGenerator_System() *QRandomGenerator {
@@ -275,20 +275,20 @@ func (this *QRandomGenerator64) Generate() uint64 {
 	return (uint64)(C.QRandomGenerator64_generate(this.h))
 }
 
-func (this *QRandomGenerator64) OperatorCall() uint64 {
-	return (uint64)(C.QRandomGenerator64_operatorCall(this.h))
+func (this *QRandomGenerator64) OperatorCall() result_type {
+	int /* TODO  */
 }
 
 func (this *QRandomGenerator64) Discard(z uint64) {
 	C.QRandomGenerator64_discard(this.h, (C.ulonglong)(z))
 }
 
-func QRandomGenerator64_Min() uint64 {
-	return (uint64)(C.QRandomGenerator64_min())
+func QRandomGenerator64_Min() result_type {
+	int /* TODO  */
 }
 
-func QRandomGenerator64_Max() uint64 {
-	return (uint64)(C.QRandomGenerator64_max())
+func QRandomGenerator64_Max() result_type {
+	int /* TODO  */
 }
 
 func QRandomGenerator64_System() *QRandomGenerator64 {

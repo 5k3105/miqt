@@ -19,8 +19,8 @@ QVideoFrameFormat* QVideoFrameFormat_new() {
 	return new (std::nothrow) QVideoFrameFormat();
 }
 
-QVideoFrameFormat* QVideoFrameFormat_new2(QSize* size, int pixelFormat) {
-	return new (std::nothrow) QVideoFrameFormat(*size, static_cast<QVideoFrameFormat::PixelFormat>(pixelFormat));
+QVideoFrameFormat* QVideoFrameFormat_new2(QSize* size, PixelFormat pixelFormat) {
+	return new (std::nothrow) QVideoFrameFormat(*size, pixelFormat);
 }
 
 QVideoFrameFormat* QVideoFrameFormat_new3(QVideoFrameFormat* format) {
@@ -88,13 +88,12 @@ void QVideoFrameFormat_setViewport(QVideoFrameFormat* self, QRect* viewport) {
 	self->setViewport(*viewport);
 }
 
-int QVideoFrameFormat_scanLineDirection(const QVideoFrameFormat* self) {
-	QVideoFrameFormat::Direction _ret = self->scanLineDirection();
-	return static_cast<int>(_ret);
+Direction QVideoFrameFormat_scanLineDirection(const QVideoFrameFormat* self) {
+	return self->scanLineDirection();
 }
 
-void QVideoFrameFormat_setScanLineDirection(QVideoFrameFormat* self, int direction) {
-	self->setScanLineDirection(static_cast<QVideoFrameFormat::Direction>(direction));
+void QVideoFrameFormat_setScanLineDirection(QVideoFrameFormat* self, Direction direction) {
+	self->setScanLineDirection(direction);
 }
 
 double QVideoFrameFormat_frameRate(const QVideoFrameFormat* self) {
@@ -106,40 +105,45 @@ void QVideoFrameFormat_setFrameRate(QVideoFrameFormat* self, double rate) {
 	self->setFrameRate(static_cast<qreal>(rate));
 }
 
-int QVideoFrameFormat_yCbCrColorSpace(const QVideoFrameFormat* self) {
-	QVideoFrameFormat::YCbCrColorSpace _ret = self->yCbCrColorSpace();
-	return static_cast<int>(_ret);
+double QVideoFrameFormat_streamFrameRate(const QVideoFrameFormat* self) {
+	qreal _ret = self->streamFrameRate();
+	return static_cast<double>(_ret);
 }
 
-void QVideoFrameFormat_setYCbCrColorSpace(QVideoFrameFormat* self, int colorSpace) {
-	self->setYCbCrColorSpace(static_cast<QVideoFrameFormat::YCbCrColorSpace>(colorSpace));
+void QVideoFrameFormat_setStreamFrameRate(QVideoFrameFormat* self, double rate) {
+	self->setStreamFrameRate(static_cast<qreal>(rate));
 }
 
-int QVideoFrameFormat_colorSpace(const QVideoFrameFormat* self) {
-	QVideoFrameFormat::ColorSpace _ret = self->colorSpace();
-	return static_cast<int>(_ret);
+YCbCrColorSpace QVideoFrameFormat_yCbCrColorSpace(const QVideoFrameFormat* self) {
+	return self->yCbCrColorSpace();
 }
 
-void QVideoFrameFormat_setColorSpace(QVideoFrameFormat* self, int colorSpace) {
-	self->setColorSpace(static_cast<QVideoFrameFormat::ColorSpace>(colorSpace));
+void QVideoFrameFormat_setYCbCrColorSpace(QVideoFrameFormat* self, YCbCrColorSpace colorSpace) {
+	self->setYCbCrColorSpace(colorSpace);
 }
 
-int QVideoFrameFormat_colorTransfer(const QVideoFrameFormat* self) {
-	QVideoFrameFormat::ColorTransfer _ret = self->colorTransfer();
-	return static_cast<int>(_ret);
+ColorSpace QVideoFrameFormat_colorSpace(const QVideoFrameFormat* self) {
+	return self->colorSpace();
 }
 
-void QVideoFrameFormat_setColorTransfer(QVideoFrameFormat* self, int colorTransfer) {
-	self->setColorTransfer(static_cast<QVideoFrameFormat::ColorTransfer>(colorTransfer));
+void QVideoFrameFormat_setColorSpace(QVideoFrameFormat* self, ColorSpace colorSpace) {
+	self->setColorSpace(colorSpace);
 }
 
-int QVideoFrameFormat_colorRange(const QVideoFrameFormat* self) {
-	QVideoFrameFormat::ColorRange _ret = self->colorRange();
-	return static_cast<int>(_ret);
+ColorTransfer QVideoFrameFormat_colorTransfer(const QVideoFrameFormat* self) {
+	return self->colorTransfer();
 }
 
-void QVideoFrameFormat_setColorRange(QVideoFrameFormat* self, int range) {
-	self->setColorRange(static_cast<QVideoFrameFormat::ColorRange>(range));
+void QVideoFrameFormat_setColorTransfer(QVideoFrameFormat* self, ColorTransfer colorTransfer) {
+	self->setColorTransfer(colorTransfer);
+}
+
+ColorRange QVideoFrameFormat_colorRange(const QVideoFrameFormat* self) {
+	return self->colorRange();
+}
+
+void QVideoFrameFormat_setColorRange(QVideoFrameFormat* self, ColorRange range) {
+	self->setColorRange(range);
 }
 
 bool QVideoFrameFormat_isMirrored(const QVideoFrameFormat* self) {
@@ -148,6 +152,15 @@ bool QVideoFrameFormat_isMirrored(const QVideoFrameFormat* self) {
 
 void QVideoFrameFormat_setMirrored(QVideoFrameFormat* self, bool mirrored) {
 	self->setMirrored(mirrored);
+}
+
+int QVideoFrameFormat_rotation(const QVideoFrameFormat* self) {
+	QtVideo::Rotation _ret = self->rotation();
+	return static_cast<int>(_ret);
+}
+
+void QVideoFrameFormat_setRotation(QVideoFrameFormat* self, int rotation) {
+	self->setRotation(static_cast<QtVideo::Rotation>(rotation));
 }
 
 struct miqt_string QVideoFrameFormat_vertexShaderFileName(const QVideoFrameFormat* self) {
@@ -180,13 +193,12 @@ void QVideoFrameFormat_setMaxLuminance(QVideoFrameFormat* self, float lum) {
 	self->setMaxLuminance(static_cast<float>(lum));
 }
 
-int QVideoFrameFormat_pixelFormatFromImageFormat(int format) {
-	QVideoFrameFormat::PixelFormat _ret = QVideoFrameFormat::pixelFormatFromImageFormat(static_cast<QImage::Format>(format));
-	return static_cast<int>(_ret);
+PixelFormat QVideoFrameFormat_pixelFormatFromImageFormat(int format) {
+	return QVideoFrameFormat::pixelFormatFromImageFormat(static_cast<QImage::Format>(format));
 }
 
-int QVideoFrameFormat_imageFormatFromPixelFormat(int format) {
-	QImage::Format _ret = QVideoFrameFormat::imageFormatFromPixelFormat(static_cast<QVideoFrameFormat::PixelFormat>(format));
+int QVideoFrameFormat_imageFormatFromPixelFormat(PixelFormat format) {
+	QImage::Format _ret = QVideoFrameFormat::imageFormatFromPixelFormat(format);
 	return static_cast<int>(_ret);
 }
 

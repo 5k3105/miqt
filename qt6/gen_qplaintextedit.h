@@ -169,8 +169,8 @@ bool QPlainTextEdit_isUndoRedoEnabled(const QPlainTextEdit* self);
 void QPlainTextEdit_setUndoRedoEnabled(QPlainTextEdit* self, bool enable);
 void QPlainTextEdit_setMaximumBlockCount(QPlainTextEdit* self, int maximum);
 int QPlainTextEdit_maximumBlockCount(const QPlainTextEdit* self);
-int QPlainTextEdit_lineWrapMode(const QPlainTextEdit* self);
-void QPlainTextEdit_setLineWrapMode(QPlainTextEdit* self, int mode);
+LineWrapMode QPlainTextEdit_lineWrapMode(const QPlainTextEdit* self);
+void QPlainTextEdit_setLineWrapMode(QPlainTextEdit* self, LineWrapMode mode);
 int QPlainTextEdit_wordWrapMode(const QPlainTextEdit* self);
 void QPlainTextEdit_setWordWrapMode(QPlainTextEdit* self, int policy);
 void QPlainTextEdit_setBackgroundVisible(QPlainTextEdit* self, bool visible);
@@ -368,7 +368,7 @@ void QPlainTextEdit_virtualbase_hideEvent(void* self, QHideEvent* event);
 bool QPlainTextEdit_override_virtual_nativeEvent(void* self, intptr_t slot);
 bool QPlainTextEdit_virtualbase_nativeEvent(void* self, struct miqt_string eventType, void* message, intptr_t* result);
 bool QPlainTextEdit_override_virtual_metric(void* self, intptr_t slot);
-int QPlainTextEdit_virtualbase_metric(const void* self, int param1);
+int QPlainTextEdit_virtualbase_metric(const void* self, PaintDeviceMetric param1);
 bool QPlainTextEdit_override_virtual_initPainter(void* self, intptr_t slot);
 void QPlainTextEdit_virtualbase_initPainter(const void* self, QPainter* painter);
 bool QPlainTextEdit_override_virtual_redirected(void* self, intptr_t slot);
@@ -402,6 +402,7 @@ QObject* QPlainTextEdit_protectedbase_sender(bool* _dynamic_cast_ok, const void*
 int QPlainTextEdit_protectedbase_senderSignalIndex(bool* _dynamic_cast_ok, const void* self);
 int QPlainTextEdit_protectedbase_receivers(bool* _dynamic_cast_ok, const void* self, const char* signal);
 bool QPlainTextEdit_protectedbase_isSignalConnected(bool* _dynamic_cast_ok, const void* self, QMetaMethod* signal);
+double QPlainTextEdit_protectedbase_getDecodedMetricF(bool* _dynamic_cast_ok, const void* self, PaintDeviceMetric metricA, PaintDeviceMetric metricB);
 
 void QPlainTextEdit_delete(QPlainTextEdit* self);
 
@@ -410,7 +411,7 @@ void QPlainTextDocumentLayout_virtbase(QPlainTextDocumentLayout* src, QAbstractT
 QMetaObject* QPlainTextDocumentLayout_metaObject(const QPlainTextDocumentLayout* self);
 void* QPlainTextDocumentLayout_metacast(QPlainTextDocumentLayout* self, const char* param1);
 struct miqt_string QPlainTextDocumentLayout_tr(const char* s);
-void QPlainTextDocumentLayout_draw(QPlainTextDocumentLayout* self, QPainter* param1, QAbstractTextDocumentLayout__PaintContext* param2);
+void QPlainTextDocumentLayout_draw(QPlainTextDocumentLayout* self, QPainter* param1, const PaintContext* param2);
 int QPlainTextDocumentLayout_hitTest(const QPlainTextDocumentLayout* self, QPointF* param1, int param2);
 int QPlainTextDocumentLayout_pageCount(const QPlainTextDocumentLayout* self);
 QSizeF* QPlainTextDocumentLayout_documentSize(const QPlainTextDocumentLayout* self);
@@ -425,7 +426,7 @@ struct miqt_string QPlainTextDocumentLayout_tr2(const char* s, const char* c);
 struct miqt_string QPlainTextDocumentLayout_tr3(const char* s, const char* c, int n);
 
 bool QPlainTextDocumentLayout_override_virtual_draw(void* self, intptr_t slot);
-void QPlainTextDocumentLayout_virtualbase_draw(void* self, QPainter* param1, QAbstractTextDocumentLayout__PaintContext* param2);
+void QPlainTextDocumentLayout_virtualbase_draw(void* self, QPainter* param1, const PaintContext* param2);
 bool QPlainTextDocumentLayout_override_virtual_hitTest(void* self, intptr_t slot);
 int QPlainTextDocumentLayout_virtualbase_hitTest(const void* self, QPointF* param1, int param2);
 bool QPlainTextDocumentLayout_override_virtual_pageCount(void* self, intptr_t slot);

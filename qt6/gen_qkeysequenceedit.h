@@ -28,6 +28,7 @@ class QEvent;
 class QFocusEvent;
 class QHideEvent;
 class QInputMethodEvent;
+class QKeyCombination;
 class QKeyEvent;
 class QKeySequence;
 class QKeySequenceEdit;
@@ -63,6 +64,7 @@ typedef struct QEvent QEvent;
 typedef struct QFocusEvent QFocusEvent;
 typedef struct QHideEvent QHideEvent;
 typedef struct QInputMethodEvent QInputMethodEvent;
+typedef struct QKeyCombination QKeyCombination;
 typedef struct QKeyEvent QKeyEvent;
 typedef struct QKeySequence QKeySequence;
 typedef struct QKeySequenceEdit QKeySequenceEdit;
@@ -95,10 +97,14 @@ QMetaObject* QKeySequenceEdit_metaObject(const QKeySequenceEdit* self);
 void* QKeySequenceEdit_metacast(QKeySequenceEdit* self, const char* param1);
 struct miqt_string QKeySequenceEdit_tr(const char* s);
 QKeySequence* QKeySequenceEdit_keySequence(const QKeySequenceEdit* self);
+ptrdiff_t QKeySequenceEdit_maximumSequenceLength(const QKeySequenceEdit* self);
 void QKeySequenceEdit_setClearButtonEnabled(QKeySequenceEdit* self, bool enable);
 bool QKeySequenceEdit_isClearButtonEnabled(const QKeySequenceEdit* self);
+void QKeySequenceEdit_setFinishingKeyCombinations(QKeySequenceEdit* self, struct miqt_array /* of QKeyCombination* */  finishingKeyCombinations);
+struct miqt_array /* of QKeyCombination* */  QKeySequenceEdit_finishingKeyCombinations(const QKeySequenceEdit* self);
 void QKeySequenceEdit_setKeySequence(QKeySequenceEdit* self, QKeySequence* keySequence);
 void QKeySequenceEdit_clear(QKeySequenceEdit* self);
+void QKeySequenceEdit_setMaximumSequenceLength(QKeySequenceEdit* self, ptrdiff_t count);
 void QKeySequenceEdit_editingFinished(QKeySequenceEdit* self);
 void QKeySequenceEdit_connect_editingFinished(QKeySequenceEdit* self, intptr_t slot);
 void QKeySequenceEdit_keySequenceChanged(QKeySequenceEdit* self, QKeySequence* keySequence);
@@ -182,7 +188,7 @@ bool QKeySequenceEdit_virtualbase_nativeEvent(void* self, struct miqt_string eve
 bool QKeySequenceEdit_override_virtual_changeEvent(void* self, intptr_t slot);
 void QKeySequenceEdit_virtualbase_changeEvent(void* self, QEvent* param1);
 bool QKeySequenceEdit_override_virtual_metric(void* self, intptr_t slot);
-int QKeySequenceEdit_virtualbase_metric(const void* self, int param1);
+int QKeySequenceEdit_virtualbase_metric(const void* self, PaintDeviceMetric param1);
 bool QKeySequenceEdit_override_virtual_initPainter(void* self, intptr_t slot);
 void QKeySequenceEdit_virtualbase_initPainter(const void* self, QPainter* painter);
 bool QKeySequenceEdit_override_virtual_redirected(void* self, intptr_t slot);
@@ -215,6 +221,7 @@ QObject* QKeySequenceEdit_protectedbase_sender(bool* _dynamic_cast_ok, const voi
 int QKeySequenceEdit_protectedbase_senderSignalIndex(bool* _dynamic_cast_ok, const void* self);
 int QKeySequenceEdit_protectedbase_receivers(bool* _dynamic_cast_ok, const void* self, const char* signal);
 bool QKeySequenceEdit_protectedbase_isSignalConnected(bool* _dynamic_cast_ok, const void* self, QMetaMethod* signal);
+double QKeySequenceEdit_protectedbase_getDecodedMetricF(bool* _dynamic_cast_ok, const void* self, PaintDeviceMetric metricA, PaintDeviceMetric metricB);
 
 void QKeySequenceEdit_delete(QKeySequenceEdit* self);
 

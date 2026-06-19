@@ -310,9 +310,8 @@ QColor* QMovie_backgroundColor(const QMovie* self) {
 	return new QColor(self->backgroundColor());
 }
 
-int QMovie_state(const QMovie* self) {
-	QMovie::MovieState _ret = self->state();
-	return static_cast<int>(_ret);
+MovieState QMovie_state(const QMovie* self) {
+	return self->state();
 }
 
 QRect* QMovie_frameRect(const QMovie* self) {
@@ -379,13 +378,12 @@ void QMovie_setScaledSize(QMovie* self, QSize* size) {
 	self->setScaledSize(*size);
 }
 
-int QMovie_cacheMode(const QMovie* self) {
-	QMovie::CacheMode _ret = self->cacheMode();
-	return static_cast<int>(_ret);
+CacheMode QMovie_cacheMode(const QMovie* self) {
+	return self->cacheMode();
 }
 
-void QMovie_setCacheMode(QMovie* self, int mode) {
-	self->setCacheMode(static_cast<QMovie::CacheMode>(mode));
+void QMovie_setCacheMode(QMovie* self, CacheMode mode) {
+	self->setCacheMode(mode);
 }
 
 void QMovie_started(QMovie* self) {

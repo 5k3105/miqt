@@ -106,12 +106,12 @@ func (this *QValidator) Locale() *QLocale {
 	return _goptr
 }
 
-func (this *QValidator) Validate(param1 string, param2 *int) QValidator__State {
+func (this *QValidator) Validate(param1 string, param2 *int) State {
 	param1_ms := C.struct_miqt_string{}
 	param1_ms.data = C.CString(param1)
 	param1_ms.len = C.size_t(len(param1))
 	defer C.free(unsafe.Pointer(param1_ms.data))
-	return (QValidator__State)(C.QValidator_validate(this.h, param1_ms, (*C.int)(unsafe.Pointer(param2))))
+	int /* TODO  */
 }
 
 func (this *QValidator) Fixup(param1 string) {
@@ -218,7 +218,7 @@ func (this *QValidator) IsSignalConnected(signal *QMetaMethod) bool {
 	return _method_ret
 
 }
-func (this *QValidator) OnValidate(slot func(param1 string, param2 *int) QValidator__State) {
+func (this *QValidator) OnValidate(slot func(param1 string, param2 *int) State) {
 	ok := C.QValidator_override_virtual_validate(unsafe.Pointer(this.h), C.intptr_t(cgo.NewHandle(slot)))
 	if !ok {
 		panic("miqt: can only override virtual methods for directly constructed types")
@@ -226,8 +226,8 @@ func (this *QValidator) OnValidate(slot func(param1 string, param2 *int) QValida
 }
 
 //export miqt_exec_callback_QValidator_validate
-func miqt_exec_callback_QValidator_validate(self *C.QValidator, cb C.intptr_t, param1 C.struct_miqt_string, param2 *C.int) C.int {
-	gofunc, ok := cgo.Handle(cb).Value().(func(param1 string, param2 *int) QValidator__State)
+func miqt_exec_callback_QValidator_validate(self *C.QValidator, cb C.intptr_t, param1 C.struct_miqt_string, param2 *C.int) C.State {
+	gofunc, ok := cgo.Handle(cb).Value().(func(param1 string, param2 *int) State)
 	if !ok {
 		panic("miqt: callback of non-callback type (heap corruption?)")
 	}
@@ -241,7 +241,7 @@ func miqt_exec_callback_QValidator_validate(self *C.QValidator, cb C.intptr_t, p
 
 	virtualReturn := gofunc(slotval1, slotval2)
 
-	return (C.int)(virtualReturn)
+	return virtualReturn
 
 }
 
@@ -1101,8 +1101,8 @@ func (this *QDoubleValidator) SetDecimals(decimals int) {
 	C.QDoubleValidator_setDecimals(this.h, (C.int)(decimals))
 }
 
-func (this *QDoubleValidator) SetNotation(notation QDoubleValidator__Notation) {
-	C.QDoubleValidator_setNotation(this.h, (C.int)(notation))
+func (this *QDoubleValidator) SetNotation(notation Notation) {
+	C.QDoubleValidator_setNotation(this.h, notation)
 }
 
 func (this *QDoubleValidator) Bottom() float64 {
@@ -1117,8 +1117,8 @@ func (this *QDoubleValidator) Decimals() int {
 	return (int)(C.QDoubleValidator_decimals(this.h))
 }
 
-func (this *QDoubleValidator) Notation() QDoubleValidator__Notation {
-	return (QDoubleValidator__Notation)(C.QDoubleValidator_notation(this.h))
+func (this *QDoubleValidator) Notation() Notation {
+	int /* TODO  */
 }
 
 func (this *QDoubleValidator) BottomChanged(bottom float64) {

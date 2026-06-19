@@ -36,8 +36,59 @@ const (
 	QPropertyObserverBase__ObserverNotifiesBinding       QPropertyObserverBase__ObserverTag = 0
 	QPropertyObserverBase__ObserverNotifiesChangeHandler QPropertyObserverBase__ObserverTag = 1
 	QPropertyObserverBase__ObserverIsPlaceholder         QPropertyObserverBase__ObserverTag = 2
-	QPropertyObserverBase__ObserverIsAlias               QPropertyObserverBase__ObserverTag = 3
 )
+
+type QScopedPropertyUpdateGroup struct {
+	h *C.QScopedPropertyUpdateGroup
+}
+
+func (this *QScopedPropertyUpdateGroup) cPointer() *C.QScopedPropertyUpdateGroup {
+	if this == nil {
+		return nil
+	}
+	return this.h
+}
+
+func (this *QScopedPropertyUpdateGroup) UnsafePointer() unsafe.Pointer {
+	if this == nil {
+		return nil
+	}
+	return unsafe.Pointer(this.h)
+}
+
+// newQScopedPropertyUpdateGroup constructs the type using only CGO pointers.
+func newQScopedPropertyUpdateGroup(h *C.QScopedPropertyUpdateGroup) *QScopedPropertyUpdateGroup {
+	if h == nil {
+		return nil
+	}
+
+	return &QScopedPropertyUpdateGroup{h: h}
+}
+
+// UnsafeNewQScopedPropertyUpdateGroup constructs the type using only unsafe pointers.
+func UnsafeNewQScopedPropertyUpdateGroup(h unsafe.Pointer) *QScopedPropertyUpdateGroup {
+	return newQScopedPropertyUpdateGroup((*C.QScopedPropertyUpdateGroup)(h))
+}
+
+// NewQScopedPropertyUpdateGroup constructs a new QScopedPropertyUpdateGroup object.
+func NewQScopedPropertyUpdateGroup() *QScopedPropertyUpdateGroup {
+
+	return newQScopedPropertyUpdateGroup(C.QScopedPropertyUpdateGroup_new())
+}
+
+// Delete this object from C++ memory.
+func (this *QScopedPropertyUpdateGroup) Delete() {
+	C.QScopedPropertyUpdateGroup_delete(this.h)
+}
+
+// GoGC adds a Go Finalizer to this pointer, so that it will be deleted
+// from C++ memory once it is unreachable from Go memory.
+func (this *QScopedPropertyUpdateGroup) GoGC() {
+	runtime.SetFinalizer(this, func(this *QScopedPropertyUpdateGroup) {
+		this.Delete()
+		runtime.KeepAlive(this.h)
+	})
+}
 
 type QPropertyBindingSourceLocation struct {
 	h *C.QPropertyBindingSourceLocation
@@ -174,9 +225,9 @@ func NewQPropertyBindingError() *QPropertyBindingError {
 }
 
 // NewQPropertyBindingError2 constructs a new QPropertyBindingError object.
-func NewQPropertyBindingError2(typeVal QPropertyBindingError__Type) *QPropertyBindingError {
+func NewQPropertyBindingError2(typeVal Type) *QPropertyBindingError {
 
-	return newQPropertyBindingError(C.QPropertyBindingError_new2((C.int)(typeVal)))
+	return newQPropertyBindingError(C.QPropertyBindingError_new2(typeVal))
 }
 
 // NewQPropertyBindingError3 constructs a new QPropertyBindingError object.
@@ -186,13 +237,13 @@ func NewQPropertyBindingError3(other *QPropertyBindingError) *QPropertyBindingEr
 }
 
 // NewQPropertyBindingError4 constructs a new QPropertyBindingError object.
-func NewQPropertyBindingError4(typeVal QPropertyBindingError__Type, description string) *QPropertyBindingError {
+func NewQPropertyBindingError4(typeVal Type, description string) *QPropertyBindingError {
 	description_ms := C.struct_miqt_string{}
 	description_ms.data = C.CString(description)
 	description_ms.len = C.size_t(len(description))
 	defer C.free(unsafe.Pointer(description_ms.data))
 
-	return newQPropertyBindingError(C.QPropertyBindingError_new4((C.int)(typeVal), description_ms))
+	return newQPropertyBindingError(C.QPropertyBindingError_new4(typeVal, description_ms))
 }
 
 func (this *QPropertyBindingError) OperatorAssign(other *QPropertyBindingError) {
@@ -203,8 +254,8 @@ func (this *QPropertyBindingError) HasError() bool {
 	return (bool)(C.QPropertyBindingError_hasError(this.h))
 }
 
-func (this *QPropertyBindingError) Type() QPropertyBindingError__Type {
-	return (QPropertyBindingError__Type)(C.QPropertyBindingError_type(this.h))
+func (this *QPropertyBindingError) Type() Type {
+	int /* TODO  */
 }
 
 func (this *QPropertyBindingError) Description() string {
@@ -267,9 +318,15 @@ func NewQUntypedPropertyBinding() *QUntypedPropertyBinding {
 }
 
 // NewQUntypedPropertyBinding2 constructs a new QUntypedPropertyBinding object.
-func NewQUntypedPropertyBinding2(other *QUntypedPropertyBinding) *QUntypedPropertyBinding {
+func NewQUntypedPropertyBinding2(metaType QMetaType, vtable *BindingFunctionVTable, function unsafe.Pointer, location *QPropertyBindingSourceLocation) *QUntypedPropertyBinding {
 
-	return newQUntypedPropertyBinding(C.QUntypedPropertyBinding_new2(other.cPointer()))
+	return newQUntypedPropertyBinding(C.QUntypedPropertyBinding_new2(metaType.cPointer(), vtable, function, location.cPointer()))
+}
+
+// NewQUntypedPropertyBinding3 constructs a new QUntypedPropertyBinding object.
+func NewQUntypedPropertyBinding3(other *QUntypedPropertyBinding) *QUntypedPropertyBinding {
+
+	return newQUntypedPropertyBinding(C.QUntypedPropertyBinding_new3(other.cPointer()))
 }
 
 func (this *QUntypedPropertyBinding) OperatorAssign(other *QUntypedPropertyBinding) {

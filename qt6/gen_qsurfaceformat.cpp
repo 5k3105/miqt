@@ -1,5 +1,4 @@
 #include <QColorSpace>
-#include <QPair>
 #include <QSurfaceFormat>
 #include <qsurfaceformat.h>
 #include "gen_qsurfaceformat.h"
@@ -16,8 +15,8 @@ QSurfaceFormat* QSurfaceFormat_new() {
 	return new (std::nothrow) QSurfaceFormat();
 }
 
-QSurfaceFormat* QSurfaceFormat_new2(int options) {
-	return new (std::nothrow) QSurfaceFormat(static_cast<QSurfaceFormat::FormatOptions>(options));
+QSurfaceFormat* QSurfaceFormat_new2(FormatOptions options) {
+	return new (std::nothrow) QSurfaceFormat(options);
 }
 
 QSurfaceFormat* QSurfaceFormat_new3(QSurfaceFormat* other) {
@@ -84,35 +83,32 @@ int QSurfaceFormat_samples(const QSurfaceFormat* self) {
 	return self->samples();
 }
 
-void QSurfaceFormat_setSwapBehavior(QSurfaceFormat* self, int behavior) {
-	self->setSwapBehavior(static_cast<QSurfaceFormat::SwapBehavior>(behavior));
+void QSurfaceFormat_setSwapBehavior(QSurfaceFormat* self, SwapBehavior behavior) {
+	self->setSwapBehavior(behavior);
 }
 
-int QSurfaceFormat_swapBehavior(const QSurfaceFormat* self) {
-	QSurfaceFormat::SwapBehavior _ret = self->swapBehavior();
-	return static_cast<int>(_ret);
+SwapBehavior QSurfaceFormat_swapBehavior(const QSurfaceFormat* self) {
+	return self->swapBehavior();
 }
 
 bool QSurfaceFormat_hasAlpha(const QSurfaceFormat* self) {
 	return self->hasAlpha();
 }
 
-void QSurfaceFormat_setProfile(QSurfaceFormat* self, int profile) {
-	self->setProfile(static_cast<QSurfaceFormat::OpenGLContextProfile>(profile));
+void QSurfaceFormat_setProfile(QSurfaceFormat* self, OpenGLContextProfile profile) {
+	self->setProfile(profile);
 }
 
-int QSurfaceFormat_profile(const QSurfaceFormat* self) {
-	QSurfaceFormat::OpenGLContextProfile _ret = self->profile();
-	return static_cast<int>(_ret);
+OpenGLContextProfile QSurfaceFormat_profile(const QSurfaceFormat* self) {
+	return self->profile();
 }
 
-void QSurfaceFormat_setRenderableType(QSurfaceFormat* self, int type) {
-	self->setRenderableType(static_cast<QSurfaceFormat::RenderableType>(type));
+void QSurfaceFormat_setRenderableType(QSurfaceFormat* self, RenderableType type) {
+	self->setRenderableType(type);
 }
 
-int QSurfaceFormat_renderableType(const QSurfaceFormat* self) {
-	QSurfaceFormat::RenderableType _ret = self->renderableType();
-	return static_cast<int>(_ret);
+RenderableType QSurfaceFormat_renderableType(const QSurfaceFormat* self) {
+	return self->renderableType();
 }
 
 void QSurfaceFormat_setMajorVersion(QSurfaceFormat* self, int majorVersion) {
@@ -131,20 +127,6 @@ int QSurfaceFormat_minorVersion(const QSurfaceFormat* self) {
 	return self->minorVersion();
 }
 
-struct miqt_map /* tuple of int and int */  QSurfaceFormat_version(const QSurfaceFormat* self) {
-	QPair<int, int> _ret = self->version();
-	// Convert QPair<> from C++ memory to manually-managed C memory
-	int* _first_arr = static_cast<int*>(malloc(sizeof(int)));
-	int* _second_arr = static_cast<int*>(malloc(sizeof(int)));
-	_first_arr[0] = _ret.first;
-	_second_arr[0] = _ret.second;
-	struct miqt_map _out;
-	_out.len = 1;
-	_out.keys = static_cast<void*>(_first_arr);
-	_out.values = static_cast<void*>(_second_arr);
-	return _out;
-}
-
 void QSurfaceFormat_setVersion(QSurfaceFormat* self, int major, int minor) {
 	self->setVersion(static_cast<int>(major), static_cast<int>(minor));
 }
@@ -161,12 +143,12 @@ void QSurfaceFormat_setOptions(QSurfaceFormat* self, int options) {
 	self->setOptions(static_cast<QSurfaceFormat::FormatOptions>(options));
 }
 
-void QSurfaceFormat_setOption(QSurfaceFormat* self, int option) {
-	self->setOption(static_cast<QSurfaceFormat::FormatOption>(option));
+void QSurfaceFormat_setOption(QSurfaceFormat* self, FormatOption option) {
+	self->setOption(option);
 }
 
-bool QSurfaceFormat_testOption(const QSurfaceFormat* self, int option) {
-	return self->testOption(static_cast<QSurfaceFormat::FormatOption>(option));
+bool QSurfaceFormat_testOption(const QSurfaceFormat* self, FormatOption option) {
+	return self->testOption(option);
 }
 
 int QSurfaceFormat_options(const QSurfaceFormat* self) {
@@ -192,8 +174,8 @@ void QSurfaceFormat_setColorSpace(QSurfaceFormat* self, QColorSpace* colorSpace)
 	self->setColorSpace(*colorSpace);
 }
 
-void QSurfaceFormat_setColorSpaceWithColorSpace(QSurfaceFormat* self, int colorSpace) {
-	self->setColorSpace(static_cast<QSurfaceFormat::ColorSpace>(colorSpace));
+void QSurfaceFormat_setColorSpaceWithColorSpace(QSurfaceFormat* self, ColorSpace colorSpace) {
+	self->setColorSpace(colorSpace);
 }
 
 void QSurfaceFormat_setDefaultFormat(QSurfaceFormat* format) {
@@ -204,8 +186,8 @@ QSurfaceFormat* QSurfaceFormat_defaultFormat() {
 	return new QSurfaceFormat(QSurfaceFormat::defaultFormat());
 }
 
-void QSurfaceFormat_setOption2(QSurfaceFormat* self, int option, bool on) {
-	self->setOption(static_cast<QSurfaceFormat::FormatOption>(option), on);
+void QSurfaceFormat_setOption2(QSurfaceFormat* self, FormatOption option, bool on) {
+	self->setOption(option, on);
 }
 
 void QSurfaceFormat_delete(QSurfaceFormat* self) {

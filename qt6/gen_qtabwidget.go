@@ -224,12 +224,12 @@ func (this *QTabWidget) Count() int {
 	return (int)(C.QTabWidget_count(this.h))
 }
 
-func (this *QTabWidget) TabPosition() QTabWidget__TabPosition {
-	return (QTabWidget__TabPosition)(C.QTabWidget_tabPosition(this.h))
+func (this *QTabWidget) TabPosition() TabPosition {
+	int /* TODO  */
 }
 
-func (this *QTabWidget) SetTabPosition(position QTabWidget__TabPosition) {
-	C.QTabWidget_setTabPosition(this.h, (C.int)(position))
+func (this *QTabWidget) SetTabPosition(position TabPosition) {
+	C.QTabWidget_setTabPosition(this.h, position)
 }
 
 func (this *QTabWidget) TabsClosable() bool {
@@ -248,12 +248,12 @@ func (this *QTabWidget) SetMovable(movable bool) {
 	C.QTabWidget_setMovable(this.h, (C.bool)(movable))
 }
 
-func (this *QTabWidget) TabShape() QTabWidget__TabShape {
-	return (QTabWidget__TabShape)(C.QTabWidget_tabShape(this.h))
+func (this *QTabWidget) TabShape() TabShape {
+	int /* TODO  */
 }
 
-func (this *QTabWidget) SetTabShape(s QTabWidget__TabShape) {
-	C.QTabWidget_setTabShape(this.h, (C.int)(s))
+func (this *QTabWidget) SetTabShape(s TabShape) {
+	C.QTabWidget_setTabShape(this.h, s)
 }
 
 func (this *QTabWidget) SizeHint() *QSize {
@@ -577,6 +577,20 @@ func (this *QTabWidget) IsSignalConnected(signal *QMetaMethod) bool {
 
 	var _dynamic_cast_ok C.bool = false
 	_method_ret := (bool)(C.QTabWidget_protectedbase_isSignalConnected(&_dynamic_cast_ok, unsafe.Pointer(this.h), signal.cPointer()))
+
+	if !_dynamic_cast_ok {
+		panic("miqt: can only call protected methods for directly constructed types")
+	}
+
+	return _method_ret
+
+}
+
+// GetDecodedMetricF can only be called from a QTabWidget that was directly constructed.
+func (this *QTabWidget) GetDecodedMetricF(metricA PaintDeviceMetric, metricB PaintDeviceMetric) float64 {
+
+	var _dynamic_cast_ok C.bool = false
+	_method_ret := (float64)(C.QTabWidget_protectedbase_getDecodedMetricF(&_dynamic_cast_ok, unsafe.Pointer(this.h), metricA, metricB))
 
 	if !_dynamic_cast_ok {
 		panic("miqt: can only call protected methods for directly constructed types")
@@ -1566,12 +1580,12 @@ func miqt_exec_callback_QTabWidget_nativeEvent(self *C.QTabWidget, cb C.intptr_t
 
 }
 
-func (this *QTabWidget) callVirtualBase_Metric(param1 QPaintDevice__PaintDeviceMetric) int {
+func (this *QTabWidget) callVirtualBase_Metric(param1 PaintDeviceMetric) int {
 
-	return (int)(C.QTabWidget_virtualbase_metric(unsafe.Pointer(this.h), (C.int)(param1)))
+	return (int)(C.QTabWidget_virtualbase_metric(unsafe.Pointer(this.h), param1))
 
 }
-func (this *QTabWidget) OnMetric(slot func(super func(param1 QPaintDevice__PaintDeviceMetric) int, param1 QPaintDevice__PaintDeviceMetric) int) {
+func (this *QTabWidget) OnMetric(slot func(super func(param1 PaintDeviceMetric) int, param1 PaintDeviceMetric) int) {
 	ok := C.QTabWidget_override_virtual_metric(unsafe.Pointer(this.h), C.intptr_t(cgo.NewHandle(slot)))
 	if !ok {
 		panic("miqt: can only override virtual methods for directly constructed types")
@@ -1579,14 +1593,14 @@ func (this *QTabWidget) OnMetric(slot func(super func(param1 QPaintDevice__Paint
 }
 
 //export miqt_exec_callback_QTabWidget_metric
-func miqt_exec_callback_QTabWidget_metric(self *C.QTabWidget, cb C.intptr_t, param1 C.int) C.int {
-	gofunc, ok := cgo.Handle(cb).Value().(func(super func(param1 QPaintDevice__PaintDeviceMetric) int, param1 QPaintDevice__PaintDeviceMetric) int)
+func miqt_exec_callback_QTabWidget_metric(self *C.QTabWidget, cb C.intptr_t, param1 C.PaintDeviceMetric) C.int {
+	gofunc, ok := cgo.Handle(cb).Value().(func(super func(param1 PaintDeviceMetric) int, param1 PaintDeviceMetric) int)
 	if !ok {
 		panic("miqt: callback of non-callback type (heap corruption?)")
 	}
 
 	// Convert all CABI parameters to Go parameters
-	slotval1 := (QPaintDevice__PaintDeviceMetric)(param1)
+	int /* TODO  */
 
 	virtualReturn := gofunc((&QTabWidget{h: self}).callVirtualBase_Metric, slotval1)
 

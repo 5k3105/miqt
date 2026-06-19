@@ -155,24 +155,24 @@ func QQmlDebuggingEnabler_StartDebugConnector(pluginName string) bool {
 	return (bool)(C.QQmlDebuggingEnabler_startDebugConnector(pluginName_ms))
 }
 
-func QQmlDebuggingEnabler_StartTcpDebugServer2(port int, mode QQmlDebuggingEnabler__StartMode) bool {
-	return (bool)(C.QQmlDebuggingEnabler_startTcpDebugServer2((C.int)(port), (C.int)(mode)))
+func QQmlDebuggingEnabler_StartTcpDebugServer2(port int, mode StartMode) bool {
+	return (bool)(C.QQmlDebuggingEnabler_startTcpDebugServer2((C.int)(port), mode))
 }
 
-func QQmlDebuggingEnabler_StartTcpDebugServer3(port int, mode QQmlDebuggingEnabler__StartMode, hostName string) bool {
+func QQmlDebuggingEnabler_StartTcpDebugServer3(port int, mode StartMode, hostName string) bool {
 	hostName_ms := C.struct_miqt_string{}
 	hostName_ms.data = C.CString(hostName)
 	hostName_ms.len = C.size_t(len(hostName))
 	defer C.free(unsafe.Pointer(hostName_ms.data))
-	return (bool)(C.QQmlDebuggingEnabler_startTcpDebugServer3((C.int)(port), (C.int)(mode), hostName_ms))
+	return (bool)(C.QQmlDebuggingEnabler_startTcpDebugServer3((C.int)(port), mode, hostName_ms))
 }
 
-func QQmlDebuggingEnabler_ConnectToLocalDebugger2(socketFileName string, mode QQmlDebuggingEnabler__StartMode) bool {
+func QQmlDebuggingEnabler_ConnectToLocalDebugger2(socketFileName string, mode StartMode) bool {
 	socketFileName_ms := C.struct_miqt_string{}
 	socketFileName_ms.data = C.CString(socketFileName)
 	socketFileName_ms.len = C.size_t(len(socketFileName))
 	defer C.free(unsafe.Pointer(socketFileName_ms.data))
-	return (bool)(C.QQmlDebuggingEnabler_connectToLocalDebugger2(socketFileName_ms, (C.int)(mode)))
+	return (bool)(C.QQmlDebuggingEnabler_connectToLocalDebugger2(socketFileName_ms, mode))
 }
 
 func QQmlDebuggingEnabler_StartDebugConnector2(pluginName string, configuration map[string]qt6.QVariant) bool {

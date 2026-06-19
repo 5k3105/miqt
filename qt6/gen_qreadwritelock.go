@@ -20,8 +20,109 @@ const (
 	QReadWriteLock__Recursive    QReadWriteLock__RecursionMode = 1
 )
 
+type QBasicReadWriteLock struct {
+	h *C.QBasicReadWriteLock
+}
+
+func (this *QBasicReadWriteLock) cPointer() *C.QBasicReadWriteLock {
+	if this == nil {
+		return nil
+	}
+	return this.h
+}
+
+func (this *QBasicReadWriteLock) UnsafePointer() unsafe.Pointer {
+	if this == nil {
+		return nil
+	}
+	return unsafe.Pointer(this.h)
+}
+
+// newQBasicReadWriteLock constructs the type using only CGO pointers.
+func newQBasicReadWriteLock(h *C.QBasicReadWriteLock) *QBasicReadWriteLock {
+	if h == nil {
+		return nil
+	}
+
+	return &QBasicReadWriteLock{h: h}
+}
+
+// UnsafeNewQBasicReadWriteLock constructs the type using only unsafe pointers.
+func UnsafeNewQBasicReadWriteLock(h unsafe.Pointer) *QBasicReadWriteLock {
+	return newQBasicReadWriteLock((*C.QBasicReadWriteLock)(h))
+}
+
+// NewQBasicReadWriteLock constructs a new QBasicReadWriteLock object.
+func NewQBasicReadWriteLock() *QBasicReadWriteLock {
+
+	return newQBasicReadWriteLock(C.QBasicReadWriteLock_new())
+}
+
+func (this *QBasicReadWriteLock) LockForRead() {
+	C.QBasicReadWriteLock_lockForRead(this.h)
+}
+
+func (this *QBasicReadWriteLock) TryLockForRead() bool {
+	return (bool)(C.QBasicReadWriteLock_tryLockForRead(this.h))
+}
+
+func (this *QBasicReadWriteLock) TryLockForReadWithTimeout(timeout QDeadlineTimer) bool {
+	return (bool)(C.QBasicReadWriteLock_tryLockForReadWithTimeout(this.h, timeout.cPointer()))
+}
+
+func (this *QBasicReadWriteLock) LockForWrite() {
+	C.QBasicReadWriteLock_lockForWrite(this.h)
+}
+
+func (this *QBasicReadWriteLock) TryLockForWrite() bool {
+	return (bool)(C.QBasicReadWriteLock_tryLockForWrite(this.h))
+}
+
+func (this *QBasicReadWriteLock) TryLockForWriteWithTimeout(timeout QDeadlineTimer) bool {
+	return (bool)(C.QBasicReadWriteLock_tryLockForWriteWithTimeout(this.h, timeout.cPointer()))
+}
+
+func (this *QBasicReadWriteLock) Unlock() {
+	C.QBasicReadWriteLock_unlock(this.h)
+}
+
+func (this *QBasicReadWriteLock) Lock() {
+	C.QBasicReadWriteLock_lock(this.h)
+}
+
+func (this *QBasicReadWriteLock) LockShared() {
+	C.QBasicReadWriteLock_lockShared(this.h)
+}
+
+func (this *QBasicReadWriteLock) TryLock() bool {
+	return (bool)(C.QBasicReadWriteLock_tryLock(this.h))
+}
+
+func (this *QBasicReadWriteLock) TryLockShared() bool {
+	return (bool)(C.QBasicReadWriteLock_tryLockShared(this.h))
+}
+
+func (this *QBasicReadWriteLock) UnlockShared() {
+	C.QBasicReadWriteLock_unlockShared(this.h)
+}
+
+// Delete this object from C++ memory.
+func (this *QBasicReadWriteLock) Delete() {
+	C.QBasicReadWriteLock_delete(this.h)
+}
+
+// GoGC adds a Go Finalizer to this pointer, so that it will be deleted
+// from C++ memory once it is unreachable from Go memory.
+func (this *QBasicReadWriteLock) GoGC() {
+	runtime.SetFinalizer(this, func(this *QBasicReadWriteLock) {
+		this.Delete()
+		runtime.KeepAlive(this.h)
+	})
+}
+
 type QReadWriteLock struct {
 	h *C.QReadWriteLock
+	*QBasicReadWriteLock
 }
 
 func (this *QReadWriteLock) cPointer() *C.QReadWriteLock {
@@ -43,8 +144,11 @@ func newQReadWriteLock(h *C.QReadWriteLock) *QReadWriteLock {
 	if h == nil {
 		return nil
 	}
+	var outptr_QBasicReadWriteLock *C.QBasicReadWriteLock = nil
+	C.QReadWriteLock_virtbase(h, &outptr_QBasicReadWriteLock)
 
-	return &QReadWriteLock{h: h}
+	return &QReadWriteLock{h: h,
+		QBasicReadWriteLock: newQBasicReadWriteLock(outptr_QBasicReadWriteLock)}
 }
 
 // UnsafeNewQReadWriteLock constructs the type using only unsafe pointers.
@@ -59,37 +163,17 @@ func NewQReadWriteLock() *QReadWriteLock {
 }
 
 // NewQReadWriteLock2 constructs a new QReadWriteLock object.
-func NewQReadWriteLock2(recursionMode QReadWriteLock__RecursionMode) *QReadWriteLock {
+func NewQReadWriteLock2(recursionMode RecursionMode) *QReadWriteLock {
 
-	return newQReadWriteLock(C.QReadWriteLock_new2((C.int)(recursionMode)))
+	return newQReadWriteLock(C.QReadWriteLock_new2(recursionMode))
 }
 
-func (this *QReadWriteLock) LockForRead() {
-	C.QReadWriteLock_lockForRead(this.h)
+func (this *QReadWriteLock) TryLockForRead(timeout int) bool {
+	return (bool)(C.QReadWriteLock_tryLockForRead(this.h, (C.int)(timeout)))
 }
 
-func (this *QReadWriteLock) TryLockForRead() bool {
-	return (bool)(C.QReadWriteLock_tryLockForRead(this.h))
-}
-
-func (this *QReadWriteLock) TryLockForReadWithTimeout(timeout int) bool {
-	return (bool)(C.QReadWriteLock_tryLockForReadWithTimeout(this.h, (C.int)(timeout)))
-}
-
-func (this *QReadWriteLock) LockForWrite() {
-	C.QReadWriteLock_lockForWrite(this.h)
-}
-
-func (this *QReadWriteLock) TryLockForWrite() bool {
-	return (bool)(C.QReadWriteLock_tryLockForWrite(this.h))
-}
-
-func (this *QReadWriteLock) TryLockForWriteWithTimeout(timeout int) bool {
-	return (bool)(C.QReadWriteLock_tryLockForWriteWithTimeout(this.h, (C.int)(timeout)))
-}
-
-func (this *QReadWriteLock) Unlock() {
-	C.QReadWriteLock_unlock(this.h)
+func (this *QReadWriteLock) TryLockForWrite(timeout int) bool {
+	return (bool)(C.QReadWriteLock_tryLockForWrite(this.h, (C.int)(timeout)))
 }
 
 // Delete this object from C++ memory.

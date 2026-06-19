@@ -116,12 +116,12 @@ func (this *QSlider) MinimumSizeHint() *QSize {
 	return _goptr
 }
 
-func (this *QSlider) SetTickPosition(position QSlider__TickPosition) {
-	C.QSlider_setTickPosition(this.h, (C.int)(position))
+func (this *QSlider) SetTickPosition(position TickPosition) {
+	C.QSlider_setTickPosition(this.h, position)
 }
 
-func (this *QSlider) TickPosition() QSlider__TickPosition {
-	return (QSlider__TickPosition)(C.QSlider_tickPosition(this.h))
+func (this *QSlider) TickPosition() TickPosition {
+	int /* TODO  */
 }
 
 func (this *QSlider) SetTickInterval(ti int) {
@@ -159,10 +159,10 @@ func QSlider_Tr3(s string, c string, n int) string {
 }
 
 // SetRepeatAction can only be called from a QSlider that was directly constructed.
-func (this *QSlider) SetRepeatAction(action QAbstractSlider__SliderAction) {
+func (this *QSlider) SetRepeatAction(action SliderAction) {
 
 	var _dynamic_cast_ok C.bool = false
-	C.QSlider_protectedbase_setRepeatAction(&_dynamic_cast_ok, unsafe.Pointer(this.h), (C.int)(action))
+	C.QSlider_protectedbase_setRepeatAction(&_dynamic_cast_ok, unsafe.Pointer(this.h), action)
 
 	if !_dynamic_cast_ok {
 		panic("miqt: can only call protected methods for directly constructed types")
@@ -171,11 +171,10 @@ func (this *QSlider) SetRepeatAction(action QAbstractSlider__SliderAction) {
 }
 
 // RepeatAction can only be called from a QSlider that was directly constructed.
-func (this *QSlider) RepeatAction() QAbstractSlider__SliderAction {
+func (this *QSlider) RepeatAction() SliderAction {
 
 	var _dynamic_cast_ok C.bool = false
-	_method_ret := (QAbstractSlider__SliderAction)(C.QSlider_protectedbase_repeatAction(&_dynamic_cast_ok, unsafe.Pointer(this.h)))
-
+	int /* TODO  */
 	if !_dynamic_cast_ok {
 		panic("miqt: can only call protected methods for directly constructed types")
 	}
@@ -297,6 +296,20 @@ func (this *QSlider) IsSignalConnected(signal *QMetaMethod) bool {
 
 	var _dynamic_cast_ok C.bool = false
 	_method_ret := (bool)(C.QSlider_protectedbase_isSignalConnected(&_dynamic_cast_ok, unsafe.Pointer(this.h), signal.cPointer()))
+
+	if !_dynamic_cast_ok {
+		panic("miqt: can only call protected methods for directly constructed types")
+	}
+
+	return _method_ret
+
+}
+
+// GetDecodedMetricF can only be called from a QSlider that was directly constructed.
+func (this *QSlider) GetDecodedMetricF(metricA PaintDeviceMetric, metricB PaintDeviceMetric) float64 {
+
+	var _dynamic_cast_ok C.bool = false
+	_method_ret := (float64)(C.QSlider_protectedbase_getDecodedMetricF(&_dynamic_cast_ok, unsafe.Pointer(this.h), metricA, metricB))
 
 	if !_dynamic_cast_ok {
 		panic("miqt: can only call protected methods for directly constructed types")
@@ -518,12 +531,12 @@ func miqt_exec_callback_QSlider_initStyleOption(self *C.QSlider, cb C.intptr_t, 
 
 }
 
-func (this *QSlider) callVirtualBase_SliderChange(change QAbstractSlider__SliderChange) {
+func (this *QSlider) callVirtualBase_SliderChange(change SliderChange) {
 
-	C.QSlider_virtualbase_sliderChange(unsafe.Pointer(this.h), (C.int)(change))
+	C.QSlider_virtualbase_sliderChange(unsafe.Pointer(this.h), change)
 
 }
-func (this *QSlider) OnSliderChange(slot func(super func(change QAbstractSlider__SliderChange), change QAbstractSlider__SliderChange)) {
+func (this *QSlider) OnSliderChange(slot func(super func(change SliderChange), change SliderChange)) {
 	ok := C.QSlider_override_virtual_sliderChange(unsafe.Pointer(this.h), C.intptr_t(cgo.NewHandle(slot)))
 	if !ok {
 		panic("miqt: can only override virtual methods for directly constructed types")
@@ -531,14 +544,14 @@ func (this *QSlider) OnSliderChange(slot func(super func(change QAbstractSlider_
 }
 
 //export miqt_exec_callback_QSlider_sliderChange
-func miqt_exec_callback_QSlider_sliderChange(self *C.QSlider, cb C.intptr_t, change C.int) {
-	gofunc, ok := cgo.Handle(cb).Value().(func(super func(change QAbstractSlider__SliderChange), change QAbstractSlider__SliderChange))
+func miqt_exec_callback_QSlider_sliderChange(self *C.QSlider, cb C.intptr_t, change C.SliderChange) {
+	gofunc, ok := cgo.Handle(cb).Value().(func(super func(change SliderChange), change SliderChange))
 	if !ok {
 		panic("miqt: callback of non-callback type (heap corruption?)")
 	}
 
 	// Convert all CABI parameters to Go parameters
-	slotval1 := (QAbstractSlider__SliderChange)(change)
+	int /* TODO  */
 
 	gofunc((&QSlider{h: self}).callVirtualBase_SliderChange, slotval1)
 
@@ -1286,12 +1299,12 @@ func miqt_exec_callback_QSlider_nativeEvent(self *C.QSlider, cb C.intptr_t, even
 
 }
 
-func (this *QSlider) callVirtualBase_Metric(param1 QPaintDevice__PaintDeviceMetric) int {
+func (this *QSlider) callVirtualBase_Metric(param1 PaintDeviceMetric) int {
 
-	return (int)(C.QSlider_virtualbase_metric(unsafe.Pointer(this.h), (C.int)(param1)))
+	return (int)(C.QSlider_virtualbase_metric(unsafe.Pointer(this.h), param1))
 
 }
-func (this *QSlider) OnMetric(slot func(super func(param1 QPaintDevice__PaintDeviceMetric) int, param1 QPaintDevice__PaintDeviceMetric) int) {
+func (this *QSlider) OnMetric(slot func(super func(param1 PaintDeviceMetric) int, param1 PaintDeviceMetric) int) {
 	ok := C.QSlider_override_virtual_metric(unsafe.Pointer(this.h), C.intptr_t(cgo.NewHandle(slot)))
 	if !ok {
 		panic("miqt: can only override virtual methods for directly constructed types")
@@ -1299,14 +1312,14 @@ func (this *QSlider) OnMetric(slot func(super func(param1 QPaintDevice__PaintDev
 }
 
 //export miqt_exec_callback_QSlider_metric
-func miqt_exec_callback_QSlider_metric(self *C.QSlider, cb C.intptr_t, param1 C.int) C.int {
-	gofunc, ok := cgo.Handle(cb).Value().(func(super func(param1 QPaintDevice__PaintDeviceMetric) int, param1 QPaintDevice__PaintDeviceMetric) int)
+func miqt_exec_callback_QSlider_metric(self *C.QSlider, cb C.intptr_t, param1 C.PaintDeviceMetric) C.int {
+	gofunc, ok := cgo.Handle(cb).Value().(func(super func(param1 PaintDeviceMetric) int, param1 PaintDeviceMetric) int)
 	if !ok {
 		panic("miqt: callback of non-callback type (heap corruption?)")
 	}
 
 	// Convert all CABI parameters to Go parameters
-	slotval1 := (QPaintDevice__PaintDeviceMetric)(param1)
+	int /* TODO  */
 
 	virtualReturn := gofunc((&QSlider{h: self}).callVirtualBase_Metric, slotval1)
 

@@ -20,6 +20,7 @@ const (
 	QTextDocument__DocumentTitle QTextDocument__MetaInformation = 0
 	QTextDocument__DocumentUrl   QTextDocument__MetaInformation = 1
 	QTextDocument__CssMedia      QTextDocument__MetaInformation = 2
+	QTextDocument__FrontMatter   QTextDocument__MetaInformation = 3
 )
 
 type QTextDocument__MarkdownFeature int
@@ -27,7 +28,7 @@ type QTextDocument__MarkdownFeature int
 const (
 	QTextDocument__MarkdownNoHTML            QTextDocument__MarkdownFeature = 96
 	QTextDocument__MarkdownDialectCommonMark QTextDocument__MarkdownFeature = 0
-	QTextDocument__MarkdownDialectGitHub     QTextDocument__MarkdownFeature = 20236
+	QTextDocument__MarkdownDialectGitHub     QTextDocument__MarkdownFeature = 1068812
 )
 
 type QTextDocument__FindFlag int
@@ -250,16 +251,16 @@ func (this *QTextDocument) DocumentLayout() *QAbstractTextDocumentLayout {
 	return newQAbstractTextDocumentLayout(C.QTextDocument_documentLayout(this.h))
 }
 
-func (this *QTextDocument) SetMetaInformation(info QTextDocument__MetaInformation, param2 string) {
+func (this *QTextDocument) SetMetaInformation(info MetaInformation, param2 string) {
 	param2_ms := C.struct_miqt_string{}
 	param2_ms.data = C.CString(param2)
 	param2_ms.len = C.size_t(len(param2))
 	defer C.free(unsafe.Pointer(param2_ms.data))
-	C.QTextDocument_setMetaInformation(this.h, (C.int)(info), param2_ms)
+	C.QTextDocument_setMetaInformation(this.h, info, param2_ms)
 }
 
-func (this *QTextDocument) MetaInformation(info QTextDocument__MetaInformation) string {
-	var _ms C.struct_miqt_string = C.QTextDocument_metaInformation(this.h, (C.int)(info))
+func (this *QTextDocument) MetaInformation(info MetaInformation) string {
+	var _ms C.struct_miqt_string = C.QTextDocument_metaInformation(this.h, info)
 	_ret := C.GoStringN(_ms.data, C.int(int64(_ms.len)))
 	C.free(unsafe.Pointer(_ms.data))
 	return _ret
@@ -477,6 +478,14 @@ func (this *QTextDocument) Resource(typeVal int, name *QUrl) *QVariant {
 
 func (this *QTextDocument) AddResource(typeVal int, name *QUrl, resource *QVariant) {
 	C.QTextDocument_addResource(this.h, (C.int)(typeVal), name.cPointer(), resource.cPointer())
+}
+
+func (this *QTextDocument) SetResourceProvider(provider *ResourceProvider) {
+	C.QTextDocument_setResourceProvider(this.h, provider)
+}
+
+func QTextDocument_SetDefaultResourceProvider(provider *ResourceProvider) {
+	C.QTextDocument_setDefaultResourceProvider(provider)
 }
 
 func (this *QTextDocument) AllFormats() []QTextFormat {
@@ -865,19 +874,19 @@ func (this *QTextDocument) CloneWithParent(parent *QObject) *QTextDocument {
 	return newQTextDocument(C.QTextDocument_cloneWithParent(this.h, parent.cPointer()))
 }
 
-func (this *QTextDocument) ToMarkdownWithFeatures(features QTextDocument__MarkdownFeature) string {
-	var _ms C.struct_miqt_string = C.QTextDocument_toMarkdownWithFeatures(this.h, (C.int)(features))
+func (this *QTextDocument) ToMarkdownWithFeatures(features MarkdownFeatures) string {
+	var _ms C.struct_miqt_string = C.QTextDocument_toMarkdownWithFeatures(this.h, features)
 	_ret := C.GoStringN(_ms.data, C.int(int64(_ms.len)))
 	C.free(unsafe.Pointer(_ms.data))
 	return _ret
 }
 
-func (this *QTextDocument) SetMarkdown2(markdown string, features QTextDocument__MarkdownFeature) {
+func (this *QTextDocument) SetMarkdown2(markdown string, features MarkdownFeatures) {
 	markdown_ms := C.struct_miqt_string{}
 	markdown_ms.data = C.CString(markdown)
 	markdown_ms.len = C.size_t(len(markdown))
 	defer C.free(unsafe.Pointer(markdown_ms.data))
-	C.QTextDocument_setMarkdown2(this.h, markdown_ms, (C.int)(features))
+	C.QTextDocument_setMarkdown2(this.h, markdown_ms, features)
 }
 
 func (this *QTextDocument) Find4(subString string, from int) *QTextCursor {
@@ -890,22 +899,22 @@ func (this *QTextDocument) Find4(subString string, from int) *QTextCursor {
 	return _goptr
 }
 
-func (this *QTextDocument) Find5(subString string, from int, options QTextDocument__FindFlag) *QTextCursor {
+func (this *QTextDocument) Find5(subString string, from int, options FindFlags) *QTextCursor {
 	subString_ms := C.struct_miqt_string{}
 	subString_ms.data = C.CString(subString)
 	subString_ms.len = C.size_t(len(subString))
 	defer C.free(unsafe.Pointer(subString_ms.data))
-	_goptr := newQTextCursor(C.QTextDocument_find5(this.h, subString_ms, (C.int)(from), (C.int)(options)))
+	_goptr := newQTextCursor(C.QTextDocument_find5(this.h, subString_ms, (C.int)(from), options))
 	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
 	return _goptr
 }
 
-func (this *QTextDocument) Find6(subString string, cursor *QTextCursor, options QTextDocument__FindFlag) *QTextCursor {
+func (this *QTextDocument) Find6(subString string, cursor *QTextCursor, options FindFlags) *QTextCursor {
 	subString_ms := C.struct_miqt_string{}
 	subString_ms.data = C.CString(subString)
 	subString_ms.len = C.size_t(len(subString))
 	defer C.free(unsafe.Pointer(subString_ms.data))
-	_goptr := newQTextCursor(C.QTextDocument_find6(this.h, subString_ms, cursor.cPointer(), (C.int)(options)))
+	_goptr := newQTextCursor(C.QTextDocument_find6(this.h, subString_ms, cursor.cPointer(), options))
 	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
 	return _goptr
 }
@@ -916,14 +925,14 @@ func (this *QTextDocument) Find7(expr *QRegularExpression, from int) *QTextCurso
 	return _goptr
 }
 
-func (this *QTextDocument) Find8(expr *QRegularExpression, from int, options QTextDocument__FindFlag) *QTextCursor {
-	_goptr := newQTextCursor(C.QTextDocument_find8(this.h, expr.cPointer(), (C.int)(from), (C.int)(options)))
+func (this *QTextDocument) Find8(expr *QRegularExpression, from int, options FindFlags) *QTextCursor {
+	_goptr := newQTextCursor(C.QTextDocument_find8(this.h, expr.cPointer(), (C.int)(from), options))
 	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
 	return _goptr
 }
 
-func (this *QTextDocument) Find9(expr *QRegularExpression, cursor *QTextCursor, options QTextDocument__FindFlag) *QTextCursor {
-	_goptr := newQTextCursor(C.QTextDocument_find9(this.h, expr.cPointer(), cursor.cPointer(), (C.int)(options)))
+func (this *QTextDocument) Find9(expr *QRegularExpression, cursor *QTextCursor, options FindFlags) *QTextCursor {
+	_goptr := newQTextCursor(C.QTextDocument_find9(this.h, expr.cPointer(), cursor.cPointer(), options))
 	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
 	return _goptr
 }
@@ -932,8 +941,8 @@ func (this *QTextDocument) DrawContents2(painter *QPainter, rect *QRectF) {
 	C.QTextDocument_drawContents2(this.h, painter.cPointer(), rect.cPointer())
 }
 
-func (this *QTextDocument) ClearUndoRedoStacksWithHistoryToClear(historyToClear QTextDocument__Stacks) {
-	C.QTextDocument_clearUndoRedoStacksWithHistoryToClear(this.h, (C.int)(historyToClear))
+func (this *QTextDocument) ClearUndoRedoStacksWithHistoryToClear(historyToClear Stacks) {
+	C.QTextDocument_clearUndoRedoStacksWithHistoryToClear(this.h, historyToClear)
 }
 
 func (this *QTextDocument) SetModifiedWithBool(m bool) {

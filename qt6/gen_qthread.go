@@ -27,6 +27,14 @@ const (
 	QThread__InheritPriority      QThread__Priority = 7
 )
 
+type QThread__QualityOfService int
+
+const (
+	QThread__Auto QThread__QualityOfService = 0
+	QThread__High QThread__QualityOfService = 1
+	QThread__Eco  QThread__QualityOfService = 2
+)
+
 type QThread struct {
 	h *C.QThread
 	*QObject
@@ -102,6 +110,10 @@ func QThread_CurrentThread() *QThread {
 	return newQThread(C.QThread_currentThread())
 }
 
+func QThread_IsMainThread() bool {
+	return (bool)(C.QThread_isMainThread())
+}
+
 func QThread_IdealThreadCount() int {
 	return (int)(C.QThread_idealThreadCount())
 }
@@ -110,12 +122,12 @@ func QThread_YieldCurrentThread() {
 	C.QThread_yieldCurrentThread()
 }
 
-func (this *QThread) SetPriority(priority QThread__Priority) {
-	C.QThread_setPriority(this.h, (C.int)(priority))
+func (this *QThread) SetPriority(priority Priority) {
+	C.QThread_setPriority(this.h, priority)
 }
 
-func (this *QThread) Priority() QThread__Priority {
-	return (QThread__Priority)(C.QThread_priority(this.h))
+func (this *QThread) Priority() Priority {
+	int /* TODO  */
 }
 
 func (this *QThread) IsFinished() bool {
@@ -156,6 +168,18 @@ func (this *QThread) Event(event *QEvent) bool {
 
 func (this *QThread) LoopLevel() int {
 	return (int)(C.QThread_loopLevel(this.h))
+}
+
+func (this *QThread) IsCurrentThread() bool {
+	return (bool)(C.QThread_isCurrentThread(this.h))
+}
+
+func (this *QThread) SetServiceLevel(serviceLevel QualityOfService) {
+	C.QThread_setServiceLevel(this.h, serviceLevel)
+}
+
+func (this *QThread) ServiceLevel() QualityOfService {
+	int /* TODO  */
 }
 
 func (this *QThread) Start() {
@@ -216,8 +240,8 @@ func QThread_Tr3(s string, c string, n int) string {
 	return _ret
 }
 
-func (this *QThread) StartWithQThreadPriority(param1 QThread__Priority) {
-	C.QThread_startWithQThreadPriority(this.h, (C.int)(param1))
+func (this *QThread) StartWithPriority(param1 Priority) {
+	C.QThread_startWithPriority(this.h, param1)
 }
 
 func (this *QThread) ExitWithRetcode(retcode int) {
@@ -509,33 +533,6 @@ func miqt_exec_callback_QThread_disconnectNotify(self *C.QThread, cb C.intptr_t,
 
 	gofunc((&QThread{h: self}).callVirtualBase_DisconnectNotify, slotval1)
 
-}
-func (this *QThread) OnStarted(slot func()) {
-	C.QThread_connect_started(this.h, C.intptr_t(cgo.NewHandle(slot)))
-}
-
-//export miqt_exec_callback_QThread_started
-func miqt_exec_callback_QThread_started(cb C.intptr_t) {
-	gofunc, ok := cgo.Handle(cb).Value().(func())
-	if !ok {
-		panic("miqt: callback of non-callback type (heap corruption?)")
-	}
-
-	gofunc()
-}
-
-func (this *QThread) OnFinished(slot func()) {
-	C.QThread_connect_finished(this.h, C.intptr_t(cgo.NewHandle(slot)))
-}
-
-//export miqt_exec_callback_QThread_finished
-func miqt_exec_callback_QThread_finished(cb C.intptr_t) {
-	gofunc, ok := cgo.Handle(cb).Value().(func())
-	if !ok {
-		panic("miqt: callback of non-callback type (heap corruption?)")
-	}
-
-	gofunc()
 }
 
 // Delete this object from C++ memory.

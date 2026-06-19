@@ -114,6 +114,10 @@ func (this *QObject) IsQuickItemType() bool {
 	return (bool)(C.QObject_isQuickItemType(this.h))
 }
 
+func (this *QObject) IsQmlExposed() bool {
+	return (bool)(C.QObject_isQmlExposed(this.h))
+}
+
 func (this *QObject) SignalsBlocked() bool {
 	return (bool)(C.QObject_signalsBlocked(this.h))
 }
@@ -126,8 +130,8 @@ func (this *QObject) Thread() *QThread {
 	return newQThread(C.QObject_thread(this.h))
 }
 
-func (this *QObject) MoveToThread(thread *QThread) {
-	C.QObject_moveToThread(this.h, thread.cPointer())
+func (this *QObject) MoveToThread(thread *QThread) bool {
+	return (bool)(C.QObject_moveToThread(this.h, thread.cPointer()))
 }
 
 func (this *QObject) StartTimer(interval int) int {
@@ -136,6 +140,10 @@ func (this *QObject) StartTimer(interval int) int {
 
 func (this *QObject) KillTimer(id int) {
 	C.QObject_killTimer(this.h, (C.int)(id))
+}
+
+func (this *QObject) KillTimerWithId(id TimerId) {
+	C.QObject_killTimerWithId(this.h, (C.int)(id))
 }
 
 func (this *QObject) Children() []*QObject {
@@ -565,25 +573,6 @@ func miqt_exec_callback_QObject_disconnectNotify(self *C.QObject, cb C.intptr_t,
 	gofunc((&QObject{h: self}).callVirtualBase_DisconnectNotify, slotval1)
 
 }
-func (this *QObject) OnObjectNameChanged(slot func(objectName string)) {
-	C.QObject_connect_objectNameChanged(this.h, C.intptr_t(cgo.NewHandle(slot)))
-}
-
-//export miqt_exec_callback_QObject_objectNameChanged
-func miqt_exec_callback_QObject_objectNameChanged(cb C.intptr_t, objectName C.struct_miqt_string) {
-	gofunc, ok := cgo.Handle(cb).Value().(func(objectName string))
-	if !ok {
-		panic("miqt: callback of non-callback type (heap corruption?)")
-	}
-
-	// Convert all CABI parameters to Go parameters
-	var objectName_ms C.struct_miqt_string = objectName
-	objectName_ret := C.GoStringN(objectName_ms.data, C.int(int64(objectName_ms.len)))
-	C.free(unsafe.Pointer(objectName_ms.data))
-	slotval1 := objectName_ret
-
-	gofunc(slotval1)
-}
 
 // Delete this object from C++ memory.
 func (this *QObject) Delete() {
@@ -649,6 +638,10 @@ func (this *QSignalBlocker) Reblock() {
 
 func (this *QSignalBlocker) Unblock() {
 	C.QSignalBlocker_unblock(this.h)
+}
+
+func (this *QSignalBlocker) Dismiss() {
+	C.QSignalBlocker_dismiss(this.h)
 }
 
 // Delete this object from C++ memory.

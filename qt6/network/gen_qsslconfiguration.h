@@ -95,7 +95,7 @@ bool QSslConfiguration_ocspStaplingEnabled(const QSslConfiguration* self);
 void QSslConfiguration_setAllowedNextProtocols(QSslConfiguration* self, struct miqt_array /* of struct miqt_string */  protocols);
 struct miqt_array /* of struct miqt_string */  QSslConfiguration_allowedNextProtocols(const QSslConfiguration* self);
 struct miqt_string QSslConfiguration_nextNegotiatedProtocol(const QSslConfiguration* self);
-int QSslConfiguration_nextProtocolNegotiationStatus(const QSslConfiguration* self);
+NextProtocolNegotiationStatus QSslConfiguration_nextProtocolNegotiationStatus(const QSslConfiguration* self);
 bool QSslConfiguration_addCaCertificates2(QSslConfiguration* self, struct miqt_string path, int format);
 bool QSslConfiguration_addCaCertificates3(QSslConfiguration* self, struct miqt_string path, int format, int syntax);
 

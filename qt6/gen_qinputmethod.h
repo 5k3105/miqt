@@ -57,7 +57,7 @@ void QInputMethod_hide(QInputMethod* self);
 void QInputMethod_update(QInputMethod* self, int queries);
 void QInputMethod_reset(QInputMethod* self);
 void QInputMethod_commit(QInputMethod* self);
-void QInputMethod_invokeAction(QInputMethod* self, int a, int cursorPosition);
+void QInputMethod_invokeAction(QInputMethod* self, Action a, int cursorPosition);
 void QInputMethod_cursorRectangleChanged(QInputMethod* self);
 void QInputMethod_connect_cursorRectangleChanged(QInputMethod* self, intptr_t slot);
 void QInputMethod_anchorRectangleChanged(QInputMethod* self);

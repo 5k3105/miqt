@@ -138,14 +138,14 @@ func (this *QCborArray) Append(value *QCborValue) {
 	C.QCborArray_append(this.h, value.cPointer())
 }
 
-func (this *QCborArray) Extract(it QCborArray__ConstIterator) *QCborValue {
-	_goptr := newQCborValue(C.QCborArray_extract(this.h, it.cPointer()))
+func (this *QCborArray) Extract(it ConstIterator) *QCborValue {
+	_goptr := newQCborValue(C.QCborArray_extract(this.h, it))
 	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
 	return _goptr
 }
 
-func (this *QCborArray) ExtractWithIt(it QCborArray__Iterator) *QCborValue {
-	_goptr := newQCborValue(C.QCborArray_extractWithIt(this.h, it.cPointer()))
+func (this *QCborArray) ExtractWithIt(it Iterator) *QCborValue {
+	_goptr := newQCborValue(C.QCborArray_extractWithIt(this.h, it))
 	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
 	return _goptr
 }
@@ -188,88 +188,52 @@ func (this *QCborArray) Compare(other *QCborArray) int {
 	return (int)(C.QCborArray_compare(this.h, other.cPointer()))
 }
 
-func (this *QCborArray) OperatorEqual(other *QCborArray) bool {
-	return (bool)(C.QCborArray_operatorEqual(this.h, other.cPointer()))
+func (this *QCborArray) Begin() iterator {
+	int /* TODO  */
 }
 
-func (this *QCborArray) OperatorNotEqual(other *QCborArray) bool {
-	return (bool)(C.QCborArray_operatorNotEqual(this.h, other.cPointer()))
+func (this *QCborArray) ConstBegin() const_iterator {
+	int /* TODO  */
 }
 
-func (this *QCborArray) OperatorLesser(other *QCborArray) bool {
-	return (bool)(C.QCborArray_operatorLesser(this.h, other.cPointer()))
+func (this *QCborArray) Begin2() const_iterator {
+	int /* TODO  */
 }
 
-func (this *QCborArray) Begin() *QCborArray__Iterator {
-	_goptr := newQCborArray__Iterator(C.QCborArray_begin(this.h))
-	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
-	return _goptr
+func (this *QCborArray) Cbegin() const_iterator {
+	int /* TODO  */
 }
 
-func (this *QCborArray) ConstBegin() *QCborArray__ConstIterator {
-	_goptr := newQCborArray__ConstIterator(C.QCborArray_constBegin(this.h))
-	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
-	return _goptr
+func (this *QCborArray) End() iterator {
+	int /* TODO  */
 }
 
-func (this *QCborArray) Begin2() *QCborArray__ConstIterator {
-	_goptr := newQCborArray__ConstIterator(C.QCborArray_begin2(this.h))
-	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
-	return _goptr
+func (this *QCborArray) ConstEnd() const_iterator {
+	int /* TODO  */
 }
 
-func (this *QCborArray) Cbegin() *QCborArray__ConstIterator {
-	_goptr := newQCborArray__ConstIterator(C.QCborArray_cbegin(this.h))
-	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
-	return _goptr
+func (this *QCborArray) End2() const_iterator {
+	int /* TODO  */
 }
 
-func (this *QCborArray) End() *QCborArray__Iterator {
-	_goptr := newQCborArray__Iterator(C.QCborArray_end(this.h))
-	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
-	return _goptr
+func (this *QCborArray) Cend() const_iterator {
+	int /* TODO  */
 }
 
-func (this *QCborArray) ConstEnd() *QCborArray__ConstIterator {
-	_goptr := newQCborArray__ConstIterator(C.QCborArray_constEnd(this.h))
-	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
-	return _goptr
+func (this *QCborArray) Insert2(before iterator, value *QCborValue) iterator {
+	int /* TODO  */
 }
 
-func (this *QCborArray) End2() *QCborArray__ConstIterator {
-	_goptr := newQCborArray__ConstIterator(C.QCborArray_end2(this.h))
-	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
-	return _goptr
+func (this *QCborArray) Insert3(before const_iterator, value *QCborValue) iterator {
+	int /* TODO  */
 }
 
-func (this *QCborArray) Cend() *QCborArray__ConstIterator {
-	_goptr := newQCborArray__ConstIterator(C.QCborArray_cend(this.h))
-	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
-	return _goptr
+func (this *QCborArray) Erase(it iterator) iterator {
+	int /* TODO  */
 }
 
-func (this *QCborArray) Insert2(before QCborArray__Iterator, value *QCborValue) *QCborArray__Iterator {
-	_goptr := newQCborArray__Iterator(C.QCborArray_insert2(this.h, before.cPointer(), value.cPointer()))
-	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
-	return _goptr
-}
-
-func (this *QCborArray) Insert3(before QCborArray__ConstIterator, value *QCborValue) *QCborArray__Iterator {
-	_goptr := newQCborArray__Iterator(C.QCborArray_insert3(this.h, before.cPointer(), value.cPointer()))
-	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
-	return _goptr
-}
-
-func (this *QCborArray) Erase(it QCborArray__Iterator) *QCborArray__Iterator {
-	_goptr := newQCborArray__Iterator(C.QCborArray_erase(this.h, it.cPointer()))
-	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
-	return _goptr
-}
-
-func (this *QCborArray) EraseWithIt(it QCborArray__ConstIterator) *QCborArray__Iterator {
-	_goptr := newQCborArray__Iterator(C.QCborArray_eraseWithIt(this.h, it.cPointer()))
-	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
-	return _goptr
+func (this *QCborArray) EraseWithIt(it const_iterator) iterator {
+	int /* TODO  */
 }
 
 func (this *QCborArray) PushBack(t *QCborValue) {
@@ -411,13 +375,13 @@ func NewQCborArray__Iterator() *QCborArray__Iterator {
 }
 
 // NewQCborArray__Iterator2 constructs a new QCborArray::Iterator object.
-func NewQCborArray__Iterator2(param1 *QCborArray__Iterator) *QCborArray__Iterator {
+func NewQCborArray__Iterator2(param1 *Iterator) *QCborArray__Iterator {
 
-	return newQCborArray__Iterator(C.QCborArray__Iterator_new2(param1.cPointer()))
+	return newQCborArray__Iterator(C.QCborArray__Iterator_new2(param1))
 }
 
-func (this *QCborArray__Iterator) OperatorAssign(other *QCborArray__Iterator) {
-	C.QCborArray__Iterator_operatorAssign(this.h, other.cPointer())
+func (this *QCborArray__Iterator) OperatorAssign(other *Iterator) {
+	C.QCborArray__Iterator_operatorAssign(this.h, other)
 }
 
 func (this *QCborArray__Iterator) OperatorMultiply() *QCborValueRef {
@@ -440,96 +404,40 @@ func (this *QCborArray__Iterator) OperatorSubscript(j int64) *QCborValueRef {
 	return _goptr
 }
 
-func (this *QCborArray__Iterator) OperatorEqual(o *QCborArray__Iterator) bool {
-	return (bool)(C.QCborArray__Iterator_operatorEqual(this.h, o.cPointer()))
+func (this *QCborArray__Iterator) OperatorPlusPlus() *Iterator {
+	int /* TODO  */
 }
 
-func (this *QCborArray__Iterator) OperatorNotEqual(o *QCborArray__Iterator) bool {
-	return (bool)(C.QCborArray__Iterator_operatorNotEqual(this.h, o.cPointer()))
+func (this *QCborArray__Iterator) OperatorPlusPlusWithInt(param1 int) Iterator {
+	int /* TODO  */
 }
 
-func (this *QCborArray__Iterator) OperatorLesser(other *QCborArray__Iterator) bool {
-	return (bool)(C.QCborArray__Iterator_operatorLesser(this.h, other.cPointer()))
+func (this *QCborArray__Iterator) OperatorMinusMinus() *Iterator {
+	int /* TODO  */
 }
 
-func (this *QCborArray__Iterator) OperatorLesserOrEqual(other *QCborArray__Iterator) bool {
-	return (bool)(C.QCborArray__Iterator_operatorLesserOrEqual(this.h, other.cPointer()))
+func (this *QCborArray__Iterator) OperatorMinusMinusWithInt(param1 int) Iterator {
+	int /* TODO  */
 }
 
-func (this *QCborArray__Iterator) OperatorGreater(other *QCborArray__Iterator) bool {
-	return (bool)(C.QCborArray__Iterator_operatorGreater(this.h, other.cPointer()))
+func (this *QCborArray__Iterator) OperatorPlusAssign(j int64) *Iterator {
+	int /* TODO  */
 }
 
-func (this *QCborArray__Iterator) OperatorGreaterOrEqual(other *QCborArray__Iterator) bool {
-	return (bool)(C.QCborArray__Iterator_operatorGreaterOrEqual(this.h, other.cPointer()))
+func (this *QCborArray__Iterator) OperatorMinusAssign(j int64) *Iterator {
+	int /* TODO  */
 }
 
-func (this *QCborArray__Iterator) OperatorEqualWithQCborArrayConstIterator(o *QCborArray__ConstIterator) bool {
-	return (bool)(C.QCborArray__Iterator_operatorEqualWithQCborArrayConstIterator(this.h, o.cPointer()))
+func (this *QCborArray__Iterator) OperatorPlus(j int64) Iterator {
+	int /* TODO  */
 }
 
-func (this *QCborArray__Iterator) OperatorNotEqualWithQCborArrayConstIterator(o *QCborArray__ConstIterator) bool {
-	return (bool)(C.QCborArray__Iterator_operatorNotEqualWithQCborArrayConstIterator(this.h, o.cPointer()))
+func (this *QCborArray__Iterator) OperatorMinus(j int64) Iterator {
+	int /* TODO  */
 }
 
-func (this *QCborArray__Iterator) OperatorLesserWithOther(other *QCborArray__ConstIterator) bool {
-	return (bool)(C.QCborArray__Iterator_operatorLesserWithOther(this.h, other.cPointer()))
-}
-
-func (this *QCborArray__Iterator) OperatorLesserOrEqualWithOther(other *QCborArray__ConstIterator) bool {
-	return (bool)(C.QCborArray__Iterator_operatorLesserOrEqualWithOther(this.h, other.cPointer()))
-}
-
-func (this *QCborArray__Iterator) OperatorGreaterWithOther(other *QCborArray__ConstIterator) bool {
-	return (bool)(C.QCborArray__Iterator_operatorGreaterWithOther(this.h, other.cPointer()))
-}
-
-func (this *QCborArray__Iterator) OperatorGreaterOrEqualWithOther(other *QCborArray__ConstIterator) bool {
-	return (bool)(C.QCborArray__Iterator_operatorGreaterOrEqualWithOther(this.h, other.cPointer()))
-}
-
-func (this *QCborArray__Iterator) OperatorPlusPlus() *QCborArray__Iterator {
-	return newQCborArray__Iterator(C.QCborArray__Iterator_operatorPlusPlus(this.h))
-}
-
-func (this *QCborArray__Iterator) OperatorPlusPlusWithInt(param1 int) *QCborArray__Iterator {
-	_goptr := newQCborArray__Iterator(C.QCborArray__Iterator_operatorPlusPlusWithInt(this.h, (C.int)(param1)))
-	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
-	return _goptr
-}
-
-func (this *QCborArray__Iterator) OperatorMinusMinus() *QCborArray__Iterator {
-	return newQCborArray__Iterator(C.QCborArray__Iterator_operatorMinusMinus(this.h))
-}
-
-func (this *QCborArray__Iterator) OperatorMinusMinusWithInt(param1 int) *QCborArray__Iterator {
-	_goptr := newQCborArray__Iterator(C.QCborArray__Iterator_operatorMinusMinusWithInt(this.h, (C.int)(param1)))
-	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
-	return _goptr
-}
-
-func (this *QCborArray__Iterator) OperatorPlusAssign(j int64) *QCborArray__Iterator {
-	return newQCborArray__Iterator(C.QCborArray__Iterator_operatorPlusAssign(this.h, (C.ptrdiff_t)(j)))
-}
-
-func (this *QCborArray__Iterator) OperatorMinusAssign(j int64) *QCborArray__Iterator {
-	return newQCborArray__Iterator(C.QCborArray__Iterator_operatorMinusAssign(this.h, (C.ptrdiff_t)(j)))
-}
-
-func (this *QCborArray__Iterator) OperatorPlus(j int64) *QCborArray__Iterator {
-	_goptr := newQCborArray__Iterator(C.QCborArray__Iterator_operatorPlus(this.h, (C.ptrdiff_t)(j)))
-	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
-	return _goptr
-}
-
-func (this *QCborArray__Iterator) OperatorMinus(j int64) *QCborArray__Iterator {
-	_goptr := newQCborArray__Iterator(C.QCborArray__Iterator_operatorMinus(this.h, (C.ptrdiff_t)(j)))
-	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
-	return _goptr
-}
-
-func (this *QCborArray__Iterator) OperatorMinusWithQCborArrayIterator(j QCborArray__Iterator) int64 {
-	return (int64)(C.QCborArray__Iterator_operatorMinusWithQCborArrayIterator(this.h, j.cPointer()))
+func (this *QCborArray__Iterator) OperatorMinusWithIterator(j Iterator) int64 {
+	return (int64)(C.QCborArray__Iterator_operatorMinusWithIterator(this.h, j))
 }
 
 // Delete this object from C++ memory.
@@ -585,13 +493,13 @@ func NewQCborArray__ConstIterator() *QCborArray__ConstIterator {
 }
 
 // NewQCborArray__ConstIterator2 constructs a new QCborArray::ConstIterator object.
-func NewQCborArray__ConstIterator2(param1 *QCborArray__ConstIterator) *QCborArray__ConstIterator {
+func NewQCborArray__ConstIterator2(param1 *ConstIterator) *QCborArray__ConstIterator {
 
-	return newQCborArray__ConstIterator(C.QCborArray__ConstIterator_new2(param1.cPointer()))
+	return newQCborArray__ConstIterator(C.QCborArray__ConstIterator_new2(param1))
 }
 
-func (this *QCborArray__ConstIterator) OperatorAssign(other *QCborArray__ConstIterator) {
-	C.QCborArray__ConstIterator_operatorAssign(this.h, other.cPointer())
+func (this *QCborArray__ConstIterator) OperatorAssign(other *ConstIterator) {
+	C.QCborArray__ConstIterator_operatorAssign(this.h, other)
 }
 
 func (this *QCborArray__ConstIterator) OperatorMultiply() *QCborValueConstRef {
@@ -610,96 +518,40 @@ func (this *QCborArray__ConstIterator) OperatorSubscript(j int64) *QCborValueCon
 	return _goptr
 }
 
-func (this *QCborArray__ConstIterator) OperatorEqual(o *QCborArray__Iterator) bool {
-	return (bool)(C.QCborArray__ConstIterator_operatorEqual(this.h, o.cPointer()))
+func (this *QCborArray__ConstIterator) OperatorPlusPlus() *ConstIterator {
+	int /* TODO  */
 }
 
-func (this *QCborArray__ConstIterator) OperatorNotEqual(o *QCborArray__Iterator) bool {
-	return (bool)(C.QCborArray__ConstIterator_operatorNotEqual(this.h, o.cPointer()))
+func (this *QCborArray__ConstIterator) OperatorPlusPlusWithInt(param1 int) ConstIterator {
+	int /* TODO  */
 }
 
-func (this *QCborArray__ConstIterator) OperatorLesser(other *QCborArray__Iterator) bool {
-	return (bool)(C.QCborArray__ConstIterator_operatorLesser(this.h, other.cPointer()))
+func (this *QCborArray__ConstIterator) OperatorMinusMinus() *ConstIterator {
+	int /* TODO  */
 }
 
-func (this *QCborArray__ConstIterator) OperatorLesserOrEqual(other *QCborArray__Iterator) bool {
-	return (bool)(C.QCborArray__ConstIterator_operatorLesserOrEqual(this.h, other.cPointer()))
+func (this *QCborArray__ConstIterator) OperatorMinusMinusWithInt(param1 int) ConstIterator {
+	int /* TODO  */
 }
 
-func (this *QCborArray__ConstIterator) OperatorGreater(other *QCborArray__Iterator) bool {
-	return (bool)(C.QCborArray__ConstIterator_operatorGreater(this.h, other.cPointer()))
+func (this *QCborArray__ConstIterator) OperatorPlusAssign(j int64) *ConstIterator {
+	int /* TODO  */
 }
 
-func (this *QCborArray__ConstIterator) OperatorGreaterOrEqual(other *QCborArray__Iterator) bool {
-	return (bool)(C.QCborArray__ConstIterator_operatorGreaterOrEqual(this.h, other.cPointer()))
+func (this *QCborArray__ConstIterator) OperatorMinusAssign(j int64) *ConstIterator {
+	int /* TODO  */
 }
 
-func (this *QCborArray__ConstIterator) OperatorEqualWithQCborArrayConstIterator(o *QCborArray__ConstIterator) bool {
-	return (bool)(C.QCborArray__ConstIterator_operatorEqualWithQCborArrayConstIterator(this.h, o.cPointer()))
+func (this *QCborArray__ConstIterator) OperatorPlus(j int64) ConstIterator {
+	int /* TODO  */
 }
 
-func (this *QCborArray__ConstIterator) OperatorNotEqualWithQCborArrayConstIterator(o *QCborArray__ConstIterator) bool {
-	return (bool)(C.QCborArray__ConstIterator_operatorNotEqualWithQCborArrayConstIterator(this.h, o.cPointer()))
+func (this *QCborArray__ConstIterator) OperatorMinus(j int64) ConstIterator {
+	int /* TODO  */
 }
 
-func (this *QCborArray__ConstIterator) OperatorLesserWithOther(other *QCborArray__ConstIterator) bool {
-	return (bool)(C.QCborArray__ConstIterator_operatorLesserWithOther(this.h, other.cPointer()))
-}
-
-func (this *QCborArray__ConstIterator) OperatorLesserOrEqualWithOther(other *QCborArray__ConstIterator) bool {
-	return (bool)(C.QCborArray__ConstIterator_operatorLesserOrEqualWithOther(this.h, other.cPointer()))
-}
-
-func (this *QCborArray__ConstIterator) OperatorGreaterWithOther(other *QCborArray__ConstIterator) bool {
-	return (bool)(C.QCborArray__ConstIterator_operatorGreaterWithOther(this.h, other.cPointer()))
-}
-
-func (this *QCborArray__ConstIterator) OperatorGreaterOrEqualWithOther(other *QCborArray__ConstIterator) bool {
-	return (bool)(C.QCborArray__ConstIterator_operatorGreaterOrEqualWithOther(this.h, other.cPointer()))
-}
-
-func (this *QCborArray__ConstIterator) OperatorPlusPlus() *QCborArray__ConstIterator {
-	return newQCborArray__ConstIterator(C.QCborArray__ConstIterator_operatorPlusPlus(this.h))
-}
-
-func (this *QCborArray__ConstIterator) OperatorPlusPlusWithInt(param1 int) *QCborArray__ConstIterator {
-	_goptr := newQCborArray__ConstIterator(C.QCborArray__ConstIterator_operatorPlusPlusWithInt(this.h, (C.int)(param1)))
-	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
-	return _goptr
-}
-
-func (this *QCborArray__ConstIterator) OperatorMinusMinus() *QCborArray__ConstIterator {
-	return newQCborArray__ConstIterator(C.QCborArray__ConstIterator_operatorMinusMinus(this.h))
-}
-
-func (this *QCborArray__ConstIterator) OperatorMinusMinusWithInt(param1 int) *QCborArray__ConstIterator {
-	_goptr := newQCborArray__ConstIterator(C.QCborArray__ConstIterator_operatorMinusMinusWithInt(this.h, (C.int)(param1)))
-	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
-	return _goptr
-}
-
-func (this *QCborArray__ConstIterator) OperatorPlusAssign(j int64) *QCborArray__ConstIterator {
-	return newQCborArray__ConstIterator(C.QCborArray__ConstIterator_operatorPlusAssign(this.h, (C.ptrdiff_t)(j)))
-}
-
-func (this *QCborArray__ConstIterator) OperatorMinusAssign(j int64) *QCborArray__ConstIterator {
-	return newQCborArray__ConstIterator(C.QCborArray__ConstIterator_operatorMinusAssign(this.h, (C.ptrdiff_t)(j)))
-}
-
-func (this *QCborArray__ConstIterator) OperatorPlus(j int64) *QCborArray__ConstIterator {
-	_goptr := newQCborArray__ConstIterator(C.QCborArray__ConstIterator_operatorPlus(this.h, (C.ptrdiff_t)(j)))
-	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
-	return _goptr
-}
-
-func (this *QCborArray__ConstIterator) OperatorMinus(j int64) *QCborArray__ConstIterator {
-	_goptr := newQCborArray__ConstIterator(C.QCborArray__ConstIterator_operatorMinus(this.h, (C.ptrdiff_t)(j)))
-	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
-	return _goptr
-}
-
-func (this *QCborArray__ConstIterator) OperatorMinusWithQCborArrayConstIterator(j QCborArray__ConstIterator) int64 {
-	return (int64)(C.QCborArray__ConstIterator_operatorMinusWithQCborArrayConstIterator(this.h, j.cPointer()))
+func (this *QCborArray__ConstIterator) OperatorMinusWithConstIterator(j ConstIterator) int64 {
+	return (int64)(C.QCborArray__ConstIterator_operatorMinusWithConstIterator(this.h, j))
 }
 
 // Delete this object from C++ memory.

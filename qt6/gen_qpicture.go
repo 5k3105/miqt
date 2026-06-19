@@ -149,6 +149,24 @@ func (this *QPicture) PaintEngine() *QPaintEngine {
 	return newQPaintEngine(C.QPicture_paintEngine(this.h))
 }
 
+func (this *QPicture) DataPtr() *DataPtr {
+	int /* TODO  */
+}
+
+// GetDecodedMetricF can only be called from a QPicture that was directly constructed.
+func (this *QPicture) GetDecodedMetricF(metricA PaintDeviceMetric, metricB PaintDeviceMetric) float64 {
+
+	var _dynamic_cast_ok C.bool = false
+	_method_ret := (float64)(C.QPicture_protectedbase_getDecodedMetricF(&_dynamic_cast_ok, unsafe.Pointer(this.h), metricA, metricB))
+
+	if !_dynamic_cast_ok {
+		panic("miqt: can only call protected methods for directly constructed types")
+	}
+
+	return _method_ret
+
+}
+
 func (this *QPicture) callVirtualBase_DevType() int {
 
 	return (int)(C.QPicture_virtualbase_devType(unsafe.Pointer(this.h)))
@@ -230,12 +248,12 @@ func miqt_exec_callback_QPicture_paintEngine(self *C.QPicture, cb C.intptr_t) *C
 
 }
 
-func (this *QPicture) callVirtualBase_Metric(m QPaintDevice__PaintDeviceMetric) int {
+func (this *QPicture) callVirtualBase_Metric(m PaintDeviceMetric) int {
 
-	return (int)(C.QPicture_virtualbase_metric(unsafe.Pointer(this.h), (C.int)(m)))
+	return (int)(C.QPicture_virtualbase_metric(unsafe.Pointer(this.h), m))
 
 }
-func (this *QPicture) OnMetric(slot func(super func(m QPaintDevice__PaintDeviceMetric) int, m QPaintDevice__PaintDeviceMetric) int) {
+func (this *QPicture) OnMetric(slot func(super func(m PaintDeviceMetric) int, m PaintDeviceMetric) int) {
 	ok := C.QPicture_override_virtual_metric(unsafe.Pointer(this.h), C.intptr_t(cgo.NewHandle(slot)))
 	if !ok {
 		panic("miqt: can only override virtual methods for directly constructed types")
@@ -243,14 +261,14 @@ func (this *QPicture) OnMetric(slot func(super func(m QPaintDevice__PaintDeviceM
 }
 
 //export miqt_exec_callback_QPicture_metric
-func miqt_exec_callback_QPicture_metric(self *C.QPicture, cb C.intptr_t, m C.int) C.int {
-	gofunc, ok := cgo.Handle(cb).Value().(func(super func(m QPaintDevice__PaintDeviceMetric) int, m QPaintDevice__PaintDeviceMetric) int)
+func miqt_exec_callback_QPicture_metric(self *C.QPicture, cb C.intptr_t, m C.PaintDeviceMetric) C.int {
+	gofunc, ok := cgo.Handle(cb).Value().(func(super func(m PaintDeviceMetric) int, m PaintDeviceMetric) int)
 	if !ok {
 		panic("miqt: callback of non-callback type (heap corruption?)")
 	}
 
 	// Convert all CABI parameters to Go parameters
-	slotval1 := (QPaintDevice__PaintDeviceMetric)(m)
+	int /* TODO  */
 
 	virtualReturn := gofunc((&QPicture{h: self}).callVirtualBase_Metric, slotval1)
 

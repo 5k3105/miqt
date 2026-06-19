@@ -437,9 +437,8 @@ struct miqt_string QSslConfiguration_nextNegotiatedProtocol(const QSslConfigurat
 	return _ms;
 }
 
-int QSslConfiguration_nextProtocolNegotiationStatus(const QSslConfiguration* self) {
-	QSslConfiguration::NextProtocolNegotiationStatus _ret = self->nextProtocolNegotiationStatus();
-	return static_cast<int>(_ret);
+NextProtocolNegotiationStatus QSslConfiguration_nextProtocolNegotiationStatus(const QSslConfiguration* self) {
+	return self->nextProtocolNegotiationStatus();
 }
 
 bool QSslConfiguration_addCaCertificates2(QSslConfiguration* self, struct miqt_string path, int format) {

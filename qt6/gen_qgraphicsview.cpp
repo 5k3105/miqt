@@ -101,7 +101,7 @@ void miqt_exec_callback_QGraphicsView_tabletEvent(QGraphicsView*, intptr_t, QTab
 void miqt_exec_callback_QGraphicsView_actionEvent(QGraphicsView*, intptr_t, QActionEvent*);
 void miqt_exec_callback_QGraphicsView_hideEvent(QGraphicsView*, intptr_t, QHideEvent*);
 bool miqt_exec_callback_QGraphicsView_nativeEvent(QGraphicsView*, intptr_t, struct miqt_string, void*, intptr_t*);
-int miqt_exec_callback_QGraphicsView_metric(const QGraphicsView*, intptr_t, int);
+int miqt_exec_callback_QGraphicsView_metric(const QGraphicsView*, intptr_t, PaintDeviceMetric);
 void miqt_exec_callback_QGraphicsView_initPainter(const QGraphicsView*, intptr_t, QPainter*);
 QPaintDevice* miqt_exec_callback_QGraphicsView_redirected(const QGraphicsView*, intptr_t, QPoint*);
 QPainter* miqt_exec_callback_QGraphicsView_sharedPainter(const QGraphicsView*, intptr_t);
@@ -891,18 +891,17 @@ public:
 	intptr_t handle__metric = 0;
 
 	// Subclass to allow providing a Go implementation
-	virtual int metric(QPaintDevice::PaintDeviceMetric param1) const override {
+	virtual int metric(PaintDeviceMetric param1) const override {
 		if (handle__metric == 0) {
 			return QGraphicsView::metric(param1);
 		}
 
-		QPaintDevice::PaintDeviceMetric param1_ret = param1;
-		int sigval1 = static_cast<int>(param1_ret);
+		PaintDeviceMetric sigval1 = param1;
 		int callback_return_value = miqt_exec_callback_QGraphicsView_metric(this, handle__metric, sigval1);
 		return static_cast<int>(callback_return_value);
 	}
 
-	friend int QGraphicsView_virtualbase_metric(const void* self, int param1);
+	friend int QGraphicsView_virtualbase_metric(const void* self, PaintDeviceMetric param1);
 
 	// cgo.Handle value for overwritten implementation
 	intptr_t handle__initPainter = 0;
@@ -1054,6 +1053,7 @@ public:
 	friend int QGraphicsView_protectedbase_senderSignalIndex(bool* _dynamic_cast_ok, const void* self);
 	friend int QGraphicsView_protectedbase_receivers(bool* _dynamic_cast_ok, const void* self, const char* signal);
 	friend bool QGraphicsView_protectedbase_isSignalConnected(bool* _dynamic_cast_ok, const void* self, QMetaMethod* signal);
+	friend double QGraphicsView_protectedbase_getDecodedMetricF(bool* _dynamic_cast_ok, const void* self, PaintDeviceMetric metricA, PaintDeviceMetric metricB);
 };
 
 QGraphicsView* QGraphicsView_new(QWidget* parent) {
@@ -1121,53 +1121,48 @@ void QGraphicsView_setAlignment(QGraphicsView* self, int alignment) {
 	self->setAlignment(static_cast<Qt::Alignment>(alignment));
 }
 
-int QGraphicsView_transformationAnchor(const QGraphicsView* self) {
-	QGraphicsView::ViewportAnchor _ret = self->transformationAnchor();
-	return static_cast<int>(_ret);
+ViewportAnchor QGraphicsView_transformationAnchor(const QGraphicsView* self) {
+	return self->transformationAnchor();
 }
 
-void QGraphicsView_setTransformationAnchor(QGraphicsView* self, int anchor) {
-	self->setTransformationAnchor(static_cast<QGraphicsView::ViewportAnchor>(anchor));
+void QGraphicsView_setTransformationAnchor(QGraphicsView* self, ViewportAnchor anchor) {
+	self->setTransformationAnchor(anchor);
 }
 
-int QGraphicsView_resizeAnchor(const QGraphicsView* self) {
-	QGraphicsView::ViewportAnchor _ret = self->resizeAnchor();
-	return static_cast<int>(_ret);
+ViewportAnchor QGraphicsView_resizeAnchor(const QGraphicsView* self) {
+	return self->resizeAnchor();
 }
 
-void QGraphicsView_setResizeAnchor(QGraphicsView* self, int anchor) {
-	self->setResizeAnchor(static_cast<QGraphicsView::ViewportAnchor>(anchor));
+void QGraphicsView_setResizeAnchor(QGraphicsView* self, ViewportAnchor anchor) {
+	self->setResizeAnchor(anchor);
 }
 
-int QGraphicsView_viewportUpdateMode(const QGraphicsView* self) {
-	QGraphicsView::ViewportUpdateMode _ret = self->viewportUpdateMode();
-	return static_cast<int>(_ret);
+ViewportUpdateMode QGraphicsView_viewportUpdateMode(const QGraphicsView* self) {
+	return self->viewportUpdateMode();
 }
 
-void QGraphicsView_setViewportUpdateMode(QGraphicsView* self, int mode) {
-	self->setViewportUpdateMode(static_cast<QGraphicsView::ViewportUpdateMode>(mode));
+void QGraphicsView_setViewportUpdateMode(QGraphicsView* self, ViewportUpdateMode mode) {
+	self->setViewportUpdateMode(mode);
 }
 
-int QGraphicsView_optimizationFlags(const QGraphicsView* self) {
-	QGraphicsView::OptimizationFlags _ret = self->optimizationFlags();
-	return static_cast<int>(_ret);
+OptimizationFlags QGraphicsView_optimizationFlags(const QGraphicsView* self) {
+	return self->optimizationFlags();
 }
 
-void QGraphicsView_setOptimizationFlag(QGraphicsView* self, int flag) {
-	self->setOptimizationFlag(static_cast<QGraphicsView::OptimizationFlag>(flag));
+void QGraphicsView_setOptimizationFlag(QGraphicsView* self, OptimizationFlag flag) {
+	self->setOptimizationFlag(flag);
 }
 
-void QGraphicsView_setOptimizationFlags(QGraphicsView* self, int flags) {
-	self->setOptimizationFlags(static_cast<QGraphicsView::OptimizationFlags>(flags));
+void QGraphicsView_setOptimizationFlags(QGraphicsView* self, OptimizationFlags flags) {
+	self->setOptimizationFlags(flags);
 }
 
-int QGraphicsView_dragMode(const QGraphicsView* self) {
-	QGraphicsView::DragMode _ret = self->dragMode();
-	return static_cast<int>(_ret);
+DragMode QGraphicsView_dragMode(const QGraphicsView* self) {
+	return self->dragMode();
 }
 
-void QGraphicsView_setDragMode(QGraphicsView* self, int mode) {
-	self->setDragMode(static_cast<QGraphicsView::DragMode>(mode));
+void QGraphicsView_setDragMode(QGraphicsView* self, DragMode mode) {
+	self->setDragMode(mode);
 }
 
 int QGraphicsView_rubberBandSelectionMode(const QGraphicsView* self) {
@@ -1183,13 +1178,12 @@ QRect* QGraphicsView_rubberBandRect(const QGraphicsView* self) {
 	return new QRect(self->rubberBandRect());
 }
 
-int QGraphicsView_cacheMode(const QGraphicsView* self) {
-	QGraphicsView::CacheMode _ret = self->cacheMode();
-	return static_cast<int>(_ret);
+CacheMode QGraphicsView_cacheMode(const QGraphicsView* self) {
+	return self->cacheMode();
 }
 
-void QGraphicsView_setCacheMode(QGraphicsView* self, int mode) {
-	self->setCacheMode(static_cast<QGraphicsView::CacheMode>(mode));
+void QGraphicsView_setCacheMode(QGraphicsView* self, CacheMode mode) {
+	self->setCacheMode(mode);
 }
 
 void QGraphicsView_resetCachedContent(QGraphicsView* self) {
@@ -1487,8 +1481,8 @@ void QGraphicsView_setRenderHint2(QGraphicsView* self, int hint, bool enabled) {
 	self->setRenderHint(static_cast<QPainter::RenderHint>(hint), enabled);
 }
 
-void QGraphicsView_setOptimizationFlag2(QGraphicsView* self, int flag, bool enabled) {
-	self->setOptimizationFlag(static_cast<QGraphicsView::OptimizationFlag>(flag), enabled);
+void QGraphicsView_setOptimizationFlag2(QGraphicsView* self, OptimizationFlag flag, bool enabled) {
+	self->setOptimizationFlag(flag, enabled);
 }
 
 void QGraphicsView_setTransform2(QGraphicsView* self, QTransform* matrix, bool combine) {
@@ -2231,8 +2225,8 @@ bool QGraphicsView_override_virtual_metric(void* self, intptr_t slot) {
 	return true;
 }
 
-int QGraphicsView_virtualbase_metric(const void* self, int param1) {
-	return static_cast<const MiqtVirtualQGraphicsView*>(self)->QGraphicsView::metric(static_cast<MiqtVirtualQGraphicsView::PaintDeviceMetric>(param1));
+int QGraphicsView_virtualbase_metric(const void* self, PaintDeviceMetric param1) {
+	return static_cast<const MiqtVirtualQGraphicsView*>(self)->QGraphicsView::metric(param1);
 }
 
 bool QGraphicsView_override_virtual_initPainter(void* self, intptr_t slot) {
@@ -2477,6 +2471,17 @@ bool QGraphicsView_protectedbase_isSignalConnected(bool* _dynamic_cast_ok, const
 
 	*_dynamic_cast_ok = true;
 	return self_cast->isSignalConnected(*signal);
+}
+
+double QGraphicsView_protectedbase_getDecodedMetricF(bool* _dynamic_cast_ok, const void* self, PaintDeviceMetric metricA, PaintDeviceMetric metricB) {
+	MiqtVirtualQGraphicsView* self_cast = dynamic_cast<MiqtVirtualQGraphicsView*>( (QGraphicsView*)(self) );
+	if (self_cast == nullptr) {
+		*_dynamic_cast_ok = false;
+		return 0;
+	}
+
+	*_dynamic_cast_ok = true;
+	return self_cast->getDecodedMetricF(metricA, metricB);
 }
 
 void QGraphicsView_delete(QGraphicsView* self) {

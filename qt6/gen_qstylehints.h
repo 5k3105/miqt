@@ -15,12 +15,14 @@ extern "C" {
 #endif
 
 #ifdef __cplusplus
+class QAccessibilityHints;
 class QChar;
 class QMetaMethod;
 class QMetaObject;
 class QObject;
 class QStyleHints;
 #else
+typedef struct QAccessibilityHints QAccessibilityHints;
 typedef struct QChar QChar;
 typedef struct QMetaMethod QMetaMethod;
 typedef struct QMetaObject QMetaObject;
@@ -46,12 +48,16 @@ int QStyleHints_startDragVelocity(const QStyleHints* self);
 void QStyleHints_setKeyboardInputInterval(QStyleHints* self, int keyboardInputInterval);
 int QStyleHints_keyboardInputInterval(const QStyleHints* self);
 int QStyleHints_keyboardAutoRepeatRate(const QStyleHints* self);
+double QStyleHints_keyboardAutoRepeatRateF(const QStyleHints* self);
 void QStyleHints_setCursorFlashTime(QStyleHints* self, int cursorFlashTime);
 int QStyleHints_cursorFlashTime(const QStyleHints* self);
 bool QStyleHints_showIsFullScreen(const QStyleHints* self);
 bool QStyleHints_showIsMaximized(const QStyleHints* self);
 bool QStyleHints_showShortcutsInContextMenus(const QStyleHints* self);
 void QStyleHints_setShowShortcutsInContextMenus(QStyleHints* self, bool showShortcutsInContextMenus);
+int QStyleHints_contextMenuTrigger(const QStyleHints* self);
+void QStyleHints_setContextMenuTrigger(QStyleHints* self, int contextMenuTrigger);
+bool QStyleHints_menuSelectionWraps(const QStyleHints* self);
 int QStyleHints_passwordMaskDelay(const QStyleHints* self);
 QChar* QStyleHints_passwordMaskCharacter(const QStyleHints* self);
 double QStyleHints_fontSmoothingGamma(const QStyleHints* self);
@@ -66,6 +72,10 @@ int QStyleHints_wheelScrollLines(const QStyleHints* self);
 void QStyleHints_setWheelScrollLines(QStyleHints* self, int scrollLines);
 void QStyleHints_setMouseQuickSelectionThreshold(QStyleHints* self, int threshold);
 int QStyleHints_mouseQuickSelectionThreshold(const QStyleHints* self);
+int QStyleHints_colorScheme(const QStyleHints* self);
+void QStyleHints_setColorScheme(QStyleHints* self, int scheme);
+void QStyleHints_unsetColorScheme(QStyleHints* self);
+QAccessibilityHints* QStyleHints_accessibility(const QStyleHints* self);
 void QStyleHints_cursorFlashTimeChanged(QStyleHints* self, int cursorFlashTime);
 void QStyleHints_connect_cursorFlashTimeChanged(QStyleHints* self, intptr_t slot);
 void QStyleHints_keyboardInputIntervalChanged(QStyleHints* self, int keyboardInputInterval);
@@ -84,10 +94,14 @@ void QStyleHints_useHoverEffectsChanged(QStyleHints* self, bool useHoverEffects)
 void QStyleHints_connect_useHoverEffectsChanged(QStyleHints* self, intptr_t slot);
 void QStyleHints_showShortcutsInContextMenusChanged(QStyleHints* self, bool param1);
 void QStyleHints_connect_showShortcutsInContextMenusChanged(QStyleHints* self, intptr_t slot);
+void QStyleHints_contextMenuTriggerChanged(QStyleHints* self, int contextMenuTrigger);
+void QStyleHints_connect_contextMenuTriggerChanged(QStyleHints* self, intptr_t slot);
 void QStyleHints_wheelScrollLinesChanged(QStyleHints* self, int scrollLines);
 void QStyleHints_connect_wheelScrollLinesChanged(QStyleHints* self, intptr_t slot);
 void QStyleHints_mouseQuickSelectionThresholdChanged(QStyleHints* self, int threshold);
 void QStyleHints_connect_mouseQuickSelectionThresholdChanged(QStyleHints* self, intptr_t slot);
+void QStyleHints_colorSchemeChanged(QStyleHints* self, int colorScheme);
+void QStyleHints_connect_colorSchemeChanged(QStyleHints* self, intptr_t slot);
 struct miqt_string QStyleHints_tr2(const char* s, const char* c);
 struct miqt_string QStyleHints_tr3(const char* s, const char* c, int n);
 

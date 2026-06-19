@@ -17,7 +17,6 @@
 #include <QSqlDatabase>
 #include <QSqlError>
 #include <QSqlIndex>
-#include <QSqlQuery>
 #include <QSqlQueryModel>
 #include <QSqlRecord>
 #include <QSqlRelation>
@@ -51,7 +50,7 @@ struct miqt_string miqt_exec_callback_QSqlRelationalTableModel_orderByClause(con
 int miqt_exec_callback_QSqlRelationalTableModel_flags(const QSqlRelationalTableModel*, intptr_t, QModelIndex*);
 bool miqt_exec_callback_QSqlRelationalTableModel_clearItemData(QSqlRelationalTableModel*, intptr_t, QModelIndex*);
 QVariant* miqt_exec_callback_QSqlRelationalTableModel_headerData(const QSqlRelationalTableModel*, intptr_t, int, int, int);
-void miqt_exec_callback_QSqlRelationalTableModel_setEditStrategy(QSqlRelationalTableModel*, intptr_t, int);
+void miqt_exec_callback_QSqlRelationalTableModel_setEditStrategy(QSqlRelationalTableModel*, intptr_t, EditStrategy);
 void miqt_exec_callback_QSqlRelationalTableModel_sort(QSqlRelationalTableModel*, intptr_t, int, int);
 void miqt_exec_callback_QSqlRelationalTableModel_setSort(QSqlRelationalTableModel*, intptr_t, int, int);
 void miqt_exec_callback_QSqlRelationalTableModel_setFilter(QSqlRelationalTableModel*, intptr_t, struct miqt_string);
@@ -470,19 +469,18 @@ public:
 	intptr_t handle__setEditStrategy = 0;
 
 	// Subclass to allow providing a Go implementation
-	virtual void setEditStrategy(QSqlTableModel::EditStrategy strategy) override {
+	virtual void setEditStrategy(EditStrategy strategy) override {
 		if (handle__setEditStrategy == 0) {
 			QSqlRelationalTableModel::setEditStrategy(strategy);
 			return;
 		}
 
-		QSqlTableModel::EditStrategy strategy_ret = strategy;
-		int sigval1 = static_cast<int>(strategy_ret);
+		EditStrategy sigval1 = strategy;
 		miqt_exec_callback_QSqlRelationalTableModel_setEditStrategy(this, handle__setEditStrategy, sigval1);
 
 	}
 
-	friend void QSqlRelationalTableModel_virtualbase_setEditStrategy(void* self, int strategy);
+	friend void QSqlRelationalTableModel_virtualbase_setEditStrategy(void* self, EditStrategy strategy);
 
 	// cgo.Handle value for overwritten implementation
 	intptr_t handle__sort = 0;
@@ -1322,7 +1320,6 @@ public:
 
 	// Wrappers to allow calling protected methods:
 	friend void QSqlRelationalTableModel_protectedbase_setPrimaryKey(bool* _dynamic_cast_ok, void* self, QSqlIndex* key);
-	friend void QSqlRelationalTableModel_protectedbase_setQuery(bool* _dynamic_cast_ok, void* self, QSqlQuery* query);
 	friend QSqlRecord* QSqlRelationalTableModel_protectedbase_primaryValues(bool* _dynamic_cast_ok, const void* self, int row);
 	friend void QSqlRelationalTableModel_protectedbase_beginInsertRows(bool* _dynamic_cast_ok, void* self, QModelIndex* parent, int first, int last);
 	friend void QSqlRelationalTableModel_protectedbase_endInsertRows(bool* _dynamic_cast_ok, void* self);
@@ -1703,8 +1700,8 @@ bool QSqlRelationalTableModel_override_virtual_setEditStrategy(void* self, intpt
 	return true;
 }
 
-void QSqlRelationalTableModel_virtualbase_setEditStrategy(void* self, int strategy) {
-	static_cast<MiqtVirtualQSqlRelationalTableModel*>(self)->QSqlRelationalTableModel::setEditStrategy(static_cast<MiqtVirtualQSqlRelationalTableModel::EditStrategy>(strategy));
+void QSqlRelationalTableModel_virtualbase_setEditStrategy(void* self, EditStrategy strategy) {
+	static_cast<MiqtVirtualQSqlRelationalTableModel*>(self)->QSqlRelationalTableModel::setEditStrategy(strategy);
 }
 
 bool QSqlRelationalTableModel_override_virtual_sort(void* self, intptr_t slot) {
@@ -2377,17 +2374,6 @@ void QSqlRelationalTableModel_protectedbase_setPrimaryKey(bool* _dynamic_cast_ok
 
 	*_dynamic_cast_ok = true;
 	self_cast->setPrimaryKey(*key);
-}
-
-void QSqlRelationalTableModel_protectedbase_setQuery(bool* _dynamic_cast_ok, void* self, QSqlQuery* query) {
-	MiqtVirtualQSqlRelationalTableModel* self_cast = dynamic_cast<MiqtVirtualQSqlRelationalTableModel*>( (QSqlRelationalTableModel*)(self) );
-	if (self_cast == nullptr) {
-		*_dynamic_cast_ok = false;
-		return ;
-	}
-
-	*_dynamic_cast_ok = true;
-	self_cast->setQuery(*query);
 }
 
 QSqlRecord* QSqlRelationalTableModel_protectedbase_primaryValues(bool* _dynamic_cast_ok, const void* self, int row) {

@@ -70,7 +70,7 @@ func NewQPrintPreviewDialog3(printer *QPrinter) *QPrintPreviewDialog {
 }
 
 // NewQPrintPreviewDialog4 constructs a new QPrintPreviewDialog object.
-func NewQPrintPreviewDialog4(parent *qt6.QWidget, flags qt6.WindowType) *QPrintPreviewDialog {
+func NewQPrintPreviewDialog4(parent *qt6.QWidget, flags WindowType) *QPrintPreviewDialog {
 
 	return newQPrintPreviewDialog(C.QPrintPreviewDialog_new4((*C.QWidget)(parent.UnsafePointer()), (C.int)(flags)))
 }
@@ -82,7 +82,7 @@ func NewQPrintPreviewDialog5(printer *QPrinter, parent *qt6.QWidget) *QPrintPrev
 }
 
 // NewQPrintPreviewDialog6 constructs a new QPrintPreviewDialog object.
-func NewQPrintPreviewDialog6(printer *QPrinter, parent *qt6.QWidget, flags qt6.WindowType) *QPrintPreviewDialog {
+func NewQPrintPreviewDialog6(printer *QPrinter, parent *qt6.QWidget, flags WindowType) *QPrintPreviewDialog {
 
 	return newQPrintPreviewDialog(C.QPrintPreviewDialog_new6(printer.cPointer(), (*C.QWidget)(parent.UnsafePointer()), (C.int)(flags)))
 }
@@ -285,6 +285,20 @@ func (this *QPrintPreviewDialog) IsSignalConnected(signal *qt6.QMetaMethod) bool
 
 	var _dynamic_cast_ok C.bool = false
 	_method_ret := (bool)(C.QPrintPreviewDialog_protectedbase_isSignalConnected(&_dynamic_cast_ok, unsafe.Pointer(this.h), (*C.QMetaMethod)(signal.UnsafePointer())))
+
+	if !_dynamic_cast_ok {
+		panic("miqt: can only call protected methods for directly constructed types")
+	}
+
+	return _method_ret
+
+}
+
+// GetDecodedMetricF can only be called from a QPrintPreviewDialog that was directly constructed.
+func (this *QPrintPreviewDialog) GetDecodedMetricF(metricA PaintDeviceMetric, metricB PaintDeviceMetric) float64 {
+
+	var _dynamic_cast_ok C.bool = false
+	_method_ret := (float64)(C.QPrintPreviewDialog_protectedbase_getDecodedMetricF(&_dynamic_cast_ok, unsafe.Pointer(this.h), metricA, metricB))
 
 	if !_dynamic_cast_ok {
 		panic("miqt: can only call protected methods for directly constructed types")
@@ -1346,12 +1360,12 @@ func miqt_exec_callback_QPrintPreviewDialog_changeEvent(self *C.QPrintPreviewDia
 
 }
 
-func (this *QPrintPreviewDialog) callVirtualBase_Metric(param1 qt6.QPaintDevice__PaintDeviceMetric) int {
+func (this *QPrintPreviewDialog) callVirtualBase_Metric(param1 PaintDeviceMetric) int {
 
-	return (int)(C.QPrintPreviewDialog_virtualbase_metric(unsafe.Pointer(this.h), (C.int)(param1)))
+	return (int)(C.QPrintPreviewDialog_virtualbase_metric(unsafe.Pointer(this.h), param1))
 
 }
-func (this *QPrintPreviewDialog) OnMetric(slot func(super func(param1 qt6.QPaintDevice__PaintDeviceMetric) int, param1 qt6.QPaintDevice__PaintDeviceMetric) int) {
+func (this *QPrintPreviewDialog) OnMetric(slot func(super func(param1 PaintDeviceMetric) int, param1 PaintDeviceMetric) int) {
 	ok := C.QPrintPreviewDialog_override_virtual_metric(unsafe.Pointer(this.h), C.intptr_t(cgo.NewHandle(slot)))
 	if !ok {
 		panic("miqt: can only override virtual methods for directly constructed types")
@@ -1359,14 +1373,14 @@ func (this *QPrintPreviewDialog) OnMetric(slot func(super func(param1 qt6.QPaint
 }
 
 //export miqt_exec_callback_QPrintPreviewDialog_metric
-func miqt_exec_callback_QPrintPreviewDialog_metric(self *C.QPrintPreviewDialog, cb C.intptr_t, param1 C.int) C.int {
-	gofunc, ok := cgo.Handle(cb).Value().(func(super func(param1 qt6.QPaintDevice__PaintDeviceMetric) int, param1 qt6.QPaintDevice__PaintDeviceMetric) int)
+func miqt_exec_callback_QPrintPreviewDialog_metric(self *C.QPrintPreviewDialog, cb C.intptr_t, param1 C.PaintDeviceMetric) C.int {
+	gofunc, ok := cgo.Handle(cb).Value().(func(super func(param1 PaintDeviceMetric) int, param1 PaintDeviceMetric) int)
 	if !ok {
 		panic("miqt: callback of non-callback type (heap corruption?)")
 	}
 
 	// Convert all CABI parameters to Go parameters
-	slotval1 := (qt6.QPaintDevice__PaintDeviceMetric)(param1)
+	int /* TODO  */
 
 	virtualReturn := gofunc((&QPrintPreviewDialog{h: self}).callVirtualBase_Metric, slotval1)
 

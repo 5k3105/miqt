@@ -1,0 +1,36 @@
+#pragma once
+#ifndef MIQT_QT6_NETWORK_GEN_QHTTP1CONFIGURATION_H
+#define MIQT_QT6_NETWORK_GEN_QHTTP1CONFIGURATION_H
+
+#include <stdbool.h>
+#include <stddef.h>
+#include <stdint.h>
+
+#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
+
+#include "../../libmiqt/libmiqt.h"
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+#ifdef __cplusplus
+class QHttp1Configuration;
+#else
+typedef struct QHttp1Configuration QHttp1Configuration;
+#endif
+
+QHttp1Configuration* QHttp1Configuration_new();
+QHttp1Configuration* QHttp1Configuration_new2(QHttp1Configuration* other);
+void QHttp1Configuration_operatorAssign(QHttp1Configuration* self, QHttp1Configuration* other);
+void QHttp1Configuration_setNumberOfConnectionsPerHost(QHttp1Configuration* self, ptrdiff_t amount);
+ptrdiff_t QHttp1Configuration_numberOfConnectionsPerHost(const QHttp1Configuration* self);
+void QHttp1Configuration_swap(QHttp1Configuration* self, QHttp1Configuration* other);
+
+void QHttp1Configuration_delete(QHttp1Configuration* self);
+
+#ifdef __cplusplus
+} /* extern C */
+#endif
+
+#endif

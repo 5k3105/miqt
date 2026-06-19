@@ -185,7 +185,7 @@ void QRadioButton_virtualbase_hideEvent(void* self, QHideEvent* event);
 bool QRadioButton_override_virtual_nativeEvent(void* self, intptr_t slot);
 bool QRadioButton_virtualbase_nativeEvent(void* self, struct miqt_string eventType, void* message, intptr_t* result);
 bool QRadioButton_override_virtual_metric(void* self, intptr_t slot);
-int QRadioButton_virtualbase_metric(const void* self, int param1);
+int QRadioButton_virtualbase_metric(const void* self, PaintDeviceMetric param1);
 bool QRadioButton_override_virtual_initPainter(void* self, intptr_t slot);
 void QRadioButton_virtualbase_initPainter(const void* self, QPainter* painter);
 bool QRadioButton_override_virtual_redirected(void* self, intptr_t slot);
@@ -218,6 +218,7 @@ QObject* QRadioButton_protectedbase_sender(bool* _dynamic_cast_ok, const void* s
 int QRadioButton_protectedbase_senderSignalIndex(bool* _dynamic_cast_ok, const void* self);
 int QRadioButton_protectedbase_receivers(bool* _dynamic_cast_ok, const void* self, const char* signal);
 bool QRadioButton_protectedbase_isSignalConnected(bool* _dynamic_cast_ok, const void* self, QMetaMethod* signal);
+double QRadioButton_protectedbase_getDecodedMetricF(bool* _dynamic_cast_ok, const void* self, PaintDeviceMetric metricA, PaintDeviceMetric metricB);
 
 void QRadioButton_delete(QRadioButton* self);
 

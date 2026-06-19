@@ -55,12 +55,28 @@ func QJSNumberCoercion_IsInteger(d float64) bool {
 	return (bool)(C.QJSNumberCoercion_isInteger((C.double)(d)))
 }
 
+func QJSNumberCoercion_IsArrayIndex(d float64) bool {
+	return (bool)(C.QJSNumberCoercion_isArrayIndex((C.double)(d)))
+}
+
+func QJSNumberCoercion_IsArrayIndexWithQint64(i int64) bool {
+	return (bool)(C.QJSNumberCoercion_isArrayIndexWithQint64((C.longlong)(i)))
+}
+
+func QJSNumberCoercion_IsArrayIndexWithQuint64(i uint64) bool {
+	return (bool)(C.QJSNumberCoercion_isArrayIndexWithQuint64((C.ulonglong)(i)))
+}
+
 func QJSNumberCoercion_ToInteger(d float64) int {
 	return (int)(C.QJSNumberCoercion_toInteger((C.double)(d)))
 }
 
 func QJSNumberCoercion_Equals(lhs float64, rhs float64) bool {
 	return (bool)(C.QJSNumberCoercion_equals((C.double)(lhs), (C.double)(rhs)))
+}
+
+func QJSNumberCoercion_RoundTowards0(d float64) float64 {
+	return (float64)(C.QJSNumberCoercion_roundTowards0((C.double)(d)))
 }
 
 // Delete this object from C++ memory.

@@ -8,6 +8,7 @@
 #include <QMetaObject>
 #include <QObject>
 #include <QProcess>
+#define WORKAROUND_INNER_CLASS_DEFINITION_QProcess__UnixProcessParameters
 #include <QProcessEnvironment>
 #include <QString>
 #include <QByteArray>
@@ -23,11 +24,7 @@ extern "C" {
 void miqt_exec_callback_QProcess_finished(intptr_t, int);
 void miqt_exec_callback_QProcess_errorOccurred(intptr_t, int);
 void miqt_exec_callback_QProcess_finished2(intptr_t, int, int);
-void miqt_exec_callback_QProcess_started(intptr_t);
-void miqt_exec_callback_QProcess_stateChanged(intptr_t, int);
-void miqt_exec_callback_QProcess_readyReadStandardOutput(intptr_t);
-void miqt_exec_callback_QProcess_readyReadStandardError(intptr_t);
-bool miqt_exec_callback_QProcess_open(QProcess*, intptr_t, int);
+bool miqt_exec_callback_QProcess_open(QProcess*, intptr_t, OpenMode);
 bool miqt_exec_callback_QProcess_waitForReadyRead(QProcess*, intptr_t, int);
 bool miqt_exec_callback_QProcess_waitForBytesWritten(QProcess*, intptr_t, int);
 long long miqt_exec_callback_QProcess_bytesToWrite(const QProcess*, intptr_t);
@@ -59,8 +56,8 @@ QProcessEnvironment* QProcessEnvironment_new() {
 	return new (std::nothrow) QProcessEnvironment();
 }
 
-QProcessEnvironment* QProcessEnvironment_new2(int param1) {
-	return new (std::nothrow) QProcessEnvironment(static_cast<QProcessEnvironment::Initialization>(param1));
+QProcessEnvironment* QProcessEnvironment_new2(Initialization param1) {
+	return new (std::nothrow) QProcessEnvironment(param1);
 }
 
 QProcessEnvironment* QProcessEnvironment_new3(QProcessEnvironment* other) {
@@ -73,14 +70,6 @@ void QProcessEnvironment_operatorAssign(QProcessEnvironment* self, QProcessEnvir
 
 void QProcessEnvironment_swap(QProcessEnvironment* self, QProcessEnvironment* other) {
 	self->swap(*other);
-}
-
-bool QProcessEnvironment_operatorEqual(const QProcessEnvironment* self, QProcessEnvironment* other) {
-	return (*self == *other);
-}
-
-bool QProcessEnvironment_operatorNotEqual(const QProcessEnvironment* self, QProcessEnvironment* other) {
-	return (*self != *other);
 }
 
 bool QProcessEnvironment_isEmpty(const QProcessEnvironment* self) {
@@ -200,18 +189,17 @@ public:
 	intptr_t handle__open = 0;
 
 	// Subclass to allow providing a Go implementation
-	virtual bool open(QIODeviceBase::OpenMode mode) override {
+	virtual bool open(OpenMode mode) override {
 		if (handle__open == 0) {
 			return QProcess::open(mode);
 		}
 
-		QIODeviceBase::OpenMode mode_ret = mode;
-		int sigval1 = static_cast<int>(mode_ret);
+		OpenMode sigval1 = mode;
 		bool callback_return_value = miqt_exec_callback_QProcess_open(this, handle__open, sigval1);
 		return callback_return_value;
 	}
 
-	friend bool QProcess_virtualbase_open(void* self, int mode);
+	friend bool QProcess_virtualbase_open(void* self, OpenMode mode);
 
 	// cgo.Handle value for overwritten implementation
 	intptr_t handle__waitForReadyRead = 0;
@@ -592,7 +580,7 @@ public:
 	friend void QProcess_virtualbase_disconnectNotify(void* self, QMetaMethod* signal);
 
 	// Wrappers to allow calling protected methods:
-	friend void QProcess_protectedbase_setProcessState(bool* _dynamic_cast_ok, void* self, int state);
+	friend void QProcess_protectedbase_setProcessState(bool* _dynamic_cast_ok, void* self, ProcessState state);
 	friend void QProcess_protectedbase_setOpenMode(bool* _dynamic_cast_ok, void* self, int openMode);
 	friend void QProcess_protectedbase_setErrorString(bool* _dynamic_cast_ok, void* self, struct miqt_string errorString);
 	friend QObject* QProcess_protectedbase_sender(bool* _dynamic_cast_ok, const void* self);
@@ -650,8 +638,8 @@ bool QProcess_startDetached(QProcess* self) {
 	return self->startDetached();
 }
 
-bool QProcess_open(QProcess* self, int mode) {
-	return self->open(static_cast<QIODeviceBase::OpenMode>(mode));
+bool QProcess_open(QProcess* self, OpenMode mode) {
+	return self->open(mode);
 }
 
 struct miqt_string QProcess_program(const QProcess* self) {
@@ -701,35 +689,32 @@ void QProcess_setArguments(QProcess* self, struct miqt_array /* of struct miqt_s
 	self->setArguments(arguments_QList);
 }
 
-int QProcess_processChannelMode(const QProcess* self) {
-	QProcess::ProcessChannelMode _ret = self->processChannelMode();
-	return static_cast<int>(_ret);
+ProcessChannelMode QProcess_processChannelMode(const QProcess* self) {
+	return self->processChannelMode();
 }
 
-void QProcess_setProcessChannelMode(QProcess* self, int mode) {
-	self->setProcessChannelMode(static_cast<QProcess::ProcessChannelMode>(mode));
+void QProcess_setProcessChannelMode(QProcess* self, ProcessChannelMode mode) {
+	self->setProcessChannelMode(mode);
 }
 
-int QProcess_inputChannelMode(const QProcess* self) {
-	QProcess::InputChannelMode _ret = self->inputChannelMode();
-	return static_cast<int>(_ret);
+InputChannelMode QProcess_inputChannelMode(const QProcess* self) {
+	return self->inputChannelMode();
 }
 
-void QProcess_setInputChannelMode(QProcess* self, int mode) {
-	self->setInputChannelMode(static_cast<QProcess::InputChannelMode>(mode));
+void QProcess_setInputChannelMode(QProcess* self, InputChannelMode mode) {
+	self->setInputChannelMode(mode);
 }
 
-int QProcess_readChannel(const QProcess* self) {
-	QProcess::ProcessChannel _ret = self->readChannel();
-	return static_cast<int>(_ret);
+ProcessChannel QProcess_readChannel(const QProcess* self) {
+	return self->readChannel();
 }
 
-void QProcess_setReadChannel(QProcess* self, int channel) {
-	self->setReadChannel(static_cast<QProcess::ProcessChannel>(channel));
+void QProcess_setReadChannel(QProcess* self, ProcessChannel channel) {
+	self->setReadChannel(channel);
 }
 
-void QProcess_closeReadChannel(QProcess* self, int channel) {
-	self->closeReadChannel(static_cast<QProcess::ProcessChannel>(channel));
+void QProcess_closeReadChannel(QProcess* self, ProcessChannel channel) {
+	self->closeReadChannel(channel);
 }
 
 void QProcess_closeWriteChannel(QProcess* self) {
@@ -753,6 +738,22 @@ void QProcess_setStandardErrorFile(QProcess* self, struct miqt_string fileName) 
 
 void QProcess_setStandardOutputProcess(QProcess* self, QProcess* destination) {
 	self->setStandardOutputProcess(destination);
+}
+
+void QProcess_failChildProcessModifier(QProcess* self, const char* description) {
+	self->failChildProcessModifier(description);
+}
+
+UnixProcessParameters QProcess_unixProcessParameters(const QProcess* self) {
+	return self->unixProcessParameters();
+}
+
+void QProcess_setUnixProcessParameters(QProcess* self, const UnixProcessParameters* params) {
+	self->setUnixProcessParameters(*params);
+}
+
+void QProcess_setUnixProcessParametersWithFlagsOnly(QProcess* self, UnixProcessFlags flagsOnly) {
+	self->setUnixProcessParameters(flagsOnly);
 }
 
 struct miqt_string QProcess_workingDirectory(const QProcess* self) {
@@ -987,7 +988,7 @@ void QProcess_start3(QProcess* self, struct miqt_string program, struct miqt_arr
 	self->start(program_QString, arguments_QList);
 }
 
-void QProcess_start4(QProcess* self, struct miqt_string program, struct miqt_array /* of struct miqt_string */  arguments, int mode) {
+void QProcess_start4(QProcess* self, struct miqt_string program, struct miqt_array /* of struct miqt_string */  arguments, OpenMode mode) {
 	QString program_QString = QString::fromUtf8(program.data, program.len);
 	QStringList arguments_QList;
 	arguments_QList.reserve(arguments.len);
@@ -996,30 +997,34 @@ void QProcess_start4(QProcess* self, struct miqt_string program, struct miqt_arr
 		QString arguments_arr_i_QString = QString::fromUtf8(arguments_arr[i].data, arguments_arr[i].len);
 		arguments_QList.push_back(arguments_arr_i_QString);
 	}
-	self->start(program_QString, arguments_QList, static_cast<QIODeviceBase::OpenMode>(mode));
+	self->start(program_QString, arguments_QList, mode);
 }
 
-void QProcess_startWithMode(QProcess* self, int mode) {
-	self->start(static_cast<QIODeviceBase::OpenMode>(mode));
+void QProcess_startWithMode(QProcess* self, OpenMode mode) {
+	self->start(mode);
 }
 
-void QProcess_startCommand2(QProcess* self, struct miqt_string command, int mode) {
+void QProcess_startCommand2(QProcess* self, struct miqt_string command, OpenMode mode) {
 	QString command_QString = QString::fromUtf8(command.data, command.len);
-	self->startCommand(command_QString, static_cast<QIODeviceBase::OpenMode>(mode));
+	self->startCommand(command_QString, mode);
 }
 
 bool QProcess_startDetachedWithPid(QProcess* self, long long* pid) {
 	return self->startDetached(static_cast<qint64*>(pid));
 }
 
-void QProcess_setStandardOutputFile2(QProcess* self, struct miqt_string fileName, int mode) {
+void QProcess_setStandardOutputFile2(QProcess* self, struct miqt_string fileName, OpenMode mode) {
 	QString fileName_QString = QString::fromUtf8(fileName.data, fileName.len);
-	self->setStandardOutputFile(fileName_QString, static_cast<QIODeviceBase::OpenMode>(mode));
+	self->setStandardOutputFile(fileName_QString, mode);
 }
 
-void QProcess_setStandardErrorFile2(QProcess* self, struct miqt_string fileName, int mode) {
+void QProcess_setStandardErrorFile2(QProcess* self, struct miqt_string fileName, OpenMode mode) {
 	QString fileName_QString = QString::fromUtf8(fileName.data, fileName.len);
-	self->setStandardErrorFile(fileName_QString, static_cast<QIODeviceBase::OpenMode>(mode));
+	self->setStandardErrorFile(fileName_QString, mode);
+}
+
+void QProcess_failChildProcessModifier2(QProcess* self, const char* description, int error) {
+	self->failChildProcessModifier(description, static_cast<int>(error));
 }
 
 bool QProcess_waitForStartedWithMsecs(QProcess* self, int msecs) {
@@ -1103,8 +1108,8 @@ bool QProcess_override_virtual_open(void* self, intptr_t slot) {
 	return true;
 }
 
-bool QProcess_virtualbase_open(void* self, int mode) {
-	return static_cast<MiqtVirtualQProcess*>(self)->QProcess::open(static_cast<MiqtVirtualQProcess::OpenMode>(mode));
+bool QProcess_virtualbase_open(void* self, OpenMode mode) {
+	return static_cast<MiqtVirtualQProcess*>(self)->QProcess::open(mode);
 }
 
 bool QProcess_override_virtual_waitForReadyRead(void* self, intptr_t slot) {
@@ -1437,7 +1442,7 @@ void QProcess_virtualbase_disconnectNotify(void* self, QMetaMethod* signal) {
 	static_cast<MiqtVirtualQProcess*>(self)->QProcess::disconnectNotify(*signal);
 }
 
-void QProcess_protectedbase_setProcessState(bool* _dynamic_cast_ok, void* self, int state) {
+void QProcess_protectedbase_setProcessState(bool* _dynamic_cast_ok, void* self, ProcessState state) {
 	MiqtVirtualQProcess* self_cast = dynamic_cast<MiqtVirtualQProcess*>( (QProcess*)(self) );
 	if (self_cast == nullptr) {
 		*_dynamic_cast_ok = false;
@@ -1445,7 +1450,7 @@ void QProcess_protectedbase_setProcessState(bool* _dynamic_cast_ok, void* self, 
 	}
 
 	*_dynamic_cast_ok = true;
-	self_cast->setProcessState(static_cast<MiqtVirtualQProcess::ProcessState>(state));
+	self_cast->setProcessState(state);
 }
 
 void QProcess_protectedbase_setOpenMode(bool* _dynamic_cast_ok, void* self, int openMode) {
@@ -1515,33 +1520,35 @@ bool QProcess_protectedbase_isSignalConnected(bool* _dynamic_cast_ok, const void
 	return self_cast->isSignalConnected(*signal);
 }
 
-void QProcess_connect_started(QProcess* self, intptr_t slot) {
-	QProcess::connect(self, &QProcess::started, self, [=]() {
-		miqt_exec_callback_QProcess_started(slot);
-	});
-}
-
-void QProcess_connect_stateChanged(QProcess* self, intptr_t slot) {
-	QProcess::connect(self, &QProcess::stateChanged, self, [=](QProcess::ProcessState state) {
-		QProcess::ProcessState state_ret = state;
-		int sigval1 = static_cast<int>(state_ret);
-		miqt_exec_callback_QProcess_stateChanged(slot, sigval1);
-	});
-}
-
-void QProcess_connect_readyReadStandardOutput(QProcess* self, intptr_t slot) {
-	QProcess::connect(self, &QProcess::readyReadStandardOutput, self, [=]() {
-		miqt_exec_callback_QProcess_readyReadStandardOutput(slot);
-	});
-}
-
-void QProcess_connect_readyReadStandardError(QProcess* self, intptr_t slot) {
-	QProcess::connect(self, &QProcess::readyReadStandardError, self, [=]() {
-		miqt_exec_callback_QProcess_readyReadStandardError(slot);
-	});
-}
-
 void QProcess_delete(QProcess* self) {
+	delete self;
+}
+
+UnixProcessFlags QProcess__UnixProcessParameters_flags(const QProcess__UnixProcessParameters* self) {
+	return self->flags;
+}
+
+void QProcess__UnixProcessParameters_setFlags(QProcess__UnixProcessParameters* self, UnixProcessFlags flags) {
+	self->flags = flags;
+}
+
+int QProcess__UnixProcessParameters_lowestFileDescriptorToClose(const QProcess__UnixProcessParameters* self) {
+	return self->lowestFileDescriptorToClose;
+}
+
+void QProcess__UnixProcessParameters_setLowestFileDescriptorToClose(QProcess__UnixProcessParameters* self, int lowestFileDescriptorToClose) {
+	self->lowestFileDescriptorToClose = static_cast<int>(lowestFileDescriptorToClose);
+}
+
+quint32[6] QProcess__UnixProcessParameters_Reserved(const QProcess__UnixProcessParameters* self) {
+	return self->_reserved;
+}
+
+void QProcess__UnixProcessParameters_setReserved(QProcess__UnixProcessParameters* self, quint32[6] _reserved) {
+	self->_reserved = _reserved;
+}
+
+void QProcess__UnixProcessParameters_delete(QProcess__UnixProcessParameters* self) {
 	delete self;
 }
 

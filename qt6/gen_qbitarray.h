@@ -48,15 +48,15 @@ bool QBitArray_operatorSubscriptWithQsizetype(const QBitArray* self, ptrdiff_t i
 void QBitArray_operatorBitwiseAndAssign(QBitArray* self, QBitArray* param1);
 void QBitArray_operatorBitwiseOrAssign(QBitArray* self, QBitArray* param1);
 void QBitArray_operatorBitwiseNotAssign(QBitArray* self, QBitArray* param1);
-bool QBitArray_operatorEqual(const QBitArray* self, QBitArray* other);
-bool QBitArray_operatorNotEqual(const QBitArray* self, QBitArray* other);
-bool QBitArray_fill(QBitArray* self, bool val);
+bool QBitArray_fill(QBitArray* self, bool aval);
 void QBitArray_fill2(QBitArray* self, bool val, ptrdiff_t first, ptrdiff_t last);
 void QBitArray_truncate(QBitArray* self, ptrdiff_t pos);
 const char* QBitArray_bits(const QBitArray* self);
 QBitArray* QBitArray_fromBits(const char* data, ptrdiff_t len);
 unsigned int QBitArray_toUInt32(const QBitArray* self, int endianness);
-bool QBitArray_fill3(QBitArray* self, bool val, ptrdiff_t size);
+DataPtr* QBitArray_dataPtr(QBitArray* self);
+const DataPtr* QBitArray_dataPtr2(const QBitArray* self);
+bool QBitArray_fill3(QBitArray* self, bool aval, ptrdiff_t asize);
 unsigned int QBitArray_toUInt322(const QBitArray* self, int endianness, bool* ok);
 
 void QBitArray_delete(QBitArray* self);

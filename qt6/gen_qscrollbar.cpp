@@ -14,6 +14,7 @@
 #include <QHideEvent>
 #include <QInputMethodEvent>
 #include <QKeyEvent>
+#include <QMenu>
 #include <QMetaMethod>
 #include <QMetaObject>
 #include <QMouseEvent>
@@ -52,7 +53,7 @@ void miqt_exec_callback_QScrollBar_mousePressEvent(QScrollBar*, intptr_t, QMouse
 void miqt_exec_callback_QScrollBar_mouseReleaseEvent(QScrollBar*, intptr_t, QMouseEvent*);
 void miqt_exec_callback_QScrollBar_mouseMoveEvent(QScrollBar*, intptr_t, QMouseEvent*);
 void miqt_exec_callback_QScrollBar_hideEvent(QScrollBar*, intptr_t, QHideEvent*);
-void miqt_exec_callback_QScrollBar_sliderChange(QScrollBar*, intptr_t, int);
+void miqt_exec_callback_QScrollBar_sliderChange(QScrollBar*, intptr_t, SliderChange);
 void miqt_exec_callback_QScrollBar_contextMenuEvent(QScrollBar*, intptr_t, QContextMenuEvent*);
 void miqt_exec_callback_QScrollBar_initStyleOption(const QScrollBar*, intptr_t, QStyleOptionSlider*);
 void miqt_exec_callback_QScrollBar_keyPressEvent(QScrollBar*, intptr_t, QKeyEvent*);
@@ -81,7 +82,7 @@ void miqt_exec_callback_QScrollBar_dragLeaveEvent(QScrollBar*, intptr_t, QDragLe
 void miqt_exec_callback_QScrollBar_dropEvent(QScrollBar*, intptr_t, QDropEvent*);
 void miqt_exec_callback_QScrollBar_showEvent(QScrollBar*, intptr_t, QShowEvent*);
 bool miqt_exec_callback_QScrollBar_nativeEvent(QScrollBar*, intptr_t, struct miqt_string, void*, intptr_t*);
-int miqt_exec_callback_QScrollBar_metric(const QScrollBar*, intptr_t, int);
+int miqt_exec_callback_QScrollBar_metric(const QScrollBar*, intptr_t, PaintDeviceMetric);
 void miqt_exec_callback_QScrollBar_initPainter(const QScrollBar*, intptr_t, QPainter*);
 QPaintDevice* miqt_exec_callback_QScrollBar_redirected(const QScrollBar*, intptr_t, QPoint*);
 QPainter* miqt_exec_callback_QScrollBar_sharedPainter(const QScrollBar*, intptr_t);
@@ -244,19 +245,18 @@ public:
 	intptr_t handle__sliderChange = 0;
 
 	// Subclass to allow providing a Go implementation
-	virtual void sliderChange(QAbstractSlider::SliderChange change) override {
+	virtual void sliderChange(SliderChange change) override {
 		if (handle__sliderChange == 0) {
 			QScrollBar::sliderChange(change);
 			return;
 		}
 
-		QAbstractSlider::SliderChange change_ret = change;
-		int sigval1 = static_cast<int>(change_ret);
+		SliderChange sigval1 = change;
 		miqt_exec_callback_QScrollBar_sliderChange(this, handle__sliderChange, sigval1);
 
 	}
 
-	friend void QScrollBar_virtualbase_sliderChange(void* self, int change);
+	friend void QScrollBar_virtualbase_sliderChange(void* self, SliderChange change);
 
 	// cgo.Handle value for overwritten implementation
 	intptr_t handle__contextMenuEvent = 0;
@@ -736,18 +736,17 @@ public:
 	intptr_t handle__metric = 0;
 
 	// Subclass to allow providing a Go implementation
-	virtual int metric(QPaintDevice::PaintDeviceMetric param1) const override {
+	virtual int metric(PaintDeviceMetric param1) const override {
 		if (handle__metric == 0) {
 			return QScrollBar::metric(param1);
 		}
 
-		QPaintDevice::PaintDeviceMetric param1_ret = param1;
-		int sigval1 = static_cast<int>(param1_ret);
+		PaintDeviceMetric sigval1 = param1;
 		int callback_return_value = miqt_exec_callback_QScrollBar_metric(this, handle__metric, sigval1);
 		return static_cast<int>(callback_return_value);
 	}
 
-	friend int QScrollBar_virtualbase_metric(const void* self, int param1);
+	friend int QScrollBar_virtualbase_metric(const void* self, PaintDeviceMetric param1);
 
 	// cgo.Handle value for overwritten implementation
 	intptr_t handle__initPainter = 0;
@@ -937,8 +936,8 @@ public:
 	friend void QScrollBar_virtualbase_disconnectNotify(void* self, QMetaMethod* signal);
 
 	// Wrappers to allow calling protected methods:
-	friend void QScrollBar_protectedbase_setRepeatAction(bool* _dynamic_cast_ok, void* self, int action);
-	friend int QScrollBar_protectedbase_repeatAction(bool* _dynamic_cast_ok, const void* self);
+	friend void QScrollBar_protectedbase_setRepeatAction(bool* _dynamic_cast_ok, void* self, SliderAction action);
+	friend SliderAction QScrollBar_protectedbase_repeatAction(bool* _dynamic_cast_ok, const void* self);
 	friend void QScrollBar_protectedbase_updateMicroFocus(bool* _dynamic_cast_ok, void* self);
 	friend void QScrollBar_protectedbase_create(bool* _dynamic_cast_ok, void* self);
 	friend void QScrollBar_protectedbase_destroy(bool* _dynamic_cast_ok, void* self);
@@ -948,6 +947,7 @@ public:
 	friend int QScrollBar_protectedbase_senderSignalIndex(bool* _dynamic_cast_ok, const void* self);
 	friend int QScrollBar_protectedbase_receivers(bool* _dynamic_cast_ok, const void* self, const char* signal);
 	friend bool QScrollBar_protectedbase_isSignalConnected(bool* _dynamic_cast_ok, const void* self, QMetaMethod* signal);
+	friend double QScrollBar_protectedbase_getDecodedMetricF(bool* _dynamic_cast_ok, const void* self, PaintDeviceMetric metricA, PaintDeviceMetric metricB);
 };
 
 QScrollBar* QScrollBar_new(QWidget* parent) {
@@ -995,6 +995,10 @@ QSize* QScrollBar_sizeHint(const QScrollBar* self) {
 
 bool QScrollBar_event(QScrollBar* self, QEvent* event) {
 	return self->event(event);
+}
+
+QMenu* QScrollBar_createStandardContextMenu(QScrollBar* self, QPoint* position) {
+	return self->createStandardContextMenu(*position);
 }
 
 struct miqt_string QScrollBar_tr2(const char* s, const char* c) {
@@ -1141,8 +1145,8 @@ bool QScrollBar_override_virtual_sliderChange(void* self, intptr_t slot) {
 	return true;
 }
 
-void QScrollBar_virtualbase_sliderChange(void* self, int change) {
-	static_cast<MiqtVirtualQScrollBar*>(self)->QScrollBar::sliderChange(static_cast<MiqtVirtualQScrollBar::SliderChange>(change));
+void QScrollBar_virtualbase_sliderChange(void* self, SliderChange change) {
+	static_cast<MiqtVirtualQScrollBar*>(self)->QScrollBar::sliderChange(change);
 }
 
 bool QScrollBar_override_virtual_contextMenuEvent(void* self, intptr_t slot) {
@@ -1548,8 +1552,8 @@ bool QScrollBar_override_virtual_metric(void* self, intptr_t slot) {
 	return true;
 }
 
-int QScrollBar_virtualbase_metric(const void* self, int param1) {
-	return static_cast<const MiqtVirtualQScrollBar*>(self)->QScrollBar::metric(static_cast<MiqtVirtualQScrollBar::PaintDeviceMetric>(param1));
+int QScrollBar_virtualbase_metric(const void* self, PaintDeviceMetric param1) {
+	return static_cast<const MiqtVirtualQScrollBar*>(self)->QScrollBar::metric(param1);
 }
 
 bool QScrollBar_override_virtual_initPainter(void* self, intptr_t slot) {
@@ -1706,7 +1710,7 @@ void QScrollBar_virtualbase_disconnectNotify(void* self, QMetaMethod* signal) {
 	static_cast<MiqtVirtualQScrollBar*>(self)->QScrollBar::disconnectNotify(*signal);
 }
 
-void QScrollBar_protectedbase_setRepeatAction(bool* _dynamic_cast_ok, void* self, int action) {
+void QScrollBar_protectedbase_setRepeatAction(bool* _dynamic_cast_ok, void* self, SliderAction action) {
 	MiqtVirtualQScrollBar* self_cast = dynamic_cast<MiqtVirtualQScrollBar*>( (QScrollBar*)(self) );
 	if (self_cast == nullptr) {
 		*_dynamic_cast_ok = false;
@@ -1714,19 +1718,18 @@ void QScrollBar_protectedbase_setRepeatAction(bool* _dynamic_cast_ok, void* self
 	}
 
 	*_dynamic_cast_ok = true;
-	self_cast->setRepeatAction(static_cast<MiqtVirtualQScrollBar::SliderAction>(action));
+	self_cast->setRepeatAction(action);
 }
 
-int QScrollBar_protectedbase_repeatAction(bool* _dynamic_cast_ok, const void* self) {
+SliderAction QScrollBar_protectedbase_repeatAction(bool* _dynamic_cast_ok, const void* self) {
 	MiqtVirtualQScrollBar* self_cast = dynamic_cast<MiqtVirtualQScrollBar*>( (QScrollBar*)(self) );
 	if (self_cast == nullptr) {
 		*_dynamic_cast_ok = false;
-		return (int)(0);
+		return nullptr;
 	}
 
 	*_dynamic_cast_ok = true;
-	MiqtVirtualQScrollBar::SliderAction _ret = self_cast->repeatAction();
-	return static_cast<int>(_ret);
+	return self_cast->repeatAction();
 }
 
 void QScrollBar_protectedbase_updateMicroFocus(bool* _dynamic_cast_ok, void* self) {
@@ -1826,6 +1829,17 @@ bool QScrollBar_protectedbase_isSignalConnected(bool* _dynamic_cast_ok, const vo
 
 	*_dynamic_cast_ok = true;
 	return self_cast->isSignalConnected(*signal);
+}
+
+double QScrollBar_protectedbase_getDecodedMetricF(bool* _dynamic_cast_ok, const void* self, PaintDeviceMetric metricA, PaintDeviceMetric metricB) {
+	MiqtVirtualQScrollBar* self_cast = dynamic_cast<MiqtVirtualQScrollBar*>( (QScrollBar*)(self) );
+	if (self_cast == nullptr) {
+		*_dynamic_cast_ok = false;
+		return 0;
+	}
+
+	*_dynamic_cast_ok = true;
+	return self_cast->getDecodedMetricF(metricA, metricB);
 }
 
 void QScrollBar_delete(QScrollBar* self) {

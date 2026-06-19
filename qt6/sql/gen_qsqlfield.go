@@ -128,6 +128,10 @@ func (this *QSqlField) OperatorAssign(other *QSqlField) {
 	C.QSqlField_operatorAssign(this.h, other.cPointer())
 }
 
+func (this *QSqlField) Swap(other *QSqlField) {
+	C.QSqlField_swap(this.h, other.cPointer())
+}
+
 func (this *QSqlField) OperatorEqual(other *QSqlField) bool {
 	return (bool)(C.QSqlField_operatorEqual(this.h, other.cPointer()))
 }
@@ -214,8 +218,8 @@ func (this *QSqlField) SetType(typeVal qt6.QVariant__Type) {
 	C.QSqlField_setType(this.h, (C.int)(typeVal))
 }
 
-func (this *QSqlField) SetRequiredStatus(status QSqlField__RequiredStatus) {
-	C.QSqlField_setRequiredStatus(this.h, (C.int)(status))
+func (this *QSqlField) SetRequiredStatus(status RequiredStatus) {
+	C.QSqlField_setRequiredStatus(this.h, status)
 }
 
 func (this *QSqlField) SetRequired(required bool) {
@@ -246,8 +250,8 @@ func (this *QSqlField) SetAutoValue(autoVal bool) {
 	C.QSqlField_setAutoValue(this.h, (C.bool)(autoVal))
 }
 
-func (this *QSqlField) RequiredStatus() QSqlField__RequiredStatus {
-	return (QSqlField__RequiredStatus)(C.QSqlField_requiredStatus(this.h))
+func (this *QSqlField) RequiredStatus() RequiredStatus {
+	int /* TODO  */
 }
 
 func (this *QSqlField) Length() int {

@@ -66,6 +66,7 @@ const (
 	QMetaType__QCborValue            QMetaType__Type = 53
 	QMetaType__QCborArray            QMetaType__Type = 54
 	QMetaType__QCborMap              QMetaType__Type = 55
+	QMetaType__Float16               QMetaType__Type = 63
 	QMetaType__QModelIndex           QMetaType__Type = 42
 	QMetaType__QPersistentModelIndex QMetaType__Type = 50
 	QMetaType__QObjectStar           QMetaType__Type = 39
@@ -100,7 +101,7 @@ const (
 	QMetaType__QColorSpace           QMetaType__Type = 4119
 	QMetaType__QSizePolicy           QMetaType__Type = 8192
 	QMetaType__FirstCoreType         QMetaType__Type = 1
-	QMetaType__LastCoreType          QMetaType__Type = 58
+	QMetaType__LastCoreType          QMetaType__Type = 63
 	QMetaType__FirstGuiType          QMetaType__Type = 4096
 	QMetaType__LastGuiType           QMetaType__Type = 4119
 	QMetaType__FirstWidgetsType      QMetaType__Type = 8192
@@ -129,6 +130,8 @@ const (
 	QMetaType__IsPointer                QMetaType__TypeFlag = 2048
 	QMetaType__IsQmlList                QMetaType__TypeFlag = 4096
 	QMetaType__IsConst                  QMetaType__TypeFlag = 8192
+	QMetaType__NeedsCopyConstruction    QMetaType__TypeFlag = 16384
+	QMetaType__NeedsMoveConstruction    QMetaType__TypeFlag = 32768
 )
 
 type QMetaType struct {
@@ -218,8 +221,8 @@ func QMetaType_SizeOf(typeVal int) int {
 	return (int)(C.QMetaType_sizeOf((C.int)(typeVal)))
 }
 
-func QMetaType_TypeFlags(typeVal int) QMetaType__TypeFlag {
-	return (QMetaType__TypeFlag)(C.QMetaType_typeFlags((C.int)(typeVal)))
+func QMetaType_TypeFlags(typeVal int) TypeFlags {
+	int /* TODO  */
 }
 
 func QMetaType_MetaObjectForType(typeVal int) *QMetaObject {
@@ -254,6 +257,10 @@ func (this *QMetaType) IsRegistered2() bool {
 	return (bool)(C.QMetaType_isRegistered2(this.h))
 }
 
+func (this *QMetaType) RegisterType() {
+	C.QMetaType_registerType(this.h)
+}
+
 func (this *QMetaType) Id() int {
 	return (int)(C.QMetaType_id(this.h))
 }
@@ -266,8 +273,8 @@ func (this *QMetaType) AlignOf() int64 {
 	return (int64)(C.QMetaType_alignOf(this.h))
 }
 
-func (this *QMetaType) Flags() QMetaType__TypeFlag {
-	return (QMetaType__TypeFlag)(C.QMetaType_flags(this.h))
+func (this *QMetaType) Flags() TypeFlags {
+	int /* TODO  */
 }
 
 func (this *QMetaType) MetaObject() *QMetaObject {
@@ -305,6 +312,22 @@ func (this *QMetaType) Equals(lhs unsafe.Pointer, rhs unsafe.Pointer) bool {
 	return (bool)(C.QMetaType_equals(this.h, lhs, rhs))
 }
 
+func (this *QMetaType) IsDefaultConstructible() bool {
+	return (bool)(C.QMetaType_isDefaultConstructible(this.h))
+}
+
+func (this *QMetaType) IsCopyConstructible() bool {
+	return (bool)(C.QMetaType_isCopyConstructible(this.h))
+}
+
+func (this *QMetaType) IsMoveConstructible() bool {
+	return (bool)(C.QMetaType_isMoveConstructible(this.h))
+}
+
+func (this *QMetaType) IsDestructible() bool {
+	return (bool)(C.QMetaType_isDestructible(this.h))
+}
+
 func (this *QMetaType) IsEqualityComparable() bool {
 	return (bool)(C.QMetaType_isEqualityComparable(this.h))
 }
@@ -331,6 +354,12 @@ func QMetaType_Save2(stream *QDataStream, typeVal int, data unsafe.Pointer) bool
 
 func QMetaType_Load2(stream *QDataStream, typeVal int, data unsafe.Pointer) bool {
 	return (bool)(C.QMetaType_load2(stream.cPointer(), (C.int)(typeVal), data))
+}
+
+func (this *QMetaType) UnderlyingType() *QMetaType {
+	_goptr := newQMetaType(C.QMetaType_underlyingType(this.h))
+	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
+	return _goptr
 }
 
 func QMetaType_FromName(name QByteArrayView) *QMetaType {
@@ -391,8 +420,16 @@ func QMetaType_HasRegisteredMutableViewFunction(fromType QMetaType, toType QMeta
 	return (bool)(C.QMetaType_hasRegisteredMutableViewFunction(fromType.cPointer(), toType.cPointer()))
 }
 
+func QMetaType_RegisterConverterFunction(f *ConverterFunction, from QMetaType, to QMetaType) bool {
+	return (bool)(C.QMetaType_registerConverterFunction(f, from.cPointer(), to.cPointer()))
+}
+
 func QMetaType_UnregisterConverterFunction(from QMetaType, to QMetaType) {
 	C.QMetaType_unregisterConverterFunction(from.cPointer(), to.cPointer())
+}
+
+func QMetaType_RegisterMutableViewFunction(f *MutableViewFunction, from QMetaType, to QMetaType) bool {
+	return (bool)(C.QMetaType_registerMutableViewFunction(f, from.cPointer(), to.cPointer()))
 }
 
 func QMetaType_UnregisterMutableViewFunction(from QMetaType, to QMetaType) {

@@ -113,12 +113,12 @@ func (this *QNetworkAddressEntry) OperatorNotEqual(other *QNetworkAddressEntry) 
 	return (bool)(C.QNetworkAddressEntry_operatorNotEqual(this.h, other.cPointer()))
 }
 
-func (this *QNetworkAddressEntry) DnsEligibility() QNetworkAddressEntry__DnsEligibilityStatus {
-	return (QNetworkAddressEntry__DnsEligibilityStatus)(C.QNetworkAddressEntry_dnsEligibility(this.h))
+func (this *QNetworkAddressEntry) DnsEligibility() DnsEligibilityStatus {
+	int /* TODO  */
 }
 
-func (this *QNetworkAddressEntry) SetDnsEligibility(status QNetworkAddressEntry__DnsEligibilityStatus) {
-	C.QNetworkAddressEntry_setDnsEligibility(this.h, (C.int8_t)(status))
+func (this *QNetworkAddressEntry) SetDnsEligibility(status DnsEligibilityStatus) {
+	C.QNetworkAddressEntry_setDnsEligibility(this.h, status)
 }
 
 func (this *QNetworkAddressEntry) Ip() *QHostAddress {
@@ -283,12 +283,12 @@ func (this *QNetworkInterface) HumanReadableName() string {
 	return _ret
 }
 
-func (this *QNetworkInterface) Flags() QNetworkInterface__InterfaceFlag {
-	return (QNetworkInterface__InterfaceFlag)(C.QNetworkInterface_flags(this.h))
+func (this *QNetworkInterface) Flags() InterfaceFlags {
+	int /* TODO  */
 }
 
-func (this *QNetworkInterface) Type() QNetworkInterface__InterfaceType {
-	return (QNetworkInterface__InterfaceType)(C.QNetworkInterface_type(this.h))
+func (this *QNetworkInterface) Type() InterfaceType {
+	int /* TODO  */
 }
 
 func (this *QNetworkInterface) HardwareAddress() string {

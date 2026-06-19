@@ -13,18 +13,16 @@ extern "C" {
 } /* extern C */
 #endif
 
-int QCborError_c(const QCborError* self) {
-	QCborError::Code c_ret = self->c;
-	return static_cast<int>(c_ret);
+Code QCborError_c(const QCborError* self) {
+	return self->c;
 }
 
-void QCborError_setC(QCborError* self, int c) {
-	self->c = static_cast<QCborError::Code>(c);
+void QCborError_setC(QCborError* self, Code c) {
+	self->c = c;
 }
 
-int QCborError_ToQCborError__Code(const QCborError* self) {
-	QCborError::Code _ret = self->operator QCborError::Code();
-	return static_cast<int>(_ret);
+Code QCborError_ToQCborError__Code(const QCborError* self) {
+	return self->operator QCborError::Code();
 }
 
 struct miqt_string QCborError_toString(const QCborError* self) {

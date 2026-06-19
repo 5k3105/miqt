@@ -64,35 +64,47 @@ func NewQQmlApplicationEngine2(url *qt6.QUrl) *QQmlApplicationEngine {
 }
 
 // NewQQmlApplicationEngine3 constructs a new QQmlApplicationEngine object.
-func NewQQmlApplicationEngine3(filePath string) *QQmlApplicationEngine {
-	filePath_ms := C.struct_miqt_string{}
-	filePath_ms.data = C.CString(filePath)
-	filePath_ms.len = C.size_t(len(filePath))
-	defer C.free(unsafe.Pointer(filePath_ms.data))
+func NewQQmlApplicationEngine3(uri qt6.QAnyStringView, typeName qt6.QAnyStringView) *QQmlApplicationEngine {
 
-	return newQQmlApplicationEngine(C.QQmlApplicationEngine_new3(filePath_ms))
+	return newQQmlApplicationEngine(C.QQmlApplicationEngine_new3((*C.QAnyStringView)(uri.UnsafePointer()), (*C.QAnyStringView)(typeName.UnsafePointer())))
 }
 
 // NewQQmlApplicationEngine4 constructs a new QQmlApplicationEngine object.
-func NewQQmlApplicationEngine4(parent *qt6.QObject) *QQmlApplicationEngine {
-
-	return newQQmlApplicationEngine(C.QQmlApplicationEngine_new4((*C.QObject)(parent.UnsafePointer())))
-}
-
-// NewQQmlApplicationEngine5 constructs a new QQmlApplicationEngine object.
-func NewQQmlApplicationEngine5(url *qt6.QUrl, parent *qt6.QObject) *QQmlApplicationEngine {
-
-	return newQQmlApplicationEngine(C.QQmlApplicationEngine_new5((*C.QUrl)(url.UnsafePointer()), (*C.QObject)(parent.UnsafePointer())))
-}
-
-// NewQQmlApplicationEngine6 constructs a new QQmlApplicationEngine object.
-func NewQQmlApplicationEngine6(filePath string, parent *qt6.QObject) *QQmlApplicationEngine {
+func NewQQmlApplicationEngine4(filePath string) *QQmlApplicationEngine {
 	filePath_ms := C.struct_miqt_string{}
 	filePath_ms.data = C.CString(filePath)
 	filePath_ms.len = C.size_t(len(filePath))
 	defer C.free(unsafe.Pointer(filePath_ms.data))
 
-	return newQQmlApplicationEngine(C.QQmlApplicationEngine_new6(filePath_ms, (*C.QObject)(parent.UnsafePointer())))
+	return newQQmlApplicationEngine(C.QQmlApplicationEngine_new4(filePath_ms))
+}
+
+// NewQQmlApplicationEngine5 constructs a new QQmlApplicationEngine object.
+func NewQQmlApplicationEngine5(parent *qt6.QObject) *QQmlApplicationEngine {
+
+	return newQQmlApplicationEngine(C.QQmlApplicationEngine_new5((*C.QObject)(parent.UnsafePointer())))
+}
+
+// NewQQmlApplicationEngine6 constructs a new QQmlApplicationEngine object.
+func NewQQmlApplicationEngine6(url *qt6.QUrl, parent *qt6.QObject) *QQmlApplicationEngine {
+
+	return newQQmlApplicationEngine(C.QQmlApplicationEngine_new6((*C.QUrl)(url.UnsafePointer()), (*C.QObject)(parent.UnsafePointer())))
+}
+
+// NewQQmlApplicationEngine7 constructs a new QQmlApplicationEngine object.
+func NewQQmlApplicationEngine7(uri qt6.QAnyStringView, typeName qt6.QAnyStringView, parent *qt6.QObject) *QQmlApplicationEngine {
+
+	return newQQmlApplicationEngine(C.QQmlApplicationEngine_new7((*C.QAnyStringView)(uri.UnsafePointer()), (*C.QAnyStringView)(typeName.UnsafePointer()), (*C.QObject)(parent.UnsafePointer())))
+}
+
+// NewQQmlApplicationEngine8 constructs a new QQmlApplicationEngine object.
+func NewQQmlApplicationEngine8(filePath string, parent *qt6.QObject) *QQmlApplicationEngine {
+	filePath_ms := C.struct_miqt_string{}
+	filePath_ms.data = C.CString(filePath)
+	filePath_ms.len = C.size_t(len(filePath))
+	defer C.free(unsafe.Pointer(filePath_ms.data))
+
+	return newQQmlApplicationEngine(C.QQmlApplicationEngine_new8(filePath_ms, (*C.QObject)(parent.UnsafePointer())))
 }
 
 func (this *QQmlApplicationEngine) MetaObject() *qt6.QMetaObject {
@@ -134,6 +146,10 @@ func (this *QQmlApplicationEngine) LoadWithFilePath(filePath string) {
 	filePath_ms.len = C.size_t(len(filePath))
 	defer C.free(unsafe.Pointer(filePath_ms.data))
 	C.QQmlApplicationEngine_loadWithFilePath(this.h, filePath_ms)
+}
+
+func (this *QQmlApplicationEngine) LoadFromModule(uri qt6.QAnyStringView, typeName qt6.QAnyStringView) {
+	C.QQmlApplicationEngine_loadFromModule(this.h, (*C.QAnyStringView)(uri.UnsafePointer()), (*C.QAnyStringView)(typeName.UnsafePointer()))
 }
 
 func (this *QQmlApplicationEngine) SetInitialProperties(initialProperties map[string]qt6.QVariant) {

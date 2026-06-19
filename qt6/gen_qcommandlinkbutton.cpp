@@ -84,7 +84,7 @@ void miqt_exec_callback_QCommandLinkButton_dropEvent(QCommandLinkButton*, intptr
 void miqt_exec_callback_QCommandLinkButton_showEvent(QCommandLinkButton*, intptr_t, QShowEvent*);
 void miqt_exec_callback_QCommandLinkButton_hideEvent(QCommandLinkButton*, intptr_t, QHideEvent*);
 bool miqt_exec_callback_QCommandLinkButton_nativeEvent(QCommandLinkButton*, intptr_t, struct miqt_string, void*, intptr_t*);
-int miqt_exec_callback_QCommandLinkButton_metric(const QCommandLinkButton*, intptr_t, int);
+int miqt_exec_callback_QCommandLinkButton_metric(const QCommandLinkButton*, intptr_t, PaintDeviceMetric);
 void miqt_exec_callback_QCommandLinkButton_initPainter(const QCommandLinkButton*, intptr_t, QPainter*);
 QPaintDevice* miqt_exec_callback_QCommandLinkButton_redirected(const QCommandLinkButton*, intptr_t, QPoint*);
 QPainter* miqt_exec_callback_QCommandLinkButton_sharedPainter(const QCommandLinkButton*, intptr_t);
@@ -773,18 +773,17 @@ public:
 	intptr_t handle__metric = 0;
 
 	// Subclass to allow providing a Go implementation
-	virtual int metric(QPaintDevice::PaintDeviceMetric param1) const override {
+	virtual int metric(PaintDeviceMetric param1) const override {
 		if (handle__metric == 0) {
 			return QCommandLinkButton::metric(param1);
 		}
 
-		QPaintDevice::PaintDeviceMetric param1_ret = param1;
-		int sigval1 = static_cast<int>(param1_ret);
+		PaintDeviceMetric sigval1 = param1;
 		int callback_return_value = miqt_exec_callback_QCommandLinkButton_metric(this, handle__metric, sigval1);
 		return static_cast<int>(callback_return_value);
 	}
 
-	friend int QCommandLinkButton_virtualbase_metric(const void* self, int param1);
+	friend int QCommandLinkButton_virtualbase_metric(const void* self, PaintDeviceMetric param1);
 
 	// cgo.Handle value for overwritten implementation
 	intptr_t handle__initPainter = 0;
@@ -983,6 +982,7 @@ public:
 	friend int QCommandLinkButton_protectedbase_senderSignalIndex(bool* _dynamic_cast_ok, const void* self);
 	friend int QCommandLinkButton_protectedbase_receivers(bool* _dynamic_cast_ok, const void* self, const char* signal);
 	friend bool QCommandLinkButton_protectedbase_isSignalConnected(bool* _dynamic_cast_ok, const void* self, QMetaMethod* signal);
+	friend double QCommandLinkButton_protectedbase_getDecodedMetricF(bool* _dynamic_cast_ok, const void* self, PaintDeviceMetric metricA, PaintDeviceMetric metricB);
 };
 
 QCommandLinkButton* QCommandLinkButton_new(QWidget* parent) {
@@ -1649,8 +1649,8 @@ bool QCommandLinkButton_override_virtual_metric(void* self, intptr_t slot) {
 	return true;
 }
 
-int QCommandLinkButton_virtualbase_metric(const void* self, int param1) {
-	return static_cast<const MiqtVirtualQCommandLinkButton*>(self)->QCommandLinkButton::metric(static_cast<MiqtVirtualQCommandLinkButton::PaintDeviceMetric>(param1));
+int QCommandLinkButton_virtualbase_metric(const void* self, PaintDeviceMetric param1) {
+	return static_cast<const MiqtVirtualQCommandLinkButton*>(self)->QCommandLinkButton::metric(param1);
 }
 
 bool QCommandLinkButton_override_virtual_initPainter(void* self, intptr_t slot) {
@@ -1904,6 +1904,17 @@ bool QCommandLinkButton_protectedbase_isSignalConnected(bool* _dynamic_cast_ok, 
 
 	*_dynamic_cast_ok = true;
 	return self_cast->isSignalConnected(*signal);
+}
+
+double QCommandLinkButton_protectedbase_getDecodedMetricF(bool* _dynamic_cast_ok, const void* self, PaintDeviceMetric metricA, PaintDeviceMetric metricB) {
+	MiqtVirtualQCommandLinkButton* self_cast = dynamic_cast<MiqtVirtualQCommandLinkButton*>( (QCommandLinkButton*)(self) );
+	if (self_cast == nullptr) {
+		*_dynamic_cast_ok = false;
+		return 0;
+	}
+
+	*_dynamic_cast_ok = true;
+	return self_cast->getDecodedMetricF(metricA, metricB);
 }
 
 void QCommandLinkButton_delete(QCommandLinkButton* self) {

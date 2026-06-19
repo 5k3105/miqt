@@ -29,17 +29,17 @@
 extern "C" {
 #endif
 
-void miqt_exec_callback_QCommonStyle_drawPrimitive(const QCommonStyle*, intptr_t, int, QStyleOption*, QPainter*, QWidget*);
-void miqt_exec_callback_QCommonStyle_drawControl(const QCommonStyle*, intptr_t, int, QStyleOption*, QPainter*, QWidget*);
-QRect* miqt_exec_callback_QCommonStyle_subElementRect(const QCommonStyle*, intptr_t, int, QStyleOption*, QWidget*);
-void miqt_exec_callback_QCommonStyle_drawComplexControl(const QCommonStyle*, intptr_t, int, QStyleOptionComplex*, QPainter*, QWidget*);
-int miqt_exec_callback_QCommonStyle_hitTestComplexControl(const QCommonStyle*, intptr_t, int, QStyleOptionComplex*, QPoint*, QWidget*);
-QRect* miqt_exec_callback_QCommonStyle_subControlRect(const QCommonStyle*, intptr_t, int, QStyleOptionComplex*, int, QWidget*);
-QSize* miqt_exec_callback_QCommonStyle_sizeFromContents(const QCommonStyle*, intptr_t, int, QStyleOption*, QSize*, QWidget*);
-int miqt_exec_callback_QCommonStyle_pixelMetric(const QCommonStyle*, intptr_t, int, QStyleOption*, QWidget*);
-int miqt_exec_callback_QCommonStyle_styleHint(const QCommonStyle*, intptr_t, int, QStyleOption*, QWidget*, QStyleHintReturn*);
-QIcon* miqt_exec_callback_QCommonStyle_standardIcon(const QCommonStyle*, intptr_t, int, QStyleOption*, QWidget*);
-QPixmap* miqt_exec_callback_QCommonStyle_standardPixmap(const QCommonStyle*, intptr_t, int, QStyleOption*, QWidget*);
+void miqt_exec_callback_QCommonStyle_drawPrimitive(const QCommonStyle*, intptr_t, PrimitiveElement, QStyleOption*, QPainter*, QWidget*);
+void miqt_exec_callback_QCommonStyle_drawControl(const QCommonStyle*, intptr_t, ControlElement, QStyleOption*, QPainter*, QWidget*);
+QRect* miqt_exec_callback_QCommonStyle_subElementRect(const QCommonStyle*, intptr_t, SubElement, QStyleOption*, QWidget*);
+void miqt_exec_callback_QCommonStyle_drawComplexControl(const QCommonStyle*, intptr_t, ComplexControl, QStyleOptionComplex*, QPainter*, QWidget*);
+SubControl miqt_exec_callback_QCommonStyle_hitTestComplexControl(const QCommonStyle*, intptr_t, ComplexControl, QStyleOptionComplex*, QPoint*, QWidget*);
+QRect* miqt_exec_callback_QCommonStyle_subControlRect(const QCommonStyle*, intptr_t, ComplexControl, QStyleOptionComplex*, SubControl, QWidget*);
+QSize* miqt_exec_callback_QCommonStyle_sizeFromContents(const QCommonStyle*, intptr_t, ContentsType, QStyleOption*, QSize*, QWidget*);
+int miqt_exec_callback_QCommonStyle_pixelMetric(const QCommonStyle*, intptr_t, PixelMetric, QStyleOption*, QWidget*);
+int miqt_exec_callback_QCommonStyle_styleHint(const QCommonStyle*, intptr_t, StyleHint, QStyleOption*, QWidget*, QStyleHintReturn*);
+QIcon* miqt_exec_callback_QCommonStyle_standardIcon(const QCommonStyle*, intptr_t, StandardPixmap, QStyleOption*, QWidget*);
+QPixmap* miqt_exec_callback_QCommonStyle_standardPixmap(const QCommonStyle*, intptr_t, StandardPixmap, QStyleOption*, QWidget*);
 QPixmap* miqt_exec_callback_QCommonStyle_generatedIconPixmap(const QCommonStyle*, intptr_t, int, QPixmap*, QStyleOption*);
 int miqt_exec_callback_QCommonStyle_layoutSpacing(const QCommonStyle*, intptr_t, int, int, int, QStyleOption*, QWidget*);
 void miqt_exec_callback_QCommonStyle_polish(QCommonStyle*, intptr_t, QPalette*);
@@ -74,14 +74,13 @@ public:
 	intptr_t handle__drawPrimitive = 0;
 
 	// Subclass to allow providing a Go implementation
-	virtual void drawPrimitive(QStyle::PrimitiveElement pe, const QStyleOption* opt, QPainter* p, const QWidget* w) const override {
+	virtual void drawPrimitive(PrimitiveElement pe, const QStyleOption* opt, QPainter* p, const QWidget* w) const override {
 		if (handle__drawPrimitive == 0) {
 			QCommonStyle::drawPrimitive(pe, opt, p, w);
 			return;
 		}
 
-		QStyle::PrimitiveElement pe_ret = pe;
-		int sigval1 = static_cast<int>(pe_ret);
+		PrimitiveElement sigval1 = pe;
 		QStyleOption* sigval2 = (QStyleOption*) opt;
 		QPainter* sigval3 = p;
 		QWidget* sigval4 = (QWidget*) w;
@@ -89,20 +88,19 @@ public:
 
 	}
 
-	friend void QCommonStyle_virtualbase_drawPrimitive(const void* self, int pe, QStyleOption* opt, QPainter* p, QWidget* w);
+	friend void QCommonStyle_virtualbase_drawPrimitive(const void* self, PrimitiveElement pe, QStyleOption* opt, QPainter* p, QWidget* w);
 
 	// cgo.Handle value for overwritten implementation
 	intptr_t handle__drawControl = 0;
 
 	// Subclass to allow providing a Go implementation
-	virtual void drawControl(QStyle::ControlElement element, const QStyleOption* opt, QPainter* p, const QWidget* w) const override {
+	virtual void drawControl(ControlElement element, const QStyleOption* opt, QPainter* p, const QWidget* w) const override {
 		if (handle__drawControl == 0) {
 			QCommonStyle::drawControl(element, opt, p, w);
 			return;
 		}
 
-		QStyle::ControlElement element_ret = element;
-		int sigval1 = static_cast<int>(element_ret);
+		ControlElement sigval1 = element;
 		QStyleOption* sigval2 = (QStyleOption*) opt;
 		QPainter* sigval3 = p;
 		QWidget* sigval4 = (QWidget*) w;
@@ -110,39 +108,37 @@ public:
 
 	}
 
-	friend void QCommonStyle_virtualbase_drawControl(const void* self, int element, QStyleOption* opt, QPainter* p, QWidget* w);
+	friend void QCommonStyle_virtualbase_drawControl(const void* self, ControlElement element, QStyleOption* opt, QPainter* p, QWidget* w);
 
 	// cgo.Handle value for overwritten implementation
 	intptr_t handle__subElementRect = 0;
 
 	// Subclass to allow providing a Go implementation
-	virtual QRect subElementRect(QStyle::SubElement r, const QStyleOption* opt, const QWidget* widget) const override {
+	virtual QRect subElementRect(SubElement r, const QStyleOption* opt, const QWidget* widget) const override {
 		if (handle__subElementRect == 0) {
 			return QCommonStyle::subElementRect(r, opt, widget);
 		}
 
-		QStyle::SubElement r_ret = r;
-		int sigval1 = static_cast<int>(r_ret);
+		SubElement sigval1 = r;
 		QStyleOption* sigval2 = (QStyleOption*) opt;
 		QWidget* sigval3 = (QWidget*) widget;
 		QRect* callback_return_value = miqt_exec_callback_QCommonStyle_subElementRect(this, handle__subElementRect, sigval1, sigval2, sigval3);
 		return *callback_return_value;
 	}
 
-	friend QRect* QCommonStyle_virtualbase_subElementRect(const void* self, int r, QStyleOption* opt, QWidget* widget);
+	friend QRect* QCommonStyle_virtualbase_subElementRect(const void* self, SubElement r, QStyleOption* opt, QWidget* widget);
 
 	// cgo.Handle value for overwritten implementation
 	intptr_t handle__drawComplexControl = 0;
 
 	// Subclass to allow providing a Go implementation
-	virtual void drawComplexControl(QStyle::ComplexControl cc, const QStyleOptionComplex* opt, QPainter* p, const QWidget* w) const override {
+	virtual void drawComplexControl(ComplexControl cc, const QStyleOptionComplex* opt, QPainter* p, const QWidget* w) const override {
 		if (handle__drawComplexControl == 0) {
 			QCommonStyle::drawComplexControl(cc, opt, p, w);
 			return;
 		}
 
-		QStyle::ComplexControl cc_ret = cc;
-		int sigval1 = static_cast<int>(cc_ret);
+		ComplexControl sigval1 = cc;
 		QStyleOptionComplex* sigval2 = (QStyleOptionComplex*) opt;
 		QPainter* sigval3 = p;
 		QWidget* sigval4 = (QWidget*) w;
@@ -150,62 +146,58 @@ public:
 
 	}
 
-	friend void QCommonStyle_virtualbase_drawComplexControl(const void* self, int cc, QStyleOptionComplex* opt, QPainter* p, QWidget* w);
+	friend void QCommonStyle_virtualbase_drawComplexControl(const void* self, ComplexControl cc, QStyleOptionComplex* opt, QPainter* p, QWidget* w);
 
 	// cgo.Handle value for overwritten implementation
 	intptr_t handle__hitTestComplexControl = 0;
 
 	// Subclass to allow providing a Go implementation
-	virtual QStyle::SubControl hitTestComplexControl(QStyle::ComplexControl cc, const QStyleOptionComplex* opt, const QPoint& pt, const QWidget* w) const override {
+	virtual SubControl hitTestComplexControl(ComplexControl cc, const QStyleOptionComplex* opt, const QPoint& pt, const QWidget* w) const override {
 		if (handle__hitTestComplexControl == 0) {
 			return QCommonStyle::hitTestComplexControl(cc, opt, pt, w);
 		}
 
-		QStyle::ComplexControl cc_ret = cc;
-		int sigval1 = static_cast<int>(cc_ret);
+		ComplexControl sigval1 = cc;
 		QStyleOptionComplex* sigval2 = (QStyleOptionComplex*) opt;
 		const QPoint& pt_ret = pt;
 		// Cast returned reference into pointer
 		QPoint* sigval3 = const_cast<QPoint*>(&pt_ret);
 		QWidget* sigval4 = (QWidget*) w;
-		int callback_return_value = miqt_exec_callback_QCommonStyle_hitTestComplexControl(this, handle__hitTestComplexControl, sigval1, sigval2, sigval3, sigval4);
-		return static_cast<QStyle::SubControl>(callback_return_value);
+		SubControl callback_return_value = miqt_exec_callback_QCommonStyle_hitTestComplexControl(this, handle__hitTestComplexControl, sigval1, sigval2, sigval3, sigval4);
+		return callback_return_value;
 	}
 
-	friend int QCommonStyle_virtualbase_hitTestComplexControl(const void* self, int cc, QStyleOptionComplex* opt, QPoint* pt, QWidget* w);
+	friend SubControl QCommonStyle_virtualbase_hitTestComplexControl(const void* self, ComplexControl cc, QStyleOptionComplex* opt, QPoint* pt, QWidget* w);
 
 	// cgo.Handle value for overwritten implementation
 	intptr_t handle__subControlRect = 0;
 
 	// Subclass to allow providing a Go implementation
-	virtual QRect subControlRect(QStyle::ComplexControl cc, const QStyleOptionComplex* opt, QStyle::SubControl sc, const QWidget* w) const override {
+	virtual QRect subControlRect(ComplexControl cc, const QStyleOptionComplex* opt, SubControl sc, const QWidget* w) const override {
 		if (handle__subControlRect == 0) {
 			return QCommonStyle::subControlRect(cc, opt, sc, w);
 		}
 
-		QStyle::ComplexControl cc_ret = cc;
-		int sigval1 = static_cast<int>(cc_ret);
+		ComplexControl sigval1 = cc;
 		QStyleOptionComplex* sigval2 = (QStyleOptionComplex*) opt;
-		QStyle::SubControl sc_ret = sc;
-		int sigval3 = static_cast<int>(sc_ret);
+		SubControl sigval3 = sc;
 		QWidget* sigval4 = (QWidget*) w;
 		QRect* callback_return_value = miqt_exec_callback_QCommonStyle_subControlRect(this, handle__subControlRect, sigval1, sigval2, sigval3, sigval4);
 		return *callback_return_value;
 	}
 
-	friend QRect* QCommonStyle_virtualbase_subControlRect(const void* self, int cc, QStyleOptionComplex* opt, int sc, QWidget* w);
+	friend QRect* QCommonStyle_virtualbase_subControlRect(const void* self, ComplexControl cc, QStyleOptionComplex* opt, SubControl sc, QWidget* w);
 
 	// cgo.Handle value for overwritten implementation
 	intptr_t handle__sizeFromContents = 0;
 
 	// Subclass to allow providing a Go implementation
-	virtual QSize sizeFromContents(QStyle::ContentsType ct, const QStyleOption* opt, const QSize& contentsSize, const QWidget* widget) const override {
+	virtual QSize sizeFromContents(ContentsType ct, const QStyleOption* opt, const QSize& contentsSize, const QWidget* widget) const override {
 		if (handle__sizeFromContents == 0) {
 			return QCommonStyle::sizeFromContents(ct, opt, contentsSize, widget);
 		}
 
-		QStyle::ContentsType ct_ret = ct;
-		int sigval1 = static_cast<int>(ct_ret);
+		ContentsType sigval1 = ct;
 		QStyleOption* sigval2 = (QStyleOption*) opt;
 		const QSize& contentsSize_ret = contentsSize;
 		// Cast returned reference into pointer
@@ -215,38 +207,36 @@ public:
 		return *callback_return_value;
 	}
 
-	friend QSize* QCommonStyle_virtualbase_sizeFromContents(const void* self, int ct, QStyleOption* opt, QSize* contentsSize, QWidget* widget);
+	friend QSize* QCommonStyle_virtualbase_sizeFromContents(const void* self, ContentsType ct, QStyleOption* opt, QSize* contentsSize, QWidget* widget);
 
 	// cgo.Handle value for overwritten implementation
 	intptr_t handle__pixelMetric = 0;
 
 	// Subclass to allow providing a Go implementation
-	virtual int pixelMetric(QStyle::PixelMetric m, const QStyleOption* opt, const QWidget* widget) const override {
+	virtual int pixelMetric(PixelMetric m, const QStyleOption* opt, const QWidget* widget) const override {
 		if (handle__pixelMetric == 0) {
 			return QCommonStyle::pixelMetric(m, opt, widget);
 		}
 
-		QStyle::PixelMetric m_ret = m;
-		int sigval1 = static_cast<int>(m_ret);
+		PixelMetric sigval1 = m;
 		QStyleOption* sigval2 = (QStyleOption*) opt;
 		QWidget* sigval3 = (QWidget*) widget;
 		int callback_return_value = miqt_exec_callback_QCommonStyle_pixelMetric(this, handle__pixelMetric, sigval1, sigval2, sigval3);
 		return static_cast<int>(callback_return_value);
 	}
 
-	friend int QCommonStyle_virtualbase_pixelMetric(const void* self, int m, QStyleOption* opt, QWidget* widget);
+	friend int QCommonStyle_virtualbase_pixelMetric(const void* self, PixelMetric m, QStyleOption* opt, QWidget* widget);
 
 	// cgo.Handle value for overwritten implementation
 	intptr_t handle__styleHint = 0;
 
 	// Subclass to allow providing a Go implementation
-	virtual int styleHint(QStyle::StyleHint sh, const QStyleOption* opt, const QWidget* w, QStyleHintReturn* shret) const override {
+	virtual int styleHint(StyleHint sh, const QStyleOption* opt, const QWidget* w, QStyleHintReturn* shret) const override {
 		if (handle__styleHint == 0) {
 			return QCommonStyle::styleHint(sh, opt, w, shret);
 		}
 
-		QStyle::StyleHint sh_ret = sh;
-		int sigval1 = static_cast<int>(sh_ret);
+		StyleHint sigval1 = sh;
 		QStyleOption* sigval2 = (QStyleOption*) opt;
 		QWidget* sigval3 = (QWidget*) w;
 		QStyleHintReturn* sigval4 = shret;
@@ -254,45 +244,43 @@ public:
 		return static_cast<int>(callback_return_value);
 	}
 
-	friend int QCommonStyle_virtualbase_styleHint(const void* self, int sh, QStyleOption* opt, QWidget* w, QStyleHintReturn* shret);
+	friend int QCommonStyle_virtualbase_styleHint(const void* self, StyleHint sh, QStyleOption* opt, QWidget* w, QStyleHintReturn* shret);
 
 	// cgo.Handle value for overwritten implementation
 	intptr_t handle__standardIcon = 0;
 
 	// Subclass to allow providing a Go implementation
-	virtual QIcon standardIcon(QStyle::StandardPixmap standardIcon, const QStyleOption* opt, const QWidget* widget) const override {
+	virtual QIcon standardIcon(StandardPixmap standardIcon, const QStyleOption* opt, const QWidget* widget) const override {
 		if (handle__standardIcon == 0) {
 			return QCommonStyle::standardIcon(standardIcon, opt, widget);
 		}
 
-		QStyle::StandardPixmap standardIcon_ret = standardIcon;
-		int sigval1 = static_cast<int>(standardIcon_ret);
+		StandardPixmap sigval1 = standardIcon;
 		QStyleOption* sigval2 = (QStyleOption*) opt;
 		QWidget* sigval3 = (QWidget*) widget;
 		QIcon* callback_return_value = miqt_exec_callback_QCommonStyle_standardIcon(this, handle__standardIcon, sigval1, sigval2, sigval3);
 		return *callback_return_value;
 	}
 
-	friend QIcon* QCommonStyle_virtualbase_standardIcon(const void* self, int standardIcon, QStyleOption* opt, QWidget* widget);
+	friend QIcon* QCommonStyle_virtualbase_standardIcon(const void* self, StandardPixmap standardIcon, QStyleOption* opt, QWidget* widget);
 
 	// cgo.Handle value for overwritten implementation
 	intptr_t handle__standardPixmap = 0;
 
 	// Subclass to allow providing a Go implementation
-	virtual QPixmap standardPixmap(QStyle::StandardPixmap sp, const QStyleOption* opt, const QWidget* widget) const override {
+	virtual QPixmap standardPixmap(StandardPixmap sp, const QStyleOption* opt, const QWidget* widget) const override {
 		if (handle__standardPixmap == 0) {
 			return QCommonStyle::standardPixmap(sp, opt, widget);
 		}
 
-		QStyle::StandardPixmap sp_ret = sp;
-		int sigval1 = static_cast<int>(sp_ret);
+		StandardPixmap sigval1 = sp;
 		QStyleOption* sigval2 = (QStyleOption*) opt;
 		QWidget* sigval3 = (QWidget*) widget;
 		QPixmap* callback_return_value = miqt_exec_callback_QCommonStyle_standardPixmap(this, handle__standardPixmap, sigval1, sigval2, sigval3);
 		return *callback_return_value;
 	}
 
-	friend QPixmap* QCommonStyle_virtualbase_standardPixmap(const void* self, int sp, QStyleOption* opt, QWidget* widget);
+	friend QPixmap* QCommonStyle_virtualbase_standardPixmap(const void* self, StandardPixmap sp, QStyleOption* opt, QWidget* widget);
 
 	// cgo.Handle value for overwritten implementation
 	intptr_t handle__generatedIconPixmap = 0;
@@ -708,49 +696,48 @@ struct miqt_string QCommonStyle_tr(const char* s) {
 	return _ms;
 }
 
-void QCommonStyle_drawPrimitive(const QCommonStyle* self, int pe, QStyleOption* opt, QPainter* p, QWidget* w) {
-	self->drawPrimitive(static_cast<QStyle::PrimitiveElement>(pe), opt, p, w);
+void QCommonStyle_drawPrimitive(const QCommonStyle* self, PrimitiveElement pe, QStyleOption* opt, QPainter* p, QWidget* w) {
+	self->drawPrimitive(pe, opt, p, w);
 }
 
-void QCommonStyle_drawControl(const QCommonStyle* self, int element, QStyleOption* opt, QPainter* p, QWidget* w) {
-	self->drawControl(static_cast<QStyle::ControlElement>(element), opt, p, w);
+void QCommonStyle_drawControl(const QCommonStyle* self, ControlElement element, QStyleOption* opt, QPainter* p, QWidget* w) {
+	self->drawControl(element, opt, p, w);
 }
 
-QRect* QCommonStyle_subElementRect(const QCommonStyle* self, int r, QStyleOption* opt, QWidget* widget) {
-	return new QRect(self->subElementRect(static_cast<QStyle::SubElement>(r), opt, widget));
+QRect* QCommonStyle_subElementRect(const QCommonStyle* self, SubElement r, QStyleOption* opt, QWidget* widget) {
+	return new QRect(self->subElementRect(r, opt, widget));
 }
 
-void QCommonStyle_drawComplexControl(const QCommonStyle* self, int cc, QStyleOptionComplex* opt, QPainter* p, QWidget* w) {
-	self->drawComplexControl(static_cast<QStyle::ComplexControl>(cc), opt, p, w);
+void QCommonStyle_drawComplexControl(const QCommonStyle* self, ComplexControl cc, QStyleOptionComplex* opt, QPainter* p, QWidget* w) {
+	self->drawComplexControl(cc, opt, p, w);
 }
 
-int QCommonStyle_hitTestComplexControl(const QCommonStyle* self, int cc, QStyleOptionComplex* opt, QPoint* pt, QWidget* w) {
-	QStyle::SubControl _ret = self->hitTestComplexControl(static_cast<QStyle::ComplexControl>(cc), opt, *pt, w);
-	return static_cast<int>(_ret);
+SubControl QCommonStyle_hitTestComplexControl(const QCommonStyle* self, ComplexControl cc, QStyleOptionComplex* opt, QPoint* pt, QWidget* w) {
+	return self->hitTestComplexControl(cc, opt, *pt, w);
 }
 
-QRect* QCommonStyle_subControlRect(const QCommonStyle* self, int cc, QStyleOptionComplex* opt, int sc, QWidget* w) {
-	return new QRect(self->subControlRect(static_cast<QStyle::ComplexControl>(cc), opt, static_cast<QStyle::SubControl>(sc), w));
+QRect* QCommonStyle_subControlRect(const QCommonStyle* self, ComplexControl cc, QStyleOptionComplex* opt, SubControl sc, QWidget* w) {
+	return new QRect(self->subControlRect(cc, opt, sc, w));
 }
 
-QSize* QCommonStyle_sizeFromContents(const QCommonStyle* self, int ct, QStyleOption* opt, QSize* contentsSize, QWidget* widget) {
-	return new QSize(self->sizeFromContents(static_cast<QStyle::ContentsType>(ct), opt, *contentsSize, widget));
+QSize* QCommonStyle_sizeFromContents(const QCommonStyle* self, ContentsType ct, QStyleOption* opt, QSize* contentsSize, QWidget* widget) {
+	return new QSize(self->sizeFromContents(ct, opt, *contentsSize, widget));
 }
 
-int QCommonStyle_pixelMetric(const QCommonStyle* self, int m, QStyleOption* opt, QWidget* widget) {
-	return self->pixelMetric(static_cast<QStyle::PixelMetric>(m), opt, widget);
+int QCommonStyle_pixelMetric(const QCommonStyle* self, PixelMetric m, QStyleOption* opt, QWidget* widget) {
+	return self->pixelMetric(m, opt, widget);
 }
 
-int QCommonStyle_styleHint(const QCommonStyle* self, int sh, QStyleOption* opt, QWidget* w, QStyleHintReturn* shret) {
-	return self->styleHint(static_cast<QStyle::StyleHint>(sh), opt, w, shret);
+int QCommonStyle_styleHint(const QCommonStyle* self, StyleHint sh, QStyleOption* opt, QWidget* w, QStyleHintReturn* shret) {
+	return self->styleHint(sh, opt, w, shret);
 }
 
-QIcon* QCommonStyle_standardIcon(const QCommonStyle* self, int standardIcon, QStyleOption* opt, QWidget* widget) {
-	return new QIcon(self->standardIcon(static_cast<QStyle::StandardPixmap>(standardIcon), opt, widget));
+QIcon* QCommonStyle_standardIcon(const QCommonStyle* self, StandardPixmap standardIcon, QStyleOption* opt, QWidget* widget) {
+	return new QIcon(self->standardIcon(standardIcon, opt, widget));
 }
 
-QPixmap* QCommonStyle_standardPixmap(const QCommonStyle* self, int sp, QStyleOption* opt, QWidget* widget) {
-	return new QPixmap(self->standardPixmap(static_cast<QStyle::StandardPixmap>(sp), opt, widget));
+QPixmap* QCommonStyle_standardPixmap(const QCommonStyle* self, StandardPixmap sp, QStyleOption* opt, QWidget* widget) {
+	return new QPixmap(self->standardPixmap(sp, opt, widget));
 }
 
 QPixmap* QCommonStyle_generatedIconPixmap(const QCommonStyle* self, int iconMode, QPixmap* pixmap, QStyleOption* opt) {
@@ -813,8 +800,8 @@ bool QCommonStyle_override_virtual_drawPrimitive(void* self, intptr_t slot) {
 	return true;
 }
 
-void QCommonStyle_virtualbase_drawPrimitive(const void* self, int pe, QStyleOption* opt, QPainter* p, QWidget* w) {
-	static_cast<const MiqtVirtualQCommonStyle*>(self)->QCommonStyle::drawPrimitive(static_cast<MiqtVirtualQCommonStyle::PrimitiveElement>(pe), opt, p, w);
+void QCommonStyle_virtualbase_drawPrimitive(const void* self, PrimitiveElement pe, QStyleOption* opt, QPainter* p, QWidget* w) {
+	static_cast<const MiqtVirtualQCommonStyle*>(self)->QCommonStyle::drawPrimitive(pe, opt, p, w);
 }
 
 bool QCommonStyle_override_virtual_drawControl(void* self, intptr_t slot) {
@@ -827,8 +814,8 @@ bool QCommonStyle_override_virtual_drawControl(void* self, intptr_t slot) {
 	return true;
 }
 
-void QCommonStyle_virtualbase_drawControl(const void* self, int element, QStyleOption* opt, QPainter* p, QWidget* w) {
-	static_cast<const MiqtVirtualQCommonStyle*>(self)->QCommonStyle::drawControl(static_cast<MiqtVirtualQCommonStyle::ControlElement>(element), opt, p, w);
+void QCommonStyle_virtualbase_drawControl(const void* self, ControlElement element, QStyleOption* opt, QPainter* p, QWidget* w) {
+	static_cast<const MiqtVirtualQCommonStyle*>(self)->QCommonStyle::drawControl(element, opt, p, w);
 }
 
 bool QCommonStyle_override_virtual_subElementRect(void* self, intptr_t slot) {
@@ -841,8 +828,8 @@ bool QCommonStyle_override_virtual_subElementRect(void* self, intptr_t slot) {
 	return true;
 }
 
-QRect* QCommonStyle_virtualbase_subElementRect(const void* self, int r, QStyleOption* opt, QWidget* widget) {
-	return new QRect(static_cast<const MiqtVirtualQCommonStyle*>(self)->QCommonStyle::subElementRect(static_cast<MiqtVirtualQCommonStyle::SubElement>(r), opt, widget));
+QRect* QCommonStyle_virtualbase_subElementRect(const void* self, SubElement r, QStyleOption* opt, QWidget* widget) {
+	return new QRect(static_cast<const MiqtVirtualQCommonStyle*>(self)->QCommonStyle::subElementRect(r, opt, widget));
 }
 
 bool QCommonStyle_override_virtual_drawComplexControl(void* self, intptr_t slot) {
@@ -855,8 +842,8 @@ bool QCommonStyle_override_virtual_drawComplexControl(void* self, intptr_t slot)
 	return true;
 }
 
-void QCommonStyle_virtualbase_drawComplexControl(const void* self, int cc, QStyleOptionComplex* opt, QPainter* p, QWidget* w) {
-	static_cast<const MiqtVirtualQCommonStyle*>(self)->QCommonStyle::drawComplexControl(static_cast<MiqtVirtualQCommonStyle::ComplexControl>(cc), opt, p, w);
+void QCommonStyle_virtualbase_drawComplexControl(const void* self, ComplexControl cc, QStyleOptionComplex* opt, QPainter* p, QWidget* w) {
+	static_cast<const MiqtVirtualQCommonStyle*>(self)->QCommonStyle::drawComplexControl(cc, opt, p, w);
 }
 
 bool QCommonStyle_override_virtual_hitTestComplexControl(void* self, intptr_t slot) {
@@ -869,9 +856,8 @@ bool QCommonStyle_override_virtual_hitTestComplexControl(void* self, intptr_t sl
 	return true;
 }
 
-int QCommonStyle_virtualbase_hitTestComplexControl(const void* self, int cc, QStyleOptionComplex* opt, QPoint* pt, QWidget* w) {
-	MiqtVirtualQCommonStyle::SubControl _ret = static_cast<const MiqtVirtualQCommonStyle*>(self)->QCommonStyle::hitTestComplexControl(static_cast<MiqtVirtualQCommonStyle::ComplexControl>(cc), opt, *pt, w);
-	return static_cast<int>(_ret);
+SubControl QCommonStyle_virtualbase_hitTestComplexControl(const void* self, ComplexControl cc, QStyleOptionComplex* opt, QPoint* pt, QWidget* w) {
+	return static_cast<const MiqtVirtualQCommonStyle*>(self)->QCommonStyle::hitTestComplexControl(cc, opt, *pt, w);
 }
 
 bool QCommonStyle_override_virtual_subControlRect(void* self, intptr_t slot) {
@@ -884,8 +870,8 @@ bool QCommonStyle_override_virtual_subControlRect(void* self, intptr_t slot) {
 	return true;
 }
 
-QRect* QCommonStyle_virtualbase_subControlRect(const void* self, int cc, QStyleOptionComplex* opt, int sc, QWidget* w) {
-	return new QRect(static_cast<const MiqtVirtualQCommonStyle*>(self)->QCommonStyle::subControlRect(static_cast<MiqtVirtualQCommonStyle::ComplexControl>(cc), opt, static_cast<MiqtVirtualQCommonStyle::SubControl>(sc), w));
+QRect* QCommonStyle_virtualbase_subControlRect(const void* self, ComplexControl cc, QStyleOptionComplex* opt, SubControl sc, QWidget* w) {
+	return new QRect(static_cast<const MiqtVirtualQCommonStyle*>(self)->QCommonStyle::subControlRect(cc, opt, sc, w));
 }
 
 bool QCommonStyle_override_virtual_sizeFromContents(void* self, intptr_t slot) {
@@ -898,8 +884,8 @@ bool QCommonStyle_override_virtual_sizeFromContents(void* self, intptr_t slot) {
 	return true;
 }
 
-QSize* QCommonStyle_virtualbase_sizeFromContents(const void* self, int ct, QStyleOption* opt, QSize* contentsSize, QWidget* widget) {
-	return new QSize(static_cast<const MiqtVirtualQCommonStyle*>(self)->QCommonStyle::sizeFromContents(static_cast<MiqtVirtualQCommonStyle::ContentsType>(ct), opt, *contentsSize, widget));
+QSize* QCommonStyle_virtualbase_sizeFromContents(const void* self, ContentsType ct, QStyleOption* opt, QSize* contentsSize, QWidget* widget) {
+	return new QSize(static_cast<const MiqtVirtualQCommonStyle*>(self)->QCommonStyle::sizeFromContents(ct, opt, *contentsSize, widget));
 }
 
 bool QCommonStyle_override_virtual_pixelMetric(void* self, intptr_t slot) {
@@ -912,8 +898,8 @@ bool QCommonStyle_override_virtual_pixelMetric(void* self, intptr_t slot) {
 	return true;
 }
 
-int QCommonStyle_virtualbase_pixelMetric(const void* self, int m, QStyleOption* opt, QWidget* widget) {
-	return static_cast<const MiqtVirtualQCommonStyle*>(self)->QCommonStyle::pixelMetric(static_cast<MiqtVirtualQCommonStyle::PixelMetric>(m), opt, widget);
+int QCommonStyle_virtualbase_pixelMetric(const void* self, PixelMetric m, QStyleOption* opt, QWidget* widget) {
+	return static_cast<const MiqtVirtualQCommonStyle*>(self)->QCommonStyle::pixelMetric(m, opt, widget);
 }
 
 bool QCommonStyle_override_virtual_styleHint(void* self, intptr_t slot) {
@@ -926,8 +912,8 @@ bool QCommonStyle_override_virtual_styleHint(void* self, intptr_t slot) {
 	return true;
 }
 
-int QCommonStyle_virtualbase_styleHint(const void* self, int sh, QStyleOption* opt, QWidget* w, QStyleHintReturn* shret) {
-	return static_cast<const MiqtVirtualQCommonStyle*>(self)->QCommonStyle::styleHint(static_cast<MiqtVirtualQCommonStyle::StyleHint>(sh), opt, w, shret);
+int QCommonStyle_virtualbase_styleHint(const void* self, StyleHint sh, QStyleOption* opt, QWidget* w, QStyleHintReturn* shret) {
+	return static_cast<const MiqtVirtualQCommonStyle*>(self)->QCommonStyle::styleHint(sh, opt, w, shret);
 }
 
 bool QCommonStyle_override_virtual_standardIcon(void* self, intptr_t slot) {
@@ -940,8 +926,8 @@ bool QCommonStyle_override_virtual_standardIcon(void* self, intptr_t slot) {
 	return true;
 }
 
-QIcon* QCommonStyle_virtualbase_standardIcon(const void* self, int standardIcon, QStyleOption* opt, QWidget* widget) {
-	return new QIcon(static_cast<const MiqtVirtualQCommonStyle*>(self)->QCommonStyle::standardIcon(static_cast<MiqtVirtualQCommonStyle::StandardPixmap>(standardIcon), opt, widget));
+QIcon* QCommonStyle_virtualbase_standardIcon(const void* self, StandardPixmap standardIcon, QStyleOption* opt, QWidget* widget) {
+	return new QIcon(static_cast<const MiqtVirtualQCommonStyle*>(self)->QCommonStyle::standardIcon(standardIcon, opt, widget));
 }
 
 bool QCommonStyle_override_virtual_standardPixmap(void* self, intptr_t slot) {
@@ -954,8 +940,8 @@ bool QCommonStyle_override_virtual_standardPixmap(void* self, intptr_t slot) {
 	return true;
 }
 
-QPixmap* QCommonStyle_virtualbase_standardPixmap(const void* self, int sp, QStyleOption* opt, QWidget* widget) {
-	return new QPixmap(static_cast<const MiqtVirtualQCommonStyle*>(self)->QCommonStyle::standardPixmap(static_cast<MiqtVirtualQCommonStyle::StandardPixmap>(sp), opt, widget));
+QPixmap* QCommonStyle_virtualbase_standardPixmap(const void* self, StandardPixmap sp, QStyleOption* opt, QWidget* widget) {
+	return new QPixmap(static_cast<const MiqtVirtualQCommonStyle*>(self)->QCommonStyle::standardPixmap(sp, opt, widget));
 }
 
 bool QCommonStyle_override_virtual_generatedIconPixmap(void* self, intptr_t slot) {

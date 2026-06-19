@@ -29,6 +29,162 @@ const (
 	QIcon__Off QIcon__State = 1
 )
 
+type QIcon__ThemeIcon int
+
+const (
+	QIcon__AddressBookNew          QIcon__ThemeIcon = 0
+	QIcon__ApplicationExit         QIcon__ThemeIcon = 1
+	QIcon__AppointmentNew          QIcon__ThemeIcon = 2
+	QIcon__CallStart               QIcon__ThemeIcon = 3
+	QIcon__CallStop                QIcon__ThemeIcon = 4
+	QIcon__ContactNew              QIcon__ThemeIcon = 5
+	QIcon__DocumentNew             QIcon__ThemeIcon = 6
+	QIcon__DocumentOpen            QIcon__ThemeIcon = 7
+	QIcon__DocumentOpenRecent      QIcon__ThemeIcon = 8
+	QIcon__DocumentPageSetup       QIcon__ThemeIcon = 9
+	QIcon__DocumentPrint           QIcon__ThemeIcon = 10
+	QIcon__DocumentPrintPreview    QIcon__ThemeIcon = 11
+	QIcon__DocumentProperties      QIcon__ThemeIcon = 12
+	QIcon__DocumentRevert          QIcon__ThemeIcon = 13
+	QIcon__DocumentSave            QIcon__ThemeIcon = 14
+	QIcon__DocumentSaveAs          QIcon__ThemeIcon = 15
+	QIcon__DocumentSend            QIcon__ThemeIcon = 16
+	QIcon__EditClear               QIcon__ThemeIcon = 17
+	QIcon__EditCopy                QIcon__ThemeIcon = 18
+	QIcon__EditCut                 QIcon__ThemeIcon = 19
+	QIcon__EditDelete              QIcon__ThemeIcon = 20
+	QIcon__EditFind                QIcon__ThemeIcon = 21
+	QIcon__EditPaste               QIcon__ThemeIcon = 22
+	QIcon__EditRedo                QIcon__ThemeIcon = 23
+	QIcon__EditSelectAll           QIcon__ThemeIcon = 24
+	QIcon__EditUndo                QIcon__ThemeIcon = 25
+	QIcon__FolderNew               QIcon__ThemeIcon = 26
+	QIcon__FormatIndentLess        QIcon__ThemeIcon = 27
+	QIcon__FormatIndentMore        QIcon__ThemeIcon = 28
+	QIcon__FormatJustifyCenter     QIcon__ThemeIcon = 29
+	QIcon__FormatJustifyFill       QIcon__ThemeIcon = 30
+	QIcon__FormatJustifyLeft       QIcon__ThemeIcon = 31
+	QIcon__FormatJustifyRight      QIcon__ThemeIcon = 32
+	QIcon__FormatTextDirectionLtr  QIcon__ThemeIcon = 33
+	QIcon__FormatTextDirectionRtl  QIcon__ThemeIcon = 34
+	QIcon__FormatTextBold          QIcon__ThemeIcon = 35
+	QIcon__FormatTextItalic        QIcon__ThemeIcon = 36
+	QIcon__FormatTextUnderline     QIcon__ThemeIcon = 37
+	QIcon__FormatTextStrikethrough QIcon__ThemeIcon = 38
+	QIcon__GoDown                  QIcon__ThemeIcon = 39
+	QIcon__GoHome                  QIcon__ThemeIcon = 40
+	QIcon__GoNext                  QIcon__ThemeIcon = 41
+	QIcon__GoPrevious              QIcon__ThemeIcon = 42
+	QIcon__GoUp                    QIcon__ThemeIcon = 43
+	QIcon__HelpAbout               QIcon__ThemeIcon = 44
+	QIcon__HelpFaq                 QIcon__ThemeIcon = 45
+	QIcon__InsertImage             QIcon__ThemeIcon = 46
+	QIcon__InsertLink              QIcon__ThemeIcon = 47
+	QIcon__InsertText              QIcon__ThemeIcon = 48
+	QIcon__ListAdd                 QIcon__ThemeIcon = 49
+	QIcon__ListRemove              QIcon__ThemeIcon = 50
+	QIcon__MailForward             QIcon__ThemeIcon = 51
+	QIcon__MailMarkImportant       QIcon__ThemeIcon = 52
+	QIcon__MailMarkRead            QIcon__ThemeIcon = 53
+	QIcon__MailMarkUnread          QIcon__ThemeIcon = 54
+	QIcon__MailMessageNew          QIcon__ThemeIcon = 55
+	QIcon__MailReplyAll            QIcon__ThemeIcon = 56
+	QIcon__MailReplySender         QIcon__ThemeIcon = 57
+	QIcon__MailSend                QIcon__ThemeIcon = 58
+	QIcon__MediaEject              QIcon__ThemeIcon = 59
+	QIcon__MediaPlaybackPause      QIcon__ThemeIcon = 60
+	QIcon__MediaPlaybackStart      QIcon__ThemeIcon = 61
+	QIcon__MediaPlaybackStop       QIcon__ThemeIcon = 62
+	QIcon__MediaRecord             QIcon__ThemeIcon = 63
+	QIcon__MediaSeekBackward       QIcon__ThemeIcon = 64
+	QIcon__MediaSeekForward        QIcon__ThemeIcon = 65
+	QIcon__MediaSkipBackward       QIcon__ThemeIcon = 66
+	QIcon__MediaSkipForward        QIcon__ThemeIcon = 67
+	QIcon__ObjectRotateLeft        QIcon__ThemeIcon = 68
+	QIcon__ObjectRotateRight       QIcon__ThemeIcon = 69
+	QIcon__ProcessStop             QIcon__ThemeIcon = 70
+	QIcon__SystemLockScreen        QIcon__ThemeIcon = 71
+	QIcon__SystemLogOut            QIcon__ThemeIcon = 72
+	QIcon__SystemSearch            QIcon__ThemeIcon = 73
+	QIcon__SystemReboot            QIcon__ThemeIcon = 74
+	QIcon__SystemShutdown          QIcon__ThemeIcon = 75
+	QIcon__ToolsCheckSpelling      QIcon__ThemeIcon = 76
+	QIcon__ViewFullscreen          QIcon__ThemeIcon = 77
+	QIcon__ViewRefresh             QIcon__ThemeIcon = 78
+	QIcon__ViewRestore             QIcon__ThemeIcon = 79
+	QIcon__WindowClose             QIcon__ThemeIcon = 80
+	QIcon__WindowNew               QIcon__ThemeIcon = 81
+	QIcon__ZoomFitBest             QIcon__ThemeIcon = 82
+	QIcon__ZoomIn                  QIcon__ThemeIcon = 83
+	QIcon__ZoomOut                 QIcon__ThemeIcon = 84
+	QIcon__AudioCard               QIcon__ThemeIcon = 85
+	QIcon__AudioInputMicrophone    QIcon__ThemeIcon = 86
+	QIcon__Battery                 QIcon__ThemeIcon = 87
+	QIcon__CameraPhoto             QIcon__ThemeIcon = 88
+	QIcon__CameraVideo             QIcon__ThemeIcon = 89
+	QIcon__CameraWeb               QIcon__ThemeIcon = 90
+	QIcon__Computer                QIcon__ThemeIcon = 91
+	QIcon__DriveHarddisk           QIcon__ThemeIcon = 92
+	QIcon__DriveOptical            QIcon__ThemeIcon = 93
+	QIcon__InputGaming             QIcon__ThemeIcon = 94
+	QIcon__InputKeyboard           QIcon__ThemeIcon = 95
+	QIcon__InputMouse              QIcon__ThemeIcon = 96
+	QIcon__InputTablet             QIcon__ThemeIcon = 97
+	QIcon__MediaFlash              QIcon__ThemeIcon = 98
+	QIcon__MediaOptical            QIcon__ThemeIcon = 99
+	QIcon__MediaTape               QIcon__ThemeIcon = 100
+	QIcon__MultimediaPlayer        QIcon__ThemeIcon = 101
+	QIcon__NetworkWired            QIcon__ThemeIcon = 102
+	QIcon__NetworkWireless         QIcon__ThemeIcon = 103
+	QIcon__Phone                   QIcon__ThemeIcon = 104
+	QIcon__Printer                 QIcon__ThemeIcon = 105
+	QIcon__Scanner                 QIcon__ThemeIcon = 106
+	QIcon__VideoDisplay            QIcon__ThemeIcon = 107
+	QIcon__AppointmentMissed       QIcon__ThemeIcon = 108
+	QIcon__AppointmentSoon         QIcon__ThemeIcon = 109
+	QIcon__AudioVolumeHigh         QIcon__ThemeIcon = 110
+	QIcon__AudioVolumeLow          QIcon__ThemeIcon = 111
+	QIcon__AudioVolumeMedium       QIcon__ThemeIcon = 112
+	QIcon__AudioVolumeMuted        QIcon__ThemeIcon = 113
+	QIcon__BatteryCaution          QIcon__ThemeIcon = 114
+	QIcon__BatteryLow              QIcon__ThemeIcon = 115
+	QIcon__DialogError             QIcon__ThemeIcon = 116
+	QIcon__DialogInformation       QIcon__ThemeIcon = 117
+	QIcon__DialogPassword          QIcon__ThemeIcon = 118
+	QIcon__DialogQuestion          QIcon__ThemeIcon = 119
+	QIcon__DialogWarning           QIcon__ThemeIcon = 120
+	QIcon__FolderDragAccept        QIcon__ThemeIcon = 121
+	QIcon__FolderOpen              QIcon__ThemeIcon = 122
+	QIcon__FolderVisiting          QIcon__ThemeIcon = 123
+	QIcon__ImageLoading            QIcon__ThemeIcon = 124
+	QIcon__ImageMissing            QIcon__ThemeIcon = 125
+	QIcon__MailAttachment          QIcon__ThemeIcon = 126
+	QIcon__MailUnread              QIcon__ThemeIcon = 127
+	QIcon__MailRead                QIcon__ThemeIcon = 128
+	QIcon__MailReplied             QIcon__ThemeIcon = 129
+	QIcon__MediaPlaylistRepeat     QIcon__ThemeIcon = 130
+	QIcon__MediaPlaylistShuffle    QIcon__ThemeIcon = 131
+	QIcon__NetworkOffline          QIcon__ThemeIcon = 132
+	QIcon__PrinterPrinting         QIcon__ThemeIcon = 133
+	QIcon__SecurityHigh            QIcon__ThemeIcon = 134
+	QIcon__SecurityLow             QIcon__ThemeIcon = 135
+	QIcon__SoftwareUpdateAvailable QIcon__ThemeIcon = 136
+	QIcon__SoftwareUpdateUrgent    QIcon__ThemeIcon = 137
+	QIcon__SyncError               QIcon__ThemeIcon = 138
+	QIcon__SyncSynchronizing       QIcon__ThemeIcon = 139
+	QIcon__UserAvailable           QIcon__ThemeIcon = 140
+	QIcon__UserOffline             QIcon__ThemeIcon = 141
+	QIcon__WeatherClear            QIcon__ThemeIcon = 142
+	QIcon__WeatherClearNight       QIcon__ThemeIcon = 143
+	QIcon__WeatherFewClouds        QIcon__ThemeIcon = 144
+	QIcon__WeatherFewCloudsNight   QIcon__ThemeIcon = 145
+	QIcon__WeatherFog              QIcon__ThemeIcon = 146
+	QIcon__WeatherShowers          QIcon__ThemeIcon = 147
+	QIcon__WeatherSnow             QIcon__ThemeIcon = 148
+	QIcon__WeatherStorm            QIcon__ThemeIcon = 149
+	QIcon__NThemeIcons             QIcon__ThemeIcon = 150
+)
+
 type QIcon struct {
 	h *C.QIcon
 }
@@ -242,6 +398,22 @@ func QIcon_HasThemeIcon(name string) bool {
 	return (bool)(C.QIcon_hasThemeIcon(name_ms))
 }
 
+func QIcon_FromThemeWithIcon(icon ThemeIcon) *QIcon {
+	_goptr := newQIcon(C.QIcon_fromThemeWithIcon(icon))
+	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
+	return _goptr
+}
+
+func QIcon_FromTheme3(icon ThemeIcon, fallback *QIcon) *QIcon {
+	_goptr := newQIcon(C.QIcon_fromTheme3(icon, fallback.cPointer()))
+	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
+	return _goptr
+}
+
+func QIcon_HasThemeIconWithIcon(icon ThemeIcon) bool {
+	return (bool)(C.QIcon_hasThemeIconWithIcon(icon))
+}
+
 func QIcon_ThemeSearchPaths() []string {
 	var _ma C.struct_miqt_array = C.QIcon_themeSearchPaths()
 	_ret := make([]string, int(_ma.len))
@@ -326,86 +498,90 @@ func QIcon_SetFallbackThemeName(name string) {
 	C.QIcon_setFallbackThemeName(name_ms)
 }
 
-func (this *QIcon) Pixmap5(size *QSize, mode QIcon__Mode) *QPixmap {
-	_goptr := newQPixmap(C.QIcon_pixmap5(this.h, size.cPointer(), (C.int)(mode)))
+func (this *QIcon) DataPtr() *DataPtr {
+	int /* TODO  */
+}
+
+func (this *QIcon) Pixmap5(size *QSize, mode Mode) *QPixmap {
+	_goptr := newQPixmap(C.QIcon_pixmap5(this.h, size.cPointer(), mode))
 	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
 	return _goptr
 }
 
-func (this *QIcon) Pixmap6(size *QSize, mode QIcon__Mode, state QIcon__State) *QPixmap {
-	_goptr := newQPixmap(C.QIcon_pixmap6(this.h, size.cPointer(), (C.int)(mode), (C.int)(state)))
+func (this *QIcon) Pixmap6(size *QSize, mode Mode, state State) *QPixmap {
+	_goptr := newQPixmap(C.QIcon_pixmap6(this.h, size.cPointer(), mode, state))
 	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
 	return _goptr
 }
 
-func (this *QIcon) Pixmap7(w int, h int, mode QIcon__Mode) *QPixmap {
-	_goptr := newQPixmap(C.QIcon_pixmap7(this.h, (C.int)(w), (C.int)(h), (C.int)(mode)))
+func (this *QIcon) Pixmap7(w int, h int, mode Mode) *QPixmap {
+	_goptr := newQPixmap(C.QIcon_pixmap7(this.h, (C.int)(w), (C.int)(h), mode))
 	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
 	return _goptr
 }
 
-func (this *QIcon) Pixmap8(w int, h int, mode QIcon__Mode, state QIcon__State) *QPixmap {
-	_goptr := newQPixmap(C.QIcon_pixmap8(this.h, (C.int)(w), (C.int)(h), (C.int)(mode), (C.int)(state)))
+func (this *QIcon) Pixmap8(w int, h int, mode Mode, state State) *QPixmap {
+	_goptr := newQPixmap(C.QIcon_pixmap8(this.h, (C.int)(w), (C.int)(h), mode, state))
 	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
 	return _goptr
 }
 
-func (this *QIcon) Pixmap9(extent int, mode QIcon__Mode) *QPixmap {
-	_goptr := newQPixmap(C.QIcon_pixmap9(this.h, (C.int)(extent), (C.int)(mode)))
+func (this *QIcon) Pixmap9(extent int, mode Mode) *QPixmap {
+	_goptr := newQPixmap(C.QIcon_pixmap9(this.h, (C.int)(extent), mode))
 	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
 	return _goptr
 }
 
-func (this *QIcon) Pixmap10(extent int, mode QIcon__Mode, state QIcon__State) *QPixmap {
-	_goptr := newQPixmap(C.QIcon_pixmap10(this.h, (C.int)(extent), (C.int)(mode), (C.int)(state)))
+func (this *QIcon) Pixmap10(extent int, mode Mode, state State) *QPixmap {
+	_goptr := newQPixmap(C.QIcon_pixmap10(this.h, (C.int)(extent), mode, state))
 	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
 	return _goptr
 }
 
-func (this *QIcon) Pixmap11(size *QSize, devicePixelRatio float64, mode QIcon__Mode) *QPixmap {
-	_goptr := newQPixmap(C.QIcon_pixmap11(this.h, size.cPointer(), (C.double)(devicePixelRatio), (C.int)(mode)))
+func (this *QIcon) Pixmap11(size *QSize, devicePixelRatio float64, mode Mode) *QPixmap {
+	_goptr := newQPixmap(C.QIcon_pixmap11(this.h, size.cPointer(), (C.double)(devicePixelRatio), mode))
 	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
 	return _goptr
 }
 
-func (this *QIcon) Pixmap12(size *QSize, devicePixelRatio float64, mode QIcon__Mode, state QIcon__State) *QPixmap {
-	_goptr := newQPixmap(C.QIcon_pixmap12(this.h, size.cPointer(), (C.double)(devicePixelRatio), (C.int)(mode), (C.int)(state)))
+func (this *QIcon) Pixmap12(size *QSize, devicePixelRatio float64, mode Mode, state State) *QPixmap {
+	_goptr := newQPixmap(C.QIcon_pixmap12(this.h, size.cPointer(), (C.double)(devicePixelRatio), mode, state))
 	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
 	return _goptr
 }
 
-func (this *QIcon) Pixmap13(window *QWindow, size *QSize, mode QIcon__Mode) *QPixmap {
-	_goptr := newQPixmap(C.QIcon_pixmap13(this.h, window.cPointer(), size.cPointer(), (C.int)(mode)))
+func (this *QIcon) Pixmap13(window *QWindow, size *QSize, mode Mode) *QPixmap {
+	_goptr := newQPixmap(C.QIcon_pixmap13(this.h, window.cPointer(), size.cPointer(), mode))
 	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
 	return _goptr
 }
 
-func (this *QIcon) Pixmap14(window *QWindow, size *QSize, mode QIcon__Mode, state QIcon__State) *QPixmap {
-	_goptr := newQPixmap(C.QIcon_pixmap14(this.h, window.cPointer(), size.cPointer(), (C.int)(mode), (C.int)(state)))
+func (this *QIcon) Pixmap14(window *QWindow, size *QSize, mode Mode, state State) *QPixmap {
+	_goptr := newQPixmap(C.QIcon_pixmap14(this.h, window.cPointer(), size.cPointer(), mode, state))
 	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
 	return _goptr
 }
 
-func (this *QIcon) ActualSize3(size *QSize, mode QIcon__Mode) *QSize {
-	_goptr := newQSize(C.QIcon_actualSize3(this.h, size.cPointer(), (C.int)(mode)))
+func (this *QIcon) ActualSize3(size *QSize, mode Mode) *QSize {
+	_goptr := newQSize(C.QIcon_actualSize3(this.h, size.cPointer(), mode))
 	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
 	return _goptr
 }
 
-func (this *QIcon) ActualSize4(size *QSize, mode QIcon__Mode, state QIcon__State) *QSize {
-	_goptr := newQSize(C.QIcon_actualSize4(this.h, size.cPointer(), (C.int)(mode), (C.int)(state)))
+func (this *QIcon) ActualSize4(size *QSize, mode Mode, state State) *QSize {
+	_goptr := newQSize(C.QIcon_actualSize4(this.h, size.cPointer(), mode, state))
 	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
 	return _goptr
 }
 
-func (this *QIcon) ActualSize5(window *QWindow, size *QSize, mode QIcon__Mode) *QSize {
-	_goptr := newQSize(C.QIcon_actualSize5(this.h, window.cPointer(), size.cPointer(), (C.int)(mode)))
+func (this *QIcon) ActualSize5(window *QWindow, size *QSize, mode Mode) *QSize {
+	_goptr := newQSize(C.QIcon_actualSize5(this.h, window.cPointer(), size.cPointer(), mode))
 	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
 	return _goptr
 }
 
-func (this *QIcon) ActualSize6(window *QWindow, size *QSize, mode QIcon__Mode, state QIcon__State) *QSize {
-	_goptr := newQSize(C.QIcon_actualSize6(this.h, window.cPointer(), size.cPointer(), (C.int)(mode), (C.int)(state)))
+func (this *QIcon) ActualSize6(window *QWindow, size *QSize, mode Mode, state State) *QSize {
+	_goptr := newQSize(C.QIcon_actualSize6(this.h, window.cPointer(), size.cPointer(), mode, state))
 	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
 	return _goptr
 }
@@ -414,32 +590,32 @@ func (this *QIcon) Paint3(painter *QPainter, rect *QRect, alignment AlignmentFla
 	C.QIcon_paint3(this.h, painter.cPointer(), rect.cPointer(), (C.int)(alignment))
 }
 
-func (this *QIcon) Paint4(painter *QPainter, rect *QRect, alignment AlignmentFlag, mode QIcon__Mode) {
-	C.QIcon_paint4(this.h, painter.cPointer(), rect.cPointer(), (C.int)(alignment), (C.int)(mode))
+func (this *QIcon) Paint4(painter *QPainter, rect *QRect, alignment AlignmentFlag, mode Mode) {
+	C.QIcon_paint4(this.h, painter.cPointer(), rect.cPointer(), (C.int)(alignment), mode)
 }
 
-func (this *QIcon) Paint5(painter *QPainter, rect *QRect, alignment AlignmentFlag, mode QIcon__Mode, state QIcon__State) {
-	C.QIcon_paint5(this.h, painter.cPointer(), rect.cPointer(), (C.int)(alignment), (C.int)(mode), (C.int)(state))
+func (this *QIcon) Paint5(painter *QPainter, rect *QRect, alignment AlignmentFlag, mode Mode, state State) {
+	C.QIcon_paint5(this.h, painter.cPointer(), rect.cPointer(), (C.int)(alignment), mode, state)
 }
 
 func (this *QIcon) Paint6(painter *QPainter, x int, y int, w int, h int, alignment AlignmentFlag) {
 	C.QIcon_paint6(this.h, painter.cPointer(), (C.int)(x), (C.int)(y), (C.int)(w), (C.int)(h), (C.int)(alignment))
 }
 
-func (this *QIcon) Paint7(painter *QPainter, x int, y int, w int, h int, alignment AlignmentFlag, mode QIcon__Mode) {
-	C.QIcon_paint7(this.h, painter.cPointer(), (C.int)(x), (C.int)(y), (C.int)(w), (C.int)(h), (C.int)(alignment), (C.int)(mode))
+func (this *QIcon) Paint7(painter *QPainter, x int, y int, w int, h int, alignment AlignmentFlag, mode Mode) {
+	C.QIcon_paint7(this.h, painter.cPointer(), (C.int)(x), (C.int)(y), (C.int)(w), (C.int)(h), (C.int)(alignment), mode)
 }
 
-func (this *QIcon) Paint8(painter *QPainter, x int, y int, w int, h int, alignment AlignmentFlag, mode QIcon__Mode, state QIcon__State) {
-	C.QIcon_paint8(this.h, painter.cPointer(), (C.int)(x), (C.int)(y), (C.int)(w), (C.int)(h), (C.int)(alignment), (C.int)(mode), (C.int)(state))
+func (this *QIcon) Paint8(painter *QPainter, x int, y int, w int, h int, alignment AlignmentFlag, mode Mode, state State) {
+	C.QIcon_paint8(this.h, painter.cPointer(), (C.int)(x), (C.int)(y), (C.int)(w), (C.int)(h), (C.int)(alignment), mode, state)
 }
 
-func (this *QIcon) AddPixmap2(pixmap *QPixmap, mode QIcon__Mode) {
-	C.QIcon_addPixmap2(this.h, pixmap.cPointer(), (C.int)(mode))
+func (this *QIcon) AddPixmap2(pixmap *QPixmap, mode Mode) {
+	C.QIcon_addPixmap2(this.h, pixmap.cPointer(), mode)
 }
 
-func (this *QIcon) AddPixmap3(pixmap *QPixmap, mode QIcon__Mode, state QIcon__State) {
-	C.QIcon_addPixmap3(this.h, pixmap.cPointer(), (C.int)(mode), (C.int)(state))
+func (this *QIcon) AddPixmap3(pixmap *QPixmap, mode Mode, state State) {
+	C.QIcon_addPixmap3(this.h, pixmap.cPointer(), mode, state)
 }
 
 func (this *QIcon) AddFile2(fileName string, size *QSize) {
@@ -450,24 +626,24 @@ func (this *QIcon) AddFile2(fileName string, size *QSize) {
 	C.QIcon_addFile2(this.h, fileName_ms, size.cPointer())
 }
 
-func (this *QIcon) AddFile3(fileName string, size *QSize, mode QIcon__Mode) {
+func (this *QIcon) AddFile3(fileName string, size *QSize, mode Mode) {
 	fileName_ms := C.struct_miqt_string{}
 	fileName_ms.data = C.CString(fileName)
 	fileName_ms.len = C.size_t(len(fileName))
 	defer C.free(unsafe.Pointer(fileName_ms.data))
-	C.QIcon_addFile3(this.h, fileName_ms, size.cPointer(), (C.int)(mode))
+	C.QIcon_addFile3(this.h, fileName_ms, size.cPointer(), mode)
 }
 
-func (this *QIcon) AddFile4(fileName string, size *QSize, mode QIcon__Mode, state QIcon__State) {
+func (this *QIcon) AddFile4(fileName string, size *QSize, mode Mode, state State) {
 	fileName_ms := C.struct_miqt_string{}
 	fileName_ms.data = C.CString(fileName)
 	fileName_ms.len = C.size_t(len(fileName))
 	defer C.free(unsafe.Pointer(fileName_ms.data))
-	C.QIcon_addFile4(this.h, fileName_ms, size.cPointer(), (C.int)(mode), (C.int)(state))
+	C.QIcon_addFile4(this.h, fileName_ms, size.cPointer(), mode, state)
 }
 
-func (this *QIcon) AvailableSizesWithMode(mode QIcon__Mode) []QSize {
-	var _ma C.struct_miqt_array = C.QIcon_availableSizesWithMode(this.h, (C.int)(mode))
+func (this *QIcon) AvailableSizesWithMode(mode Mode) []QSize {
+	var _ma C.struct_miqt_array = C.QIcon_availableSizesWithMode(this.h, mode)
 	_ret := make([]QSize, int(_ma.len))
 	_outCast := (*[0xffff]*C.QSize)(unsafe.Pointer(_ma.data)) // hey ya
 	for i := 0; i < int(_ma.len); i++ {
@@ -478,8 +654,8 @@ func (this *QIcon) AvailableSizesWithMode(mode QIcon__Mode) []QSize {
 	return _ret
 }
 
-func (this *QIcon) AvailableSizes2(mode QIcon__Mode, state QIcon__State) []QSize {
-	var _ma C.struct_miqt_array = C.QIcon_availableSizes2(this.h, (C.int)(mode), (C.int)(state))
+func (this *QIcon) AvailableSizes2(mode Mode, state State) []QSize {
+	var _ma C.struct_miqt_array = C.QIcon_availableSizes2(this.h, mode, state)
 	_ret := make([]QSize, int(_ma.len))
 	_outCast := (*[0xffff]*C.QSize)(unsafe.Pointer(_ma.data)) // hey ya
 	for i := 0; i < int(_ma.len); i++ {

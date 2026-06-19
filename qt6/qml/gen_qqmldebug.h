@@ -33,9 +33,9 @@ void QQmlDebuggingEnabler_setServices(struct miqt_array /* of struct miqt_string
 bool QQmlDebuggingEnabler_startTcpDebugServer(int port);
 bool QQmlDebuggingEnabler_connectToLocalDebugger(struct miqt_string socketFileName);
 bool QQmlDebuggingEnabler_startDebugConnector(struct miqt_string pluginName);
-bool QQmlDebuggingEnabler_startTcpDebugServer2(int port, int mode);
-bool QQmlDebuggingEnabler_startTcpDebugServer3(int port, int mode, struct miqt_string hostName);
-bool QQmlDebuggingEnabler_connectToLocalDebugger2(struct miqt_string socketFileName, int mode);
+bool QQmlDebuggingEnabler_startTcpDebugServer2(int port, StartMode mode);
+bool QQmlDebuggingEnabler_startTcpDebugServer3(int port, StartMode mode, struct miqt_string hostName);
+bool QQmlDebuggingEnabler_connectToLocalDebugger2(struct miqt_string socketFileName, StartMode mode);
 bool QQmlDebuggingEnabler_startDebugConnector2(struct miqt_string pluginName, struct miqt_map /* of struct miqt_string to QVariant* */  configuration);
 
 void QQmlDebuggingEnabler_delete(QQmlDebuggingEnabler* self);

@@ -181,6 +181,14 @@ func (this *QIdentityProxyModel) MoveColumns(sourceParent *QModelIndex, sourceCo
 	return (bool)(C.QIdentityProxyModel_moveColumns(this.h, sourceParent.cPointer(), (C.int)(sourceColumn), (C.int)(count), destinationParent.cPointer(), (C.int)(destinationChild)))
 }
 
+func (this *QIdentityProxyModel) HandleSourceLayoutChanges() bool {
+	return (bool)(C.QIdentityProxyModel_handleSourceLayoutChanges(this.h))
+}
+
+func (this *QIdentityProxyModel) HandleSourceDataChanges() bool {
+	return (bool)(C.QIdentityProxyModel_handleSourceDataChanges(this.h))
+}
+
 func QIdentityProxyModel_Tr2(s string, c string) string {
 	s_Cstring := C.CString(s)
 	defer C.free(unsafe.Pointer(s_Cstring))
@@ -201,6 +209,30 @@ func QIdentityProxyModel_Tr3(s string, c string, n int) string {
 	_ret := C.GoStringN(_ms.data, C.int(int64(_ms.len)))
 	C.free(unsafe.Pointer(_ms.data))
 	return _ret
+}
+
+// SetHandleSourceLayoutChanges can only be called from a QIdentityProxyModel that was directly constructed.
+func (this *QIdentityProxyModel) SetHandleSourceLayoutChanges(handleSourceLayoutChanges bool) {
+
+	var _dynamic_cast_ok C.bool = false
+	C.QIdentityProxyModel_protectedbase_setHandleSourceLayoutChanges(&_dynamic_cast_ok, unsafe.Pointer(this.h), (C.bool)(handleSourceLayoutChanges))
+
+	if !_dynamic_cast_ok {
+		panic("miqt: can only call protected methods for directly constructed types")
+	}
+
+}
+
+// SetHandleSourceDataChanges can only be called from a QIdentityProxyModel that was directly constructed.
+func (this *QIdentityProxyModel) SetHandleSourceDataChanges(handleSourceDataChanges bool) {
+
+	var _dynamic_cast_ok C.bool = false
+	C.QIdentityProxyModel_protectedbase_setHandleSourceDataChanges(&_dynamic_cast_ok, unsafe.Pointer(this.h), (C.bool)(handleSourceDataChanges))
+
+	if !_dynamic_cast_ok {
+		panic("miqt: can only call protected methods for directly constructed types")
+	}
+
 }
 
 // CreateSourceIndex can only be called from a QIdentityProxyModel that was directly constructed.

@@ -98,7 +98,7 @@ void miqt_exec_callback_QFileDialog_dragLeaveEvent(QFileDialog*, intptr_t, QDrag
 void miqt_exec_callback_QFileDialog_dropEvent(QFileDialog*, intptr_t, QDropEvent*);
 void miqt_exec_callback_QFileDialog_hideEvent(QFileDialog*, intptr_t, QHideEvent*);
 bool miqt_exec_callback_QFileDialog_nativeEvent(QFileDialog*, intptr_t, struct miqt_string, void*, intptr_t*);
-int miqt_exec_callback_QFileDialog_metric(const QFileDialog*, intptr_t, int);
+int miqt_exec_callback_QFileDialog_metric(const QFileDialog*, intptr_t, PaintDeviceMetric);
 void miqt_exec_callback_QFileDialog_initPainter(const QFileDialog*, intptr_t, QPainter*);
 QPaintDevice* miqt_exec_callback_QFileDialog_redirected(const QFileDialog*, intptr_t, QPoint*);
 QPainter* miqt_exec_callback_QFileDialog_sharedPainter(const QFileDialog*, intptr_t);
@@ -800,18 +800,17 @@ public:
 	intptr_t handle__metric = 0;
 
 	// Subclass to allow providing a Go implementation
-	virtual int metric(QPaintDevice::PaintDeviceMetric param1) const override {
+	virtual int metric(PaintDeviceMetric param1) const override {
 		if (handle__metric == 0) {
 			return QFileDialog::metric(param1);
 		}
 
-		QPaintDevice::PaintDeviceMetric param1_ret = param1;
-		int sigval1 = static_cast<int>(param1_ret);
+		PaintDeviceMetric sigval1 = param1;
 		int callback_return_value = miqt_exec_callback_QFileDialog_metric(this, handle__metric, sigval1);
 		return static_cast<int>(callback_return_value);
 	}
 
-	friend int QFileDialog_virtualbase_metric(const void* self, int param1);
+	friend int QFileDialog_virtualbase_metric(const void* self, PaintDeviceMetric param1);
 
 	// cgo.Handle value for overwritten implementation
 	intptr_t handle__initPainter = 0;
@@ -1011,6 +1010,7 @@ public:
 	friend int QFileDialog_protectedbase_senderSignalIndex(bool* _dynamic_cast_ok, const void* self);
 	friend int QFileDialog_protectedbase_receivers(bool* _dynamic_cast_ok, const void* self, const char* signal);
 	friend bool QFileDialog_protectedbase_isSignalConnected(bool* _dynamic_cast_ok, const void* self, QMetaMethod* signal);
+	friend double QFileDialog_protectedbase_getDecodedMetricF(bool* _dynamic_cast_ok, const void* self, PaintDeviceMetric metricA, PaintDeviceMetric metricB);
 };
 
 QFileDialog* QFileDialog_new(QWidget* parent) {
@@ -1237,31 +1237,28 @@ void QFileDialog_setFilter(QFileDialog* self, int filters) {
 	self->setFilter(static_cast<QDir::Filters>(filters));
 }
 
-void QFileDialog_setViewMode(QFileDialog* self, int mode) {
-	self->setViewMode(static_cast<QFileDialog::ViewMode>(mode));
+void QFileDialog_setViewMode(QFileDialog* self, ViewMode mode) {
+	self->setViewMode(mode);
 }
 
-int QFileDialog_viewMode(const QFileDialog* self) {
-	QFileDialog::ViewMode _ret = self->viewMode();
-	return static_cast<int>(_ret);
+ViewMode QFileDialog_viewMode(const QFileDialog* self) {
+	return self->viewMode();
 }
 
-void QFileDialog_setFileMode(QFileDialog* self, int mode) {
-	self->setFileMode(static_cast<QFileDialog::FileMode>(mode));
+void QFileDialog_setFileMode(QFileDialog* self, FileMode mode) {
+	self->setFileMode(mode);
 }
 
-int QFileDialog_fileMode(const QFileDialog* self) {
-	QFileDialog::FileMode _ret = self->fileMode();
-	return static_cast<int>(_ret);
+FileMode QFileDialog_fileMode(const QFileDialog* self) {
+	return self->fileMode();
 }
 
-void QFileDialog_setAcceptMode(QFileDialog* self, int mode) {
-	self->setAcceptMode(static_cast<QFileDialog::AcceptMode>(mode));
+void QFileDialog_setAcceptMode(QFileDialog* self, AcceptMode mode) {
+	self->setAcceptMode(mode);
 }
 
-int QFileDialog_acceptMode(const QFileDialog* self) {
-	QFileDialog::AcceptMode _ret = self->acceptMode();
-	return static_cast<int>(_ret);
+AcceptMode QFileDialog_acceptMode(const QFileDialog* self) {
+	return self->acceptMode();
 }
 
 void QFileDialog_setSidebarUrls(QFileDialog* self, struct miqt_array /* of QUrl* */  urls) {
@@ -1364,13 +1361,13 @@ QAbstractFileIconProvider* QFileDialog_iconProvider(const QFileDialog* self) {
 	return self->iconProvider();
 }
 
-void QFileDialog_setLabelText(QFileDialog* self, int label, struct miqt_string text) {
+void QFileDialog_setLabelText(QFileDialog* self, DialogLabel label, struct miqt_string text) {
 	QString text_QString = QString::fromUtf8(text.data, text.len);
-	self->setLabelText(static_cast<QFileDialog::DialogLabel>(label), text_QString);
+	self->setLabelText(label, text_QString);
 }
 
-struct miqt_string QFileDialog_labelText(const QFileDialog* self, int label) {
-	QString _ret = self->labelText(static_cast<QFileDialog::DialogLabel>(label));
+struct miqt_string QFileDialog_labelText(const QFileDialog* self, DialogLabel label) {
+	QString _ret = self->labelText(label);
 	// Convert QString from UTF-16 in C++ RAII memory to UTF-8 in manually-managed C memory
 	QByteArray _b = _ret.toUtf8();
 	struct miqt_string _ms;
@@ -1419,21 +1416,20 @@ QAbstractProxyModel* QFileDialog_proxyModel(const QFileDialog* self) {
 	return self->proxyModel();
 }
 
-void QFileDialog_setOption(QFileDialog* self, int option) {
-	self->setOption(static_cast<QFileDialog::Option>(option));
+void QFileDialog_setOption(QFileDialog* self, Option option) {
+	self->setOption(option);
 }
 
-bool QFileDialog_testOption(const QFileDialog* self, int option) {
-	return self->testOption(static_cast<QFileDialog::Option>(option));
+bool QFileDialog_testOption(const QFileDialog* self, Option option) {
+	return self->testOption(option);
 }
 
-void QFileDialog_setOptions(QFileDialog* self, int options) {
-	self->setOptions(static_cast<QFileDialog::Options>(options));
+void QFileDialog_setOptions(QFileDialog* self, Options options) {
+	self->setOptions(options);
 }
 
-int QFileDialog_options(const QFileDialog* self) {
-	QFileDialog::Options _ret = self->options();
-	return static_cast<int>(_ret);
+Options QFileDialog_options(const QFileDialog* self) {
+	return self->options();
 }
 
 void QFileDialog_setVisible(QFileDialog* self, bool visible) {
@@ -1721,8 +1717,8 @@ struct miqt_string QFileDialog_tr3(const char* s, const char* c, int n) {
 	return _ms;
 }
 
-void QFileDialog_setOption2(QFileDialog* self, int option, bool on) {
-	self->setOption(static_cast<QFileDialog::Option>(option), on);
+void QFileDialog_setOption2(QFileDialog* self, Option option, bool on) {
+	self->setOption(option, on);
 }
 
 struct miqt_string QFileDialog_getOpenFileNameWithParent(QWidget* parent) {
@@ -1901,10 +1897,10 @@ struct miqt_string QFileDialog_getExistingDirectory3(QWidget* parent, struct miq
 	return _ms;
 }
 
-struct miqt_string QFileDialog_getExistingDirectory4(QWidget* parent, struct miqt_string caption, struct miqt_string dir, int options) {
+struct miqt_string QFileDialog_getExistingDirectory4(QWidget* parent, struct miqt_string caption, struct miqt_string dir, Options options) {
 	QString caption_QString = QString::fromUtf8(caption.data, caption.len);
 	QString dir_QString = QString::fromUtf8(dir.data, dir.len);
-	QString _ret = QFileDialog::getExistingDirectory(parent, caption_QString, dir_QString, static_cast<QFileDialog::Options>(options));
+	QString _ret = QFileDialog::getExistingDirectory(parent, caption_QString, dir_QString, options);
 	// Convert QString from UTF-16 in C++ RAII memory to UTF-8 in manually-managed C memory
 	QByteArray _b = _ret.toUtf8();
 	struct miqt_string _ms;
@@ -1928,12 +1924,12 @@ QUrl* QFileDialog_getExistingDirectoryUrl3(QWidget* parent, struct miqt_string c
 	return new QUrl(QFileDialog::getExistingDirectoryUrl(parent, caption_QString, *dir));
 }
 
-QUrl* QFileDialog_getExistingDirectoryUrl4(QWidget* parent, struct miqt_string caption, QUrl* dir, int options) {
+QUrl* QFileDialog_getExistingDirectoryUrl4(QWidget* parent, struct miqt_string caption, QUrl* dir, Options options) {
 	QString caption_QString = QString::fromUtf8(caption.data, caption.len);
-	return new QUrl(QFileDialog::getExistingDirectoryUrl(parent, caption_QString, *dir, static_cast<QFileDialog::Options>(options)));
+	return new QUrl(QFileDialog::getExistingDirectoryUrl(parent, caption_QString, *dir, options));
 }
 
-QUrl* QFileDialog_getExistingDirectoryUrl5(QWidget* parent, struct miqt_string caption, QUrl* dir, int options, struct miqt_array /* of struct miqt_string */  supportedSchemes) {
+QUrl* QFileDialog_getExistingDirectoryUrl5(QWidget* parent, struct miqt_string caption, QUrl* dir, Options options, struct miqt_array /* of struct miqt_string */  supportedSchemes) {
 	QString caption_QString = QString::fromUtf8(caption.data, caption.len);
 	QStringList supportedSchemes_QList;
 	supportedSchemes_QList.reserve(supportedSchemes.len);
@@ -1942,7 +1938,7 @@ QUrl* QFileDialog_getExistingDirectoryUrl5(QWidget* parent, struct miqt_string c
 		QString supportedSchemes_arr_i_QString = QString::fromUtf8(supportedSchemes_arr[i].data, supportedSchemes_arr[i].len);
 		supportedSchemes_QList.push_back(supportedSchemes_arr_i_QString);
 	}
-	return new QUrl(QFileDialog::getExistingDirectoryUrl(parent, caption_QString, *dir, static_cast<QFileDialog::Options>(options), supportedSchemes_QList));
+	return new QUrl(QFileDialog::getExistingDirectoryUrl(parent, caption_QString, *dir, options, supportedSchemes_QList));
 }
 
 struct miqt_array /* of struct miqt_string */  QFileDialog_getOpenFileNamesWithParent(QWidget* parent) {
@@ -2085,6 +2081,12 @@ struct miqt_array /* of QUrl* */  QFileDialog_getOpenFileUrls4(QWidget* parent, 
 	_out.len = _ret.length();
 	_out.data = static_cast<void*>(_arr);
 	return _out;
+}
+
+void QFileDialog_saveFileContent2(struct miqt_string fileContent, struct miqt_string fileNameHint, QWidget* parent) {
+	QByteArray fileContent_QByteArray(fileContent.data, fileContent.len);
+	QString fileNameHint_QString = QString::fromUtf8(fileNameHint.data, fileNameHint.len);
+	QFileDialog::saveFileContent(fileContent_QByteArray, fileNameHint_QString, parent);
 }
 
 bool QFileDialog_override_virtual_setVisible(void* self, intptr_t slot) {
@@ -2658,8 +2660,8 @@ bool QFileDialog_override_virtual_metric(void* self, intptr_t slot) {
 	return true;
 }
 
-int QFileDialog_virtualbase_metric(const void* self, int param1) {
-	return static_cast<const MiqtVirtualQFileDialog*>(self)->QFileDialog::metric(static_cast<MiqtVirtualQFileDialog::PaintDeviceMetric>(param1));
+int QFileDialog_virtualbase_metric(const void* self, PaintDeviceMetric param1) {
+	return static_cast<const MiqtVirtualQFileDialog*>(self)->QFileDialog::metric(param1);
 }
 
 bool QFileDialog_override_virtual_initPainter(void* self, intptr_t slot) {
@@ -2924,6 +2926,17 @@ bool QFileDialog_protectedbase_isSignalConnected(bool* _dynamic_cast_ok, const v
 
 	*_dynamic_cast_ok = true;
 	return self_cast->isSignalConnected(*signal);
+}
+
+double QFileDialog_protectedbase_getDecodedMetricF(bool* _dynamic_cast_ok, const void* self, PaintDeviceMetric metricA, PaintDeviceMetric metricB) {
+	MiqtVirtualQFileDialog* self_cast = dynamic_cast<MiqtVirtualQFileDialog*>( (QFileDialog*)(self) );
+	if (self_cast == nullptr) {
+		*_dynamic_cast_ok = false;
+		return 0;
+	}
+
+	*_dynamic_cast_ok = true;
+	return self_cast->getDecodedMetricF(metricA, metricB);
 }
 
 void QFileDialog_delete(QFileDialog* self) {

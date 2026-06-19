@@ -150,28 +150,28 @@ func (this *QMdiArea) SetBackground(background *QBrush) {
 	C.QMdiArea_setBackground(this.h, background.cPointer())
 }
 
-func (this *QMdiArea) ActivationOrder() QMdiArea__WindowOrder {
-	return (QMdiArea__WindowOrder)(C.QMdiArea_activationOrder(this.h))
+func (this *QMdiArea) ActivationOrder() WindowOrder {
+	int /* TODO  */
 }
 
-func (this *QMdiArea) SetActivationOrder(order QMdiArea__WindowOrder) {
-	C.QMdiArea_setActivationOrder(this.h, (C.int)(order))
+func (this *QMdiArea) SetActivationOrder(order WindowOrder) {
+	C.QMdiArea_setActivationOrder(this.h, order)
 }
 
-func (this *QMdiArea) SetOption(option QMdiArea__AreaOption) {
-	C.QMdiArea_setOption(this.h, (C.int)(option))
+func (this *QMdiArea) SetOption(option AreaOption) {
+	C.QMdiArea_setOption(this.h, option)
 }
 
-func (this *QMdiArea) TestOption(opton QMdiArea__AreaOption) bool {
-	return (bool)(C.QMdiArea_testOption(this.h, (C.int)(opton)))
+func (this *QMdiArea) TestOption(opton AreaOption) bool {
+	return (bool)(C.QMdiArea_testOption(this.h, opton))
 }
 
-func (this *QMdiArea) SetViewMode(mode QMdiArea__ViewMode) {
-	C.QMdiArea_setViewMode(this.h, (C.int)(mode))
+func (this *QMdiArea) SetViewMode(mode ViewMode) {
+	C.QMdiArea_setViewMode(this.h, mode)
 }
 
-func (this *QMdiArea) ViewMode() QMdiArea__ViewMode {
-	return (QMdiArea__ViewMode)(C.QMdiArea_viewMode(this.h))
+func (this *QMdiArea) ViewMode() ViewMode {
+	int /* TODO  */
 }
 
 func (this *QMdiArea) DocumentMode() bool {
@@ -284,8 +284,8 @@ func QMdiArea_Tr3(s string, c string, n int) string {
 	return _ret
 }
 
-func (this *QMdiArea) SubWindowListWithOrder(order QMdiArea__WindowOrder) []*QMdiSubWindow {
-	var _ma C.struct_miqt_array = C.QMdiArea_subWindowListWithOrder(this.h, (C.int)(order))
+func (this *QMdiArea) SubWindowListWithOrder(order WindowOrder) []*QMdiSubWindow {
+	var _ma C.struct_miqt_array = C.QMdiArea_subWindowListWithOrder(this.h, order)
 	_ret := make([]*QMdiSubWindow, int(_ma.len))
 	_outCast := (*[0xffff]*C.QMdiSubWindow)(unsafe.Pointer(_ma.data)) // hey ya
 	for i := 0; i < int(_ma.len); i++ {
@@ -298,8 +298,8 @@ func (this *QMdiArea) AddSubWindow2(widget *QWidget, flags WindowType) *QMdiSubW
 	return newQMdiSubWindow(C.QMdiArea_addSubWindow2(this.h, widget.cPointer(), (C.int)(flags)))
 }
 
-func (this *QMdiArea) SetOption2(option QMdiArea__AreaOption, on bool) {
-	C.QMdiArea_setOption2(this.h, (C.int)(option), (C.bool)(on))
+func (this *QMdiArea) SetOption2(option AreaOption, on bool) {
+	C.QMdiArea_setOption2(this.h, option, (C.bool)(on))
 }
 
 // SetViewportMargins can only be called from a QMdiArea that was directly constructed.
@@ -455,6 +455,20 @@ func (this *QMdiArea) IsSignalConnected(signal *QMetaMethod) bool {
 
 	var _dynamic_cast_ok C.bool = false
 	_method_ret := (bool)(C.QMdiArea_protectedbase_isSignalConnected(&_dynamic_cast_ok, unsafe.Pointer(this.h), signal.cPointer()))
+
+	if !_dynamic_cast_ok {
+		panic("miqt: can only call protected methods for directly constructed types")
+	}
+
+	return _method_ret
+
+}
+
+// GetDecodedMetricF can only be called from a QMdiArea that was directly constructed.
+func (this *QMdiArea) GetDecodedMetricF(metricA PaintDeviceMetric, metricB PaintDeviceMetric) float64 {
+
+	var _dynamic_cast_ok C.bool = false
+	_method_ret := (float64)(C.QMdiArea_protectedbase_getDecodedMetricF(&_dynamic_cast_ok, unsafe.Pointer(this.h), metricA, metricB))
 
 	if !_dynamic_cast_ok {
 		panic("miqt: can only call protected methods for directly constructed types")
@@ -1583,12 +1597,12 @@ func miqt_exec_callback_QMdiArea_nativeEvent(self *C.QMdiArea, cb C.intptr_t, ev
 
 }
 
-func (this *QMdiArea) callVirtualBase_Metric(param1 QPaintDevice__PaintDeviceMetric) int {
+func (this *QMdiArea) callVirtualBase_Metric(param1 PaintDeviceMetric) int {
 
-	return (int)(C.QMdiArea_virtualbase_metric(unsafe.Pointer(this.h), (C.int)(param1)))
+	return (int)(C.QMdiArea_virtualbase_metric(unsafe.Pointer(this.h), param1))
 
 }
-func (this *QMdiArea) OnMetric(slot func(super func(param1 QPaintDevice__PaintDeviceMetric) int, param1 QPaintDevice__PaintDeviceMetric) int) {
+func (this *QMdiArea) OnMetric(slot func(super func(param1 PaintDeviceMetric) int, param1 PaintDeviceMetric) int) {
 	ok := C.QMdiArea_override_virtual_metric(unsafe.Pointer(this.h), C.intptr_t(cgo.NewHandle(slot)))
 	if !ok {
 		panic("miqt: can only override virtual methods for directly constructed types")
@@ -1596,14 +1610,14 @@ func (this *QMdiArea) OnMetric(slot func(super func(param1 QPaintDevice__PaintDe
 }
 
 //export miqt_exec_callback_QMdiArea_metric
-func miqt_exec_callback_QMdiArea_metric(self *C.QMdiArea, cb C.intptr_t, param1 C.int) C.int {
-	gofunc, ok := cgo.Handle(cb).Value().(func(super func(param1 QPaintDevice__PaintDeviceMetric) int, param1 QPaintDevice__PaintDeviceMetric) int)
+func miqt_exec_callback_QMdiArea_metric(self *C.QMdiArea, cb C.intptr_t, param1 C.PaintDeviceMetric) C.int {
+	gofunc, ok := cgo.Handle(cb).Value().(func(super func(param1 PaintDeviceMetric) int, param1 PaintDeviceMetric) int)
 	if !ok {
 		panic("miqt: callback of non-callback type (heap corruption?)")
 	}
 
 	// Convert all CABI parameters to Go parameters
-	slotval1 := (QPaintDevice__PaintDeviceMetric)(param1)
+	int /* TODO  */
 
 	virtualReturn := gofunc((&QMdiArea{h: self}).callVirtualBase_Metric, slotval1)
 

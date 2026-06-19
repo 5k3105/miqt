@@ -183,8 +183,8 @@ func (this *QAbstractSlider) Value() int {
 	return (int)(C.QAbstractSlider_value(this.h))
 }
 
-func (this *QAbstractSlider) TriggerAction(action QAbstractSlider__SliderAction) {
-	C.QAbstractSlider_triggerAction(this.h, (C.int)(action))
+func (this *QAbstractSlider) TriggerAction(action SliderAction) {
+	C.QAbstractSlider_triggerAction(this.h, action)
 }
 
 func (this *QAbstractSlider) SetValue(value int) {
@@ -338,10 +338,10 @@ func QAbstractSlider_Tr3(s string, c string, n int) string {
 }
 
 // SetRepeatAction can only be called from a QAbstractSlider that was directly constructed.
-func (this *QAbstractSlider) SetRepeatAction(action QAbstractSlider__SliderAction) {
+func (this *QAbstractSlider) SetRepeatAction(action SliderAction) {
 
 	var _dynamic_cast_ok C.bool = false
-	C.QAbstractSlider_protectedbase_setRepeatAction(&_dynamic_cast_ok, unsafe.Pointer(this.h), (C.int)(action))
+	C.QAbstractSlider_protectedbase_setRepeatAction(&_dynamic_cast_ok, unsafe.Pointer(this.h), action)
 
 	if !_dynamic_cast_ok {
 		panic("miqt: can only call protected methods for directly constructed types")
@@ -350,11 +350,10 @@ func (this *QAbstractSlider) SetRepeatAction(action QAbstractSlider__SliderActio
 }
 
 // RepeatAction can only be called from a QAbstractSlider that was directly constructed.
-func (this *QAbstractSlider) RepeatAction() QAbstractSlider__SliderAction {
+func (this *QAbstractSlider) RepeatAction() SliderAction {
 
 	var _dynamic_cast_ok C.bool = false
-	_method_ret := (QAbstractSlider__SliderAction)(C.QAbstractSlider_protectedbase_repeatAction(&_dynamic_cast_ok, unsafe.Pointer(this.h)))
-
+	int /* TODO  */
 	if !_dynamic_cast_ok {
 		panic("miqt: can only call protected methods for directly constructed types")
 	}
@@ -364,10 +363,10 @@ func (this *QAbstractSlider) RepeatAction() QAbstractSlider__SliderAction {
 }
 
 // SetRepeatAction2 can only be called from a QAbstractSlider that was directly constructed.
-func (this *QAbstractSlider) SetRepeatAction2(action QAbstractSlider__SliderAction, thresholdTime int) {
+func (this *QAbstractSlider) SetRepeatAction2(action SliderAction, thresholdTime int) {
 
 	var _dynamic_cast_ok C.bool = false
-	C.QAbstractSlider_protectedbase_setRepeatAction2(&_dynamic_cast_ok, unsafe.Pointer(this.h), (C.int)(action), (C.int)(thresholdTime))
+	C.QAbstractSlider_protectedbase_setRepeatAction2(&_dynamic_cast_ok, unsafe.Pointer(this.h), action, (C.int)(thresholdTime))
 
 	if !_dynamic_cast_ok {
 		panic("miqt: can only call protected methods for directly constructed types")
@@ -376,10 +375,10 @@ func (this *QAbstractSlider) SetRepeatAction2(action QAbstractSlider__SliderActi
 }
 
 // SetRepeatAction3 can only be called from a QAbstractSlider that was directly constructed.
-func (this *QAbstractSlider) SetRepeatAction3(action QAbstractSlider__SliderAction, thresholdTime int, repeatTime int) {
+func (this *QAbstractSlider) SetRepeatAction3(action SliderAction, thresholdTime int, repeatTime int) {
 
 	var _dynamic_cast_ok C.bool = false
-	C.QAbstractSlider_protectedbase_setRepeatAction3(&_dynamic_cast_ok, unsafe.Pointer(this.h), (C.int)(action), (C.int)(thresholdTime), (C.int)(repeatTime))
+	C.QAbstractSlider_protectedbase_setRepeatAction3(&_dynamic_cast_ok, unsafe.Pointer(this.h), action, (C.int)(thresholdTime), (C.int)(repeatTime))
 
 	if !_dynamic_cast_ok {
 		panic("miqt: can only call protected methods for directly constructed types")
@@ -509,6 +508,20 @@ func (this *QAbstractSlider) IsSignalConnected(signal *QMetaMethod) bool {
 
 }
 
+// GetDecodedMetricF can only be called from a QAbstractSlider that was directly constructed.
+func (this *QAbstractSlider) GetDecodedMetricF(metricA PaintDeviceMetric, metricB PaintDeviceMetric) float64 {
+
+	var _dynamic_cast_ok C.bool = false
+	_method_ret := (float64)(C.QAbstractSlider_protectedbase_getDecodedMetricF(&_dynamic_cast_ok, unsafe.Pointer(this.h), metricA, metricB))
+
+	if !_dynamic_cast_ok {
+		panic("miqt: can only call protected methods for directly constructed types")
+	}
+
+	return _method_ret
+
+}
+
 func (this *QAbstractSlider) callVirtualBase_Event(e *QEvent) bool {
 
 	return (bool)(C.QAbstractSlider_virtualbase_event(unsafe.Pointer(this.h), e.cPointer()))
@@ -537,12 +550,12 @@ func miqt_exec_callback_QAbstractSlider_event(self *C.QAbstractSlider, cb C.intp
 
 }
 
-func (this *QAbstractSlider) callVirtualBase_SliderChange(change QAbstractSlider__SliderChange) {
+func (this *QAbstractSlider) callVirtualBase_SliderChange(change SliderChange) {
 
-	C.QAbstractSlider_virtualbase_sliderChange(unsafe.Pointer(this.h), (C.int)(change))
+	C.QAbstractSlider_virtualbase_sliderChange(unsafe.Pointer(this.h), change)
 
 }
-func (this *QAbstractSlider) OnSliderChange(slot func(super func(change QAbstractSlider__SliderChange), change QAbstractSlider__SliderChange)) {
+func (this *QAbstractSlider) OnSliderChange(slot func(super func(change SliderChange), change SliderChange)) {
 	ok := C.QAbstractSlider_override_virtual_sliderChange(unsafe.Pointer(this.h), C.intptr_t(cgo.NewHandle(slot)))
 	if !ok {
 		panic("miqt: can only override virtual methods for directly constructed types")
@@ -550,14 +563,14 @@ func (this *QAbstractSlider) OnSliderChange(slot func(super func(change QAbstrac
 }
 
 //export miqt_exec_callback_QAbstractSlider_sliderChange
-func miqt_exec_callback_QAbstractSlider_sliderChange(self *C.QAbstractSlider, cb C.intptr_t, change C.int) {
-	gofunc, ok := cgo.Handle(cb).Value().(func(super func(change QAbstractSlider__SliderChange), change QAbstractSlider__SliderChange))
+func miqt_exec_callback_QAbstractSlider_sliderChange(self *C.QAbstractSlider, cb C.intptr_t, change C.SliderChange) {
+	gofunc, ok := cgo.Handle(cb).Value().(func(super func(change SliderChange), change SliderChange))
 	if !ok {
 		panic("miqt: callback of non-callback type (heap corruption?)")
 	}
 
 	// Convert all CABI parameters to Go parameters
-	slotval1 := (QAbstractSlider__SliderChange)(change)
+	int /* TODO  */
 
 	gofunc((&QAbstractSlider{h: self}).callVirtualBase_SliderChange, slotval1)
 
@@ -1463,12 +1476,12 @@ func miqt_exec_callback_QAbstractSlider_nativeEvent(self *C.QAbstractSlider, cb 
 
 }
 
-func (this *QAbstractSlider) callVirtualBase_Metric(param1 QPaintDevice__PaintDeviceMetric) int {
+func (this *QAbstractSlider) callVirtualBase_Metric(param1 PaintDeviceMetric) int {
 
-	return (int)(C.QAbstractSlider_virtualbase_metric(unsafe.Pointer(this.h), (C.int)(param1)))
+	return (int)(C.QAbstractSlider_virtualbase_metric(unsafe.Pointer(this.h), param1))
 
 }
-func (this *QAbstractSlider) OnMetric(slot func(super func(param1 QPaintDevice__PaintDeviceMetric) int, param1 QPaintDevice__PaintDeviceMetric) int) {
+func (this *QAbstractSlider) OnMetric(slot func(super func(param1 PaintDeviceMetric) int, param1 PaintDeviceMetric) int) {
 	ok := C.QAbstractSlider_override_virtual_metric(unsafe.Pointer(this.h), C.intptr_t(cgo.NewHandle(slot)))
 	if !ok {
 		panic("miqt: can only override virtual methods for directly constructed types")
@@ -1476,14 +1489,14 @@ func (this *QAbstractSlider) OnMetric(slot func(super func(param1 QPaintDevice__
 }
 
 //export miqt_exec_callback_QAbstractSlider_metric
-func miqt_exec_callback_QAbstractSlider_metric(self *C.QAbstractSlider, cb C.intptr_t, param1 C.int) C.int {
-	gofunc, ok := cgo.Handle(cb).Value().(func(super func(param1 QPaintDevice__PaintDeviceMetric) int, param1 QPaintDevice__PaintDeviceMetric) int)
+func miqt_exec_callback_QAbstractSlider_metric(self *C.QAbstractSlider, cb C.intptr_t, param1 C.PaintDeviceMetric) C.int {
+	gofunc, ok := cgo.Handle(cb).Value().(func(super func(param1 PaintDeviceMetric) int, param1 PaintDeviceMetric) int)
 	if !ok {
 		panic("miqt: callback of non-callback type (heap corruption?)")
 	}
 
 	// Convert all CABI parameters to Go parameters
-	slotval1 := (QPaintDevice__PaintDeviceMetric)(param1)
+	int /* TODO  */
 
 	virtualReturn := gofunc((&QAbstractSlider{h: self}).callVirtualBase_Metric, slotval1)
 

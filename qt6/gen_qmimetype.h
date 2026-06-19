@@ -24,8 +24,6 @@ QMimeType* QMimeType_new();
 QMimeType* QMimeType_new2(QMimeType* other);
 void QMimeType_operatorAssign(QMimeType* self, QMimeType* other);
 void QMimeType_swap(QMimeType* self, QMimeType* other);
-bool QMimeType_operatorEqual(const QMimeType* self, QMimeType* other);
-bool QMimeType_operatorNotEqual(const QMimeType* self, QMimeType* other);
 bool QMimeType_isValid(const QMimeType* self);
 bool QMimeType_isDefault(const QMimeType* self);
 struct miqt_string QMimeType_name(const QMimeType* self);

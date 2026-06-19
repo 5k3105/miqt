@@ -107,8 +107,8 @@ func (this *QSslDiffieHellmanParameters) IsValid() bool {
 	return (bool)(C.QSslDiffieHellmanParameters_isValid(this.h))
 }
 
-func (this *QSslDiffieHellmanParameters) Error() QSslDiffieHellmanParameters__Error {
-	return (QSslDiffieHellmanParameters__Error)(C.QSslDiffieHellmanParameters_error(this.h))
+func (this *QSslDiffieHellmanParameters) Error() Error {
+	int /* TODO  */
 }
 
 func (this *QSslDiffieHellmanParameters) ErrorString() string {

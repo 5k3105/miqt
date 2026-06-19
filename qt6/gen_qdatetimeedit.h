@@ -54,6 +54,7 @@ class QStyleOptionSpinBox;
 class QTabletEvent;
 class QTime;
 class QTimeEdit;
+class QTimeZone;
 class QTimerEvent;
 class QVariant;
 class QWheelEvent;
@@ -98,6 +99,7 @@ typedef struct QStyleOptionSpinBox QStyleOptionSpinBox;
 typedef struct QTabletEvent QTabletEvent;
 typedef struct QTime QTime;
 typedef struct QTimeEdit QTimeEdit;
+typedef struct QTimeZone QTimeZone;
 typedef struct QTimerEvent QTimerEvent;
 typedef struct QVariant QVariant;
 typedef struct QWheelEvent QWheelEvent;
@@ -142,23 +144,25 @@ QTime* QDateTimeEdit_maximumTime(const QDateTimeEdit* self);
 void QDateTimeEdit_setMaximumTime(QDateTimeEdit* self, QTime* max);
 void QDateTimeEdit_clearMaximumTime(QDateTimeEdit* self);
 void QDateTimeEdit_setTimeRange(QDateTimeEdit* self, QTime* min, QTime* max);
-int QDateTimeEdit_displayedSections(const QDateTimeEdit* self);
-int QDateTimeEdit_currentSection(const QDateTimeEdit* self);
-int QDateTimeEdit_sectionAt(const QDateTimeEdit* self, int index);
-void QDateTimeEdit_setCurrentSection(QDateTimeEdit* self, int section);
+Sections QDateTimeEdit_displayedSections(const QDateTimeEdit* self);
+Section QDateTimeEdit_currentSection(const QDateTimeEdit* self);
+Section QDateTimeEdit_sectionAt(const QDateTimeEdit* self, int index);
+void QDateTimeEdit_setCurrentSection(QDateTimeEdit* self, Section section);
 int QDateTimeEdit_currentSectionIndex(const QDateTimeEdit* self);
 void QDateTimeEdit_setCurrentSectionIndex(QDateTimeEdit* self, int index);
 QCalendarWidget* QDateTimeEdit_calendarWidget(const QDateTimeEdit* self);
 void QDateTimeEdit_setCalendarWidget(QDateTimeEdit* self, QCalendarWidget* calendarWidget);
 int QDateTimeEdit_sectionCount(const QDateTimeEdit* self);
-void QDateTimeEdit_setSelectedSection(QDateTimeEdit* self, int section);
-struct miqt_string QDateTimeEdit_sectionText(const QDateTimeEdit* self, int section);
+void QDateTimeEdit_setSelectedSection(QDateTimeEdit* self, Section section);
+struct miqt_string QDateTimeEdit_sectionText(const QDateTimeEdit* self, Section section);
 struct miqt_string QDateTimeEdit_displayFormat(const QDateTimeEdit* self);
 void QDateTimeEdit_setDisplayFormat(QDateTimeEdit* self, struct miqt_string format);
 bool QDateTimeEdit_calendarPopup(const QDateTimeEdit* self);
 void QDateTimeEdit_setCalendarPopup(QDateTimeEdit* self, bool enable);
 int QDateTimeEdit_timeSpec(const QDateTimeEdit* self);
 void QDateTimeEdit_setTimeSpec(QDateTimeEdit* self, int spec);
+QTimeZone* QDateTimeEdit_timeZone(const QDateTimeEdit* self);
+void QDateTimeEdit_setTimeZone(QDateTimeEdit* self, QTimeZone* zone);
 QSize* QDateTimeEdit_sizeHint(const QDateTimeEdit* self);
 void QDateTimeEdit_clear(QDateTimeEdit* self);
 void QDateTimeEdit_stepBy(QDateTimeEdit* self, int steps);
@@ -180,7 +184,7 @@ int QDateTimeEdit_validate(const QDateTimeEdit* self, struct miqt_string input, 
 void QDateTimeEdit_fixup(const QDateTimeEdit* self, struct miqt_string input);
 QDateTime* QDateTimeEdit_dateTimeFromText(const QDateTimeEdit* self, struct miqt_string text);
 struct miqt_string QDateTimeEdit_textFromDateTime(const QDateTimeEdit* self, QDateTime* dt);
-int QDateTimeEdit_stepEnabled(const QDateTimeEdit* self);
+StepEnabled QDateTimeEdit_stepEnabled(const QDateTimeEdit* self);
 void QDateTimeEdit_mousePressEvent(QDateTimeEdit* self, QMouseEvent* event);
 void QDateTimeEdit_paintEvent(QDateTimeEdit* self, QPaintEvent* event);
 void QDateTimeEdit_initStyleOption(const QDateTimeEdit* self, QStyleOptionSpinBox* option);
@@ -212,7 +216,7 @@ QDateTime* QDateTimeEdit_virtualbase_dateTimeFromText(const void* self, struct m
 bool QDateTimeEdit_override_virtual_textFromDateTime(void* self, intptr_t slot);
 struct miqt_string QDateTimeEdit_virtualbase_textFromDateTime(const void* self, QDateTime* dt);
 bool QDateTimeEdit_override_virtual_stepEnabled(void* self, intptr_t slot);
-int QDateTimeEdit_virtualbase_stepEnabled(const void* self);
+StepEnabled QDateTimeEdit_virtualbase_stepEnabled(const void* self);
 bool QDateTimeEdit_override_virtual_mousePressEvent(void* self, intptr_t slot);
 void QDateTimeEdit_virtualbase_mousePressEvent(void* self, QMouseEvent* event);
 bool QDateTimeEdit_override_virtual_paintEvent(void* self, intptr_t slot);
@@ -278,7 +282,7 @@ void QDateTimeEdit_virtualbase_dropEvent(void* self, QDropEvent* event);
 bool QDateTimeEdit_override_virtual_nativeEvent(void* self, intptr_t slot);
 bool QDateTimeEdit_virtualbase_nativeEvent(void* self, struct miqt_string eventType, void* message, intptr_t* result);
 bool QDateTimeEdit_override_virtual_metric(void* self, intptr_t slot);
-int QDateTimeEdit_virtualbase_metric(const void* self, int param1);
+int QDateTimeEdit_virtualbase_metric(const void* self, PaintDeviceMetric param1);
 bool QDateTimeEdit_override_virtual_initPainter(void* self, intptr_t slot);
 void QDateTimeEdit_virtualbase_initPainter(const void* self, QPainter* painter);
 bool QDateTimeEdit_override_virtual_redirected(void* self, intptr_t slot);
@@ -309,6 +313,7 @@ QObject* QDateTimeEdit_protectedbase_sender(bool* _dynamic_cast_ok, const void* 
 int QDateTimeEdit_protectedbase_senderSignalIndex(bool* _dynamic_cast_ok, const void* self);
 int QDateTimeEdit_protectedbase_receivers(bool* _dynamic_cast_ok, const void* self, const char* signal);
 bool QDateTimeEdit_protectedbase_isSignalConnected(bool* _dynamic_cast_ok, const void* self, QMetaMethod* signal);
+double QDateTimeEdit_protectedbase_getDecodedMetricF(bool* _dynamic_cast_ok, const void* self, PaintDeviceMetric metricA, PaintDeviceMetric metricB);
 
 void QDateTimeEdit_delete(QDateTimeEdit* self);
 
@@ -350,7 +355,7 @@ QDateTime* QTimeEdit_virtualbase_dateTimeFromText(const void* self, struct miqt_
 bool QTimeEdit_override_virtual_textFromDateTime(void* self, intptr_t slot);
 struct miqt_string QTimeEdit_virtualbase_textFromDateTime(const void* self, QDateTime* dt);
 bool QTimeEdit_override_virtual_stepEnabled(void* self, intptr_t slot);
-int QTimeEdit_virtualbase_stepEnabled(const void* self);
+StepEnabled QTimeEdit_virtualbase_stepEnabled(const void* self);
 bool QTimeEdit_override_virtual_mousePressEvent(void* self, intptr_t slot);
 void QTimeEdit_virtualbase_mousePressEvent(void* self, QMouseEvent* event);
 bool QTimeEdit_override_virtual_paintEvent(void* self, intptr_t slot);
@@ -416,7 +421,7 @@ void QTimeEdit_virtualbase_dropEvent(void* self, QDropEvent* event);
 bool QTimeEdit_override_virtual_nativeEvent(void* self, intptr_t slot);
 bool QTimeEdit_virtualbase_nativeEvent(void* self, struct miqt_string eventType, void* message, intptr_t* result);
 bool QTimeEdit_override_virtual_metric(void* self, intptr_t slot);
-int QTimeEdit_virtualbase_metric(const void* self, int param1);
+int QTimeEdit_virtualbase_metric(const void* self, PaintDeviceMetric param1);
 bool QTimeEdit_override_virtual_initPainter(void* self, intptr_t slot);
 void QTimeEdit_virtualbase_initPainter(const void* self, QPainter* painter);
 bool QTimeEdit_override_virtual_redirected(void* self, intptr_t slot);
@@ -447,6 +452,7 @@ QObject* QTimeEdit_protectedbase_sender(bool* _dynamic_cast_ok, const void* self
 int QTimeEdit_protectedbase_senderSignalIndex(bool* _dynamic_cast_ok, const void* self);
 int QTimeEdit_protectedbase_receivers(bool* _dynamic_cast_ok, const void* self, const char* signal);
 bool QTimeEdit_protectedbase_isSignalConnected(bool* _dynamic_cast_ok, const void* self, QMetaMethod* signal);
+double QTimeEdit_protectedbase_getDecodedMetricF(bool* _dynamic_cast_ok, const void* self, PaintDeviceMetric metricA, PaintDeviceMetric metricB);
 
 void QTimeEdit_delete(QTimeEdit* self);
 
@@ -488,7 +494,7 @@ QDateTime* QDateEdit_virtualbase_dateTimeFromText(const void* self, struct miqt_
 bool QDateEdit_override_virtual_textFromDateTime(void* self, intptr_t slot);
 struct miqt_string QDateEdit_virtualbase_textFromDateTime(const void* self, QDateTime* dt);
 bool QDateEdit_override_virtual_stepEnabled(void* self, intptr_t slot);
-int QDateEdit_virtualbase_stepEnabled(const void* self);
+StepEnabled QDateEdit_virtualbase_stepEnabled(const void* self);
 bool QDateEdit_override_virtual_mousePressEvent(void* self, intptr_t slot);
 void QDateEdit_virtualbase_mousePressEvent(void* self, QMouseEvent* event);
 bool QDateEdit_override_virtual_paintEvent(void* self, intptr_t slot);
@@ -554,7 +560,7 @@ void QDateEdit_virtualbase_dropEvent(void* self, QDropEvent* event);
 bool QDateEdit_override_virtual_nativeEvent(void* self, intptr_t slot);
 bool QDateEdit_virtualbase_nativeEvent(void* self, struct miqt_string eventType, void* message, intptr_t* result);
 bool QDateEdit_override_virtual_metric(void* self, intptr_t slot);
-int QDateEdit_virtualbase_metric(const void* self, int param1);
+int QDateEdit_virtualbase_metric(const void* self, PaintDeviceMetric param1);
 bool QDateEdit_override_virtual_initPainter(void* self, intptr_t slot);
 void QDateEdit_virtualbase_initPainter(const void* self, QPainter* painter);
 bool QDateEdit_override_virtual_redirected(void* self, intptr_t slot);
@@ -585,6 +591,7 @@ QObject* QDateEdit_protectedbase_sender(bool* _dynamic_cast_ok, const void* self
 int QDateEdit_protectedbase_senderSignalIndex(bool* _dynamic_cast_ok, const void* self);
 int QDateEdit_protectedbase_receivers(bool* _dynamic_cast_ok, const void* self, const char* signal);
 bool QDateEdit_protectedbase_isSignalConnected(bool* _dynamic_cast_ok, const void* self, QMetaMethod* signal);
+double QDateEdit_protectedbase_getDecodedMetricF(bool* _dynamic_cast_ok, const void* self, PaintDeviceMetric metricA, PaintDeviceMetric metricB);
 
 void QDateEdit_delete(QDateEdit* self);
 

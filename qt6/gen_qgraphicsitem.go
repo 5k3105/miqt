@@ -282,32 +282,32 @@ func (this *QGraphicsItem) SetGroup(group *QGraphicsItemGroup) {
 	C.QGraphicsItem_setGroup(this.h, group.cPointer())
 }
 
-func (this *QGraphicsItem) Flags() QGraphicsItem__GraphicsItemFlag {
-	return (QGraphicsItem__GraphicsItemFlag)(C.QGraphicsItem_flags(this.h))
+func (this *QGraphicsItem) Flags() GraphicsItemFlags {
+	int /* TODO  */
 }
 
-func (this *QGraphicsItem) SetFlag(flag QGraphicsItem__GraphicsItemFlag) {
-	C.QGraphicsItem_setFlag(this.h, (C.int)(flag))
+func (this *QGraphicsItem) SetFlag(flag GraphicsItemFlag) {
+	C.QGraphicsItem_setFlag(this.h, flag)
 }
 
-func (this *QGraphicsItem) SetFlags(flags QGraphicsItem__GraphicsItemFlag) {
-	C.QGraphicsItem_setFlags(this.h, (C.int)(flags))
+func (this *QGraphicsItem) SetFlags(flags GraphicsItemFlags) {
+	C.QGraphicsItem_setFlags(this.h, flags)
 }
 
-func (this *QGraphicsItem) CacheMode() QGraphicsItem__CacheMode {
-	return (QGraphicsItem__CacheMode)(C.QGraphicsItem_cacheMode(this.h))
+func (this *QGraphicsItem) CacheMode() CacheMode {
+	int /* TODO  */
 }
 
-func (this *QGraphicsItem) SetCacheMode(mode QGraphicsItem__CacheMode) {
-	C.QGraphicsItem_setCacheMode(this.h, (C.int)(mode))
+func (this *QGraphicsItem) SetCacheMode(mode CacheMode) {
+	C.QGraphicsItem_setCacheMode(this.h, mode)
 }
 
-func (this *QGraphicsItem) PanelModality() QGraphicsItem__PanelModality {
-	return (QGraphicsItem__PanelModality)(C.QGraphicsItem_panelModality(this.h))
+func (this *QGraphicsItem) PanelModality() PanelModality {
+	int /* TODO  */
 }
 
-func (this *QGraphicsItem) SetPanelModality(panelModality QGraphicsItem__PanelModality) {
-	C.QGraphicsItem_setPanelModality(this.h, (C.int)(panelModality))
+func (this *QGraphicsItem) SetPanelModality(panelModality PanelModality) {
+	C.QGraphicsItem_setPanelModality(this.h, panelModality)
 }
 
 func (this *QGraphicsItem) IsBlockedByModalPanel() bool {
@@ -975,12 +975,12 @@ func (this *QGraphicsItem) RemoveSceneEventFilter(filterItem *QGraphicsItem) {
 	C.QGraphicsItem_removeSceneEventFilter(this.h, filterItem.cPointer())
 }
 
-func (this *QGraphicsItem) SetFlag2(flag QGraphicsItem__GraphicsItemFlag, enabled bool) {
-	C.QGraphicsItem_setFlag2(this.h, (C.int)(flag), (C.bool)(enabled))
+func (this *QGraphicsItem) SetFlag2(flag GraphicsItemFlag, enabled bool) {
+	C.QGraphicsItem_setFlag2(this.h, flag, (C.bool)(enabled))
 }
 
-func (this *QGraphicsItem) SetCacheMode2(mode QGraphicsItem__CacheMode, cacheSize *QSize) {
-	C.QGraphicsItem_setCacheMode2(this.h, (C.int)(mode), cacheSize.cPointer())
+func (this *QGraphicsItem) SetCacheMode2(mode CacheMode, cacheSize *QSize) {
+	C.QGraphicsItem_setCacheMode2(this.h, mode, cacheSize.cPointer())
 }
 
 func (this *QGraphicsItem) SetFocusWithFocusReason(focusReason FocusReason) {
@@ -1907,14 +1907,14 @@ func miqt_exec_callback_QGraphicsItem_inputMethodQuery(self *C.QGraphicsItem, cb
 
 }
 
-func (this *QGraphicsItem) callVirtualBase_ItemChange(change QGraphicsItem__GraphicsItemChange, value *QVariant) *QVariant {
+func (this *QGraphicsItem) callVirtualBase_ItemChange(change GraphicsItemChange, value *QVariant) *QVariant {
 
-	_goptr := newQVariant(C.QGraphicsItem_virtualbase_itemChange(unsafe.Pointer(this.h), (C.int)(change), value.cPointer()))
+	_goptr := newQVariant(C.QGraphicsItem_virtualbase_itemChange(unsafe.Pointer(this.h), change, value.cPointer()))
 	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
 	return _goptr
 
 }
-func (this *QGraphicsItem) OnItemChange(slot func(super func(change QGraphicsItem__GraphicsItemChange, value *QVariant) *QVariant, change QGraphicsItem__GraphicsItemChange, value *QVariant) *QVariant) {
+func (this *QGraphicsItem) OnItemChange(slot func(super func(change GraphicsItemChange, value *QVariant) *QVariant, change GraphicsItemChange, value *QVariant) *QVariant) {
 	ok := C.QGraphicsItem_override_virtual_itemChange(unsafe.Pointer(this.h), C.intptr_t(cgo.NewHandle(slot)))
 	if !ok {
 		panic("miqt: can only override virtual methods for directly constructed types")
@@ -1922,15 +1922,14 @@ func (this *QGraphicsItem) OnItemChange(slot func(super func(change QGraphicsIte
 }
 
 //export miqt_exec_callback_QGraphicsItem_itemChange
-func miqt_exec_callback_QGraphicsItem_itemChange(self *C.QGraphicsItem, cb C.intptr_t, change C.int, value *C.QVariant) *C.QVariant {
-	gofunc, ok := cgo.Handle(cb).Value().(func(super func(change QGraphicsItem__GraphicsItemChange, value *QVariant) *QVariant, change QGraphicsItem__GraphicsItemChange, value *QVariant) *QVariant)
+func miqt_exec_callback_QGraphicsItem_itemChange(self *C.QGraphicsItem, cb C.intptr_t, change C.GraphicsItemChange, value *C.QVariant) *C.QVariant {
+	gofunc, ok := cgo.Handle(cb).Value().(func(super func(change GraphicsItemChange, value *QVariant) *QVariant, change GraphicsItemChange, value *QVariant) *QVariant)
 	if !ok {
 		panic("miqt: callback of non-callback type (heap corruption?)")
 	}
 
 	// Convert all CABI parameters to Go parameters
-	slotval1 := (QGraphicsItem__GraphicsItemChange)(change)
-
+	int /* TODO  */
 	slotval2 := newQVariant(value)
 
 	virtualReturn := gofunc((&QGraphicsItem{h: self}).callVirtualBase_ItemChange, slotval1, slotval2)
@@ -1939,12 +1938,12 @@ func miqt_exec_callback_QGraphicsItem_itemChange(self *C.QGraphicsItem, cb C.int
 
 }
 
-func (this *QGraphicsItem) callVirtualBase_SupportsExtension(extension QGraphicsItem__Extension) bool {
+func (this *QGraphicsItem) callVirtualBase_SupportsExtension(extension Extension) bool {
 
-	return (bool)(C.QGraphicsItem_virtualbase_supportsExtension(unsafe.Pointer(this.h), (C.int)(extension)))
+	return (bool)(C.QGraphicsItem_virtualbase_supportsExtension(unsafe.Pointer(this.h), extension))
 
 }
-func (this *QGraphicsItem) OnSupportsExtension(slot func(super func(extension QGraphicsItem__Extension) bool, extension QGraphicsItem__Extension) bool) {
+func (this *QGraphicsItem) OnSupportsExtension(slot func(super func(extension Extension) bool, extension Extension) bool) {
 	ok := C.QGraphicsItem_override_virtual_supportsExtension(unsafe.Pointer(this.h), C.intptr_t(cgo.NewHandle(slot)))
 	if !ok {
 		panic("miqt: can only override virtual methods for directly constructed types")
@@ -1952,14 +1951,14 @@ func (this *QGraphicsItem) OnSupportsExtension(slot func(super func(extension QG
 }
 
 //export miqt_exec_callback_QGraphicsItem_supportsExtension
-func miqt_exec_callback_QGraphicsItem_supportsExtension(self *C.QGraphicsItem, cb C.intptr_t, extension C.int) C.bool {
-	gofunc, ok := cgo.Handle(cb).Value().(func(super func(extension QGraphicsItem__Extension) bool, extension QGraphicsItem__Extension) bool)
+func miqt_exec_callback_QGraphicsItem_supportsExtension(self *C.QGraphicsItem, cb C.intptr_t, extension C.Extension) C.bool {
+	gofunc, ok := cgo.Handle(cb).Value().(func(super func(extension Extension) bool, extension Extension) bool)
 	if !ok {
 		panic("miqt: callback of non-callback type (heap corruption?)")
 	}
 
 	// Convert all CABI parameters to Go parameters
-	slotval1 := (QGraphicsItem__Extension)(extension)
+	int /* TODO  */
 
 	virtualReturn := gofunc((&QGraphicsItem{h: self}).callVirtualBase_SupportsExtension, slotval1)
 
@@ -1967,12 +1966,12 @@ func miqt_exec_callback_QGraphicsItem_supportsExtension(self *C.QGraphicsItem, c
 
 }
 
-func (this *QGraphicsItem) callVirtualBase_SetExtension(extension QGraphicsItem__Extension, variant *QVariant) {
+func (this *QGraphicsItem) callVirtualBase_SetExtension(extension Extension, variant *QVariant) {
 
-	C.QGraphicsItem_virtualbase_setExtension(unsafe.Pointer(this.h), (C.int)(extension), variant.cPointer())
+	C.QGraphicsItem_virtualbase_setExtension(unsafe.Pointer(this.h), extension, variant.cPointer())
 
 }
-func (this *QGraphicsItem) OnSetExtension(slot func(super func(extension QGraphicsItem__Extension, variant *QVariant), extension QGraphicsItem__Extension, variant *QVariant)) {
+func (this *QGraphicsItem) OnSetExtension(slot func(super func(extension Extension, variant *QVariant), extension Extension, variant *QVariant)) {
 	ok := C.QGraphicsItem_override_virtual_setExtension(unsafe.Pointer(this.h), C.intptr_t(cgo.NewHandle(slot)))
 	if !ok {
 		panic("miqt: can only override virtual methods for directly constructed types")
@@ -1980,15 +1979,14 @@ func (this *QGraphicsItem) OnSetExtension(slot func(super func(extension QGraphi
 }
 
 //export miqt_exec_callback_QGraphicsItem_setExtension
-func miqt_exec_callback_QGraphicsItem_setExtension(self *C.QGraphicsItem, cb C.intptr_t, extension C.int, variant *C.QVariant) {
-	gofunc, ok := cgo.Handle(cb).Value().(func(super func(extension QGraphicsItem__Extension, variant *QVariant), extension QGraphicsItem__Extension, variant *QVariant))
+func miqt_exec_callback_QGraphicsItem_setExtension(self *C.QGraphicsItem, cb C.intptr_t, extension C.Extension, variant *C.QVariant) {
+	gofunc, ok := cgo.Handle(cb).Value().(func(super func(extension Extension, variant *QVariant), extension Extension, variant *QVariant))
 	if !ok {
 		panic("miqt: callback of non-callback type (heap corruption?)")
 	}
 
 	// Convert all CABI parameters to Go parameters
-	slotval1 := (QGraphicsItem__Extension)(extension)
-
+	int /* TODO  */
 	slotval2 := newQVariant(variant)
 
 	gofunc((&QGraphicsItem{h: self}).callVirtualBase_SetExtension, slotval1, slotval2)
@@ -3461,14 +3459,14 @@ func miqt_exec_callback_QGraphicsObject_inputMethodQuery(self *C.QGraphicsObject
 
 }
 
-func (this *QGraphicsObject) callVirtualBase_ItemChange(change QGraphicsItem__GraphicsItemChange, value *QVariant) *QVariant {
+func (this *QGraphicsObject) callVirtualBase_ItemChange(change GraphicsItemChange, value *QVariant) *QVariant {
 
-	_goptr := newQVariant(C.QGraphicsObject_virtualbase_itemChange(unsafe.Pointer(this.h), (C.int)(change), value.cPointer()))
+	_goptr := newQVariant(C.QGraphicsObject_virtualbase_itemChange(unsafe.Pointer(this.h), change, value.cPointer()))
 	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
 	return _goptr
 
 }
-func (this *QGraphicsObject) OnItemChange(slot func(super func(change QGraphicsItem__GraphicsItemChange, value *QVariant) *QVariant, change QGraphicsItem__GraphicsItemChange, value *QVariant) *QVariant) {
+func (this *QGraphicsObject) OnItemChange(slot func(super func(change GraphicsItemChange, value *QVariant) *QVariant, change GraphicsItemChange, value *QVariant) *QVariant) {
 	ok := C.QGraphicsObject_override_virtual_itemChange(unsafe.Pointer(this.h), C.intptr_t(cgo.NewHandle(slot)))
 	if !ok {
 		panic("miqt: can only override virtual methods for directly constructed types")
@@ -3476,15 +3474,14 @@ func (this *QGraphicsObject) OnItemChange(slot func(super func(change QGraphicsI
 }
 
 //export miqt_exec_callback_QGraphicsObject_itemChange
-func miqt_exec_callback_QGraphicsObject_itemChange(self *C.QGraphicsObject, cb C.intptr_t, change C.int, value *C.QVariant) *C.QVariant {
-	gofunc, ok := cgo.Handle(cb).Value().(func(super func(change QGraphicsItem__GraphicsItemChange, value *QVariant) *QVariant, change QGraphicsItem__GraphicsItemChange, value *QVariant) *QVariant)
+func miqt_exec_callback_QGraphicsObject_itemChange(self *C.QGraphicsObject, cb C.intptr_t, change C.GraphicsItemChange, value *C.QVariant) *C.QVariant {
+	gofunc, ok := cgo.Handle(cb).Value().(func(super func(change GraphicsItemChange, value *QVariant) *QVariant, change GraphicsItemChange, value *QVariant) *QVariant)
 	if !ok {
 		panic("miqt: callback of non-callback type (heap corruption?)")
 	}
 
 	// Convert all CABI parameters to Go parameters
-	slotval1 := (QGraphicsItem__GraphicsItemChange)(change)
-
+	int /* TODO  */
 	slotval2 := newQVariant(value)
 
 	virtualReturn := gofunc((&QGraphicsObject{h: self}).callVirtualBase_ItemChange, slotval1, slotval2)
@@ -3493,12 +3490,12 @@ func miqt_exec_callback_QGraphicsObject_itemChange(self *C.QGraphicsObject, cb C
 
 }
 
-func (this *QGraphicsObject) callVirtualBase_SupportsExtension(extension QGraphicsItem__Extension) bool {
+func (this *QGraphicsObject) callVirtualBase_SupportsExtension(extension Extension) bool {
 
-	return (bool)(C.QGraphicsObject_virtualbase_supportsExtension(unsafe.Pointer(this.h), (C.int)(extension)))
+	return (bool)(C.QGraphicsObject_virtualbase_supportsExtension(unsafe.Pointer(this.h), extension))
 
 }
-func (this *QGraphicsObject) OnSupportsExtension(slot func(super func(extension QGraphicsItem__Extension) bool, extension QGraphicsItem__Extension) bool) {
+func (this *QGraphicsObject) OnSupportsExtension(slot func(super func(extension Extension) bool, extension Extension) bool) {
 	ok := C.QGraphicsObject_override_virtual_supportsExtension(unsafe.Pointer(this.h), C.intptr_t(cgo.NewHandle(slot)))
 	if !ok {
 		panic("miqt: can only override virtual methods for directly constructed types")
@@ -3506,14 +3503,14 @@ func (this *QGraphicsObject) OnSupportsExtension(slot func(super func(extension 
 }
 
 //export miqt_exec_callback_QGraphicsObject_supportsExtension
-func miqt_exec_callback_QGraphicsObject_supportsExtension(self *C.QGraphicsObject, cb C.intptr_t, extension C.int) C.bool {
-	gofunc, ok := cgo.Handle(cb).Value().(func(super func(extension QGraphicsItem__Extension) bool, extension QGraphicsItem__Extension) bool)
+func miqt_exec_callback_QGraphicsObject_supportsExtension(self *C.QGraphicsObject, cb C.intptr_t, extension C.Extension) C.bool {
+	gofunc, ok := cgo.Handle(cb).Value().(func(super func(extension Extension) bool, extension Extension) bool)
 	if !ok {
 		panic("miqt: callback of non-callback type (heap corruption?)")
 	}
 
 	// Convert all CABI parameters to Go parameters
-	slotval1 := (QGraphicsItem__Extension)(extension)
+	int /* TODO  */
 
 	virtualReturn := gofunc((&QGraphicsObject{h: self}).callVirtualBase_SupportsExtension, slotval1)
 
@@ -3521,12 +3518,12 @@ func miqt_exec_callback_QGraphicsObject_supportsExtension(self *C.QGraphicsObjec
 
 }
 
-func (this *QGraphicsObject) callVirtualBase_SetExtension(extension QGraphicsItem__Extension, variant *QVariant) {
+func (this *QGraphicsObject) callVirtualBase_SetExtension(extension Extension, variant *QVariant) {
 
-	C.QGraphicsObject_virtualbase_setExtension(unsafe.Pointer(this.h), (C.int)(extension), variant.cPointer())
+	C.QGraphicsObject_virtualbase_setExtension(unsafe.Pointer(this.h), extension, variant.cPointer())
 
 }
-func (this *QGraphicsObject) OnSetExtension(slot func(super func(extension QGraphicsItem__Extension, variant *QVariant), extension QGraphicsItem__Extension, variant *QVariant)) {
+func (this *QGraphicsObject) OnSetExtension(slot func(super func(extension Extension, variant *QVariant), extension Extension, variant *QVariant)) {
 	ok := C.QGraphicsObject_override_virtual_setExtension(unsafe.Pointer(this.h), C.intptr_t(cgo.NewHandle(slot)))
 	if !ok {
 		panic("miqt: can only override virtual methods for directly constructed types")
@@ -3534,15 +3531,14 @@ func (this *QGraphicsObject) OnSetExtension(slot func(super func(extension QGrap
 }
 
 //export miqt_exec_callback_QGraphicsObject_setExtension
-func miqt_exec_callback_QGraphicsObject_setExtension(self *C.QGraphicsObject, cb C.intptr_t, extension C.int, variant *C.QVariant) {
-	gofunc, ok := cgo.Handle(cb).Value().(func(super func(extension QGraphicsItem__Extension, variant *QVariant), extension QGraphicsItem__Extension, variant *QVariant))
+func miqt_exec_callback_QGraphicsObject_setExtension(self *C.QGraphicsObject, cb C.intptr_t, extension C.Extension, variant *C.QVariant) {
+	gofunc, ok := cgo.Handle(cb).Value().(func(super func(extension Extension, variant *QVariant), extension Extension, variant *QVariant))
 	if !ok {
 		panic("miqt: callback of non-callback type (heap corruption?)")
 	}
 
 	// Convert all CABI parameters to Go parameters
-	slotval1 := (QGraphicsItem__Extension)(extension)
-
+	int /* TODO  */
 	slotval2 := newQVariant(variant)
 
 	gofunc((&QGraphicsObject{h: self}).callVirtualBase_SetExtension, slotval1, slotval2)
@@ -4539,14 +4535,14 @@ func miqt_exec_callback_QAbstractGraphicsShapeItem_inputMethodQuery(self *C.QAbs
 
 }
 
-func (this *QAbstractGraphicsShapeItem) callVirtualBase_ItemChange(change QGraphicsItem__GraphicsItemChange, value *QVariant) *QVariant {
+func (this *QAbstractGraphicsShapeItem) callVirtualBase_ItemChange(change GraphicsItemChange, value *QVariant) *QVariant {
 
-	_goptr := newQVariant(C.QAbstractGraphicsShapeItem_virtualbase_itemChange(unsafe.Pointer(this.h), (C.int)(change), value.cPointer()))
+	_goptr := newQVariant(C.QAbstractGraphicsShapeItem_virtualbase_itemChange(unsafe.Pointer(this.h), change, value.cPointer()))
 	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
 	return _goptr
 
 }
-func (this *QAbstractGraphicsShapeItem) OnItemChange(slot func(super func(change QGraphicsItem__GraphicsItemChange, value *QVariant) *QVariant, change QGraphicsItem__GraphicsItemChange, value *QVariant) *QVariant) {
+func (this *QAbstractGraphicsShapeItem) OnItemChange(slot func(super func(change GraphicsItemChange, value *QVariant) *QVariant, change GraphicsItemChange, value *QVariant) *QVariant) {
 	ok := C.QAbstractGraphicsShapeItem_override_virtual_itemChange(unsafe.Pointer(this.h), C.intptr_t(cgo.NewHandle(slot)))
 	if !ok {
 		panic("miqt: can only override virtual methods for directly constructed types")
@@ -4554,15 +4550,14 @@ func (this *QAbstractGraphicsShapeItem) OnItemChange(slot func(super func(change
 }
 
 //export miqt_exec_callback_QAbstractGraphicsShapeItem_itemChange
-func miqt_exec_callback_QAbstractGraphicsShapeItem_itemChange(self *C.QAbstractGraphicsShapeItem, cb C.intptr_t, change C.int, value *C.QVariant) *C.QVariant {
-	gofunc, ok := cgo.Handle(cb).Value().(func(super func(change QGraphicsItem__GraphicsItemChange, value *QVariant) *QVariant, change QGraphicsItem__GraphicsItemChange, value *QVariant) *QVariant)
+func miqt_exec_callback_QAbstractGraphicsShapeItem_itemChange(self *C.QAbstractGraphicsShapeItem, cb C.intptr_t, change C.GraphicsItemChange, value *C.QVariant) *C.QVariant {
+	gofunc, ok := cgo.Handle(cb).Value().(func(super func(change GraphicsItemChange, value *QVariant) *QVariant, change GraphicsItemChange, value *QVariant) *QVariant)
 	if !ok {
 		panic("miqt: callback of non-callback type (heap corruption?)")
 	}
 
 	// Convert all CABI parameters to Go parameters
-	slotval1 := (QGraphicsItem__GraphicsItemChange)(change)
-
+	int /* TODO  */
 	slotval2 := newQVariant(value)
 
 	virtualReturn := gofunc((&QAbstractGraphicsShapeItem{h: self}).callVirtualBase_ItemChange, slotval1, slotval2)
@@ -4571,12 +4566,12 @@ func miqt_exec_callback_QAbstractGraphicsShapeItem_itemChange(self *C.QAbstractG
 
 }
 
-func (this *QAbstractGraphicsShapeItem) callVirtualBase_SupportsExtension(extension QGraphicsItem__Extension) bool {
+func (this *QAbstractGraphicsShapeItem) callVirtualBase_SupportsExtension(extension Extension) bool {
 
-	return (bool)(C.QAbstractGraphicsShapeItem_virtualbase_supportsExtension(unsafe.Pointer(this.h), (C.int)(extension)))
+	return (bool)(C.QAbstractGraphicsShapeItem_virtualbase_supportsExtension(unsafe.Pointer(this.h), extension))
 
 }
-func (this *QAbstractGraphicsShapeItem) OnSupportsExtension(slot func(super func(extension QGraphicsItem__Extension) bool, extension QGraphicsItem__Extension) bool) {
+func (this *QAbstractGraphicsShapeItem) OnSupportsExtension(slot func(super func(extension Extension) bool, extension Extension) bool) {
 	ok := C.QAbstractGraphicsShapeItem_override_virtual_supportsExtension(unsafe.Pointer(this.h), C.intptr_t(cgo.NewHandle(slot)))
 	if !ok {
 		panic("miqt: can only override virtual methods for directly constructed types")
@@ -4584,14 +4579,14 @@ func (this *QAbstractGraphicsShapeItem) OnSupportsExtension(slot func(super func
 }
 
 //export miqt_exec_callback_QAbstractGraphicsShapeItem_supportsExtension
-func miqt_exec_callback_QAbstractGraphicsShapeItem_supportsExtension(self *C.QAbstractGraphicsShapeItem, cb C.intptr_t, extension C.int) C.bool {
-	gofunc, ok := cgo.Handle(cb).Value().(func(super func(extension QGraphicsItem__Extension) bool, extension QGraphicsItem__Extension) bool)
+func miqt_exec_callback_QAbstractGraphicsShapeItem_supportsExtension(self *C.QAbstractGraphicsShapeItem, cb C.intptr_t, extension C.Extension) C.bool {
+	gofunc, ok := cgo.Handle(cb).Value().(func(super func(extension Extension) bool, extension Extension) bool)
 	if !ok {
 		panic("miqt: callback of non-callback type (heap corruption?)")
 	}
 
 	// Convert all CABI parameters to Go parameters
-	slotval1 := (QGraphicsItem__Extension)(extension)
+	int /* TODO  */
 
 	virtualReturn := gofunc((&QAbstractGraphicsShapeItem{h: self}).callVirtualBase_SupportsExtension, slotval1)
 
@@ -4599,12 +4594,12 @@ func miqt_exec_callback_QAbstractGraphicsShapeItem_supportsExtension(self *C.QAb
 
 }
 
-func (this *QAbstractGraphicsShapeItem) callVirtualBase_SetExtension(extension QGraphicsItem__Extension, variant *QVariant) {
+func (this *QAbstractGraphicsShapeItem) callVirtualBase_SetExtension(extension Extension, variant *QVariant) {
 
-	C.QAbstractGraphicsShapeItem_virtualbase_setExtension(unsafe.Pointer(this.h), (C.int)(extension), variant.cPointer())
+	C.QAbstractGraphicsShapeItem_virtualbase_setExtension(unsafe.Pointer(this.h), extension, variant.cPointer())
 
 }
-func (this *QAbstractGraphicsShapeItem) OnSetExtension(slot func(super func(extension QGraphicsItem__Extension, variant *QVariant), extension QGraphicsItem__Extension, variant *QVariant)) {
+func (this *QAbstractGraphicsShapeItem) OnSetExtension(slot func(super func(extension Extension, variant *QVariant), extension Extension, variant *QVariant)) {
 	ok := C.QAbstractGraphicsShapeItem_override_virtual_setExtension(unsafe.Pointer(this.h), C.intptr_t(cgo.NewHandle(slot)))
 	if !ok {
 		panic("miqt: can only override virtual methods for directly constructed types")
@@ -4612,15 +4607,14 @@ func (this *QAbstractGraphicsShapeItem) OnSetExtension(slot func(super func(exte
 }
 
 //export miqt_exec_callback_QAbstractGraphicsShapeItem_setExtension
-func miqt_exec_callback_QAbstractGraphicsShapeItem_setExtension(self *C.QAbstractGraphicsShapeItem, cb C.intptr_t, extension C.int, variant *C.QVariant) {
-	gofunc, ok := cgo.Handle(cb).Value().(func(super func(extension QGraphicsItem__Extension, variant *QVariant), extension QGraphicsItem__Extension, variant *QVariant))
+func miqt_exec_callback_QAbstractGraphicsShapeItem_setExtension(self *C.QAbstractGraphicsShapeItem, cb C.intptr_t, extension C.Extension, variant *C.QVariant) {
+	gofunc, ok := cgo.Handle(cb).Value().(func(super func(extension Extension, variant *QVariant), extension Extension, variant *QVariant))
 	if !ok {
 		panic("miqt: callback of non-callback type (heap corruption?)")
 	}
 
 	// Convert all CABI parameters to Go parameters
-	slotval1 := (QGraphicsItem__Extension)(extension)
-
+	int /* TODO  */
 	slotval2 := newQVariant(variant)
 
 	gofunc((&QAbstractGraphicsShapeItem{h: self}).callVirtualBase_SetExtension, slotval1, slotval2)
@@ -5015,12 +5009,12 @@ func miqt_exec_callback_QGraphicsPathItem_type(self *C.QGraphicsPathItem, cb C.i
 
 }
 
-func (this *QGraphicsPathItem) callVirtualBase_SupportsExtension(extension QGraphicsItem__Extension) bool {
+func (this *QGraphicsPathItem) callVirtualBase_SupportsExtension(extension Extension) bool {
 
-	return (bool)(C.QGraphicsPathItem_virtualbase_supportsExtension(unsafe.Pointer(this.h), (C.int)(extension)))
+	return (bool)(C.QGraphicsPathItem_virtualbase_supportsExtension(unsafe.Pointer(this.h), extension))
 
 }
-func (this *QGraphicsPathItem) OnSupportsExtension(slot func(super func(extension QGraphicsItem__Extension) bool, extension QGraphicsItem__Extension) bool) {
+func (this *QGraphicsPathItem) OnSupportsExtension(slot func(super func(extension Extension) bool, extension Extension) bool) {
 	ok := C.QGraphicsPathItem_override_virtual_supportsExtension(unsafe.Pointer(this.h), C.intptr_t(cgo.NewHandle(slot)))
 	if !ok {
 		panic("miqt: can only override virtual methods for directly constructed types")
@@ -5028,14 +5022,14 @@ func (this *QGraphicsPathItem) OnSupportsExtension(slot func(super func(extensio
 }
 
 //export miqt_exec_callback_QGraphicsPathItem_supportsExtension
-func miqt_exec_callback_QGraphicsPathItem_supportsExtension(self *C.QGraphicsPathItem, cb C.intptr_t, extension C.int) C.bool {
-	gofunc, ok := cgo.Handle(cb).Value().(func(super func(extension QGraphicsItem__Extension) bool, extension QGraphicsItem__Extension) bool)
+func miqt_exec_callback_QGraphicsPathItem_supportsExtension(self *C.QGraphicsPathItem, cb C.intptr_t, extension C.Extension) C.bool {
+	gofunc, ok := cgo.Handle(cb).Value().(func(super func(extension Extension) bool, extension Extension) bool)
 	if !ok {
 		panic("miqt: callback of non-callback type (heap corruption?)")
 	}
 
 	// Convert all CABI parameters to Go parameters
-	slotval1 := (QGraphicsItem__Extension)(extension)
+	int /* TODO  */
 
 	virtualReturn := gofunc((&QGraphicsPathItem{h: self}).callVirtualBase_SupportsExtension, slotval1)
 
@@ -5043,12 +5037,12 @@ func miqt_exec_callback_QGraphicsPathItem_supportsExtension(self *C.QGraphicsPat
 
 }
 
-func (this *QGraphicsPathItem) callVirtualBase_SetExtension(extension QGraphicsItem__Extension, variant *QVariant) {
+func (this *QGraphicsPathItem) callVirtualBase_SetExtension(extension Extension, variant *QVariant) {
 
-	C.QGraphicsPathItem_virtualbase_setExtension(unsafe.Pointer(this.h), (C.int)(extension), variant.cPointer())
+	C.QGraphicsPathItem_virtualbase_setExtension(unsafe.Pointer(this.h), extension, variant.cPointer())
 
 }
-func (this *QGraphicsPathItem) OnSetExtension(slot func(super func(extension QGraphicsItem__Extension, variant *QVariant), extension QGraphicsItem__Extension, variant *QVariant)) {
+func (this *QGraphicsPathItem) OnSetExtension(slot func(super func(extension Extension, variant *QVariant), extension Extension, variant *QVariant)) {
 	ok := C.QGraphicsPathItem_override_virtual_setExtension(unsafe.Pointer(this.h), C.intptr_t(cgo.NewHandle(slot)))
 	if !ok {
 		panic("miqt: can only override virtual methods for directly constructed types")
@@ -5056,15 +5050,14 @@ func (this *QGraphicsPathItem) OnSetExtension(slot func(super func(extension QGr
 }
 
 //export miqt_exec_callback_QGraphicsPathItem_setExtension
-func miqt_exec_callback_QGraphicsPathItem_setExtension(self *C.QGraphicsPathItem, cb C.intptr_t, extension C.int, variant *C.QVariant) {
-	gofunc, ok := cgo.Handle(cb).Value().(func(super func(extension QGraphicsItem__Extension, variant *QVariant), extension QGraphicsItem__Extension, variant *QVariant))
+func miqt_exec_callback_QGraphicsPathItem_setExtension(self *C.QGraphicsPathItem, cb C.intptr_t, extension C.Extension, variant *C.QVariant) {
+	gofunc, ok := cgo.Handle(cb).Value().(func(super func(extension Extension, variant *QVariant), extension Extension, variant *QVariant))
 	if !ok {
 		panic("miqt: callback of non-callback type (heap corruption?)")
 	}
 
 	// Convert all CABI parameters to Go parameters
-	slotval1 := (QGraphicsItem__Extension)(extension)
-
+	int /* TODO  */
 	slotval2 := newQVariant(variant)
 
 	gofunc((&QGraphicsPathItem{h: self}).callVirtualBase_SetExtension, slotval1, slotval2)
@@ -5743,14 +5736,14 @@ func miqt_exec_callback_QGraphicsPathItem_inputMethodQuery(self *C.QGraphicsPath
 
 }
 
-func (this *QGraphicsPathItem) callVirtualBase_ItemChange(change QGraphicsItem__GraphicsItemChange, value *QVariant) *QVariant {
+func (this *QGraphicsPathItem) callVirtualBase_ItemChange(change GraphicsItemChange, value *QVariant) *QVariant {
 
-	_goptr := newQVariant(C.QGraphicsPathItem_virtualbase_itemChange(unsafe.Pointer(this.h), (C.int)(change), value.cPointer()))
+	_goptr := newQVariant(C.QGraphicsPathItem_virtualbase_itemChange(unsafe.Pointer(this.h), change, value.cPointer()))
 	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
 	return _goptr
 
 }
-func (this *QGraphicsPathItem) OnItemChange(slot func(super func(change QGraphicsItem__GraphicsItemChange, value *QVariant) *QVariant, change QGraphicsItem__GraphicsItemChange, value *QVariant) *QVariant) {
+func (this *QGraphicsPathItem) OnItemChange(slot func(super func(change GraphicsItemChange, value *QVariant) *QVariant, change GraphicsItemChange, value *QVariant) *QVariant) {
 	ok := C.QGraphicsPathItem_override_virtual_itemChange(unsafe.Pointer(this.h), C.intptr_t(cgo.NewHandle(slot)))
 	if !ok {
 		panic("miqt: can only override virtual methods for directly constructed types")
@@ -5758,15 +5751,14 @@ func (this *QGraphicsPathItem) OnItemChange(slot func(super func(change QGraphic
 }
 
 //export miqt_exec_callback_QGraphicsPathItem_itemChange
-func miqt_exec_callback_QGraphicsPathItem_itemChange(self *C.QGraphicsPathItem, cb C.intptr_t, change C.int, value *C.QVariant) *C.QVariant {
-	gofunc, ok := cgo.Handle(cb).Value().(func(super func(change QGraphicsItem__GraphicsItemChange, value *QVariant) *QVariant, change QGraphicsItem__GraphicsItemChange, value *QVariant) *QVariant)
+func miqt_exec_callback_QGraphicsPathItem_itemChange(self *C.QGraphicsPathItem, cb C.intptr_t, change C.GraphicsItemChange, value *C.QVariant) *C.QVariant {
+	gofunc, ok := cgo.Handle(cb).Value().(func(super func(change GraphicsItemChange, value *QVariant) *QVariant, change GraphicsItemChange, value *QVariant) *QVariant)
 	if !ok {
 		panic("miqt: callback of non-callback type (heap corruption?)")
 	}
 
 	// Convert all CABI parameters to Go parameters
-	slotval1 := (QGraphicsItem__GraphicsItemChange)(change)
-
+	int /* TODO  */
 	slotval2 := newQVariant(value)
 
 	virtualReturn := gofunc((&QGraphicsPathItem{h: self}).callVirtualBase_ItemChange, slotval1, slotval2)
@@ -6149,12 +6141,12 @@ func miqt_exec_callback_QGraphicsRectItem_type(self *C.QGraphicsRectItem, cb C.i
 
 }
 
-func (this *QGraphicsRectItem) callVirtualBase_SupportsExtension(extension QGraphicsItem__Extension) bool {
+func (this *QGraphicsRectItem) callVirtualBase_SupportsExtension(extension Extension) bool {
 
-	return (bool)(C.QGraphicsRectItem_virtualbase_supportsExtension(unsafe.Pointer(this.h), (C.int)(extension)))
+	return (bool)(C.QGraphicsRectItem_virtualbase_supportsExtension(unsafe.Pointer(this.h), extension))
 
 }
-func (this *QGraphicsRectItem) OnSupportsExtension(slot func(super func(extension QGraphicsItem__Extension) bool, extension QGraphicsItem__Extension) bool) {
+func (this *QGraphicsRectItem) OnSupportsExtension(slot func(super func(extension Extension) bool, extension Extension) bool) {
 	ok := C.QGraphicsRectItem_override_virtual_supportsExtension(unsafe.Pointer(this.h), C.intptr_t(cgo.NewHandle(slot)))
 	if !ok {
 		panic("miqt: can only override virtual methods for directly constructed types")
@@ -6162,14 +6154,14 @@ func (this *QGraphicsRectItem) OnSupportsExtension(slot func(super func(extensio
 }
 
 //export miqt_exec_callback_QGraphicsRectItem_supportsExtension
-func miqt_exec_callback_QGraphicsRectItem_supportsExtension(self *C.QGraphicsRectItem, cb C.intptr_t, extension C.int) C.bool {
-	gofunc, ok := cgo.Handle(cb).Value().(func(super func(extension QGraphicsItem__Extension) bool, extension QGraphicsItem__Extension) bool)
+func miqt_exec_callback_QGraphicsRectItem_supportsExtension(self *C.QGraphicsRectItem, cb C.intptr_t, extension C.Extension) C.bool {
+	gofunc, ok := cgo.Handle(cb).Value().(func(super func(extension Extension) bool, extension Extension) bool)
 	if !ok {
 		panic("miqt: callback of non-callback type (heap corruption?)")
 	}
 
 	// Convert all CABI parameters to Go parameters
-	slotval1 := (QGraphicsItem__Extension)(extension)
+	int /* TODO  */
 
 	virtualReturn := gofunc((&QGraphicsRectItem{h: self}).callVirtualBase_SupportsExtension, slotval1)
 
@@ -6177,12 +6169,12 @@ func miqt_exec_callback_QGraphicsRectItem_supportsExtension(self *C.QGraphicsRec
 
 }
 
-func (this *QGraphicsRectItem) callVirtualBase_SetExtension(extension QGraphicsItem__Extension, variant *QVariant) {
+func (this *QGraphicsRectItem) callVirtualBase_SetExtension(extension Extension, variant *QVariant) {
 
-	C.QGraphicsRectItem_virtualbase_setExtension(unsafe.Pointer(this.h), (C.int)(extension), variant.cPointer())
+	C.QGraphicsRectItem_virtualbase_setExtension(unsafe.Pointer(this.h), extension, variant.cPointer())
 
 }
-func (this *QGraphicsRectItem) OnSetExtension(slot func(super func(extension QGraphicsItem__Extension, variant *QVariant), extension QGraphicsItem__Extension, variant *QVariant)) {
+func (this *QGraphicsRectItem) OnSetExtension(slot func(super func(extension Extension, variant *QVariant), extension Extension, variant *QVariant)) {
 	ok := C.QGraphicsRectItem_override_virtual_setExtension(unsafe.Pointer(this.h), C.intptr_t(cgo.NewHandle(slot)))
 	if !ok {
 		panic("miqt: can only override virtual methods for directly constructed types")
@@ -6190,15 +6182,14 @@ func (this *QGraphicsRectItem) OnSetExtension(slot func(super func(extension QGr
 }
 
 //export miqt_exec_callback_QGraphicsRectItem_setExtension
-func miqt_exec_callback_QGraphicsRectItem_setExtension(self *C.QGraphicsRectItem, cb C.intptr_t, extension C.int, variant *C.QVariant) {
-	gofunc, ok := cgo.Handle(cb).Value().(func(super func(extension QGraphicsItem__Extension, variant *QVariant), extension QGraphicsItem__Extension, variant *QVariant))
+func miqt_exec_callback_QGraphicsRectItem_setExtension(self *C.QGraphicsRectItem, cb C.intptr_t, extension C.Extension, variant *C.QVariant) {
+	gofunc, ok := cgo.Handle(cb).Value().(func(super func(extension Extension, variant *QVariant), extension Extension, variant *QVariant))
 	if !ok {
 		panic("miqt: callback of non-callback type (heap corruption?)")
 	}
 
 	// Convert all CABI parameters to Go parameters
-	slotval1 := (QGraphicsItem__Extension)(extension)
-
+	int /* TODO  */
 	slotval2 := newQVariant(variant)
 
 	gofunc((&QGraphicsRectItem{h: self}).callVirtualBase_SetExtension, slotval1, slotval2)
@@ -6877,14 +6868,14 @@ func miqt_exec_callback_QGraphicsRectItem_inputMethodQuery(self *C.QGraphicsRect
 
 }
 
-func (this *QGraphicsRectItem) callVirtualBase_ItemChange(change QGraphicsItem__GraphicsItemChange, value *QVariant) *QVariant {
+func (this *QGraphicsRectItem) callVirtualBase_ItemChange(change GraphicsItemChange, value *QVariant) *QVariant {
 
-	_goptr := newQVariant(C.QGraphicsRectItem_virtualbase_itemChange(unsafe.Pointer(this.h), (C.int)(change), value.cPointer()))
+	_goptr := newQVariant(C.QGraphicsRectItem_virtualbase_itemChange(unsafe.Pointer(this.h), change, value.cPointer()))
 	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
 	return _goptr
 
 }
-func (this *QGraphicsRectItem) OnItemChange(slot func(super func(change QGraphicsItem__GraphicsItemChange, value *QVariant) *QVariant, change QGraphicsItem__GraphicsItemChange, value *QVariant) *QVariant) {
+func (this *QGraphicsRectItem) OnItemChange(slot func(super func(change GraphicsItemChange, value *QVariant) *QVariant, change GraphicsItemChange, value *QVariant) *QVariant) {
 	ok := C.QGraphicsRectItem_override_virtual_itemChange(unsafe.Pointer(this.h), C.intptr_t(cgo.NewHandle(slot)))
 	if !ok {
 		panic("miqt: can only override virtual methods for directly constructed types")
@@ -6892,15 +6883,14 @@ func (this *QGraphicsRectItem) OnItemChange(slot func(super func(change QGraphic
 }
 
 //export miqt_exec_callback_QGraphicsRectItem_itemChange
-func miqt_exec_callback_QGraphicsRectItem_itemChange(self *C.QGraphicsRectItem, cb C.intptr_t, change C.int, value *C.QVariant) *C.QVariant {
-	gofunc, ok := cgo.Handle(cb).Value().(func(super func(change QGraphicsItem__GraphicsItemChange, value *QVariant) *QVariant, change QGraphicsItem__GraphicsItemChange, value *QVariant) *QVariant)
+func miqt_exec_callback_QGraphicsRectItem_itemChange(self *C.QGraphicsRectItem, cb C.intptr_t, change C.GraphicsItemChange, value *C.QVariant) *C.QVariant {
+	gofunc, ok := cgo.Handle(cb).Value().(func(super func(change GraphicsItemChange, value *QVariant) *QVariant, change GraphicsItemChange, value *QVariant) *QVariant)
 	if !ok {
 		panic("miqt: callback of non-callback type (heap corruption?)")
 	}
 
 	// Convert all CABI parameters to Go parameters
-	slotval1 := (QGraphicsItem__GraphicsItemChange)(change)
-
+	int /* TODO  */
 	slotval2 := newQVariant(value)
 
 	virtualReturn := gofunc((&QGraphicsRectItem{h: self}).callVirtualBase_ItemChange, slotval1, slotval2)
@@ -7299,12 +7289,12 @@ func miqt_exec_callback_QGraphicsEllipseItem_type(self *C.QGraphicsEllipseItem, 
 
 }
 
-func (this *QGraphicsEllipseItem) callVirtualBase_SupportsExtension(extension QGraphicsItem__Extension) bool {
+func (this *QGraphicsEllipseItem) callVirtualBase_SupportsExtension(extension Extension) bool {
 
-	return (bool)(C.QGraphicsEllipseItem_virtualbase_supportsExtension(unsafe.Pointer(this.h), (C.int)(extension)))
+	return (bool)(C.QGraphicsEllipseItem_virtualbase_supportsExtension(unsafe.Pointer(this.h), extension))
 
 }
-func (this *QGraphicsEllipseItem) OnSupportsExtension(slot func(super func(extension QGraphicsItem__Extension) bool, extension QGraphicsItem__Extension) bool) {
+func (this *QGraphicsEllipseItem) OnSupportsExtension(slot func(super func(extension Extension) bool, extension Extension) bool) {
 	ok := C.QGraphicsEllipseItem_override_virtual_supportsExtension(unsafe.Pointer(this.h), C.intptr_t(cgo.NewHandle(slot)))
 	if !ok {
 		panic("miqt: can only override virtual methods for directly constructed types")
@@ -7312,14 +7302,14 @@ func (this *QGraphicsEllipseItem) OnSupportsExtension(slot func(super func(exten
 }
 
 //export miqt_exec_callback_QGraphicsEllipseItem_supportsExtension
-func miqt_exec_callback_QGraphicsEllipseItem_supportsExtension(self *C.QGraphicsEllipseItem, cb C.intptr_t, extension C.int) C.bool {
-	gofunc, ok := cgo.Handle(cb).Value().(func(super func(extension QGraphicsItem__Extension) bool, extension QGraphicsItem__Extension) bool)
+func miqt_exec_callback_QGraphicsEllipseItem_supportsExtension(self *C.QGraphicsEllipseItem, cb C.intptr_t, extension C.Extension) C.bool {
+	gofunc, ok := cgo.Handle(cb).Value().(func(super func(extension Extension) bool, extension Extension) bool)
 	if !ok {
 		panic("miqt: callback of non-callback type (heap corruption?)")
 	}
 
 	// Convert all CABI parameters to Go parameters
-	slotval1 := (QGraphicsItem__Extension)(extension)
+	int /* TODO  */
 
 	virtualReturn := gofunc((&QGraphicsEllipseItem{h: self}).callVirtualBase_SupportsExtension, slotval1)
 
@@ -7327,12 +7317,12 @@ func miqt_exec_callback_QGraphicsEllipseItem_supportsExtension(self *C.QGraphics
 
 }
 
-func (this *QGraphicsEllipseItem) callVirtualBase_SetExtension(extension QGraphicsItem__Extension, variant *QVariant) {
+func (this *QGraphicsEllipseItem) callVirtualBase_SetExtension(extension Extension, variant *QVariant) {
 
-	C.QGraphicsEllipseItem_virtualbase_setExtension(unsafe.Pointer(this.h), (C.int)(extension), variant.cPointer())
+	C.QGraphicsEllipseItem_virtualbase_setExtension(unsafe.Pointer(this.h), extension, variant.cPointer())
 
 }
-func (this *QGraphicsEllipseItem) OnSetExtension(slot func(super func(extension QGraphicsItem__Extension, variant *QVariant), extension QGraphicsItem__Extension, variant *QVariant)) {
+func (this *QGraphicsEllipseItem) OnSetExtension(slot func(super func(extension Extension, variant *QVariant), extension Extension, variant *QVariant)) {
 	ok := C.QGraphicsEllipseItem_override_virtual_setExtension(unsafe.Pointer(this.h), C.intptr_t(cgo.NewHandle(slot)))
 	if !ok {
 		panic("miqt: can only override virtual methods for directly constructed types")
@@ -7340,15 +7330,14 @@ func (this *QGraphicsEllipseItem) OnSetExtension(slot func(super func(extension 
 }
 
 //export miqt_exec_callback_QGraphicsEllipseItem_setExtension
-func miqt_exec_callback_QGraphicsEllipseItem_setExtension(self *C.QGraphicsEllipseItem, cb C.intptr_t, extension C.int, variant *C.QVariant) {
-	gofunc, ok := cgo.Handle(cb).Value().(func(super func(extension QGraphicsItem__Extension, variant *QVariant), extension QGraphicsItem__Extension, variant *QVariant))
+func miqt_exec_callback_QGraphicsEllipseItem_setExtension(self *C.QGraphicsEllipseItem, cb C.intptr_t, extension C.Extension, variant *C.QVariant) {
+	gofunc, ok := cgo.Handle(cb).Value().(func(super func(extension Extension, variant *QVariant), extension Extension, variant *QVariant))
 	if !ok {
 		panic("miqt: callback of non-callback type (heap corruption?)")
 	}
 
 	// Convert all CABI parameters to Go parameters
-	slotval1 := (QGraphicsItem__Extension)(extension)
-
+	int /* TODO  */
 	slotval2 := newQVariant(variant)
 
 	gofunc((&QGraphicsEllipseItem{h: self}).callVirtualBase_SetExtension, slotval1, slotval2)
@@ -8027,14 +8016,14 @@ func miqt_exec_callback_QGraphicsEllipseItem_inputMethodQuery(self *C.QGraphicsE
 
 }
 
-func (this *QGraphicsEllipseItem) callVirtualBase_ItemChange(change QGraphicsItem__GraphicsItemChange, value *QVariant) *QVariant {
+func (this *QGraphicsEllipseItem) callVirtualBase_ItemChange(change GraphicsItemChange, value *QVariant) *QVariant {
 
-	_goptr := newQVariant(C.QGraphicsEllipseItem_virtualbase_itemChange(unsafe.Pointer(this.h), (C.int)(change), value.cPointer()))
+	_goptr := newQVariant(C.QGraphicsEllipseItem_virtualbase_itemChange(unsafe.Pointer(this.h), change, value.cPointer()))
 	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
 	return _goptr
 
 }
-func (this *QGraphicsEllipseItem) OnItemChange(slot func(super func(change QGraphicsItem__GraphicsItemChange, value *QVariant) *QVariant, change QGraphicsItem__GraphicsItemChange, value *QVariant) *QVariant) {
+func (this *QGraphicsEllipseItem) OnItemChange(slot func(super func(change GraphicsItemChange, value *QVariant) *QVariant, change GraphicsItemChange, value *QVariant) *QVariant) {
 	ok := C.QGraphicsEllipseItem_override_virtual_itemChange(unsafe.Pointer(this.h), C.intptr_t(cgo.NewHandle(slot)))
 	if !ok {
 		panic("miqt: can only override virtual methods for directly constructed types")
@@ -8042,15 +8031,14 @@ func (this *QGraphicsEllipseItem) OnItemChange(slot func(super func(change QGrap
 }
 
 //export miqt_exec_callback_QGraphicsEllipseItem_itemChange
-func miqt_exec_callback_QGraphicsEllipseItem_itemChange(self *C.QGraphicsEllipseItem, cb C.intptr_t, change C.int, value *C.QVariant) *C.QVariant {
-	gofunc, ok := cgo.Handle(cb).Value().(func(super func(change QGraphicsItem__GraphicsItemChange, value *QVariant) *QVariant, change QGraphicsItem__GraphicsItemChange, value *QVariant) *QVariant)
+func miqt_exec_callback_QGraphicsEllipseItem_itemChange(self *C.QGraphicsEllipseItem, cb C.intptr_t, change C.GraphicsItemChange, value *C.QVariant) *C.QVariant {
+	gofunc, ok := cgo.Handle(cb).Value().(func(super func(change GraphicsItemChange, value *QVariant) *QVariant, change GraphicsItemChange, value *QVariant) *QVariant)
 	if !ok {
 		panic("miqt: callback of non-callback type (heap corruption?)")
 	}
 
 	// Convert all CABI parameters to Go parameters
-	slotval1 := (QGraphicsItem__GraphicsItemChange)(change)
-
+	int /* TODO  */
 	slotval2 := newQVariant(value)
 
 	virtualReturn := gofunc((&QGraphicsEllipseItem{h: self}).callVirtualBase_ItemChange, slotval1, slotval2)
@@ -8403,12 +8391,12 @@ func miqt_exec_callback_QGraphicsPolygonItem_type(self *C.QGraphicsPolygonItem, 
 
 }
 
-func (this *QGraphicsPolygonItem) callVirtualBase_SupportsExtension(extension QGraphicsItem__Extension) bool {
+func (this *QGraphicsPolygonItem) callVirtualBase_SupportsExtension(extension Extension) bool {
 
-	return (bool)(C.QGraphicsPolygonItem_virtualbase_supportsExtension(unsafe.Pointer(this.h), (C.int)(extension)))
+	return (bool)(C.QGraphicsPolygonItem_virtualbase_supportsExtension(unsafe.Pointer(this.h), extension))
 
 }
-func (this *QGraphicsPolygonItem) OnSupportsExtension(slot func(super func(extension QGraphicsItem__Extension) bool, extension QGraphicsItem__Extension) bool) {
+func (this *QGraphicsPolygonItem) OnSupportsExtension(slot func(super func(extension Extension) bool, extension Extension) bool) {
 	ok := C.QGraphicsPolygonItem_override_virtual_supportsExtension(unsafe.Pointer(this.h), C.intptr_t(cgo.NewHandle(slot)))
 	if !ok {
 		panic("miqt: can only override virtual methods for directly constructed types")
@@ -8416,14 +8404,14 @@ func (this *QGraphicsPolygonItem) OnSupportsExtension(slot func(super func(exten
 }
 
 //export miqt_exec_callback_QGraphicsPolygonItem_supportsExtension
-func miqt_exec_callback_QGraphicsPolygonItem_supportsExtension(self *C.QGraphicsPolygonItem, cb C.intptr_t, extension C.int) C.bool {
-	gofunc, ok := cgo.Handle(cb).Value().(func(super func(extension QGraphicsItem__Extension) bool, extension QGraphicsItem__Extension) bool)
+func miqt_exec_callback_QGraphicsPolygonItem_supportsExtension(self *C.QGraphicsPolygonItem, cb C.intptr_t, extension C.Extension) C.bool {
+	gofunc, ok := cgo.Handle(cb).Value().(func(super func(extension Extension) bool, extension Extension) bool)
 	if !ok {
 		panic("miqt: callback of non-callback type (heap corruption?)")
 	}
 
 	// Convert all CABI parameters to Go parameters
-	slotval1 := (QGraphicsItem__Extension)(extension)
+	int /* TODO  */
 
 	virtualReturn := gofunc((&QGraphicsPolygonItem{h: self}).callVirtualBase_SupportsExtension, slotval1)
 
@@ -8431,12 +8419,12 @@ func miqt_exec_callback_QGraphicsPolygonItem_supportsExtension(self *C.QGraphics
 
 }
 
-func (this *QGraphicsPolygonItem) callVirtualBase_SetExtension(extension QGraphicsItem__Extension, variant *QVariant) {
+func (this *QGraphicsPolygonItem) callVirtualBase_SetExtension(extension Extension, variant *QVariant) {
 
-	C.QGraphicsPolygonItem_virtualbase_setExtension(unsafe.Pointer(this.h), (C.int)(extension), variant.cPointer())
+	C.QGraphicsPolygonItem_virtualbase_setExtension(unsafe.Pointer(this.h), extension, variant.cPointer())
 
 }
-func (this *QGraphicsPolygonItem) OnSetExtension(slot func(super func(extension QGraphicsItem__Extension, variant *QVariant), extension QGraphicsItem__Extension, variant *QVariant)) {
+func (this *QGraphicsPolygonItem) OnSetExtension(slot func(super func(extension Extension, variant *QVariant), extension Extension, variant *QVariant)) {
 	ok := C.QGraphicsPolygonItem_override_virtual_setExtension(unsafe.Pointer(this.h), C.intptr_t(cgo.NewHandle(slot)))
 	if !ok {
 		panic("miqt: can only override virtual methods for directly constructed types")
@@ -8444,15 +8432,14 @@ func (this *QGraphicsPolygonItem) OnSetExtension(slot func(super func(extension 
 }
 
 //export miqt_exec_callback_QGraphicsPolygonItem_setExtension
-func miqt_exec_callback_QGraphicsPolygonItem_setExtension(self *C.QGraphicsPolygonItem, cb C.intptr_t, extension C.int, variant *C.QVariant) {
-	gofunc, ok := cgo.Handle(cb).Value().(func(super func(extension QGraphicsItem__Extension, variant *QVariant), extension QGraphicsItem__Extension, variant *QVariant))
+func miqt_exec_callback_QGraphicsPolygonItem_setExtension(self *C.QGraphicsPolygonItem, cb C.intptr_t, extension C.Extension, variant *C.QVariant) {
+	gofunc, ok := cgo.Handle(cb).Value().(func(super func(extension Extension, variant *QVariant), extension Extension, variant *QVariant))
 	if !ok {
 		panic("miqt: callback of non-callback type (heap corruption?)")
 	}
 
 	// Convert all CABI parameters to Go parameters
-	slotval1 := (QGraphicsItem__Extension)(extension)
-
+	int /* TODO  */
 	slotval2 := newQVariant(variant)
 
 	gofunc((&QGraphicsPolygonItem{h: self}).callVirtualBase_SetExtension, slotval1, slotval2)
@@ -9131,14 +9118,14 @@ func miqt_exec_callback_QGraphicsPolygonItem_inputMethodQuery(self *C.QGraphicsP
 
 }
 
-func (this *QGraphicsPolygonItem) callVirtualBase_ItemChange(change QGraphicsItem__GraphicsItemChange, value *QVariant) *QVariant {
+func (this *QGraphicsPolygonItem) callVirtualBase_ItemChange(change GraphicsItemChange, value *QVariant) *QVariant {
 
-	_goptr := newQVariant(C.QGraphicsPolygonItem_virtualbase_itemChange(unsafe.Pointer(this.h), (C.int)(change), value.cPointer()))
+	_goptr := newQVariant(C.QGraphicsPolygonItem_virtualbase_itemChange(unsafe.Pointer(this.h), change, value.cPointer()))
 	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
 	return _goptr
 
 }
-func (this *QGraphicsPolygonItem) OnItemChange(slot func(super func(change QGraphicsItem__GraphicsItemChange, value *QVariant) *QVariant, change QGraphicsItem__GraphicsItemChange, value *QVariant) *QVariant) {
+func (this *QGraphicsPolygonItem) OnItemChange(slot func(super func(change GraphicsItemChange, value *QVariant) *QVariant, change GraphicsItemChange, value *QVariant) *QVariant) {
 	ok := C.QGraphicsPolygonItem_override_virtual_itemChange(unsafe.Pointer(this.h), C.intptr_t(cgo.NewHandle(slot)))
 	if !ok {
 		panic("miqt: can only override virtual methods for directly constructed types")
@@ -9146,15 +9133,14 @@ func (this *QGraphicsPolygonItem) OnItemChange(slot func(super func(change QGrap
 }
 
 //export miqt_exec_callback_QGraphicsPolygonItem_itemChange
-func miqt_exec_callback_QGraphicsPolygonItem_itemChange(self *C.QGraphicsPolygonItem, cb C.intptr_t, change C.int, value *C.QVariant) *C.QVariant {
-	gofunc, ok := cgo.Handle(cb).Value().(func(super func(change QGraphicsItem__GraphicsItemChange, value *QVariant) *QVariant, change QGraphicsItem__GraphicsItemChange, value *QVariant) *QVariant)
+func miqt_exec_callback_QGraphicsPolygonItem_itemChange(self *C.QGraphicsPolygonItem, cb C.intptr_t, change C.GraphicsItemChange, value *C.QVariant) *C.QVariant {
+	gofunc, ok := cgo.Handle(cb).Value().(func(super func(change GraphicsItemChange, value *QVariant) *QVariant, change GraphicsItemChange, value *QVariant) *QVariant)
 	if !ok {
 		panic("miqt: callback of non-callback type (heap corruption?)")
 	}
 
 	// Convert all CABI parameters to Go parameters
-	slotval1 := (QGraphicsItem__GraphicsItemChange)(change)
-
+	int /* TODO  */
 	slotval2 := newQVariant(value)
 
 	virtualReturn := gofunc((&QGraphicsPolygonItem{h: self}).callVirtualBase_ItemChange, slotval1, slotval2)
@@ -9547,12 +9533,12 @@ func miqt_exec_callback_QGraphicsLineItem_type(self *C.QGraphicsLineItem, cb C.i
 
 }
 
-func (this *QGraphicsLineItem) callVirtualBase_SupportsExtension(extension QGraphicsItem__Extension) bool {
+func (this *QGraphicsLineItem) callVirtualBase_SupportsExtension(extension Extension) bool {
 
-	return (bool)(C.QGraphicsLineItem_virtualbase_supportsExtension(unsafe.Pointer(this.h), (C.int)(extension)))
+	return (bool)(C.QGraphicsLineItem_virtualbase_supportsExtension(unsafe.Pointer(this.h), extension))
 
 }
-func (this *QGraphicsLineItem) OnSupportsExtension(slot func(super func(extension QGraphicsItem__Extension) bool, extension QGraphicsItem__Extension) bool) {
+func (this *QGraphicsLineItem) OnSupportsExtension(slot func(super func(extension Extension) bool, extension Extension) bool) {
 	ok := C.QGraphicsLineItem_override_virtual_supportsExtension(unsafe.Pointer(this.h), C.intptr_t(cgo.NewHandle(slot)))
 	if !ok {
 		panic("miqt: can only override virtual methods for directly constructed types")
@@ -9560,14 +9546,14 @@ func (this *QGraphicsLineItem) OnSupportsExtension(slot func(super func(extensio
 }
 
 //export miqt_exec_callback_QGraphicsLineItem_supportsExtension
-func miqt_exec_callback_QGraphicsLineItem_supportsExtension(self *C.QGraphicsLineItem, cb C.intptr_t, extension C.int) C.bool {
-	gofunc, ok := cgo.Handle(cb).Value().(func(super func(extension QGraphicsItem__Extension) bool, extension QGraphicsItem__Extension) bool)
+func miqt_exec_callback_QGraphicsLineItem_supportsExtension(self *C.QGraphicsLineItem, cb C.intptr_t, extension C.Extension) C.bool {
+	gofunc, ok := cgo.Handle(cb).Value().(func(super func(extension Extension) bool, extension Extension) bool)
 	if !ok {
 		panic("miqt: callback of non-callback type (heap corruption?)")
 	}
 
 	// Convert all CABI parameters to Go parameters
-	slotval1 := (QGraphicsItem__Extension)(extension)
+	int /* TODO  */
 
 	virtualReturn := gofunc((&QGraphicsLineItem{h: self}).callVirtualBase_SupportsExtension, slotval1)
 
@@ -9575,12 +9561,12 @@ func miqt_exec_callback_QGraphicsLineItem_supportsExtension(self *C.QGraphicsLin
 
 }
 
-func (this *QGraphicsLineItem) callVirtualBase_SetExtension(extension QGraphicsItem__Extension, variant *QVariant) {
+func (this *QGraphicsLineItem) callVirtualBase_SetExtension(extension Extension, variant *QVariant) {
 
-	C.QGraphicsLineItem_virtualbase_setExtension(unsafe.Pointer(this.h), (C.int)(extension), variant.cPointer())
+	C.QGraphicsLineItem_virtualbase_setExtension(unsafe.Pointer(this.h), extension, variant.cPointer())
 
 }
-func (this *QGraphicsLineItem) OnSetExtension(slot func(super func(extension QGraphicsItem__Extension, variant *QVariant), extension QGraphicsItem__Extension, variant *QVariant)) {
+func (this *QGraphicsLineItem) OnSetExtension(slot func(super func(extension Extension, variant *QVariant), extension Extension, variant *QVariant)) {
 	ok := C.QGraphicsLineItem_override_virtual_setExtension(unsafe.Pointer(this.h), C.intptr_t(cgo.NewHandle(slot)))
 	if !ok {
 		panic("miqt: can only override virtual methods for directly constructed types")
@@ -9588,15 +9574,14 @@ func (this *QGraphicsLineItem) OnSetExtension(slot func(super func(extension QGr
 }
 
 //export miqt_exec_callback_QGraphicsLineItem_setExtension
-func miqt_exec_callback_QGraphicsLineItem_setExtension(self *C.QGraphicsLineItem, cb C.intptr_t, extension C.int, variant *C.QVariant) {
-	gofunc, ok := cgo.Handle(cb).Value().(func(super func(extension QGraphicsItem__Extension, variant *QVariant), extension QGraphicsItem__Extension, variant *QVariant))
+func miqt_exec_callback_QGraphicsLineItem_setExtension(self *C.QGraphicsLineItem, cb C.intptr_t, extension C.Extension, variant *C.QVariant) {
+	gofunc, ok := cgo.Handle(cb).Value().(func(super func(extension Extension, variant *QVariant), extension Extension, variant *QVariant))
 	if !ok {
 		panic("miqt: callback of non-callback type (heap corruption?)")
 	}
 
 	// Convert all CABI parameters to Go parameters
-	slotval1 := (QGraphicsItem__Extension)(extension)
-
+	int /* TODO  */
 	slotval2 := newQVariant(variant)
 
 	gofunc((&QGraphicsLineItem{h: self}).callVirtualBase_SetExtension, slotval1, slotval2)
@@ -10275,14 +10260,14 @@ func miqt_exec_callback_QGraphicsLineItem_inputMethodQuery(self *C.QGraphicsLine
 
 }
 
-func (this *QGraphicsLineItem) callVirtualBase_ItemChange(change QGraphicsItem__GraphicsItemChange, value *QVariant) *QVariant {
+func (this *QGraphicsLineItem) callVirtualBase_ItemChange(change GraphicsItemChange, value *QVariant) *QVariant {
 
-	_goptr := newQVariant(C.QGraphicsLineItem_virtualbase_itemChange(unsafe.Pointer(this.h), (C.int)(change), value.cPointer()))
+	_goptr := newQVariant(C.QGraphicsLineItem_virtualbase_itemChange(unsafe.Pointer(this.h), change, value.cPointer()))
 	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
 	return _goptr
 
 }
-func (this *QGraphicsLineItem) OnItemChange(slot func(super func(change QGraphicsItem__GraphicsItemChange, value *QVariant) *QVariant, change QGraphicsItem__GraphicsItemChange, value *QVariant) *QVariant) {
+func (this *QGraphicsLineItem) OnItemChange(slot func(super func(change GraphicsItemChange, value *QVariant) *QVariant, change GraphicsItemChange, value *QVariant) *QVariant) {
 	ok := C.QGraphicsLineItem_override_virtual_itemChange(unsafe.Pointer(this.h), C.intptr_t(cgo.NewHandle(slot)))
 	if !ok {
 		panic("miqt: can only override virtual methods for directly constructed types")
@@ -10290,15 +10275,14 @@ func (this *QGraphicsLineItem) OnItemChange(slot func(super func(change QGraphic
 }
 
 //export miqt_exec_callback_QGraphicsLineItem_itemChange
-func miqt_exec_callback_QGraphicsLineItem_itemChange(self *C.QGraphicsLineItem, cb C.intptr_t, change C.int, value *C.QVariant) *C.QVariant {
-	gofunc, ok := cgo.Handle(cb).Value().(func(super func(change QGraphicsItem__GraphicsItemChange, value *QVariant) *QVariant, change QGraphicsItem__GraphicsItemChange, value *QVariant) *QVariant)
+func miqt_exec_callback_QGraphicsLineItem_itemChange(self *C.QGraphicsLineItem, cb C.intptr_t, change C.GraphicsItemChange, value *C.QVariant) *C.QVariant {
+	gofunc, ok := cgo.Handle(cb).Value().(func(super func(change GraphicsItemChange, value *QVariant) *QVariant, change GraphicsItemChange, value *QVariant) *QVariant)
 	if !ok {
 		panic("miqt: callback of non-callback type (heap corruption?)")
 	}
 
 	// Convert all CABI parameters to Go parameters
-	slotval1 := (QGraphicsItem__GraphicsItemChange)(change)
-
+	int /* TODO  */
 	slotval2 := newQVariant(value)
 
 	virtualReturn := gofunc((&QGraphicsLineItem{h: self}).callVirtualBase_ItemChange, slotval1, slotval2)
@@ -10447,12 +10431,12 @@ func (this *QGraphicsPixmapItem) Type() int {
 	return (int)(C.QGraphicsPixmapItem_type(this.h))
 }
 
-func (this *QGraphicsPixmapItem) ShapeMode() QGraphicsPixmapItem__ShapeMode {
-	return (QGraphicsPixmapItem__ShapeMode)(C.QGraphicsPixmapItem_shapeMode(this.h))
+func (this *QGraphicsPixmapItem) ShapeMode() ShapeMode {
+	int /* TODO  */
 }
 
-func (this *QGraphicsPixmapItem) SetShapeMode(mode QGraphicsPixmapItem__ShapeMode) {
-	C.QGraphicsPixmapItem_setShapeMode(this.h, (C.int)(mode))
+func (this *QGraphicsPixmapItem) SetShapeMode(mode ShapeMode) {
+	C.QGraphicsPixmapItem_setShapeMode(this.h, mode)
 }
 
 // UpdateMicroFocus can only be called from a QGraphicsPixmapItem that was directly constructed.
@@ -10695,12 +10679,12 @@ func miqt_exec_callback_QGraphicsPixmapItem_type(self *C.QGraphicsPixmapItem, cb
 
 }
 
-func (this *QGraphicsPixmapItem) callVirtualBase_SupportsExtension(extension QGraphicsItem__Extension) bool {
+func (this *QGraphicsPixmapItem) callVirtualBase_SupportsExtension(extension Extension) bool {
 
-	return (bool)(C.QGraphicsPixmapItem_virtualbase_supportsExtension(unsafe.Pointer(this.h), (C.int)(extension)))
+	return (bool)(C.QGraphicsPixmapItem_virtualbase_supportsExtension(unsafe.Pointer(this.h), extension))
 
 }
-func (this *QGraphicsPixmapItem) OnSupportsExtension(slot func(super func(extension QGraphicsItem__Extension) bool, extension QGraphicsItem__Extension) bool) {
+func (this *QGraphicsPixmapItem) OnSupportsExtension(slot func(super func(extension Extension) bool, extension Extension) bool) {
 	ok := C.QGraphicsPixmapItem_override_virtual_supportsExtension(unsafe.Pointer(this.h), C.intptr_t(cgo.NewHandle(slot)))
 	if !ok {
 		panic("miqt: can only override virtual methods for directly constructed types")
@@ -10708,14 +10692,14 @@ func (this *QGraphicsPixmapItem) OnSupportsExtension(slot func(super func(extens
 }
 
 //export miqt_exec_callback_QGraphicsPixmapItem_supportsExtension
-func miqt_exec_callback_QGraphicsPixmapItem_supportsExtension(self *C.QGraphicsPixmapItem, cb C.intptr_t, extension C.int) C.bool {
-	gofunc, ok := cgo.Handle(cb).Value().(func(super func(extension QGraphicsItem__Extension) bool, extension QGraphicsItem__Extension) bool)
+func miqt_exec_callback_QGraphicsPixmapItem_supportsExtension(self *C.QGraphicsPixmapItem, cb C.intptr_t, extension C.Extension) C.bool {
+	gofunc, ok := cgo.Handle(cb).Value().(func(super func(extension Extension) bool, extension Extension) bool)
 	if !ok {
 		panic("miqt: callback of non-callback type (heap corruption?)")
 	}
 
 	// Convert all CABI parameters to Go parameters
-	slotval1 := (QGraphicsItem__Extension)(extension)
+	int /* TODO  */
 
 	virtualReturn := gofunc((&QGraphicsPixmapItem{h: self}).callVirtualBase_SupportsExtension, slotval1)
 
@@ -10723,12 +10707,12 @@ func miqt_exec_callback_QGraphicsPixmapItem_supportsExtension(self *C.QGraphicsP
 
 }
 
-func (this *QGraphicsPixmapItem) callVirtualBase_SetExtension(extension QGraphicsItem__Extension, variant *QVariant) {
+func (this *QGraphicsPixmapItem) callVirtualBase_SetExtension(extension Extension, variant *QVariant) {
 
-	C.QGraphicsPixmapItem_virtualbase_setExtension(unsafe.Pointer(this.h), (C.int)(extension), variant.cPointer())
+	C.QGraphicsPixmapItem_virtualbase_setExtension(unsafe.Pointer(this.h), extension, variant.cPointer())
 
 }
-func (this *QGraphicsPixmapItem) OnSetExtension(slot func(super func(extension QGraphicsItem__Extension, variant *QVariant), extension QGraphicsItem__Extension, variant *QVariant)) {
+func (this *QGraphicsPixmapItem) OnSetExtension(slot func(super func(extension Extension, variant *QVariant), extension Extension, variant *QVariant)) {
 	ok := C.QGraphicsPixmapItem_override_virtual_setExtension(unsafe.Pointer(this.h), C.intptr_t(cgo.NewHandle(slot)))
 	if !ok {
 		panic("miqt: can only override virtual methods for directly constructed types")
@@ -10736,15 +10720,14 @@ func (this *QGraphicsPixmapItem) OnSetExtension(slot func(super func(extension Q
 }
 
 //export miqt_exec_callback_QGraphicsPixmapItem_setExtension
-func miqt_exec_callback_QGraphicsPixmapItem_setExtension(self *C.QGraphicsPixmapItem, cb C.intptr_t, extension C.int, variant *C.QVariant) {
-	gofunc, ok := cgo.Handle(cb).Value().(func(super func(extension QGraphicsItem__Extension, variant *QVariant), extension QGraphicsItem__Extension, variant *QVariant))
+func miqt_exec_callback_QGraphicsPixmapItem_setExtension(self *C.QGraphicsPixmapItem, cb C.intptr_t, extension C.Extension, variant *C.QVariant) {
+	gofunc, ok := cgo.Handle(cb).Value().(func(super func(extension Extension, variant *QVariant), extension Extension, variant *QVariant))
 	if !ok {
 		panic("miqt: callback of non-callback type (heap corruption?)")
 	}
 
 	// Convert all CABI parameters to Go parameters
-	slotval1 := (QGraphicsItem__Extension)(extension)
-
+	int /* TODO  */
 	slotval2 := newQVariant(variant)
 
 	gofunc((&QGraphicsPixmapItem{h: self}).callVirtualBase_SetExtension, slotval1, slotval2)
@@ -11423,14 +11406,14 @@ func miqt_exec_callback_QGraphicsPixmapItem_inputMethodQuery(self *C.QGraphicsPi
 
 }
 
-func (this *QGraphicsPixmapItem) callVirtualBase_ItemChange(change QGraphicsItem__GraphicsItemChange, value *QVariant) *QVariant {
+func (this *QGraphicsPixmapItem) callVirtualBase_ItemChange(change GraphicsItemChange, value *QVariant) *QVariant {
 
-	_goptr := newQVariant(C.QGraphicsPixmapItem_virtualbase_itemChange(unsafe.Pointer(this.h), (C.int)(change), value.cPointer()))
+	_goptr := newQVariant(C.QGraphicsPixmapItem_virtualbase_itemChange(unsafe.Pointer(this.h), change, value.cPointer()))
 	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
 	return _goptr
 
 }
-func (this *QGraphicsPixmapItem) OnItemChange(slot func(super func(change QGraphicsItem__GraphicsItemChange, value *QVariant) *QVariant, change QGraphicsItem__GraphicsItemChange, value *QVariant) *QVariant) {
+func (this *QGraphicsPixmapItem) OnItemChange(slot func(super func(change GraphicsItemChange, value *QVariant) *QVariant, change GraphicsItemChange, value *QVariant) *QVariant) {
 	ok := C.QGraphicsPixmapItem_override_virtual_itemChange(unsafe.Pointer(this.h), C.intptr_t(cgo.NewHandle(slot)))
 	if !ok {
 		panic("miqt: can only override virtual methods for directly constructed types")
@@ -11438,15 +11421,14 @@ func (this *QGraphicsPixmapItem) OnItemChange(slot func(super func(change QGraph
 }
 
 //export miqt_exec_callback_QGraphicsPixmapItem_itemChange
-func miqt_exec_callback_QGraphicsPixmapItem_itemChange(self *C.QGraphicsPixmapItem, cb C.intptr_t, change C.int, value *C.QVariant) *C.QVariant {
-	gofunc, ok := cgo.Handle(cb).Value().(func(super func(change QGraphicsItem__GraphicsItemChange, value *QVariant) *QVariant, change QGraphicsItem__GraphicsItemChange, value *QVariant) *QVariant)
+func miqt_exec_callback_QGraphicsPixmapItem_itemChange(self *C.QGraphicsPixmapItem, cb C.intptr_t, change C.GraphicsItemChange, value *C.QVariant) *C.QVariant {
+	gofunc, ok := cgo.Handle(cb).Value().(func(super func(change GraphicsItemChange, value *QVariant) *QVariant, change GraphicsItemChange, value *QVariant) *QVariant)
 	if !ok {
 		panic("miqt: callback of non-callback type (heap corruption?)")
 	}
 
 	// Convert all CABI parameters to Go parameters
-	slotval1 := (QGraphicsItem__GraphicsItemChange)(change)
-
+	int /* TODO  */
 	slotval2 := newQVariant(value)
 
 	virtualReturn := gofunc((&QGraphicsPixmapItem{h: self}).callVirtualBase_ItemChange, slotval1, slotval2)
@@ -12568,12 +12550,12 @@ func miqt_exec_callback_QGraphicsTextItem_inputMethodQuery(self *C.QGraphicsText
 
 }
 
-func (this *QGraphicsTextItem) callVirtualBase_SupportsExtension(extension QGraphicsItem__Extension) bool {
+func (this *QGraphicsTextItem) callVirtualBase_SupportsExtension(extension Extension) bool {
 
-	return (bool)(C.QGraphicsTextItem_virtualbase_supportsExtension(unsafe.Pointer(this.h), (C.int)(extension)))
+	return (bool)(C.QGraphicsTextItem_virtualbase_supportsExtension(unsafe.Pointer(this.h), extension))
 
 }
-func (this *QGraphicsTextItem) OnSupportsExtension(slot func(super func(extension QGraphicsItem__Extension) bool, extension QGraphicsItem__Extension) bool) {
+func (this *QGraphicsTextItem) OnSupportsExtension(slot func(super func(extension Extension) bool, extension Extension) bool) {
 	ok := C.QGraphicsTextItem_override_virtual_supportsExtension(unsafe.Pointer(this.h), C.intptr_t(cgo.NewHandle(slot)))
 	if !ok {
 		panic("miqt: can only override virtual methods for directly constructed types")
@@ -12581,14 +12563,14 @@ func (this *QGraphicsTextItem) OnSupportsExtension(slot func(super func(extensio
 }
 
 //export miqt_exec_callback_QGraphicsTextItem_supportsExtension
-func miqt_exec_callback_QGraphicsTextItem_supportsExtension(self *C.QGraphicsTextItem, cb C.intptr_t, extension C.int) C.bool {
-	gofunc, ok := cgo.Handle(cb).Value().(func(super func(extension QGraphicsItem__Extension) bool, extension QGraphicsItem__Extension) bool)
+func miqt_exec_callback_QGraphicsTextItem_supportsExtension(self *C.QGraphicsTextItem, cb C.intptr_t, extension C.Extension) C.bool {
+	gofunc, ok := cgo.Handle(cb).Value().(func(super func(extension Extension) bool, extension Extension) bool)
 	if !ok {
 		panic("miqt: callback of non-callback type (heap corruption?)")
 	}
 
 	// Convert all CABI parameters to Go parameters
-	slotval1 := (QGraphicsItem__Extension)(extension)
+	int /* TODO  */
 
 	virtualReturn := gofunc((&QGraphicsTextItem{h: self}).callVirtualBase_SupportsExtension, slotval1)
 
@@ -12596,12 +12578,12 @@ func miqt_exec_callback_QGraphicsTextItem_supportsExtension(self *C.QGraphicsTex
 
 }
 
-func (this *QGraphicsTextItem) callVirtualBase_SetExtension(extension QGraphicsItem__Extension, variant *QVariant) {
+func (this *QGraphicsTextItem) callVirtualBase_SetExtension(extension Extension, variant *QVariant) {
 
-	C.QGraphicsTextItem_virtualbase_setExtension(unsafe.Pointer(this.h), (C.int)(extension), variant.cPointer())
+	C.QGraphicsTextItem_virtualbase_setExtension(unsafe.Pointer(this.h), extension, variant.cPointer())
 
 }
-func (this *QGraphicsTextItem) OnSetExtension(slot func(super func(extension QGraphicsItem__Extension, variant *QVariant), extension QGraphicsItem__Extension, variant *QVariant)) {
+func (this *QGraphicsTextItem) OnSetExtension(slot func(super func(extension Extension, variant *QVariant), extension Extension, variant *QVariant)) {
 	ok := C.QGraphicsTextItem_override_virtual_setExtension(unsafe.Pointer(this.h), C.intptr_t(cgo.NewHandle(slot)))
 	if !ok {
 		panic("miqt: can only override virtual methods for directly constructed types")
@@ -12609,15 +12591,14 @@ func (this *QGraphicsTextItem) OnSetExtension(slot func(super func(extension QGr
 }
 
 //export miqt_exec_callback_QGraphicsTextItem_setExtension
-func miqt_exec_callback_QGraphicsTextItem_setExtension(self *C.QGraphicsTextItem, cb C.intptr_t, extension C.int, variant *C.QVariant) {
-	gofunc, ok := cgo.Handle(cb).Value().(func(super func(extension QGraphicsItem__Extension, variant *QVariant), extension QGraphicsItem__Extension, variant *QVariant))
+func miqt_exec_callback_QGraphicsTextItem_setExtension(self *C.QGraphicsTextItem, cb C.intptr_t, extension C.Extension, variant *C.QVariant) {
+	gofunc, ok := cgo.Handle(cb).Value().(func(super func(extension Extension, variant *QVariant), extension Extension, variant *QVariant))
 	if !ok {
 		panic("miqt: callback of non-callback type (heap corruption?)")
 	}
 
 	// Convert all CABI parameters to Go parameters
-	slotval1 := (QGraphicsItem__Extension)(extension)
-
+	int /* TODO  */
 	slotval2 := newQVariant(variant)
 
 	gofunc((&QGraphicsTextItem{h: self}).callVirtualBase_SetExtension, slotval1, slotval2)
@@ -12984,14 +12965,14 @@ func miqt_exec_callback_QGraphicsTextItem_wheelEvent(self *C.QGraphicsTextItem, 
 
 }
 
-func (this *QGraphicsTextItem) callVirtualBase_ItemChange(change QGraphicsItem__GraphicsItemChange, value *QVariant) *QVariant {
+func (this *QGraphicsTextItem) callVirtualBase_ItemChange(change GraphicsItemChange, value *QVariant) *QVariant {
 
-	_goptr := newQVariant(C.QGraphicsTextItem_virtualbase_itemChange(unsafe.Pointer(this.h), (C.int)(change), value.cPointer()))
+	_goptr := newQVariant(C.QGraphicsTextItem_virtualbase_itemChange(unsafe.Pointer(this.h), change, value.cPointer()))
 	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
 	return _goptr
 
 }
-func (this *QGraphicsTextItem) OnItemChange(slot func(super func(change QGraphicsItem__GraphicsItemChange, value *QVariant) *QVariant, change QGraphicsItem__GraphicsItemChange, value *QVariant) *QVariant) {
+func (this *QGraphicsTextItem) OnItemChange(slot func(super func(change GraphicsItemChange, value *QVariant) *QVariant, change GraphicsItemChange, value *QVariant) *QVariant) {
 	ok := C.QGraphicsTextItem_override_virtual_itemChange(unsafe.Pointer(this.h), C.intptr_t(cgo.NewHandle(slot)))
 	if !ok {
 		panic("miqt: can only override virtual methods for directly constructed types")
@@ -12999,15 +12980,14 @@ func (this *QGraphicsTextItem) OnItemChange(slot func(super func(change QGraphic
 }
 
 //export miqt_exec_callback_QGraphicsTextItem_itemChange
-func miqt_exec_callback_QGraphicsTextItem_itemChange(self *C.QGraphicsTextItem, cb C.intptr_t, change C.int, value *C.QVariant) *C.QVariant {
-	gofunc, ok := cgo.Handle(cb).Value().(func(super func(change QGraphicsItem__GraphicsItemChange, value *QVariant) *QVariant, change QGraphicsItem__GraphicsItemChange, value *QVariant) *QVariant)
+func miqt_exec_callback_QGraphicsTextItem_itemChange(self *C.QGraphicsTextItem, cb C.intptr_t, change C.GraphicsItemChange, value *C.QVariant) *C.QVariant {
+	gofunc, ok := cgo.Handle(cb).Value().(func(super func(change GraphicsItemChange, value *QVariant) *QVariant, change GraphicsItemChange, value *QVariant) *QVariant)
 	if !ok {
 		panic("miqt: callback of non-callback type (heap corruption?)")
 	}
 
 	// Convert all CABI parameters to Go parameters
-	slotval1 := (QGraphicsItem__GraphicsItemChange)(change)
-
+	int /* TODO  */
 	slotval2 := newQVariant(value)
 
 	virtualReturn := gofunc((&QGraphicsTextItem{h: self}).callVirtualBase_ItemChange, slotval1, slotval2)
@@ -13397,12 +13377,12 @@ func miqt_exec_callback_QGraphicsSimpleTextItem_type(self *C.QGraphicsSimpleText
 
 }
 
-func (this *QGraphicsSimpleTextItem) callVirtualBase_SupportsExtension(extension QGraphicsItem__Extension) bool {
+func (this *QGraphicsSimpleTextItem) callVirtualBase_SupportsExtension(extension Extension) bool {
 
-	return (bool)(C.QGraphicsSimpleTextItem_virtualbase_supportsExtension(unsafe.Pointer(this.h), (C.int)(extension)))
+	return (bool)(C.QGraphicsSimpleTextItem_virtualbase_supportsExtension(unsafe.Pointer(this.h), extension))
 
 }
-func (this *QGraphicsSimpleTextItem) OnSupportsExtension(slot func(super func(extension QGraphicsItem__Extension) bool, extension QGraphicsItem__Extension) bool) {
+func (this *QGraphicsSimpleTextItem) OnSupportsExtension(slot func(super func(extension Extension) bool, extension Extension) bool) {
 	ok := C.QGraphicsSimpleTextItem_override_virtual_supportsExtension(unsafe.Pointer(this.h), C.intptr_t(cgo.NewHandle(slot)))
 	if !ok {
 		panic("miqt: can only override virtual methods for directly constructed types")
@@ -13410,14 +13390,14 @@ func (this *QGraphicsSimpleTextItem) OnSupportsExtension(slot func(super func(ex
 }
 
 //export miqt_exec_callback_QGraphicsSimpleTextItem_supportsExtension
-func miqt_exec_callback_QGraphicsSimpleTextItem_supportsExtension(self *C.QGraphicsSimpleTextItem, cb C.intptr_t, extension C.int) C.bool {
-	gofunc, ok := cgo.Handle(cb).Value().(func(super func(extension QGraphicsItem__Extension) bool, extension QGraphicsItem__Extension) bool)
+func miqt_exec_callback_QGraphicsSimpleTextItem_supportsExtension(self *C.QGraphicsSimpleTextItem, cb C.intptr_t, extension C.Extension) C.bool {
+	gofunc, ok := cgo.Handle(cb).Value().(func(super func(extension Extension) bool, extension Extension) bool)
 	if !ok {
 		panic("miqt: callback of non-callback type (heap corruption?)")
 	}
 
 	// Convert all CABI parameters to Go parameters
-	slotval1 := (QGraphicsItem__Extension)(extension)
+	int /* TODO  */
 
 	virtualReturn := gofunc((&QGraphicsSimpleTextItem{h: self}).callVirtualBase_SupportsExtension, slotval1)
 
@@ -13425,12 +13405,12 @@ func miqt_exec_callback_QGraphicsSimpleTextItem_supportsExtension(self *C.QGraph
 
 }
 
-func (this *QGraphicsSimpleTextItem) callVirtualBase_SetExtension(extension QGraphicsItem__Extension, variant *QVariant) {
+func (this *QGraphicsSimpleTextItem) callVirtualBase_SetExtension(extension Extension, variant *QVariant) {
 
-	C.QGraphicsSimpleTextItem_virtualbase_setExtension(unsafe.Pointer(this.h), (C.int)(extension), variant.cPointer())
+	C.QGraphicsSimpleTextItem_virtualbase_setExtension(unsafe.Pointer(this.h), extension, variant.cPointer())
 
 }
-func (this *QGraphicsSimpleTextItem) OnSetExtension(slot func(super func(extension QGraphicsItem__Extension, variant *QVariant), extension QGraphicsItem__Extension, variant *QVariant)) {
+func (this *QGraphicsSimpleTextItem) OnSetExtension(slot func(super func(extension Extension, variant *QVariant), extension Extension, variant *QVariant)) {
 	ok := C.QGraphicsSimpleTextItem_override_virtual_setExtension(unsafe.Pointer(this.h), C.intptr_t(cgo.NewHandle(slot)))
 	if !ok {
 		panic("miqt: can only override virtual methods for directly constructed types")
@@ -13438,15 +13418,14 @@ func (this *QGraphicsSimpleTextItem) OnSetExtension(slot func(super func(extensi
 }
 
 //export miqt_exec_callback_QGraphicsSimpleTextItem_setExtension
-func miqt_exec_callback_QGraphicsSimpleTextItem_setExtension(self *C.QGraphicsSimpleTextItem, cb C.intptr_t, extension C.int, variant *C.QVariant) {
-	gofunc, ok := cgo.Handle(cb).Value().(func(super func(extension QGraphicsItem__Extension, variant *QVariant), extension QGraphicsItem__Extension, variant *QVariant))
+func miqt_exec_callback_QGraphicsSimpleTextItem_setExtension(self *C.QGraphicsSimpleTextItem, cb C.intptr_t, extension C.Extension, variant *C.QVariant) {
+	gofunc, ok := cgo.Handle(cb).Value().(func(super func(extension Extension, variant *QVariant), extension Extension, variant *QVariant))
 	if !ok {
 		panic("miqt: callback of non-callback type (heap corruption?)")
 	}
 
 	// Convert all CABI parameters to Go parameters
-	slotval1 := (QGraphicsItem__Extension)(extension)
-
+	int /* TODO  */
 	slotval2 := newQVariant(variant)
 
 	gofunc((&QGraphicsSimpleTextItem{h: self}).callVirtualBase_SetExtension, slotval1, slotval2)
@@ -14125,14 +14104,14 @@ func miqt_exec_callback_QGraphicsSimpleTextItem_inputMethodQuery(self *C.QGraphi
 
 }
 
-func (this *QGraphicsSimpleTextItem) callVirtualBase_ItemChange(change QGraphicsItem__GraphicsItemChange, value *QVariant) *QVariant {
+func (this *QGraphicsSimpleTextItem) callVirtualBase_ItemChange(change GraphicsItemChange, value *QVariant) *QVariant {
 
-	_goptr := newQVariant(C.QGraphicsSimpleTextItem_virtualbase_itemChange(unsafe.Pointer(this.h), (C.int)(change), value.cPointer()))
+	_goptr := newQVariant(C.QGraphicsSimpleTextItem_virtualbase_itemChange(unsafe.Pointer(this.h), change, value.cPointer()))
 	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
 	return _goptr
 
 }
-func (this *QGraphicsSimpleTextItem) OnItemChange(slot func(super func(change QGraphicsItem__GraphicsItemChange, value *QVariant) *QVariant, change QGraphicsItem__GraphicsItemChange, value *QVariant) *QVariant) {
+func (this *QGraphicsSimpleTextItem) OnItemChange(slot func(super func(change GraphicsItemChange, value *QVariant) *QVariant, change GraphicsItemChange, value *QVariant) *QVariant) {
 	ok := C.QGraphicsSimpleTextItem_override_virtual_itemChange(unsafe.Pointer(this.h), C.intptr_t(cgo.NewHandle(slot)))
 	if !ok {
 		panic("miqt: can only override virtual methods for directly constructed types")
@@ -14140,15 +14119,14 @@ func (this *QGraphicsSimpleTextItem) OnItemChange(slot func(super func(change QG
 }
 
 //export miqt_exec_callback_QGraphicsSimpleTextItem_itemChange
-func miqt_exec_callback_QGraphicsSimpleTextItem_itemChange(self *C.QGraphicsSimpleTextItem, cb C.intptr_t, change C.int, value *C.QVariant) *C.QVariant {
-	gofunc, ok := cgo.Handle(cb).Value().(func(super func(change QGraphicsItem__GraphicsItemChange, value *QVariant) *QVariant, change QGraphicsItem__GraphicsItemChange, value *QVariant) *QVariant)
+func miqt_exec_callback_QGraphicsSimpleTextItem_itemChange(self *C.QGraphicsSimpleTextItem, cb C.intptr_t, change C.GraphicsItemChange, value *C.QVariant) *C.QVariant {
+	gofunc, ok := cgo.Handle(cb).Value().(func(super func(change GraphicsItemChange, value *QVariant) *QVariant, change GraphicsItemChange, value *QVariant) *QVariant)
 	if !ok {
 		panic("miqt: callback of non-callback type (heap corruption?)")
 	}
 
 	// Convert all CABI parameters to Go parameters
-	slotval1 := (QGraphicsItem__GraphicsItemChange)(change)
-
+	int /* TODO  */
 	slotval2 := newQVariant(value)
 
 	virtualReturn := gofunc((&QGraphicsSimpleTextItem{h: self}).callVirtualBase_ItemChange, slotval1, slotval2)
@@ -15133,14 +15111,14 @@ func miqt_exec_callback_QGraphicsItemGroup_inputMethodQuery(self *C.QGraphicsIte
 
 }
 
-func (this *QGraphicsItemGroup) callVirtualBase_ItemChange(change QGraphicsItem__GraphicsItemChange, value *QVariant) *QVariant {
+func (this *QGraphicsItemGroup) callVirtualBase_ItemChange(change GraphicsItemChange, value *QVariant) *QVariant {
 
-	_goptr := newQVariant(C.QGraphicsItemGroup_virtualbase_itemChange(unsafe.Pointer(this.h), (C.int)(change), value.cPointer()))
+	_goptr := newQVariant(C.QGraphicsItemGroup_virtualbase_itemChange(unsafe.Pointer(this.h), change, value.cPointer()))
 	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
 	return _goptr
 
 }
-func (this *QGraphicsItemGroup) OnItemChange(slot func(super func(change QGraphicsItem__GraphicsItemChange, value *QVariant) *QVariant, change QGraphicsItem__GraphicsItemChange, value *QVariant) *QVariant) {
+func (this *QGraphicsItemGroup) OnItemChange(slot func(super func(change GraphicsItemChange, value *QVariant) *QVariant, change GraphicsItemChange, value *QVariant) *QVariant) {
 	ok := C.QGraphicsItemGroup_override_virtual_itemChange(unsafe.Pointer(this.h), C.intptr_t(cgo.NewHandle(slot)))
 	if !ok {
 		panic("miqt: can only override virtual methods for directly constructed types")
@@ -15148,15 +15126,14 @@ func (this *QGraphicsItemGroup) OnItemChange(slot func(super func(change QGraphi
 }
 
 //export miqt_exec_callback_QGraphicsItemGroup_itemChange
-func miqt_exec_callback_QGraphicsItemGroup_itemChange(self *C.QGraphicsItemGroup, cb C.intptr_t, change C.int, value *C.QVariant) *C.QVariant {
-	gofunc, ok := cgo.Handle(cb).Value().(func(super func(change QGraphicsItem__GraphicsItemChange, value *QVariant) *QVariant, change QGraphicsItem__GraphicsItemChange, value *QVariant) *QVariant)
+func miqt_exec_callback_QGraphicsItemGroup_itemChange(self *C.QGraphicsItemGroup, cb C.intptr_t, change C.GraphicsItemChange, value *C.QVariant) *C.QVariant {
+	gofunc, ok := cgo.Handle(cb).Value().(func(super func(change GraphicsItemChange, value *QVariant) *QVariant, change GraphicsItemChange, value *QVariant) *QVariant)
 	if !ok {
 		panic("miqt: callback of non-callback type (heap corruption?)")
 	}
 
 	// Convert all CABI parameters to Go parameters
-	slotval1 := (QGraphicsItem__GraphicsItemChange)(change)
-
+	int /* TODO  */
 	slotval2 := newQVariant(value)
 
 	virtualReturn := gofunc((&QGraphicsItemGroup{h: self}).callVirtualBase_ItemChange, slotval1, slotval2)
@@ -15165,12 +15142,12 @@ func miqt_exec_callback_QGraphicsItemGroup_itemChange(self *C.QGraphicsItemGroup
 
 }
 
-func (this *QGraphicsItemGroup) callVirtualBase_SupportsExtension(extension QGraphicsItem__Extension) bool {
+func (this *QGraphicsItemGroup) callVirtualBase_SupportsExtension(extension Extension) bool {
 
-	return (bool)(C.QGraphicsItemGroup_virtualbase_supportsExtension(unsafe.Pointer(this.h), (C.int)(extension)))
+	return (bool)(C.QGraphicsItemGroup_virtualbase_supportsExtension(unsafe.Pointer(this.h), extension))
 
 }
-func (this *QGraphicsItemGroup) OnSupportsExtension(slot func(super func(extension QGraphicsItem__Extension) bool, extension QGraphicsItem__Extension) bool) {
+func (this *QGraphicsItemGroup) OnSupportsExtension(slot func(super func(extension Extension) bool, extension Extension) bool) {
 	ok := C.QGraphicsItemGroup_override_virtual_supportsExtension(unsafe.Pointer(this.h), C.intptr_t(cgo.NewHandle(slot)))
 	if !ok {
 		panic("miqt: can only override virtual methods for directly constructed types")
@@ -15178,14 +15155,14 @@ func (this *QGraphicsItemGroup) OnSupportsExtension(slot func(super func(extensi
 }
 
 //export miqt_exec_callback_QGraphicsItemGroup_supportsExtension
-func miqt_exec_callback_QGraphicsItemGroup_supportsExtension(self *C.QGraphicsItemGroup, cb C.intptr_t, extension C.int) C.bool {
-	gofunc, ok := cgo.Handle(cb).Value().(func(super func(extension QGraphicsItem__Extension) bool, extension QGraphicsItem__Extension) bool)
+func miqt_exec_callback_QGraphicsItemGroup_supportsExtension(self *C.QGraphicsItemGroup, cb C.intptr_t, extension C.Extension) C.bool {
+	gofunc, ok := cgo.Handle(cb).Value().(func(super func(extension Extension) bool, extension Extension) bool)
 	if !ok {
 		panic("miqt: callback of non-callback type (heap corruption?)")
 	}
 
 	// Convert all CABI parameters to Go parameters
-	slotval1 := (QGraphicsItem__Extension)(extension)
+	int /* TODO  */
 
 	virtualReturn := gofunc((&QGraphicsItemGroup{h: self}).callVirtualBase_SupportsExtension, slotval1)
 
@@ -15193,12 +15170,12 @@ func miqt_exec_callback_QGraphicsItemGroup_supportsExtension(self *C.QGraphicsIt
 
 }
 
-func (this *QGraphicsItemGroup) callVirtualBase_SetExtension(extension QGraphicsItem__Extension, variant *QVariant) {
+func (this *QGraphicsItemGroup) callVirtualBase_SetExtension(extension Extension, variant *QVariant) {
 
-	C.QGraphicsItemGroup_virtualbase_setExtension(unsafe.Pointer(this.h), (C.int)(extension), variant.cPointer())
+	C.QGraphicsItemGroup_virtualbase_setExtension(unsafe.Pointer(this.h), extension, variant.cPointer())
 
 }
-func (this *QGraphicsItemGroup) OnSetExtension(slot func(super func(extension QGraphicsItem__Extension, variant *QVariant), extension QGraphicsItem__Extension, variant *QVariant)) {
+func (this *QGraphicsItemGroup) OnSetExtension(slot func(super func(extension Extension, variant *QVariant), extension Extension, variant *QVariant)) {
 	ok := C.QGraphicsItemGroup_override_virtual_setExtension(unsafe.Pointer(this.h), C.intptr_t(cgo.NewHandle(slot)))
 	if !ok {
 		panic("miqt: can only override virtual methods for directly constructed types")
@@ -15206,15 +15183,14 @@ func (this *QGraphicsItemGroup) OnSetExtension(slot func(super func(extension QG
 }
 
 //export miqt_exec_callback_QGraphicsItemGroup_setExtension
-func miqt_exec_callback_QGraphicsItemGroup_setExtension(self *C.QGraphicsItemGroup, cb C.intptr_t, extension C.int, variant *C.QVariant) {
-	gofunc, ok := cgo.Handle(cb).Value().(func(super func(extension QGraphicsItem__Extension, variant *QVariant), extension QGraphicsItem__Extension, variant *QVariant))
+func miqt_exec_callback_QGraphicsItemGroup_setExtension(self *C.QGraphicsItemGroup, cb C.intptr_t, extension C.Extension, variant *C.QVariant) {
+	gofunc, ok := cgo.Handle(cb).Value().(func(super func(extension Extension, variant *QVariant), extension Extension, variant *QVariant))
 	if !ok {
 		panic("miqt: callback of non-callback type (heap corruption?)")
 	}
 
 	// Convert all CABI parameters to Go parameters
-	slotval1 := (QGraphicsItem__Extension)(extension)
-
+	int /* TODO  */
 	slotval2 := newQVariant(variant)
 
 	gofunc((&QGraphicsItemGroup{h: self}).callVirtualBase_SetExtension, slotval1, slotval2)

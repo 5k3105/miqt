@@ -175,16 +175,16 @@ func (this *QGlyphRun) IsRightToLeft() bool {
 	return (bool)(C.QGlyphRun_isRightToLeft(this.h))
 }
 
-func (this *QGlyphRun) SetFlag(flag QGlyphRun__GlyphRunFlag) {
-	C.QGlyphRun_setFlag(this.h, (C.int)(flag))
+func (this *QGlyphRun) SetFlag(flag GlyphRunFlag) {
+	C.QGlyphRun_setFlag(this.h, flag)
 }
 
-func (this *QGlyphRun) SetFlags(flags QGlyphRun__GlyphRunFlag) {
-	C.QGlyphRun_setFlags(this.h, (C.int)(flags))
+func (this *QGlyphRun) SetFlags(flags GlyphRunFlags) {
+	C.QGlyphRun_setFlags(this.h, flags)
 }
 
-func (this *QGlyphRun) Flags() QGlyphRun__GlyphRunFlag {
-	return (QGlyphRun__GlyphRunFlag)(C.QGlyphRun_flags(this.h))
+func (this *QGlyphRun) Flags() GlyphRunFlags {
+	int /* TODO  */
 }
 
 func (this *QGlyphRun) SetBoundingRect(boundingRect *QRectF) {
@@ -197,12 +197,47 @@ func (this *QGlyphRun) BoundingRect() *QRectF {
 	return _goptr
 }
 
+func (this *QGlyphRun) StringIndexes() []int64 {
+	var _ma C.struct_miqt_array = C.QGlyphRun_stringIndexes(this.h)
+	_ret := make([]int64, int(_ma.len))
+	_outCast := (*[0xffff]C.ptrdiff_t)(unsafe.Pointer(_ma.data)) // hey ya
+	for i := 0; i < int(_ma.len); i++ {
+		_ret[i] = (int64)(_outCast[i])
+	}
+	return _ret
+}
+
+func (this *QGlyphRun) SetStringIndexes(stringIndexes []int64) {
+	stringIndexes_CArray := (*[0xffff]C.ptrdiff_t)(C.malloc(C.size_t(8 * len(stringIndexes))))
+	defer C.free(unsafe.Pointer(stringIndexes_CArray))
+	for i := range stringIndexes {
+		stringIndexes_CArray[i] = (C.ptrdiff_t)(stringIndexes[i])
+	}
+	stringIndexes_ma := C.struct_miqt_array{len: C.size_t(len(stringIndexes)), data: unsafe.Pointer(stringIndexes_CArray)}
+	C.QGlyphRun_setStringIndexes(this.h, stringIndexes_ma)
+}
+
+func (this *QGlyphRun) SetSourceString(sourceString string) {
+	sourceString_ms := C.struct_miqt_string{}
+	sourceString_ms.data = C.CString(sourceString)
+	sourceString_ms.len = C.size_t(len(sourceString))
+	defer C.free(unsafe.Pointer(sourceString_ms.data))
+	C.QGlyphRun_setSourceString(this.h, sourceString_ms)
+}
+
+func (this *QGlyphRun) SourceString() string {
+	var _ms C.struct_miqt_string = C.QGlyphRun_sourceString(this.h)
+	_ret := C.GoStringN(_ms.data, C.int(int64(_ms.len)))
+	C.free(unsafe.Pointer(_ms.data))
+	return _ret
+}
+
 func (this *QGlyphRun) IsEmpty() bool {
 	return (bool)(C.QGlyphRun_isEmpty(this.h))
 }
 
-func (this *QGlyphRun) SetFlag2(flag QGlyphRun__GlyphRunFlag, enabled bool) {
-	C.QGlyphRun_setFlag2(this.h, (C.int)(flag), (C.bool)(enabled))
+func (this *QGlyphRun) SetFlag2(flag GlyphRunFlag, enabled bool) {
+	C.QGlyphRun_setFlag2(this.h, flag, (C.bool)(enabled))
 }
 
 // Delete this object from C++ memory.

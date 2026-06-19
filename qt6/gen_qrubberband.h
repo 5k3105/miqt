@@ -88,13 +88,13 @@ typedef struct QWheelEvent QWheelEvent;
 typedef struct QWidget QWidget;
 #endif
 
-QRubberBand* QRubberBand_new(int param1);
-QRubberBand* QRubberBand_new2(int param1, QWidget* param2);
+QRubberBand* QRubberBand_new(Shape param1);
+QRubberBand* QRubberBand_new2(Shape param1, QWidget* param2);
 void QRubberBand_virtbase(QRubberBand* src, QWidget** outptr_QWidget);
 QMetaObject* QRubberBand_metaObject(const QRubberBand* self);
 void* QRubberBand_metacast(QRubberBand* self, const char* param1);
 struct miqt_string QRubberBand_tr(const char* s);
-int QRubberBand_shape(const QRubberBand* self);
+Shape QRubberBand_shape(const QRubberBand* self);
 void QRubberBand_setGeometry(QRubberBand* self, QRect* r);
 void QRubberBand_setGeometry2(QRubberBand* self, int x, int y, int w, int h);
 void QRubberBand_move(QRubberBand* self, int x, int y);
@@ -182,7 +182,7 @@ void QRubberBand_virtualbase_hideEvent(void* self, QHideEvent* event);
 bool QRubberBand_override_virtual_nativeEvent(void* self, intptr_t slot);
 bool QRubberBand_virtualbase_nativeEvent(void* self, struct miqt_string eventType, void* message, intptr_t* result);
 bool QRubberBand_override_virtual_metric(void* self, intptr_t slot);
-int QRubberBand_virtualbase_metric(const void* self, int param1);
+int QRubberBand_virtualbase_metric(const void* self, PaintDeviceMetric param1);
 bool QRubberBand_override_virtual_initPainter(void* self, intptr_t slot);
 void QRubberBand_virtualbase_initPainter(const void* self, QPainter* painter);
 bool QRubberBand_override_virtual_redirected(void* self, intptr_t slot);
@@ -217,6 +217,7 @@ QObject* QRubberBand_protectedbase_sender(bool* _dynamic_cast_ok, const void* se
 int QRubberBand_protectedbase_senderSignalIndex(bool* _dynamic_cast_ok, const void* self);
 int QRubberBand_protectedbase_receivers(bool* _dynamic_cast_ok, const void* self, const char* signal);
 bool QRubberBand_protectedbase_isSignalConnected(bool* _dynamic_cast_ok, const void* self, QMetaMethod* signal);
+double QRubberBand_protectedbase_getDecodedMetricF(bool* _dynamic_cast_ok, const void* self, PaintDeviceMetric metricA, PaintDeviceMetric metricB);
 
 void QRubberBand_delete(QRubberBand* self);
 

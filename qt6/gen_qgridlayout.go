@@ -897,12 +897,12 @@ func miqt_exec_callback_QGridLayout_isEmpty(self *C.QGridLayout, cb C.intptr_t) 
 
 }
 
-func (this *QGridLayout) callVirtualBase_ControlTypes() QSizePolicy__ControlType {
+func (this *QGridLayout) callVirtualBase_ControlTypes() ControlType {
 
-	return (QSizePolicy__ControlType)(C.QGridLayout_virtualbase_controlTypes(unsafe.Pointer(this.h)))
+	return (ControlType)(C.QGridLayout_virtualbase_controlTypes(unsafe.Pointer(this.h)))
 
 }
-func (this *QGridLayout) OnControlTypes(slot func(super func() QSizePolicy__ControlType) QSizePolicy__ControlType) {
+func (this *QGridLayout) OnControlTypes(slot func(super func() ControlType) ControlType) {
 	ok := C.QGridLayout_override_virtual_controlTypes(unsafe.Pointer(this.h), C.intptr_t(cgo.NewHandle(slot)))
 	if !ok {
 		panic("miqt: can only override virtual methods for directly constructed types")
@@ -911,7 +911,7 @@ func (this *QGridLayout) OnControlTypes(slot func(super func() QSizePolicy__Cont
 
 //export miqt_exec_callback_QGridLayout_controlTypes
 func miqt_exec_callback_QGridLayout_controlTypes(self *C.QGridLayout, cb C.intptr_t) C.int {
-	gofunc, ok := cgo.Handle(cb).Value().(func(super func() QSizePolicy__ControlType) QSizePolicy__ControlType)
+	gofunc, ok := cgo.Handle(cb).Value().(func(super func() ControlType) ControlType)
 	if !ok {
 		panic("miqt: callback of non-callback type (heap corruption?)")
 	}

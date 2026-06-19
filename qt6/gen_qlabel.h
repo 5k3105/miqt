@@ -233,7 +233,7 @@ void QLabel_virtualbase_hideEvent(void* self, QHideEvent* event);
 bool QLabel_override_virtual_nativeEvent(void* self, intptr_t slot);
 bool QLabel_virtualbase_nativeEvent(void* self, struct miqt_string eventType, void* message, intptr_t* result);
 bool QLabel_override_virtual_metric(void* self, intptr_t slot);
-int QLabel_virtualbase_metric(const void* self, int param1);
+int QLabel_virtualbase_metric(const void* self, PaintDeviceMetric param1);
 bool QLabel_override_virtual_initPainter(void* self, intptr_t slot);
 void QLabel_virtualbase_initPainter(const void* self, QPainter* painter);
 bool QLabel_override_virtual_redirected(void* self, intptr_t slot);
@@ -267,6 +267,7 @@ QObject* QLabel_protectedbase_sender(bool* _dynamic_cast_ok, const void* self);
 int QLabel_protectedbase_senderSignalIndex(bool* _dynamic_cast_ok, const void* self);
 int QLabel_protectedbase_receivers(bool* _dynamic_cast_ok, const void* self, const char* signal);
 bool QLabel_protectedbase_isSignalConnected(bool* _dynamic_cast_ok, const void* self, QMetaMethod* signal);
+double QLabel_protectedbase_getDecodedMetricF(bool* _dynamic_cast_ok, const void* self, PaintDeviceMetric metricA, PaintDeviceMetric metricB);
 
 void QLabel_delete(QLabel* self);
 

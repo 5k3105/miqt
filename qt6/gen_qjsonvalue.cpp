@@ -1,5 +1,9 @@
+#include <QAnyStringView>
+#include <QByteArray>
+#include <QByteArrayView>
 #include <QJsonArray>
 #include <QJsonObject>
+#include <QJsonParseError>
 #include <QJsonValue>
 #include <QJsonValueConstRef>
 #include <QJsonValueRef>
@@ -59,8 +63,8 @@ QJsonValue* QJsonValue_new10(QJsonValue* other) {
 	return new (std::nothrow) QJsonValue(*other);
 }
 
-QJsonValue* QJsonValue_new11(int param1) {
-	return new (std::nothrow) QJsonValue(static_cast<QJsonValue::Type>(param1));
+QJsonValue* QJsonValue_new11(Type param1) {
+	return new (std::nothrow) QJsonValue(param1);
 }
 
 void QJsonValue_operatorAssign(QJsonValue* self, QJsonValue* other) {
@@ -79,9 +83,21 @@ QVariant* QJsonValue_toVariant(const QJsonValue* self) {
 	return new QVariant(self->toVariant());
 }
 
-int QJsonValue_type(const QJsonValue* self) {
-	QJsonValue::Type _ret = self->type();
-	return static_cast<int>(_ret);
+QJsonValue* QJsonValue_fromJson(QByteArrayView* json) {
+	return new QJsonValue(QJsonValue::fromJson(*json));
+}
+
+struct miqt_string QJsonValue_toJson(const QJsonValue* self) {
+	QByteArray _qb = self->toJson();
+	struct miqt_string _ms;
+	_ms.len = _qb.length();
+	_ms.data = static_cast<char*>(malloc(_ms.len));
+	memcpy(_ms.data, _qb.data(), _ms.len);
+	return _ms;
+}
+
+Type QJsonValue_type(const QJsonValue* self) {
+	return self->type();
 }
 
 bool QJsonValue_isNull(const QJsonValue* self) {
@@ -152,6 +168,10 @@ struct miqt_string QJsonValue_toStringWithDefaultValue(const QJsonValue* self, s
 	return _ms;
 }
 
+QAnyStringView* QJsonValue_toStringView(const QJsonValue* self) {
+	return new QAnyStringView(self->toStringView());
+}
+
 QJsonArray* QJsonValue_toArray(const QJsonValue* self) {
 	return new QJsonArray(self->toArray());
 }
@@ -177,12 +197,17 @@ QJsonValue* QJsonValue_operatorSubscriptWithQsizetype(const QJsonValue* self, pt
 	return new QJsonValue(self->operator[]((qsizetype)(i)));
 }
 
-bool QJsonValue_operatorEqual(const QJsonValue* self, QJsonValue* other) {
-	return (*self == *other);
+QJsonValue* QJsonValue_fromJson2(QByteArrayView* json, QJsonParseError* error) {
+	return new QJsonValue(QJsonValue::fromJson(*json, error));
 }
 
-bool QJsonValue_operatorNotEqual(const QJsonValue* self, QJsonValue* other) {
-	return (*self != *other);
+struct miqt_string QJsonValue_toJsonWithFormat(const QJsonValue* self, JsonFormat format) {
+	QByteArray _qb = self->toJson(format);
+	struct miqt_string _ms;
+	_ms.len = _qb.length();
+	_ms.data = static_cast<char*>(malloc(_ms.len));
+	memcpy(_ms.data, _qb.data(), _ms.len);
+	return _ms;
 }
 
 bool QJsonValue_toBoolWithDefaultValue(const QJsonValue* self, bool defaultValue) {
@@ -200,6 +225,10 @@ long long QJsonValue_toIntegerWithDefaultValue(const QJsonValue* self, long long
 
 double QJsonValue_toDoubleWithDefaultValue(const QJsonValue* self, double defaultValue) {
 	return self->toDouble(static_cast<double>(defaultValue));
+}
+
+QAnyStringView* QJsonValue_toStringViewWithDefaultValue(const QJsonValue* self, QAnyStringView* defaultValue) {
+	return new QAnyStringView(self->toStringView(*defaultValue));
 }
 
 void QJsonValue_delete(QJsonValue* self) {
@@ -279,6 +308,10 @@ struct miqt_string QJsonValueConstRef_toString(const QJsonValueConstRef* self) {
 	return _ms;
 }
 
+QAnyStringView* QJsonValueConstRef_toStringView(const QJsonValueConstRef* self) {
+	return new QAnyStringView(self->toStringView());
+}
+
 QJsonArray* QJsonValueConstRef_toArray(const QJsonValueConstRef* self) {
 	return new QJsonArray(self->toArray());
 }
@@ -289,14 +322,6 @@ QJsonObject* QJsonValueConstRef_toObject(const QJsonValueConstRef* self) {
 
 QJsonValue* QJsonValueConstRef_operatorSubscriptWithQsizetype(const QJsonValueConstRef* self, ptrdiff_t i) {
 	return new QJsonValue(self->operator[]((qsizetype)(i)));
-}
-
-bool QJsonValueConstRef_operatorEqual(const QJsonValueConstRef* self, QJsonValue* other) {
-	return (*self == *other);
-}
-
-bool QJsonValueConstRef_operatorNotEqual(const QJsonValueConstRef* self, QJsonValue* other) {
-	return (*self != *other);
 }
 
 bool QJsonValueConstRef_toBoolWithDefaultValue(const QJsonValueConstRef* self, bool defaultValue) {
@@ -326,6 +351,10 @@ struct miqt_string QJsonValueConstRef_toStringWithDefaultValue(const QJsonValueC
 	_ms.data = static_cast<char*>(malloc(_ms.len));
 	memcpy(_ms.data, _b.data(), _ms.len);
 	return _ms;
+}
+
+QAnyStringView* QJsonValueConstRef_toStringViewWithDefaultValue(const QJsonValueConstRef* self, QAnyStringView* defaultValue) {
+	return new QAnyStringView(self->toStringView(*defaultValue));
 }
 
 void QJsonValueConstRef_delete(QJsonValueConstRef* self) {
@@ -425,6 +454,10 @@ struct miqt_string QJsonValueRef_toString(const QJsonValueRef* self) {
 	return _ms;
 }
 
+QAnyStringView* QJsonValueRef_toStringView(const QJsonValueRef* self) {
+	return new QAnyStringView(self->toStringView());
+}
+
 QJsonArray* QJsonValueRef_toArray(const QJsonValueRef* self) {
 	return new QJsonArray(self->toArray());
 }
@@ -435,14 +468,6 @@ QJsonObject* QJsonValueRef_toObject(const QJsonValueRef* self) {
 
 QJsonValue* QJsonValueRef_operatorSubscriptWithQsizetype(const QJsonValueRef* self, ptrdiff_t i) {
 	return new QJsonValue(self->operator[]((qsizetype)(i)));
-}
-
-bool QJsonValueRef_operatorEqual(const QJsonValueRef* self, QJsonValue* other) {
-	return (*self == *other);
-}
-
-bool QJsonValueRef_operatorNotEqual(const QJsonValueRef* self, QJsonValue* other) {
-	return (*self != *other);
 }
 
 bool QJsonValueRef_toBoolWithDefaultValue(const QJsonValueRef* self, bool defaultValue) {
@@ -472,6 +497,10 @@ struct miqt_string QJsonValueRef_toStringWithDefaultValue(const QJsonValueRef* s
 	_ms.data = static_cast<char*>(malloc(_ms.len));
 	memcpy(_ms.data, _b.data(), _ms.len);
 	return _ms;
+}
+
+QAnyStringView* QJsonValueRef_toStringViewWithDefaultValue(const QJsonValueRef* self, QAnyStringView* defaultValue) {
+	return new QAnyStringView(self->toStringView(*defaultValue));
 }
 
 void QJsonValueRef_delete(QJsonValueRef* self) {

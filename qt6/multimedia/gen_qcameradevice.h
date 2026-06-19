@@ -46,9 +46,10 @@ bool QCameraDevice_isNull(const QCameraDevice* self);
 struct miqt_string QCameraDevice_id(const QCameraDevice* self);
 struct miqt_string QCameraDevice_description(const QCameraDevice* self);
 bool QCameraDevice_isDefault(const QCameraDevice* self);
-int QCameraDevice_position(const QCameraDevice* self);
+Position QCameraDevice_position(const QCameraDevice* self);
 struct miqt_array /* of QSize* */  QCameraDevice_photoResolutions(const QCameraDevice* self);
 struct miqt_array /* of QCameraFormat* */  QCameraDevice_videoFormats(const QCameraDevice* self);
+int QCameraDevice_correctionAngle(const QCameraDevice* self);
 
 void QCameraDevice_delete(QCameraDevice* self);
 

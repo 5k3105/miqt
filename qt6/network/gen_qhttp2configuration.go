@@ -101,6 +101,14 @@ func (this *QHttp2Configuration) MaxFrameSize() uint {
 	return (uint)(C.QHttp2Configuration_maxFrameSize(this.h))
 }
 
+func (this *QHttp2Configuration) SetMaxConcurrentStreams(value uint) {
+	C.QHttp2Configuration_setMaxConcurrentStreams(this.h, (C.uint)(value))
+}
+
+func (this *QHttp2Configuration) MaxConcurrentStreams() uint {
+	return (uint)(C.QHttp2Configuration_maxConcurrentStreams(this.h))
+}
+
 func (this *QHttp2Configuration) Swap(other *QHttp2Configuration) {
 	C.QHttp2Configuration_swap(this.h, other.cPointer())
 }

@@ -59,9 +59,9 @@ func UnsafeNewQGraphicsSceneEvent(h unsafe.Pointer) *QGraphicsSceneEvent {
 }
 
 // NewQGraphicsSceneEvent constructs a new QGraphicsSceneEvent object.
-func NewQGraphicsSceneEvent(typeVal QEvent__Type) *QGraphicsSceneEvent {
+func NewQGraphicsSceneEvent(typeVal Type) *QGraphicsSceneEvent {
 
-	return newQGraphicsSceneEvent(C.QGraphicsSceneEvent_new((C.int)(typeVal)))
+	return newQGraphicsSceneEvent(C.QGraphicsSceneEvent_new(typeVal))
 }
 
 func (this *QGraphicsSceneEvent) Widget() *QWidget {
@@ -188,9 +188,9 @@ func NewQGraphicsSceneMouseEvent() *QGraphicsSceneMouseEvent {
 }
 
 // NewQGraphicsSceneMouseEvent2 constructs a new QGraphicsSceneMouseEvent object.
-func NewQGraphicsSceneMouseEvent2(typeVal QEvent__Type) *QGraphicsSceneMouseEvent {
+func NewQGraphicsSceneMouseEvent2(typeVal Type) *QGraphicsSceneMouseEvent {
 
-	return newQGraphicsSceneMouseEvent(C.QGraphicsSceneMouseEvent_new2((C.int)(typeVal)))
+	return newQGraphicsSceneMouseEvent(C.QGraphicsSceneMouseEvent_new2(typeVal))
 }
 
 func (this *QGraphicsSceneMouseEvent) Pos() *QPointF {
@@ -431,9 +431,9 @@ func NewQGraphicsSceneWheelEvent() *QGraphicsSceneWheelEvent {
 }
 
 // NewQGraphicsSceneWheelEvent2 constructs a new QGraphicsSceneWheelEvent object.
-func NewQGraphicsSceneWheelEvent2(typeVal QEvent__Type) *QGraphicsSceneWheelEvent {
+func NewQGraphicsSceneWheelEvent2(typeVal Type) *QGraphicsSceneWheelEvent {
 
-	return newQGraphicsSceneWheelEvent(C.QGraphicsSceneWheelEvent_new2((C.int)(typeVal)))
+	return newQGraphicsSceneWheelEvent(C.QGraphicsSceneWheelEvent_new2(typeVal))
 }
 
 func (this *QGraphicsSceneWheelEvent) Pos() *QPointF {
@@ -632,9 +632,9 @@ func NewQGraphicsSceneContextMenuEvent() *QGraphicsSceneContextMenuEvent {
 }
 
 // NewQGraphicsSceneContextMenuEvent2 constructs a new QGraphicsSceneContextMenuEvent object.
-func NewQGraphicsSceneContextMenuEvent2(typeVal QEvent__Type) *QGraphicsSceneContextMenuEvent {
+func NewQGraphicsSceneContextMenuEvent2(typeVal Type) *QGraphicsSceneContextMenuEvent {
 
-	return newQGraphicsSceneContextMenuEvent(C.QGraphicsSceneContextMenuEvent_new2((C.int)(typeVal)))
+	return newQGraphicsSceneContextMenuEvent(C.QGraphicsSceneContextMenuEvent_new2(typeVal))
 }
 
 func (this *QGraphicsSceneContextMenuEvent) Pos() *QPointF {
@@ -675,12 +675,12 @@ func (this *QGraphicsSceneContextMenuEvent) SetModifiers(modifiers KeyboardModif
 	C.QGraphicsSceneContextMenuEvent_setModifiers(this.h, (C.int)(modifiers))
 }
 
-func (this *QGraphicsSceneContextMenuEvent) Reason() QGraphicsSceneContextMenuEvent__Reason {
-	return (QGraphicsSceneContextMenuEvent__Reason)(C.QGraphicsSceneContextMenuEvent_reason(this.h))
+func (this *QGraphicsSceneContextMenuEvent) Reason() Reason {
+	int /* TODO  */
 }
 
-func (this *QGraphicsSceneContextMenuEvent) SetReason(reason QGraphicsSceneContextMenuEvent__Reason) {
-	C.QGraphicsSceneContextMenuEvent_setReason(this.h, (C.int)(reason))
+func (this *QGraphicsSceneContextMenuEvent) SetReason(reason Reason) {
+	C.QGraphicsSceneContextMenuEvent_setReason(this.h, reason)
 }
 
 func (this *QGraphicsSceneContextMenuEvent) callVirtualBase_SetAccepted(accepted bool) {
@@ -791,9 +791,9 @@ func NewQGraphicsSceneHoverEvent() *QGraphicsSceneHoverEvent {
 }
 
 // NewQGraphicsSceneHoverEvent2 constructs a new QGraphicsSceneHoverEvent object.
-func NewQGraphicsSceneHoverEvent2(typeVal QEvent__Type) *QGraphicsSceneHoverEvent {
+func NewQGraphicsSceneHoverEvent2(typeVal Type) *QGraphicsSceneHoverEvent {
 
-	return newQGraphicsSceneHoverEvent(C.QGraphicsSceneHoverEvent_new2((C.int)(typeVal)))
+	return newQGraphicsSceneHoverEvent(C.QGraphicsSceneHoverEvent_new2(typeVal))
 }
 
 func (this *QGraphicsSceneHoverEvent) Pos() *QPointF {
@@ -972,9 +972,9 @@ func NewQGraphicsSceneHelpEvent() *QGraphicsSceneHelpEvent {
 }
 
 // NewQGraphicsSceneHelpEvent2 constructs a new QGraphicsSceneHelpEvent object.
-func NewQGraphicsSceneHelpEvent2(typeVal QEvent__Type) *QGraphicsSceneHelpEvent {
+func NewQGraphicsSceneHelpEvent2(typeVal Type) *QGraphicsSceneHelpEvent {
 
-	return newQGraphicsSceneHelpEvent(C.QGraphicsSceneHelpEvent_new2((C.int)(typeVal)))
+	return newQGraphicsSceneHelpEvent(C.QGraphicsSceneHelpEvent_new2(typeVal))
 }
 
 func (this *QGraphicsSceneHelpEvent) ScenePos() *QPointF {
@@ -1105,9 +1105,9 @@ func NewQGraphicsSceneDragDropEvent() *QGraphicsSceneDragDropEvent {
 }
 
 // NewQGraphicsSceneDragDropEvent2 constructs a new QGraphicsSceneDragDropEvent object.
-func NewQGraphicsSceneDragDropEvent2(typeVal QEvent__Type) *QGraphicsSceneDragDropEvent {
+func NewQGraphicsSceneDragDropEvent2(typeVal Type) *QGraphicsSceneDragDropEvent {
 
-	return newQGraphicsSceneDragDropEvent(C.QGraphicsSceneDragDropEvent_new2((C.int)(typeVal)))
+	return newQGraphicsSceneDragDropEvent(C.QGraphicsSceneDragDropEvent_new2(typeVal))
 }
 
 func (this *QGraphicsSceneDragDropEvent) Pos() *QPointF {

@@ -18,6 +18,7 @@ type QFileSystemModel__Roles int
 
 const (
 	QFileSystemModel__FileIconRole    QFileSystemModel__Roles = 1
+	QFileSystemModel__FileInfoRole    QFileSystemModel__Roles = 252
 	QFileSystemModel__FilePathRole    QFileSystemModel__Roles = 257
 	QFileSystemModel__FileNameRole    QFileSystemModel__Roles = 258
 	QFileSystemModel__FilePermissions QFileSystemModel__Roles = 259
@@ -352,12 +353,12 @@ func (this *QFileSystemModel) IconProvider() *QAbstractFileIconProvider {
 	return newQAbstractFileIconProvider(C.QFileSystemModel_iconProvider(this.h))
 }
 
-func (this *QFileSystemModel) SetFilter(filters QDir__Filter) {
+func (this *QFileSystemModel) SetFilter(filters Filter) {
 	C.QFileSystemModel_setFilter(this.h, (C.int)(filters))
 }
 
-func (this *QFileSystemModel) Filter() QDir__Filter {
-	return (QDir__Filter)(C.QFileSystemModel_filter(this.h))
+func (this *QFileSystemModel) Filter() Filter {
+	return (Filter)(C.QFileSystemModel_filter(this.h))
 }
 
 func (this *QFileSystemModel) SetResolveSymlinks(enable bool) {
@@ -411,20 +412,20 @@ func (this *QFileSystemModel) NameFilters() []string {
 	return _ret
 }
 
-func (this *QFileSystemModel) SetOption(option QFileSystemModel__Option) {
-	C.QFileSystemModel_setOption(this.h, (C.int)(option))
+func (this *QFileSystemModel) SetOption(option Option) {
+	C.QFileSystemModel_setOption(this.h, option)
 }
 
-func (this *QFileSystemModel) TestOption(option QFileSystemModel__Option) bool {
-	return (bool)(C.QFileSystemModel_testOption(this.h, (C.int)(option)))
+func (this *QFileSystemModel) TestOption(option Option) bool {
+	return (bool)(C.QFileSystemModel_testOption(this.h, option))
 }
 
-func (this *QFileSystemModel) SetOptions(options QFileSystemModel__Option) {
-	C.QFileSystemModel_setOptions(this.h, (C.int)(options))
+func (this *QFileSystemModel) SetOptions(options Options) {
+	C.QFileSystemModel_setOptions(this.h, options)
 }
 
-func (this *QFileSystemModel) Options() QFileSystemModel__Option {
-	return (QFileSystemModel__Option)(C.QFileSystemModel_options(this.h))
+func (this *QFileSystemModel) Options() Options {
+	int /* TODO  */
 }
 
 func (this *QFileSystemModel) FilePath(index *QModelIndex) string {
@@ -451,6 +452,12 @@ func (this *QFileSystemModel) Type(index *QModelIndex) string {
 
 func (this *QFileSystemModel) LastModified(index *QModelIndex) *QDateTime {
 	_goptr := newQDateTime(C.QFileSystemModel_lastModified(this.h, index.cPointer()))
+	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
+	return _goptr
+}
+
+func (this *QFileSystemModel) LastModified2(index *QModelIndex, tz *QTimeZone) *QDateTime {
+	_goptr := newQDateTime(C.QFileSystemModel_lastModified2(this.h, index.cPointer(), tz.cPointer()))
 	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
 	return _goptr
 }
@@ -482,8 +489,8 @@ func (this *QFileSystemModel) FileIcon(index *QModelIndex) *QIcon {
 	return _goptr
 }
 
-func (this *QFileSystemModel) Permissions(index *QModelIndex) QFileDevice__Permission {
-	return (QFileDevice__Permission)(C.QFileSystemModel_permissions(this.h, index.cPointer()))
+func (this *QFileSystemModel) Permissions(index *QModelIndex) Permission {
+	return (Permission)(C.QFileSystemModel_permissions(this.h, index.cPointer()))
 }
 
 func (this *QFileSystemModel) FileInfo(index *QModelIndex) *QFileInfo {
@@ -534,8 +541,8 @@ func (this *QFileSystemModel) MyComputerWithRole(role int) *QVariant {
 	return _goptr
 }
 
-func (this *QFileSystemModel) SetOption2(option QFileSystemModel__Option, on bool) {
-	C.QFileSystemModel_setOption2(this.h, (C.int)(option), (C.bool)(on))
+func (this *QFileSystemModel) SetOption2(option Option, on bool) {
+	C.QFileSystemModel_setOption2(this.h, option, (C.bool)(on))
 }
 
 // CreateIndex can only be called from a QFileSystemModel that was directly constructed.

@@ -101,16 +101,16 @@ struct miqt_string QPrintDialog_tr(const char* s);
 int QPrintDialog_exec(QPrintDialog* self);
 void QPrintDialog_accept(QPrintDialog* self);
 void QPrintDialog_done(QPrintDialog* self, int result);
-void QPrintDialog_setOption(QPrintDialog* self, int option);
-bool QPrintDialog_testOption(const QPrintDialog* self, int option);
-void QPrintDialog_setOptions(QPrintDialog* self, int options);
-int QPrintDialog_options(const QPrintDialog* self);
+void QPrintDialog_setOption(QPrintDialog* self, PrintDialogOption option);
+bool QPrintDialog_testOption(const QPrintDialog* self, PrintDialogOption option);
+void QPrintDialog_setOptions(QPrintDialog* self, PrintDialogOptions options);
+PrintDialogOptions QPrintDialog_options(const QPrintDialog* self);
 void QPrintDialog_setVisible(QPrintDialog* self, bool visible);
 void QPrintDialog_accepted(QPrintDialog* self, QPrinter* printer);
 void QPrintDialog_connect_accepted(QPrintDialog* self, intptr_t slot);
 struct miqt_string QPrintDialog_tr2(const char* s, const char* c);
 struct miqt_string QPrintDialog_tr3(const char* s, const char* c, int n);
-void QPrintDialog_setOption2(QPrintDialog* self, int option, bool on);
+void QPrintDialog_setOption2(QPrintDialog* self, PrintDialogOption option, bool on);
 
 bool QPrintDialog_override_virtual_exec(void* self, intptr_t slot);
 int QPrintDialog_virtualbase_exec(void* self);
@@ -193,7 +193,7 @@ bool QPrintDialog_virtualbase_nativeEvent(void* self, struct miqt_string eventTy
 bool QPrintDialog_override_virtual_changeEvent(void* self, intptr_t slot);
 void QPrintDialog_virtualbase_changeEvent(void* self, QEvent* param1);
 bool QPrintDialog_override_virtual_metric(void* self, intptr_t slot);
-int QPrintDialog_virtualbase_metric(const void* self, int param1);
+int QPrintDialog_virtualbase_metric(const void* self, PaintDeviceMetric param1);
 bool QPrintDialog_override_virtual_initPainter(void* self, intptr_t slot);
 void QPrintDialog_virtualbase_initPainter(const void* self, QPainter* painter);
 bool QPrintDialog_override_virtual_redirected(void* self, intptr_t slot);
@@ -227,6 +227,7 @@ QObject* QPrintDialog_protectedbase_sender(bool* _dynamic_cast_ok, const void* s
 int QPrintDialog_protectedbase_senderSignalIndex(bool* _dynamic_cast_ok, const void* self);
 int QPrintDialog_protectedbase_receivers(bool* _dynamic_cast_ok, const void* self, const char* signal);
 bool QPrintDialog_protectedbase_isSignalConnected(bool* _dynamic_cast_ok, const void* self, QMetaMethod* signal);
+double QPrintDialog_protectedbase_getDecodedMetricF(bool* _dynamic_cast_ok, const void* self, PaintDeviceMetric metricA, PaintDeviceMetric metricB);
 
 void QPrintDialog_delete(QPrintDialog* self);
 

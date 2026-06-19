@@ -1,4 +1,6 @@
+#include <QByteArray>
 #include <QFont>
+#define WORKAROUND_INNER_CLASS_DEFINITION_QFont__Tag
 #include <QList>
 #include <QPaintDevice>
 #include <QString>
@@ -184,13 +186,12 @@ void QFont_setPixelSize(QFont* self, int pixelSize) {
 	self->setPixelSize(static_cast<int>(pixelSize));
 }
 
-int QFont_weight(const QFont* self) {
-	QFont::Weight _ret = self->weight();
-	return static_cast<int>(_ret);
+Weight QFont_weight(const QFont* self) {
+	return self->weight();
 }
 
-void QFont_setWeight(QFont* self, int weight) {
-	self->setWeight(static_cast<QFont::Weight>(weight));
+void QFont_setWeight(QFont* self, Weight weight) {
+	self->setWeight(weight);
 }
 
 bool QFont_bold(const QFont* self) {
@@ -201,13 +202,12 @@ void QFont_setBold(QFont* self, bool bold) {
 	self->setBold(bold);
 }
 
-void QFont_setStyle(QFont* self, int style) {
-	self->setStyle(static_cast<QFont::Style>(style));
+void QFont_setStyle(QFont* self, Style style) {
+	self->setStyle(style);
 }
 
-int QFont_style(const QFont* self) {
-	QFont::Style _ret = self->style();
-	return static_cast<int>(_ret);
+Style QFont_style(const QFont* self) {
+	return self->style();
 }
 
 bool QFont_italic(const QFont* self) {
@@ -258,22 +258,20 @@ void QFont_setKerning(QFont* self, bool kerning) {
 	self->setKerning(kerning);
 }
 
-int QFont_styleHint(const QFont* self) {
-	QFont::StyleHint _ret = self->styleHint();
-	return static_cast<int>(_ret);
+StyleHint QFont_styleHint(const QFont* self) {
+	return self->styleHint();
 }
 
-int QFont_styleStrategy(const QFont* self) {
-	QFont::StyleStrategy _ret = self->styleStrategy();
-	return static_cast<int>(_ret);
+StyleStrategy QFont_styleStrategy(const QFont* self) {
+	return self->styleStrategy();
 }
 
-void QFont_setStyleHint(QFont* self, int param1) {
-	self->setStyleHint(static_cast<QFont::StyleHint>(param1));
+void QFont_setStyleHint(QFont* self, StyleHint param1) {
+	self->setStyleHint(param1);
 }
 
-void QFont_setStyleStrategy(QFont* self, int s) {
-	self->setStyleStrategy(static_cast<QFont::StyleStrategy>(s));
+void QFont_setStyleStrategy(QFont* self, StyleStrategy s) {
+	self->setStyleStrategy(s);
 }
 
 int QFont_stretch(const QFont* self) {
@@ -289,13 +287,12 @@ double QFont_letterSpacing(const QFont* self) {
 	return static_cast<double>(_ret);
 }
 
-int QFont_letterSpacingType(const QFont* self) {
-	QFont::SpacingType _ret = self->letterSpacingType();
-	return static_cast<int>(_ret);
+SpacingType QFont_letterSpacingType(const QFont* self) {
+	return self->letterSpacingType();
 }
 
-void QFont_setLetterSpacing(QFont* self, int type, double spacing) {
-	self->setLetterSpacing(static_cast<QFont::SpacingType>(type), static_cast<qreal>(spacing));
+void QFont_setLetterSpacing(QFont* self, SpacingType type, double spacing) {
+	self->setLetterSpacing(type, static_cast<qreal>(spacing));
 }
 
 double QFont_wordSpacing(const QFont* self) {
@@ -307,22 +304,87 @@ void QFont_setWordSpacing(QFont* self, double spacing) {
 	self->setWordSpacing(static_cast<qreal>(spacing));
 }
 
-void QFont_setCapitalization(QFont* self, int capitalization) {
-	self->setCapitalization(static_cast<QFont::Capitalization>(capitalization));
+void QFont_setCapitalization(QFont* self, Capitalization capitalization) {
+	self->setCapitalization(capitalization);
 }
 
-int QFont_capitalization(const QFont* self) {
-	QFont::Capitalization _ret = self->capitalization();
-	return static_cast<int>(_ret);
+Capitalization QFont_capitalization(const QFont* self) {
+	return self->capitalization();
 }
 
-void QFont_setHintingPreference(QFont* self, int hintingPreference) {
-	self->setHintingPreference(static_cast<QFont::HintingPreference>(hintingPreference));
+void QFont_setHintingPreference(QFont* self, HintingPreference hintingPreference) {
+	self->setHintingPreference(hintingPreference);
 }
 
-int QFont_hintingPreference(const QFont* self) {
-	QFont::HintingPreference _ret = self->hintingPreference();
-	return static_cast<int>(_ret);
+HintingPreference QFont_hintingPreference(const QFont* self) {
+	return self->hintingPreference();
+}
+
+void QFont_setFeature(QFont* self, Tag tag, unsigned int value) {
+	self->setFeature(tag, static_cast<quint32>(value));
+}
+
+void QFont_unsetFeature(QFont* self, Tag tag) {
+	self->unsetFeature(tag);
+}
+
+unsigned int QFont_featureValue(const QFont* self, Tag tag) {
+	quint32 _ret = self->featureValue(tag);
+	return static_cast<unsigned int>(_ret);
+}
+
+bool QFont_isFeatureSet(const QFont* self, Tag tag) {
+	return self->isFeatureSet(tag);
+}
+
+struct miqt_array /* of Tag */  QFont_featureTags(const QFont* self) {
+	QList<Tag> _ret = self->featureTags();
+	// Convert QList<> from C++ memory to manually-managed C memory
+	Tag* _arr = static_cast<Tag*>(malloc(sizeof(Tag) * _ret.length()));
+	for (size_t i = 0, e = _ret.length(); i < e; ++i) {
+		_arr[i] = _ret[i];
+	}
+	struct miqt_array _out;
+	_out.len = _ret.length();
+	_out.data = static_cast<void*>(_arr);
+	return _out;
+}
+
+void QFont_clearFeatures(QFont* self) {
+	self->clearFeatures();
+}
+
+void QFont_setVariableAxis(QFont* self, Tag tag, float value) {
+	self->setVariableAxis(tag, static_cast<float>(value));
+}
+
+void QFont_unsetVariableAxis(QFont* self, Tag tag) {
+	self->unsetVariableAxis(tag);
+}
+
+bool QFont_isVariableAxisSet(const QFont* self, Tag tag) {
+	return self->isVariableAxisSet(tag);
+}
+
+float QFont_variableAxisValue(const QFont* self, Tag tag) {
+	return self->variableAxisValue(tag);
+}
+
+void QFont_clearVariableAxes(QFont* self) {
+	self->clearVariableAxes();
+}
+
+struct miqt_array /* of Tag */  QFont_variableAxisTags(const QFont* self) {
+	QList<Tag> _ret = self->variableAxisTags();
+	// Convert QList<> from C++ memory to manually-managed C memory
+	Tag* _arr = static_cast<Tag*>(malloc(sizeof(Tag) * _ret.length()));
+	for (size_t i = 0, e = _ret.length(); i < e; ++i) {
+		_arr[i] = _ret[i];
+	}
+	struct miqt_array _out;
+	_out.len = _ret.length();
+	_out.data = static_cast<void*>(_arr);
+	return _out;
 }
 
 bool QFont_exactMatch(const QFont* self) {
@@ -500,11 +562,45 @@ int QFont_legacyWeight(const QFont* self) {
 	return self->legacyWeight();
 }
 
-void QFont_setStyleHint2(QFont* self, int param1, int param2) {
-	self->setStyleHint(static_cast<QFont::StyleHint>(param1), static_cast<QFont::StyleStrategy>(param2));
+void QFont_setStyleHint2(QFont* self, StyleHint param1, StyleStrategy param2) {
+	self->setStyleHint(param1, param2);
 }
 
 void QFont_delete(QFont* self) {
+	delete self;
+}
+
+QFont__Tag* QFont__Tag_new() {
+	return new (std::nothrow) QFont::Tag();
+}
+
+QFont__Tag* QFont__Tag_new2(const Tag* param1) {
+	return new (std::nothrow) QFont::Tag(*param1);
+}
+
+bool QFont__Tag_isValid(const QFont__Tag* self) {
+	return self->isValid();
+}
+
+unsigned int QFont__Tag_value(const QFont__Tag* self) {
+	quint32 _ret = self->value();
+	return static_cast<unsigned int>(_ret);
+}
+
+struct miqt_string QFont__Tag_toString(const QFont__Tag* self) {
+	QByteArray _qb = self->toString();
+	struct miqt_string _ms;
+	_ms.len = _qb.length();
+	_ms.data = static_cast<char*>(malloc(_ms.len));
+	memcpy(_ms.data, _qb.data(), _ms.len);
+	return _ms;
+}
+
+void QFont__Tag_operatorAssign(QFont__Tag* self, const Tag* param1) {
+	self->operator=(*param1);
+}
+
+void QFont__Tag_delete(QFont__Tag* self) {
 	delete self;
 }
 

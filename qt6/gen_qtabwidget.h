@@ -118,14 +118,14 @@ QWidget* QTabWidget_currentWidget(const QTabWidget* self);
 QWidget* QTabWidget_widget(const QTabWidget* self, int index);
 int QTabWidget_indexOf(const QTabWidget* self, QWidget* widget);
 int QTabWidget_count(const QTabWidget* self);
-int QTabWidget_tabPosition(const QTabWidget* self);
-void QTabWidget_setTabPosition(QTabWidget* self, int position);
+TabPosition QTabWidget_tabPosition(const QTabWidget* self);
+void QTabWidget_setTabPosition(QTabWidget* self, TabPosition position);
 bool QTabWidget_tabsClosable(const QTabWidget* self);
 void QTabWidget_setTabsClosable(QTabWidget* self, bool closeable);
 bool QTabWidget_isMovable(const QTabWidget* self);
 void QTabWidget_setMovable(QTabWidget* self, bool movable);
-int QTabWidget_tabShape(const QTabWidget* self);
-void QTabWidget_setTabShape(QTabWidget* self, int s);
+TabShape QTabWidget_tabShape(const QTabWidget* self);
+void QTabWidget_setTabShape(QTabWidget* self, TabShape s);
 QSize* QTabWidget_sizeHint(const QTabWidget* self);
 QSize* QTabWidget_minimumSizeHint(const QTabWidget* self);
 int QTabWidget_heightForWidth(const QTabWidget* self, int width);
@@ -243,7 +243,7 @@ void QTabWidget_virtualbase_hideEvent(void* self, QHideEvent* event);
 bool QTabWidget_override_virtual_nativeEvent(void* self, intptr_t slot);
 bool QTabWidget_virtualbase_nativeEvent(void* self, struct miqt_string eventType, void* message, intptr_t* result);
 bool QTabWidget_override_virtual_metric(void* self, intptr_t slot);
-int QTabWidget_virtualbase_metric(const void* self, int param1);
+int QTabWidget_virtualbase_metric(const void* self, PaintDeviceMetric param1);
 bool QTabWidget_override_virtual_initPainter(void* self, intptr_t slot);
 void QTabWidget_virtualbase_initPainter(const void* self, QPainter* painter);
 bool QTabWidget_override_virtual_redirected(void* self, intptr_t slot);
@@ -279,6 +279,7 @@ QObject* QTabWidget_protectedbase_sender(bool* _dynamic_cast_ok, const void* sel
 int QTabWidget_protectedbase_senderSignalIndex(bool* _dynamic_cast_ok, const void* self);
 int QTabWidget_protectedbase_receivers(bool* _dynamic_cast_ok, const void* self, const char* signal);
 bool QTabWidget_protectedbase_isSignalConnected(bool* _dynamic_cast_ok, const void* self, QMetaMethod* signal);
+double QTabWidget_protectedbase_getDecodedMetricF(bool* _dynamic_cast_ok, const void* self, PaintDeviceMetric metricA, PaintDeviceMetric metricB);
 
 void QTabWidget_delete(QTabWidget* self);
 

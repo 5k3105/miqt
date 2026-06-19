@@ -14,25 +14,24 @@ QPixelFormat* QPixelFormat_new() {
 	return new (std::nothrow) QPixelFormat();
 }
 
-QPixelFormat* QPixelFormat_new2(int colorModel, unsigned char firstSize, unsigned char secondSize, unsigned char thirdSize, unsigned char fourthSize, unsigned char fifthSize, unsigned char alphaSize, int alphaUsage, int alphaPosition, int premultiplied, int typeInterpretation) {
-	return new (std::nothrow) QPixelFormat(static_cast<QPixelFormat::ColorModel>(colorModel), static_cast<uchar>(firstSize), static_cast<uchar>(secondSize), static_cast<uchar>(thirdSize), static_cast<uchar>(fourthSize), static_cast<uchar>(fifthSize), static_cast<uchar>(alphaSize), static_cast<QPixelFormat::AlphaUsage>(alphaUsage), static_cast<QPixelFormat::AlphaPosition>(alphaPosition), static_cast<QPixelFormat::AlphaPremultiplied>(premultiplied), static_cast<QPixelFormat::TypeInterpretation>(typeInterpretation));
+QPixelFormat* QPixelFormat_new2(ColorModel colorModel, unsigned char firstSize, unsigned char secondSize, unsigned char thirdSize, unsigned char fourthSize, unsigned char fifthSize, unsigned char alphaSize, AlphaUsage alphaUsage, AlphaPosition alphaPosition, AlphaPremultiplied premultiplied, TypeInterpretation typeInterpretation) {
+	return new (std::nothrow) QPixelFormat(colorModel, static_cast<uchar>(firstSize), static_cast<uchar>(secondSize), static_cast<uchar>(thirdSize), static_cast<uchar>(fourthSize), static_cast<uchar>(fifthSize), static_cast<uchar>(alphaSize), alphaUsage, alphaPosition, premultiplied, typeInterpretation);
 }
 
 QPixelFormat* QPixelFormat_new3(QPixelFormat* param1) {
 	return new (std::nothrow) QPixelFormat(*param1);
 }
 
-QPixelFormat* QPixelFormat_new4(int colorModel, unsigned char firstSize, unsigned char secondSize, unsigned char thirdSize, unsigned char fourthSize, unsigned char fifthSize, unsigned char alphaSize, int alphaUsage, int alphaPosition, int premultiplied, int typeInterpretation, int byteOrder) {
-	return new (std::nothrow) QPixelFormat(static_cast<QPixelFormat::ColorModel>(colorModel), static_cast<uchar>(firstSize), static_cast<uchar>(secondSize), static_cast<uchar>(thirdSize), static_cast<uchar>(fourthSize), static_cast<uchar>(fifthSize), static_cast<uchar>(alphaSize), static_cast<QPixelFormat::AlphaUsage>(alphaUsage), static_cast<QPixelFormat::AlphaPosition>(alphaPosition), static_cast<QPixelFormat::AlphaPremultiplied>(premultiplied), static_cast<QPixelFormat::TypeInterpretation>(typeInterpretation), static_cast<QPixelFormat::ByteOrder>(byteOrder));
+QPixelFormat* QPixelFormat_new4(ColorModel colorModel, unsigned char firstSize, unsigned char secondSize, unsigned char thirdSize, unsigned char fourthSize, unsigned char fifthSize, unsigned char alphaSize, AlphaUsage alphaUsage, AlphaPosition alphaPosition, AlphaPremultiplied premultiplied, TypeInterpretation typeInterpretation, ByteOrder byteOrder) {
+	return new (std::nothrow) QPixelFormat(colorModel, static_cast<uchar>(firstSize), static_cast<uchar>(secondSize), static_cast<uchar>(thirdSize), static_cast<uchar>(fourthSize), static_cast<uchar>(fifthSize), static_cast<uchar>(alphaSize), alphaUsage, alphaPosition, premultiplied, typeInterpretation, byteOrder);
 }
 
-QPixelFormat* QPixelFormat_new5(int colorModel, unsigned char firstSize, unsigned char secondSize, unsigned char thirdSize, unsigned char fourthSize, unsigned char fifthSize, unsigned char alphaSize, int alphaUsage, int alphaPosition, int premultiplied, int typeInterpretation, int byteOrder, unsigned char subEnum) {
-	return new (std::nothrow) QPixelFormat(static_cast<QPixelFormat::ColorModel>(colorModel), static_cast<uchar>(firstSize), static_cast<uchar>(secondSize), static_cast<uchar>(thirdSize), static_cast<uchar>(fourthSize), static_cast<uchar>(fifthSize), static_cast<uchar>(alphaSize), static_cast<QPixelFormat::AlphaUsage>(alphaUsage), static_cast<QPixelFormat::AlphaPosition>(alphaPosition), static_cast<QPixelFormat::AlphaPremultiplied>(premultiplied), static_cast<QPixelFormat::TypeInterpretation>(typeInterpretation), static_cast<QPixelFormat::ByteOrder>(byteOrder), static_cast<uchar>(subEnum));
+QPixelFormat* QPixelFormat_new5(ColorModel colorModel, unsigned char firstSize, unsigned char secondSize, unsigned char thirdSize, unsigned char fourthSize, unsigned char fifthSize, unsigned char alphaSize, AlphaUsage alphaUsage, AlphaPosition alphaPosition, AlphaPremultiplied premultiplied, TypeInterpretation typeInterpretation, ByteOrder byteOrder, unsigned char subEnum) {
+	return new (std::nothrow) QPixelFormat(colorModel, static_cast<uchar>(firstSize), static_cast<uchar>(secondSize), static_cast<uchar>(thirdSize), static_cast<uchar>(fourthSize), static_cast<uchar>(fifthSize), static_cast<uchar>(alphaSize), alphaUsage, alphaPosition, premultiplied, typeInterpretation, byteOrder, static_cast<uchar>(subEnum));
 }
 
-int QPixelFormat_colorModel(const QPixelFormat* self) {
-	QPixelFormat::ColorModel _ret = self->colorModel();
-	return static_cast<int>(_ret);
+ColorModel QPixelFormat_colorModel(const QPixelFormat* self) {
+	return self->colorModel();
 }
 
 unsigned char QPixelFormat_channelCount(const QPixelFormat* self) {
@@ -105,34 +104,28 @@ unsigned char QPixelFormat_bitsPerPixel(const QPixelFormat* self) {
 	return static_cast<unsigned char>(_ret);
 }
 
-int QPixelFormat_alphaUsage(const QPixelFormat* self) {
-	QPixelFormat::AlphaUsage _ret = self->alphaUsage();
-	return static_cast<int>(_ret);
+AlphaUsage QPixelFormat_alphaUsage(const QPixelFormat* self) {
+	return self->alphaUsage();
 }
 
-int QPixelFormat_alphaPosition(const QPixelFormat* self) {
-	QPixelFormat::AlphaPosition _ret = self->alphaPosition();
-	return static_cast<int>(_ret);
+AlphaPosition QPixelFormat_alphaPosition(const QPixelFormat* self) {
+	return self->alphaPosition();
 }
 
-int QPixelFormat_premultiplied(const QPixelFormat* self) {
-	QPixelFormat::AlphaPremultiplied _ret = self->premultiplied();
-	return static_cast<int>(_ret);
+AlphaPremultiplied QPixelFormat_premultiplied(const QPixelFormat* self) {
+	return self->premultiplied();
 }
 
-int QPixelFormat_typeInterpretation(const QPixelFormat* self) {
-	QPixelFormat::TypeInterpretation _ret = self->typeInterpretation();
-	return static_cast<int>(_ret);
+TypeInterpretation QPixelFormat_typeInterpretation(const QPixelFormat* self) {
+	return self->typeInterpretation();
 }
 
-int QPixelFormat_byteOrder(const QPixelFormat* self) {
-	QPixelFormat::ByteOrder _ret = self->byteOrder();
-	return static_cast<int>(_ret);
+ByteOrder QPixelFormat_byteOrder(const QPixelFormat* self) {
+	return self->byteOrder();
 }
 
-int QPixelFormat_yuvLayout(const QPixelFormat* self) {
-	QPixelFormat::YUVLayout _ret = self->yuvLayout();
-	return static_cast<int>(_ret);
+YUVLayout QPixelFormat_yuvLayout(const QPixelFormat* self) {
+	return self->yuvLayout();
 }
 
 unsigned char QPixelFormat_subEnum(const QPixelFormat* self) {

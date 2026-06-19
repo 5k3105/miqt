@@ -81,7 +81,7 @@ void miqt_exec_callback_QSplashScreen_showEvent(QSplashScreen*, intptr_t, QShowE
 void miqt_exec_callback_QSplashScreen_hideEvent(QSplashScreen*, intptr_t, QHideEvent*);
 bool miqt_exec_callback_QSplashScreen_nativeEvent(QSplashScreen*, intptr_t, struct miqt_string, void*, intptr_t*);
 void miqt_exec_callback_QSplashScreen_changeEvent(QSplashScreen*, intptr_t, QEvent*);
-int miqt_exec_callback_QSplashScreen_metric(const QSplashScreen*, intptr_t, int);
+int miqt_exec_callback_QSplashScreen_metric(const QSplashScreen*, intptr_t, PaintDeviceMetric);
 void miqt_exec_callback_QSplashScreen_initPainter(const QSplashScreen*, intptr_t, QPainter*);
 QPaintDevice* miqt_exec_callback_QSplashScreen_redirected(const QSplashScreen*, intptr_t, QPoint*);
 QPainter* miqt_exec_callback_QSplashScreen_sharedPainter(const QSplashScreen*, intptr_t);
@@ -704,18 +704,17 @@ public:
 	intptr_t handle__metric = 0;
 
 	// Subclass to allow providing a Go implementation
-	virtual int metric(QPaintDevice::PaintDeviceMetric param1) const override {
+	virtual int metric(PaintDeviceMetric param1) const override {
 		if (handle__metric == 0) {
 			return QSplashScreen::metric(param1);
 		}
 
-		QPaintDevice::PaintDeviceMetric param1_ret = param1;
-		int sigval1 = static_cast<int>(param1_ret);
+		PaintDeviceMetric sigval1 = param1;
 		int callback_return_value = miqt_exec_callback_QSplashScreen_metric(this, handle__metric, sigval1);
 		return static_cast<int>(callback_return_value);
 	}
 
-	friend int QSplashScreen_virtualbase_metric(const void* self, int param1);
+	friend int QSplashScreen_virtualbase_metric(const void* self, PaintDeviceMetric param1);
 
 	// cgo.Handle value for overwritten implementation
 	intptr_t handle__initPainter = 0;
@@ -931,6 +930,7 @@ public:
 	friend int QSplashScreen_protectedbase_senderSignalIndex(bool* _dynamic_cast_ok, const void* self);
 	friend int QSplashScreen_protectedbase_receivers(bool* _dynamic_cast_ok, const void* self, const char* signal);
 	friend bool QSplashScreen_protectedbase_isSignalConnected(bool* _dynamic_cast_ok, const void* self, QMetaMethod* signal);
+	friend double QSplashScreen_protectedbase_getDecodedMetricF(bool* _dynamic_cast_ok, const void* self, PaintDeviceMetric metricA, PaintDeviceMetric metricB);
 };
 
 QSplashScreen* QSplashScreen_new() {
@@ -1568,8 +1568,8 @@ bool QSplashScreen_override_virtual_metric(void* self, intptr_t slot) {
 	return true;
 }
 
-int QSplashScreen_virtualbase_metric(const void* self, int param1) {
-	return static_cast<const MiqtVirtualQSplashScreen*>(self)->QSplashScreen::metric(static_cast<MiqtVirtualQSplashScreen::PaintDeviceMetric>(param1));
+int QSplashScreen_virtualbase_metric(const void* self, PaintDeviceMetric param1) {
+	return static_cast<const MiqtVirtualQSplashScreen*>(self)->QSplashScreen::metric(param1);
 }
 
 bool QSplashScreen_override_virtual_initPainter(void* self, intptr_t slot) {
@@ -1837,6 +1837,17 @@ bool QSplashScreen_protectedbase_isSignalConnected(bool* _dynamic_cast_ok, const
 
 	*_dynamic_cast_ok = true;
 	return self_cast->isSignalConnected(*signal);
+}
+
+double QSplashScreen_protectedbase_getDecodedMetricF(bool* _dynamic_cast_ok, const void* self, PaintDeviceMetric metricA, PaintDeviceMetric metricB) {
+	MiqtVirtualQSplashScreen* self_cast = dynamic_cast<MiqtVirtualQSplashScreen*>( (QSplashScreen*)(self) );
+	if (self_cast == nullptr) {
+		*_dynamic_cast_ok = false;
+		return 0;
+	}
+
+	*_dynamic_cast_ok = true;
+	return self_cast->getDecodedMetricF(metricA, metricB);
 }
 
 void QSplashScreen_delete(QSplashScreen* self) {

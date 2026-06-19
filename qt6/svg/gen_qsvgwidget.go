@@ -112,6 +112,14 @@ func (this *QSvgWidget) SizeHint() *qt6.QSize {
 	return _goptr
 }
 
+func (this *QSvgWidget) Options() Option {
+	return (Option)(C.QSvgWidget_options(this.h))
+}
+
+func (this *QSvgWidget) SetOptions(options Option) {
+	C.QSvgWidget_setOptions(this.h, (C.int)(options))
+}
+
 func (this *QSvgWidget) Load(file string) {
 	file_ms := C.struct_miqt_string{}
 	file_ms.data = C.CString(file)
@@ -266,6 +274,20 @@ func (this *QSvgWidget) IsSignalConnected(signal *qt6.QMetaMethod) bool {
 
 	var _dynamic_cast_ok C.bool = false
 	_method_ret := (bool)(C.QSvgWidget_protectedbase_isSignalConnected(&_dynamic_cast_ok, unsafe.Pointer(this.h), (*C.QMetaMethod)(signal.UnsafePointer())))
+
+	if !_dynamic_cast_ok {
+		panic("miqt: can only call protected methods for directly constructed types")
+	}
+
+	return _method_ret
+
+}
+
+// GetDecodedMetricF can only be called from a QSvgWidget that was directly constructed.
+func (this *QSvgWidget) GetDecodedMetricF(metricA PaintDeviceMetric, metricB PaintDeviceMetric) float64 {
+
+	var _dynamic_cast_ok C.bool = false
+	_method_ret := (float64)(C.QSvgWidget_protectedbase_getDecodedMetricF(&_dynamic_cast_ok, unsafe.Pointer(this.h), metricA, metricB))
 
 	if !_dynamic_cast_ok {
 		panic("miqt: can only call protected methods for directly constructed types")
@@ -1177,12 +1199,12 @@ func miqt_exec_callback_QSvgWidget_changeEvent(self *C.QSvgWidget, cb C.intptr_t
 
 }
 
-func (this *QSvgWidget) callVirtualBase_Metric(param1 qt6.QPaintDevice__PaintDeviceMetric) int {
+func (this *QSvgWidget) callVirtualBase_Metric(param1 PaintDeviceMetric) int {
 
-	return (int)(C.QSvgWidget_virtualbase_metric(unsafe.Pointer(this.h), (C.int)(param1)))
+	return (int)(C.QSvgWidget_virtualbase_metric(unsafe.Pointer(this.h), param1))
 
 }
-func (this *QSvgWidget) OnMetric(slot func(super func(param1 qt6.QPaintDevice__PaintDeviceMetric) int, param1 qt6.QPaintDevice__PaintDeviceMetric) int) {
+func (this *QSvgWidget) OnMetric(slot func(super func(param1 PaintDeviceMetric) int, param1 PaintDeviceMetric) int) {
 	ok := C.QSvgWidget_override_virtual_metric(unsafe.Pointer(this.h), C.intptr_t(cgo.NewHandle(slot)))
 	if !ok {
 		panic("miqt: can only override virtual methods for directly constructed types")
@@ -1190,14 +1212,14 @@ func (this *QSvgWidget) OnMetric(slot func(super func(param1 qt6.QPaintDevice__P
 }
 
 //export miqt_exec_callback_QSvgWidget_metric
-func miqt_exec_callback_QSvgWidget_metric(self *C.QSvgWidget, cb C.intptr_t, param1 C.int) C.int {
-	gofunc, ok := cgo.Handle(cb).Value().(func(super func(param1 qt6.QPaintDevice__PaintDeviceMetric) int, param1 qt6.QPaintDevice__PaintDeviceMetric) int)
+func miqt_exec_callback_QSvgWidget_metric(self *C.QSvgWidget, cb C.intptr_t, param1 C.PaintDeviceMetric) C.int {
+	gofunc, ok := cgo.Handle(cb).Value().(func(super func(param1 PaintDeviceMetric) int, param1 PaintDeviceMetric) int)
 	if !ok {
 		panic("miqt: callback of non-callback type (heap corruption?)")
 	}
 
 	// Convert all CABI parameters to Go parameters
-	slotval1 := (qt6.QPaintDevice__PaintDeviceMetric)(param1)
+	int /* TODO  */
 
 	virtualReturn := gofunc((&QSvgWidget{h: self}).callVirtualBase_Metric, slotval1)
 

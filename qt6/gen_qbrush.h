@@ -60,6 +60,9 @@ QBrush* QBrush_new11(QColor* color, int bs);
 QBrush* QBrush_new12(int color, int bs);
 void QBrush_operatorAssign(QBrush* self, QBrush* brush);
 void QBrush_swap(QBrush* self, QBrush* other);
+void QBrush_operatorAssignWithStyle(QBrush* self, int style);
+void QBrush_operatorAssignWithColor(QBrush* self, QColor* color);
+void QBrush_operatorAssign2(QBrush* self, int color);
 QVariant* QBrush_ToQVariant(const QBrush* self);
 int QBrush_style(const QBrush* self);
 void QBrush_setStyle(QBrush* self, int style);
@@ -77,22 +80,21 @@ bool QBrush_isOpaque(const QBrush* self);
 bool QBrush_operatorEqual(const QBrush* self, QBrush* b);
 bool QBrush_operatorNotEqual(const QBrush* self, QBrush* b);
 bool QBrush_isDetached(const QBrush* self);
+DataPtr* QBrush_dataPtr(QBrush* self);
 
 void QBrush_delete(QBrush* self);
 
 QGradient* QGradient_new();
-QGradient* QGradient_new2(int param1);
+QGradient* QGradient_new2(Preset param1);
 QGradient* QGradient_new3(QGradient* param1);
-int QGradient_type(const QGradient* self);
-void QGradient_setSpread(QGradient* self, int spread);
-int QGradient_spread(const QGradient* self);
+Type QGradient_type(const QGradient* self);
+void QGradient_setSpread(QGradient* self, Spread spread);
+Spread QGradient_spread(const QGradient* self);
 void QGradient_setColorAt(QGradient* self, double pos, QColor* color);
-void QGradient_setStops(QGradient* self, struct miqt_array /* of struct miqt_map  tuple of double and QColor*   */  stops);
-struct miqt_array /* of struct miqt_map  tuple of double and QColor*   */  QGradient_stops(const QGradient* self);
-int QGradient_coordinateMode(const QGradient* self);
-void QGradient_setCoordinateMode(QGradient* self, int mode);
-int QGradient_interpolationMode(const QGradient* self);
-void QGradient_setInterpolationMode(QGradient* self, int mode);
+CoordinateMode QGradient_coordinateMode(const QGradient* self);
+void QGradient_setCoordinateMode(QGradient* self, CoordinateMode mode);
+InterpolationMode QGradient_interpolationMode(const QGradient* self);
+void QGradient_setInterpolationMode(QGradient* self, InterpolationMode mode);
 bool QGradient_operatorEqual(const QGradient* self, QGradient* gradient);
 bool QGradient_operatorNotEqual(const QGradient* self, QGradient* other);
 
@@ -149,7 +151,7 @@ void QConicalGradient_setAngle(QConicalGradient* self, double angle);
 
 void QConicalGradient_delete(QConicalGradient* self);
 
-QGradient__QGradientData* QGradient__QGradientData_new(QGradient__QGradientData* param1);
+QGradient__QGradientData* QGradient__QGradientData_new(const QGradientData* param1);
 void QGradient__QGradientData_delete(QGradient__QGradientData* self);
 
 #ifdef __cplusplus

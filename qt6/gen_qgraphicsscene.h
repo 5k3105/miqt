@@ -116,8 +116,8 @@ double QGraphicsScene_height(const QGraphicsScene* self);
 void QGraphicsScene_setSceneRect(QGraphicsScene* self, QRectF* rect);
 void QGraphicsScene_setSceneRect2(QGraphicsScene* self, double x, double y, double w, double h);
 void QGraphicsScene_render(QGraphicsScene* self, QPainter* painter);
-int QGraphicsScene_itemIndexMethod(const QGraphicsScene* self);
-void QGraphicsScene_setItemIndexMethod(QGraphicsScene* self, int method);
+ItemIndexMethod QGraphicsScene_itemIndexMethod(const QGraphicsScene* self);
+void QGraphicsScene_setItemIndexMethod(QGraphicsScene* self, ItemIndexMethod method);
 int QGraphicsScene_bspTreeDepth(const QGraphicsScene* self);
 void QGraphicsScene_setBspTreeDepth(QGraphicsScene* self, int depth);
 QRectF* QGraphicsScene_itemsBoundingRect(const QGraphicsScene* self);
@@ -251,10 +251,10 @@ QGraphicsRectItem* QGraphicsScene_addRect5(QGraphicsScene* self, double x, doubl
 QGraphicsRectItem* QGraphicsScene_addRect6(QGraphicsScene* self, double x, double y, double w, double h, QPen* pen, QBrush* brush);
 void QGraphicsScene_setFocusItem2(QGraphicsScene* self, QGraphicsItem* item, int focusReason);
 void QGraphicsScene_setFocusWithFocusReason(QGraphicsScene* self, int focusReason);
-void QGraphicsScene_invalidate3(QGraphicsScene* self, double x, double y, double w, double h, int layers);
+void QGraphicsScene_invalidate3(QGraphicsScene* self, double x, double y, double w, double h, SceneLayers layers);
 void QGraphicsScene_updateWithRect(QGraphicsScene* self, QRectF* rect);
 void QGraphicsScene_invalidateWithRect(QGraphicsScene* self, QRectF* rect);
-void QGraphicsScene_invalidate4(QGraphicsScene* self, QRectF* rect, int layers);
+void QGraphicsScene_invalidate4(QGraphicsScene* self, QRectF* rect, SceneLayers layers);
 
 bool QGraphicsScene_override_virtual_inputMethodQuery(void* self, intptr_t slot);
 QVariant* QGraphicsScene_virtualbase_inputMethodQuery(const void* self, int query);

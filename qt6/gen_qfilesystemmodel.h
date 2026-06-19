@@ -32,6 +32,7 @@ class QModelIndex;
 class QModelRoleDataSpan;
 class QObject;
 class QSize;
+class QTimeZone;
 class QTimerEvent;
 class QVariant;
 #else
@@ -52,6 +53,7 @@ typedef struct QModelIndex QModelIndex;
 typedef struct QModelRoleDataSpan QModelRoleDataSpan;
 typedef struct QObject QObject;
 typedef struct QSize QSize;
+typedef struct QTimeZone QTimeZone;
 typedef struct QTimerEvent QTimerEvent;
 typedef struct QVariant QVariant;
 #endif
@@ -103,15 +105,16 @@ void QFileSystemModel_setNameFilterDisables(QFileSystemModel* self, bool enable)
 bool QFileSystemModel_nameFilterDisables(const QFileSystemModel* self);
 void QFileSystemModel_setNameFilters(QFileSystemModel* self, struct miqt_array /* of struct miqt_string */  filters);
 struct miqt_array /* of struct miqt_string */  QFileSystemModel_nameFilters(const QFileSystemModel* self);
-void QFileSystemModel_setOption(QFileSystemModel* self, int option);
-bool QFileSystemModel_testOption(const QFileSystemModel* self, int option);
-void QFileSystemModel_setOptions(QFileSystemModel* self, int options);
-int QFileSystemModel_options(const QFileSystemModel* self);
+void QFileSystemModel_setOption(QFileSystemModel* self, Option option);
+bool QFileSystemModel_testOption(const QFileSystemModel* self, Option option);
+void QFileSystemModel_setOptions(QFileSystemModel* self, Options options);
+Options QFileSystemModel_options(const QFileSystemModel* self);
 struct miqt_string QFileSystemModel_filePath(const QFileSystemModel* self, QModelIndex* index);
 bool QFileSystemModel_isDir(const QFileSystemModel* self, QModelIndex* index);
 long long QFileSystemModel_size(const QFileSystemModel* self, QModelIndex* index);
 struct miqt_string QFileSystemModel_type(const QFileSystemModel* self, QModelIndex* index);
 QDateTime* QFileSystemModel_lastModified(const QFileSystemModel* self, QModelIndex* index);
+QDateTime* QFileSystemModel_lastModified2(const QFileSystemModel* self, QModelIndex* index, QTimeZone* tz);
 QModelIndex* QFileSystemModel_mkdir(QFileSystemModel* self, QModelIndex* parent, struct miqt_string name);
 bool QFileSystemModel_rmdir(QFileSystemModel* self, QModelIndex* index);
 struct miqt_string QFileSystemModel_fileName(const QFileSystemModel* self, QModelIndex* index);
@@ -125,7 +128,7 @@ struct miqt_string QFileSystemModel_tr2(const char* s, const char* c);
 struct miqt_string QFileSystemModel_tr3(const char* s, const char* c, int n);
 QModelIndex* QFileSystemModel_index2(const QFileSystemModel* self, struct miqt_string path, int column);
 QVariant* QFileSystemModel_myComputerWithRole(const QFileSystemModel* self, int role);
-void QFileSystemModel_setOption2(QFileSystemModel* self, int option, bool on);
+void QFileSystemModel_setOption2(QFileSystemModel* self, Option option, bool on);
 
 bool QFileSystemModel_override_virtual_index(void* self, intptr_t slot);
 QModelIndex* QFileSystemModel_virtualbase_index(const void* self, int row, int column, QModelIndex* parent);

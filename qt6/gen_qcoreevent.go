@@ -188,6 +188,12 @@ const (
 	QEvent__Pointer                          QEvent__Type = 218
 	QEvent__TabletTrackingChange             QEvent__Type = 219
 	QEvent__WindowAboutToChangeInternal      QEvent__Type = 221
+	QEvent__DevicePixelRatioChange           QEvent__Type = 222
+	QEvent__ChildWindowAdded                 QEvent__Type = 223
+	QEvent__ChildWindowRemoved               QEvent__Type = 224
+	QEvent__ParentWindowAboutToChange        QEvent__Type = 225
+	QEvent__ParentWindowChange               QEvent__Type = 226
+	QEvent__SafeAreaMarginsChange            QEvent__Type = 227
 	QEvent__User                             QEvent__Type = 1000
 	QEvent__MaxUser                          QEvent__Type = 65535
 )
@@ -225,13 +231,13 @@ func UnsafeNewQEvent(h unsafe.Pointer) *QEvent {
 }
 
 // NewQEvent constructs a new QEvent object.
-func NewQEvent(typeVal QEvent__Type) *QEvent {
+func NewQEvent(typeVal Type) *QEvent {
 
-	return newQEvent(C.QEvent_new((C.int)(typeVal)))
+	return newQEvent(C.QEvent_new(typeVal))
 }
 
-func (this *QEvent) Type() QEvent__Type {
-	return (QEvent__Type)(C.QEvent_type(this.h))
+func (this *QEvent) Type() Type {
+	int /* TODO  */
 }
 
 func (this *QEvent) Spontaneous() bool {
@@ -385,12 +391,26 @@ func NewQTimerEvent(timerId int) *QTimerEvent {
 	return newQTimerEvent(C.QTimerEvent_new((C.int)(timerId)))
 }
 
+// NewQTimerEvent2 constructs a new QTimerEvent object.
+func NewQTimerEvent2(timerId TimerId) *QTimerEvent {
+
+	return newQTimerEvent(C.QTimerEvent_new2((C.int)(timerId)))
+}
+
 func (this *QTimerEvent) Clone() *QTimerEvent {
 	return newQTimerEvent(C.QTimerEvent_clone(this.h))
 }
 
 func (this *QTimerEvent) TimerId() int {
 	return (int)(C.QTimerEvent_timerId(this.h))
+}
+
+func (this *QTimerEvent) Id() TimerId {
+	return (TimerId)(C.QTimerEvent_id(this.h))
+}
+
+func (this *QTimerEvent) Matches(timer *QBasicTimer) bool {
+	return (bool)(C.QTimerEvent_matches(this.h, timer.cPointer()))
 }
 
 func (this *QTimerEvent) callVirtualBase_Clone() *QTimerEvent {
@@ -495,9 +515,9 @@ func UnsafeNewQChildEvent(h unsafe.Pointer) *QChildEvent {
 }
 
 // NewQChildEvent constructs a new QChildEvent object.
-func NewQChildEvent(typeVal QEvent__Type, child *QObject) *QChildEvent {
+func NewQChildEvent(typeVal Type, child *QObject) *QChildEvent {
 
-	return newQChildEvent(C.QChildEvent_new((C.int)(typeVal), child.cPointer()))
+	return newQChildEvent(C.QChildEvent_new(typeVal, child.cPointer()))
 }
 
 func (this *QChildEvent) Clone() *QChildEvent {

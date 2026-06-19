@@ -24,8 +24,8 @@ QFutureInterfaceBase* QFutureInterfaceBase_new2(QFutureInterfaceBase* other) {
 	return new (std::nothrow) QFutureInterfaceBase(*other);
 }
 
-QFutureInterfaceBase* QFutureInterfaceBase_new3(int initialState) {
-	return new (std::nothrow) QFutureInterfaceBase(static_cast<QFutureInterfaceBase::State>(initialState));
+QFutureInterfaceBase* QFutureInterfaceBase_new3(State initialState) {
+	return new (std::nothrow) QFutureInterfaceBase(initialState);
 }
 
 void QFutureInterfaceBase_operatorAssign(QFutureInterfaceBase* self, QFutureInterfaceBase* other) {
@@ -116,8 +116,8 @@ int QFutureInterfaceBase_resultCount(const QFutureInterfaceBase* self) {
 	return self->resultCount();
 }
 
-bool QFutureInterfaceBase_queryState(const QFutureInterfaceBase* self, int state) {
-	return self->queryState(static_cast<QFutureInterfaceBase::State>(state));
+bool QFutureInterfaceBase_queryState(const QFutureInterfaceBase* self, State state) {
+	return self->queryState(state);
 }
 
 bool QFutureInterfaceBase_isRunning(const QFutureInterfaceBase* self) {
@@ -178,6 +178,18 @@ void QFutureInterfaceBase_cancel(QFutureInterfaceBase* self) {
 
 void QFutureInterfaceBase_cancelAndFinish(QFutureInterfaceBase* self) {
 	self->cancelAndFinish();
+}
+
+void QFutureInterfaceBase_cancelChain(QFutureInterfaceBase* self) {
+	self->cancelChain();
+}
+
+void QFutureInterfaceBase_setAddResultsIfCanceledEnabled(QFutureInterfaceBase* self, bool enable) {
+	self->setAddResultsIfCanceledEnabled(enable);
+}
+
+bool QFutureInterfaceBase_isAddResultsIfCanceledEnabled(const QFutureInterfaceBase* self) {
+	return self->isAddResultsIfCanceledEnabled();
 }
 
 void QFutureInterfaceBase_setSuspended(QFutureInterfaceBase* self, bool suspend) {

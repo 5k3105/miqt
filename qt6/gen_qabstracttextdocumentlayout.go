@@ -75,8 +75,8 @@ func QAbstractTextDocumentLayout_Tr(s string) string {
 	return _ret
 }
 
-func (this *QAbstractTextDocumentLayout) Draw(painter *QPainter, context *QAbstractTextDocumentLayout__PaintContext) {
-	C.QAbstractTextDocumentLayout_draw(this.h, painter.cPointer(), context.cPointer())
+func (this *QAbstractTextDocumentLayout) Draw(painter *QPainter, context *PaintContext) {
+	C.QAbstractTextDocumentLayout_draw(this.h, painter.cPointer(), context)
 }
 
 func (this *QAbstractTextDocumentLayout) HitTest(point *QPointF, accuracy HitTestAccuracy) int {
@@ -365,7 +365,7 @@ func (this *QAbstractTextDocumentLayout) IsSignalConnected(signal *QMetaMethod) 
 	return _method_ret
 
 }
-func (this *QAbstractTextDocumentLayout) OnDraw(slot func(painter *QPainter, context *QAbstractTextDocumentLayout__PaintContext)) {
+func (this *QAbstractTextDocumentLayout) OnDraw(slot func(painter *QPainter, context *PaintContext)) {
 	ok := C.QAbstractTextDocumentLayout_override_virtual_draw(unsafe.Pointer(this.h), C.intptr_t(cgo.NewHandle(slot)))
 	if !ok {
 		panic("miqt: can only override virtual methods for directly constructed types")
@@ -373,8 +373,8 @@ func (this *QAbstractTextDocumentLayout) OnDraw(slot func(painter *QPainter, con
 }
 
 //export miqt_exec_callback_QAbstractTextDocumentLayout_draw
-func miqt_exec_callback_QAbstractTextDocumentLayout_draw(self *C.QAbstractTextDocumentLayout, cb C.intptr_t, painter *C.QPainter, context *C.QAbstractTextDocumentLayout__PaintContext) {
-	gofunc, ok := cgo.Handle(cb).Value().(func(painter *QPainter, context *QAbstractTextDocumentLayout__PaintContext))
+func miqt_exec_callback_QAbstractTextDocumentLayout_draw(self *C.QAbstractTextDocumentLayout, cb C.intptr_t, painter *C.QPainter, context *C.PaintContext) {
+	gofunc, ok := cgo.Handle(cb).Value().(func(painter *QPainter, context *PaintContext))
 	if !ok {
 		panic("miqt: callback of non-callback type (heap corruption?)")
 	}
@@ -382,7 +382,7 @@ func miqt_exec_callback_QAbstractTextDocumentLayout_draw(self *C.QAbstractTextDo
 	// Convert all CABI parameters to Go parameters
 	slotval1 := newQPainter(painter)
 
-	slotval2 := newQAbstractTextDocumentLayout__PaintContext(context)
+	int /* TODO  */
 
 	gofunc(slotval1, slotval2)
 
@@ -913,9 +913,15 @@ func UnsafeNewQAbstractTextDocumentLayout__Selection(h unsafe.Pointer) *QAbstrac
 }
 
 // NewQAbstractTextDocumentLayout__Selection constructs a new QAbstractTextDocumentLayout::Selection object.
-func NewQAbstractTextDocumentLayout__Selection(param1 *QAbstractTextDocumentLayout__Selection) *QAbstractTextDocumentLayout__Selection {
+func NewQAbstractTextDocumentLayout__Selection(param1 *Selection) *QAbstractTextDocumentLayout__Selection {
 
-	return newQAbstractTextDocumentLayout__Selection(C.QAbstractTextDocumentLayout__Selection_new(param1.cPointer()))
+	return newQAbstractTextDocumentLayout__Selection(C.QAbstractTextDocumentLayout__Selection_new(param1))
+}
+
+// NewQAbstractTextDocumentLayout__Selection2 constructs a new QAbstractTextDocumentLayout::Selection object.
+func NewQAbstractTextDocumentLayout__Selection2() *QAbstractTextDocumentLayout__Selection {
+
+	return newQAbstractTextDocumentLayout__Selection(C.QAbstractTextDocumentLayout__Selection_new2())
 }
 
 func (this *QAbstractTextDocumentLayout__Selection) Cursor() *QTextCursor {
@@ -938,8 +944,8 @@ func (this *QAbstractTextDocumentLayout__Selection) SetFormat(format QTextCharFo
 	C.QAbstractTextDocumentLayout__Selection_setFormat(this.h, format.cPointer())
 }
 
-func (this *QAbstractTextDocumentLayout__Selection) OperatorAssign(param1 *QAbstractTextDocumentLayout__Selection) {
-	C.QAbstractTextDocumentLayout__Selection_operatorAssign(this.h, param1.cPointer())
+func (this *QAbstractTextDocumentLayout__Selection) OperatorAssign(param1 *Selection) {
+	C.QAbstractTextDocumentLayout__Selection_operatorAssign(this.h, param1)
 }
 
 // Delete this object from C++ memory.
@@ -995,9 +1001,9 @@ func NewQAbstractTextDocumentLayout__PaintContext() *QAbstractTextDocumentLayout
 }
 
 // NewQAbstractTextDocumentLayout__PaintContext2 constructs a new QAbstractTextDocumentLayout::PaintContext object.
-func NewQAbstractTextDocumentLayout__PaintContext2(param1 *QAbstractTextDocumentLayout__PaintContext) *QAbstractTextDocumentLayout__PaintContext {
+func NewQAbstractTextDocumentLayout__PaintContext2(param1 *PaintContext) *QAbstractTextDocumentLayout__PaintContext {
 
-	return newQAbstractTextDocumentLayout__PaintContext(C.QAbstractTextDocumentLayout__PaintContext_new2(param1.cPointer()))
+	return newQAbstractTextDocumentLayout__PaintContext(C.QAbstractTextDocumentLayout__PaintContext_new2(param1))
 }
 
 func (this *QAbstractTextDocumentLayout__PaintContext) CursorPosition() int {
@@ -1028,30 +1034,28 @@ func (this *QAbstractTextDocumentLayout__PaintContext) SetClip(clip QRectF) {
 	C.QAbstractTextDocumentLayout__PaintContext_setClip(this.h, clip.cPointer())
 }
 
-func (this *QAbstractTextDocumentLayout__PaintContext) Selections() []QAbstractTextDocumentLayout__Selection {
+func (this *QAbstractTextDocumentLayout__PaintContext) Selections() []Selection {
 	var selections_ma C.struct_miqt_array = C.QAbstractTextDocumentLayout__PaintContext_selections(this.h)
-	selections_ret := make([]QAbstractTextDocumentLayout__Selection, int(selections_ma.len))
-	selections_outCast := (*[0xffff]*C.QAbstractTextDocumentLayout__Selection)(unsafe.Pointer(selections_ma.data)) // hey ya
+	selections_ret := make([]Selection, int(selections_ma.len))
+	selections_outCast := (*[0xffff]C.Selection)(unsafe.Pointer(selections_ma.data)) // hey ya
 	for i := 0; i < int(selections_ma.len); i++ {
-		selections_lv_goptr := newQAbstractTextDocumentLayout__Selection(selections_outCast[i])
-		selections_lv_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
-		selections_ret[i] = *selections_lv_goptr
+		int /* TODO  */
 	}
 	return selections_ret
 }
 
-func (this *QAbstractTextDocumentLayout__PaintContext) SetSelections(selections []QAbstractTextDocumentLayout__Selection) {
-	selections_CArray := (*[0xffff]*C.QAbstractTextDocumentLayout__Selection)(C.malloc(C.size_t(8 * len(selections))))
+func (this *QAbstractTextDocumentLayout__PaintContext) SetSelections(selections []Selection) {
+	selections_CArray := (*[0xffff]C.Selection)(C.malloc(C.size_t(8 * len(selections))))
 	defer C.free(unsafe.Pointer(selections_CArray))
 	for i := range selections {
-		selections_CArray[i] = selections[i].cPointer()
+		selections_CArray[i] = selections[i]
 	}
 	selections_ma := C.struct_miqt_array{len: C.size_t(len(selections)), data: unsafe.Pointer(selections_CArray)}
 	C.QAbstractTextDocumentLayout__PaintContext_setSelections(this.h, selections_ma)
 }
 
-func (this *QAbstractTextDocumentLayout__PaintContext) OperatorAssign(param1 *QAbstractTextDocumentLayout__PaintContext) {
-	C.QAbstractTextDocumentLayout__PaintContext_operatorAssign(this.h, param1.cPointer())
+func (this *QAbstractTextDocumentLayout__PaintContext) OperatorAssign(param1 *PaintContext) {
+	C.QAbstractTextDocumentLayout__PaintContext_operatorAssign(this.h, param1)
 }
 
 // Delete this object from C++ memory.

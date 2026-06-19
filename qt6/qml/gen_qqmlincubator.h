@@ -31,7 +31,7 @@ typedef struct QVariant QVariant;
 #endif
 
 QQmlIncubator* QQmlIncubator_new();
-QQmlIncubator* QQmlIncubator_new2(int param1);
+QQmlIncubator* QQmlIncubator_new2(IncubationMode param1);
 void QQmlIncubator_clear(QQmlIncubator* self);
 void QQmlIncubator_forceCompletion(QQmlIncubator* self);
 bool QQmlIncubator_isNull(const QQmlIncubator* self);
@@ -39,15 +39,15 @@ bool QQmlIncubator_isReady(const QQmlIncubator* self);
 bool QQmlIncubator_isError(const QQmlIncubator* self);
 bool QQmlIncubator_isLoading(const QQmlIncubator* self);
 struct miqt_array /* of QQmlError* */  QQmlIncubator_errors(const QQmlIncubator* self);
-int QQmlIncubator_incubationMode(const QQmlIncubator* self);
-int QQmlIncubator_status(const QQmlIncubator* self);
+IncubationMode QQmlIncubator_incubationMode(const QQmlIncubator* self);
+Status QQmlIncubator_status(const QQmlIncubator* self);
 QObject* QQmlIncubator_object(const QQmlIncubator* self);
 void QQmlIncubator_setInitialProperties(QQmlIncubator* self, struct miqt_map /* of struct miqt_string to QVariant* */  initialProperties);
-void QQmlIncubator_statusChanged(QQmlIncubator* self, int param1);
+void QQmlIncubator_statusChanged(QQmlIncubator* self, Status param1);
 void QQmlIncubator_setInitialState(QQmlIncubator* self, QObject* initialState);
 
 bool QQmlIncubator_override_virtual_statusChanged(void* self, intptr_t slot);
-void QQmlIncubator_virtualbase_statusChanged(void* self, int param1);
+void QQmlIncubator_virtualbase_statusChanged(void* self, Status param1);
 bool QQmlIncubator_override_virtual_setInitialState(void* self, intptr_t slot);
 void QQmlIncubator_virtualbase_setInitialState(void* self, QObject* initialState);
 

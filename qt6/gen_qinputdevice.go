@@ -92,13 +92,13 @@ func NewQInputDevice() *QInputDevice {
 }
 
 // NewQInputDevice2 constructs a new QInputDevice object.
-func NewQInputDevice2(name string, systemId int64, typeVal QInputDevice__DeviceType) *QInputDevice {
+func NewQInputDevice2(name string, systemId int64, typeVal DeviceType) *QInputDevice {
 	name_ms := C.struct_miqt_string{}
 	name_ms.data = C.CString(name)
 	name_ms.len = C.size_t(len(name))
 	defer C.free(unsafe.Pointer(name_ms.data))
 
-	return newQInputDevice(C.QInputDevice_new2(name_ms, (C.longlong)(systemId), (C.int)(typeVal)))
+	return newQInputDevice(C.QInputDevice_new2(name_ms, (C.longlong)(systemId), typeVal))
 }
 
 // NewQInputDevice3 constructs a new QInputDevice object.
@@ -108,7 +108,7 @@ func NewQInputDevice3(parent *QObject) *QInputDevice {
 }
 
 // NewQInputDevice4 constructs a new QInputDevice object.
-func NewQInputDevice4(name string, systemId int64, typeVal QInputDevice__DeviceType, seatName string) *QInputDevice {
+func NewQInputDevice4(name string, systemId int64, typeVal DeviceType, seatName string) *QInputDevice {
 	name_ms := C.struct_miqt_string{}
 	name_ms.data = C.CString(name)
 	name_ms.len = C.size_t(len(name))
@@ -118,11 +118,11 @@ func NewQInputDevice4(name string, systemId int64, typeVal QInputDevice__DeviceT
 	seatName_ms.len = C.size_t(len(seatName))
 	defer C.free(unsafe.Pointer(seatName_ms.data))
 
-	return newQInputDevice(C.QInputDevice_new4(name_ms, (C.longlong)(systemId), (C.int)(typeVal), seatName_ms))
+	return newQInputDevice(C.QInputDevice_new4(name_ms, (C.longlong)(systemId), typeVal, seatName_ms))
 }
 
 // NewQInputDevice5 constructs a new QInputDevice object.
-func NewQInputDevice5(name string, systemId int64, typeVal QInputDevice__DeviceType, seatName string, parent *QObject) *QInputDevice {
+func NewQInputDevice5(name string, systemId int64, typeVal DeviceType, seatName string, parent *QObject) *QInputDevice {
 	name_ms := C.struct_miqt_string{}
 	name_ms.data = C.CString(name)
 	name_ms.len = C.size_t(len(name))
@@ -132,7 +132,7 @@ func NewQInputDevice5(name string, systemId int64, typeVal QInputDevice__DeviceT
 	seatName_ms.len = C.size_t(len(seatName))
 	defer C.free(unsafe.Pointer(seatName_ms.data))
 
-	return newQInputDevice(C.QInputDevice_new5(name_ms, (C.longlong)(systemId), (C.int)(typeVal), seatName_ms, parent.cPointer()))
+	return newQInputDevice(C.QInputDevice_new5(name_ms, (C.longlong)(systemId), typeVal, seatName_ms, parent.cPointer()))
 }
 
 func (this *QInputDevice) MetaObject() *QMetaObject {
@@ -161,16 +161,16 @@ func (this *QInputDevice) Name() string {
 	return _ret
 }
 
-func (this *QInputDevice) Type() QInputDevice__DeviceType {
-	return (QInputDevice__DeviceType)(C.QInputDevice_type(this.h))
+func (this *QInputDevice) Type() DeviceType {
+	int /* TODO  */
 }
 
-func (this *QInputDevice) Capabilities() QInputDevice__Capability {
-	return (QInputDevice__Capability)(C.QInputDevice_capabilities(this.h))
+func (this *QInputDevice) Capabilities() Capabilities {
+	int /* TODO  */
 }
 
-func (this *QInputDevice) HasCapability(cap QInputDevice__Capability) bool {
-	return (bool)(C.QInputDevice_hasCapability(this.h, (C.int)(cap)))
+func (this *QInputDevice) HasCapability(cap Capability) bool {
+	return (bool)(C.QInputDevice_hasCapability(this.h, cap))
 }
 
 func (this *QInputDevice) SystemId() int64 {
@@ -239,6 +239,26 @@ func miqt_exec_callback_QInputDevice_availableVirtualGeometryChanged(cb C.intptr
 	area_goptr := newQRect(area)
 	area_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
 	slotval1 := *area_goptr
+
+	gofunc(slotval1)
+}
+
+func (this *QInputDevice) CapabilitiesChanged(capabilities Capabilities) {
+	C.QInputDevice_capabilitiesChanged(this.h, capabilities)
+}
+func (this *QInputDevice) OnCapabilitiesChanged(slot func(capabilities Capabilities)) {
+	C.QInputDevice_connect_capabilitiesChanged(this.h, C.intptr_t(cgo.NewHandle(slot)))
+}
+
+//export miqt_exec_callback_QInputDevice_capabilitiesChanged
+func miqt_exec_callback_QInputDevice_capabilitiesChanged(cb C.intptr_t, capabilities C.Capabilities) {
+	gofunc, ok := cgo.Handle(cb).Value().(func(capabilities Capabilities))
+	if !ok {
+		panic("miqt: callback of non-callback type (heap corruption?)")
+	}
+
+	// Convert all CABI parameters to Go parameters
+	int /* TODO  */
 
 	gofunc(slotval1)
 }

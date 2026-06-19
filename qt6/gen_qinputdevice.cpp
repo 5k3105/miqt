@@ -18,6 +18,7 @@ extern "C" {
 #endif
 
 void miqt_exec_callback_QInputDevice_availableVirtualGeometryChanged(intptr_t, QRect*);
+void miqt_exec_callback_QInputDevice_capabilitiesChanged(intptr_t, Capabilities);
 bool miqt_exec_callback_QInputDevice_event(QInputDevice*, intptr_t, QEvent*);
 bool miqt_exec_callback_QInputDevice_eventFilter(QInputDevice*, intptr_t, QObject*, QEvent*);
 void miqt_exec_callback_QInputDevice_timerEvent(QInputDevice*, intptr_t, QTimerEvent*);
@@ -33,10 +34,10 @@ class MiqtVirtualQInputDevice final : public QInputDevice {
 public:
 
 	MiqtVirtualQInputDevice(): QInputDevice() {}
-	MiqtVirtualQInputDevice(const QString& name, qint64 systemId, QInputDevice::DeviceType type): QInputDevice(name, systemId, type) {}
+	MiqtVirtualQInputDevice(const QString& name, qint64 systemId, DeviceType type): QInputDevice(name, systemId, type) {}
 	MiqtVirtualQInputDevice(QObject* parent): QInputDevice(parent) {}
-	MiqtVirtualQInputDevice(const QString& name, qint64 systemId, QInputDevice::DeviceType type, const QString& seatName): QInputDevice(name, systemId, type, seatName) {}
-	MiqtVirtualQInputDevice(const QString& name, qint64 systemId, QInputDevice::DeviceType type, const QString& seatName, QObject* parent): QInputDevice(name, systemId, type, seatName, parent) {}
+	MiqtVirtualQInputDevice(const QString& name, qint64 systemId, DeviceType type, const QString& seatName): QInputDevice(name, systemId, type, seatName) {}
+	MiqtVirtualQInputDevice(const QString& name, qint64 systemId, DeviceType type, const QString& seatName, QObject* parent): QInputDevice(name, systemId, type, seatName, parent) {}
 
 	virtual ~MiqtVirtualQInputDevice() override = default;
 
@@ -173,25 +174,25 @@ QInputDevice* QInputDevice_new() {
 	return new (std::nothrow) MiqtVirtualQInputDevice();
 }
 
-QInputDevice* QInputDevice_new2(struct miqt_string name, long long systemId, int type) {
+QInputDevice* QInputDevice_new2(struct miqt_string name, long long systemId, DeviceType type) {
 	QString name_QString = QString::fromUtf8(name.data, name.len);
-	return new (std::nothrow) MiqtVirtualQInputDevice(name_QString, static_cast<qint64>(systemId), static_cast<QInputDevice::DeviceType>(type));
+	return new (std::nothrow) MiqtVirtualQInputDevice(name_QString, static_cast<qint64>(systemId), type);
 }
 
 QInputDevice* QInputDevice_new3(QObject* parent) {
 	return new (std::nothrow) MiqtVirtualQInputDevice(parent);
 }
 
-QInputDevice* QInputDevice_new4(struct miqt_string name, long long systemId, int type, struct miqt_string seatName) {
+QInputDevice* QInputDevice_new4(struct miqt_string name, long long systemId, DeviceType type, struct miqt_string seatName) {
 	QString name_QString = QString::fromUtf8(name.data, name.len);
 	QString seatName_QString = QString::fromUtf8(seatName.data, seatName.len);
-	return new (std::nothrow) MiqtVirtualQInputDevice(name_QString, static_cast<qint64>(systemId), static_cast<QInputDevice::DeviceType>(type), seatName_QString);
+	return new (std::nothrow) MiqtVirtualQInputDevice(name_QString, static_cast<qint64>(systemId), type, seatName_QString);
 }
 
-QInputDevice* QInputDevice_new5(struct miqt_string name, long long systemId, int type, struct miqt_string seatName, QObject* parent) {
+QInputDevice* QInputDevice_new5(struct miqt_string name, long long systemId, DeviceType type, struct miqt_string seatName, QObject* parent) {
 	QString name_QString = QString::fromUtf8(name.data, name.len);
 	QString seatName_QString = QString::fromUtf8(seatName.data, seatName.len);
-	return new (std::nothrow) MiqtVirtualQInputDevice(name_QString, static_cast<qint64>(systemId), static_cast<QInputDevice::DeviceType>(type), seatName_QString, parent);
+	return new (std::nothrow) MiqtVirtualQInputDevice(name_QString, static_cast<qint64>(systemId), type, seatName_QString, parent);
 }
 
 void QInputDevice_virtbase(QInputDevice* src, QObject** outptr_QObject) {
@@ -228,18 +229,16 @@ struct miqt_string QInputDevice_name(const QInputDevice* self) {
 	return _ms;
 }
 
-int QInputDevice_type(const QInputDevice* self) {
-	QInputDevice::DeviceType _ret = self->type();
-	return static_cast<int>(_ret);
+DeviceType QInputDevice_type(const QInputDevice* self) {
+	return self->type();
 }
 
-int QInputDevice_capabilities(const QInputDevice* self) {
-	QInputDevice::Capabilities _ret = self->capabilities();
-	return static_cast<int>(_ret);
+Capabilities QInputDevice_capabilities(const QInputDevice* self) {
+	return self->capabilities();
 }
 
-bool QInputDevice_hasCapability(const QInputDevice* self, int cap) {
-	return self->hasCapability(static_cast<QInputDevice::Capability>(cap));
+bool QInputDevice_hasCapability(const QInputDevice* self, Capability cap) {
+	return self->hasCapability(cap);
 }
 
 long long QInputDevice_systemId(const QInputDevice* self) {
@@ -311,6 +310,17 @@ void QInputDevice_connect_availableVirtualGeometryChanged(QInputDevice* self, in
 	QInputDevice::connect(self, static_cast<void (QInputDevice::*)(QRect)>(&QInputDevice::availableVirtualGeometryChanged), self, [=](QRect area) {
 		QRect* sigval1 = new QRect(area);
 		miqt_exec_callback_QInputDevice_availableVirtualGeometryChanged(slot, sigval1);
+	});
+}
+
+void QInputDevice_capabilitiesChanged(QInputDevice* self, Capabilities capabilities) {
+	self->capabilitiesChanged(capabilities);
+}
+
+void QInputDevice_connect_capabilitiesChanged(QInputDevice* self, intptr_t slot) {
+	QInputDevice::connect(self, static_cast<void (QInputDevice::*)(Capabilities)>(&QInputDevice::capabilitiesChanged), self, [=](Capabilities capabilities) {
+		Capabilities sigval1 = capabilities;
+		miqt_exec_callback_QInputDevice_capabilitiesChanged(slot, sigval1);
 	});
 }
 

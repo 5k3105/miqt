@@ -52,7 +52,7 @@ void miqt_exec_callback_QSlider_mousePressEvent(QSlider*, intptr_t, QMouseEvent*
 void miqt_exec_callback_QSlider_mouseReleaseEvent(QSlider*, intptr_t, QMouseEvent*);
 void miqt_exec_callback_QSlider_mouseMoveEvent(QSlider*, intptr_t, QMouseEvent*);
 void miqt_exec_callback_QSlider_initStyleOption(const QSlider*, intptr_t, QStyleOptionSlider*);
-void miqt_exec_callback_QSlider_sliderChange(QSlider*, intptr_t, int);
+void miqt_exec_callback_QSlider_sliderChange(QSlider*, intptr_t, SliderChange);
 void miqt_exec_callback_QSlider_keyPressEvent(QSlider*, intptr_t, QKeyEvent*);
 void miqt_exec_callback_QSlider_timerEvent(QSlider*, intptr_t, QTimerEvent*);
 void miqt_exec_callback_QSlider_wheelEvent(QSlider*, intptr_t, QWheelEvent*);
@@ -81,7 +81,7 @@ void miqt_exec_callback_QSlider_dropEvent(QSlider*, intptr_t, QDropEvent*);
 void miqt_exec_callback_QSlider_showEvent(QSlider*, intptr_t, QShowEvent*);
 void miqt_exec_callback_QSlider_hideEvent(QSlider*, intptr_t, QHideEvent*);
 bool miqt_exec_callback_QSlider_nativeEvent(QSlider*, intptr_t, struct miqt_string, void*, intptr_t*);
-int miqt_exec_callback_QSlider_metric(const QSlider*, intptr_t, int);
+int miqt_exec_callback_QSlider_metric(const QSlider*, intptr_t, PaintDeviceMetric);
 void miqt_exec_callback_QSlider_initPainter(const QSlider*, intptr_t, QPainter*);
 QPaintDevice* miqt_exec_callback_QSlider_redirected(const QSlider*, intptr_t, QPoint*);
 QPainter* miqt_exec_callback_QSlider_sharedPainter(const QSlider*, intptr_t);
@@ -242,19 +242,18 @@ public:
 	intptr_t handle__sliderChange = 0;
 
 	// Subclass to allow providing a Go implementation
-	virtual void sliderChange(QAbstractSlider::SliderChange change) override {
+	virtual void sliderChange(SliderChange change) override {
 		if (handle__sliderChange == 0) {
 			QSlider::sliderChange(change);
 			return;
 		}
 
-		QAbstractSlider::SliderChange change_ret = change;
-		int sigval1 = static_cast<int>(change_ret);
+		SliderChange sigval1 = change;
 		miqt_exec_callback_QSlider_sliderChange(this, handle__sliderChange, sigval1);
 
 	}
 
-	friend void QSlider_virtualbase_sliderChange(void* self, int change);
+	friend void QSlider_virtualbase_sliderChange(void* self, SliderChange change);
 
 	// cgo.Handle value for overwritten implementation
 	intptr_t handle__keyPressEvent = 0;
@@ -736,18 +735,17 @@ public:
 	intptr_t handle__metric = 0;
 
 	// Subclass to allow providing a Go implementation
-	virtual int metric(QPaintDevice::PaintDeviceMetric param1) const override {
+	virtual int metric(PaintDeviceMetric param1) const override {
 		if (handle__metric == 0) {
 			return QSlider::metric(param1);
 		}
 
-		QPaintDevice::PaintDeviceMetric param1_ret = param1;
-		int sigval1 = static_cast<int>(param1_ret);
+		PaintDeviceMetric sigval1 = param1;
 		int callback_return_value = miqt_exec_callback_QSlider_metric(this, handle__metric, sigval1);
 		return static_cast<int>(callback_return_value);
 	}
 
-	friend int QSlider_virtualbase_metric(const void* self, int param1);
+	friend int QSlider_virtualbase_metric(const void* self, PaintDeviceMetric param1);
 
 	// cgo.Handle value for overwritten implementation
 	intptr_t handle__initPainter = 0;
@@ -937,8 +935,8 @@ public:
 	friend void QSlider_virtualbase_disconnectNotify(void* self, QMetaMethod* signal);
 
 	// Wrappers to allow calling protected methods:
-	friend void QSlider_protectedbase_setRepeatAction(bool* _dynamic_cast_ok, void* self, int action);
-	friend int QSlider_protectedbase_repeatAction(bool* _dynamic_cast_ok, const void* self);
+	friend void QSlider_protectedbase_setRepeatAction(bool* _dynamic_cast_ok, void* self, SliderAction action);
+	friend SliderAction QSlider_protectedbase_repeatAction(bool* _dynamic_cast_ok, const void* self);
 	friend void QSlider_protectedbase_updateMicroFocus(bool* _dynamic_cast_ok, void* self);
 	friend void QSlider_protectedbase_create(bool* _dynamic_cast_ok, void* self);
 	friend void QSlider_protectedbase_destroy(bool* _dynamic_cast_ok, void* self);
@@ -948,6 +946,7 @@ public:
 	friend int QSlider_protectedbase_senderSignalIndex(bool* _dynamic_cast_ok, const void* self);
 	friend int QSlider_protectedbase_receivers(bool* _dynamic_cast_ok, const void* self, const char* signal);
 	friend bool QSlider_protectedbase_isSignalConnected(bool* _dynamic_cast_ok, const void* self, QMetaMethod* signal);
+	friend double QSlider_protectedbase_getDecodedMetricF(bool* _dynamic_cast_ok, const void* self, PaintDeviceMetric metricA, PaintDeviceMetric metricB);
 };
 
 QSlider* QSlider_new(QWidget* parent) {
@@ -997,13 +996,12 @@ QSize* QSlider_minimumSizeHint(const QSlider* self) {
 	return new QSize(self->minimumSizeHint());
 }
 
-void QSlider_setTickPosition(QSlider* self, int position) {
-	self->setTickPosition(static_cast<QSlider::TickPosition>(position));
+void QSlider_setTickPosition(QSlider* self, TickPosition position) {
+	self->setTickPosition(position);
 }
 
-int QSlider_tickPosition(const QSlider* self) {
-	QSlider::TickPosition _ret = self->tickPosition();
-	return static_cast<int>(_ret);
+TickPosition QSlider_tickPosition(const QSlider* self) {
+	return self->tickPosition();
 }
 
 void QSlider_setTickInterval(QSlider* self, int ti) {
@@ -1162,8 +1160,8 @@ bool QSlider_override_virtual_sliderChange(void* self, intptr_t slot) {
 	return true;
 }
 
-void QSlider_virtualbase_sliderChange(void* self, int change) {
-	static_cast<MiqtVirtualQSlider*>(self)->QSlider::sliderChange(static_cast<MiqtVirtualQSlider::SliderChange>(change));
+void QSlider_virtualbase_sliderChange(void* self, SliderChange change) {
+	static_cast<MiqtVirtualQSlider*>(self)->QSlider::sliderChange(change);
 }
 
 bool QSlider_override_virtual_keyPressEvent(void* self, intptr_t slot) {
@@ -1569,8 +1567,8 @@ bool QSlider_override_virtual_metric(void* self, intptr_t slot) {
 	return true;
 }
 
-int QSlider_virtualbase_metric(const void* self, int param1) {
-	return static_cast<const MiqtVirtualQSlider*>(self)->QSlider::metric(static_cast<MiqtVirtualQSlider::PaintDeviceMetric>(param1));
+int QSlider_virtualbase_metric(const void* self, PaintDeviceMetric param1) {
+	return static_cast<const MiqtVirtualQSlider*>(self)->QSlider::metric(param1);
 }
 
 bool QSlider_override_virtual_initPainter(void* self, intptr_t slot) {
@@ -1727,7 +1725,7 @@ void QSlider_virtualbase_disconnectNotify(void* self, QMetaMethod* signal) {
 	static_cast<MiqtVirtualQSlider*>(self)->QSlider::disconnectNotify(*signal);
 }
 
-void QSlider_protectedbase_setRepeatAction(bool* _dynamic_cast_ok, void* self, int action) {
+void QSlider_protectedbase_setRepeatAction(bool* _dynamic_cast_ok, void* self, SliderAction action) {
 	MiqtVirtualQSlider* self_cast = dynamic_cast<MiqtVirtualQSlider*>( (QSlider*)(self) );
 	if (self_cast == nullptr) {
 		*_dynamic_cast_ok = false;
@@ -1735,19 +1733,18 @@ void QSlider_protectedbase_setRepeatAction(bool* _dynamic_cast_ok, void* self, i
 	}
 
 	*_dynamic_cast_ok = true;
-	self_cast->setRepeatAction(static_cast<MiqtVirtualQSlider::SliderAction>(action));
+	self_cast->setRepeatAction(action);
 }
 
-int QSlider_protectedbase_repeatAction(bool* _dynamic_cast_ok, const void* self) {
+SliderAction QSlider_protectedbase_repeatAction(bool* _dynamic_cast_ok, const void* self) {
 	MiqtVirtualQSlider* self_cast = dynamic_cast<MiqtVirtualQSlider*>( (QSlider*)(self) );
 	if (self_cast == nullptr) {
 		*_dynamic_cast_ok = false;
-		return (int)(0);
+		return nullptr;
 	}
 
 	*_dynamic_cast_ok = true;
-	MiqtVirtualQSlider::SliderAction _ret = self_cast->repeatAction();
-	return static_cast<int>(_ret);
+	return self_cast->repeatAction();
 }
 
 void QSlider_protectedbase_updateMicroFocus(bool* _dynamic_cast_ok, void* self) {
@@ -1847,6 +1844,17 @@ bool QSlider_protectedbase_isSignalConnected(bool* _dynamic_cast_ok, const void*
 
 	*_dynamic_cast_ok = true;
 	return self_cast->isSignalConnected(*signal);
+}
+
+double QSlider_protectedbase_getDecodedMetricF(bool* _dynamic_cast_ok, const void* self, PaintDeviceMetric metricA, PaintDeviceMetric metricB) {
+	MiqtVirtualQSlider* self_cast = dynamic_cast<MiqtVirtualQSlider*>( (QSlider*)(self) );
+	if (self_cast == nullptr) {
+		*_dynamic_cast_ok = false;
+		return 0;
+	}
+
+	*_dynamic_cast_ok = true;
+	return self_cast->getDecodedMetricF(metricA, metricB);
 }
 
 void QSlider_delete(QSlider* self) {

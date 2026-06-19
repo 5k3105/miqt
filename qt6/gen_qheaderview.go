@@ -229,16 +229,16 @@ func (this *QHeaderView) HighlightSections() bool {
 	return (bool)(C.QHeaderView_highlightSections(this.h))
 }
 
-func (this *QHeaderView) SectionResizeMode(logicalIndex int) QHeaderView__ResizeMode {
-	return (QHeaderView__ResizeMode)(C.QHeaderView_sectionResizeMode(this.h, (C.int)(logicalIndex)))
+func (this *QHeaderView) SectionResizeMode(logicalIndex int) ResizeMode {
+	int /* TODO  */
 }
 
-func (this *QHeaderView) SetSectionResizeMode(mode QHeaderView__ResizeMode) {
-	C.QHeaderView_setSectionResizeMode(this.h, (C.int)(mode))
+func (this *QHeaderView) SetSectionResizeMode(mode ResizeMode) {
+	C.QHeaderView_setSectionResizeMode(this.h, mode)
 }
 
-func (this *QHeaderView) SetSectionResizeMode2(logicalIndex int, mode QHeaderView__ResizeMode) {
-	C.QHeaderView_setSectionResizeMode2(this.h, (C.int)(logicalIndex), (C.int)(mode))
+func (this *QHeaderView) SetSectionResizeMode2(logicalIndex int, mode ResizeMode) {
+	C.QHeaderView_setSectionResizeMode2(this.h, (C.int)(logicalIndex), mode)
 }
 
 func (this *QHeaderView) SetResizeContentsPrecision(precision int) {
@@ -719,11 +719,10 @@ func (this *QHeaderView) InitializeSections2(start int, end int) {
 }
 
 // State can only be called from a QHeaderView that was directly constructed.
-func (this *QHeaderView) State() QAbstractItemView__State {
+func (this *QHeaderView) State() State {
 
 	var _dynamic_cast_ok C.bool = false
-	_method_ret := (QAbstractItemView__State)(C.QHeaderView_protectedbase_state(&_dynamic_cast_ok, unsafe.Pointer(this.h)))
-
+	int /* TODO  */
 	if !_dynamic_cast_ok {
 		panic("miqt: can only call protected methods for directly constructed types")
 	}
@@ -733,10 +732,10 @@ func (this *QHeaderView) State() QAbstractItemView__State {
 }
 
 // SetState can only be called from a QHeaderView that was directly constructed.
-func (this *QHeaderView) SetState(state QAbstractItemView__State) {
+func (this *QHeaderView) SetState(state State) {
 
 	var _dynamic_cast_ok C.bool = false
-	C.QHeaderView_protectedbase_setState(&_dynamic_cast_ok, unsafe.Pointer(this.h), (C.int)(state))
+	C.QHeaderView_protectedbase_setState(&_dynamic_cast_ok, unsafe.Pointer(this.h), state)
 
 	if !_dynamic_cast_ok {
 		panic("miqt: can only call protected methods for directly constructed types")
@@ -845,11 +844,10 @@ func (this *QHeaderView) DoAutoScroll() {
 }
 
 // DropIndicatorPosition can only be called from a QHeaderView that was directly constructed.
-func (this *QHeaderView) DropIndicatorPosition() QAbstractItemView__DropIndicatorPosition {
+func (this *QHeaderView) DropIndicatorPosition() DropIndicatorPosition {
 
 	var _dynamic_cast_ok C.bool = false
-	_method_ret := (QAbstractItemView__DropIndicatorPosition)(C.QHeaderView_protectedbase_dropIndicatorPosition(&_dynamic_cast_ok, unsafe.Pointer(this.h)))
-
+	int /* TODO  */
 	if !_dynamic_cast_ok {
 		panic("miqt: can only call protected methods for directly constructed types")
 	}
@@ -1011,6 +1009,20 @@ func (this *QHeaderView) IsSignalConnected(signal *QMetaMethod) bool {
 
 	var _dynamic_cast_ok C.bool = false
 	_method_ret := (bool)(C.QHeaderView_protectedbase_isSignalConnected(&_dynamic_cast_ok, unsafe.Pointer(this.h), signal.cPointer()))
+
+	if !_dynamic_cast_ok {
+		panic("miqt: can only call protected methods for directly constructed types")
+	}
+
+	return _method_ret
+
+}
+
+// GetDecodedMetricF can only be called from a QHeaderView that was directly constructed.
+func (this *QHeaderView) GetDecodedMetricF(metricA PaintDeviceMetric, metricB PaintDeviceMetric) float64 {
+
+	var _dynamic_cast_ok C.bool = false
+	_method_ret := (float64)(C.QHeaderView_protectedbase_getDecodedMetricF(&_dynamic_cast_ok, unsafe.Pointer(this.h), metricA, metricB))
 
 	if !_dynamic_cast_ok {
 		panic("miqt: can only call protected methods for directly constructed types")
@@ -1622,12 +1634,12 @@ func miqt_exec_callback_QHeaderView_visualRect(self *C.QHeaderView, cb C.intptr_
 
 }
 
-func (this *QHeaderView) callVirtualBase_ScrollTo(index *QModelIndex, hint QAbstractItemView__ScrollHint) {
+func (this *QHeaderView) callVirtualBase_ScrollTo(index *QModelIndex, hint ScrollHint) {
 
-	C.QHeaderView_virtualbase_scrollTo(unsafe.Pointer(this.h), index.cPointer(), (C.int)(hint))
+	C.QHeaderView_virtualbase_scrollTo(unsafe.Pointer(this.h), index.cPointer(), hint)
 
 }
-func (this *QHeaderView) OnScrollTo(slot func(super func(index *QModelIndex, hint QAbstractItemView__ScrollHint), index *QModelIndex, hint QAbstractItemView__ScrollHint)) {
+func (this *QHeaderView) OnScrollTo(slot func(super func(index *QModelIndex, hint ScrollHint), index *QModelIndex, hint ScrollHint)) {
 	ok := C.QHeaderView_override_virtual_scrollTo(unsafe.Pointer(this.h), C.intptr_t(cgo.NewHandle(slot)))
 	if !ok {
 		panic("miqt: can only override virtual methods for directly constructed types")
@@ -1635,8 +1647,8 @@ func (this *QHeaderView) OnScrollTo(slot func(super func(index *QModelIndex, hin
 }
 
 //export miqt_exec_callback_QHeaderView_scrollTo
-func miqt_exec_callback_QHeaderView_scrollTo(self *C.QHeaderView, cb C.intptr_t, index *C.QModelIndex, hint C.int) {
-	gofunc, ok := cgo.Handle(cb).Value().(func(super func(index *QModelIndex, hint QAbstractItemView__ScrollHint), index *QModelIndex, hint QAbstractItemView__ScrollHint))
+func miqt_exec_callback_QHeaderView_scrollTo(self *C.QHeaderView, cb C.intptr_t, index *C.QModelIndex, hint C.ScrollHint) {
+	gofunc, ok := cgo.Handle(cb).Value().(func(super func(index *QModelIndex, hint ScrollHint), index *QModelIndex, hint ScrollHint))
 	if !ok {
 		panic("miqt: callback of non-callback type (heap corruption?)")
 	}
@@ -1644,7 +1656,7 @@ func miqt_exec_callback_QHeaderView_scrollTo(self *C.QHeaderView, cb C.intptr_t,
 	// Convert all CABI parameters to Go parameters
 	slotval1 := newQModelIndex(index)
 
-	slotval2 := (QAbstractItemView__ScrollHint)(hint)
+	int /* TODO  */
 
 	gofunc((&QHeaderView{h: self}).callVirtualBase_ScrollTo, slotval1, slotval2)
 
@@ -1708,14 +1720,14 @@ func miqt_exec_callback_QHeaderView_isIndexHidden(self *C.QHeaderView, cb C.intp
 
 }
 
-func (this *QHeaderView) callVirtualBase_MoveCursor(param1 QAbstractItemView__CursorAction, param2 KeyboardModifier) *QModelIndex {
+func (this *QHeaderView) callVirtualBase_MoveCursor(param1 CursorAction, param2 KeyboardModifier) *QModelIndex {
 
-	_goptr := newQModelIndex(C.QHeaderView_virtualbase_moveCursor(unsafe.Pointer(this.h), (C.int)(param1), (C.int)(param2)))
+	_goptr := newQModelIndex(C.QHeaderView_virtualbase_moveCursor(unsafe.Pointer(this.h), param1, (C.int)(param2)))
 	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
 	return _goptr
 
 }
-func (this *QHeaderView) OnMoveCursor(slot func(super func(param1 QAbstractItemView__CursorAction, param2 KeyboardModifier) *QModelIndex, param1 QAbstractItemView__CursorAction, param2 KeyboardModifier) *QModelIndex) {
+func (this *QHeaderView) OnMoveCursor(slot func(super func(param1 CursorAction, param2 KeyboardModifier) *QModelIndex, param1 CursorAction, param2 KeyboardModifier) *QModelIndex) {
 	ok := C.QHeaderView_override_virtual_moveCursor(unsafe.Pointer(this.h), C.intptr_t(cgo.NewHandle(slot)))
 	if !ok {
 		panic("miqt: can only override virtual methods for directly constructed types")
@@ -1723,15 +1735,14 @@ func (this *QHeaderView) OnMoveCursor(slot func(super func(param1 QAbstractItemV
 }
 
 //export miqt_exec_callback_QHeaderView_moveCursor
-func miqt_exec_callback_QHeaderView_moveCursor(self *C.QHeaderView, cb C.intptr_t, param1 C.int, param2 C.int) *C.QModelIndex {
-	gofunc, ok := cgo.Handle(cb).Value().(func(super func(param1 QAbstractItemView__CursorAction, param2 KeyboardModifier) *QModelIndex, param1 QAbstractItemView__CursorAction, param2 KeyboardModifier) *QModelIndex)
+func miqt_exec_callback_QHeaderView_moveCursor(self *C.QHeaderView, cb C.intptr_t, param1 C.CursorAction, param2 C.int) *C.QModelIndex {
+	gofunc, ok := cgo.Handle(cb).Value().(func(super func(param1 CursorAction, param2 KeyboardModifier) *QModelIndex, param1 CursorAction, param2 KeyboardModifier) *QModelIndex)
 	if !ok {
 		panic("miqt: callback of non-callback type (heap corruption?)")
 	}
 
 	// Convert all CABI parameters to Go parameters
-	slotval1 := (QAbstractItemView__CursorAction)(param1)
-
+	int /* TODO  */
 	slotval2 := (KeyboardModifier)(param2)
 
 	virtualReturn := gofunc((&QHeaderView{h: self}).callVirtualBase_MoveCursor, slotval1, slotval2)
@@ -1740,12 +1751,12 @@ func miqt_exec_callback_QHeaderView_moveCursor(self *C.QHeaderView, cb C.intptr_
 
 }
 
-func (this *QHeaderView) callVirtualBase_SetSelection(rect *QRect, flags QItemSelectionModel__SelectionFlag) {
+func (this *QHeaderView) callVirtualBase_SetSelection(rect *QRect, flags SelectionFlag) {
 
 	C.QHeaderView_virtualbase_setSelection(unsafe.Pointer(this.h), rect.cPointer(), (C.int)(flags))
 
 }
-func (this *QHeaderView) OnSetSelection(slot func(super func(rect *QRect, flags QItemSelectionModel__SelectionFlag), rect *QRect, flags QItemSelectionModel__SelectionFlag)) {
+func (this *QHeaderView) OnSetSelection(slot func(super func(rect *QRect, flags SelectionFlag), rect *QRect, flags SelectionFlag)) {
 	ok := C.QHeaderView_override_virtual_setSelection(unsafe.Pointer(this.h), C.intptr_t(cgo.NewHandle(slot)))
 	if !ok {
 		panic("miqt: can only override virtual methods for directly constructed types")
@@ -1754,7 +1765,7 @@ func (this *QHeaderView) OnSetSelection(slot func(super func(rect *QRect, flags 
 
 //export miqt_exec_callback_QHeaderView_setSelection
 func miqt_exec_callback_QHeaderView_setSelection(self *C.QHeaderView, cb C.intptr_t, rect *C.QRect, flags C.int) {
-	gofunc, ok := cgo.Handle(cb).Value().(func(super func(rect *QRect, flags QItemSelectionModel__SelectionFlag), rect *QRect, flags QItemSelectionModel__SelectionFlag))
+	gofunc, ok := cgo.Handle(cb).Value().(func(super func(rect *QRect, flags SelectionFlag), rect *QRect, flags SelectionFlag))
 	if !ok {
 		panic("miqt: callback of non-callback type (heap corruption?)")
 	}
@@ -1762,7 +1773,7 @@ func miqt_exec_callback_QHeaderView_setSelection(self *C.QHeaderView, cb C.intpt
 	// Convert all CABI parameters to Go parameters
 	slotval1 := newQRect(rect)
 
-	slotval2 := (QItemSelectionModel__SelectionFlag)(flags)
+	slotval2 := (SelectionFlag)(flags)
 
 	gofunc((&QHeaderView{h: self}).callVirtualBase_SetSelection, slotval1, slotval2)
 
@@ -2400,12 +2411,12 @@ func miqt_exec_callback_QHeaderView_selectedIndexes(self *C.QHeaderView, cb C.in
 
 }
 
-func (this *QHeaderView) callVirtualBase_Edit2(index *QModelIndex, trigger QAbstractItemView__EditTrigger, event *QEvent) bool {
+func (this *QHeaderView) callVirtualBase_Edit2(index *QModelIndex, trigger EditTrigger, event *QEvent) bool {
 
-	return (bool)(C.QHeaderView_virtualbase_edit2(unsafe.Pointer(this.h), index.cPointer(), (C.int)(trigger), event.cPointer()))
+	return (bool)(C.QHeaderView_virtualbase_edit2(unsafe.Pointer(this.h), index.cPointer(), trigger, event.cPointer()))
 
 }
-func (this *QHeaderView) OnEdit2(slot func(super func(index *QModelIndex, trigger QAbstractItemView__EditTrigger, event *QEvent) bool, index *QModelIndex, trigger QAbstractItemView__EditTrigger, event *QEvent) bool) {
+func (this *QHeaderView) OnEdit2(slot func(super func(index *QModelIndex, trigger EditTrigger, event *QEvent) bool, index *QModelIndex, trigger EditTrigger, event *QEvent) bool) {
 	ok := C.QHeaderView_override_virtual_edit2(unsafe.Pointer(this.h), C.intptr_t(cgo.NewHandle(slot)))
 	if !ok {
 		panic("miqt: can only override virtual methods for directly constructed types")
@@ -2413,8 +2424,8 @@ func (this *QHeaderView) OnEdit2(slot func(super func(index *QModelIndex, trigge
 }
 
 //export miqt_exec_callback_QHeaderView_edit2
-func miqt_exec_callback_QHeaderView_edit2(self *C.QHeaderView, cb C.intptr_t, index *C.QModelIndex, trigger C.int, event *C.QEvent) C.bool {
-	gofunc, ok := cgo.Handle(cb).Value().(func(super func(index *QModelIndex, trigger QAbstractItemView__EditTrigger, event *QEvent) bool, index *QModelIndex, trigger QAbstractItemView__EditTrigger, event *QEvent) bool)
+func miqt_exec_callback_QHeaderView_edit2(self *C.QHeaderView, cb C.intptr_t, index *C.QModelIndex, trigger C.EditTrigger, event *C.QEvent) C.bool {
+	gofunc, ok := cgo.Handle(cb).Value().(func(super func(index *QModelIndex, trigger EditTrigger, event *QEvent) bool, index *QModelIndex, trigger EditTrigger, event *QEvent) bool)
 	if !ok {
 		panic("miqt: callback of non-callback type (heap corruption?)")
 	}
@@ -2422,8 +2433,7 @@ func miqt_exec_callback_QHeaderView_edit2(self *C.QHeaderView, cb C.intptr_t, in
 	// Convert all CABI parameters to Go parameters
 	slotval1 := newQModelIndex(index)
 
-	slotval2 := (QAbstractItemView__EditTrigger)(trigger)
-
+	int /* TODO  */
 	slotval3 := newQEvent(event)
 
 	virtualReturn := gofunc((&QHeaderView{h: self}).callVirtualBase_Edit2, slotval1, slotval2, slotval3)
@@ -2432,12 +2442,12 @@ func miqt_exec_callback_QHeaderView_edit2(self *C.QHeaderView, cb C.intptr_t, in
 
 }
 
-func (this *QHeaderView) callVirtualBase_SelectionCommand(index *QModelIndex, event *QEvent) QItemSelectionModel__SelectionFlag {
+func (this *QHeaderView) callVirtualBase_SelectionCommand(index *QModelIndex, event *QEvent) SelectionFlag {
 
-	return (QItemSelectionModel__SelectionFlag)(C.QHeaderView_virtualbase_selectionCommand(unsafe.Pointer(this.h), index.cPointer(), event.cPointer()))
+	return (SelectionFlag)(C.QHeaderView_virtualbase_selectionCommand(unsafe.Pointer(this.h), index.cPointer(), event.cPointer()))
 
 }
-func (this *QHeaderView) OnSelectionCommand(slot func(super func(index *QModelIndex, event *QEvent) QItemSelectionModel__SelectionFlag, index *QModelIndex, event *QEvent) QItemSelectionModel__SelectionFlag) {
+func (this *QHeaderView) OnSelectionCommand(slot func(super func(index *QModelIndex, event *QEvent) SelectionFlag, index *QModelIndex, event *QEvent) SelectionFlag) {
 	ok := C.QHeaderView_override_virtual_selectionCommand(unsafe.Pointer(this.h), C.intptr_t(cgo.NewHandle(slot)))
 	if !ok {
 		panic("miqt: can only override virtual methods for directly constructed types")
@@ -2446,7 +2456,7 @@ func (this *QHeaderView) OnSelectionCommand(slot func(super func(index *QModelIn
 
 //export miqt_exec_callback_QHeaderView_selectionCommand
 func miqt_exec_callback_QHeaderView_selectionCommand(self *C.QHeaderView, cb C.intptr_t, index *C.QModelIndex, event *C.QEvent) C.int {
-	gofunc, ok := cgo.Handle(cb).Value().(func(super func(index *QModelIndex, event *QEvent) QItemSelectionModel__SelectionFlag, index *QModelIndex, event *QEvent) QItemSelectionModel__SelectionFlag)
+	gofunc, ok := cgo.Handle(cb).Value().(func(super func(index *QModelIndex, event *QEvent) SelectionFlag, index *QModelIndex, event *QEvent) SelectionFlag)
 	if !ok {
 		panic("miqt: callback of non-callback type (heap corruption?)")
 	}
@@ -3368,12 +3378,12 @@ func miqt_exec_callback_QHeaderView_nativeEvent(self *C.QHeaderView, cb C.intptr
 
 }
 
-func (this *QHeaderView) callVirtualBase_Metric(param1 QPaintDevice__PaintDeviceMetric) int {
+func (this *QHeaderView) callVirtualBase_Metric(param1 PaintDeviceMetric) int {
 
-	return (int)(C.QHeaderView_virtualbase_metric(unsafe.Pointer(this.h), (C.int)(param1)))
+	return (int)(C.QHeaderView_virtualbase_metric(unsafe.Pointer(this.h), param1))
 
 }
-func (this *QHeaderView) OnMetric(slot func(super func(param1 QPaintDevice__PaintDeviceMetric) int, param1 QPaintDevice__PaintDeviceMetric) int) {
+func (this *QHeaderView) OnMetric(slot func(super func(param1 PaintDeviceMetric) int, param1 PaintDeviceMetric) int) {
 	ok := C.QHeaderView_override_virtual_metric(unsafe.Pointer(this.h), C.intptr_t(cgo.NewHandle(slot)))
 	if !ok {
 		panic("miqt: can only override virtual methods for directly constructed types")
@@ -3381,14 +3391,14 @@ func (this *QHeaderView) OnMetric(slot func(super func(param1 QPaintDevice__Pain
 }
 
 //export miqt_exec_callback_QHeaderView_metric
-func miqt_exec_callback_QHeaderView_metric(self *C.QHeaderView, cb C.intptr_t, param1 C.int) C.int {
-	gofunc, ok := cgo.Handle(cb).Value().(func(super func(param1 QPaintDevice__PaintDeviceMetric) int, param1 QPaintDevice__PaintDeviceMetric) int)
+func miqt_exec_callback_QHeaderView_metric(self *C.QHeaderView, cb C.intptr_t, param1 C.PaintDeviceMetric) C.int {
+	gofunc, ok := cgo.Handle(cb).Value().(func(super func(param1 PaintDeviceMetric) int, param1 PaintDeviceMetric) int)
 	if !ok {
 		panic("miqt: callback of non-callback type (heap corruption?)")
 	}
 
 	// Convert all CABI parameters to Go parameters
-	slotval1 := (QPaintDevice__PaintDeviceMetric)(param1)
+	int /* TODO  */
 
 	virtualReturn := gofunc((&QHeaderView{h: self}).callVirtualBase_Metric, slotval1)
 

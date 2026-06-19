@@ -28,7 +28,7 @@ typedef struct QThreadPool QThreadPool;
 
 QFutureInterfaceBase* QFutureInterfaceBase_new();
 QFutureInterfaceBase* QFutureInterfaceBase_new2(QFutureInterfaceBase* other);
-QFutureInterfaceBase* QFutureInterfaceBase_new3(int initialState);
+QFutureInterfaceBase* QFutureInterfaceBase_new3(State initialState);
 void QFutureInterfaceBase_operatorAssign(QFutureInterfaceBase* self, QFutureInterfaceBase* other);
 void QFutureInterfaceBase_reportStarted(QFutureInterfaceBase* self);
 void QFutureInterfaceBase_reportFinished(QFutureInterfaceBase* self);
@@ -49,7 +49,7 @@ struct miqt_string QFutureInterfaceBase_progressText(const QFutureInterfaceBase*
 void QFutureInterfaceBase_setExpectedResultCount(QFutureInterfaceBase* self, int resultCount);
 int QFutureInterfaceBase_expectedResultCount(QFutureInterfaceBase* self);
 int QFutureInterfaceBase_resultCount(const QFutureInterfaceBase* self);
-bool QFutureInterfaceBase_queryState(const QFutureInterfaceBase* self, int state);
+bool QFutureInterfaceBase_queryState(const QFutureInterfaceBase* self, State state);
 bool QFutureInterfaceBase_isRunning(const QFutureInterfaceBase* self);
 bool QFutureInterfaceBase_isStarted(const QFutureInterfaceBase* self);
 bool QFutureInterfaceBase_isCanceled(const QFutureInterfaceBase* self);
@@ -65,6 +65,9 @@ bool QFutureInterfaceBase_isValid(const QFutureInterfaceBase* self);
 int QFutureInterfaceBase_loadState(const QFutureInterfaceBase* self);
 void QFutureInterfaceBase_cancel(QFutureInterfaceBase* self);
 void QFutureInterfaceBase_cancelAndFinish(QFutureInterfaceBase* self);
+void QFutureInterfaceBase_cancelChain(QFutureInterfaceBase* self);
+void QFutureInterfaceBase_setAddResultsIfCanceledEnabled(QFutureInterfaceBase* self, bool enable);
+bool QFutureInterfaceBase_isAddResultsIfCanceledEnabled(const QFutureInterfaceBase* self);
 void QFutureInterfaceBase_setSuspended(QFutureInterfaceBase* self, bool suspend);
 void QFutureInterfaceBase_toggleSuspended(QFutureInterfaceBase* self);
 void QFutureInterfaceBase_reportSuspended(const QFutureInterfaceBase* self);

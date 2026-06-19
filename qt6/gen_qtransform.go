@@ -114,8 +114,8 @@ func (this *QTransform) IsTranslating() bool {
 	return (bool)(C.QTransform_isTranslating(this.h))
 }
 
-func (this *QTransform) Type() QTransform__TransformationType {
-	return (QTransform__TransformationType)(C.QTransform_type(this.h))
+func (this *QTransform) Type() TransformationType {
+	int /* TODO  */
 }
 
 func (this *QTransform) Determinant() float64 {
@@ -200,12 +200,20 @@ func (this *QTransform) Shear(sh float64, sv float64) *QTransform {
 	return newQTransform(C.QTransform_shear(this.h, (C.double)(sh), (C.double)(sv)))
 }
 
-func (this *QTransform) Rotate(a float64) *QTransform {
-	return newQTransform(C.QTransform_rotate(this.h, (C.double)(a)))
+func (this *QTransform) Rotate(a float64, axis Axis, distanceToPlane float64) *QTransform {
+	return newQTransform(C.QTransform_rotate(this.h, (C.double)(a), (C.int)(axis), (C.double)(distanceToPlane)))
 }
 
-func (this *QTransform) RotateRadians(a float64) *QTransform {
-	return newQTransform(C.QTransform_rotateRadians(this.h, (C.double)(a)))
+func (this *QTransform) RotateWithQreal(a float64) *QTransform {
+	return newQTransform(C.QTransform_rotateWithQreal(this.h, (C.double)(a)))
+}
+
+func (this *QTransform) RotateRadians(a float64, axis Axis, distanceToPlane float64) *QTransform {
+	return newQTransform(C.QTransform_rotateRadians(this.h, (C.double)(a), (C.int)(axis), (C.double)(distanceToPlane)))
+}
+
+func (this *QTransform) RotateRadiansWithQreal(a float64) *QTransform {
+	return newQTransform(C.QTransform_rotateRadiansWithQreal(this.h, (C.double)(a)))
 }
 
 func (this *QTransform) OperatorEqual(param1 *QTransform) bool {
@@ -318,6 +326,10 @@ func QTransform_FromScale(dx float64, dy float64) *QTransform {
 	_goptr := newQTransform(C.QTransform_fromScale((C.double)(dx), (C.double)(dy)))
 	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
 	return _goptr
+}
+
+func (this *QTransform) AsAffineMatrix() Affine {
+	int /* TODO  */
 }
 
 func (this *QTransform) InvertedWithInvertible(invertible *bool) *QTransform {

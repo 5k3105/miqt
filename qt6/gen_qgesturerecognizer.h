@@ -28,7 +28,7 @@ typedef struct QObject QObject;
 
 QGestureRecognizer* QGestureRecognizer_new();
 QGesture* QGestureRecognizer_create(QGestureRecognizer* self, QObject* target);
-int QGestureRecognizer_recognize(QGestureRecognizer* self, QGesture* state, QObject* watched, QEvent* event);
+Result QGestureRecognizer_recognize(QGestureRecognizer* self, QGesture* state, QObject* watched, QEvent* event);
 void QGestureRecognizer_reset(QGestureRecognizer* self, QGesture* state);
 int QGestureRecognizer_registerRecognizer(QGestureRecognizer* recognizer);
 void QGestureRecognizer_unregisterRecognizer(int type);
@@ -37,7 +37,7 @@ void QGestureRecognizer_operatorAssign(QGestureRecognizer* self, QGestureRecogni
 bool QGestureRecognizer_override_virtual_create(void* self, intptr_t slot);
 QGesture* QGestureRecognizer_virtualbase_create(void* self, QObject* target);
 bool QGestureRecognizer_override_virtual_recognize(void* self, intptr_t slot);
-int QGestureRecognizer_virtualbase_recognize(void* self, QGesture* state, QObject* watched, QEvent* event);
+Result QGestureRecognizer_virtualbase_recognize(void* self, QGesture* state, QObject* watched, QEvent* event);
 bool QGestureRecognizer_override_virtual_reset(void* self, intptr_t slot);
 void QGestureRecognizer_virtualbase_reset(void* self, QGesture* state);
 

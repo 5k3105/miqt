@@ -16,6 +16,7 @@ extern "C" {
 
 #ifdef __cplusplus
 class QChildEvent;
+class QDeadlineTimer;
 class QEvent;
 class QMetaMethod;
 class QMetaObject;
@@ -26,6 +27,7 @@ class QThreadPool;
 class QTimerEvent;
 #else
 typedef struct QChildEvent QChildEvent;
+typedef struct QDeadlineTimer QDeadlineTimer;
 typedef struct QEvent QEvent;
 typedef struct QMetaMethod QMetaMethod;
 typedef struct QMetaObject QMetaObject;
@@ -57,14 +59,17 @@ void QThreadPool_setThreadPriority(QThreadPool* self, int priority);
 int QThreadPool_threadPriority(const QThreadPool* self);
 void QThreadPool_reserveThread(QThreadPool* self);
 void QThreadPool_releaseThread(QThreadPool* self);
-bool QThreadPool_waitForDone(QThreadPool* self);
+void QThreadPool_setServiceLevel(QThreadPool* self, int serviceLevel);
+int QThreadPool_serviceLevel(const QThreadPool* self);
+bool QThreadPool_waitForDone(QThreadPool* self, int msecs);
+bool QThreadPool_waitForDone2(QThreadPool* self);
 void QThreadPool_clear(QThreadPool* self);
 bool QThreadPool_contains(const QThreadPool* self, QThread* thread);
 bool QThreadPool_tryTake(QThreadPool* self, QRunnable* runnable);
 struct miqt_string QThreadPool_tr2(const char* s, const char* c);
 struct miqt_string QThreadPool_tr3(const char* s, const char* c, int n);
 void QThreadPool_start2(QThreadPool* self, QRunnable* runnable, int priority);
-bool QThreadPool_waitForDoneWithMsecs(QThreadPool* self, int msecs);
+bool QThreadPool_waitForDoneWithDeadline(QThreadPool* self, QDeadlineTimer* deadline);
 
 bool QThreadPool_override_virtual_event(void* self, intptr_t slot);
 bool QThreadPool_virtualbase_event(void* self, QEvent* event);

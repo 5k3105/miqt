@@ -644,13 +644,12 @@ void QGraphicsScene_render(QGraphicsScene* self, QPainter* painter) {
 	self->render(painter);
 }
 
-int QGraphicsScene_itemIndexMethod(const QGraphicsScene* self) {
-	QGraphicsScene::ItemIndexMethod _ret = self->itemIndexMethod();
-	return static_cast<int>(_ret);
+ItemIndexMethod QGraphicsScene_itemIndexMethod(const QGraphicsScene* self) {
+	return self->itemIndexMethod();
 }
 
-void QGraphicsScene_setItemIndexMethod(QGraphicsScene* self, int method) {
-	self->setItemIndexMethod(static_cast<QGraphicsScene::ItemIndexMethod>(method));
+void QGraphicsScene_setItemIndexMethod(QGraphicsScene* self, ItemIndexMethod method) {
+	self->setItemIndexMethod(method);
 }
 
 int QGraphicsScene_bspTreeDepth(const QGraphicsScene* self) {
@@ -1337,8 +1336,8 @@ void QGraphicsScene_setFocusWithFocusReason(QGraphicsScene* self, int focusReaso
 	self->setFocus(static_cast<Qt::FocusReason>(focusReason));
 }
 
-void QGraphicsScene_invalidate3(QGraphicsScene* self, double x, double y, double w, double h, int layers) {
-	self->invalidate(static_cast<qreal>(x), static_cast<qreal>(y), static_cast<qreal>(w), static_cast<qreal>(h), static_cast<QGraphicsScene::SceneLayers>(layers));
+void QGraphicsScene_invalidate3(QGraphicsScene* self, double x, double y, double w, double h, SceneLayers layers) {
+	self->invalidate(static_cast<qreal>(x), static_cast<qreal>(y), static_cast<qreal>(w), static_cast<qreal>(h), layers);
 }
 
 void QGraphicsScene_updateWithRect(QGraphicsScene* self, QRectF* rect) {
@@ -1349,8 +1348,8 @@ void QGraphicsScene_invalidateWithRect(QGraphicsScene* self, QRectF* rect) {
 	self->invalidate(*rect);
 }
 
-void QGraphicsScene_invalidate4(QGraphicsScene* self, QRectF* rect, int layers) {
-	self->invalidate(*rect, static_cast<QGraphicsScene::SceneLayers>(layers));
+void QGraphicsScene_invalidate4(QGraphicsScene* self, QRectF* rect, SceneLayers layers) {
+	self->invalidate(*rect, layers);
 }
 
 bool QGraphicsScene_override_virtual_inputMethodQuery(void* self, intptr_t slot) {

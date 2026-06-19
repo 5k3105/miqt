@@ -31,19 +31,19 @@ struct miqt_array /* of struct miqt_string */  miqt_exec_callback_QSqlDriver_tab
 QSqlIndex* miqt_exec_callback_QSqlDriver_primaryIndex(const QSqlDriver*, intptr_t, struct miqt_string);
 QSqlRecord* miqt_exec_callback_QSqlDriver_record(const QSqlDriver*, intptr_t, struct miqt_string);
 struct miqt_string miqt_exec_callback_QSqlDriver_formatValue(const QSqlDriver*, intptr_t, QSqlField*, bool);
-struct miqt_string miqt_exec_callback_QSqlDriver_escapeIdentifier(const QSqlDriver*, intptr_t, struct miqt_string, int);
-struct miqt_string miqt_exec_callback_QSqlDriver_sqlStatement(const QSqlDriver*, intptr_t, int, struct miqt_string, QSqlRecord*, bool);
+struct miqt_string miqt_exec_callback_QSqlDriver_escapeIdentifier(const QSqlDriver*, intptr_t, struct miqt_string, IdentifierType);
+struct miqt_string miqt_exec_callback_QSqlDriver_sqlStatement(const QSqlDriver*, intptr_t, StatementType, struct miqt_string, QSqlRecord*, bool);
 QVariant* miqt_exec_callback_QSqlDriver_handle(const QSqlDriver*, intptr_t);
-bool miqt_exec_callback_QSqlDriver_hasFeature(const QSqlDriver*, intptr_t, int);
+bool miqt_exec_callback_QSqlDriver_hasFeature(const QSqlDriver*, intptr_t, DriverFeature);
 void miqt_exec_callback_QSqlDriver_close(QSqlDriver*, intptr_t);
 QSqlResult* miqt_exec_callback_QSqlDriver_createResult(const QSqlDriver*, intptr_t);
 bool miqt_exec_callback_QSqlDriver_open(QSqlDriver*, intptr_t, struct miqt_string, struct miqt_string, struct miqt_string, struct miqt_string, int, struct miqt_string);
 bool miqt_exec_callback_QSqlDriver_subscribeToNotification(QSqlDriver*, intptr_t, struct miqt_string);
 bool miqt_exec_callback_QSqlDriver_unsubscribeFromNotification(QSqlDriver*, intptr_t, struct miqt_string);
 struct miqt_array /* of struct miqt_string */  miqt_exec_callback_QSqlDriver_subscribedToNotifications(const QSqlDriver*, intptr_t);
-bool miqt_exec_callback_QSqlDriver_isIdentifierEscaped(const QSqlDriver*, intptr_t, struct miqt_string, int);
-struct miqt_string miqt_exec_callback_QSqlDriver_stripDelimiters(const QSqlDriver*, intptr_t, struct miqt_string, int);
-int miqt_exec_callback_QSqlDriver_maximumIdentifierLength(const QSqlDriver*, intptr_t, int);
+bool miqt_exec_callback_QSqlDriver_isIdentifierEscaped(const QSqlDriver*, intptr_t, struct miqt_string, IdentifierType);
+struct miqt_string miqt_exec_callback_QSqlDriver_stripDelimiters(const QSqlDriver*, intptr_t, struct miqt_string, IdentifierType);
+int miqt_exec_callback_QSqlDriver_maximumIdentifierLength(const QSqlDriver*, intptr_t, IdentifierType);
 bool miqt_exec_callback_QSqlDriver_cancelQuery(QSqlDriver*, intptr_t);
 void miqt_exec_callback_QSqlDriver_setOpen(QSqlDriver*, intptr_t, bool);
 void miqt_exec_callback_QSqlDriver_setOpenError(QSqlDriver*, intptr_t, bool);
@@ -227,7 +227,7 @@ public:
 	intptr_t handle__escapeIdentifier = 0;
 
 	// Subclass to allow providing a Go implementation
-	virtual QString escapeIdentifier(const QString& identifier, QSqlDriver::IdentifierType type) const override {
+	virtual QString escapeIdentifier(const QString& identifier, IdentifierType type) const override {
 		if (handle__escapeIdentifier == 0) {
 			return QSqlDriver::escapeIdentifier(identifier, type);
 		}
@@ -240,27 +240,25 @@ public:
 		identifier_ms.data = static_cast<char*>(malloc(identifier_ms.len));
 		memcpy(identifier_ms.data, identifier_b.data(), identifier_ms.len);
 		struct miqt_string sigval1 = identifier_ms;
-		QSqlDriver::IdentifierType type_ret = type;
-		int sigval2 = static_cast<int>(type_ret);
+		IdentifierType sigval2 = type;
 		struct miqt_string callback_return_value = miqt_exec_callback_QSqlDriver_escapeIdentifier(this, handle__escapeIdentifier, sigval1, sigval2);
 		QString callback_return_value_QString = QString::fromUtf8(callback_return_value.data, callback_return_value.len);
 		free(callback_return_value.data);
 		return callback_return_value_QString;
 	}
 
-	friend struct miqt_string QSqlDriver_virtualbase_escapeIdentifier(const void* self, struct miqt_string identifier, int type);
+	friend struct miqt_string QSqlDriver_virtualbase_escapeIdentifier(const void* self, struct miqt_string identifier, IdentifierType type);
 
 	// cgo.Handle value for overwritten implementation
 	intptr_t handle__sqlStatement = 0;
 
 	// Subclass to allow providing a Go implementation
-	virtual QString sqlStatement(QSqlDriver::StatementType type, const QString& tableName, const QSqlRecord& rec, bool preparedStatement) const override {
+	virtual QString sqlStatement(StatementType type, const QString& tableName, const QSqlRecord& rec, bool preparedStatement) const override {
 		if (handle__sqlStatement == 0) {
 			return QSqlDriver::sqlStatement(type, tableName, rec, preparedStatement);
 		}
 
-		QSqlDriver::StatementType type_ret = type;
-		int sigval1 = static_cast<int>(type_ret);
+		StatementType sigval1 = type;
 		const QString tableName_ret = tableName;
 		// Convert QString from UTF-16 in C++ RAII memory to UTF-8 in manually-managed C memory
 		QByteArray tableName_b = tableName_ret.toUtf8();
@@ -279,7 +277,7 @@ public:
 		return callback_return_value_QString;
 	}
 
-	friend struct miqt_string QSqlDriver_virtualbase_sqlStatement(const void* self, int type, struct miqt_string tableName, QSqlRecord* rec, bool preparedStatement);
+	friend struct miqt_string QSqlDriver_virtualbase_sqlStatement(const void* self, StatementType type, struct miqt_string tableName, QSqlRecord* rec, bool preparedStatement);
 
 	// cgo.Handle value for overwritten implementation
 	intptr_t handle__handle = 0;
@@ -300,13 +298,12 @@ public:
 	intptr_t handle__hasFeature = 0;
 
 	// Subclass to allow providing a Go implementation
-	virtual bool hasFeature(QSqlDriver::DriverFeature f) const override {
+	virtual bool hasFeature(DriverFeature f) const override {
 		if (handle__hasFeature == 0) {
 			return false; // Pure virtual, there is no base we can call
 		}
 
-		QSqlDriver::DriverFeature f_ret = f;
-		int sigval1 = static_cast<int>(f_ret);
+		DriverFeature sigval1 = f;
 		bool callback_return_value = miqt_exec_callback_QSqlDriver_hasFeature(this, handle__hasFeature, sigval1);
 		return callback_return_value;
 	}
@@ -468,7 +465,7 @@ public:
 	intptr_t handle__isIdentifierEscaped = 0;
 
 	// Subclass to allow providing a Go implementation
-	virtual bool isIdentifierEscaped(const QString& identifier, QSqlDriver::IdentifierType type) const override {
+	virtual bool isIdentifierEscaped(const QString& identifier, IdentifierType type) const override {
 		if (handle__isIdentifierEscaped == 0) {
 			return QSqlDriver::isIdentifierEscaped(identifier, type);
 		}
@@ -481,19 +478,18 @@ public:
 		identifier_ms.data = static_cast<char*>(malloc(identifier_ms.len));
 		memcpy(identifier_ms.data, identifier_b.data(), identifier_ms.len);
 		struct miqt_string sigval1 = identifier_ms;
-		QSqlDriver::IdentifierType type_ret = type;
-		int sigval2 = static_cast<int>(type_ret);
+		IdentifierType sigval2 = type;
 		bool callback_return_value = miqt_exec_callback_QSqlDriver_isIdentifierEscaped(this, handle__isIdentifierEscaped, sigval1, sigval2);
 		return callback_return_value;
 	}
 
-	friend bool QSqlDriver_virtualbase_isIdentifierEscaped(const void* self, struct miqt_string identifier, int type);
+	friend bool QSqlDriver_virtualbase_isIdentifierEscaped(const void* self, struct miqt_string identifier, IdentifierType type);
 
 	// cgo.Handle value for overwritten implementation
 	intptr_t handle__stripDelimiters = 0;
 
 	// Subclass to allow providing a Go implementation
-	virtual QString stripDelimiters(const QString& identifier, QSqlDriver::IdentifierType type) const override {
+	virtual QString stripDelimiters(const QString& identifier, IdentifierType type) const override {
 		if (handle__stripDelimiters == 0) {
 			return QSqlDriver::stripDelimiters(identifier, type);
 		}
@@ -506,32 +502,30 @@ public:
 		identifier_ms.data = static_cast<char*>(malloc(identifier_ms.len));
 		memcpy(identifier_ms.data, identifier_b.data(), identifier_ms.len);
 		struct miqt_string sigval1 = identifier_ms;
-		QSqlDriver::IdentifierType type_ret = type;
-		int sigval2 = static_cast<int>(type_ret);
+		IdentifierType sigval2 = type;
 		struct miqt_string callback_return_value = miqt_exec_callback_QSqlDriver_stripDelimiters(this, handle__stripDelimiters, sigval1, sigval2);
 		QString callback_return_value_QString = QString::fromUtf8(callback_return_value.data, callback_return_value.len);
 		free(callback_return_value.data);
 		return callback_return_value_QString;
 	}
 
-	friend struct miqt_string QSqlDriver_virtualbase_stripDelimiters(const void* self, struct miqt_string identifier, int type);
+	friend struct miqt_string QSqlDriver_virtualbase_stripDelimiters(const void* self, struct miqt_string identifier, IdentifierType type);
 
 	// cgo.Handle value for overwritten implementation
 	intptr_t handle__maximumIdentifierLength = 0;
 
 	// Subclass to allow providing a Go implementation
-	virtual int maximumIdentifierLength(QSqlDriver::IdentifierType type) const override {
+	virtual int maximumIdentifierLength(IdentifierType type) const override {
 		if (handle__maximumIdentifierLength == 0) {
 			return QSqlDriver::maximumIdentifierLength(type);
 		}
 
-		QSqlDriver::IdentifierType type_ret = type;
-		int sigval1 = static_cast<int>(type_ret);
+		IdentifierType sigval1 = type;
 		int callback_return_value = miqt_exec_callback_QSqlDriver_maximumIdentifierLength(this, handle__maximumIdentifierLength, sigval1);
 		return static_cast<int>(callback_return_value);
 	}
 
-	friend int QSqlDriver_virtualbase_maximumIdentifierLength(const void* self, int type);
+	friend int QSqlDriver_virtualbase_maximumIdentifierLength(const void* self, IdentifierType type);
 
 	// cgo.Handle value for overwritten implementation
 	intptr_t handle__cancelQuery = 0;
@@ -822,9 +816,9 @@ struct miqt_string QSqlDriver_formatValue(const QSqlDriver* self, QSqlField* fie
 	return _ms;
 }
 
-struct miqt_string QSqlDriver_escapeIdentifier(const QSqlDriver* self, struct miqt_string identifier, int type) {
+struct miqt_string QSqlDriver_escapeIdentifier(const QSqlDriver* self, struct miqt_string identifier, IdentifierType type) {
 	QString identifier_QString = QString::fromUtf8(identifier.data, identifier.len);
-	QString _ret = self->escapeIdentifier(identifier_QString, static_cast<QSqlDriver::IdentifierType>(type));
+	QString _ret = self->escapeIdentifier(identifier_QString, type);
 	// Convert QString from UTF-16 in C++ RAII memory to UTF-8 in manually-managed C memory
 	QByteArray _b = _ret.toUtf8();
 	struct miqt_string _ms;
@@ -834,9 +828,9 @@ struct miqt_string QSqlDriver_escapeIdentifier(const QSqlDriver* self, struct mi
 	return _ms;
 }
 
-struct miqt_string QSqlDriver_sqlStatement(const QSqlDriver* self, int type, struct miqt_string tableName, QSqlRecord* rec, bool preparedStatement) {
+struct miqt_string QSqlDriver_sqlStatement(const QSqlDriver* self, StatementType type, struct miqt_string tableName, QSqlRecord* rec, bool preparedStatement) {
 	QString tableName_QString = QString::fromUtf8(tableName.data, tableName.len);
-	QString _ret = self->sqlStatement(static_cast<QSqlDriver::StatementType>(type), tableName_QString, *rec, preparedStatement);
+	QString _ret = self->sqlStatement(type, tableName_QString, *rec, preparedStatement);
 	// Convert QString from UTF-16 in C++ RAII memory to UTF-8 in manually-managed C memory
 	QByteArray _b = _ret.toUtf8();
 	struct miqt_string _ms;
@@ -854,8 +848,8 @@ QVariant* QSqlDriver_handle(const QSqlDriver* self) {
 	return new QVariant(self->handle());
 }
 
-bool QSqlDriver_hasFeature(const QSqlDriver* self, int f) {
-	return self->hasFeature(static_cast<QSqlDriver::DriverFeature>(f));
+bool QSqlDriver_hasFeature(const QSqlDriver* self, DriverFeature f) {
+	return self->hasFeature(f);
 }
 
 void QSqlDriver_close(QSqlDriver* self) {
@@ -905,14 +899,14 @@ struct miqt_array /* of struct miqt_string */  QSqlDriver_subscribedToNotificati
 	return _out;
 }
 
-bool QSqlDriver_isIdentifierEscaped(const QSqlDriver* self, struct miqt_string identifier, int type) {
+bool QSqlDriver_isIdentifierEscaped(const QSqlDriver* self, struct miqt_string identifier, IdentifierType type) {
 	QString identifier_QString = QString::fromUtf8(identifier.data, identifier.len);
-	return self->isIdentifierEscaped(identifier_QString, static_cast<QSqlDriver::IdentifierType>(type));
+	return self->isIdentifierEscaped(identifier_QString, type);
 }
 
-struct miqt_string QSqlDriver_stripDelimiters(const QSqlDriver* self, struct miqt_string identifier, int type) {
+struct miqt_string QSqlDriver_stripDelimiters(const QSqlDriver* self, struct miqt_string identifier, IdentifierType type) {
 	QString identifier_QString = QString::fromUtf8(identifier.data, identifier.len);
-	QString _ret = self->stripDelimiters(identifier_QString, static_cast<QSqlDriver::IdentifierType>(type));
+	QString _ret = self->stripDelimiters(identifier_QString, type);
 	// Convert QString from UTF-16 in C++ RAII memory to UTF-8 in manually-managed C memory
 	QByteArray _b = _ret.toUtf8();
 	struct miqt_string _ms;
@@ -931,13 +925,23 @@ int QSqlDriver_numericalPrecisionPolicy(const QSqlDriver* self) {
 	return static_cast<int>(_ret);
 }
 
-int QSqlDriver_dbmsType(const QSqlDriver* self) {
-	QSqlDriver::DbmsType _ret = self->dbmsType();
-	return static_cast<int>(_ret);
+DbmsType QSqlDriver_dbmsType(const QSqlDriver* self) {
+	return self->dbmsType();
 }
 
-int QSqlDriver_maximumIdentifierLength(const QSqlDriver* self, int type) {
-	return self->maximumIdentifierLength(static_cast<QSqlDriver::IdentifierType>(type));
+int QSqlDriver_maximumIdentifierLength(const QSqlDriver* self, IdentifierType type) {
+	return self->maximumIdentifierLength(type);
+}
+
+struct miqt_string QSqlDriver_connectionName(const QSqlDriver* self) {
+	QString _ret = self->connectionName();
+	// Convert QString from UTF-16 in C++ RAII memory to UTF-8 in manually-managed C memory
+	QByteArray _b = _ret.toUtf8();
+	struct miqt_string _ms;
+	_ms.len = _b.length();
+	_ms.data = static_cast<char*>(malloc(_ms.len));
+	memcpy(_ms.data, _b.data(), _ms.len);
+	return _ms;
 }
 
 bool QSqlDriver_cancelQuery(QSqlDriver* self) {
@@ -1137,9 +1141,9 @@ bool QSqlDriver_override_virtual_escapeIdentifier(void* self, intptr_t slot) {
 	return true;
 }
 
-struct miqt_string QSqlDriver_virtualbase_escapeIdentifier(const void* self, struct miqt_string identifier, int type) {
+struct miqt_string QSqlDriver_virtualbase_escapeIdentifier(const void* self, struct miqt_string identifier, IdentifierType type) {
 	QString identifier_QString = QString::fromUtf8(identifier.data, identifier.len);
-	QString _ret = static_cast<const MiqtVirtualQSqlDriver*>(self)->QSqlDriver::escapeIdentifier(identifier_QString, static_cast<MiqtVirtualQSqlDriver::IdentifierType>(type));
+	QString _ret = static_cast<const MiqtVirtualQSqlDriver*>(self)->QSqlDriver::escapeIdentifier(identifier_QString, type);
 	// Convert QString from UTF-16 in C++ RAII memory to UTF-8 in manually-managed C memory
 	QByteArray _b = _ret.toUtf8();
 	struct miqt_string _ms;
@@ -1159,9 +1163,9 @@ bool QSqlDriver_override_virtual_sqlStatement(void* self, intptr_t slot) {
 	return true;
 }
 
-struct miqt_string QSqlDriver_virtualbase_sqlStatement(const void* self, int type, struct miqt_string tableName, QSqlRecord* rec, bool preparedStatement) {
+struct miqt_string QSqlDriver_virtualbase_sqlStatement(const void* self, StatementType type, struct miqt_string tableName, QSqlRecord* rec, bool preparedStatement) {
 	QString tableName_QString = QString::fromUtf8(tableName.data, tableName.len);
-	QString _ret = static_cast<const MiqtVirtualQSqlDriver*>(self)->QSqlDriver::sqlStatement(static_cast<MiqtVirtualQSqlDriver::StatementType>(type), tableName_QString, *rec, preparedStatement);
+	QString _ret = static_cast<const MiqtVirtualQSqlDriver*>(self)->QSqlDriver::sqlStatement(type, tableName_QString, *rec, preparedStatement);
 	// Convert QString from UTF-16 in C++ RAII memory to UTF-8 in manually-managed C memory
 	QByteArray _b = _ret.toUtf8();
 	struct miqt_string _ms;
@@ -1295,9 +1299,9 @@ bool QSqlDriver_override_virtual_isIdentifierEscaped(void* self, intptr_t slot) 
 	return true;
 }
 
-bool QSqlDriver_virtualbase_isIdentifierEscaped(const void* self, struct miqt_string identifier, int type) {
+bool QSqlDriver_virtualbase_isIdentifierEscaped(const void* self, struct miqt_string identifier, IdentifierType type) {
 	QString identifier_QString = QString::fromUtf8(identifier.data, identifier.len);
-	return static_cast<const MiqtVirtualQSqlDriver*>(self)->QSqlDriver::isIdentifierEscaped(identifier_QString, static_cast<MiqtVirtualQSqlDriver::IdentifierType>(type));
+	return static_cast<const MiqtVirtualQSqlDriver*>(self)->QSqlDriver::isIdentifierEscaped(identifier_QString, type);
 }
 
 bool QSqlDriver_override_virtual_stripDelimiters(void* self, intptr_t slot) {
@@ -1310,9 +1314,9 @@ bool QSqlDriver_override_virtual_stripDelimiters(void* self, intptr_t slot) {
 	return true;
 }
 
-struct miqt_string QSqlDriver_virtualbase_stripDelimiters(const void* self, struct miqt_string identifier, int type) {
+struct miqt_string QSqlDriver_virtualbase_stripDelimiters(const void* self, struct miqt_string identifier, IdentifierType type) {
 	QString identifier_QString = QString::fromUtf8(identifier.data, identifier.len);
-	QString _ret = static_cast<const MiqtVirtualQSqlDriver*>(self)->QSqlDriver::stripDelimiters(identifier_QString, static_cast<MiqtVirtualQSqlDriver::IdentifierType>(type));
+	QString _ret = static_cast<const MiqtVirtualQSqlDriver*>(self)->QSqlDriver::stripDelimiters(identifier_QString, type);
 	// Convert QString from UTF-16 in C++ RAII memory to UTF-8 in manually-managed C memory
 	QByteArray _b = _ret.toUtf8();
 	struct miqt_string _ms;
@@ -1332,8 +1336,8 @@ bool QSqlDriver_override_virtual_maximumIdentifierLength(void* self, intptr_t sl
 	return true;
 }
 
-int QSqlDriver_virtualbase_maximumIdentifierLength(const void* self, int type) {
-	return static_cast<const MiqtVirtualQSqlDriver*>(self)->QSqlDriver::maximumIdentifierLength(static_cast<MiqtVirtualQSqlDriver::IdentifierType>(type));
+int QSqlDriver_virtualbase_maximumIdentifierLength(const void* self, IdentifierType type) {
+	return static_cast<const MiqtVirtualQSqlDriver*>(self)->QSqlDriver::maximumIdentifierLength(type);
 }
 
 bool QSqlDriver_override_virtual_cancelQuery(void* self, intptr_t slot) {

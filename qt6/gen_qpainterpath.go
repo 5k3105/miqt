@@ -282,12 +282,20 @@ func (this *QPainterPath) SetElementPositionAt(i int, x float64, y float64) {
 	C.QPainterPath_setElementPositionAt(this.h, (C.int)(i), (C.double)(x), (C.double)(y))
 }
 
+func (this *QPainterPath) IsCachingEnabled() bool {
+	return (bool)(C.QPainterPath_isCachingEnabled(this.h))
+}
+
+func (this *QPainterPath) SetCachingEnabled(enabled bool) {
+	C.QPainterPath_setCachingEnabled(this.h, (C.bool)(enabled))
+}
+
 func (this *QPainterPath) Length() float64 {
 	return (float64)(C.QPainterPath_length(this.h))
 }
 
-func (this *QPainterPath) PercentAtLength(t float64) float64 {
-	return (float64)(C.QPainterPath_percentAtLength(this.h, (C.double)(t)))
+func (this *QPainterPath) PercentAtLength(lenVal float64) float64 {
+	return (float64)(C.QPainterPath_percentAtLength(this.h, (C.double)(lenVal)))
 }
 
 func (this *QPainterPath) PointAtPercent(t float64) *QPointF {
@@ -302,6 +310,12 @@ func (this *QPainterPath) AngleAtPercent(t float64) float64 {
 
 func (this *QPainterPath) SlopeAtPercent(t float64) float64 {
 	return (float64)(C.QPainterPath_slopeAtPercent(this.h, (C.double)(t)))
+}
+
+func (this *QPainterPath) Trimmed(fromFraction float64, toFraction float64) *QPainterPath {
+	_goptr := newQPainterPath(C.QPainterPath_trimmed(this.h, (C.double)(fromFraction), (C.double)(toFraction)))
+	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
+	return _goptr
 }
 
 func (this *QPainterPath) IntersectsWithQPainterPath(p *QPainterPath) bool {
@@ -390,6 +404,12 @@ func (this *QPainterPath) AddRoundedRect3(rect *QRectF, xRadius float64, yRadius
 
 func (this *QPainterPath) AddRoundedRect4(x float64, y float64, w float64, h float64, xRadius float64, yRadius float64, mode SizeMode) {
 	C.QPainterPath_addRoundedRect4(this.h, (C.double)(x), (C.double)(y), (C.double)(w), (C.double)(h), (C.double)(xRadius), (C.double)(yRadius), (C.int)(mode))
+}
+
+func (this *QPainterPath) Trimmed2(fromFraction float64, toFraction float64, offset float64) *QPainterPath {
+	_goptr := newQPainterPath(C.QPainterPath_trimmed2(this.h, (C.double)(fromFraction), (C.double)(toFraction), (C.double)(offset)))
+	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
+	return _goptr
 }
 
 // Delete this object from C++ memory.
@@ -574,6 +594,18 @@ func UnsafeNewQPainterPath__Element(h unsafe.Pointer) *QPainterPath__Element {
 	return newQPainterPath__Element((*C.QPainterPath__Element)(h))
 }
 
+// NewQPainterPath__Element constructs a new QPainterPath::Element object.
+func NewQPainterPath__Element() *QPainterPath__Element {
+
+	return newQPainterPath__Element(C.QPainterPath__Element_new())
+}
+
+// NewQPainterPath__Element2 constructs a new QPainterPath::Element object.
+func NewQPainterPath__Element2(param1 *Element) *QPainterPath__Element {
+
+	return newQPainterPath__Element(C.QPainterPath__Element_new2(param1))
+}
+
 func (this *QPainterPath__Element) X() float64 {
 	return (float64)(C.QPainterPath__Element_x(this.h))
 }
@@ -590,12 +622,12 @@ func (this *QPainterPath__Element) SetY(y float64) {
 	C.QPainterPath__Element_setY(this.h, (C.double)(y))
 }
 
-func (this *QPainterPath__Element) Type() QPainterPath__ElementType {
-	return (QPainterPath__ElementType)(C.QPainterPath__Element_type(this.h))
+func (this *QPainterPath__Element) Type() ElementType {
+	int /* TODO  */
 }
 
-func (this *QPainterPath__Element) SetType(typeVal QPainterPath__ElementType) {
-	C.QPainterPath__Element_setType(this.h, (C.int)(typeVal))
+func (this *QPainterPath__Element) SetType(typeVal ElementType) {
+	C.QPainterPath__Element_setType(this.h, typeVal)
 }
 
 func (this *QPainterPath__Element) IsMoveTo() bool {
@@ -616,12 +648,12 @@ func (this *QPainterPath__Element) ToQPointF() *QPointF {
 	return _goptr
 }
 
-func (this *QPainterPath__Element) OperatorEqual(e *QPainterPath__Element) bool {
-	return (bool)(C.QPainterPath__Element_operatorEqual(this.h, e.cPointer()))
+func (this *QPainterPath__Element) OperatorEqual(e *Element) bool {
+	return (bool)(C.QPainterPath__Element_operatorEqual(this.h, e))
 }
 
-func (this *QPainterPath__Element) OperatorNotEqual(e *QPainterPath__Element) bool {
-	return (bool)(C.QPainterPath__Element_operatorNotEqual(this.h, e.cPointer()))
+func (this *QPainterPath__Element) OperatorNotEqual(e *Element) bool {
+	return (bool)(C.QPainterPath__Element_operatorNotEqual(this.h, e))
 }
 
 // Delete this object from C++ memory.

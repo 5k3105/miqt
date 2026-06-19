@@ -86,6 +86,10 @@ func QLoggingCategory_DefaultCategory() *QLoggingCategory {
 	return newQLoggingCategory(C.QLoggingCategory_defaultCategory())
 }
 
+func QLoggingCategory_InstallFilter(param1 CategoryFilter) CategoryFilter {
+	int /* TODO  */
+}
+
 func QLoggingCategory_SetFilterRules(rules string) {
 	rules_ms := C.struct_miqt_string{}
 	rules_ms.data = C.CString(rules)

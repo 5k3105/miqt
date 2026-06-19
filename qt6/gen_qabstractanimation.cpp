@@ -282,22 +282,20 @@ struct miqt_string QAbstractAnimation_tr(const char* s) {
 	return _ms;
 }
 
-int QAbstractAnimation_state(const QAbstractAnimation* self) {
-	QAbstractAnimation::State _ret = self->state();
-	return static_cast<int>(_ret);
+State QAbstractAnimation_state(const QAbstractAnimation* self) {
+	return self->state();
 }
 
 QAnimationGroup* QAbstractAnimation_group(const QAbstractAnimation* self) {
 	return self->group();
 }
 
-int QAbstractAnimation_direction(const QAbstractAnimation* self) {
-	QAbstractAnimation::Direction _ret = self->direction();
-	return static_cast<int>(_ret);
+Direction QAbstractAnimation_direction(const QAbstractAnimation* self) {
+	return self->direction();
 }
 
-void QAbstractAnimation_setDirection(QAbstractAnimation* self, int direction) {
-	self->setDirection(static_cast<QAbstractAnimation::Direction>(direction));
+void QAbstractAnimation_setDirection(QAbstractAnimation* self, Direction direction) {
+	self->setDirection(direction);
 }
 
 int QAbstractAnimation_currentTime(const QAbstractAnimation* self) {

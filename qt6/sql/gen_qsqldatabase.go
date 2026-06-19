@@ -9,6 +9,7 @@ package sql
 import "C"
 
 import (
+	"github.com/mappu/miqt/qt6"
 	"runtime"
 	"unsafe"
 )
@@ -67,8 +68,62 @@ func (this *QSqlDriverCreatorBase) GoGC() {
 	})
 }
 
+type QSqlDatabaseDefaultConnectionName struct {
+	h *C.QSqlDatabaseDefaultConnectionName
+}
+
+func (this *QSqlDatabaseDefaultConnectionName) cPointer() *C.QSqlDatabaseDefaultConnectionName {
+	if this == nil {
+		return nil
+	}
+	return this.h
+}
+
+func (this *QSqlDatabaseDefaultConnectionName) UnsafePointer() unsafe.Pointer {
+	if this == nil {
+		return nil
+	}
+	return unsafe.Pointer(this.h)
+}
+
+// newQSqlDatabaseDefaultConnectionName constructs the type using only CGO pointers.
+func newQSqlDatabaseDefaultConnectionName(h *C.QSqlDatabaseDefaultConnectionName) *QSqlDatabaseDefaultConnectionName {
+	if h == nil {
+		return nil
+	}
+
+	return &QSqlDatabaseDefaultConnectionName{h: h}
+}
+
+// UnsafeNewQSqlDatabaseDefaultConnectionName constructs the type using only unsafe pointers.
+func UnsafeNewQSqlDatabaseDefaultConnectionName(h unsafe.Pointer) *QSqlDatabaseDefaultConnectionName {
+	return newQSqlDatabaseDefaultConnectionName((*C.QSqlDatabaseDefaultConnectionName)(h))
+}
+
+func QSqlDatabaseDefaultConnectionName_DefaultConnectionName() string {
+	var _ms C.struct_miqt_string = C.QSqlDatabaseDefaultConnectionName_defaultConnectionName()
+	_ret := C.GoStringN(_ms.data, C.int(int64(_ms.len)))
+	C.free(unsafe.Pointer(_ms.data))
+	return _ret
+}
+
+// Delete this object from C++ memory.
+func (this *QSqlDatabaseDefaultConnectionName) Delete() {
+	C.QSqlDatabaseDefaultConnectionName_delete(this.h)
+}
+
+// GoGC adds a Go Finalizer to this pointer, so that it will be deleted
+// from C++ memory once it is unreachable from Go memory.
+func (this *QSqlDatabaseDefaultConnectionName) GoGC() {
+	runtime.SetFinalizer(this, func(this *QSqlDatabaseDefaultConnectionName) {
+		this.Delete()
+		runtime.KeepAlive(this.h)
+	})
+}
+
 type QSqlDatabase struct {
 	h *C.QSqlDatabase
+	*QSqlDatabaseDefaultConnectionName
 }
 
 func (this *QSqlDatabase) cPointer() *C.QSqlDatabase {
@@ -90,8 +145,11 @@ func newQSqlDatabase(h *C.QSqlDatabase) *QSqlDatabase {
 	if h == nil {
 		return nil
 	}
+	var outptr_QSqlDatabaseDefaultConnectionName *C.QSqlDatabaseDefaultConnectionName = nil
+	C.QSqlDatabase_virtbase(h, &outptr_QSqlDatabaseDefaultConnectionName)
 
-	return &QSqlDatabase{h: h}
+	return &QSqlDatabase{h: h,
+		QSqlDatabaseDefaultConnectionName: newQSqlDatabaseDefaultConnectionName(outptr_QSqlDatabaseDefaultConnectionName)}
 }
 
 // UnsafeNewQSqlDatabase constructs the type using only unsafe pointers.
@@ -303,6 +361,14 @@ func (this *QSqlDatabase) SetNumericalPrecisionPolicy(precisionPolicy QSql__Nume
 
 func (this *QSqlDatabase) NumericalPrecisionPolicy() QSql__NumericalPrecisionPolicy {
 	return (QSql__NumericalPrecisionPolicy)(C.QSqlDatabase_numericalPrecisionPolicy(this.h))
+}
+
+func (this *QSqlDatabase) MoveToThread(targetThread *qt6.QThread) bool {
+	return (bool)(C.QSqlDatabase_moveToThread(this.h, (*C.QThread)(targetThread.UnsafePointer())))
+}
+
+func (this *QSqlDatabase) Thread() *qt6.QThread {
+	return qt6.UnsafeNewQThread(unsafe.Pointer(C.QSqlDatabase_thread(this.h)))
 }
 
 func (this *QSqlDatabase) Driver() *QSqlDriver {

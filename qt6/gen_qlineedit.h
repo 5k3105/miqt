@@ -118,8 +118,8 @@ void QLineEdit_setFrame(QLineEdit* self, bool frame);
 bool QLineEdit_hasFrame(const QLineEdit* self);
 void QLineEdit_setClearButtonEnabled(QLineEdit* self, bool enable);
 bool QLineEdit_isClearButtonEnabled(const QLineEdit* self);
-int QLineEdit_echoMode(const QLineEdit* self);
-void QLineEdit_setEchoMode(QLineEdit* self, int echoMode);
+EchoMode QLineEdit_echoMode(const QLineEdit* self);
+void QLineEdit_setEchoMode(QLineEdit* self, EchoMode echoMode);
 bool QLineEdit_isReadOnly(const QLineEdit* self);
 void QLineEdit_setReadOnly(QLineEdit* self, bool readOnly);
 void QLineEdit_setValidator(QLineEdit* self, QValidator* validator);
@@ -161,8 +161,8 @@ bool QLineEdit_hasAcceptableInput(const QLineEdit* self);
 void QLineEdit_setTextMargins(QLineEdit* self, int left, int top, int right, int bottom);
 void QLineEdit_setTextMarginsWithMargins(QLineEdit* self, QMargins* margins);
 QMargins* QLineEdit_textMargins(const QLineEdit* self);
-void QLineEdit_addAction(QLineEdit* self, QAction* action, int position);
-QAction* QLineEdit_addAction2(QLineEdit* self, QIcon* icon, int position);
+void QLineEdit_addAction(QLineEdit* self, QAction* action, ActionPosition position);
+QAction* QLineEdit_addAction2(QLineEdit* self, QIcon* icon, ActionPosition position);
 void QLineEdit_setText(QLineEdit* self, struct miqt_string text);
 void QLineEdit_clear(QLineEdit* self);
 void QLineEdit_selectAll(QLineEdit* self);
@@ -291,7 +291,7 @@ void QLineEdit_virtualbase_hideEvent(void* self, QHideEvent* event);
 bool QLineEdit_override_virtual_nativeEvent(void* self, intptr_t slot);
 bool QLineEdit_virtualbase_nativeEvent(void* self, struct miqt_string eventType, void* message, intptr_t* result);
 bool QLineEdit_override_virtual_metric(void* self, intptr_t slot);
-int QLineEdit_virtualbase_metric(const void* self, int param1);
+int QLineEdit_virtualbase_metric(const void* self, PaintDeviceMetric param1);
 bool QLineEdit_override_virtual_initPainter(void* self, intptr_t slot);
 void QLineEdit_virtualbase_initPainter(const void* self, QPainter* painter);
 bool QLineEdit_override_virtual_redirected(void* self, intptr_t slot);
@@ -321,6 +321,7 @@ QObject* QLineEdit_protectedbase_sender(bool* _dynamic_cast_ok, const void* self
 int QLineEdit_protectedbase_senderSignalIndex(bool* _dynamic_cast_ok, const void* self);
 int QLineEdit_protectedbase_receivers(bool* _dynamic_cast_ok, const void* self, const char* signal);
 bool QLineEdit_protectedbase_isSignalConnected(bool* _dynamic_cast_ok, const void* self, QMetaMethod* signal);
+double QLineEdit_protectedbase_getDecodedMetricF(bool* _dynamic_cast_ok, const void* self, PaintDeviceMetric metricA, PaintDeviceMetric metricB);
 
 void QLineEdit_delete(QLineEdit* self);
 

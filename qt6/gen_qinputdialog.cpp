@@ -90,7 +90,7 @@ void miqt_exec_callback_QInputDialog_dropEvent(QInputDialog*, intptr_t, QDropEve
 void miqt_exec_callback_QInputDialog_hideEvent(QInputDialog*, intptr_t, QHideEvent*);
 bool miqt_exec_callback_QInputDialog_nativeEvent(QInputDialog*, intptr_t, struct miqt_string, void*, intptr_t*);
 void miqt_exec_callback_QInputDialog_changeEvent(QInputDialog*, intptr_t, QEvent*);
-int miqt_exec_callback_QInputDialog_metric(const QInputDialog*, intptr_t, int);
+int miqt_exec_callback_QInputDialog_metric(const QInputDialog*, intptr_t, PaintDeviceMetric);
 void miqt_exec_callback_QInputDialog_initPainter(const QInputDialog*, intptr_t, QPainter*);
 QPaintDevice* miqt_exec_callback_QInputDialog_redirected(const QInputDialog*, intptr_t, QPoint*);
 QPainter* miqt_exec_callback_QInputDialog_sharedPainter(const QInputDialog*, intptr_t);
@@ -789,18 +789,17 @@ public:
 	intptr_t handle__metric = 0;
 
 	// Subclass to allow providing a Go implementation
-	virtual int metric(QPaintDevice::PaintDeviceMetric param1) const override {
+	virtual int metric(PaintDeviceMetric param1) const override {
 		if (handle__metric == 0) {
 			return QInputDialog::metric(param1);
 		}
 
-		QPaintDevice::PaintDeviceMetric param1_ret = param1;
-		int sigval1 = static_cast<int>(param1_ret);
+		PaintDeviceMetric sigval1 = param1;
 		int callback_return_value = miqt_exec_callback_QInputDialog_metric(this, handle__metric, sigval1);
 		return static_cast<int>(callback_return_value);
 	}
 
-	friend int QInputDialog_virtualbase_metric(const void* self, int param1);
+	friend int QInputDialog_virtualbase_metric(const void* self, PaintDeviceMetric param1);
 
 	// cgo.Handle value for overwritten implementation
 	intptr_t handle__initPainter = 0;
@@ -1000,6 +999,7 @@ public:
 	friend int QInputDialog_protectedbase_senderSignalIndex(bool* _dynamic_cast_ok, const void* self);
 	friend int QInputDialog_protectedbase_receivers(bool* _dynamic_cast_ok, const void* self, const char* signal);
 	friend bool QInputDialog_protectedbase_isSignalConnected(bool* _dynamic_cast_ok, const void* self, QMetaMethod* signal);
+	friend double QInputDialog_protectedbase_getDecodedMetricF(bool* _dynamic_cast_ok, const void* self, PaintDeviceMetric metricA, PaintDeviceMetric metricB);
 };
 
 QInputDialog* QInputDialog_new(QWidget* parent) {
@@ -1037,13 +1037,12 @@ struct miqt_string QInputDialog_tr(const char* s) {
 	return _ms;
 }
 
-void QInputDialog_setInputMode(QInputDialog* self, int mode) {
-	self->setInputMode(static_cast<QInputDialog::InputMode>(mode));
+void QInputDialog_setInputMode(QInputDialog* self, InputMode mode) {
+	self->setInputMode(mode);
 }
 
-int QInputDialog_inputMode(const QInputDialog* self) {
-	QInputDialog::InputMode _ret = self->inputMode();
-	return static_cast<int>(_ret);
+InputMode QInputDialog_inputMode(const QInputDialog* self) {
+	return self->inputMode();
 }
 
 void QInputDialog_setLabelText(QInputDialog* self, struct miqt_string text) {
@@ -1062,21 +1061,20 @@ struct miqt_string QInputDialog_labelText(const QInputDialog* self) {
 	return _ms;
 }
 
-void QInputDialog_setOption(QInputDialog* self, int option) {
-	self->setOption(static_cast<QInputDialog::InputDialogOption>(option));
+void QInputDialog_setOption(QInputDialog* self, InputDialogOption option) {
+	self->setOption(option);
 }
 
-bool QInputDialog_testOption(const QInputDialog* self, int option) {
-	return self->testOption(static_cast<QInputDialog::InputDialogOption>(option));
+bool QInputDialog_testOption(const QInputDialog* self, InputDialogOption option) {
+	return self->testOption(option);
 }
 
-void QInputDialog_setOptions(QInputDialog* self, int options) {
-	self->setOptions(static_cast<QInputDialog::InputDialogOptions>(options));
+void QInputDialog_setOptions(QInputDialog* self, InputDialogOptions options) {
+	self->setOptions(options);
 }
 
-int QInputDialog_options(const QInputDialog* self) {
-	QInputDialog::InputDialogOptions _ret = self->options();
-	return static_cast<int>(_ret);
+InputDialogOptions QInputDialog_options(const QInputDialog* self) {
+	return self->options();
 }
 
 void QInputDialog_setTextValue(QInputDialog* self, struct miqt_string text) {
@@ -1433,8 +1431,8 @@ struct miqt_string QInputDialog_tr3(const char* s, const char* c, int n) {
 	return _ms;
 }
 
-void QInputDialog_setOption2(QInputDialog* self, int option, bool on) {
-	self->setOption(static_cast<QInputDialog::InputDialogOption>(option), on);
+void QInputDialog_setOption2(QInputDialog* self, InputDialogOption option, bool on) {
+	self->setOption(option, on);
 }
 
 struct miqt_string QInputDialog_getText2(QWidget* parent, struct miqt_string title, struct miqt_string label, int echo) {
@@ -2311,8 +2309,8 @@ bool QInputDialog_override_virtual_metric(void* self, intptr_t slot) {
 	return true;
 }
 
-int QInputDialog_virtualbase_metric(const void* self, int param1) {
-	return static_cast<const MiqtVirtualQInputDialog*>(self)->QInputDialog::metric(static_cast<MiqtVirtualQInputDialog::PaintDeviceMetric>(param1));
+int QInputDialog_virtualbase_metric(const void* self, PaintDeviceMetric param1) {
+	return static_cast<const MiqtVirtualQInputDialog*>(self)->QInputDialog::metric(param1);
 }
 
 bool QInputDialog_override_virtual_initPainter(void* self, intptr_t slot) {
@@ -2577,6 +2575,17 @@ bool QInputDialog_protectedbase_isSignalConnected(bool* _dynamic_cast_ok, const 
 
 	*_dynamic_cast_ok = true;
 	return self_cast->isSignalConnected(*signal);
+}
+
+double QInputDialog_protectedbase_getDecodedMetricF(bool* _dynamic_cast_ok, const void* self, PaintDeviceMetric metricA, PaintDeviceMetric metricB) {
+	MiqtVirtualQInputDialog* self_cast = dynamic_cast<MiqtVirtualQInputDialog*>( (QInputDialog*)(self) );
+	if (self_cast == nullptr) {
+		*_dynamic_cast_ok = false;
+		return 0;
+	}
+
+	*_dynamic_cast_ok = true;
+	return self_cast->getDecodedMetricF(metricA, metricB);
 }
 
 void QInputDialog_delete(QInputDialog* self) {

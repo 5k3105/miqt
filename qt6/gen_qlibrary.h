@@ -53,8 +53,8 @@ struct miqt_string QLibrary_fileName(const QLibrary* self);
 void QLibrary_setFileNameAndVersion(QLibrary* self, struct miqt_string fileName, int verNum);
 void QLibrary_setFileNameAndVersion2(QLibrary* self, struct miqt_string fileName, struct miqt_string version);
 struct miqt_string QLibrary_errorString(const QLibrary* self);
-void QLibrary_setLoadHints(QLibrary* self, int hints);
-int QLibrary_loadHints(const QLibrary* self);
+void QLibrary_setLoadHints(QLibrary* self, LoadHints hints);
+LoadHints QLibrary_loadHints(const QLibrary* self);
 struct miqt_string QLibrary_tr2(const char* s, const char* c);
 struct miqt_string QLibrary_tr3(const char* s, const char* c, int n);
 

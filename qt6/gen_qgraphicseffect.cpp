@@ -29,7 +29,7 @@ extern "C" {
 void miqt_exec_callback_QGraphicsEffect_enabledChanged(intptr_t, bool);
 QRectF* miqt_exec_callback_QGraphicsEffect_boundingRectFor(const QGraphicsEffect*, intptr_t, QRectF*);
 void miqt_exec_callback_QGraphicsEffect_draw(QGraphicsEffect*, intptr_t, QPainter*);
-void miqt_exec_callback_QGraphicsEffect_sourceChanged(QGraphicsEffect*, intptr_t, int);
+void miqt_exec_callback_QGraphicsEffect_sourceChanged(QGraphicsEffect*, intptr_t, ChangeFlags);
 bool miqt_exec_callback_QGraphicsEffect_event(QGraphicsEffect*, intptr_t, QEvent*);
 bool miqt_exec_callback_QGraphicsEffect_eventFilter(QGraphicsEffect*, intptr_t, QObject*, QEvent*);
 void miqt_exec_callback_QGraphicsEffect_timerEvent(QGraphicsEffect*, intptr_t, QTimerEvent*);
@@ -41,7 +41,7 @@ void miqt_exec_callback_QGraphicsColorizeEffect_colorChanged(intptr_t, QColor*);
 void miqt_exec_callback_QGraphicsColorizeEffect_strengthChanged(intptr_t, double);
 void miqt_exec_callback_QGraphicsColorizeEffect_draw(QGraphicsColorizeEffect*, intptr_t, QPainter*);
 QRectF* miqt_exec_callback_QGraphicsColorizeEffect_boundingRectFor(const QGraphicsColorizeEffect*, intptr_t, QRectF*);
-void miqt_exec_callback_QGraphicsColorizeEffect_sourceChanged(QGraphicsColorizeEffect*, intptr_t, int);
+void miqt_exec_callback_QGraphicsColorizeEffect_sourceChanged(QGraphicsColorizeEffect*, intptr_t, ChangeFlags);
 bool miqt_exec_callback_QGraphicsColorizeEffect_event(QGraphicsColorizeEffect*, intptr_t, QEvent*);
 bool miqt_exec_callback_QGraphicsColorizeEffect_eventFilter(QGraphicsColorizeEffect*, intptr_t, QObject*, QEvent*);
 void miqt_exec_callback_QGraphicsColorizeEffect_timerEvent(QGraphicsColorizeEffect*, intptr_t, QTimerEvent*);
@@ -50,10 +50,10 @@ void miqt_exec_callback_QGraphicsColorizeEffect_customEvent(QGraphicsColorizeEff
 void miqt_exec_callback_QGraphicsColorizeEffect_connectNotify(QGraphicsColorizeEffect*, intptr_t, QMetaMethod*);
 void miqt_exec_callback_QGraphicsColorizeEffect_disconnectNotify(QGraphicsColorizeEffect*, intptr_t, QMetaMethod*);
 void miqt_exec_callback_QGraphicsBlurEffect_blurRadiusChanged(intptr_t, double);
-void miqt_exec_callback_QGraphicsBlurEffect_blurHintsChanged(intptr_t, int);
+void miqt_exec_callback_QGraphicsBlurEffect_blurHintsChanged(intptr_t, BlurHints);
 QRectF* miqt_exec_callback_QGraphicsBlurEffect_boundingRectFor(const QGraphicsBlurEffect*, intptr_t, QRectF*);
 void miqt_exec_callback_QGraphicsBlurEffect_draw(QGraphicsBlurEffect*, intptr_t, QPainter*);
-void miqt_exec_callback_QGraphicsBlurEffect_sourceChanged(QGraphicsBlurEffect*, intptr_t, int);
+void miqt_exec_callback_QGraphicsBlurEffect_sourceChanged(QGraphicsBlurEffect*, intptr_t, ChangeFlags);
 bool miqt_exec_callback_QGraphicsBlurEffect_event(QGraphicsBlurEffect*, intptr_t, QEvent*);
 bool miqt_exec_callback_QGraphicsBlurEffect_eventFilter(QGraphicsBlurEffect*, intptr_t, QObject*, QEvent*);
 void miqt_exec_callback_QGraphicsBlurEffect_timerEvent(QGraphicsBlurEffect*, intptr_t, QTimerEvent*);
@@ -66,7 +66,7 @@ void miqt_exec_callback_QGraphicsDropShadowEffect_blurRadiusChanged(intptr_t, do
 void miqt_exec_callback_QGraphicsDropShadowEffect_colorChanged(intptr_t, QColor*);
 QRectF* miqt_exec_callback_QGraphicsDropShadowEffect_boundingRectFor(const QGraphicsDropShadowEffect*, intptr_t, QRectF*);
 void miqt_exec_callback_QGraphicsDropShadowEffect_draw(QGraphicsDropShadowEffect*, intptr_t, QPainter*);
-void miqt_exec_callback_QGraphicsDropShadowEffect_sourceChanged(QGraphicsDropShadowEffect*, intptr_t, int);
+void miqt_exec_callback_QGraphicsDropShadowEffect_sourceChanged(QGraphicsDropShadowEffect*, intptr_t, ChangeFlags);
 bool miqt_exec_callback_QGraphicsDropShadowEffect_event(QGraphicsDropShadowEffect*, intptr_t, QEvent*);
 bool miqt_exec_callback_QGraphicsDropShadowEffect_eventFilter(QGraphicsDropShadowEffect*, intptr_t, QObject*, QEvent*);
 void miqt_exec_callback_QGraphicsDropShadowEffect_timerEvent(QGraphicsDropShadowEffect*, intptr_t, QTimerEvent*);
@@ -78,7 +78,7 @@ void miqt_exec_callback_QGraphicsOpacityEffect_opacityChanged(intptr_t, double);
 void miqt_exec_callback_QGraphicsOpacityEffect_opacityMaskChanged(intptr_t, QBrush*);
 void miqt_exec_callback_QGraphicsOpacityEffect_draw(QGraphicsOpacityEffect*, intptr_t, QPainter*);
 QRectF* miqt_exec_callback_QGraphicsOpacityEffect_boundingRectFor(const QGraphicsOpacityEffect*, intptr_t, QRectF*);
-void miqt_exec_callback_QGraphicsOpacityEffect_sourceChanged(QGraphicsOpacityEffect*, intptr_t, int);
+void miqt_exec_callback_QGraphicsOpacityEffect_sourceChanged(QGraphicsOpacityEffect*, intptr_t, ChangeFlags);
 bool miqt_exec_callback_QGraphicsOpacityEffect_event(QGraphicsOpacityEffect*, intptr_t, QEvent*);
 bool miqt_exec_callback_QGraphicsOpacityEffect_eventFilter(QGraphicsOpacityEffect*, intptr_t, QObject*, QEvent*);
 void miqt_exec_callback_QGraphicsOpacityEffect_timerEvent(QGraphicsOpacityEffect*, intptr_t, QTimerEvent*);
@@ -134,19 +134,18 @@ public:
 	intptr_t handle__sourceChanged = 0;
 
 	// Subclass to allow providing a Go implementation
-	virtual void sourceChanged(QGraphicsEffect::ChangeFlags flags) override {
+	virtual void sourceChanged(ChangeFlags flags) override {
 		if (handle__sourceChanged == 0) {
 			QGraphicsEffect::sourceChanged(flags);
 			return;
 		}
 
-		QGraphicsEffect::ChangeFlags flags_ret = flags;
-		int sigval1 = static_cast<int>(flags_ret);
+		ChangeFlags sigval1 = flags;
 		miqt_exec_callback_QGraphicsEffect_sourceChanged(this, handle__sourceChanged, sigval1);
 
 	}
 
-	friend void QGraphicsEffect_virtualbase_sourceChanged(void* self, int flags);
+	friend void QGraphicsEffect_virtualbase_sourceChanged(void* self, ChangeFlags flags);
 
 	// cgo.Handle value for overwritten implementation
 	intptr_t handle__event = 0;
@@ -279,7 +278,7 @@ public:
 	friend QRectF* QGraphicsEffect_protectedbase_sourceBoundingRectWithSystem(bool* _dynamic_cast_ok, const void* self, int system);
 	friend QPixmap* QGraphicsEffect_protectedbase_sourcePixmapWithSystem(bool* _dynamic_cast_ok, const void* self, int system);
 	friend QPixmap* QGraphicsEffect_protectedbase_sourcePixmap2(bool* _dynamic_cast_ok, const void* self, int system, QPoint* offset);
-	friend QPixmap* QGraphicsEffect_protectedbase_sourcePixmap3(bool* _dynamic_cast_ok, const void* self, int system, QPoint* offset, int mode);
+	friend QPixmap* QGraphicsEffect_protectedbase_sourcePixmap3(bool* _dynamic_cast_ok, const void* self, int system, QPoint* offset, PixmapPadMode mode);
 	friend QObject* QGraphicsEffect_protectedbase_sender(bool* _dynamic_cast_ok, const void* self);
 	friend int QGraphicsEffect_protectedbase_senderSignalIndex(bool* _dynamic_cast_ok, const void* self);
 	friend int QGraphicsEffect_protectedbase_receivers(bool* _dynamic_cast_ok, const void* self, const char* signal);
@@ -404,8 +403,8 @@ bool QGraphicsEffect_override_virtual_sourceChanged(void* self, intptr_t slot) {
 	return true;
 }
 
-void QGraphicsEffect_virtualbase_sourceChanged(void* self, int flags) {
-	static_cast<MiqtVirtualQGraphicsEffect*>(self)->QGraphicsEffect::sourceChanged(static_cast<MiqtVirtualQGraphicsEffect::ChangeFlags>(flags));
+void QGraphicsEffect_virtualbase_sourceChanged(void* self, ChangeFlags flags) {
+	static_cast<MiqtVirtualQGraphicsEffect*>(self)->QGraphicsEffect::sourceChanged(flags);
 }
 
 bool QGraphicsEffect_override_virtual_event(void* self, intptr_t slot) {
@@ -594,7 +593,7 @@ QPixmap* QGraphicsEffect_protectedbase_sourcePixmap2(bool* _dynamic_cast_ok, con
 	return new QPixmap(self_cast->sourcePixmap(static_cast<Qt::CoordinateSystem>(system), offset));
 }
 
-QPixmap* QGraphicsEffect_protectedbase_sourcePixmap3(bool* _dynamic_cast_ok, const void* self, int system, QPoint* offset, int mode) {
+QPixmap* QGraphicsEffect_protectedbase_sourcePixmap3(bool* _dynamic_cast_ok, const void* self, int system, QPoint* offset, PixmapPadMode mode) {
 	MiqtVirtualQGraphicsEffect* self_cast = dynamic_cast<MiqtVirtualQGraphicsEffect*>( (QGraphicsEffect*)(self) );
 	if (self_cast == nullptr) {
 		*_dynamic_cast_ok = false;
@@ -602,7 +601,7 @@ QPixmap* QGraphicsEffect_protectedbase_sourcePixmap3(bool* _dynamic_cast_ok, con
 	}
 
 	*_dynamic_cast_ok = true;
-	return new QPixmap(self_cast->sourcePixmap(static_cast<Qt::CoordinateSystem>(system), offset, static_cast<MiqtVirtualQGraphicsEffect::PixmapPadMode>(mode)));
+	return new QPixmap(self_cast->sourcePixmap(static_cast<Qt::CoordinateSystem>(system), offset, mode));
 }
 
 QObject* QGraphicsEffect_protectedbase_sender(bool* _dynamic_cast_ok, const void* self) {
@@ -700,19 +699,18 @@ public:
 	intptr_t handle__sourceChanged = 0;
 
 	// Subclass to allow providing a Go implementation
-	virtual void sourceChanged(QGraphicsEffect::ChangeFlags flags) override {
+	virtual void sourceChanged(ChangeFlags flags) override {
 		if (handle__sourceChanged == 0) {
 			QGraphicsColorizeEffect::sourceChanged(flags);
 			return;
 		}
 
-		QGraphicsEffect::ChangeFlags flags_ret = flags;
-		int sigval1 = static_cast<int>(flags_ret);
+		ChangeFlags sigval1 = flags;
 		miqt_exec_callback_QGraphicsColorizeEffect_sourceChanged(this, handle__sourceChanged, sigval1);
 
 	}
 
-	friend void QGraphicsColorizeEffect_virtualbase_sourceChanged(void* self, int flags);
+	friend void QGraphicsColorizeEffect_virtualbase_sourceChanged(void* self, ChangeFlags flags);
 
 	// cgo.Handle value for overwritten implementation
 	intptr_t handle__event = 0;
@@ -981,8 +979,8 @@ bool QGraphicsColorizeEffect_override_virtual_sourceChanged(void* self, intptr_t
 	return true;
 }
 
-void QGraphicsColorizeEffect_virtualbase_sourceChanged(void* self, int flags) {
-	static_cast<MiqtVirtualQGraphicsColorizeEffect*>(self)->QGraphicsColorizeEffect::sourceChanged(static_cast<MiqtVirtualQGraphicsColorizeEffect::ChangeFlags>(flags));
+void QGraphicsColorizeEffect_virtualbase_sourceChanged(void* self, ChangeFlags flags) {
+	static_cast<MiqtVirtualQGraphicsColorizeEffect*>(self)->QGraphicsColorizeEffect::sourceChanged(flags);
 }
 
 bool QGraphicsColorizeEffect_override_virtual_event(void* self, intptr_t slot) {
@@ -1233,19 +1231,18 @@ public:
 	intptr_t handle__sourceChanged = 0;
 
 	// Subclass to allow providing a Go implementation
-	virtual void sourceChanged(QGraphicsEffect::ChangeFlags flags) override {
+	virtual void sourceChanged(ChangeFlags flags) override {
 		if (handle__sourceChanged == 0) {
 			QGraphicsBlurEffect::sourceChanged(flags);
 			return;
 		}
 
-		QGraphicsEffect::ChangeFlags flags_ret = flags;
-		int sigval1 = static_cast<int>(flags_ret);
+		ChangeFlags sigval1 = flags;
 		miqt_exec_callback_QGraphicsBlurEffect_sourceChanged(this, handle__sourceChanged, sigval1);
 
 	}
 
-	friend void QGraphicsBlurEffect_virtualbase_sourceChanged(void* self, int flags);
+	friend void QGraphicsBlurEffect_virtualbase_sourceChanged(void* self, ChangeFlags flags);
 
 	// cgo.Handle value for overwritten implementation
 	intptr_t handle__event = 0;
@@ -1421,17 +1418,16 @@ double QGraphicsBlurEffect_blurRadius(const QGraphicsBlurEffect* self) {
 	return static_cast<double>(_ret);
 }
 
-int QGraphicsBlurEffect_blurHints(const QGraphicsBlurEffect* self) {
-	QGraphicsBlurEffect::BlurHints _ret = self->blurHints();
-	return static_cast<int>(_ret);
+BlurHints QGraphicsBlurEffect_blurHints(const QGraphicsBlurEffect* self) {
+	return self->blurHints();
 }
 
 void QGraphicsBlurEffect_setBlurRadius(QGraphicsBlurEffect* self, double blurRadius) {
 	self->setBlurRadius(static_cast<qreal>(blurRadius));
 }
 
-void QGraphicsBlurEffect_setBlurHints(QGraphicsBlurEffect* self, int hints) {
-	self->setBlurHints(static_cast<QGraphicsBlurEffect::BlurHints>(hints));
+void QGraphicsBlurEffect_setBlurHints(QGraphicsBlurEffect* self, BlurHints hints) {
+	self->setBlurHints(hints);
 }
 
 void QGraphicsBlurEffect_blurRadiusChanged(QGraphicsBlurEffect* self, double blurRadius) {
@@ -1446,14 +1442,13 @@ void QGraphicsBlurEffect_connect_blurRadiusChanged(QGraphicsBlurEffect* self, in
 	});
 }
 
-void QGraphicsBlurEffect_blurHintsChanged(QGraphicsBlurEffect* self, int hints) {
-	self->blurHintsChanged(static_cast<QGraphicsBlurEffect::BlurHints>(hints));
+void QGraphicsBlurEffect_blurHintsChanged(QGraphicsBlurEffect* self, BlurHints hints) {
+	self->blurHintsChanged(hints);
 }
 
 void QGraphicsBlurEffect_connect_blurHintsChanged(QGraphicsBlurEffect* self, intptr_t slot) {
-	QGraphicsBlurEffect::connect(self, static_cast<void (QGraphicsBlurEffect::*)(QGraphicsBlurEffect::BlurHints)>(&QGraphicsBlurEffect::blurHintsChanged), self, [=](QGraphicsBlurEffect::BlurHints hints) {
-		QGraphicsBlurEffect::BlurHints hints_ret = hints;
-		int sigval1 = static_cast<int>(hints_ret);
+	QGraphicsBlurEffect::connect(self, static_cast<void (QGraphicsBlurEffect::*)(BlurHints)>(&QGraphicsBlurEffect::blurHintsChanged), self, [=](BlurHints hints) {
+		BlurHints sigval1 = hints;
 		miqt_exec_callback_QGraphicsBlurEffect_blurHintsChanged(slot, sigval1);
 	});
 }
@@ -1518,8 +1513,8 @@ bool QGraphicsBlurEffect_override_virtual_sourceChanged(void* self, intptr_t slo
 	return true;
 }
 
-void QGraphicsBlurEffect_virtualbase_sourceChanged(void* self, int flags) {
-	static_cast<MiqtVirtualQGraphicsBlurEffect*>(self)->QGraphicsBlurEffect::sourceChanged(static_cast<MiqtVirtualQGraphicsBlurEffect::ChangeFlags>(flags));
+void QGraphicsBlurEffect_virtualbase_sourceChanged(void* self, ChangeFlags flags) {
+	static_cast<MiqtVirtualQGraphicsBlurEffect*>(self)->QGraphicsBlurEffect::sourceChanged(flags);
 }
 
 bool QGraphicsBlurEffect_override_virtual_event(void* self, intptr_t slot) {
@@ -1770,19 +1765,18 @@ public:
 	intptr_t handle__sourceChanged = 0;
 
 	// Subclass to allow providing a Go implementation
-	virtual void sourceChanged(QGraphicsEffect::ChangeFlags flags) override {
+	virtual void sourceChanged(ChangeFlags flags) override {
 		if (handle__sourceChanged == 0) {
 			QGraphicsDropShadowEffect::sourceChanged(flags);
 			return;
 		}
 
-		QGraphicsEffect::ChangeFlags flags_ret = flags;
-		int sigval1 = static_cast<int>(flags_ret);
+		ChangeFlags sigval1 = flags;
 		miqt_exec_callback_QGraphicsDropShadowEffect_sourceChanged(this, handle__sourceChanged, sigval1);
 
 	}
 
-	friend void QGraphicsDropShadowEffect_virtualbase_sourceChanged(void* self, int flags);
+	friend void QGraphicsDropShadowEffect_virtualbase_sourceChanged(void* self, ChangeFlags flags);
 
 	// cgo.Handle value for overwritten implementation
 	intptr_t handle__event = 0;
@@ -2102,8 +2096,8 @@ bool QGraphicsDropShadowEffect_override_virtual_sourceChanged(void* self, intptr
 	return true;
 }
 
-void QGraphicsDropShadowEffect_virtualbase_sourceChanged(void* self, int flags) {
-	static_cast<MiqtVirtualQGraphicsDropShadowEffect*>(self)->QGraphicsDropShadowEffect::sourceChanged(static_cast<MiqtVirtualQGraphicsDropShadowEffect::ChangeFlags>(flags));
+void QGraphicsDropShadowEffect_virtualbase_sourceChanged(void* self, ChangeFlags flags) {
+	static_cast<MiqtVirtualQGraphicsDropShadowEffect*>(self)->QGraphicsDropShadowEffect::sourceChanged(flags);
 }
 
 bool QGraphicsDropShadowEffect_override_virtual_event(void* self, intptr_t slot) {
@@ -2354,19 +2348,18 @@ public:
 	intptr_t handle__sourceChanged = 0;
 
 	// Subclass to allow providing a Go implementation
-	virtual void sourceChanged(QGraphicsEffect::ChangeFlags flags) override {
+	virtual void sourceChanged(ChangeFlags flags) override {
 		if (handle__sourceChanged == 0) {
 			QGraphicsOpacityEffect::sourceChanged(flags);
 			return;
 		}
 
-		QGraphicsEffect::ChangeFlags flags_ret = flags;
-		int sigval1 = static_cast<int>(flags_ret);
+		ChangeFlags sigval1 = flags;
 		miqt_exec_callback_QGraphicsOpacityEffect_sourceChanged(this, handle__sourceChanged, sigval1);
 
 	}
 
-	friend void QGraphicsOpacityEffect_virtualbase_sourceChanged(void* self, int flags);
+	friend void QGraphicsOpacityEffect_virtualbase_sourceChanged(void* self, ChangeFlags flags);
 
 	// cgo.Handle value for overwritten implementation
 	intptr_t handle__event = 0;
@@ -2635,8 +2628,8 @@ bool QGraphicsOpacityEffect_override_virtual_sourceChanged(void* self, intptr_t 
 	return true;
 }
 
-void QGraphicsOpacityEffect_virtualbase_sourceChanged(void* self, int flags) {
-	static_cast<MiqtVirtualQGraphicsOpacityEffect*>(self)->QGraphicsOpacityEffect::sourceChanged(static_cast<MiqtVirtualQGraphicsOpacityEffect::ChangeFlags>(flags));
+void QGraphicsOpacityEffect_virtualbase_sourceChanged(void* self, ChangeFlags flags) {
+	static_cast<MiqtVirtualQGraphicsOpacityEffect*>(self)->QGraphicsOpacityEffect::sourceChanged(flags);
 }
 
 bool QGraphicsOpacityEffect_override_virtual_event(void* self, intptr_t slot) {

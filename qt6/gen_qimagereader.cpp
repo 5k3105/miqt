@@ -274,9 +274,8 @@ QRect* QImageReader_currentImageRect(const QImageReader* self) {
 	return new QRect(self->currentImageRect());
 }
 
-int QImageReader_error(const QImageReader* self) {
-	QImageReader::ImageReaderError _ret = self->error();
-	return static_cast<int>(_ret);
+ImageReaderError QImageReader_error(const QImageReader* self) {
+	return self->error();
 }
 
 struct miqt_string QImageReader_errorString(const QImageReader* self) {

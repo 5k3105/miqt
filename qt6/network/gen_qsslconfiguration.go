@@ -480,8 +480,8 @@ func (this *QSslConfiguration) NextNegotiatedProtocol() []byte {
 	return _ret
 }
 
-func (this *QSslConfiguration) NextProtocolNegotiationStatus() QSslConfiguration__NextProtocolNegotiationStatus {
-	return (QSslConfiguration__NextProtocolNegotiationStatus)(C.QSslConfiguration_nextProtocolNegotiationStatus(this.h))
+func (this *QSslConfiguration) NextProtocolNegotiationStatus() NextProtocolNegotiationStatus {
+	int /* TODO  */
 }
 
 func (this *QSslConfiguration) AddCaCertificates2(path string, format QSsl__EncodingFormat) bool {

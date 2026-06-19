@@ -248,60 +248,60 @@ func QClipboard_Tr3(s string, c string, n int) string {
 	return _ret
 }
 
-func (this *QClipboard) ClearWithMode(mode QClipboard__Mode) {
-	C.QClipboard_clearWithMode(this.h, (C.int)(mode))
+func (this *QClipboard) ClearWithMode(mode Mode) {
+	C.QClipboard_clearWithMode(this.h, mode)
 }
 
-func (this *QClipboard) TextWithMode(mode QClipboard__Mode) string {
-	var _ms C.struct_miqt_string = C.QClipboard_textWithMode(this.h, (C.int)(mode))
+func (this *QClipboard) TextWithMode(mode Mode) string {
+	var _ms C.struct_miqt_string = C.QClipboard_textWithMode(this.h, mode)
 	_ret := C.GoStringN(_ms.data, C.int(int64(_ms.len)))
 	C.free(unsafe.Pointer(_ms.data))
 	return _ret
 }
 
-func (this *QClipboard) Text2(subtype string, mode QClipboard__Mode) string {
+func (this *QClipboard) Text2(subtype string, mode Mode) string {
 	subtype_ms := C.struct_miqt_string{}
 	subtype_ms.data = C.CString(subtype)
 	subtype_ms.len = C.size_t(len(subtype))
 	defer C.free(unsafe.Pointer(subtype_ms.data))
-	var _ms C.struct_miqt_string = C.QClipboard_text2(this.h, subtype_ms, (C.int)(mode))
+	var _ms C.struct_miqt_string = C.QClipboard_text2(this.h, subtype_ms, mode)
 	_ret := C.GoStringN(_ms.data, C.int(int64(_ms.len)))
 	C.free(unsafe.Pointer(_ms.data))
 	return _ret
 }
 
-func (this *QClipboard) SetText2(param1 string, mode QClipboard__Mode) {
+func (this *QClipboard) SetText2(param1 string, mode Mode) {
 	param1_ms := C.struct_miqt_string{}
 	param1_ms.data = C.CString(param1)
 	param1_ms.len = C.size_t(len(param1))
 	defer C.free(unsafe.Pointer(param1_ms.data))
-	C.QClipboard_setText2(this.h, param1_ms, (C.int)(mode))
+	C.QClipboard_setText2(this.h, param1_ms, mode)
 }
 
-func (this *QClipboard) MimeDataWithMode(mode QClipboard__Mode) *QMimeData {
-	return newQMimeData(C.QClipboard_mimeDataWithMode(this.h, (C.int)(mode)))
+func (this *QClipboard) MimeDataWithMode(mode Mode) *QMimeData {
+	return newQMimeData(C.QClipboard_mimeDataWithMode(this.h, mode))
 }
 
-func (this *QClipboard) SetMimeData2(data *QMimeData, mode QClipboard__Mode) {
-	C.QClipboard_setMimeData2(this.h, data.cPointer(), (C.int)(mode))
+func (this *QClipboard) SetMimeData2(data *QMimeData, mode Mode) {
+	C.QClipboard_setMimeData2(this.h, data.cPointer(), mode)
 }
 
-func (this *QClipboard) ImageWithMode(mode QClipboard__Mode) *QImage {
-	_goptr := newQImage(C.QClipboard_imageWithMode(this.h, (C.int)(mode)))
+func (this *QClipboard) ImageWithMode(mode Mode) *QImage {
+	_goptr := newQImage(C.QClipboard_imageWithMode(this.h, mode))
 	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
 	return _goptr
 }
 
-func (this *QClipboard) PixmapWithMode(mode QClipboard__Mode) *QPixmap {
-	_goptr := newQPixmap(C.QClipboard_pixmapWithMode(this.h, (C.int)(mode)))
+func (this *QClipboard) PixmapWithMode(mode Mode) *QPixmap {
+	_goptr := newQPixmap(C.QClipboard_pixmapWithMode(this.h, mode))
 	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
 	return _goptr
 }
 
-func (this *QClipboard) SetImage2(param1 *QImage, mode QClipboard__Mode) {
-	C.QClipboard_setImage2(this.h, param1.cPointer(), (C.int)(mode))
+func (this *QClipboard) SetImage2(param1 *QImage, mode Mode) {
+	C.QClipboard_setImage2(this.h, param1.cPointer(), mode)
 }
 
-func (this *QClipboard) SetPixmap2(param1 *QPixmap, mode QClipboard__Mode) {
-	C.QClipboard_setPixmap2(this.h, param1.cPointer(), (C.int)(mode))
+func (this *QClipboard) SetPixmap2(param1 *QPixmap, mode Mode) {
+	C.QClipboard_setPixmap2(this.h, param1.cPointer(), mode)
 }

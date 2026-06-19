@@ -104,6 +104,8 @@ int QCheckBox_checkState(const QCheckBox* self);
 void QCheckBox_setCheckState(QCheckBox* self, int state);
 void QCheckBox_stateChanged(QCheckBox* self, int param1);
 void QCheckBox_connect_stateChanged(QCheckBox* self, intptr_t slot);
+void QCheckBox_checkStateChanged(QCheckBox* self, int param1);
+void QCheckBox_connect_checkStateChanged(QCheckBox* self, intptr_t slot);
 bool QCheckBox_event(QCheckBox* self, QEvent* e);
 bool QCheckBox_hitButton(const QCheckBox* self, QPoint* pos);
 void QCheckBox_checkStateSet(QCheckBox* self);
@@ -194,7 +196,7 @@ void QCheckBox_virtualbase_hideEvent(void* self, QHideEvent* event);
 bool QCheckBox_override_virtual_nativeEvent(void* self, intptr_t slot);
 bool QCheckBox_virtualbase_nativeEvent(void* self, struct miqt_string eventType, void* message, intptr_t* result);
 bool QCheckBox_override_virtual_metric(void* self, intptr_t slot);
-int QCheckBox_virtualbase_metric(const void* self, int param1);
+int QCheckBox_virtualbase_metric(const void* self, PaintDeviceMetric param1);
 bool QCheckBox_override_virtual_initPainter(void* self, intptr_t slot);
 void QCheckBox_virtualbase_initPainter(const void* self, QPainter* painter);
 bool QCheckBox_override_virtual_redirected(void* self, intptr_t slot);
@@ -227,6 +229,7 @@ QObject* QCheckBox_protectedbase_sender(bool* _dynamic_cast_ok, const void* self
 int QCheckBox_protectedbase_senderSignalIndex(bool* _dynamic_cast_ok, const void* self);
 int QCheckBox_protectedbase_receivers(bool* _dynamic_cast_ok, const void* self, const char* signal);
 bool QCheckBox_protectedbase_isSignalConnected(bool* _dynamic_cast_ok, const void* self, QMetaMethod* signal);
+double QCheckBox_protectedbase_getDecodedMetricF(bool* _dynamic_cast_ok, const void* self, PaintDeviceMetric metricA, PaintDeviceMetric metricB);
 
 void QCheckBox_delete(QCheckBox* self);
 

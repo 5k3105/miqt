@@ -28,7 +28,11 @@ QVideoFrame* QVideoFrame_new2(QVideoFrameFormat* format) {
 	return new (std::nothrow) QVideoFrame(*format);
 }
 
-QVideoFrame* QVideoFrame_new3(QVideoFrame* other) {
+QVideoFrame* QVideoFrame_new3(QImage* image) {
+	return new (std::nothrow) QVideoFrame(*image);
+}
+
+QVideoFrame* QVideoFrame_new4(QVideoFrame* other) {
 	return new (std::nothrow) QVideoFrame(*other);
 }
 
@@ -143,12 +147,20 @@ void QVideoFrame_setEndTime(QVideoFrame* self, long long time) {
 	self->setEndTime(static_cast<qint64>(time));
 }
 
-void QVideoFrame_setRotationAngle(QVideoFrame* self, int rotationAngle) {
-	self->setRotationAngle(static_cast<QVideoFrame::RotationAngle>(rotationAngle));
+void QVideoFrame_setRotationAngle(QVideoFrame* self, RotationAngle angle) {
+	self->setRotationAngle(angle);
 }
 
-int QVideoFrame_rotationAngle(const QVideoFrame* self) {
-	QVideoFrame::RotationAngle _ret = self->rotationAngle();
+RotationAngle QVideoFrame_rotationAngle(const QVideoFrame* self) {
+	return self->rotationAngle();
+}
+
+void QVideoFrame_setRotation(QVideoFrame* self, int angle) {
+	self->setRotation(static_cast<QtVideo::Rotation>(angle));
+}
+
+int QVideoFrame_rotation(const QVideoFrame* self) {
+	QtVideo::Rotation _ret = self->rotation();
 	return static_cast<int>(_ret);
 }
 
@@ -158,6 +170,15 @@ void QVideoFrame_setMirrored(QVideoFrame* self, bool mirrored) {
 
 bool QVideoFrame_mirrored(const QVideoFrame* self) {
 	return self->mirrored();
+}
+
+void QVideoFrame_setStreamFrameRate(QVideoFrame* self, double rate) {
+	self->setStreamFrameRate(static_cast<qreal>(rate));
+}
+
+double QVideoFrame_streamFrameRate(const QVideoFrame* self) {
+	qreal _ret = self->streamFrameRate();
+	return static_cast<double>(_ret);
 }
 
 QImage* QVideoFrame_toImage(const QVideoFrame* self) {
@@ -180,7 +201,7 @@ void QVideoFrame_setSubtitleText(QVideoFrame* self, struct miqt_string text) {
 	self->setSubtitleText(text_QString);
 }
 
-void QVideoFrame_paint(QVideoFrame* self, QPainter* painter, QRectF* rect, QVideoFrame__PaintOptions* options) {
+void QVideoFrame_paint(QVideoFrame* self, QPainter* painter, QRectF* rect, const PaintOptions* options) {
 	self->paint(painter, *rect, *options);
 }
 
@@ -205,13 +226,12 @@ void QVideoFrame__PaintOptions_setAspectRatioMode(QVideoFrame__PaintOptions* sel
 	self->aspectRatioMode = static_cast<Qt::AspectRatioMode>(aspectRatioMode);
 }
 
-int QVideoFrame__PaintOptions_paintFlags(const QVideoFrame__PaintOptions* self) {
-	QVideoFrame::PaintOptions::PaintFlags paintFlags_ret = self->paintFlags;
-	return static_cast<int>(paintFlags_ret);
+PaintFlags QVideoFrame__PaintOptions_paintFlags(const QVideoFrame__PaintOptions* self) {
+	return self->paintFlags;
 }
 
-void QVideoFrame__PaintOptions_setPaintFlags(QVideoFrame__PaintOptions* self, int paintFlags) {
-	self->paintFlags = static_cast<QVideoFrame::PaintOptions::PaintFlags>(paintFlags);
+void QVideoFrame__PaintOptions_setPaintFlags(QVideoFrame__PaintOptions* self, PaintFlags paintFlags) {
+	self->paintFlags = paintFlags;
 }
 
 void QVideoFrame__PaintOptions_delete(QVideoFrame__PaintOptions* self) {

@@ -45,6 +45,7 @@ const (
 	QMediaMetaData__CoverArtImage      QMediaMetaData__Key = 25
 	QMediaMetaData__Orientation        QMediaMetaData__Key = 26
 	QMediaMetaData__Resolution         QMediaMetaData__Key = 27
+	QMediaMetaData__HasHdrContent      QMediaMetaData__Key = 28
 )
 
 type QMediaMetaData struct {
@@ -91,32 +92,32 @@ func NewQMediaMetaData2() *QMediaMetaData {
 	return newQMediaMetaData(C.QMediaMetaData_new2())
 }
 
-func (this *QMediaMetaData) Value(k QMediaMetaData__Key) *qt6.QVariant {
-	_goptr := qt6.UnsafeNewQVariant(unsafe.Pointer(C.QMediaMetaData_value(this.h, (C.int)(k))))
+func (this *QMediaMetaData) Value(k Key) *qt6.QVariant {
+	_goptr := qt6.UnsafeNewQVariant(unsafe.Pointer(C.QMediaMetaData_value(this.h, k)))
 	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
 	return _goptr
 }
 
-func (this *QMediaMetaData) Insert(k QMediaMetaData__Key, value *qt6.QVariant) {
-	C.QMediaMetaData_insert(this.h, (C.int)(k), (*C.QVariant)(value.UnsafePointer()))
+func (this *QMediaMetaData) Insert(k Key, value *qt6.QVariant) {
+	C.QMediaMetaData_insert(this.h, k, (*C.QVariant)(value.UnsafePointer()))
 }
 
-func (this *QMediaMetaData) Remove(k QMediaMetaData__Key) {
-	C.QMediaMetaData_remove(this.h, (C.int)(k))
+func (this *QMediaMetaData) Remove(k Key) {
+	C.QMediaMetaData_remove(this.h, k)
 }
 
-func (this *QMediaMetaData) Keys() []QMediaMetaData__Key {
+func (this *QMediaMetaData) Keys() []Key {
 	var _ma C.struct_miqt_array = C.QMediaMetaData_keys(this.h)
-	_ret := make([]QMediaMetaData__Key, int(_ma.len))
-	_outCast := (*[0xffff]C.int)(unsafe.Pointer(_ma.data)) // hey ya
+	_ret := make([]Key, int(_ma.len))
+	_outCast := (*[0xffff]C.Key)(unsafe.Pointer(_ma.data)) // hey ya
 	for i := 0; i < int(_ma.len); i++ {
-		_ret[i] = (QMediaMetaData__Key)(_outCast[i])
+		int /* TODO  */
 	}
 	return _ret
 }
 
-func (this *QMediaMetaData) OperatorSubscript(k QMediaMetaData__Key) *qt6.QVariant {
-	return qt6.UnsafeNewQVariant(unsafe.Pointer(C.QMediaMetaData_operatorSubscript(this.h, (C.int)(k))))
+func (this *QMediaMetaData) OperatorSubscript(k Key) *qt6.QVariant {
+	return qt6.UnsafeNewQVariant(unsafe.Pointer(C.QMediaMetaData_operatorSubscript(this.h, k)))
 }
 
 func (this *QMediaMetaData) Clear() {
@@ -127,15 +128,15 @@ func (this *QMediaMetaData) IsEmpty() bool {
 	return (bool)(C.QMediaMetaData_isEmpty(this.h))
 }
 
-func (this *QMediaMetaData) StringValue(k QMediaMetaData__Key) string {
-	var _ms C.struct_miqt_string = C.QMediaMetaData_stringValue(this.h, (C.int)(k))
+func (this *QMediaMetaData) StringValue(k Key) string {
+	var _ms C.struct_miqt_string = C.QMediaMetaData_stringValue(this.h, k)
 	_ret := C.GoStringN(_ms.data, C.int(int64(_ms.len)))
 	C.free(unsafe.Pointer(_ms.data))
 	return _ret
 }
 
-func QMediaMetaData_MetaDataKeyToString(k QMediaMetaData__Key) string {
-	var _ms C.struct_miqt_string = C.QMediaMetaData_metaDataKeyToString((C.int)(k))
+func QMediaMetaData_MetaDataKeyToString(k Key) string {
+	var _ms C.struct_miqt_string = C.QMediaMetaData_metaDataKeyToString(k)
 	_ret := C.GoStringN(_ms.data, C.int(int64(_ms.len)))
 	C.free(unsafe.Pointer(_ms.data))
 	return _ret

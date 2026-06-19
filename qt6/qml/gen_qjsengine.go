@@ -175,16 +175,16 @@ func (this *QJSEngine) CollectGarbage() {
 	C.QJSEngine_collectGarbage(this.h)
 }
 
-func QJSEngine_SetObjectOwnership(param1 *qt6.QObject, param2 QJSEngine__ObjectOwnership) {
-	C.QJSEngine_setObjectOwnership((*C.QObject)(param1.UnsafePointer()), (C.int)(param2))
+func QJSEngine_SetObjectOwnership(param1 *qt6.QObject, param2 ObjectOwnership) {
+	C.QJSEngine_setObjectOwnership((*C.QObject)(param1.UnsafePointer()), param2)
 }
 
-func QJSEngine_ObjectOwnership(param1 *qt6.QObject) QJSEngine__ObjectOwnership {
-	return (QJSEngine__ObjectOwnership)(C.QJSEngine_objectOwnership((*C.QObject)(param1.UnsafePointer())))
+func QJSEngine_ObjectOwnership(param1 *qt6.QObject) ObjectOwnership {
+	int /* TODO  */
 }
 
-func (this *QJSEngine) InstallExtensions(extensions QJSEngine__Extension) {
-	C.QJSEngine_installExtensions(this.h, (C.int)(extensions))
+func (this *QJSEngine) InstallExtensions(extensions Extensions) {
+	C.QJSEngine_installExtensions(this.h, extensions)
 }
 
 func (this *QJSEngine) SetInterrupted(interrupted bool) {
@@ -343,8 +343,8 @@ func (this *QJSEngine) NewErrorObject2(errorType QJSValue__ErrorType, message st
 	return _goptr
 }
 
-func (this *QJSEngine) InstallExtensions2(extensions QJSEngine__Extension, object *QJSValue) {
-	C.QJSEngine_installExtensions2(this.h, (C.int)(extensions), object.cPointer())
+func (this *QJSEngine) InstallExtensions2(extensions Extensions, object *QJSValue) {
+	C.QJSEngine_installExtensions2(this.h, extensions, object.cPointer())
 }
 
 func (this *QJSEngine) ThrowError2(errorType QJSValue__ErrorType, message string) {

@@ -49,7 +49,8 @@ const (
 	QPalette__ToolTipBase     QPalette__ColorRole = 18
 	QPalette__ToolTipText     QPalette__ColorRole = 19
 	QPalette__PlaceholderText QPalette__ColorRole = 20
-	QPalette__NColorRoles     QPalette__ColorRole = 21
+	QPalette__Accent          QPalette__ColorRole = 21
+	QPalette__NColorRoles     QPalette__ColorRole = 22
 )
 
 type QPalette struct {
@@ -140,56 +141,56 @@ func (this *QPalette) ToQVariant() *QVariant {
 	return _goptr
 }
 
-func (this *QPalette) CurrentColorGroup() QPalette__ColorGroup {
-	return (QPalette__ColorGroup)(C.QPalette_currentColorGroup(this.h))
+func (this *QPalette) CurrentColorGroup() ColorGroup {
+	int /* TODO  */
 }
 
-func (this *QPalette) SetCurrentColorGroup(cg QPalette__ColorGroup) {
-	C.QPalette_setCurrentColorGroup(this.h, (C.int)(cg))
+func (this *QPalette) SetCurrentColorGroup(cg ColorGroup) {
+	C.QPalette_setCurrentColorGroup(this.h, cg)
 }
 
-func (this *QPalette) Color(cg QPalette__ColorGroup, cr QPalette__ColorRole) *QColor {
-	return newQColor(C.QPalette_color(this.h, (C.int)(cg), (C.int)(cr)))
+func (this *QPalette) Color(cg ColorGroup, cr ColorRole) *QColor {
+	return newQColor(C.QPalette_color(this.h, cg, cr))
 }
 
-func (this *QPalette) Brush(cg QPalette__ColorGroup, cr QPalette__ColorRole) *QBrush {
-	return newQBrush(C.QPalette_brush(this.h, (C.int)(cg), (C.int)(cr)))
+func (this *QPalette) Brush(cg ColorGroup, cr ColorRole) *QBrush {
+	return newQBrush(C.QPalette_brush(this.h, cg, cr))
 }
 
-func (this *QPalette) SetColor(cg QPalette__ColorGroup, cr QPalette__ColorRole, color *QColor) {
-	C.QPalette_setColor(this.h, (C.int)(cg), (C.int)(cr), color.cPointer())
+func (this *QPalette) SetColor(cg ColorGroup, cr ColorRole, color *QColor) {
+	C.QPalette_setColor(this.h, cg, cr, color.cPointer())
 }
 
-func (this *QPalette) SetColor2(cr QPalette__ColorRole, color *QColor) {
-	C.QPalette_setColor2(this.h, (C.int)(cr), color.cPointer())
+func (this *QPalette) SetColor2(cr ColorRole, color *QColor) {
+	C.QPalette_setColor2(this.h, cr, color.cPointer())
 }
 
-func (this *QPalette) SetBrush(cr QPalette__ColorRole, brush *QBrush) {
-	C.QPalette_setBrush(this.h, (C.int)(cr), brush.cPointer())
+func (this *QPalette) SetBrush(cr ColorRole, brush *QBrush) {
+	C.QPalette_setBrush(this.h, cr, brush.cPointer())
 }
 
-func (this *QPalette) IsBrushSet(cg QPalette__ColorGroup, cr QPalette__ColorRole) bool {
-	return (bool)(C.QPalette_isBrushSet(this.h, (C.int)(cg), (C.int)(cr)))
+func (this *QPalette) IsBrushSet(cg ColorGroup, cr ColorRole) bool {
+	return (bool)(C.QPalette_isBrushSet(this.h, cg, cr))
 }
 
-func (this *QPalette) SetBrush2(cg QPalette__ColorGroup, cr QPalette__ColorRole, brush *QBrush) {
-	C.QPalette_setBrush2(this.h, (C.int)(cg), (C.int)(cr), brush.cPointer())
+func (this *QPalette) SetBrush2(cg ColorGroup, cr ColorRole, brush *QBrush) {
+	C.QPalette_setBrush2(this.h, cg, cr, brush.cPointer())
 }
 
-func (this *QPalette) SetColorGroup(cr QPalette__ColorGroup, windowText *QBrush, button *QBrush, light *QBrush, dark *QBrush, mid *QBrush, text *QBrush, bright_text *QBrush, base *QBrush, window *QBrush) {
-	C.QPalette_setColorGroup(this.h, (C.int)(cr), windowText.cPointer(), button.cPointer(), light.cPointer(), dark.cPointer(), mid.cPointer(), text.cPointer(), bright_text.cPointer(), base.cPointer(), window.cPointer())
+func (this *QPalette) SetColorGroup(cr ColorGroup, windowText *QBrush, button *QBrush, light *QBrush, dark *QBrush, mid *QBrush, text *QBrush, bright_text *QBrush, base *QBrush, window *QBrush) {
+	C.QPalette_setColorGroup(this.h, cr, windowText.cPointer(), button.cPointer(), light.cPointer(), dark.cPointer(), mid.cPointer(), text.cPointer(), bright_text.cPointer(), base.cPointer(), window.cPointer())
 }
 
-func (this *QPalette) IsEqual(cr1 QPalette__ColorGroup, cr2 QPalette__ColorGroup) bool {
-	return (bool)(C.QPalette_isEqual(this.h, (C.int)(cr1), (C.int)(cr2)))
+func (this *QPalette) IsEqual(cr1 ColorGroup, cr2 ColorGroup) bool {
+	return (bool)(C.QPalette_isEqual(this.h, cr1, cr2))
 }
 
-func (this *QPalette) ColorWithCr(cr QPalette__ColorRole) *QColor {
-	return newQColor(C.QPalette_colorWithCr(this.h, (C.int)(cr)))
+func (this *QPalette) ColorWithCr(cr ColorRole) *QColor {
+	return newQColor(C.QPalette_colorWithCr(this.h, cr))
 }
 
-func (this *QPalette) BrushWithCr(cr QPalette__ColorRole) *QBrush {
-	return newQBrush(C.QPalette_brushWithCr(this.h, (C.int)(cr)))
+func (this *QPalette) BrushWithCr(cr ColorRole) *QBrush {
+	return newQBrush(C.QPalette_brushWithCr(this.h, cr))
 }
 
 func (this *QPalette) WindowText() *QBrush {
@@ -272,6 +273,10 @@ func (this *QPalette) PlaceholderText() *QBrush {
 	return newQBrush(C.QPalette_placeholderText(this.h))
 }
 
+func (this *QPalette) Accent() *QBrush {
+	return newQBrush(C.QPalette_accent(this.h))
+}
+
 func (this *QPalette) OperatorEqual(p *QPalette) bool {
 	return (bool)(C.QPalette_operatorEqual(this.h, p.cPointer()))
 }
@@ -294,12 +299,12 @@ func (this *QPalette) Resolve(other *QPalette) *QPalette {
 	return _goptr
 }
 
-func (this *QPalette) ResolveMask() uint64 {
-	return (uint64)(C.QPalette_resolveMask(this.h))
+func (this *QPalette) ResolveMask() ResolveMask {
+	int /* TODO  */
 }
 
-func (this *QPalette) SetResolveMask(mask uint64) {
-	C.QPalette_setResolveMask(this.h, (C.ulonglong)(mask))
+func (this *QPalette) SetResolveMask(mask ResolveMask) {
+	C.QPalette_setResolveMask(this.h, mask)
 }
 
 // Delete this object from C++ memory.

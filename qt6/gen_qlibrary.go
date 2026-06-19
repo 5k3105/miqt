@@ -221,12 +221,12 @@ func (this *QLibrary) ErrorString() string {
 	return _ret
 }
 
-func (this *QLibrary) SetLoadHints(hints QLibrary__LoadHint) {
-	C.QLibrary_setLoadHints(this.h, (C.int)(hints))
+func (this *QLibrary) SetLoadHints(hints LoadHints) {
+	C.QLibrary_setLoadHints(this.h, hints)
 }
 
-func (this *QLibrary) LoadHints() QLibrary__LoadHint {
-	return (QLibrary__LoadHint)(C.QLibrary_loadHints(this.h))
+func (this *QLibrary) LoadHints() LoadHints {
+	int /* TODO  */
 }
 
 func QLibrary_Tr2(s string, c string) string {

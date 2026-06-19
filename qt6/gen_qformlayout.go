@@ -105,20 +105,20 @@ func QFormLayout_Tr(s string) string {
 	return _ret
 }
 
-func (this *QFormLayout) SetFieldGrowthPolicy(policy QFormLayout__FieldGrowthPolicy) {
-	C.QFormLayout_setFieldGrowthPolicy(this.h, (C.int)(policy))
+func (this *QFormLayout) SetFieldGrowthPolicy(policy FieldGrowthPolicy) {
+	C.QFormLayout_setFieldGrowthPolicy(this.h, policy)
 }
 
-func (this *QFormLayout) FieldGrowthPolicy() QFormLayout__FieldGrowthPolicy {
-	return (QFormLayout__FieldGrowthPolicy)(C.QFormLayout_fieldGrowthPolicy(this.h))
+func (this *QFormLayout) FieldGrowthPolicy() FieldGrowthPolicy {
+	int /* TODO  */
 }
 
-func (this *QFormLayout) SetRowWrapPolicy(policy QFormLayout__RowWrapPolicy) {
-	C.QFormLayout_setRowWrapPolicy(this.h, (C.int)(policy))
+func (this *QFormLayout) SetRowWrapPolicy(policy RowWrapPolicy) {
+	C.QFormLayout_setRowWrapPolicy(this.h, policy)
 }
 
-func (this *QFormLayout) RowWrapPolicy() QFormLayout__RowWrapPolicy {
-	return (QFormLayout__RowWrapPolicy)(C.QFormLayout_rowWrapPolicy(this.h))
+func (this *QFormLayout) RowWrapPolicy() RowWrapPolicy {
+	int /* TODO  */
 }
 
 func (this *QFormLayout) SetLabelAlignment(alignment AlignmentFlag) {
@@ -237,34 +237,28 @@ func (this *QFormLayout) RemoveRowWithLayout(layout *QLayout) {
 	C.QFormLayout_removeRowWithLayout(this.h, layout.cPointer())
 }
 
-func (this *QFormLayout) TakeRow(row int) *QFormLayout__TakeRowResult {
-	_goptr := newQFormLayout__TakeRowResult(C.QFormLayout_takeRow(this.h, (C.int)(row)))
-	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
-	return _goptr
+func (this *QFormLayout) TakeRow(row int) TakeRowResult {
+	int /* TODO  */
 }
 
-func (this *QFormLayout) TakeRowWithWidget(widget *QWidget) *QFormLayout__TakeRowResult {
-	_goptr := newQFormLayout__TakeRowResult(C.QFormLayout_takeRowWithWidget(this.h, widget.cPointer()))
-	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
-	return _goptr
+func (this *QFormLayout) TakeRowWithWidget(widget *QWidget) TakeRowResult {
+	int /* TODO  */
 }
 
-func (this *QFormLayout) TakeRowWithLayout(layout *QLayout) *QFormLayout__TakeRowResult {
-	_goptr := newQFormLayout__TakeRowResult(C.QFormLayout_takeRowWithLayout(this.h, layout.cPointer()))
-	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
-	return _goptr
+func (this *QFormLayout) TakeRowWithLayout(layout *QLayout) TakeRowResult {
+	int /* TODO  */
 }
 
-func (this *QFormLayout) SetItem(row int, role QFormLayout__ItemRole, item *QLayoutItem) {
-	C.QFormLayout_setItem(this.h, (C.int)(row), (C.int)(role), item.cPointer())
+func (this *QFormLayout) SetItem(row int, role ItemRole, item *QLayoutItem) {
+	C.QFormLayout_setItem(this.h, (C.int)(row), role, item.cPointer())
 }
 
-func (this *QFormLayout) SetWidget(row int, role QFormLayout__ItemRole, widget *QWidget) {
-	C.QFormLayout_setWidget(this.h, (C.int)(row), (C.int)(role), widget.cPointer())
+func (this *QFormLayout) SetWidget(row int, role ItemRole, widget *QWidget) {
+	C.QFormLayout_setWidget(this.h, (C.int)(row), role, widget.cPointer())
 }
 
-func (this *QFormLayout) SetLayout(row int, role QFormLayout__ItemRole, layout *QLayout) {
-	C.QFormLayout_setLayout(this.h, (C.int)(row), (C.int)(role), layout.cPointer())
+func (this *QFormLayout) SetLayout(row int, role ItemRole, layout *QLayout) {
+	C.QFormLayout_setLayout(this.h, (C.int)(row), role, layout.cPointer())
 }
 
 func (this *QFormLayout) SetRowVisible(row int, on bool) {
@@ -291,8 +285,20 @@ func (this *QFormLayout) IsRowVisibleWithLayout(layout *QLayout) bool {
 	return (bool)(C.QFormLayout_isRowVisibleWithLayout(this.h, layout.cPointer()))
 }
 
-func (this *QFormLayout) ItemAt(row int, role QFormLayout__ItemRole) *QLayoutItem {
-	return newQLayoutItem(C.QFormLayout_itemAt(this.h, (C.int)(row), (C.int)(role)))
+func (this *QFormLayout) ItemAt(row int, role ItemRole) *QLayoutItem {
+	return newQLayoutItem(C.QFormLayout_itemAt(this.h, (C.int)(row), role))
+}
+
+func (this *QFormLayout) GetItemPosition(index int, rowPtr *int, rolePtr *ItemRole) {
+	C.QFormLayout_getItemPosition(this.h, (C.int)(index), (*C.int)(unsafe.Pointer(rowPtr)), rolePtr)
+}
+
+func (this *QFormLayout) GetWidgetPosition(widget *QWidget, rowPtr *int, rolePtr *ItemRole) {
+	C.QFormLayout_getWidgetPosition(this.h, widget.cPointer(), (*C.int)(unsafe.Pointer(rowPtr)), rolePtr)
+}
+
+func (this *QFormLayout) GetLayoutPosition(layout *QLayout, rowPtr *int, rolePtr *ItemRole) {
+	C.QFormLayout_getLayoutPosition(this.h, layout.cPointer(), (*C.int)(unsafe.Pointer(rowPtr)), rolePtr)
 }
 
 func (this *QFormLayout) LabelForField(field *QWidget) *QWidget {
@@ -947,12 +953,12 @@ func miqt_exec_callback_QFormLayout_isEmpty(self *C.QFormLayout, cb C.intptr_t) 
 
 }
 
-func (this *QFormLayout) callVirtualBase_ControlTypes() QSizePolicy__ControlType {
+func (this *QFormLayout) callVirtualBase_ControlTypes() ControlType {
 
-	return (QSizePolicy__ControlType)(C.QFormLayout_virtualbase_controlTypes(unsafe.Pointer(this.h)))
+	return (ControlType)(C.QFormLayout_virtualbase_controlTypes(unsafe.Pointer(this.h)))
 
 }
-func (this *QFormLayout) OnControlTypes(slot func(super func() QSizePolicy__ControlType) QSizePolicy__ControlType) {
+func (this *QFormLayout) OnControlTypes(slot func(super func() ControlType) ControlType) {
 	ok := C.QFormLayout_override_virtual_controlTypes(unsafe.Pointer(this.h), C.intptr_t(cgo.NewHandle(slot)))
 	if !ok {
 		panic("miqt: can only override virtual methods for directly constructed types")
@@ -961,7 +967,7 @@ func (this *QFormLayout) OnControlTypes(slot func(super func() QSizePolicy__Cont
 
 //export miqt_exec_callback_QFormLayout_controlTypes
 func miqt_exec_callback_QFormLayout_controlTypes(self *C.QFormLayout, cb C.intptr_t) C.int {
-	gofunc, ok := cgo.Handle(cb).Value().(func(super func() QSizePolicy__ControlType) QSizePolicy__ControlType)
+	gofunc, ok := cgo.Handle(cb).Value().(func(super func() ControlType) ControlType)
 	if !ok {
 		panic("miqt: callback of non-callback type (heap corruption?)")
 	}
@@ -1339,6 +1345,18 @@ func newQFormLayout__TakeRowResult(h *C.QFormLayout__TakeRowResult) *QFormLayout
 // UnsafeNewQFormLayout__TakeRowResult constructs the type using only unsafe pointers.
 func UnsafeNewQFormLayout__TakeRowResult(h unsafe.Pointer) *QFormLayout__TakeRowResult {
 	return newQFormLayout__TakeRowResult((*C.QFormLayout__TakeRowResult)(h))
+}
+
+// NewQFormLayout__TakeRowResult constructs a new QFormLayout::TakeRowResult object.
+func NewQFormLayout__TakeRowResult() *QFormLayout__TakeRowResult {
+
+	return newQFormLayout__TakeRowResult(C.QFormLayout__TakeRowResult_new())
+}
+
+// NewQFormLayout__TakeRowResult2 constructs a new QFormLayout::TakeRowResult object.
+func NewQFormLayout__TakeRowResult2(param1 *TakeRowResult) *QFormLayout__TakeRowResult {
+
+	return newQFormLayout__TakeRowResult(C.QFormLayout__TakeRowResult_new2(param1))
 }
 
 func (this *QFormLayout__TakeRowResult) LabelItem() *QLayoutItem {

@@ -69,6 +69,10 @@ func (this *QSemaphore) TryAcquire2(n int, timeout int) bool {
 	return (bool)(C.QSemaphore_tryAcquire2(this.h, (C.int)(n), (C.int)(timeout)))
 }
 
+func (this *QSemaphore) TryAcquire3(n int, timeout QDeadlineTimer) bool {
+	return (bool)(C.QSemaphore_tryAcquire3(this.h, (C.int)(n), timeout.cPointer()))
+}
+
 func (this *QSemaphore) Release() {
 	C.QSemaphore_release(this.h)
 }
@@ -77,8 +81,8 @@ func (this *QSemaphore) Available() int {
 	return (int)(C.QSemaphore_available(this.h))
 }
 
-func (this *QSemaphore) TryAcquire3() bool {
-	return (bool)(C.QSemaphore_tryAcquire3(this.h))
+func (this *QSemaphore) TryAcquire4() bool {
+	return (bool)(C.QSemaphore_tryAcquire4(this.h))
 }
 
 func (this *QSemaphore) AcquireWithInt(n int) {

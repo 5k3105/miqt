@@ -343,6 +343,10 @@ func (this *QPixmap) OperatorNot() bool {
 	return (bool)(C.QPixmap_operatorNot(this.h))
 }
 
+func (this *QPixmap) DataPtr() *DataPtr {
+	int /* TODO  */
+}
+
 func (this *QPixmap) FillWithFillColor(fillColor *QColor) {
 	C.QPixmap_fillWithFillColor(this.h, fillColor.cPointer())
 }
@@ -521,6 +525,20 @@ func (this *QPixmap) Scroll4(dx int, dy int, rect *QRect, exposed *QRegion) {
 	C.QPixmap_scroll4(this.h, (C.int)(dx), (C.int)(dy), rect.cPointer(), exposed.cPointer())
 }
 
+// GetDecodedMetricF can only be called from a QPixmap that was directly constructed.
+func (this *QPixmap) GetDecodedMetricF(metricA PaintDeviceMetric, metricB PaintDeviceMetric) float64 {
+
+	var _dynamic_cast_ok C.bool = false
+	_method_ret := (float64)(C.QPixmap_protectedbase_getDecodedMetricF(&_dynamic_cast_ok, unsafe.Pointer(this.h), metricA, metricB))
+
+	if !_dynamic_cast_ok {
+		panic("miqt: can only call protected methods for directly constructed types")
+	}
+
+	return _method_ret
+
+}
+
 func (this *QPixmap) callVirtualBase_DevType() int {
 
 	return (int)(C.QPixmap_virtualbase_devType(unsafe.Pointer(this.h)))
@@ -571,12 +589,12 @@ func miqt_exec_callback_QPixmap_paintEngine(self *C.QPixmap, cb C.intptr_t) *C.Q
 
 }
 
-func (this *QPixmap) callVirtualBase_Metric(param1 QPaintDevice__PaintDeviceMetric) int {
+func (this *QPixmap) callVirtualBase_Metric(param1 PaintDeviceMetric) int {
 
-	return (int)(C.QPixmap_virtualbase_metric(unsafe.Pointer(this.h), (C.int)(param1)))
+	return (int)(C.QPixmap_virtualbase_metric(unsafe.Pointer(this.h), param1))
 
 }
-func (this *QPixmap) OnMetric(slot func(super func(param1 QPaintDevice__PaintDeviceMetric) int, param1 QPaintDevice__PaintDeviceMetric) int) {
+func (this *QPixmap) OnMetric(slot func(super func(param1 PaintDeviceMetric) int, param1 PaintDeviceMetric) int) {
 	ok := C.QPixmap_override_virtual_metric(unsafe.Pointer(this.h), C.intptr_t(cgo.NewHandle(slot)))
 	if !ok {
 		panic("miqt: can only override virtual methods for directly constructed types")
@@ -584,14 +602,14 @@ func (this *QPixmap) OnMetric(slot func(super func(param1 QPaintDevice__PaintDev
 }
 
 //export miqt_exec_callback_QPixmap_metric
-func miqt_exec_callback_QPixmap_metric(self *C.QPixmap, cb C.intptr_t, param1 C.int) C.int {
-	gofunc, ok := cgo.Handle(cb).Value().(func(super func(param1 QPaintDevice__PaintDeviceMetric) int, param1 QPaintDevice__PaintDeviceMetric) int)
+func miqt_exec_callback_QPixmap_metric(self *C.QPixmap, cb C.intptr_t, param1 C.PaintDeviceMetric) C.int {
+	gofunc, ok := cgo.Handle(cb).Value().(func(super func(param1 PaintDeviceMetric) int, param1 PaintDeviceMetric) int)
 	if !ok {
 		panic("miqt: callback of non-callback type (heap corruption?)")
 	}
 
 	// Convert all CABI parameters to Go parameters
-	slotval1 := (QPaintDevice__PaintDeviceMetric)(param1)
+	int /* TODO  */
 
 	virtualReturn := gofunc((&QPixmap{h: self}).callVirtualBase_Metric, slotval1)
 

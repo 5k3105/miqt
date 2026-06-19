@@ -24,12 +24,12 @@ QTreeWidgetItemIterator* QTreeWidgetItemIterator_new3(QTreeWidgetItem* item) {
 	return new (std::nothrow) QTreeWidgetItemIterator(item);
 }
 
-QTreeWidgetItemIterator* QTreeWidgetItemIterator_new4(QTreeWidget* widget, int flags) {
-	return new (std::nothrow) QTreeWidgetItemIterator(widget, static_cast<QTreeWidgetItemIterator::IteratorFlags>(flags));
+QTreeWidgetItemIterator* QTreeWidgetItemIterator_new4(QTreeWidget* widget, IteratorFlags flags) {
+	return new (std::nothrow) QTreeWidgetItemIterator(widget, flags);
 }
 
-QTreeWidgetItemIterator* QTreeWidgetItemIterator_new5(QTreeWidgetItem* item, int flags) {
-	return new (std::nothrow) QTreeWidgetItemIterator(item, static_cast<QTreeWidgetItemIterator::IteratorFlags>(flags));
+QTreeWidgetItemIterator* QTreeWidgetItemIterator_new5(QTreeWidgetItem* item, IteratorFlags flags) {
+	return new (std::nothrow) QTreeWidgetItemIterator(item, flags);
 }
 
 void QTreeWidgetItemIterator_operatorAssign(QTreeWidgetItemIterator* self, QTreeWidgetItemIterator* it) {

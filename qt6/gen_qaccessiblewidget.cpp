@@ -1,16 +1,18 @@
 #define WORKAROUND_INNER_CLASS_DEFINITION_QAccessible__State
 #include <QAccessibleActionInterface>
+#include <QAccessibleAttributesInterface>
 #include <QAccessibleInterface>
 #include <QAccessibleObject>
 #include <QAccessibleWidget>
+#include <QAccessibleWidgetV2>
 #include <QColor>
 #include <QList>
 #include <QObject>
-#include <QPair>
 #include <QRect>
 #include <QString>
 #include <QByteArray>
 #include <cstring>
+#include <QVariant>
 #include <QWidget>
 #include <QWindow>
 #include <qaccessiblewidget.h>
@@ -28,13 +30,13 @@ QAccessibleWidget* QAccessibleWidget_new(QWidget* o) {
 	return new (std::nothrow) QAccessibleWidget(o);
 }
 
-QAccessibleWidget* QAccessibleWidget_new2(QWidget* o, int r) {
-	return new (std::nothrow) QAccessibleWidget(o, static_cast<QAccessible::Role>(r));
-}
-
-QAccessibleWidget* QAccessibleWidget_new3(QWidget* o, int r, struct miqt_string name) {
+QAccessibleWidget* QAccessibleWidget_new2(QWidget* o, int r, struct miqt_string name) {
 	QString name_QString = QString::fromUtf8(name.data, name.len);
 	return new (std::nothrow) QAccessibleWidget(o, static_cast<QAccessible::Role>(r), name_QString);
+}
+
+QAccessibleWidget* QAccessibleWidget_new3(QWidget* o, int r) {
+	return new (std::nothrow) QAccessibleWidget(o, static_cast<QAccessible::Role>(r));
 }
 
 void QAccessibleWidget_virtbase(QAccessibleWidget* src, QAccessibleObject** outptr_QAccessibleObject, QAccessibleActionInterface** outptr_QAccessibleActionInterface) {
@@ -56,30 +58,6 @@ int QAccessibleWidget_childCount(const QAccessibleWidget* self) {
 
 int QAccessibleWidget_indexOfChild(const QAccessibleWidget* self, QAccessibleInterface* child) {
 	return self->indexOfChild(child);
-}
-
-struct miqt_array /* of struct miqt_map  tuple of QAccessibleInterface* and int   */  QAccessibleWidget_relations(const QAccessibleWidget* self, int match) {
-	QList<QPair<QAccessibleInterface *, QAccessible::Relation>> _ret = self->relations(static_cast<QAccessible::Relation>(match));
-	// Convert QList<> from C++ memory to manually-managed C memory
-	struct miqt_map /* tuple of QAccessibleInterface* and int */ * _arr = static_cast<struct miqt_map /* tuple of QAccessibleInterface* and int */ *>(malloc(sizeof(struct miqt_map /* tuple of QAccessibleInterface* and int */ ) * _ret.length()));
-	for (size_t i = 0, e = _ret.length(); i < e; ++i) {
-		QPair<QAccessibleInterface*, QFlags<QAccessible::RelationFlag>> _lv_ret = _ret[i];
-		// Convert QPair<> from C++ memory to manually-managed C memory
-		QAccessibleInterface** _lv_first_arr = static_cast<QAccessibleInterface**>(malloc(sizeof(QAccessibleInterface*)));
-		int* _lv_second_arr = static_cast<int*>(malloc(sizeof(int)));
-		_lv_first_arr[0] = _lv_ret.first;
-		QFlags<QAccessible::RelationFlag> _lv_second_ret = _lv_ret.second;
-		_lv_second_arr[0] = static_cast<int>(_lv_second_ret);
-		struct miqt_map _lv_out;
-		_lv_out.len = 1;
-		_lv_out.keys = static_cast<void*>(_lv_first_arr);
-		_lv_out.values = static_cast<void*>(_lv_second_arr);
-		_arr[i] = _lv_out;
-	}
-	struct miqt_array _out;
-	_out.len = _ret.length();
-	_out.data = static_cast<void*>(_arr);
-	return _out;
 }
 
 QAccessibleInterface* QAccessibleWidget_focusChild(const QAccessibleWidget* self) {
@@ -174,5 +152,45 @@ struct miqt_array /* of struct miqt_string */  QAccessibleWidget_keyBindingsForA
 	_out.len = _ret.length();
 	_out.data = static_cast<void*>(_arr);
 	return _out;
+}
+
+QAccessibleWidgetV2* QAccessibleWidgetV2_new(QWidget* object) {
+	return new (std::nothrow) QAccessibleWidgetV2(object);
+}
+
+QAccessibleWidgetV2* QAccessibleWidgetV2_new2(QWidget* object, int role, struct miqt_string name) {
+	QString name_QString = QString::fromUtf8(name.data, name.len);
+	return new (std::nothrow) QAccessibleWidgetV2(object, static_cast<QAccessible::Role>(role), name_QString);
+}
+
+QAccessibleWidgetV2* QAccessibleWidgetV2_new3(QWidget* object, int role) {
+	return new (std::nothrow) QAccessibleWidgetV2(object, static_cast<QAccessible::Role>(role));
+}
+
+void QAccessibleWidgetV2_virtbase(QAccessibleWidgetV2* src, QAccessibleWidget** outptr_QAccessibleWidget, QAccessibleAttributesInterface** outptr_QAccessibleAttributesInterface) {
+	*outptr_QAccessibleWidget = static_cast<QAccessibleWidget*>(src);
+	*outptr_QAccessibleAttributesInterface = static_cast<QAccessibleAttributesInterface*>(src);
+}
+
+void* QAccessibleWidgetV2_interfaceCast(QAccessibleWidgetV2* self, int t) {
+	return self->interface_cast(static_cast<QAccessible::InterfaceType>(t));
+}
+
+struct miqt_array /* of int */  QAccessibleWidgetV2_attributeKeys(const QAccessibleWidgetV2* self) {
+	QList<QAccessible::Attribute> _ret = self->attributeKeys();
+	// Convert QList<> from C++ memory to manually-managed C memory
+	int* _arr = static_cast<int*>(malloc(sizeof(int) * _ret.length()));
+	for (size_t i = 0, e = _ret.length(); i < e; ++i) {
+		QAccessible::Attribute _lv_ret = _ret[i];
+		_arr[i] = static_cast<int>(_lv_ret);
+	}
+	struct miqt_array _out;
+	_out.len = _ret.length();
+	_out.data = static_cast<void*>(_arr);
+	return _out;
+}
+
+QVariant* QAccessibleWidgetV2_attributeValue(const QAccessibleWidgetV2* self, int key) {
+	return new QVariant(self->attributeValue(static_cast<QAccessible::Attribute>(key)));
 }
 

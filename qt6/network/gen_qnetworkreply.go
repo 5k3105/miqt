@@ -139,8 +139,8 @@ func (this *QNetworkReply) Request() *QNetworkRequest {
 	return _goptr
 }
 
-func (this *QNetworkReply) Error() QNetworkReply__NetworkError {
-	return (QNetworkReply__NetworkError)(C.QNetworkReply_error(this.h))
+func (this *QNetworkReply) Error() NetworkError {
+	int /* TODO  */
 }
 
 func (this *QNetworkReply) IsFinished() bool {
@@ -163,15 +163,8 @@ func (this *QNetworkReply) Header(header QNetworkRequest__KnownHeaders) *qt6.QVa
 	return _goptr
 }
 
-func (this *QNetworkReply) HasRawHeader(headerName []byte) bool {
-	headerName_alias := C.struct_miqt_string{}
-	if len(headerName) > 0 {
-		headerName_alias.data = (*C.char)(unsafe.Pointer(&headerName[0]))
-	} else {
-		headerName_alias.data = (*C.char)(unsafe.Pointer(nil))
-	}
-	headerName_alias.len = C.size_t(len(headerName))
-	return (bool)(C.QNetworkReply_hasRawHeader(this.h, headerName_alias))
+func (this *QNetworkReply) HasRawHeader(headerName qt6.QAnyStringView) bool {
+	return (bool)(C.QNetworkReply_hasRawHeader(this.h, (*C.QAnyStringView)(headerName.UnsafePointer())))
 }
 
 func (this *QNetworkReply) RawHeaderList() [][]byte {
@@ -187,48 +180,27 @@ func (this *QNetworkReply) RawHeaderList() [][]byte {
 	return _ret
 }
 
-func (this *QNetworkReply) RawHeader(headerName []byte) []byte {
-	headerName_alias := C.struct_miqt_string{}
-	if len(headerName) > 0 {
-		headerName_alias.data = (*C.char)(unsafe.Pointer(&headerName[0]))
-	} else {
-		headerName_alias.data = (*C.char)(unsafe.Pointer(nil))
-	}
-	headerName_alias.len = C.size_t(len(headerName))
-	var _bytearray C.struct_miqt_string = C.QNetworkReply_rawHeader(this.h, headerName_alias)
+func (this *QNetworkReply) RawHeader(headerName qt6.QAnyStringView) []byte {
+	var _bytearray C.struct_miqt_string = C.QNetworkReply_rawHeader(this.h, (*C.QAnyStringView)(headerName.UnsafePointer()))
 	_ret := C.GoBytes(unsafe.Pointer(_bytearray.data), C.int(int64(_bytearray.len)))
 	C.free(unsafe.Pointer(_bytearray.data))
 	return _ret
 }
 
-func (this *QNetworkReply) RawHeaderPairs() []struct {
-	First  []byte
-	Second []byte
-} {
+func (this *QNetworkReply) RawHeaderPairs() []RawHeaderPair {
 	var _ma C.struct_miqt_array = C.QNetworkReply_rawHeaderPairs(this.h)
-	_ret := make([]struct {
-		First  []byte
-		Second []byte
-	}, int(_ma.len))
-	_outCast := (*[0xffff]C.struct_miqt_map)(unsafe.Pointer(_ma.data)) // hey ya
+	_ret := make([]RawHeaderPair, int(_ma.len))
+	_outCast := (*[0xffff]C.RawHeaderPair)(unsafe.Pointer(_ma.data)) // hey ya
 	for i := 0; i < int(_ma.len); i++ {
-		var _lv_mm C.struct_miqt_map = _outCast[i]
-		_lv_First_CArray := (*[0xffff]C.struct_miqt_string)(unsafe.Pointer(_lv_mm.keys))
-		_lv_Second_CArray := (*[0xffff]C.struct_miqt_string)(unsafe.Pointer(_lv_mm.values))
-		var _lv_first_bytearray C.struct_miqt_string = _lv_First_CArray[0]
-		_lv_first_ret := C.GoBytes(unsafe.Pointer(_lv_first_bytearray.data), C.int(int64(_lv_first_bytearray.len)))
-		C.free(unsafe.Pointer(_lv_first_bytearray.data))
-		_lv_entry_First := _lv_first_ret
-		var _lv_second_bytearray C.struct_miqt_string = _lv_Second_CArray[0]
-		_lv_second_ret := C.GoBytes(unsafe.Pointer(_lv_second_bytearray.data), C.int(int64(_lv_second_bytearray.len)))
-		C.free(unsafe.Pointer(_lv_second_bytearray.data))
-		_lv_entry_Second := _lv_second_ret
-		_ret[i] = struct {
-			First  []byte
-			Second []byte
-		}{First: _lv_entry_First, Second: _lv_entry_Second}
+		int /* TODO  */
 	}
 	return _ret
+}
+
+func (this *QNetworkReply) Headers() *QHttpHeaders {
+	_goptr := newQHttpHeaders(C.QNetworkReply_headers(this.h))
+	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
+	return _goptr
 }
 
 func (this *QNetworkReply) Attribute(code QNetworkRequest__Attribute) *qt6.QVariant {

@@ -101,6 +101,14 @@ func (this *QPen) Swap(other *QPen) {
 	C.QPen_swap(this.h, other.cPointer())
 }
 
+func (this *QPen) OperatorAssignWithColor(color QColor) {
+	C.QPen_operatorAssignWithColor(this.h, color.cPointer())
+}
+
+func (this *QPen) OperatorAssignWithStyle(style PenStyle) {
+	C.QPen_operatorAssignWithStyle(this.h, (C.int)(style))
+}
+
 func (this *QPen) Style() PenStyle {
 	return (PenStyle)(C.QPen_style(this.h))
 }
@@ -225,6 +233,10 @@ func (this *QPen) ToQVariant() *QVariant {
 
 func (this *QPen) IsDetached() bool {
 	return (bool)(C.QPen_isDetached(this.h))
+}
+
+func (this *QPen) DataPtr() *DataPtr {
+	int /* TODO  */
 }
 
 // Delete this object from C++ memory.

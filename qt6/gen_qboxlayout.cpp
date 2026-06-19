@@ -120,8 +120,8 @@ QSpacerItem* miqt_exec_callback_QVBoxLayout_spacerItem(QVBoxLayout*, intptr_t);
 class MiqtVirtualQBoxLayout final : public QBoxLayout {
 public:
 
-	MiqtVirtualQBoxLayout(QBoxLayout::Direction param1): QBoxLayout(param1) {}
-	MiqtVirtualQBoxLayout(QBoxLayout::Direction param1, QWidget* parent): QBoxLayout(param1, parent) {}
+	MiqtVirtualQBoxLayout(Direction param1): QBoxLayout(param1) {}
+	MiqtVirtualQBoxLayout(Direction param1, QWidget* parent): QBoxLayout(param1, parent) {}
 
 	virtual ~MiqtVirtualQBoxLayout() override = default;
 
@@ -622,12 +622,12 @@ public:
 	friend bool QBoxLayout_protectedbase_isSignalConnected(bool* _dynamic_cast_ok, const void* self, QMetaMethod* signal);
 };
 
-QBoxLayout* QBoxLayout_new(int param1) {
-	return new (std::nothrow) MiqtVirtualQBoxLayout(static_cast<QBoxLayout::Direction>(param1));
+QBoxLayout* QBoxLayout_new(Direction param1) {
+	return new (std::nothrow) MiqtVirtualQBoxLayout(param1);
 }
 
-QBoxLayout* QBoxLayout_new2(int param1, QWidget* parent) {
-	return new (std::nothrow) MiqtVirtualQBoxLayout(static_cast<QBoxLayout::Direction>(param1), parent);
+QBoxLayout* QBoxLayout_new2(Direction param1, QWidget* parent) {
+	return new (std::nothrow) MiqtVirtualQBoxLayout(param1, parent);
 }
 
 void QBoxLayout_virtbase(QBoxLayout* src, QLayout** outptr_QLayout) {
@@ -653,13 +653,12 @@ struct miqt_string QBoxLayout_tr(const char* s) {
 	return _ms;
 }
 
-int QBoxLayout_direction(const QBoxLayout* self) {
-	QBoxLayout::Direction _ret = self->direction();
-	return static_cast<int>(_ret);
+Direction QBoxLayout_direction(const QBoxLayout* self) {
+	return self->direction();
 }
 
-void QBoxLayout_setDirection(QBoxLayout* self, int direction) {
-	self->setDirection(static_cast<QBoxLayout::Direction>(direction));
+void QBoxLayout_setDirection(QBoxLayout* self, Direction direction) {
+	self->setDirection(direction);
 }
 
 void QBoxLayout_addSpacing(QBoxLayout* self, int size) {

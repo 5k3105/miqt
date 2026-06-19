@@ -16,10 +16,6 @@
 extern "C" {
 #endif
 
-void miqt_exec_callback_QTimeLine_valueChanged(intptr_t, double);
-void miqt_exec_callback_QTimeLine_frameChanged(intptr_t, int);
-void miqt_exec_callback_QTimeLine_stateChanged(intptr_t, int);
-void miqt_exec_callback_QTimeLine_finished(intptr_t);
 double miqt_exec_callback_QTimeLine_valueForTime(const QTimeLine*, intptr_t, int);
 void miqt_exec_callback_QTimeLine_timerEvent(QTimeLine*, intptr_t, QTimerEvent*);
 bool miqt_exec_callback_QTimeLine_event(QTimeLine*, intptr_t, QEvent*);
@@ -221,9 +217,8 @@ struct miqt_string QTimeLine_tr(const char* s) {
 	return _ms;
 }
 
-int QTimeLine_state(const QTimeLine* self) {
-	QTimeLine::State _ret = self->state();
-	return static_cast<int>(_ret);
+State QTimeLine_state(const QTimeLine* self) {
+	return self->state();
 }
 
 int QTimeLine_loopCount(const QTimeLine* self) {
@@ -234,13 +229,12 @@ void QTimeLine_setLoopCount(QTimeLine* self, int count) {
 	self->setLoopCount(static_cast<int>(count));
 }
 
-int QTimeLine_direction(const QTimeLine* self) {
-	QTimeLine::Direction _ret = self->direction();
-	return static_cast<int>(_ret);
+Direction QTimeLine_direction(const QTimeLine* self) {
+	return self->direction();
 }
 
-void QTimeLine_setDirection(QTimeLine* self, int direction) {
-	self->setDirection(static_cast<QTimeLine::Direction>(direction));
+void QTimeLine_setDirection(QTimeLine* self, Direction direction) {
+	self->setDirection(direction);
 }
 
 int QTimeLine_duration(const QTimeLine* self) {
@@ -510,34 +504,6 @@ bool QTimeLine_protectedbase_isSignalConnected(bool* _dynamic_cast_ok, const voi
 
 	*_dynamic_cast_ok = true;
 	return self_cast->isSignalConnected(*signal);
-}
-
-void QTimeLine_connect_valueChanged(QTimeLine* self, intptr_t slot) {
-	QTimeLine::connect(self, &QTimeLine::valueChanged, self, [=](qreal x) {
-		double sigval1 = x;
-		miqt_exec_callback_QTimeLine_valueChanged(slot, sigval1);
-	});
-}
-
-void QTimeLine_connect_frameChanged(QTimeLine* self, intptr_t slot) {
-	QTimeLine::connect(self, &QTimeLine::frameChanged, self, [=](int param1) {
-		int sigval1 = param1;
-		miqt_exec_callback_QTimeLine_frameChanged(slot, sigval1);
-	});
-}
-
-void QTimeLine_connect_stateChanged(QTimeLine* self, intptr_t slot) {
-	QTimeLine::connect(self, &QTimeLine::stateChanged, self, [=](QTimeLine::State newState) {
-		QTimeLine::State newState_ret = newState;
-		int sigval1 = static_cast<int>(newState_ret);
-		miqt_exec_callback_QTimeLine_stateChanged(slot, sigval1);
-	});
-}
-
-void QTimeLine_connect_finished(QTimeLine* self, intptr_t slot) {
-	QTimeLine::connect(self, &QTimeLine::finished, self, [=]() {
-		miqt_exec_callback_QTimeLine_finished(slot);
-	});
 }
 
 void QTimeLine_delete(QTimeLine* self) {

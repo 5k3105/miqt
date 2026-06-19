@@ -100,8 +100,8 @@ void* QFontComboBox_metacast(QFontComboBox* self, const char* param1);
 struct miqt_string QFontComboBox_tr(const char* s);
 void QFontComboBox_setWritingSystem(QFontComboBox* self, int writingSystem);
 int QFontComboBox_writingSystem(const QFontComboBox* self);
-void QFontComboBox_setFontFilters(QFontComboBox* self, int filters);
-int QFontComboBox_fontFilters(const QFontComboBox* self);
+void QFontComboBox_setFontFilters(QFontComboBox* self, FontFilters filters);
+FontFilters QFontComboBox_fontFilters(const QFontComboBox* self);
 QFont* QFontComboBox_currentFont(const QFontComboBox* self);
 QSize* QFontComboBox_sizeHint(const QFontComboBox* self);
 void QFontComboBox_setSampleTextForSystem(QFontComboBox* self, int writingSystem, struct miqt_string sampleText);
@@ -197,7 +197,7 @@ void QFontComboBox_virtualbase_dropEvent(void* self, QDropEvent* event);
 bool QFontComboBox_override_virtual_nativeEvent(void* self, intptr_t slot);
 bool QFontComboBox_virtualbase_nativeEvent(void* self, struct miqt_string eventType, void* message, intptr_t* result);
 bool QFontComboBox_override_virtual_metric(void* self, intptr_t slot);
-int QFontComboBox_virtualbase_metric(const void* self, int param1);
+int QFontComboBox_virtualbase_metric(const void* self, PaintDeviceMetric param1);
 bool QFontComboBox_override_virtual_initPainter(void* self, intptr_t slot);
 void QFontComboBox_virtualbase_initPainter(const void* self, QPainter* painter);
 bool QFontComboBox_override_virtual_redirected(void* self, intptr_t slot);
@@ -228,6 +228,7 @@ QObject* QFontComboBox_protectedbase_sender(bool* _dynamic_cast_ok, const void* 
 int QFontComboBox_protectedbase_senderSignalIndex(bool* _dynamic_cast_ok, const void* self);
 int QFontComboBox_protectedbase_receivers(bool* _dynamic_cast_ok, const void* self, const char* signal);
 bool QFontComboBox_protectedbase_isSignalConnected(bool* _dynamic_cast_ok, const void* self, QMetaMethod* signal);
+double QFontComboBox_protectedbase_getDecodedMetricF(bool* _dynamic_cast_ok, const void* self, PaintDeviceMetric metricA, PaintDeviceMetric metricB);
 
 void QFontComboBox_delete(QFontComboBox* self);
 

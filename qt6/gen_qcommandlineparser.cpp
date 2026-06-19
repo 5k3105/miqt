@@ -31,12 +31,12 @@ struct miqt_string QCommandLineParser_tr(const char* sourceText) {
 	return _ms;
 }
 
-void QCommandLineParser_setSingleDashWordOptionMode(QCommandLineParser* self, int parsingMode) {
-	self->setSingleDashWordOptionMode(static_cast<QCommandLineParser::SingleDashWordOptionMode>(parsingMode));
+void QCommandLineParser_setSingleDashWordOptionMode(QCommandLineParser* self, SingleDashWordOptionMode parsingMode) {
+	self->setSingleDashWordOptionMode(parsingMode);
 }
 
-void QCommandLineParser_setOptionsAfterPositionalArgumentsMode(QCommandLineParser* self, int mode) {
-	self->setOptionsAfterPositionalArgumentsMode(static_cast<QCommandLineParser::OptionsAfterPositionalArgumentsMode>(mode));
+void QCommandLineParser_setOptionsAfterPositionalArgumentsMode(QCommandLineParser* self, OptionsAfterPositionalArgumentsMode mode) {
+	self->setOptionsAfterPositionalArgumentsMode(mode);
 }
 
 bool QCommandLineParser_addOption(QCommandLineParser* self, QCommandLineOption* commandLineOption) {
@@ -276,6 +276,11 @@ struct miqt_string QCommandLineParser_helpText(const QCommandLineParser* self) {
 	return _ms;
 }
 
+void QCommandLineParser_showMessageAndExit(MessageType type, struct miqt_string message) {
+	QString message_QString = QString::fromUtf8(message.data, message.len);
+	QCommandLineParser::showMessageAndExit(type, message_QString);
+}
+
 struct miqt_string QCommandLineParser_tr2(const char* sourceText, const char* disambiguation) {
 	QString _ret = QCommandLineParser::tr(sourceText, disambiguation);
 	// Convert QString from UTF-16 in C++ RAII memory to UTF-8 in manually-managed C memory
@@ -307,6 +312,11 @@ void QCommandLineParser_addPositionalArgument2(QCommandLineParser* self, struct 
 
 void QCommandLineParser_showHelpWithExitCode(QCommandLineParser* self, int exitCode) {
 	self->showHelp(static_cast<int>(exitCode));
+}
+
+void QCommandLineParser_showMessageAndExit2(MessageType type, struct miqt_string message, int exitCode) {
+	QString message_QString = QString::fromUtf8(message.data, message.len);
+	QCommandLineParser::showMessageAndExit(type, message_QString, static_cast<int>(exitCode));
 }
 
 void QCommandLineParser_delete(QCommandLineParser* self) {

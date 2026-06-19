@@ -23,14 +23,14 @@ typedef struct QLockFile QLockFile;
 QLockFile* QLockFile_new(struct miqt_string fileName);
 struct miqt_string QLockFile_fileName(const QLockFile* self);
 bool QLockFile_lock(QLockFile* self);
-bool QLockFile_tryLock(QLockFile* self);
+bool QLockFile_tryLock(QLockFile* self, int timeout);
 void QLockFile_unlock(QLockFile* self);
 void QLockFile_setStaleLockTime(QLockFile* self, int staleLockTime);
 int QLockFile_staleLockTime(const QLockFile* self);
+bool QLockFile_tryLock2(QLockFile* self);
 bool QLockFile_isLocked(const QLockFile* self);
 bool QLockFile_removeStaleLockFile(QLockFile* self);
-int QLockFile_error(const QLockFile* self);
-bool QLockFile_tryLock2(QLockFile* self, int timeout);
+LockError QLockFile_error(const QLockFile* self);
 
 void QLockFile_delete(QLockFile* self);
 

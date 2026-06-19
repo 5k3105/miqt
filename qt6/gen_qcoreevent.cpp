@@ -1,3 +1,4 @@
+#include <QBasicTimer>
 #include <QByteArray>
 #include <QChildEvent>
 #include <QDynamicPropertyChangeEvent>
@@ -26,7 +27,7 @@ void miqt_exec_callback_QDynamicPropertyChangeEvent_setAccepted(QDynamicProperty
 class MiqtVirtualQEvent final : public QEvent {
 public:
 
-	MiqtVirtualQEvent(QEvent::Type type): QEvent(type) {}
+	MiqtVirtualQEvent(Type type): QEvent(type) {}
 
 	virtual ~MiqtVirtualQEvent() override = default;
 
@@ -64,13 +65,12 @@ public:
 
 };
 
-QEvent* QEvent_new(int type) {
-	return new (std::nothrow) MiqtVirtualQEvent(static_cast<QEvent::Type>(type));
+QEvent* QEvent_new(Type type) {
+	return new (std::nothrow) MiqtVirtualQEvent(type);
 }
 
-int QEvent_type(const QEvent* self) {
-	QEvent::Type _ret = self->type();
-	return static_cast<int>(_ret);
+Type QEvent_type(const QEvent* self) {
+	return self->type();
 }
 
 bool QEvent_spontaneous(const QEvent* self) {
@@ -153,6 +153,7 @@ class MiqtVirtualQTimerEvent final : public QTimerEvent {
 public:
 
 	MiqtVirtualQTimerEvent(int timerId): QTimerEvent(timerId) {}
+	MiqtVirtualQTimerEvent(Qt::TimerId timerId): QTimerEvent(timerId) {}
 
 	virtual ~MiqtVirtualQTimerEvent() override = default;
 
@@ -194,6 +195,10 @@ QTimerEvent* QTimerEvent_new(int timerId) {
 	return new (std::nothrow) MiqtVirtualQTimerEvent(static_cast<int>(timerId));
 }
 
+QTimerEvent* QTimerEvent_new2(int timerId) {
+	return new (std::nothrow) MiqtVirtualQTimerEvent(static_cast<Qt::TimerId>(timerId));
+}
+
 void QTimerEvent_virtbase(QTimerEvent* src, QEvent** outptr_QEvent) {
 	*outptr_QEvent = static_cast<QEvent*>(src);
 }
@@ -204,6 +209,15 @@ QTimerEvent* QTimerEvent_clone(const QTimerEvent* self) {
 
 int QTimerEvent_timerId(const QTimerEvent* self) {
 	return self->timerId();
+}
+
+int QTimerEvent_id(const QTimerEvent* self) {
+	Qt::TimerId _ret = self->id();
+	return static_cast<int>(_ret);
+}
+
+bool QTimerEvent_matches(const QTimerEvent* self, QBasicTimer* timer) {
+	return self->matches(*timer);
 }
 
 bool QTimerEvent_override_virtual_clone(void* self, intptr_t slot) {
@@ -241,7 +255,7 @@ void QTimerEvent_delete(QTimerEvent* self) {
 class MiqtVirtualQChildEvent final : public QChildEvent {
 public:
 
-	MiqtVirtualQChildEvent(QEvent::Type type, QObject* child): QChildEvent(type, child) {}
+	MiqtVirtualQChildEvent(Type type, QObject* child): QChildEvent(type, child) {}
 
 	virtual ~MiqtVirtualQChildEvent() override = default;
 
@@ -279,8 +293,8 @@ public:
 
 };
 
-QChildEvent* QChildEvent_new(int type, QObject* child) {
-	return new (std::nothrow) MiqtVirtualQChildEvent(static_cast<QEvent::Type>(type), child);
+QChildEvent* QChildEvent_new(Type type, QObject* child) {
+	return new (std::nothrow) MiqtVirtualQChildEvent(type, child);
 }
 
 void QChildEvent_virtbase(QChildEvent* src, QEvent** outptr_QEvent) {

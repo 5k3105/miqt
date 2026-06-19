@@ -33,8 +33,8 @@ bool QLockFile_lock(QLockFile* self) {
 	return self->lock();
 }
 
-bool QLockFile_tryLock(QLockFile* self) {
-	return self->tryLock();
+bool QLockFile_tryLock(QLockFile* self, int timeout) {
+	return self->tryLock(static_cast<int>(timeout));
 }
 
 void QLockFile_unlock(QLockFile* self) {
@@ -49,6 +49,10 @@ int QLockFile_staleLockTime(const QLockFile* self) {
 	return self->staleLockTime();
 }
 
+bool QLockFile_tryLock2(QLockFile* self) {
+	return self->tryLock();
+}
+
 bool QLockFile_isLocked(const QLockFile* self) {
 	return self->isLocked();
 }
@@ -57,13 +61,8 @@ bool QLockFile_removeStaleLockFile(QLockFile* self) {
 	return self->removeStaleLockFile();
 }
 
-int QLockFile_error(const QLockFile* self) {
-	QLockFile::LockError _ret = self->error();
-	return static_cast<int>(_ret);
-}
-
-bool QLockFile_tryLock2(QLockFile* self, int timeout) {
-	return self->tryLock(static_cast<int>(timeout));
+LockError QLockFile_error(const QLockFile* self) {
+	return self->error();
 }
 
 void QLockFile_delete(QLockFile* self) {

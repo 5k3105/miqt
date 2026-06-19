@@ -425,6 +425,10 @@ struct miqt_string QApplication_styleSheet(const QApplication* self) {
 	return _ms;
 }
 
+bool QApplication_autoSipEnabled(const QApplication* self) {
+	return self->autoSipEnabled();
+}
+
 void QApplication_setStyleSheet(QApplication* self, struct miqt_string sheet) {
 	QString sheet_QString = QString::fromUtf8(sheet.data, sheet.len);
 	self->setStyleSheet(sheet_QString);
@@ -432,10 +436,6 @@ void QApplication_setStyleSheet(QApplication* self, struct miqt_string sheet) {
 
 void QApplication_setAutoSipEnabled(QApplication* self, const bool enabled) {
 	self->setAutoSipEnabled(enabled);
-}
-
-bool QApplication_autoSipEnabled(const QApplication* self) {
-	return self->autoSipEnabled();
 }
 
 void QApplication_closeAllWindows() {

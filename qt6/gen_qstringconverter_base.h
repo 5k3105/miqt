@@ -24,7 +24,8 @@ bool QStringConverter_isValid(const QStringConverter* self);
 void QStringConverter_resetState(QStringConverter* self);
 bool QStringConverter_hasError(const QStringConverter* self);
 const char* QStringConverter_name(const QStringConverter* self);
-const char* QStringConverter_nameForEncoding(int e);
+const char* QStringConverter_nameForEncoding(Encoding e);
+struct miqt_array /* of struct miqt_string */  QStringConverter_availableCodecs();
 
 
 #ifdef __cplusplus

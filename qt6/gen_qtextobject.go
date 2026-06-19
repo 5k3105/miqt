@@ -291,16 +291,12 @@ func (this *QTextFrame) ParentFrame() *QTextFrame {
 	return newQTextFrame(C.QTextFrame_parentFrame(this.h))
 }
 
-func (this *QTextFrame) Begin() *QTextFrame__iterator {
-	_goptr := newQTextFrame__iterator(C.QTextFrame_begin(this.h))
-	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
-	return _goptr
+func (this *QTextFrame) Begin() iterator {
+	int /* TODO  */
 }
 
-func (this *QTextFrame) End() *QTextFrame__iterator {
-	_goptr := newQTextFrame__iterator(C.QTextFrame_end(this.h))
-	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
-	return _goptr
+func (this *QTextFrame) End() iterator {
+	int /* TODO  */
 }
 
 func QTextFrame_Tr2(s string, c string) string {
@@ -830,16 +826,12 @@ func (this *QTextBlock) LineCount() int {
 	return (int)(C.QTextBlock_lineCount(this.h))
 }
 
-func (this *QTextBlock) Begin() *QTextBlock__iterator {
-	_goptr := newQTextBlock__iterator(C.QTextBlock_begin(this.h))
-	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
-	return _goptr
+func (this *QTextBlock) Begin() iterator {
+	int /* TODO  */
 }
 
-func (this *QTextBlock) End() *QTextBlock__iterator {
-	_goptr := newQTextBlock__iterator(C.QTextBlock_end(this.h))
-	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
-	return _goptr
+func (this *QTextBlock) End() iterator {
+	int /* TODO  */
 }
 
 func (this *QTextBlock) Next() *QTextBlock {
@@ -1054,9 +1046,9 @@ func NewQTextFrame__iterator() *QTextFrame__iterator {
 }
 
 // NewQTextFrame__iterator2 constructs a new QTextFrame::iterator object.
-func NewQTextFrame__iterator2(param1 *QTextFrame__iterator) *QTextFrame__iterator {
+func NewQTextFrame__iterator2(param1 *iterator) *QTextFrame__iterator {
 
-	return newQTextFrame__iterator(C.QTextFrame__iterator_new2(param1.cPointer()))
+	return newQTextFrame__iterator(C.QTextFrame__iterator_new2(param1))
 }
 
 func (this *QTextFrame__iterator) ParentFrame() *QTextFrame {
@@ -1077,32 +1069,28 @@ func (this *QTextFrame__iterator) AtEnd() bool {
 	return (bool)(C.QTextFrame__iterator_atEnd(this.h))
 }
 
-func (this *QTextFrame__iterator) OperatorEqual(o *QTextFrame__iterator) bool {
-	return (bool)(C.QTextFrame__iterator_operatorEqual(this.h, o.cPointer()))
+func (this *QTextFrame__iterator) OperatorEqual(o *iterator) bool {
+	return (bool)(C.QTextFrame__iterator_operatorEqual(this.h, o))
 }
 
-func (this *QTextFrame__iterator) OperatorNotEqual(o *QTextFrame__iterator) bool {
-	return (bool)(C.QTextFrame__iterator_operatorNotEqual(this.h, o.cPointer()))
+func (this *QTextFrame__iterator) OperatorNotEqual(o *iterator) bool {
+	return (bool)(C.QTextFrame__iterator_operatorNotEqual(this.h, o))
 }
 
-func (this *QTextFrame__iterator) OperatorPlusPlus() *QTextFrame__iterator {
-	return newQTextFrame__iterator(C.QTextFrame__iterator_operatorPlusPlus(this.h))
+func (this *QTextFrame__iterator) OperatorPlusPlus() *iterator {
+	int /* TODO  */
 }
 
-func (this *QTextFrame__iterator) OperatorPlusPlusWithInt(param1 int) *QTextFrame__iterator {
-	_goptr := newQTextFrame__iterator(C.QTextFrame__iterator_operatorPlusPlusWithInt(this.h, (C.int)(param1)))
-	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
-	return _goptr
+func (this *QTextFrame__iterator) OperatorPlusPlusWithInt(param1 int) iterator {
+	int /* TODO  */
 }
 
-func (this *QTextFrame__iterator) OperatorMinusMinus() *QTextFrame__iterator {
-	return newQTextFrame__iterator(C.QTextFrame__iterator_operatorMinusMinus(this.h))
+func (this *QTextFrame__iterator) OperatorMinusMinus() *iterator {
+	int /* TODO  */
 }
 
-func (this *QTextFrame__iterator) OperatorMinusMinusWithInt(param1 int) *QTextFrame__iterator {
-	_goptr := newQTextFrame__iterator(C.QTextFrame__iterator_operatorMinusMinusWithInt(this.h, (C.int)(param1)))
-	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
-	return _goptr
+func (this *QTextFrame__iterator) OperatorMinusMinusWithInt(param1 int) iterator {
+	int /* TODO  */
 }
 
 // Delete this object from C++ memory.
@@ -1158,9 +1146,9 @@ func NewQTextBlock__iterator() *QTextBlock__iterator {
 }
 
 // NewQTextBlock__iterator2 constructs a new QTextBlock::iterator object.
-func NewQTextBlock__iterator2(param1 *QTextBlock__iterator) *QTextBlock__iterator {
+func NewQTextBlock__iterator2(param1 *iterator) *QTextBlock__iterator {
 
-	return newQTextBlock__iterator(C.QTextBlock__iterator_new2(param1.cPointer()))
+	return newQTextBlock__iterator(C.QTextBlock__iterator_new2(param1))
 }
 
 func (this *QTextBlock__iterator) Fragment() *QTextFragment {
@@ -1173,32 +1161,28 @@ func (this *QTextBlock__iterator) AtEnd() bool {
 	return (bool)(C.QTextBlock__iterator_atEnd(this.h))
 }
 
-func (this *QTextBlock__iterator) OperatorEqual(o *QTextBlock__iterator) bool {
-	return (bool)(C.QTextBlock__iterator_operatorEqual(this.h, o.cPointer()))
+func (this *QTextBlock__iterator) OperatorEqual(o *iterator) bool {
+	return (bool)(C.QTextBlock__iterator_operatorEqual(this.h, o))
 }
 
-func (this *QTextBlock__iterator) OperatorNotEqual(o *QTextBlock__iterator) bool {
-	return (bool)(C.QTextBlock__iterator_operatorNotEqual(this.h, o.cPointer()))
+func (this *QTextBlock__iterator) OperatorNotEqual(o *iterator) bool {
+	return (bool)(C.QTextBlock__iterator_operatorNotEqual(this.h, o))
 }
 
-func (this *QTextBlock__iterator) OperatorPlusPlus() *QTextBlock__iterator {
-	return newQTextBlock__iterator(C.QTextBlock__iterator_operatorPlusPlus(this.h))
+func (this *QTextBlock__iterator) OperatorPlusPlus() *iterator {
+	int /* TODO  */
 }
 
-func (this *QTextBlock__iterator) OperatorPlusPlusWithInt(param1 int) *QTextBlock__iterator {
-	_goptr := newQTextBlock__iterator(C.QTextBlock__iterator_operatorPlusPlusWithInt(this.h, (C.int)(param1)))
-	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
-	return _goptr
+func (this *QTextBlock__iterator) OperatorPlusPlusWithInt(param1 int) iterator {
+	int /* TODO  */
 }
 
-func (this *QTextBlock__iterator) OperatorMinusMinus() *QTextBlock__iterator {
-	return newQTextBlock__iterator(C.QTextBlock__iterator_operatorMinusMinus(this.h))
+func (this *QTextBlock__iterator) OperatorMinusMinus() *iterator {
+	int /* TODO  */
 }
 
-func (this *QTextBlock__iterator) OperatorMinusMinusWithInt(param1 int) *QTextBlock__iterator {
-	_goptr := newQTextBlock__iterator(C.QTextBlock__iterator_operatorMinusMinusWithInt(this.h, (C.int)(param1)))
-	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
-	return _goptr
+func (this *QTextBlock__iterator) OperatorMinusMinusWithInt(param1 int) iterator {
+	int /* TODO  */
 }
 
 // Delete this object from C++ memory.

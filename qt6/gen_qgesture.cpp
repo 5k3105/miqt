@@ -266,13 +266,12 @@ void QGesture_unsetHotSpot(QGesture* self) {
 	self->unsetHotSpot();
 }
 
-void QGesture_setGestureCancelPolicy(QGesture* self, int policy) {
-	self->setGestureCancelPolicy(static_cast<QGesture::GestureCancelPolicy>(policy));
+void QGesture_setGestureCancelPolicy(QGesture* self, GestureCancelPolicy policy) {
+	self->setGestureCancelPolicy(policy);
 }
 
-int QGesture_gestureCancelPolicy(const QGesture* self) {
-	QGesture::GestureCancelPolicy _ret = self->gestureCancelPolicy();
-	return static_cast<int>(_ret);
+GestureCancelPolicy QGesture_gestureCancelPolicy(const QGesture* self) {
+	return self->gestureCancelPolicy();
 }
 
 struct miqt_string QGesture_tr2(const char* s, const char* c) {
@@ -976,22 +975,20 @@ struct miqt_string QPinchGesture_tr(const char* s) {
 	return _ms;
 }
 
-int QPinchGesture_totalChangeFlags(const QPinchGesture* self) {
-	QPinchGesture::ChangeFlags _ret = self->totalChangeFlags();
-	return static_cast<int>(_ret);
+ChangeFlags QPinchGesture_totalChangeFlags(const QPinchGesture* self) {
+	return self->totalChangeFlags();
 }
 
-void QPinchGesture_setTotalChangeFlags(QPinchGesture* self, int value) {
-	self->setTotalChangeFlags(static_cast<QPinchGesture::ChangeFlags>(value));
+void QPinchGesture_setTotalChangeFlags(QPinchGesture* self, ChangeFlags value) {
+	self->setTotalChangeFlags(value);
 }
 
-int QPinchGesture_changeFlags(const QPinchGesture* self) {
-	QPinchGesture::ChangeFlags _ret = self->changeFlags();
-	return static_cast<int>(_ret);
+ChangeFlags QPinchGesture_changeFlags(const QPinchGesture* self) {
+	return self->changeFlags();
 }
 
-void QPinchGesture_setChangeFlags(QPinchGesture* self, int value) {
-	self->setChangeFlags(static_cast<QPinchGesture::ChangeFlags>(value));
+void QPinchGesture_setChangeFlags(QPinchGesture* self, ChangeFlags value) {
+	self->setChangeFlags(value);
 }
 
 QPointF* QPinchGesture_startCenterPoint(const QPinchGesture* self) {
@@ -1408,14 +1405,12 @@ struct miqt_string QSwipeGesture_tr(const char* s) {
 	return _ms;
 }
 
-int QSwipeGesture_horizontalDirection(const QSwipeGesture* self) {
-	QSwipeGesture::SwipeDirection _ret = self->horizontalDirection();
-	return static_cast<int>(_ret);
+SwipeDirection QSwipeGesture_horizontalDirection(const QSwipeGesture* self) {
+	return self->horizontalDirection();
 }
 
-int QSwipeGesture_verticalDirection(const QSwipeGesture* self) {
-	QSwipeGesture::SwipeDirection _ret = self->verticalDirection();
-	return static_cast<int>(_ret);
+SwipeDirection QSwipeGesture_verticalDirection(const QSwipeGesture* self) {
+	return self->verticalDirection();
 }
 
 double QSwipeGesture_swipeAngle(const QSwipeGesture* self) {

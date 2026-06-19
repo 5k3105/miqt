@@ -103,34 +103,6 @@ func (this *QGraphicsItemAnimation) PosAt(step float64) *QPointF {
 	return _goptr
 }
 
-func (this *QGraphicsItemAnimation) PosList() []struct {
-	First  float64
-	Second QPointF
-} {
-	var _ma C.struct_miqt_array = C.QGraphicsItemAnimation_posList(this.h)
-	_ret := make([]struct {
-		First  float64
-		Second QPointF
-	}, int(_ma.len))
-	_outCast := (*[0xffff]C.struct_miqt_map)(unsafe.Pointer(_ma.data)) // hey ya
-	for i := 0; i < int(_ma.len); i++ {
-		var _lv_mm C.struct_miqt_map = _outCast[i]
-		_lv_First_CArray := (*[0xffff]C.double)(unsafe.Pointer(_lv_mm.keys))
-		_lv_Second_CArray := (*[0xffff]*C.QPointF)(unsafe.Pointer(_lv_mm.values))
-		_lv_entry_First := (float64)(_lv_First_CArray[0])
-
-		_lv_second_goptr := newQPointF(_lv_Second_CArray[0])
-		_lv_second_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
-		_lv_entry_Second := *_lv_second_goptr
-
-		_ret[i] = struct {
-			First  float64
-			Second QPointF
-		}{First: _lv_entry_First, Second: _lv_entry_Second}
-	}
-	return _ret
-}
-
 func (this *QGraphicsItemAnimation) SetPosAt(step float64, pos *QPointF) {
 	C.QGraphicsItemAnimation_setPosAt(this.h, (C.double)(step), pos.cPointer())
 }
@@ -145,32 +117,6 @@ func (this *QGraphicsItemAnimation) RotationAt(step float64) float64 {
 	return (float64)(C.QGraphicsItemAnimation_rotationAt(this.h, (C.double)(step)))
 }
 
-func (this *QGraphicsItemAnimation) RotationList() []struct {
-	First  float64
-	Second float64
-} {
-	var _ma C.struct_miqt_array = C.QGraphicsItemAnimation_rotationList(this.h)
-	_ret := make([]struct {
-		First  float64
-		Second float64
-	}, int(_ma.len))
-	_outCast := (*[0xffff]C.struct_miqt_map)(unsafe.Pointer(_ma.data)) // hey ya
-	for i := 0; i < int(_ma.len); i++ {
-		var _lv_mm C.struct_miqt_map = _outCast[i]
-		_lv_First_CArray := (*[0xffff]C.double)(unsafe.Pointer(_lv_mm.keys))
-		_lv_Second_CArray := (*[0xffff]C.double)(unsafe.Pointer(_lv_mm.values))
-		_lv_entry_First := (float64)(_lv_First_CArray[0])
-
-		_lv_entry_Second := (float64)(_lv_Second_CArray[0])
-
-		_ret[i] = struct {
-			First  float64
-			Second float64
-		}{First: _lv_entry_First, Second: _lv_entry_Second}
-	}
-	return _ret
-}
-
 func (this *QGraphicsItemAnimation) SetRotationAt(step float64, angle float64) {
 	C.QGraphicsItemAnimation_setRotationAt(this.h, (C.double)(step), (C.double)(angle))
 }
@@ -181,34 +127,6 @@ func (this *QGraphicsItemAnimation) XTranslationAt(step float64) float64 {
 
 func (this *QGraphicsItemAnimation) YTranslationAt(step float64) float64 {
 	return (float64)(C.QGraphicsItemAnimation_yTranslationAt(this.h, (C.double)(step)))
-}
-
-func (this *QGraphicsItemAnimation) TranslationList() []struct {
-	First  float64
-	Second QPointF
-} {
-	var _ma C.struct_miqt_array = C.QGraphicsItemAnimation_translationList(this.h)
-	_ret := make([]struct {
-		First  float64
-		Second QPointF
-	}, int(_ma.len))
-	_outCast := (*[0xffff]C.struct_miqt_map)(unsafe.Pointer(_ma.data)) // hey ya
-	for i := 0; i < int(_ma.len); i++ {
-		var _lv_mm C.struct_miqt_map = _outCast[i]
-		_lv_First_CArray := (*[0xffff]C.double)(unsafe.Pointer(_lv_mm.keys))
-		_lv_Second_CArray := (*[0xffff]*C.QPointF)(unsafe.Pointer(_lv_mm.values))
-		_lv_entry_First := (float64)(_lv_First_CArray[0])
-
-		_lv_second_goptr := newQPointF(_lv_Second_CArray[0])
-		_lv_second_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
-		_lv_entry_Second := *_lv_second_goptr
-
-		_ret[i] = struct {
-			First  float64
-			Second QPointF
-		}{First: _lv_entry_First, Second: _lv_entry_Second}
-	}
-	return _ret
 }
 
 func (this *QGraphicsItemAnimation) SetTranslationAt(step float64, dx float64, dy float64) {
@@ -223,34 +141,6 @@ func (this *QGraphicsItemAnimation) HorizontalScaleAt(step float64) float64 {
 	return (float64)(C.QGraphicsItemAnimation_horizontalScaleAt(this.h, (C.double)(step)))
 }
 
-func (this *QGraphicsItemAnimation) ScaleList() []struct {
-	First  float64
-	Second QPointF
-} {
-	var _ma C.struct_miqt_array = C.QGraphicsItemAnimation_scaleList(this.h)
-	_ret := make([]struct {
-		First  float64
-		Second QPointF
-	}, int(_ma.len))
-	_outCast := (*[0xffff]C.struct_miqt_map)(unsafe.Pointer(_ma.data)) // hey ya
-	for i := 0; i < int(_ma.len); i++ {
-		var _lv_mm C.struct_miqt_map = _outCast[i]
-		_lv_First_CArray := (*[0xffff]C.double)(unsafe.Pointer(_lv_mm.keys))
-		_lv_Second_CArray := (*[0xffff]*C.QPointF)(unsafe.Pointer(_lv_mm.values))
-		_lv_entry_First := (float64)(_lv_First_CArray[0])
-
-		_lv_second_goptr := newQPointF(_lv_Second_CArray[0])
-		_lv_second_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
-		_lv_entry_Second := *_lv_second_goptr
-
-		_ret[i] = struct {
-			First  float64
-			Second QPointF
-		}{First: _lv_entry_First, Second: _lv_entry_Second}
-	}
-	return _ret
-}
-
 func (this *QGraphicsItemAnimation) SetScaleAt(step float64, sx float64, sy float64) {
 	C.QGraphicsItemAnimation_setScaleAt(this.h, (C.double)(step), (C.double)(sx), (C.double)(sy))
 }
@@ -261,34 +151,6 @@ func (this *QGraphicsItemAnimation) VerticalShearAt(step float64) float64 {
 
 func (this *QGraphicsItemAnimation) HorizontalShearAt(step float64) float64 {
 	return (float64)(C.QGraphicsItemAnimation_horizontalShearAt(this.h, (C.double)(step)))
-}
-
-func (this *QGraphicsItemAnimation) ShearList() []struct {
-	First  float64
-	Second QPointF
-} {
-	var _ma C.struct_miqt_array = C.QGraphicsItemAnimation_shearList(this.h)
-	_ret := make([]struct {
-		First  float64
-		Second QPointF
-	}, int(_ma.len))
-	_outCast := (*[0xffff]C.struct_miqt_map)(unsafe.Pointer(_ma.data)) // hey ya
-	for i := 0; i < int(_ma.len); i++ {
-		var _lv_mm C.struct_miqt_map = _outCast[i]
-		_lv_First_CArray := (*[0xffff]C.double)(unsafe.Pointer(_lv_mm.keys))
-		_lv_Second_CArray := (*[0xffff]*C.QPointF)(unsafe.Pointer(_lv_mm.values))
-		_lv_entry_First := (float64)(_lv_First_CArray[0])
-
-		_lv_second_goptr := newQPointF(_lv_Second_CArray[0])
-		_lv_second_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
-		_lv_entry_Second := *_lv_second_goptr
-
-		_ret[i] = struct {
-			First  float64
-			Second QPointF
-		}{First: _lv_entry_First, Second: _lv_entry_Second}
-	}
-	return _ret
 }
 
 func (this *QGraphicsItemAnimation) SetShearAt(step float64, sh float64, sv float64) {

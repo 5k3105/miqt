@@ -71,9 +71,9 @@ func NewQQmlIncubator() *QQmlIncubator {
 }
 
 // NewQQmlIncubator2 constructs a new QQmlIncubator object.
-func NewQQmlIncubator2(param1 QQmlIncubator__IncubationMode) *QQmlIncubator {
+func NewQQmlIncubator2(param1 IncubationMode) *QQmlIncubator {
 
-	return newQQmlIncubator(C.QQmlIncubator_new2((C.int)(param1)))
+	return newQQmlIncubator(C.QQmlIncubator_new2(param1))
 }
 
 func (this *QQmlIncubator) Clear() {
@@ -112,12 +112,12 @@ func (this *QQmlIncubator) Errors() []QQmlError {
 	return _ret
 }
 
-func (this *QQmlIncubator) IncubationMode() QQmlIncubator__IncubationMode {
-	return (QQmlIncubator__IncubationMode)(C.QQmlIncubator_incubationMode(this.h))
+func (this *QQmlIncubator) IncubationMode() IncubationMode {
+	int /* TODO  */
 }
 
-func (this *QQmlIncubator) Status() QQmlIncubator__Status {
-	return (QQmlIncubator__Status)(C.QQmlIncubator_status(this.h))
+func (this *QQmlIncubator) Status() Status {
+	int /* TODO  */
 }
 
 func (this *QQmlIncubator) Object() *qt6.QObject {
@@ -147,12 +147,12 @@ func (this *QQmlIncubator) SetInitialProperties(initialProperties map[string]qt6
 	C.QQmlIncubator_setInitialProperties(this.h, initialProperties_mm)
 }
 
-func (this *QQmlIncubator) callVirtualBase_StatusChanged(param1 QQmlIncubator__Status) {
+func (this *QQmlIncubator) callVirtualBase_StatusChanged(param1 Status) {
 
-	C.QQmlIncubator_virtualbase_statusChanged(unsafe.Pointer(this.h), (C.int)(param1))
+	C.QQmlIncubator_virtualbase_statusChanged(unsafe.Pointer(this.h), param1)
 
 }
-func (this *QQmlIncubator) OnStatusChanged(slot func(super func(param1 QQmlIncubator__Status), param1 QQmlIncubator__Status)) {
+func (this *QQmlIncubator) OnStatusChanged(slot func(super func(param1 Status), param1 Status)) {
 	ok := C.QQmlIncubator_override_virtual_statusChanged(unsafe.Pointer(this.h), C.intptr_t(cgo.NewHandle(slot)))
 	if !ok {
 		panic("miqt: can only override virtual methods for directly constructed types")
@@ -160,14 +160,14 @@ func (this *QQmlIncubator) OnStatusChanged(slot func(super func(param1 QQmlIncub
 }
 
 //export miqt_exec_callback_QQmlIncubator_statusChanged
-func miqt_exec_callback_QQmlIncubator_statusChanged(self *C.QQmlIncubator, cb C.intptr_t, param1 C.int) {
-	gofunc, ok := cgo.Handle(cb).Value().(func(super func(param1 QQmlIncubator__Status), param1 QQmlIncubator__Status))
+func miqt_exec_callback_QQmlIncubator_statusChanged(self *C.QQmlIncubator, cb C.intptr_t, param1 C.Status) {
+	gofunc, ok := cgo.Handle(cb).Value().(func(super func(param1 Status), param1 Status))
 	if !ok {
 		panic("miqt: callback of non-callback type (heap corruption?)")
 	}
 
 	// Convert all CABI parameters to Go parameters
-	slotval1 := (QQmlIncubator__Status)(param1)
+	int /* TODO  */
 
 	gofunc((&QQmlIncubator{h: self}).callVirtualBase_StatusChanged, slotval1)
 

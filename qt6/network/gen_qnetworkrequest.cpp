@@ -1,5 +1,8 @@
+#include <QAnyStringView>
 #include <QByteArray>
+#include <QHttp1Configuration>
 #include <QHttp2Configuration>
+#include <QHttpHeaders>
 #include <QList>
 #include <QNetworkRequest>
 #include <QObject>
@@ -56,17 +59,24 @@ void QNetworkRequest_setUrl(QNetworkRequest* self, QUrl* url) {
 	self->setUrl(*url);
 }
 
-QVariant* QNetworkRequest_header(const QNetworkRequest* self, int header) {
-	return new QVariant(self->header(static_cast<QNetworkRequest::KnownHeaders>(header)));
+QHttpHeaders* QNetworkRequest_headers(const QNetworkRequest* self) {
+	return new QHttpHeaders(self->headers());
 }
 
-void QNetworkRequest_setHeader(QNetworkRequest* self, int header, QVariant* value) {
-	self->setHeader(static_cast<QNetworkRequest::KnownHeaders>(header), *value);
+void QNetworkRequest_setHeaders(QNetworkRequest* self, QHttpHeaders* newHeaders) {
+	self->setHeaders(*newHeaders);
 }
 
-bool QNetworkRequest_hasRawHeader(const QNetworkRequest* self, struct miqt_string headerName) {
-	QByteArray headerName_QByteArray(headerName.data, headerName.len);
-	return self->hasRawHeader(headerName_QByteArray);
+QVariant* QNetworkRequest_header(const QNetworkRequest* self, KnownHeaders header) {
+	return new QVariant(self->header(header));
+}
+
+void QNetworkRequest_setHeader(QNetworkRequest* self, KnownHeaders header, QVariant* value) {
+	self->setHeader(header, *value);
+}
+
+bool QNetworkRequest_hasRawHeader(const QNetworkRequest* self, QAnyStringView* headerName) {
+	return self->hasRawHeader(*headerName);
 }
 
 struct miqt_array /* of struct miqt_string */  QNetworkRequest_rawHeaderList(const QNetworkRequest* self) {
@@ -87,9 +97,8 @@ struct miqt_array /* of struct miqt_string */  QNetworkRequest_rawHeaderList(con
 	return _out;
 }
 
-struct miqt_string QNetworkRequest_rawHeader(const QNetworkRequest* self, struct miqt_string headerName) {
-	QByteArray headerName_QByteArray(headerName.data, headerName.len);
-	QByteArray _qb = self->rawHeader(headerName_QByteArray);
+struct miqt_string QNetworkRequest_rawHeader(const QNetworkRequest* self, QAnyStringView* headerName) {
+	QByteArray _qb = self->rawHeader(*headerName);
 	struct miqt_string _ms;
 	_ms.len = _qb.length();
 	_ms.data = static_cast<char*>(malloc(_ms.len));
@@ -103,12 +112,12 @@ void QNetworkRequest_setRawHeader(QNetworkRequest* self, struct miqt_string head
 	self->setRawHeader(headerName_QByteArray, value_QByteArray);
 }
 
-QVariant* QNetworkRequest_attribute(const QNetworkRequest* self, int code) {
-	return new QVariant(self->attribute(static_cast<QNetworkRequest::Attribute>(code)));
+QVariant* QNetworkRequest_attribute(const QNetworkRequest* self, Attribute code) {
+	return new QVariant(self->attribute(code));
 }
 
-void QNetworkRequest_setAttribute(QNetworkRequest* self, int code, QVariant* value) {
-	self->setAttribute(static_cast<QNetworkRequest::Attribute>(code), *value);
+void QNetworkRequest_setAttribute(QNetworkRequest* self, Attribute code, QVariant* value) {
+	self->setAttribute(code, *value);
 }
 
 QSslConfiguration* QNetworkRequest_sslConfiguration(const QNetworkRequest* self) {
@@ -127,13 +136,12 @@ QObject* QNetworkRequest_originatingObject(const QNetworkRequest* self) {
 	return self->originatingObject();
 }
 
-int QNetworkRequest_priority(const QNetworkRequest* self) {
-	QNetworkRequest::Priority _ret = self->priority();
-	return static_cast<int>(_ret);
+Priority QNetworkRequest_priority(const QNetworkRequest* self) {
+	return self->priority();
 }
 
-void QNetworkRequest_setPriority(QNetworkRequest* self, int priority) {
-	self->setPriority(static_cast<QNetworkRequest::Priority>(priority));
+void QNetworkRequest_setPriority(QNetworkRequest* self, Priority priority) {
+	self->setPriority(priority);
 }
 
 int QNetworkRequest_maximumRedirectsAllowed(const QNetworkRequest* self) {
@@ -160,6 +168,14 @@ void QNetworkRequest_setPeerVerifyName(QNetworkRequest* self, struct miqt_string
 	self->setPeerVerifyName(peerName_QString);
 }
 
+QHttp1Configuration* QNetworkRequest_http1Configuration(const QNetworkRequest* self) {
+	return new QHttp1Configuration(self->http1Configuration());
+}
+
+void QNetworkRequest_setHttp1Configuration(QNetworkRequest* self, QHttp1Configuration* configuration) {
+	self->setHttp1Configuration(*configuration);
+}
+
 QHttp2Configuration* QNetworkRequest_http2Configuration(const QNetworkRequest* self) {
 	return new QHttp2Configuration(self->http2Configuration());
 }
@@ -177,20 +193,28 @@ void QNetworkRequest_setDecompressedSafetyCheckThreshold(QNetworkRequest* self, 
 	self->setDecompressedSafetyCheckThreshold(static_cast<qint64>(threshold));
 }
 
+int QNetworkRequest_tcpKeepAliveProbeCount(const QNetworkRequest* self) {
+	return self->tcpKeepAliveProbeCount();
+}
+
+void QNetworkRequest_setTcpKeepAliveProbeCount(QNetworkRequest* self, int probes) {
+	self->setTcpKeepAliveProbeCount(static_cast<int>(probes));
+}
+
 int QNetworkRequest_transferTimeout(const QNetworkRequest* self) {
 	return self->transferTimeout();
 }
 
-void QNetworkRequest_setTransferTimeout(QNetworkRequest* self) {
+void QNetworkRequest_setTransferTimeout(QNetworkRequest* self, int timeout) {
+	self->setTransferTimeout(static_cast<int>(timeout));
+}
+
+void QNetworkRequest_setTransferTimeout2(QNetworkRequest* self) {
 	self->setTransferTimeout();
 }
 
-QVariant* QNetworkRequest_attribute2(const QNetworkRequest* self, int code, QVariant* defaultValue) {
-	return new QVariant(self->attribute(static_cast<QNetworkRequest::Attribute>(code), *defaultValue));
-}
-
-void QNetworkRequest_setTransferTimeoutWithTimeout(QNetworkRequest* self, int timeout) {
-	self->setTransferTimeout(static_cast<int>(timeout));
+QVariant* QNetworkRequest_attribute2(const QNetworkRequest* self, Attribute code, QVariant* defaultValue) {
+	return new QVariant(self->attribute(code, *defaultValue));
 }
 
 void QNetworkRequest_delete(QNetworkRequest* self) {

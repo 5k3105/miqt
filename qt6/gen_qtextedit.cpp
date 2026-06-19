@@ -115,7 +115,7 @@ void miqt_exec_callback_QTextEdit_tabletEvent(QTextEdit*, intptr_t, QTabletEvent
 void miqt_exec_callback_QTextEdit_actionEvent(QTextEdit*, intptr_t, QActionEvent*);
 void miqt_exec_callback_QTextEdit_hideEvent(QTextEdit*, intptr_t, QHideEvent*);
 bool miqt_exec_callback_QTextEdit_nativeEvent(QTextEdit*, intptr_t, struct miqt_string, void*, intptr_t*);
-int miqt_exec_callback_QTextEdit_metric(const QTextEdit*, intptr_t, int);
+int miqt_exec_callback_QTextEdit_metric(const QTextEdit*, intptr_t, PaintDeviceMetric);
 void miqt_exec_callback_QTextEdit_initPainter(const QTextEdit*, intptr_t, QPainter*);
 QPaintDevice* miqt_exec_callback_QTextEdit_redirected(const QTextEdit*, intptr_t, QPoint*);
 QPainter* miqt_exec_callback_QTextEdit_sharedPainter(const QTextEdit*, intptr_t);
@@ -967,18 +967,17 @@ public:
 	intptr_t handle__metric = 0;
 
 	// Subclass to allow providing a Go implementation
-	virtual int metric(QPaintDevice::PaintDeviceMetric param1) const override {
+	virtual int metric(PaintDeviceMetric param1) const override {
 		if (handle__metric == 0) {
 			return QTextEdit::metric(param1);
 		}
 
-		QPaintDevice::PaintDeviceMetric param1_ret = param1;
-		int sigval1 = static_cast<int>(param1_ret);
+		PaintDeviceMetric sigval1 = param1;
 		int callback_return_value = miqt_exec_callback_QTextEdit_metric(this, handle__metric, sigval1);
 		return static_cast<int>(callback_return_value);
 	}
 
-	friend int QTextEdit_virtualbase_metric(const void* self, int param1);
+	friend int QTextEdit_virtualbase_metric(const void* self, PaintDeviceMetric param1);
 
 	// cgo.Handle value for overwritten implementation
 	intptr_t handle__initPainter = 0;
@@ -1114,6 +1113,7 @@ public:
 	friend int QTextEdit_protectedbase_senderSignalIndex(bool* _dynamic_cast_ok, const void* self);
 	friend int QTextEdit_protectedbase_receivers(bool* _dynamic_cast_ok, const void* self, const char* signal);
 	friend bool QTextEdit_protectedbase_isSignalConnected(bool* _dynamic_cast_ok, const void* self, QMetaMethod* signal);
+	friend double QTextEdit_protectedbase_getDecodedMetricF(bool* _dynamic_cast_ok, const void* self, PaintDeviceMetric metricA, PaintDeviceMetric metricB);
 };
 
 QTextEdit* QTextEdit_new(QWidget* parent) {
@@ -1263,13 +1263,12 @@ QTextCharFormat* QTextEdit_currentCharFormat(const QTextEdit* self) {
 	return new QTextCharFormat(self->currentCharFormat());
 }
 
-int QTextEdit_autoFormatting(const QTextEdit* self) {
-	QTextEdit::AutoFormatting _ret = self->autoFormatting();
-	return static_cast<int>(_ret);
+AutoFormatting QTextEdit_autoFormatting(const QTextEdit* self) {
+	return self->autoFormatting();
 }
 
-void QTextEdit_setAutoFormatting(QTextEdit* self, int features) {
-	self->setAutoFormatting(static_cast<QTextEdit::AutoFormatting>(features));
+void QTextEdit_setAutoFormatting(QTextEdit* self, AutoFormatting features) {
+	self->setAutoFormatting(features);
 }
 
 bool QTextEdit_tabChangesFocus(const QTextEdit* self) {
@@ -1304,13 +1303,12 @@ void QTextEdit_setUndoRedoEnabled(QTextEdit* self, bool enable) {
 	self->setUndoRedoEnabled(enable);
 }
 
-int QTextEdit_lineWrapMode(const QTextEdit* self) {
-	QTextEdit::LineWrapMode _ret = self->lineWrapMode();
-	return static_cast<int>(_ret);
+LineWrapMode QTextEdit_lineWrapMode(const QTextEdit* self) {
+	return self->lineWrapMode();
 }
 
-void QTextEdit_setLineWrapMode(QTextEdit* self, int mode) {
-	self->setLineWrapMode(static_cast<QTextEdit::LineWrapMode>(mode));
+void QTextEdit_setLineWrapMode(QTextEdit* self, LineWrapMode mode) {
+	self->setLineWrapMode(mode);
 }
 
 int QTextEdit_lineWrapColumnOrWidth(const QTextEdit* self) {
@@ -1444,22 +1442,22 @@ void QTextEdit_setAcceptRichText(QTextEdit* self, bool accept) {
 	self->setAcceptRichText(accept);
 }
 
-void QTextEdit_setExtraSelections(QTextEdit* self, struct miqt_array /* of QTextEdit__ExtraSelection* */  selections) {
-	QList<QTextEdit::ExtraSelection> selections_QList;
+void QTextEdit_setExtraSelections(QTextEdit* self, struct miqt_array /* of ExtraSelection */  selections) {
+	QList<ExtraSelection> selections_QList;
 	selections_QList.reserve(selections.len);
-	QTextEdit__ExtraSelection** selections_arr = static_cast<QTextEdit__ExtraSelection**>(selections.data);
+	ExtraSelection* selections_arr = static_cast<ExtraSelection*>(selections.data);
 	for(size_t i = 0; i < selections.len; ++i) {
-		selections_QList.push_back(*(selections_arr[i]));
+		selections_QList.push_back(selections_arr[i]);
 	}
 	self->setExtraSelections(selections_QList);
 }
 
-struct miqt_array /* of QTextEdit__ExtraSelection* */  QTextEdit_extraSelections(const QTextEdit* self) {
-	QList<QTextEdit::ExtraSelection> _ret = self->extraSelections();
+struct miqt_array /* of ExtraSelection */  QTextEdit_extraSelections(const QTextEdit* self) {
+	QList<ExtraSelection> _ret = self->extraSelections();
 	// Convert QList<> from C++ memory to manually-managed C memory
-	QTextEdit__ExtraSelection** _arr = static_cast<QTextEdit__ExtraSelection**>(malloc(sizeof(QTextEdit__ExtraSelection*) * _ret.length()));
+	ExtraSelection* _arr = static_cast<ExtraSelection*>(malloc(sizeof(ExtraSelection) * _ret.length()));
 	for (size_t i = 0, e = _ret.length(); i < e; ++i) {
-		_arr[i] = new QTextEdit::ExtraSelection(_ret[i]);
+		_arr[i] = _ret[i];
 	}
 	struct miqt_array _out;
 	_out.len = _ret.length();
@@ -2427,8 +2425,8 @@ bool QTextEdit_override_virtual_metric(void* self, intptr_t slot) {
 	return true;
 }
 
-int QTextEdit_virtualbase_metric(const void* self, int param1) {
-	return static_cast<const MiqtVirtualQTextEdit*>(self)->QTextEdit::metric(static_cast<MiqtVirtualQTextEdit::PaintDeviceMetric>(param1));
+int QTextEdit_virtualbase_metric(const void* self, PaintDeviceMetric param1) {
+	return static_cast<const MiqtVirtualQTextEdit*>(self)->QTextEdit::metric(param1);
 }
 
 bool QTextEdit_override_virtual_initPainter(void* self, intptr_t slot) {
@@ -2672,11 +2670,22 @@ bool QTextEdit_protectedbase_isSignalConnected(bool* _dynamic_cast_ok, const voi
 	return self_cast->isSignalConnected(*signal);
 }
 
+double QTextEdit_protectedbase_getDecodedMetricF(bool* _dynamic_cast_ok, const void* self, PaintDeviceMetric metricA, PaintDeviceMetric metricB) {
+	MiqtVirtualQTextEdit* self_cast = dynamic_cast<MiqtVirtualQTextEdit*>( (QTextEdit*)(self) );
+	if (self_cast == nullptr) {
+		*_dynamic_cast_ok = false;
+		return 0;
+	}
+
+	*_dynamic_cast_ok = true;
+	return self_cast->getDecodedMetricF(metricA, metricB);
+}
+
 void QTextEdit_delete(QTextEdit* self) {
 	delete self;
 }
 
-QTextEdit__ExtraSelection* QTextEdit__ExtraSelection_new(QTextEdit__ExtraSelection* param1) {
+QTextEdit__ExtraSelection* QTextEdit__ExtraSelection_new(const ExtraSelection* param1) {
 	return new (std::nothrow) QTextEdit::ExtraSelection(*param1);
 }
 
@@ -2696,7 +2705,7 @@ void QTextEdit__ExtraSelection_setFormat(QTextEdit__ExtraSelection* self, QTextC
 	self->format = *format;
 }
 
-void QTextEdit__ExtraSelection_operatorAssign(QTextEdit__ExtraSelection* self, QTextEdit__ExtraSelection* param1) {
+void QTextEdit__ExtraSelection_operatorAssign(QTextEdit__ExtraSelection* self, const ExtraSelection* param1) {
 	self->operator=(*param1);
 }
 

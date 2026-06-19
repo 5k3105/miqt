@@ -88,7 +88,7 @@ void miqt_exec_callback_QAbstractButton_dropEvent(QAbstractButton*, intptr_t, QD
 void miqt_exec_callback_QAbstractButton_showEvent(QAbstractButton*, intptr_t, QShowEvent*);
 void miqt_exec_callback_QAbstractButton_hideEvent(QAbstractButton*, intptr_t, QHideEvent*);
 bool miqt_exec_callback_QAbstractButton_nativeEvent(QAbstractButton*, intptr_t, struct miqt_string, void*, intptr_t*);
-int miqt_exec_callback_QAbstractButton_metric(const QAbstractButton*, intptr_t, int);
+int miqt_exec_callback_QAbstractButton_metric(const QAbstractButton*, intptr_t, PaintDeviceMetric);
 void miqt_exec_callback_QAbstractButton_initPainter(const QAbstractButton*, intptr_t, QPainter*);
 QPaintDevice* miqt_exec_callback_QAbstractButton_redirected(const QAbstractButton*, intptr_t, QPoint*);
 QPainter* miqt_exec_callback_QAbstractButton_sharedPainter(const QAbstractButton*, intptr_t);
@@ -753,18 +753,17 @@ public:
 	intptr_t handle__metric = 0;
 
 	// Subclass to allow providing a Go implementation
-	virtual int metric(QPaintDevice::PaintDeviceMetric param1) const override {
+	virtual int metric(PaintDeviceMetric param1) const override {
 		if (handle__metric == 0) {
 			return QAbstractButton::metric(param1);
 		}
 
-		QPaintDevice::PaintDeviceMetric param1_ret = param1;
-		int sigval1 = static_cast<int>(param1_ret);
+		PaintDeviceMetric sigval1 = param1;
 		int callback_return_value = miqt_exec_callback_QAbstractButton_metric(this, handle__metric, sigval1);
 		return static_cast<int>(callback_return_value);
 	}
 
-	friend int QAbstractButton_virtualbase_metric(const void* self, int param1);
+	friend int QAbstractButton_virtualbase_metric(const void* self, PaintDeviceMetric param1);
 
 	// cgo.Handle value for overwritten implementation
 	intptr_t handle__initPainter = 0;
@@ -963,6 +962,7 @@ public:
 	friend int QAbstractButton_protectedbase_senderSignalIndex(bool* _dynamic_cast_ok, const void* self);
 	friend int QAbstractButton_protectedbase_receivers(bool* _dynamic_cast_ok, const void* self, const char* signal);
 	friend bool QAbstractButton_protectedbase_isSignalConnected(bool* _dynamic_cast_ok, const void* self, QMetaMethod* signal);
+	friend double QAbstractButton_protectedbase_getDecodedMetricF(bool* _dynamic_cast_ok, const void* self, PaintDeviceMetric metricA, PaintDeviceMetric metricB);
 };
 
 QAbstractButton* QAbstractButton_new(QWidget* parent) {
@@ -1721,8 +1721,8 @@ bool QAbstractButton_override_virtual_metric(void* self, intptr_t slot) {
 	return true;
 }
 
-int QAbstractButton_virtualbase_metric(const void* self, int param1) {
-	return static_cast<const MiqtVirtualQAbstractButton*>(self)->QAbstractButton::metric(static_cast<MiqtVirtualQAbstractButton::PaintDeviceMetric>(param1));
+int QAbstractButton_virtualbase_metric(const void* self, PaintDeviceMetric param1) {
+	return static_cast<const MiqtVirtualQAbstractButton*>(self)->QAbstractButton::metric(param1);
 }
 
 bool QAbstractButton_override_virtual_initPainter(void* self, intptr_t slot) {
@@ -1976,6 +1976,17 @@ bool QAbstractButton_protectedbase_isSignalConnected(bool* _dynamic_cast_ok, con
 
 	*_dynamic_cast_ok = true;
 	return self_cast->isSignalConnected(*signal);
+}
+
+double QAbstractButton_protectedbase_getDecodedMetricF(bool* _dynamic_cast_ok, const void* self, PaintDeviceMetric metricA, PaintDeviceMetric metricB) {
+	MiqtVirtualQAbstractButton* self_cast = dynamic_cast<MiqtVirtualQAbstractButton*>( (QAbstractButton*)(self) );
+	if (self_cast == nullptr) {
+		*_dynamic_cast_ok = false;
+		return 0;
+	}
+
+	*_dynamic_cast_ok = true;
+	return self_cast->getDecodedMetricF(metricA, metricB);
 }
 
 void QAbstractButton_delete(QAbstractButton* self) {

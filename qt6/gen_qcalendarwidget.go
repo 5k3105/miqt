@@ -140,6 +140,10 @@ func (this *QCalendarWidget) SetMinimumDate(date QDate) {
 	C.QCalendarWidget_setMinimumDate(this.h, date.cPointer())
 }
 
+func (this *QCalendarWidget) ClearMinimumDate() {
+	C.QCalendarWidget_clearMinimumDate(this.h)
+}
+
 func (this *QCalendarWidget) MaximumDate() *QDate {
 	_goptr := newQDate(C.QCalendarWidget_maximumDate(this.h))
 	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
@@ -148,6 +152,10 @@ func (this *QCalendarWidget) MaximumDate() *QDate {
 
 func (this *QCalendarWidget) SetMaximumDate(date QDate) {
 	C.QCalendarWidget_setMaximumDate(this.h, date.cPointer())
+}
+
+func (this *QCalendarWidget) ClearMaximumDate() {
+	C.QCalendarWidget_clearMaximumDate(this.h)
 }
 
 func (this *QCalendarWidget) FirstDayOfWeek() DayOfWeek {
@@ -176,28 +184,28 @@ func (this *QCalendarWidget) SetCalendar(calendar QCalendar) {
 	C.QCalendarWidget_setCalendar(this.h, calendar.cPointer())
 }
 
-func (this *QCalendarWidget) SelectionMode() QCalendarWidget__SelectionMode {
-	return (QCalendarWidget__SelectionMode)(C.QCalendarWidget_selectionMode(this.h))
+func (this *QCalendarWidget) SelectionMode() SelectionMode {
+	int /* TODO  */
 }
 
-func (this *QCalendarWidget) SetSelectionMode(mode QCalendarWidget__SelectionMode) {
-	C.QCalendarWidget_setSelectionMode(this.h, (C.int)(mode))
+func (this *QCalendarWidget) SetSelectionMode(mode SelectionMode) {
+	C.QCalendarWidget_setSelectionMode(this.h, mode)
 }
 
-func (this *QCalendarWidget) HorizontalHeaderFormat() QCalendarWidget__HorizontalHeaderFormat {
-	return (QCalendarWidget__HorizontalHeaderFormat)(C.QCalendarWidget_horizontalHeaderFormat(this.h))
+func (this *QCalendarWidget) HorizontalHeaderFormat() HorizontalHeaderFormat {
+	int /* TODO  */
 }
 
-func (this *QCalendarWidget) SetHorizontalHeaderFormat(format QCalendarWidget__HorizontalHeaderFormat) {
-	C.QCalendarWidget_setHorizontalHeaderFormat(this.h, (C.int)(format))
+func (this *QCalendarWidget) SetHorizontalHeaderFormat(format HorizontalHeaderFormat) {
+	C.QCalendarWidget_setHorizontalHeaderFormat(this.h, format)
 }
 
-func (this *QCalendarWidget) VerticalHeaderFormat() QCalendarWidget__VerticalHeaderFormat {
-	return (QCalendarWidget__VerticalHeaderFormat)(C.QCalendarWidget_verticalHeaderFormat(this.h))
+func (this *QCalendarWidget) VerticalHeaderFormat() VerticalHeaderFormat {
+	int /* TODO  */
 }
 
-func (this *QCalendarWidget) SetVerticalHeaderFormat(format QCalendarWidget__VerticalHeaderFormat) {
-	C.QCalendarWidget_setVerticalHeaderFormat(this.h, (C.int)(format))
+func (this *QCalendarWidget) SetVerticalHeaderFormat(format VerticalHeaderFormat) {
+	C.QCalendarWidget_setVerticalHeaderFormat(this.h, format)
 }
 
 func (this *QCalendarWidget) HeaderTextFormat() *QTextCharFormat {
@@ -551,6 +559,20 @@ func (this *QCalendarWidget) IsSignalConnected(signal *QMetaMethod) bool {
 
 	var _dynamic_cast_ok C.bool = false
 	_method_ret := (bool)(C.QCalendarWidget_protectedbase_isSignalConnected(&_dynamic_cast_ok, unsafe.Pointer(this.h), signal.cPointer()))
+
+	if !_dynamic_cast_ok {
+		panic("miqt: can only call protected methods for directly constructed types")
+	}
+
+	return _method_ret
+
+}
+
+// GetDecodedMetricF can only be called from a QCalendarWidget that was directly constructed.
+func (this *QCalendarWidget) GetDecodedMetricF(metricA PaintDeviceMetric, metricB PaintDeviceMetric) float64 {
+
+	var _dynamic_cast_ok C.bool = false
+	_method_ret := (float64)(C.QCalendarWidget_protectedbase_getDecodedMetricF(&_dynamic_cast_ok, unsafe.Pointer(this.h), metricA, metricB))
 
 	if !_dynamic_cast_ok {
 		panic("miqt: can only call protected methods for directly constructed types")
@@ -1524,12 +1546,12 @@ func miqt_exec_callback_QCalendarWidget_changeEvent(self *C.QCalendarWidget, cb 
 
 }
 
-func (this *QCalendarWidget) callVirtualBase_Metric(param1 QPaintDevice__PaintDeviceMetric) int {
+func (this *QCalendarWidget) callVirtualBase_Metric(param1 PaintDeviceMetric) int {
 
-	return (int)(C.QCalendarWidget_virtualbase_metric(unsafe.Pointer(this.h), (C.int)(param1)))
+	return (int)(C.QCalendarWidget_virtualbase_metric(unsafe.Pointer(this.h), param1))
 
 }
-func (this *QCalendarWidget) OnMetric(slot func(super func(param1 QPaintDevice__PaintDeviceMetric) int, param1 QPaintDevice__PaintDeviceMetric) int) {
+func (this *QCalendarWidget) OnMetric(slot func(super func(param1 PaintDeviceMetric) int, param1 PaintDeviceMetric) int) {
 	ok := C.QCalendarWidget_override_virtual_metric(unsafe.Pointer(this.h), C.intptr_t(cgo.NewHandle(slot)))
 	if !ok {
 		panic("miqt: can only override virtual methods for directly constructed types")
@@ -1537,14 +1559,14 @@ func (this *QCalendarWidget) OnMetric(slot func(super func(param1 QPaintDevice__
 }
 
 //export miqt_exec_callback_QCalendarWidget_metric
-func miqt_exec_callback_QCalendarWidget_metric(self *C.QCalendarWidget, cb C.intptr_t, param1 C.int) C.int {
-	gofunc, ok := cgo.Handle(cb).Value().(func(super func(param1 QPaintDevice__PaintDeviceMetric) int, param1 QPaintDevice__PaintDeviceMetric) int)
+func miqt_exec_callback_QCalendarWidget_metric(self *C.QCalendarWidget, cb C.intptr_t, param1 C.PaintDeviceMetric) C.int {
+	gofunc, ok := cgo.Handle(cb).Value().(func(super func(param1 PaintDeviceMetric) int, param1 PaintDeviceMetric) int)
 	if !ok {
 		panic("miqt: callback of non-callback type (heap corruption?)")
 	}
 
 	// Convert all CABI parameters to Go parameters
-	slotval1 := (QPaintDevice__PaintDeviceMetric)(param1)
+	int /* TODO  */
 
 	virtualReturn := gofunc((&QCalendarWidget{h: self}).callVirtualBase_Metric, slotval1)
 

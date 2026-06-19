@@ -15,6 +15,7 @@ extern "C" {
 #endif
 
 #ifdef __cplusplus
+class QAnyStringView;
 class QCborArray;
 class QCborError;
 class QCborMap;
@@ -31,6 +32,7 @@ class QUrl;
 class QUuid;
 class QVariant;
 #else
+typedef struct QAnyStringView QAnyStringView;
 typedef struct QCborArray QCborArray;
 typedef struct QCborError QCborError;
 typedef struct QCborMap QCborMap;
@@ -57,7 +59,7 @@ struct miqt_string QCborParserError_errorString(const QCborParserError* self);
 void QCborParserError_delete(QCborParserError* self);
 
 QCborValue* QCborValue_new();
-QCborValue* QCborValue_new2(int t_);
+QCborValue* QCborValue_new2(Type t_);
 QCborValue* QCborValue_new3(bool b_);
 QCborValue* QCborValue_new4(int i);
 QCborValue* QCborValue_new5(unsigned int u);
@@ -80,7 +82,7 @@ QCborValue* QCborValue_new21(uint64_t tag, QCborValue* taggedValue);
 QCborValue* QCborValue_new22(int t_, QCborValue* tv);
 void QCborValue_operatorAssign(QCborValue* self, QCborValue* other);
 void QCborValue_swap(QCborValue* self, QCborValue* other);
-int QCborValue_type(const QCborValue* self);
+Type QCborValue_type(const QCborValue* self);
 bool QCborValue_isInteger(const QCborValue* self);
 bool QCborValue_isByteArray(const QCborValue* self);
 bool QCborValue_isString(const QCborValue* self);
@@ -109,6 +111,7 @@ uint64_t QCborValue_tag(const QCborValue* self);
 QCborValue* QCborValue_taggedValue(const QCborValue* self);
 struct miqt_string QCborValue_toByteArray(const QCborValue* self);
 struct miqt_string QCborValue_toString(const QCborValue* self);
+QAnyStringView* QCborValue_toStringView(const QCborValue* self);
 QDateTime* QCborValue_toDateTime(const QCborValue* self);
 QUrl* QCborValue_toUrl(const QCborValue* self);
 QRegularExpression* QCborValue_toRegularExpression(const QCborValue* self);
@@ -122,9 +125,6 @@ QCborValue* QCborValue_operatorSubscript2(const QCborValue* self, long long key)
 QCborValueRef* QCborValue_operatorSubscript3(QCborValue* self, long long key);
 QCborValueRef* QCborValue_operatorSubscript5(QCborValue* self, struct miqt_string key);
 int QCborValue_compare(const QCborValue* self, QCborValue* other);
-bool QCborValue_operatorEqual(const QCborValue* self, QCborValue* other);
-bool QCborValue_operatorNotEqual(const QCborValue* self, QCborValue* other);
-bool QCborValue_operatorLesser(const QCborValue* self, QCborValue* other);
 QCborValue* QCborValue_fromVariant(QVariant* variant);
 QVariant* QCborValue_toVariant(const QCborValue* self);
 QCborValue* QCborValue_fromJsonValue(QJsonValue* v);
@@ -144,6 +144,7 @@ uint64_t QCborValue_tagWithDefaultValue(const QCborValue* self, uint64_t default
 QCborValue* QCborValue_taggedValueWithDefaultValue(const QCborValue* self, QCborValue* defaultValue);
 struct miqt_string QCborValue_toByteArrayWithDefaultValue(const QCborValue* self, struct miqt_string defaultValue);
 struct miqt_string QCborValue_toStringWithDefaultValue(const QCborValue* self, struct miqt_string defaultValue);
+QAnyStringView* QCborValue_toStringViewWithDefaultValue(const QCborValue* self, QAnyStringView* defaultValue);
 QDateTime* QCborValue_toDateTimeWithDefaultValue(const QCborValue* self, QDateTime* defaultValue);
 QUrl* QCborValue_toUrlWithDefaultValue(const QCborValue* self, QUrl* defaultValue);
 QRegularExpression* QCborValue_toRegularExpressionWithDefaultValue(const QCborValue* self, QRegularExpression* defaultValue);
@@ -151,9 +152,9 @@ QUuid* QCborValue_toUuidWithDefaultValue(const QCborValue* self, QUuid* defaultV
 QCborValue* QCborValue_fromCbor4(struct miqt_string ba, QCborParserError* error);
 QCborValue* QCborValue_fromCbor5(const char* data, ptrdiff_t len, QCborParserError* error);
 QCborValue* QCborValue_fromCbor6(const unsigned char* data, ptrdiff_t len, QCborParserError* error);
-struct miqt_string QCborValue_toCborWithOpt(const QCborValue* self, int opt);
-void QCborValue_toCbor2(const QCborValue* self, QCborStreamWriter* writer, int opt);
-struct miqt_string QCborValue_toDiagnosticNotationWithOpts(const QCborValue* self, int opts);
+struct miqt_string QCborValue_toCborWithOpt(const QCborValue* self, EncodingOptions opt);
+void QCborValue_toCbor2(const QCborValue* self, QCborStreamWriter* writer, EncodingOptions opt);
+struct miqt_string QCborValue_toDiagnosticNotationWithOpts(const QCborValue* self, DiagnosticNotationOptions opts);
 
 void QCborValue_delete(QCborValue* self);
 
@@ -188,6 +189,7 @@ bool QCborValueConstRef_toBool(const QCborValueConstRef* self);
 double QCborValueConstRef_toDouble(const QCborValueConstRef* self);
 struct miqt_string QCborValueConstRef_toByteArray(const QCborValueConstRef* self);
 struct miqt_string QCborValueConstRef_toString(const QCborValueConstRef* self);
+QAnyStringView* QCborValueConstRef_toStringView(const QCborValueConstRef* self);
 QDateTime* QCborValueConstRef_toDateTime(const QCborValueConstRef* self);
 QUrl* QCborValueConstRef_toUrl(const QCborValueConstRef* self);
 QRegularExpression* QCborValueConstRef_toRegularExpression(const QCborValueConstRef* self);
@@ -199,9 +201,6 @@ QCborMap* QCborValueConstRef_toMapWithQCborMap(const QCborValueConstRef* self, Q
 QCborValue* QCborValueConstRef_operatorSubscript(const QCborValueConstRef* self, struct miqt_string key);
 QCborValue* QCborValueConstRef_operatorSubscript2(const QCborValueConstRef* self, long long key);
 int QCborValueConstRef_compare(const QCborValueConstRef* self, QCborValue* other);
-bool QCborValueConstRef_operatorEqual(const QCborValueConstRef* self, QCborValue* other);
-bool QCborValueConstRef_operatorNotEqual(const QCborValueConstRef* self, QCborValue* other);
-bool QCborValueConstRef_operatorLesser(const QCborValueConstRef* self, QCborValue* other);
 QVariant* QCborValueConstRef_toVariant(const QCborValueConstRef* self);
 QJsonValue* QCborValueConstRef_toJsonValue(const QCborValueConstRef* self);
 struct miqt_string QCborValueConstRef_toCbor(const QCborValueConstRef* self);
@@ -215,6 +214,7 @@ bool QCborValueConstRef_toBoolWithDefaultValue(const QCborValueConstRef* self, b
 double QCborValueConstRef_toDoubleWithDefaultValue(const QCborValueConstRef* self, double defaultValue);
 struct miqt_string QCborValueConstRef_toByteArrayWithDefaultValue(const QCborValueConstRef* self, struct miqt_string defaultValue);
 struct miqt_string QCborValueConstRef_toStringWithDefaultValue(const QCborValueConstRef* self, struct miqt_string defaultValue);
+QAnyStringView* QCborValueConstRef_toStringViewWithDefaultValue(const QCborValueConstRef* self, QAnyStringView* defaultValue);
 QDateTime* QCborValueConstRef_toDateTimeWithDefaultValue(const QCborValueConstRef* self, QDateTime* defaultValue);
 QUrl* QCborValueConstRef_toUrlWithDefaultValue(const QCborValueConstRef* self, QUrl* defaultValue);
 QRegularExpression* QCborValueConstRef_toRegularExpressionWithDefaultValue(const QCborValueConstRef* self, QRegularExpression* defaultValue);
@@ -272,9 +272,6 @@ QCborMap* QCborValueRef_toMapWithQCborMap(const QCborValueRef* self, QCborMap* m
 QCborValue* QCborValueRef_operatorSubscript3(const QCborValueRef* self, struct miqt_string key);
 QCborValue* QCborValueRef_operatorSubscript5(const QCborValueRef* self, long long key);
 int QCborValueRef_compare(const QCborValueRef* self, QCborValue* other);
-bool QCborValueRef_operatorEqual(const QCborValueRef* self, QCborValue* other);
-bool QCborValueRef_operatorNotEqual(const QCborValueRef* self, QCborValue* other);
-bool QCborValueRef_operatorLesser(const QCborValueRef* self, QCborValue* other);
 QVariant* QCborValueRef_toVariant(const QCborValueRef* self);
 QJsonValue* QCborValueRef_toJsonValue(const QCborValueRef* self);
 struct miqt_string QCborValueRef_toCbor(QCborValueRef* self);

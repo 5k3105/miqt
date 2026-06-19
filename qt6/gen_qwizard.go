@@ -72,6 +72,7 @@ const (
 	QWizard__HaveCustomButton2            QWizard__WizardOption = 16384
 	QWizard__HaveCustomButton3            QWizard__WizardOption = 32768
 	QWizard__NoCancelButtonOnLastPage     QWizard__WizardOption = 65536
+	QWizard__StretchBanner                QWizard__WizardOption = 131072
 )
 
 type QWizard struct {
@@ -229,61 +230,61 @@ func (this *QWizard) Field(name string) *QVariant {
 	return _goptr
 }
 
-func (this *QWizard) SetWizardStyle(style QWizard__WizardStyle) {
-	C.QWizard_setWizardStyle(this.h, (C.int)(style))
+func (this *QWizard) SetWizardStyle(style WizardStyle) {
+	C.QWizard_setWizardStyle(this.h, style)
 }
 
-func (this *QWizard) WizardStyle() QWizard__WizardStyle {
-	return (QWizard__WizardStyle)(C.QWizard_wizardStyle(this.h))
+func (this *QWizard) WizardStyle() WizardStyle {
+	int /* TODO  */
 }
 
-func (this *QWizard) SetOption(option QWizard__WizardOption) {
-	C.QWizard_setOption(this.h, (C.int)(option))
+func (this *QWizard) SetOption(option WizardOption) {
+	C.QWizard_setOption(this.h, option)
 }
 
-func (this *QWizard) TestOption(option QWizard__WizardOption) bool {
-	return (bool)(C.QWizard_testOption(this.h, (C.int)(option)))
+func (this *QWizard) TestOption(option WizardOption) bool {
+	return (bool)(C.QWizard_testOption(this.h, option))
 }
 
-func (this *QWizard) SetOptions(options QWizard__WizardOption) {
-	C.QWizard_setOptions(this.h, (C.int)(options))
+func (this *QWizard) SetOptions(options WizardOptions) {
+	C.QWizard_setOptions(this.h, options)
 }
 
-func (this *QWizard) Options() QWizard__WizardOption {
-	return (QWizard__WizardOption)(C.QWizard_options(this.h))
+func (this *QWizard) Options() WizardOptions {
+	int /* TODO  */
 }
 
-func (this *QWizard) SetButtonText(which QWizard__WizardButton, text string) {
+func (this *QWizard) SetButtonText(which WizardButton, text string) {
 	text_ms := C.struct_miqt_string{}
 	text_ms.data = C.CString(text)
 	text_ms.len = C.size_t(len(text))
 	defer C.free(unsafe.Pointer(text_ms.data))
-	C.QWizard_setButtonText(this.h, (C.int)(which), text_ms)
+	C.QWizard_setButtonText(this.h, which, text_ms)
 }
 
-func (this *QWizard) ButtonText(which QWizard__WizardButton) string {
-	var _ms C.struct_miqt_string = C.QWizard_buttonText(this.h, (C.int)(which))
+func (this *QWizard) ButtonText(which WizardButton) string {
+	var _ms C.struct_miqt_string = C.QWizard_buttonText(this.h, which)
 	_ret := C.GoStringN(_ms.data, C.int(int64(_ms.len)))
 	C.free(unsafe.Pointer(_ms.data))
 	return _ret
 }
 
-func (this *QWizard) SetButtonLayout(layout []QWizard__WizardButton) {
-	layout_CArray := (*[0xffff]C.int)(C.malloc(C.size_t(8 * len(layout))))
+func (this *QWizard) SetButtonLayout(layout []WizardButton) {
+	layout_CArray := (*[0xffff]C.WizardButton)(C.malloc(C.size_t(8 * len(layout))))
 	defer C.free(unsafe.Pointer(layout_CArray))
 	for i := range layout {
-		layout_CArray[i] = (C.int)(layout[i])
+		layout_CArray[i] = layout[i]
 	}
 	layout_ma := C.struct_miqt_array{len: C.size_t(len(layout)), data: unsafe.Pointer(layout_CArray)}
 	C.QWizard_setButtonLayout(this.h, layout_ma)
 }
 
-func (this *QWizard) SetButton(which QWizard__WizardButton, button *QAbstractButton) {
-	C.QWizard_setButton(this.h, (C.int)(which), button.cPointer())
+func (this *QWizard) SetButton(which WizardButton, button *QAbstractButton) {
+	C.QWizard_setButton(this.h, which, button.cPointer())
 }
 
-func (this *QWizard) Button(which QWizard__WizardButton) *QAbstractButton {
-	return newQAbstractButton(C.QWizard_button(this.h, (C.int)(which)))
+func (this *QWizard) Button(which WizardButton) *QAbstractButton {
+	return newQAbstractButton(C.QWizard_button(this.h, which))
 }
 
 func (this *QWizard) SetTitleFormat(format TextFormat) {
@@ -302,12 +303,12 @@ func (this *QWizard) SubTitleFormat() TextFormat {
 	return (TextFormat)(C.QWizard_subTitleFormat(this.h))
 }
 
-func (this *QWizard) SetPixmap(which QWizard__WizardPixmap, pixmap *QPixmap) {
-	C.QWizard_setPixmap(this.h, (C.int)(which), pixmap.cPointer())
+func (this *QWizard) SetPixmap(which WizardPixmap, pixmap *QPixmap) {
+	C.QWizard_setPixmap(this.h, which, pixmap.cPointer())
 }
 
-func (this *QWizard) Pixmap(which QWizard__WizardPixmap) *QPixmap {
-	_goptr := newQPixmap(C.QWizard_pixmap(this.h, (C.int)(which)))
+func (this *QWizard) Pixmap(which WizardPixmap) *QPixmap {
+	_goptr := newQPixmap(C.QWizard_pixmap(this.h, which))
 	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
 	return _goptr
 }
@@ -475,8 +476,8 @@ func QWizard_Tr3(s string, c string, n int) string {
 	return _ret
 }
 
-func (this *QWizard) SetOption2(option QWizard__WizardOption, on bool) {
-	C.QWizard_setOption2(this.h, (C.int)(option), (C.bool)(on))
+func (this *QWizard) SetOption2(option WizardOption, on bool) {
+	C.QWizard_setOption2(this.h, option, (C.bool)(on))
 }
 
 // AdjustPosition can only be called from a QWizard that was directly constructed.
@@ -604,6 +605,20 @@ func (this *QWizard) IsSignalConnected(signal *QMetaMethod) bool {
 
 	var _dynamic_cast_ok C.bool = false
 	_method_ret := (bool)(C.QWizard_protectedbase_isSignalConnected(&_dynamic_cast_ok, unsafe.Pointer(this.h), signal.cPointer()))
+
+	if !_dynamic_cast_ok {
+		panic("miqt: can only call protected methods for directly constructed types")
+	}
+
+	return _method_ret
+
+}
+
+// GetDecodedMetricF can only be called from a QWizard that was directly constructed.
+func (this *QWizard) GetDecodedMetricF(metricA PaintDeviceMetric, metricB PaintDeviceMetric) float64 {
+
+	var _dynamic_cast_ok C.bool = false
+	_method_ret := (float64)(C.QWizard_protectedbase_getDecodedMetricF(&_dynamic_cast_ok, unsafe.Pointer(this.h), metricA, metricB))
 
 	if !_dynamic_cast_ok {
 		panic("miqt: can only call protected methods for directly constructed types")
@@ -1767,12 +1782,12 @@ func miqt_exec_callback_QWizard_changeEvent(self *C.QWizard, cb C.intptr_t, para
 
 }
 
-func (this *QWizard) callVirtualBase_Metric(param1 QPaintDevice__PaintDeviceMetric) int {
+func (this *QWizard) callVirtualBase_Metric(param1 PaintDeviceMetric) int {
 
-	return (int)(C.QWizard_virtualbase_metric(unsafe.Pointer(this.h), (C.int)(param1)))
+	return (int)(C.QWizard_virtualbase_metric(unsafe.Pointer(this.h), param1))
 
 }
-func (this *QWizard) OnMetric(slot func(super func(param1 QPaintDevice__PaintDeviceMetric) int, param1 QPaintDevice__PaintDeviceMetric) int) {
+func (this *QWizard) OnMetric(slot func(super func(param1 PaintDeviceMetric) int, param1 PaintDeviceMetric) int) {
 	ok := C.QWizard_override_virtual_metric(unsafe.Pointer(this.h), C.intptr_t(cgo.NewHandle(slot)))
 	if !ok {
 		panic("miqt: can only override virtual methods for directly constructed types")
@@ -1780,14 +1795,14 @@ func (this *QWizard) OnMetric(slot func(super func(param1 QPaintDevice__PaintDev
 }
 
 //export miqt_exec_callback_QWizard_metric
-func miqt_exec_callback_QWizard_metric(self *C.QWizard, cb C.intptr_t, param1 C.int) C.int {
-	gofunc, ok := cgo.Handle(cb).Value().(func(super func(param1 QPaintDevice__PaintDeviceMetric) int, param1 QPaintDevice__PaintDeviceMetric) int)
+func miqt_exec_callback_QWizard_metric(self *C.QWizard, cb C.intptr_t, param1 C.PaintDeviceMetric) C.int {
+	gofunc, ok := cgo.Handle(cb).Value().(func(super func(param1 PaintDeviceMetric) int, param1 PaintDeviceMetric) int)
 	if !ok {
 		panic("miqt: callback of non-callback type (heap corruption?)")
 	}
 
 	// Convert all CABI parameters to Go parameters
-	slotval1 := (QPaintDevice__PaintDeviceMetric)(param1)
+	int /* TODO  */
 
 	virtualReturn := gofunc((&QWizard{h: self}).callVirtualBase_Metric, slotval1)
 
@@ -2516,6 +2531,20 @@ func (this *QWizardPage) IsSignalConnected(signal *QMetaMethod) bool {
 
 	var _dynamic_cast_ok C.bool = false
 	_method_ret := (bool)(C.QWizardPage_protectedbase_isSignalConnected(&_dynamic_cast_ok, unsafe.Pointer(this.h), signal.cPointer()))
+
+	if !_dynamic_cast_ok {
+		panic("miqt: can only call protected methods for directly constructed types")
+	}
+
+	return _method_ret
+
+}
+
+// GetDecodedMetricF can only be called from a QWizardPage that was directly constructed.
+func (this *QWizardPage) GetDecodedMetricF(metricA PaintDeviceMetric, metricB PaintDeviceMetric) float64 {
+
+	var _dynamic_cast_ok C.bool = false
+	_method_ret := (float64)(C.QWizardPage_protectedbase_getDecodedMetricF(&_dynamic_cast_ok, unsafe.Pointer(this.h), metricA, metricB))
 
 	if !_dynamic_cast_ok {
 		panic("miqt: can only call protected methods for directly constructed types")
@@ -3548,12 +3577,12 @@ func miqt_exec_callback_QWizardPage_changeEvent(self *C.QWizardPage, cb C.intptr
 
 }
 
-func (this *QWizardPage) callVirtualBase_Metric(param1 QPaintDevice__PaintDeviceMetric) int {
+func (this *QWizardPage) callVirtualBase_Metric(param1 PaintDeviceMetric) int {
 
-	return (int)(C.QWizardPage_virtualbase_metric(unsafe.Pointer(this.h), (C.int)(param1)))
+	return (int)(C.QWizardPage_virtualbase_metric(unsafe.Pointer(this.h), param1))
 
 }
-func (this *QWizardPage) OnMetric(slot func(super func(param1 QPaintDevice__PaintDeviceMetric) int, param1 QPaintDevice__PaintDeviceMetric) int) {
+func (this *QWizardPage) OnMetric(slot func(super func(param1 PaintDeviceMetric) int, param1 PaintDeviceMetric) int) {
 	ok := C.QWizardPage_override_virtual_metric(unsafe.Pointer(this.h), C.intptr_t(cgo.NewHandle(slot)))
 	if !ok {
 		panic("miqt: can only override virtual methods for directly constructed types")
@@ -3561,14 +3590,14 @@ func (this *QWizardPage) OnMetric(slot func(super func(param1 QPaintDevice__Pain
 }
 
 //export miqt_exec_callback_QWizardPage_metric
-func miqt_exec_callback_QWizardPage_metric(self *C.QWizardPage, cb C.intptr_t, param1 C.int) C.int {
-	gofunc, ok := cgo.Handle(cb).Value().(func(super func(param1 QPaintDevice__PaintDeviceMetric) int, param1 QPaintDevice__PaintDeviceMetric) int)
+func miqt_exec_callback_QWizardPage_metric(self *C.QWizardPage, cb C.intptr_t, param1 C.PaintDeviceMetric) C.int {
+	gofunc, ok := cgo.Handle(cb).Value().(func(super func(param1 PaintDeviceMetric) int, param1 PaintDeviceMetric) int)
 	if !ok {
 		panic("miqt: callback of non-callback type (heap corruption?)")
 	}
 
 	// Convert all CABI parameters to Go parameters
-	slotval1 := (QPaintDevice__PaintDeviceMetric)(param1)
+	int /* TODO  */
 
 	virtualReturn := gofunc((&QWizardPage{h: self}).callVirtualBase_Metric, slotval1)
 

@@ -34,18 +34,20 @@ const (
 type QFont__StyleStrategy int
 
 const (
-	QFont__PreferDefault       QFont__StyleStrategy = 1
-	QFont__PreferBitmap        QFont__StyleStrategy = 2
-	QFont__PreferDevice        QFont__StyleStrategy = 4
-	QFont__PreferOutline       QFont__StyleStrategy = 8
-	QFont__ForceOutline        QFont__StyleStrategy = 16
-	QFont__PreferMatch         QFont__StyleStrategy = 32
-	QFont__PreferQuality       QFont__StyleStrategy = 64
-	QFont__PreferAntialias     QFont__StyleStrategy = 128
-	QFont__NoAntialias         QFont__StyleStrategy = 256
-	QFont__NoSubpixelAntialias QFont__StyleStrategy = 2048
-	QFont__PreferNoShaping     QFont__StyleStrategy = 4096
-	QFont__NoFontMerging       QFont__StyleStrategy = 32768
+	QFont__PreferDefault         QFont__StyleStrategy = 1
+	QFont__PreferBitmap          QFont__StyleStrategy = 2
+	QFont__PreferDevice          QFont__StyleStrategy = 4
+	QFont__PreferOutline         QFont__StyleStrategy = 8
+	QFont__ForceOutline          QFont__StyleStrategy = 16
+	QFont__PreferMatch           QFont__StyleStrategy = 32
+	QFont__PreferQuality         QFont__StyleStrategy = 64
+	QFont__PreferAntialias       QFont__StyleStrategy = 128
+	QFont__NoAntialias           QFont__StyleStrategy = 256
+	QFont__NoSubpixelAntialias   QFont__StyleStrategy = 2048
+	QFont__PreferNoShaping       QFont__StyleStrategy = 4096
+	QFont__ContextFontMerging    QFont__StyleStrategy = 8192
+	QFont__PreferTypoLineMetrics QFont__StyleStrategy = 16384
+	QFont__NoFontMerging         QFont__StyleStrategy = 32768
 )
 
 type QFont__HintingPreference int
@@ -133,7 +135,9 @@ const (
 	QFont__HintingPreferenceResolved QFont__ResolveProperties = 32768
 	QFont__StyleNameResolved         QFont__ResolveProperties = 65536
 	QFont__FamiliesResolved          QFont__ResolveProperties = 131072
-	QFont__AllPropertiesResolved     QFont__ResolveProperties = 262143
+	QFont__FeaturesResolved          QFont__ResolveProperties = 262144
+	QFont__VariableAxesResolved      QFont__ResolveProperties = 524288
+	QFont__AllPropertiesResolved     QFont__ResolveProperties = 1048575
 )
 
 type QFont struct {
@@ -375,12 +379,12 @@ func (this *QFont) SetPixelSize(pixelSize int) {
 	C.QFont_setPixelSize(this.h, (C.int)(pixelSize))
 }
 
-func (this *QFont) Weight() QFont__Weight {
-	return (QFont__Weight)(C.QFont_weight(this.h))
+func (this *QFont) Weight() Weight {
+	int /* TODO  */
 }
 
-func (this *QFont) SetWeight(weight QFont__Weight) {
-	C.QFont_setWeight(this.h, (C.int)(weight))
+func (this *QFont) SetWeight(weight Weight) {
+	C.QFont_setWeight(this.h, weight)
 }
 
 func (this *QFont) Bold() bool {
@@ -391,12 +395,12 @@ func (this *QFont) SetBold(bold bool) {
 	C.QFont_setBold(this.h, (C.bool)(bold))
 }
 
-func (this *QFont) SetStyle(style QFont__Style) {
-	C.QFont_setStyle(this.h, (C.int)(style))
+func (this *QFont) SetStyle(style Style) {
+	C.QFont_setStyle(this.h, style)
 }
 
-func (this *QFont) Style() QFont__Style {
-	return (QFont__Style)(C.QFont_style(this.h))
+func (this *QFont) Style() Style {
+	int /* TODO  */
 }
 
 func (this *QFont) Italic() bool {
@@ -447,20 +451,20 @@ func (this *QFont) SetKerning(kerning bool) {
 	C.QFont_setKerning(this.h, (C.bool)(kerning))
 }
 
-func (this *QFont) StyleHint() QFont__StyleHint {
-	return (QFont__StyleHint)(C.QFont_styleHint(this.h))
+func (this *QFont) StyleHint() StyleHint {
+	int /* TODO  */
 }
 
-func (this *QFont) StyleStrategy() QFont__StyleStrategy {
-	return (QFont__StyleStrategy)(C.QFont_styleStrategy(this.h))
+func (this *QFont) StyleStrategy() StyleStrategy {
+	int /* TODO  */
 }
 
-func (this *QFont) SetStyleHint(param1 QFont__StyleHint) {
-	C.QFont_setStyleHint(this.h, (C.int)(param1))
+func (this *QFont) SetStyleHint(param1 StyleHint) {
+	C.QFont_setStyleHint(this.h, param1)
 }
 
-func (this *QFont) SetStyleStrategy(s QFont__StyleStrategy) {
-	C.QFont_setStyleStrategy(this.h, (C.int)(s))
+func (this *QFont) SetStyleStrategy(s StyleStrategy) {
+	C.QFont_setStyleStrategy(this.h, s)
 }
 
 func (this *QFont) Stretch() int {
@@ -475,12 +479,12 @@ func (this *QFont) LetterSpacing() float64 {
 	return (float64)(C.QFont_letterSpacing(this.h))
 }
 
-func (this *QFont) LetterSpacingType() QFont__SpacingType {
-	return (QFont__SpacingType)(C.QFont_letterSpacingType(this.h))
+func (this *QFont) LetterSpacingType() SpacingType {
+	int /* TODO  */
 }
 
-func (this *QFont) SetLetterSpacing(typeVal QFont__SpacingType, spacing float64) {
-	C.QFont_setLetterSpacing(this.h, (C.int)(typeVal), (C.double)(spacing))
+func (this *QFont) SetLetterSpacing(typeVal SpacingType, spacing float64) {
+	C.QFont_setLetterSpacing(this.h, typeVal, (C.double)(spacing))
 }
 
 func (this *QFont) WordSpacing() float64 {
@@ -491,20 +495,80 @@ func (this *QFont) SetWordSpacing(spacing float64) {
 	C.QFont_setWordSpacing(this.h, (C.double)(spacing))
 }
 
-func (this *QFont) SetCapitalization(capitalization QFont__Capitalization) {
-	C.QFont_setCapitalization(this.h, (C.int)(capitalization))
+func (this *QFont) SetCapitalization(capitalization Capitalization) {
+	C.QFont_setCapitalization(this.h, capitalization)
 }
 
-func (this *QFont) Capitalization() QFont__Capitalization {
-	return (QFont__Capitalization)(C.QFont_capitalization(this.h))
+func (this *QFont) Capitalization() Capitalization {
+	int /* TODO  */
 }
 
-func (this *QFont) SetHintingPreference(hintingPreference QFont__HintingPreference) {
-	C.QFont_setHintingPreference(this.h, (C.int)(hintingPreference))
+func (this *QFont) SetHintingPreference(hintingPreference HintingPreference) {
+	C.QFont_setHintingPreference(this.h, hintingPreference)
 }
 
-func (this *QFont) HintingPreference() QFont__HintingPreference {
-	return (QFont__HintingPreference)(C.QFont_hintingPreference(this.h))
+func (this *QFont) HintingPreference() HintingPreference {
+	int /* TODO  */
+}
+
+func (this *QFont) SetFeature(tag Tag, value uint) {
+	C.QFont_setFeature(this.h, tag, (C.uint)(value))
+}
+
+func (this *QFont) UnsetFeature(tag Tag) {
+	C.QFont_unsetFeature(this.h, tag)
+}
+
+func (this *QFont) FeatureValue(tag Tag) uint {
+	return (uint)(C.QFont_featureValue(this.h, tag))
+}
+
+func (this *QFont) IsFeatureSet(tag Tag) bool {
+	return (bool)(C.QFont_isFeatureSet(this.h, tag))
+}
+
+func (this *QFont) FeatureTags() []Tag {
+	var _ma C.struct_miqt_array = C.QFont_featureTags(this.h)
+	_ret := make([]Tag, int(_ma.len))
+	_outCast := (*[0xffff]C.Tag)(unsafe.Pointer(_ma.data)) // hey ya
+	for i := 0; i < int(_ma.len); i++ {
+		int /* TODO  */
+	}
+	return _ret
+}
+
+func (this *QFont) ClearFeatures() {
+	C.QFont_clearFeatures(this.h)
+}
+
+func (this *QFont) SetVariableAxis(tag Tag, value float32) {
+	C.QFont_setVariableAxis(this.h, tag, (C.float)(value))
+}
+
+func (this *QFont) UnsetVariableAxis(tag Tag) {
+	C.QFont_unsetVariableAxis(this.h, tag)
+}
+
+func (this *QFont) IsVariableAxisSet(tag Tag) bool {
+	return (bool)(C.QFont_isVariableAxisSet(this.h, tag))
+}
+
+func (this *QFont) VariableAxisValue(tag Tag) float32 {
+	return (float32)(C.QFont_variableAxisValue(this.h, tag))
+}
+
+func (this *QFont) ClearVariableAxes() {
+	C.QFont_clearVariableAxes(this.h)
+}
+
+func (this *QFont) VariableAxisTags() []Tag {
+	var _ma C.struct_miqt_array = C.QFont_variableAxisTags(this.h)
+	_ret := make([]Tag, int(_ma.len))
+	_outCast := (*[0xffff]C.Tag)(unsafe.Pointer(_ma.data)) // hey ya
+	for i := 0; i < int(_ma.len); i++ {
+		int /* TODO  */
+	}
+	return _ret
 }
 
 func (this *QFont) ExactMatch() bool {
@@ -679,8 +743,8 @@ func (this *QFont) LegacyWeight() int {
 	return (int)(C.QFont_legacyWeight(this.h))
 }
 
-func (this *QFont) SetStyleHint2(param1 QFont__StyleHint, param2 QFont__StyleStrategy) {
-	C.QFont_setStyleHint2(this.h, (C.int)(param1), (C.int)(param2))
+func (this *QFont) SetStyleHint2(param1 StyleHint, param2 StyleStrategy) {
+	C.QFont_setStyleHint2(this.h, param1, param2)
 }
 
 // Delete this object from C++ memory.
@@ -692,6 +756,83 @@ func (this *QFont) Delete() {
 // from C++ memory once it is unreachable from Go memory.
 func (this *QFont) GoGC() {
 	runtime.SetFinalizer(this, func(this *QFont) {
+		this.Delete()
+		runtime.KeepAlive(this.h)
+	})
+}
+
+type QFont__Tag struct {
+	h *C.QFont__Tag
+}
+
+func (this *QFont__Tag) cPointer() *C.QFont__Tag {
+	if this == nil {
+		return nil
+	}
+	return this.h
+}
+
+func (this *QFont__Tag) UnsafePointer() unsafe.Pointer {
+	if this == nil {
+		return nil
+	}
+	return unsafe.Pointer(this.h)
+}
+
+// newQFont__Tag constructs the type using only CGO pointers.
+func newQFont__Tag(h *C.QFont__Tag) *QFont__Tag {
+	if h == nil {
+		return nil
+	}
+
+	return &QFont__Tag{h: h}
+}
+
+// UnsafeNewQFont__Tag constructs the type using only unsafe pointers.
+func UnsafeNewQFont__Tag(h unsafe.Pointer) *QFont__Tag {
+	return newQFont__Tag((*C.QFont__Tag)(h))
+}
+
+// NewQFont__Tag constructs a new QFont::Tag object.
+func NewQFont__Tag() *QFont__Tag {
+
+	return newQFont__Tag(C.QFont__Tag_new())
+}
+
+// NewQFont__Tag2 constructs a new QFont::Tag object.
+func NewQFont__Tag2(param1 *Tag) *QFont__Tag {
+
+	return newQFont__Tag(C.QFont__Tag_new2(param1))
+}
+
+func (this *QFont__Tag) IsValid() bool {
+	return (bool)(C.QFont__Tag_isValid(this.h))
+}
+
+func (this *QFont__Tag) Value() uint {
+	return (uint)(C.QFont__Tag_value(this.h))
+}
+
+func (this *QFont__Tag) ToString() []byte {
+	var _bytearray C.struct_miqt_string = C.QFont__Tag_toString(this.h)
+	_ret := C.GoBytes(unsafe.Pointer(_bytearray.data), C.int(int64(_bytearray.len)))
+	C.free(unsafe.Pointer(_bytearray.data))
+	return _ret
+}
+
+func (this *QFont__Tag) OperatorAssign(param1 *Tag) {
+	C.QFont__Tag_operatorAssign(this.h, param1)
+}
+
+// Delete this object from C++ memory.
+func (this *QFont__Tag) Delete() {
+	C.QFont__Tag_delete(this.h)
+}
+
+// GoGC adds a Go Finalizer to this pointer, so that it will be deleted
+// from C++ memory once it is unreachable from Go memory.
+func (this *QFont__Tag) GoGC() {
+	runtime.SetFinalizer(this, func(this *QFont__Tag) {
 		this.Delete()
 		runtime.KeepAlive(this.h)
 	})

@@ -58,7 +58,7 @@ extern "C" {
 
 void miqt_exec_callback_QColumnView_updatePreviewWidget(intptr_t, QModelIndex*);
 QModelIndex* miqt_exec_callback_QColumnView_indexAt(const QColumnView*, intptr_t, QPoint*);
-void miqt_exec_callback_QColumnView_scrollTo(QColumnView*, intptr_t, QModelIndex*, int);
+void miqt_exec_callback_QColumnView_scrollTo(QColumnView*, intptr_t, QModelIndex*, ScrollHint);
 QSize* miqt_exec_callback_QColumnView_sizeHint(const QColumnView*, intptr_t);
 QRect* miqt_exec_callback_QColumnView_visualRect(const QColumnView*, intptr_t, QModelIndex*);
 void miqt_exec_callback_QColumnView_setModel(QColumnView*, intptr_t, QAbstractItemModel*);
@@ -66,7 +66,7 @@ void miqt_exec_callback_QColumnView_setSelectionModel(QColumnView*, intptr_t, QI
 void miqt_exec_callback_QColumnView_setRootIndex(QColumnView*, intptr_t, QModelIndex*);
 void miqt_exec_callback_QColumnView_selectAll(QColumnView*, intptr_t);
 bool miqt_exec_callback_QColumnView_isIndexHidden(const QColumnView*, intptr_t, QModelIndex*);
-QModelIndex* miqt_exec_callback_QColumnView_moveCursor(QColumnView*, intptr_t, int, int);
+QModelIndex* miqt_exec_callback_QColumnView_moveCursor(QColumnView*, intptr_t, CursorAction, int);
 void miqt_exec_callback_QColumnView_resizeEvent(QColumnView*, intptr_t, QResizeEvent*);
 void miqt_exec_callback_QColumnView_setSelection(QColumnView*, intptr_t, QRect*, int);
 QRegion* miqt_exec_callback_QColumnView_visualRegionForSelection(const QColumnView*, intptr_t, QItemSelection*);
@@ -97,7 +97,7 @@ void miqt_exec_callback_QColumnView_closeEditor(QColumnView*, intptr_t, QWidget*
 void miqt_exec_callback_QColumnView_commitData(QColumnView*, intptr_t, QWidget*);
 void miqt_exec_callback_QColumnView_editorDestroyed(QColumnView*, intptr_t, QObject*);
 struct miqt_array /* of QModelIndex* */  miqt_exec_callback_QColumnView_selectedIndexes(const QColumnView*, intptr_t);
-bool miqt_exec_callback_QColumnView_edit2(QColumnView*, intptr_t, QModelIndex*, int, QEvent*);
+bool miqt_exec_callback_QColumnView_edit2(QColumnView*, intptr_t, QModelIndex*, EditTrigger, QEvent*);
 int miqt_exec_callback_QColumnView_selectionCommand(const QColumnView*, intptr_t, QModelIndex*, QEvent*);
 void miqt_exec_callback_QColumnView_startDrag(QColumnView*, intptr_t, int);
 void miqt_exec_callback_QColumnView_initViewItemOption(const QColumnView*, intptr_t, QStyleOptionViewItem*);
@@ -141,7 +141,7 @@ void miqt_exec_callback_QColumnView_actionEvent(QColumnView*, intptr_t, QActionE
 void miqt_exec_callback_QColumnView_showEvent(QColumnView*, intptr_t, QShowEvent*);
 void miqt_exec_callback_QColumnView_hideEvent(QColumnView*, intptr_t, QHideEvent*);
 bool miqt_exec_callback_QColumnView_nativeEvent(QColumnView*, intptr_t, struct miqt_string, void*, intptr_t*);
-int miqt_exec_callback_QColumnView_metric(const QColumnView*, intptr_t, int);
+int miqt_exec_callback_QColumnView_metric(const QColumnView*, intptr_t, PaintDeviceMetric);
 void miqt_exec_callback_QColumnView_initPainter(const QColumnView*, intptr_t, QPainter*);
 QPaintDevice* miqt_exec_callback_QColumnView_redirected(const QColumnView*, intptr_t, QPoint*);
 QPainter* miqt_exec_callback_QColumnView_sharedPainter(const QColumnView*, intptr_t);
@@ -183,7 +183,7 @@ public:
 	intptr_t handle__scrollTo = 0;
 
 	// Subclass to allow providing a Go implementation
-	virtual void scrollTo(const QModelIndex& index, QAbstractItemView::ScrollHint hint) override {
+	virtual void scrollTo(const QModelIndex& index, ScrollHint hint) override {
 		if (handle__scrollTo == 0) {
 			QColumnView::scrollTo(index, hint);
 			return;
@@ -192,13 +192,12 @@ public:
 		const QModelIndex& index_ret = index;
 		// Cast returned reference into pointer
 		QModelIndex* sigval1 = const_cast<QModelIndex*>(&index_ret);
-		QAbstractItemView::ScrollHint hint_ret = hint;
-		int sigval2 = static_cast<int>(hint_ret);
+		ScrollHint sigval2 = hint;
 		miqt_exec_callback_QColumnView_scrollTo(this, handle__scrollTo, sigval1, sigval2);
 
 	}
 
-	friend void QColumnView_virtualbase_scrollTo(void* self, QModelIndex* index, int hint);
+	friend void QColumnView_virtualbase_scrollTo(void* self, QModelIndex* index, ScrollHint hint);
 
 	// cgo.Handle value for overwritten implementation
 	intptr_t handle__sizeHint = 0;
@@ -324,20 +323,19 @@ public:
 	intptr_t handle__moveCursor = 0;
 
 	// Subclass to allow providing a Go implementation
-	virtual QModelIndex moveCursor(QAbstractItemView::CursorAction cursorAction, Qt::KeyboardModifiers modifiers) override {
+	virtual QModelIndex moveCursor(CursorAction cursorAction, Qt::KeyboardModifiers modifiers) override {
 		if (handle__moveCursor == 0) {
 			return QColumnView::moveCursor(cursorAction, modifiers);
 		}
 
-		QAbstractItemView::CursorAction cursorAction_ret = cursorAction;
-		int sigval1 = static_cast<int>(cursorAction_ret);
+		CursorAction sigval1 = cursorAction;
 		Qt::KeyboardModifiers modifiers_ret = modifiers;
 		int sigval2 = static_cast<int>(modifiers_ret);
 		QModelIndex* callback_return_value = miqt_exec_callback_QColumnView_moveCursor(this, handle__moveCursor, sigval1, sigval2);
 		return *callback_return_value;
 	}
 
-	friend QModelIndex* QColumnView_virtualbase_moveCursor(void* self, int cursorAction, int modifiers);
+	friend QModelIndex* QColumnView_virtualbase_moveCursor(void* self, CursorAction cursorAction, int modifiers);
 
 	// cgo.Handle value for overwritten implementation
 	intptr_t handle__resizeEvent = 0;
@@ -897,7 +895,7 @@ public:
 	intptr_t handle__edit2 = 0;
 
 	// Subclass to allow providing a Go implementation
-	virtual bool edit(const QModelIndex& index, QAbstractItemView::EditTrigger trigger, QEvent* event) override {
+	virtual bool edit(const QModelIndex& index, EditTrigger trigger, QEvent* event) override {
 		if (handle__edit2 == 0) {
 			return QColumnView::edit(index, trigger, event);
 		}
@@ -905,14 +903,13 @@ public:
 		const QModelIndex& index_ret = index;
 		// Cast returned reference into pointer
 		QModelIndex* sigval1 = const_cast<QModelIndex*>(&index_ret);
-		QAbstractItemView::EditTrigger trigger_ret = trigger;
-		int sigval2 = static_cast<int>(trigger_ret);
+		EditTrigger sigval2 = trigger;
 		QEvent* sigval3 = event;
 		bool callback_return_value = miqt_exec_callback_QColumnView_edit2(this, handle__edit2, sigval1, sigval2, sigval3);
 		return callback_return_value;
 	}
 
-	friend bool QColumnView_virtualbase_edit2(void* self, QModelIndex* index, int trigger, QEvent* event);
+	friend bool QColumnView_virtualbase_edit2(void* self, QModelIndex* index, EditTrigger trigger, QEvent* event);
 
 	// cgo.Handle value for overwritten implementation
 	intptr_t handle__selectionCommand = 0;
@@ -1645,18 +1642,17 @@ public:
 	intptr_t handle__metric = 0;
 
 	// Subclass to allow providing a Go implementation
-	virtual int metric(QPaintDevice::PaintDeviceMetric param1) const override {
+	virtual int metric(PaintDeviceMetric param1) const override {
 		if (handle__metric == 0) {
 			return QColumnView::metric(param1);
 		}
 
-		QPaintDevice::PaintDeviceMetric param1_ret = param1;
-		int sigval1 = static_cast<int>(param1_ret);
+		PaintDeviceMetric sigval1 = param1;
 		int callback_return_value = miqt_exec_callback_QColumnView_metric(this, handle__metric, sigval1);
 		return static_cast<int>(callback_return_value);
 	}
 
-	friend int QColumnView_virtualbase_metric(const void* self, int param1);
+	friend int QColumnView_virtualbase_metric(const void* self, PaintDeviceMetric param1);
 
 	// cgo.Handle value for overwritten implementation
 	intptr_t handle__initPainter = 0;
@@ -1780,8 +1776,8 @@ public:
 
 	// Wrappers to allow calling protected methods:
 	friend void QColumnView_protectedbase_initializeColumn(bool* _dynamic_cast_ok, const void* self, QAbstractItemView* column);
-	friend int QColumnView_protectedbase_state(bool* _dynamic_cast_ok, const void* self);
-	friend void QColumnView_protectedbase_setState(bool* _dynamic_cast_ok, void* self, int state);
+	friend State QColumnView_protectedbase_state(bool* _dynamic_cast_ok, const void* self);
+	friend void QColumnView_protectedbase_setState(bool* _dynamic_cast_ok, void* self, State state);
 	friend void QColumnView_protectedbase_scheduleDelayedItemsLayout(bool* _dynamic_cast_ok, void* self);
 	friend void QColumnView_protectedbase_executeDelayedItemsLayout(bool* _dynamic_cast_ok, void* self);
 	friend void QColumnView_protectedbase_setDirtyRegion(bool* _dynamic_cast_ok, void* self, QRegion* region);
@@ -1790,7 +1786,7 @@ public:
 	friend void QColumnView_protectedbase_startAutoScroll(bool* _dynamic_cast_ok, void* self);
 	friend void QColumnView_protectedbase_stopAutoScroll(bool* _dynamic_cast_ok, void* self);
 	friend void QColumnView_protectedbase_doAutoScroll(bool* _dynamic_cast_ok, void* self);
-	friend int QColumnView_protectedbase_dropIndicatorPosition(bool* _dynamic_cast_ok, const void* self);
+	friend DropIndicatorPosition QColumnView_protectedbase_dropIndicatorPosition(bool* _dynamic_cast_ok, const void* self);
 	friend void QColumnView_protectedbase_setViewportMargins(bool* _dynamic_cast_ok, void* self, int left, int top, int right, int bottom);
 	friend QMargins* QColumnView_protectedbase_viewportMargins(bool* _dynamic_cast_ok, const void* self);
 	friend void QColumnView_protectedbase_drawFrame(bool* _dynamic_cast_ok, void* self, QPainter* param1);
@@ -1803,6 +1799,7 @@ public:
 	friend int QColumnView_protectedbase_senderSignalIndex(bool* _dynamic_cast_ok, const void* self);
 	friend int QColumnView_protectedbase_receivers(bool* _dynamic_cast_ok, const void* self, const char* signal);
 	friend bool QColumnView_protectedbase_isSignalConnected(bool* _dynamic_cast_ok, const void* self, QMetaMethod* signal);
+	friend double QColumnView_protectedbase_getDecodedMetricF(bool* _dynamic_cast_ok, const void* self, PaintDeviceMetric metricA, PaintDeviceMetric metricB);
 };
 
 QColumnView* QColumnView_new(QWidget* parent) {
@@ -1853,8 +1850,8 @@ QModelIndex* QColumnView_indexAt(const QColumnView* self, QPoint* point) {
 	return new QModelIndex(self->indexAt(*point));
 }
 
-void QColumnView_scrollTo(QColumnView* self, QModelIndex* index, int hint) {
-	self->scrollTo(*index, static_cast<QAbstractItemView::ScrollHint>(hint));
+void QColumnView_scrollTo(QColumnView* self, QModelIndex* index, ScrollHint hint) {
+	self->scrollTo(*index, hint);
 }
 
 QSize* QColumnView_sizeHint(const QColumnView* self) {
@@ -1887,6 +1884,14 @@ void QColumnView_setResizeGripsVisible(QColumnView* self, bool visible) {
 
 bool QColumnView_resizeGripsVisible(const QColumnView* self) {
 	return self->resizeGripsVisible();
+}
+
+void QColumnView_setPreviewColumnVisible(QColumnView* self, bool visible) {
+	self->setPreviewColumnVisible(visible);
+}
+
+bool QColumnView_isPreviewColumnVisible(const QColumnView* self) {
+	return self->isPreviewColumnVisible();
 }
 
 QWidget* QColumnView_previewWidget(const QColumnView* self) {
@@ -1966,8 +1971,8 @@ bool QColumnView_override_virtual_scrollTo(void* self, intptr_t slot) {
 	return true;
 }
 
-void QColumnView_virtualbase_scrollTo(void* self, QModelIndex* index, int hint) {
-	static_cast<MiqtVirtualQColumnView*>(self)->QColumnView::scrollTo(*index, static_cast<MiqtVirtualQColumnView::ScrollHint>(hint));
+void QColumnView_virtualbase_scrollTo(void* self, QModelIndex* index, ScrollHint hint) {
+	static_cast<MiqtVirtualQColumnView*>(self)->QColumnView::scrollTo(*index, hint);
 }
 
 bool QColumnView_override_virtual_sizeHint(void* self, intptr_t slot) {
@@ -2078,8 +2083,8 @@ bool QColumnView_override_virtual_moveCursor(void* self, intptr_t slot) {
 	return true;
 }
 
-QModelIndex* QColumnView_virtualbase_moveCursor(void* self, int cursorAction, int modifiers) {
-	return new QModelIndex(static_cast<MiqtVirtualQColumnView*>(self)->QColumnView::moveCursor(static_cast<MiqtVirtualQColumnView::CursorAction>(cursorAction), static_cast<Qt::KeyboardModifiers>(modifiers)));
+QModelIndex* QColumnView_virtualbase_moveCursor(void* self, CursorAction cursorAction, int modifiers) {
+	return new QModelIndex(static_cast<MiqtVirtualQColumnView*>(self)->QColumnView::moveCursor(cursorAction, static_cast<Qt::KeyboardModifiers>(modifiers)));
 }
 
 bool QColumnView_override_virtual_resizeEvent(void* self, intptr_t slot) {
@@ -2528,8 +2533,8 @@ bool QColumnView_override_virtual_edit2(void* self, intptr_t slot) {
 	return true;
 }
 
-bool QColumnView_virtualbase_edit2(void* self, QModelIndex* index, int trigger, QEvent* event) {
-	return static_cast<MiqtVirtualQColumnView*>(self)->QColumnView::edit(*index, static_cast<MiqtVirtualQColumnView::EditTrigger>(trigger), event);
+bool QColumnView_virtualbase_edit2(void* self, QModelIndex* index, EditTrigger trigger, QEvent* event) {
+	return static_cast<MiqtVirtualQColumnView*>(self)->QColumnView::edit(*index, trigger, event);
 }
 
 bool QColumnView_override_virtual_selectionCommand(void* self, intptr_t slot) {
@@ -3146,8 +3151,8 @@ bool QColumnView_override_virtual_metric(void* self, intptr_t slot) {
 	return true;
 }
 
-int QColumnView_virtualbase_metric(const void* self, int param1) {
-	return static_cast<const MiqtVirtualQColumnView*>(self)->QColumnView::metric(static_cast<MiqtVirtualQColumnView::PaintDeviceMetric>(param1));
+int QColumnView_virtualbase_metric(const void* self, PaintDeviceMetric param1) {
+	return static_cast<const MiqtVirtualQColumnView*>(self)->QColumnView::metric(param1);
 }
 
 bool QColumnView_override_virtual_initPainter(void* self, intptr_t slot) {
@@ -3259,19 +3264,18 @@ void QColumnView_protectedbase_initializeColumn(bool* _dynamic_cast_ok, const vo
 	self_cast->initializeColumn(column);
 }
 
-int QColumnView_protectedbase_state(bool* _dynamic_cast_ok, const void* self) {
+State QColumnView_protectedbase_state(bool* _dynamic_cast_ok, const void* self) {
 	MiqtVirtualQColumnView* self_cast = dynamic_cast<MiqtVirtualQColumnView*>( (QColumnView*)(self) );
 	if (self_cast == nullptr) {
 		*_dynamic_cast_ok = false;
-		return (int)(0);
+		return nullptr;
 	}
 
 	*_dynamic_cast_ok = true;
-	MiqtVirtualQColumnView::State _ret = self_cast->state();
-	return static_cast<int>(_ret);
+	return self_cast->state();
 }
 
-void QColumnView_protectedbase_setState(bool* _dynamic_cast_ok, void* self, int state) {
+void QColumnView_protectedbase_setState(bool* _dynamic_cast_ok, void* self, State state) {
 	MiqtVirtualQColumnView* self_cast = dynamic_cast<MiqtVirtualQColumnView*>( (QColumnView*)(self) );
 	if (self_cast == nullptr) {
 		*_dynamic_cast_ok = false;
@@ -3279,7 +3283,7 @@ void QColumnView_protectedbase_setState(bool* _dynamic_cast_ok, void* self, int 
 	}
 
 	*_dynamic_cast_ok = true;
-	self_cast->setState(static_cast<MiqtVirtualQColumnView::State>(state));
+	self_cast->setState(state);
 }
 
 void QColumnView_protectedbase_scheduleDelayedItemsLayout(bool* _dynamic_cast_ok, void* self) {
@@ -3370,16 +3374,15 @@ void QColumnView_protectedbase_doAutoScroll(bool* _dynamic_cast_ok, void* self) 
 	self_cast->doAutoScroll();
 }
 
-int QColumnView_protectedbase_dropIndicatorPosition(bool* _dynamic_cast_ok, const void* self) {
+DropIndicatorPosition QColumnView_protectedbase_dropIndicatorPosition(bool* _dynamic_cast_ok, const void* self) {
 	MiqtVirtualQColumnView* self_cast = dynamic_cast<MiqtVirtualQColumnView*>( (QColumnView*)(self) );
 	if (self_cast == nullptr) {
 		*_dynamic_cast_ok = false;
-		return (int)(0);
+		return nullptr;
 	}
 
 	*_dynamic_cast_ok = true;
-	MiqtVirtualQColumnView::DropIndicatorPosition _ret = self_cast->dropIndicatorPosition();
-	return static_cast<int>(_ret);
+	return self_cast->dropIndicatorPosition();
 }
 
 void QColumnView_protectedbase_setViewportMargins(bool* _dynamic_cast_ok, void* self, int left, int top, int right, int bottom) {
@@ -3512,6 +3515,17 @@ bool QColumnView_protectedbase_isSignalConnected(bool* _dynamic_cast_ok, const v
 
 	*_dynamic_cast_ok = true;
 	return self_cast->isSignalConnected(*signal);
+}
+
+double QColumnView_protectedbase_getDecodedMetricF(bool* _dynamic_cast_ok, const void* self, PaintDeviceMetric metricA, PaintDeviceMetric metricB) {
+	MiqtVirtualQColumnView* self_cast = dynamic_cast<MiqtVirtualQColumnView*>( (QColumnView*)(self) );
+	if (self_cast == nullptr) {
+		*_dynamic_cast_ok = false;
+		return 0;
+	}
+
+	*_dynamic_cast_ok = true;
+	return self_cast->getDecodedMetricF(metricA, metricB);
 }
 
 void QColumnView_delete(QColumnView* self) {

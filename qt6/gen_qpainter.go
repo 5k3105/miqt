@@ -71,6 +71,7 @@ const (
 	QPainter__RasterOp_ClearDestination           QPainter__CompositionMode = 35
 	QPainter__RasterOp_SetDestination             QPainter__CompositionMode = 36
 	QPainter__RasterOp_NotDestination             QPainter__CompositionMode = 37
+	QPainter__NCompositionModes                   QPainter__CompositionMode = 38
 )
 
 type QPainter struct {
@@ -133,12 +134,12 @@ func (this *QPainter) IsActive() bool {
 	return (bool)(C.QPainter_isActive(this.h))
 }
 
-func (this *QPainter) SetCompositionMode(mode QPainter__CompositionMode) {
-	C.QPainter_setCompositionMode(this.h, (C.int)(mode))
+func (this *QPainter) SetCompositionMode(mode CompositionMode) {
+	C.QPainter_setCompositionMode(this.h, mode)
 }
 
-func (this *QPainter) CompositionMode() QPainter__CompositionMode {
-	return (QPainter__CompositionMode)(C.QPainter_compositionMode(this.h))
+func (this *QPainter) CompositionMode() CompositionMode {
+	int /* TODO  */
 }
 
 func (this *QPainter) Font() *QFont {
@@ -185,6 +186,14 @@ func (this *QPainter) SetBrushWithStyle(style BrushStyle) {
 	C.QPainter_setBrushWithStyle(this.h, (C.int)(style))
 }
 
+func (this *QPainter) SetBrushWithColor(color QColor) {
+	C.QPainter_setBrushWithColor(this.h, color.cPointer())
+}
+
+func (this *QPainter) SetBrush2(color GlobalColor) {
+	C.QPainter_setBrush2(this.h, (C.int)(color))
+}
+
 func (this *QPainter) Brush() *QBrush {
 	return newQBrush(C.QPainter_brush(this.h))
 }
@@ -199,6 +208,12 @@ func (this *QPainter) BackgroundMode() BGMode {
 
 func (this *QPainter) BrushOrigin() *QPoint {
 	_goptr := newQPoint(C.QPainter_brushOrigin(this.h))
+	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
+	return _goptr
+}
+
+func (this *QPainter) BrushOriginF() *QPointF {
+	_goptr := newQPointF(C.QPainter_brushOriginF(this.h))
 	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
 	return _goptr
 }
@@ -691,8 +706,8 @@ func (this *QPainter) DrawPixmap11(x int, y int, w int, h int, pm *QPixmap) {
 	C.QPainter_drawPixmap11(this.h, (C.int)(x), (C.int)(y), (C.int)(w), (C.int)(h), pm.cPointer())
 }
 
-func (this *QPainter) DrawPixmapFragments(fragments *QPainter__PixmapFragment, fragmentCount int, pixmap *QPixmap) {
-	C.QPainter_drawPixmapFragments(this.h, fragments.cPointer(), (C.int)(fragmentCount), pixmap.cPointer())
+func (this *QPainter) DrawPixmapFragments(fragments *PixmapFragment, fragmentCount int, pixmap *QPixmap) {
+	C.QPainter_drawPixmapFragments(this.h, fragments, (C.int)(fragmentCount), pixmap.cPointer())
 }
 
 func (this *QPainter) DrawImage(targetRect *QRectF, image *QImage, sourceRect *QRectF) {
@@ -943,20 +958,20 @@ func (this *QPainter) EraseRectWithQRect(param1 *QRect) {
 	C.QPainter_eraseRectWithQRect(this.h, param1.cPointer())
 }
 
-func (this *QPainter) SetRenderHint(hint QPainter__RenderHint) {
-	C.QPainter_setRenderHint(this.h, (C.int)(hint))
+func (this *QPainter) SetRenderHint(hint RenderHint) {
+	C.QPainter_setRenderHint(this.h, hint)
 }
 
-func (this *QPainter) SetRenderHints(hints QPainter__RenderHint) {
-	C.QPainter_setRenderHints(this.h, (C.int)(hints))
+func (this *QPainter) SetRenderHints(hints RenderHints) {
+	C.QPainter_setRenderHints(this.h, hints)
 }
 
-func (this *QPainter) RenderHints() QPainter__RenderHint {
-	return (QPainter__RenderHint)(C.QPainter_renderHints(this.h))
+func (this *QPainter) RenderHints() RenderHints {
+	int /* TODO  */
 }
 
-func (this *QPainter) TestRenderHint(hint QPainter__RenderHint) bool {
-	return (bool)(C.QPainter_testRenderHint(this.h, (C.int)(hint)))
+func (this *QPainter) TestRenderHint(hint RenderHint) bool {
+	return (bool)(C.QPainter_testRenderHint(this.h, hint))
 }
 
 func (this *QPainter) PaintEngine() *QPaintEngine {
@@ -1035,8 +1050,8 @@ func (this *QPainter) DrawTiledPixmap7(param1 *QRect, param2 *QPixmap, param3 *Q
 	C.QPainter_drawTiledPixmap7(this.h, param1.cPointer(), param2.cPointer(), param3.cPointer())
 }
 
-func (this *QPainter) DrawPixmapFragments2(fragments *QPainter__PixmapFragment, fragmentCount int, pixmap *QPixmap, hints QPainter__PixmapFragmentHint) {
-	C.QPainter_drawPixmapFragments2(this.h, fragments.cPointer(), (C.int)(fragmentCount), pixmap.cPointer(), (C.int)(hints))
+func (this *QPainter) DrawPixmapFragments2(fragments *PixmapFragment, fragmentCount int, pixmap *QPixmap, hints PixmapFragmentHints) {
+	C.QPainter_drawPixmapFragments2(this.h, fragments, (C.int)(fragmentCount), pixmap.cPointer(), hints)
 }
 
 func (this *QPainter) DrawImage10(targetRect *QRectF, image *QImage, sourceRect *QRectF, flags ImageConversionFlag) {
@@ -1117,12 +1132,12 @@ func (this *QPainter) BoundingRect5(rect *QRectF, text string, o *QTextOption) *
 	return _goptr
 }
 
-func (this *QPainter) SetRenderHint2(hint QPainter__RenderHint, on bool) {
-	C.QPainter_setRenderHint2(this.h, (C.int)(hint), (C.bool)(on))
+func (this *QPainter) SetRenderHint2(hint RenderHint, on bool) {
+	C.QPainter_setRenderHint2(this.h, hint, (C.bool)(on))
 }
 
-func (this *QPainter) SetRenderHints2(hints QPainter__RenderHint, on bool) {
-	C.QPainter_setRenderHints2(this.h, (C.int)(hints), (C.bool)(on))
+func (this *QPainter) SetRenderHints2(hints RenderHints, on bool) {
+	C.QPainter_setRenderHints2(this.h, hints, (C.bool)(on))
 }
 
 // Delete this object from C++ memory.
@@ -1169,6 +1184,18 @@ func newQPainter__PixmapFragment(h *C.QPainter__PixmapFragment) *QPainter__Pixma
 // UnsafeNewQPainter__PixmapFragment constructs the type using only unsafe pointers.
 func UnsafeNewQPainter__PixmapFragment(h unsafe.Pointer) *QPainter__PixmapFragment {
 	return newQPainter__PixmapFragment((*C.QPainter__PixmapFragment)(h))
+}
+
+// NewQPainter__PixmapFragment constructs a new QPainter::PixmapFragment object.
+func NewQPainter__PixmapFragment() *QPainter__PixmapFragment {
+
+	return newQPainter__PixmapFragment(C.QPainter__PixmapFragment_new())
+}
+
+// NewQPainter__PixmapFragment2 constructs a new QPainter::PixmapFragment object.
+func NewQPainter__PixmapFragment2(param1 *PixmapFragment) *QPainter__PixmapFragment {
+
+	return newQPainter__PixmapFragment(C.QPainter__PixmapFragment_new2(param1))
 }
 
 func (this *QPainter__PixmapFragment) X() float64 {
@@ -1251,34 +1278,24 @@ func (this *QPainter__PixmapFragment) SetOpacity(opacity float64) {
 	C.QPainter__PixmapFragment_setOpacity(this.h, (C.double)(opacity))
 }
 
-func QPainter__PixmapFragment_Create(pos *QPointF, sourceRect *QRectF) *QPainter__PixmapFragment {
-	_goptr := newQPainter__PixmapFragment(C.QPainter__PixmapFragment_create(pos.cPointer(), sourceRect.cPointer()))
-	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
-	return _goptr
+func QPainter__PixmapFragment_Create(pos *QPointF, sourceRect *QRectF) PixmapFragment {
+	int /* TODO  */
 }
 
-func QPainter__PixmapFragment_Create2(pos *QPointF, sourceRect *QRectF, scaleX float64) *QPainter__PixmapFragment {
-	_goptr := newQPainter__PixmapFragment(C.QPainter__PixmapFragment_create2(pos.cPointer(), sourceRect.cPointer(), (C.double)(scaleX)))
-	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
-	return _goptr
+func QPainter__PixmapFragment_Create2(pos *QPointF, sourceRect *QRectF, scaleX float64) PixmapFragment {
+	int /* TODO  */
 }
 
-func QPainter__PixmapFragment_Create3(pos *QPointF, sourceRect *QRectF, scaleX float64, scaleY float64) *QPainter__PixmapFragment {
-	_goptr := newQPainter__PixmapFragment(C.QPainter__PixmapFragment_create3(pos.cPointer(), sourceRect.cPointer(), (C.double)(scaleX), (C.double)(scaleY)))
-	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
-	return _goptr
+func QPainter__PixmapFragment_Create3(pos *QPointF, sourceRect *QRectF, scaleX float64, scaleY float64) PixmapFragment {
+	int /* TODO  */
 }
 
-func QPainter__PixmapFragment_Create4(pos *QPointF, sourceRect *QRectF, scaleX float64, scaleY float64, rotation float64) *QPainter__PixmapFragment {
-	_goptr := newQPainter__PixmapFragment(C.QPainter__PixmapFragment_create4(pos.cPointer(), sourceRect.cPointer(), (C.double)(scaleX), (C.double)(scaleY), (C.double)(rotation)))
-	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
-	return _goptr
+func QPainter__PixmapFragment_Create4(pos *QPointF, sourceRect *QRectF, scaleX float64, scaleY float64, rotation float64) PixmapFragment {
+	int /* TODO  */
 }
 
-func QPainter__PixmapFragment_Create5(pos *QPointF, sourceRect *QRectF, scaleX float64, scaleY float64, rotation float64, opacity float64) *QPainter__PixmapFragment {
-	_goptr := newQPainter__PixmapFragment(C.QPainter__PixmapFragment_create5(pos.cPointer(), sourceRect.cPointer(), (C.double)(scaleX), (C.double)(scaleY), (C.double)(rotation), (C.double)(opacity)))
-	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
-	return _goptr
+func QPainter__PixmapFragment_Create5(pos *QPointF, sourceRect *QRectF, scaleX float64, scaleY float64, rotation float64, opacity float64) PixmapFragment {
+	int /* TODO  */
 }
 
 // Delete this object from C++ memory.

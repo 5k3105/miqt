@@ -53,6 +53,10 @@ QLoggingCategory* QLoggingCategory_defaultCategory() {
 	return QLoggingCategory::defaultCategory();
 }
 
+CategoryFilter QLoggingCategory_installFilter(CategoryFilter param1) {
+	return QLoggingCategory::installFilter(param1);
+}
+
 void QLoggingCategory_setFilterRules(struct miqt_string rules) {
 	QString rules_QString = QString::fromUtf8(rules.data, rules.len);
 	QLoggingCategory::setFilterRules(rules_QString);

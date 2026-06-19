@@ -1,4 +1,4 @@
-#include <QByteArray>
+#include <QByteArrayView>
 #include <QCborStreamWriter>
 #include <QIODevice>
 #include <qcborstreamwriter.h>
@@ -36,16 +36,15 @@ void QCborStreamWriter_appendWithQCborNegativeInteger(QCborStreamWriter* self, u
 	self->append(static_cast<QCborNegativeInteger>(n));
 }
 
-void QCborStreamWriter_appendWithBa(QCborStreamWriter* self, struct miqt_string ba) {
-	QByteArray ba_QByteArray(ba.data, ba.len);
-	self->append(ba_QByteArray);
+void QCborStreamWriter_appendWithBa(QCborStreamWriter* self, QByteArrayView* ba) {
+	self->append(*ba);
 }
 
 void QCborStreamWriter_appendWithTag(QCborStreamWriter* self, uint64_t tag) {
 	self->append(static_cast<QCborTag>(tag));
 }
 
-void QCborStreamWriter_append3(QCborStreamWriter* self, int tag) {
+void QCborStreamWriter_append4(QCborStreamWriter* self, int tag) {
 	self->append(static_cast<QCborKnownTags>(tag));
 }
 
@@ -89,7 +88,7 @@ void QCborStreamWriter_appendWithUint(QCborStreamWriter* self, unsigned int u) {
 	self->append(static_cast<uint>(u));
 }
 
-void QCborStreamWriter_append4(QCborStreamWriter* self, const char* str) {
+void QCborStreamWriter_append5(QCborStreamWriter* self, const char* str) {
 	self->append(str);
 }
 
@@ -117,7 +116,7 @@ bool QCborStreamWriter_endMap(QCborStreamWriter* self) {
 	return self->endMap();
 }
 
-void QCborStreamWriter_append5(QCborStreamWriter* self, const char* str, ptrdiff_t size) {
+void QCborStreamWriter_append6(QCborStreamWriter* self, const char* str, ptrdiff_t size) {
 	self->append(str, (qsizetype)(size));
 }
 

@@ -125,12 +125,12 @@ func (this *QAudioFormat) SampleRate() int {
 	return (int)(C.QAudioFormat_sampleRate(this.h))
 }
 
-func (this *QAudioFormat) SetChannelConfig(config QAudioFormat__ChannelConfig) {
-	C.QAudioFormat_setChannelConfig(this.h, (C.uint32_t)(config))
+func (this *QAudioFormat) SetChannelConfig(config ChannelConfig) {
+	C.QAudioFormat_setChannelConfig(this.h, config)
 }
 
-func (this *QAudioFormat) ChannelConfig() QAudioFormat__ChannelConfig {
-	return (QAudioFormat__ChannelConfig)(C.QAudioFormat_channelConfig(this.h))
+func (this *QAudioFormat) ChannelConfig() ChannelConfig {
+	int /* TODO  */
 }
 
 func (this *QAudioFormat) SetChannelCount(channelCount int) {
@@ -141,16 +141,16 @@ func (this *QAudioFormat) ChannelCount() int {
 	return (int)(C.QAudioFormat_channelCount(this.h))
 }
 
-func (this *QAudioFormat) ChannelOffset(channel QAudioFormat__AudioChannelPosition) int {
-	return (int)(C.QAudioFormat_channelOffset(this.h, (C.int)(channel)))
+func (this *QAudioFormat) ChannelOffset(channel AudioChannelPosition) int {
+	return (int)(C.QAudioFormat_channelOffset(this.h, channel))
 }
 
-func (this *QAudioFormat) SetSampleFormat(f QAudioFormat__SampleFormat) {
-	C.QAudioFormat_setSampleFormat(this.h, (C.uint16_t)(f))
+func (this *QAudioFormat) SetSampleFormat(f SampleFormat) {
+	C.QAudioFormat_setSampleFormat(this.h, f)
 }
 
-func (this *QAudioFormat) SampleFormat() QAudioFormat__SampleFormat {
-	return (QAudioFormat__SampleFormat)(C.QAudioFormat_sampleFormat(this.h))
+func (this *QAudioFormat) SampleFormat() SampleFormat {
+	int /* TODO  */
 }
 
 func (this *QAudioFormat) BytesForDuration(microseconds int64) int {
@@ -189,8 +189,8 @@ func (this *QAudioFormat) NormalizedSampleValue(sample unsafe.Pointer) float32 {
 	return (float32)(C.QAudioFormat_normalizedSampleValue(this.h, sample))
 }
 
-func QAudioFormat_DefaultChannelConfigForChannelCount(channelCount int) QAudioFormat__ChannelConfig {
-	return (QAudioFormat__ChannelConfig)(C.QAudioFormat_defaultChannelConfigForChannelCount((C.int)(channelCount)))
+func QAudioFormat_DefaultChannelConfigForChannelCount(channelCount int) ChannelConfig {
+	int /* TODO  */
 }
 
 // Delete this object from C++ memory.

@@ -133,18 +133,26 @@ func (this *QMediaRecorder) SetOutputLocation(location *qt6.QUrl) {
 	C.QMediaRecorder_setOutputLocation(this.h, (*C.QUrl)(location.UnsafePointer()))
 }
 
+func (this *QMediaRecorder) SetOutputDevice(device *qt6.QIODevice) {
+	C.QMediaRecorder_setOutputDevice(this.h, (*C.QIODevice)(device.UnsafePointer()))
+}
+
+func (this *QMediaRecorder) OutputDevice() *qt6.QIODevice {
+	return qt6.UnsafeNewQIODevice(unsafe.Pointer(C.QMediaRecorder_outputDevice(this.h)))
+}
+
 func (this *QMediaRecorder) ActualLocation() *qt6.QUrl {
 	_goptr := qt6.UnsafeNewQUrl(unsafe.Pointer(C.QMediaRecorder_actualLocation(this.h)))
 	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
 	return _goptr
 }
 
-func (this *QMediaRecorder) RecorderState() QMediaRecorder__RecorderState {
-	return (QMediaRecorder__RecorderState)(C.QMediaRecorder_recorderState(this.h))
+func (this *QMediaRecorder) RecorderState() RecorderState {
+	int /* TODO  */
 }
 
-func (this *QMediaRecorder) Error() QMediaRecorder__Error {
-	return (QMediaRecorder__Error)(C.QMediaRecorder_error(this.h))
+func (this *QMediaRecorder) Error() Error {
+	int /* TODO  */
 }
 
 func (this *QMediaRecorder) ErrorString() string {
@@ -168,20 +176,20 @@ func (this *QMediaRecorder) SetMediaFormat(format *QMediaFormat) {
 	C.QMediaRecorder_setMediaFormat(this.h, format.cPointer())
 }
 
-func (this *QMediaRecorder) EncodingMode() QMediaRecorder__EncodingMode {
-	return (QMediaRecorder__EncodingMode)(C.QMediaRecorder_encodingMode(this.h))
+func (this *QMediaRecorder) EncodingMode() EncodingMode {
+	int /* TODO  */
 }
 
-func (this *QMediaRecorder) SetEncodingMode(encodingMode QMediaRecorder__EncodingMode) {
-	C.QMediaRecorder_setEncodingMode(this.h, (C.int)(encodingMode))
+func (this *QMediaRecorder) SetEncodingMode(encodingMode EncodingMode) {
+	C.QMediaRecorder_setEncodingMode(this.h, encodingMode)
 }
 
-func (this *QMediaRecorder) Quality() QMediaRecorder__Quality {
-	return (QMediaRecorder__Quality)(C.QMediaRecorder_quality(this.h))
+func (this *QMediaRecorder) Quality() Quality {
+	int /* TODO  */
 }
 
-func (this *QMediaRecorder) SetQuality(quality QMediaRecorder__Quality) {
-	C.QMediaRecorder_setQuality(this.h, (C.int)(quality))
+func (this *QMediaRecorder) SetQuality(quality Quality) {
+	C.QMediaRecorder_setQuality(this.h, quality)
 }
 
 func (this *QMediaRecorder) VideoResolution() *qt6.QSize {
@@ -250,6 +258,14 @@ func (this *QMediaRecorder) SetMetaData(metaData *QMediaMetaData) {
 
 func (this *QMediaRecorder) AddMetaData(metaData *QMediaMetaData) {
 	C.QMediaRecorder_addMetaData(this.h, metaData.cPointer())
+}
+
+func (this *QMediaRecorder) AutoStop() bool {
+	return (bool)(C.QMediaRecorder_autoStop(this.h))
+}
+
+func (this *QMediaRecorder) SetAutoStop(autoStop bool) {
+	C.QMediaRecorder_setAutoStop(this.h, (C.bool)(autoStop))
 }
 
 func (this *QMediaRecorder) CaptureSession() *QMediaCaptureSession {
@@ -553,6 +569,23 @@ func (this *QMediaRecorder) OnAudioSampleRateChanged(slot func()) {
 
 //export miqt_exec_callback_QMediaRecorder_audioSampleRateChanged
 func miqt_exec_callback_QMediaRecorder_audioSampleRateChanged(cb C.intptr_t) {
+	gofunc, ok := cgo.Handle(cb).Value().(func())
+	if !ok {
+		panic("miqt: callback of non-callback type (heap corruption?)")
+	}
+
+	gofunc()
+}
+
+func (this *QMediaRecorder) AutoStopChanged() {
+	C.QMediaRecorder_autoStopChanged(this.h)
+}
+func (this *QMediaRecorder) OnAutoStopChanged(slot func()) {
+	C.QMediaRecorder_connect_autoStopChanged(this.h, C.intptr_t(cgo.NewHandle(slot)))
+}
+
+//export miqt_exec_callback_QMediaRecorder_autoStopChanged
+func miqt_exec_callback_QMediaRecorder_autoStopChanged(cb C.intptr_t) {
 	gofunc, ok := cgo.Handle(cb).Value().(func())
 	if !ok {
 		panic("miqt: callback of non-callback type (heap corruption?)")

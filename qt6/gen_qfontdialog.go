@@ -120,20 +120,20 @@ func (this *QFontDialog) SelectedFont() *QFont {
 	return _goptr
 }
 
-func (this *QFontDialog) SetOption(option QFontDialog__FontDialogOption) {
-	C.QFontDialog_setOption(this.h, (C.int)(option))
+func (this *QFontDialog) SetOption(option FontDialogOption) {
+	C.QFontDialog_setOption(this.h, option)
 }
 
-func (this *QFontDialog) TestOption(option QFontDialog__FontDialogOption) bool {
-	return (bool)(C.QFontDialog_testOption(this.h, (C.int)(option)))
+func (this *QFontDialog) TestOption(option FontDialogOption) bool {
+	return (bool)(C.QFontDialog_testOption(this.h, option))
 }
 
-func (this *QFontDialog) SetOptions(options QFontDialog__FontDialogOption) {
-	C.QFontDialog_setOptions(this.h, (C.int)(options))
+func (this *QFontDialog) SetOptions(options FontDialogOptions) {
+	C.QFontDialog_setOptions(this.h, options)
 }
 
-func (this *QFontDialog) Options() QFontDialog__FontDialogOption {
-	return (QFontDialog__FontDialogOption)(C.QFontDialog_options(this.h))
+func (this *QFontDialog) Options() FontDialogOptions {
+	int /* TODO  */
 }
 
 func (this *QFontDialog) SetVisible(visible bool) {
@@ -214,8 +214,8 @@ func QFontDialog_Tr3(s string, c string, n int) string {
 	return _ret
 }
 
-func (this *QFontDialog) SetOption2(option QFontDialog__FontDialogOption, on bool) {
-	C.QFontDialog_setOption2(this.h, (C.int)(option), (C.bool)(on))
+func (this *QFontDialog) SetOption2(option FontDialogOption, on bool) {
+	C.QFontDialog_setOption2(this.h, option, (C.bool)(on))
 }
 
 func QFontDialog_GetFont3(ok *bool, parent *QWidget) *QFont {
@@ -240,12 +240,12 @@ func QFontDialog_GetFont5(ok *bool, initial *QFont, parent *QWidget, title strin
 	return _goptr
 }
 
-func QFontDialog_GetFont6(ok *bool, initial *QFont, parent *QWidget, title string, options QFontDialog__FontDialogOption) *QFont {
+func QFontDialog_GetFont6(ok *bool, initial *QFont, parent *QWidget, title string, options FontDialogOptions) *QFont {
 	title_ms := C.struct_miqt_string{}
 	title_ms.data = C.CString(title)
 	title_ms.len = C.size_t(len(title))
 	defer C.free(unsafe.Pointer(title_ms.data))
-	_goptr := newQFont(C.QFontDialog_getFont6((*C.bool)(unsafe.Pointer(ok)), initial.cPointer(), parent.cPointer(), title_ms, (C.int)(options)))
+	_goptr := newQFont(C.QFontDialog_getFont6((*C.bool)(unsafe.Pointer(ok)), initial.cPointer(), parent.cPointer(), title_ms, options))
 	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
 	return _goptr
 }
@@ -375,6 +375,20 @@ func (this *QFontDialog) IsSignalConnected(signal *QMetaMethod) bool {
 
 	var _dynamic_cast_ok C.bool = false
 	_method_ret := (bool)(C.QFontDialog_protectedbase_isSignalConnected(&_dynamic_cast_ok, unsafe.Pointer(this.h), signal.cPointer()))
+
+	if !_dynamic_cast_ok {
+		panic("miqt: can only call protected methods for directly constructed types")
+	}
+
+	return _method_ret
+
+}
+
+// GetDecodedMetricF can only be called from a QFontDialog that was directly constructed.
+func (this *QFontDialog) GetDecodedMetricF(metricA PaintDeviceMetric, metricB PaintDeviceMetric) float64 {
+
+	var _dynamic_cast_ok C.bool = false
+	_method_ret := (float64)(C.QFontDialog_protectedbase_getDecodedMetricF(&_dynamic_cast_ok, unsafe.Pointer(this.h), metricA, metricB))
 
 	if !_dynamic_cast_ok {
 		panic("miqt: can only call protected methods for directly constructed types")
@@ -1436,12 +1450,12 @@ func miqt_exec_callback_QFontDialog_nativeEvent(self *C.QFontDialog, cb C.intptr
 
 }
 
-func (this *QFontDialog) callVirtualBase_Metric(param1 QPaintDevice__PaintDeviceMetric) int {
+func (this *QFontDialog) callVirtualBase_Metric(param1 PaintDeviceMetric) int {
 
-	return (int)(C.QFontDialog_virtualbase_metric(unsafe.Pointer(this.h), (C.int)(param1)))
+	return (int)(C.QFontDialog_virtualbase_metric(unsafe.Pointer(this.h), param1))
 
 }
-func (this *QFontDialog) OnMetric(slot func(super func(param1 QPaintDevice__PaintDeviceMetric) int, param1 QPaintDevice__PaintDeviceMetric) int) {
+func (this *QFontDialog) OnMetric(slot func(super func(param1 PaintDeviceMetric) int, param1 PaintDeviceMetric) int) {
 	ok := C.QFontDialog_override_virtual_metric(unsafe.Pointer(this.h), C.intptr_t(cgo.NewHandle(slot)))
 	if !ok {
 		panic("miqt: can only override virtual methods for directly constructed types")
@@ -1449,14 +1463,14 @@ func (this *QFontDialog) OnMetric(slot func(super func(param1 QPaintDevice__Pain
 }
 
 //export miqt_exec_callback_QFontDialog_metric
-func miqt_exec_callback_QFontDialog_metric(self *C.QFontDialog, cb C.intptr_t, param1 C.int) C.int {
-	gofunc, ok := cgo.Handle(cb).Value().(func(super func(param1 QPaintDevice__PaintDeviceMetric) int, param1 QPaintDevice__PaintDeviceMetric) int)
+func miqt_exec_callback_QFontDialog_metric(self *C.QFontDialog, cb C.intptr_t, param1 C.PaintDeviceMetric) C.int {
+	gofunc, ok := cgo.Handle(cb).Value().(func(super func(param1 PaintDeviceMetric) int, param1 PaintDeviceMetric) int)
 	if !ok {
 		panic("miqt: callback of non-callback type (heap corruption?)")
 	}
 
 	// Convert all CABI parameters to Go parameters
-	slotval1 := (QPaintDevice__PaintDeviceMetric)(param1)
+	int /* TODO  */
 
 	virtualReturn := gofunc((&QFontDialog{h: self}).callVirtualBase_Metric, slotval1)
 

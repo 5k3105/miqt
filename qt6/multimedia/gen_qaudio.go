@@ -11,11 +11,10 @@ import "C"
 type QAudio__Error int
 
 const (
-	QAudio__NoError       QAudio__Error = 0
-	QAudio__OpenError     QAudio__Error = 1
-	QAudio__IOError       QAudio__Error = 2
-	QAudio__UnderrunError QAudio__Error = 3
-	QAudio__FatalError    QAudio__Error = 4
+	QAudio__NoError    QAudio__Error = 0
+	QAudio__OpenError  QAudio__Error = 1
+	QAudio__IOError    QAudio__Error = 2
+	QAudio__FatalError QAudio__Error = 3
 )
 
 type QAudio__State int

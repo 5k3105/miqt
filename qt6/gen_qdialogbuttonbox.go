@@ -121,15 +121,15 @@ func NewQDialogButtonBox3(orientation Orientation) *QDialogButtonBox {
 }
 
 // NewQDialogButtonBox4 constructs a new QDialogButtonBox object.
-func NewQDialogButtonBox4(buttons QDialogButtonBox__StandardButton) *QDialogButtonBox {
+func NewQDialogButtonBox4(buttons StandardButtons) *QDialogButtonBox {
 
-	return newQDialogButtonBox(C.QDialogButtonBox_new4((C.int)(buttons)))
+	return newQDialogButtonBox(C.QDialogButtonBox_new4(buttons))
 }
 
 // NewQDialogButtonBox5 constructs a new QDialogButtonBox object.
-func NewQDialogButtonBox5(buttons QDialogButtonBox__StandardButton, orientation Orientation) *QDialogButtonBox {
+func NewQDialogButtonBox5(buttons StandardButtons, orientation Orientation) *QDialogButtonBox {
 
-	return newQDialogButtonBox(C.QDialogButtonBox_new5((C.int)(buttons), (C.int)(orientation)))
+	return newQDialogButtonBox(C.QDialogButtonBox_new5(buttons, (C.int)(orientation)))
 }
 
 // NewQDialogButtonBox6 constructs a new QDialogButtonBox object.
@@ -139,15 +139,15 @@ func NewQDialogButtonBox6(orientation Orientation, parent *QWidget) *QDialogButt
 }
 
 // NewQDialogButtonBox7 constructs a new QDialogButtonBox object.
-func NewQDialogButtonBox7(buttons QDialogButtonBox__StandardButton, parent *QWidget) *QDialogButtonBox {
+func NewQDialogButtonBox7(buttons StandardButtons, parent *QWidget) *QDialogButtonBox {
 
-	return newQDialogButtonBox(C.QDialogButtonBox_new7((C.int)(buttons), parent.cPointer()))
+	return newQDialogButtonBox(C.QDialogButtonBox_new7(buttons, parent.cPointer()))
 }
 
 // NewQDialogButtonBox8 constructs a new QDialogButtonBox object.
-func NewQDialogButtonBox8(buttons QDialogButtonBox__StandardButton, orientation Orientation, parent *QWidget) *QDialogButtonBox {
+func NewQDialogButtonBox8(buttons StandardButtons, orientation Orientation, parent *QWidget) *QDialogButtonBox {
 
-	return newQDialogButtonBox(C.QDialogButtonBox_new8((C.int)(buttons), (C.int)(orientation), parent.cPointer()))
+	return newQDialogButtonBox(C.QDialogButtonBox_new8(buttons, (C.int)(orientation), parent.cPointer()))
 }
 
 func (this *QDialogButtonBox) MetaObject() *QMetaObject {
@@ -177,20 +177,20 @@ func (this *QDialogButtonBox) Orientation() Orientation {
 	return (Orientation)(C.QDialogButtonBox_orientation(this.h))
 }
 
-func (this *QDialogButtonBox) AddButton(button *QAbstractButton, role QDialogButtonBox__ButtonRole) {
-	C.QDialogButtonBox_addButton(this.h, button.cPointer(), (C.int)(role))
+func (this *QDialogButtonBox) AddButton(button *QAbstractButton, role ButtonRole) {
+	C.QDialogButtonBox_addButton(this.h, button.cPointer(), role)
 }
 
-func (this *QDialogButtonBox) AddButton2(text string, role QDialogButtonBox__ButtonRole) *QPushButton {
+func (this *QDialogButtonBox) AddButton2(text string, role ButtonRole) *QPushButton {
 	text_ms := C.struct_miqt_string{}
 	text_ms.data = C.CString(text)
 	text_ms.len = C.size_t(len(text))
 	defer C.free(unsafe.Pointer(text_ms.data))
-	return newQPushButton(C.QDialogButtonBox_addButton2(this.h, text_ms, (C.int)(role)))
+	return newQPushButton(C.QDialogButtonBox_addButton2(this.h, text_ms, role))
 }
 
-func (this *QDialogButtonBox) AddButtonWithButton(button QDialogButtonBox__StandardButton) *QPushButton {
-	return newQPushButton(C.QDialogButtonBox_addButtonWithButton(this.h, (C.int)(button)))
+func (this *QDialogButtonBox) AddButtonWithButton(button StandardButton) *QPushButton {
+	return newQPushButton(C.QDialogButtonBox_addButtonWithButton(this.h, button))
 }
 
 func (this *QDialogButtonBox) RemoveButton(button *QAbstractButton) {
@@ -211,24 +211,24 @@ func (this *QDialogButtonBox) Buttons() []*QAbstractButton {
 	return _ret
 }
 
-func (this *QDialogButtonBox) ButtonRole(button *QAbstractButton) QDialogButtonBox__ButtonRole {
-	return (QDialogButtonBox__ButtonRole)(C.QDialogButtonBox_buttonRole(this.h, button.cPointer()))
+func (this *QDialogButtonBox) ButtonRole(button *QAbstractButton) ButtonRole {
+	int /* TODO  */
 }
 
-func (this *QDialogButtonBox) SetStandardButtons(buttons QDialogButtonBox__StandardButton) {
-	C.QDialogButtonBox_setStandardButtons(this.h, (C.int)(buttons))
+func (this *QDialogButtonBox) SetStandardButtons(buttons StandardButtons) {
+	C.QDialogButtonBox_setStandardButtons(this.h, buttons)
 }
 
-func (this *QDialogButtonBox) StandardButtons() QDialogButtonBox__StandardButton {
-	return (QDialogButtonBox__StandardButton)(C.QDialogButtonBox_standardButtons(this.h))
+func (this *QDialogButtonBox) StandardButtons() StandardButtons {
+	int /* TODO  */
 }
 
-func (this *QDialogButtonBox) StandardButton(button *QAbstractButton) QDialogButtonBox__StandardButton {
-	return (QDialogButtonBox__StandardButton)(C.QDialogButtonBox_standardButton(this.h, button.cPointer()))
+func (this *QDialogButtonBox) StandardButton(button *QAbstractButton) StandardButton {
+	int /* TODO  */
 }
 
-func (this *QDialogButtonBox) Button(which QDialogButtonBox__StandardButton) *QPushButton {
-	return newQPushButton(C.QDialogButtonBox_button(this.h, (C.int)(which)))
+func (this *QDialogButtonBox) Button(which StandardButton) *QPushButton {
+	return newQPushButton(C.QDialogButtonBox_button(this.h, which))
 }
 
 func (this *QDialogButtonBox) SetCenterButtons(center bool) {
@@ -445,6 +445,20 @@ func (this *QDialogButtonBox) IsSignalConnected(signal *QMetaMethod) bool {
 
 	var _dynamic_cast_ok C.bool = false
 	_method_ret := (bool)(C.QDialogButtonBox_protectedbase_isSignalConnected(&_dynamic_cast_ok, unsafe.Pointer(this.h), signal.cPointer()))
+
+	if !_dynamic_cast_ok {
+		panic("miqt: can only call protected methods for directly constructed types")
+	}
+
+	return _method_ret
+
+}
+
+// GetDecodedMetricF can only be called from a QDialogButtonBox that was directly constructed.
+func (this *QDialogButtonBox) GetDecodedMetricF(metricA PaintDeviceMetric, metricB PaintDeviceMetric) float64 {
+
+	var _dynamic_cast_ok C.bool = false
+	_method_ret := (float64)(C.QDialogButtonBox_protectedbase_getDecodedMetricF(&_dynamic_cast_ok, unsafe.Pointer(this.h), metricA, metricB))
 
 	if !_dynamic_cast_ok {
 		panic("miqt: can only call protected methods for directly constructed types")
@@ -1356,12 +1370,12 @@ func miqt_exec_callback_QDialogButtonBox_nativeEvent(self *C.QDialogButtonBox, c
 
 }
 
-func (this *QDialogButtonBox) callVirtualBase_Metric(param1 QPaintDevice__PaintDeviceMetric) int {
+func (this *QDialogButtonBox) callVirtualBase_Metric(param1 PaintDeviceMetric) int {
 
-	return (int)(C.QDialogButtonBox_virtualbase_metric(unsafe.Pointer(this.h), (C.int)(param1)))
+	return (int)(C.QDialogButtonBox_virtualbase_metric(unsafe.Pointer(this.h), param1))
 
 }
-func (this *QDialogButtonBox) OnMetric(slot func(super func(param1 QPaintDevice__PaintDeviceMetric) int, param1 QPaintDevice__PaintDeviceMetric) int) {
+func (this *QDialogButtonBox) OnMetric(slot func(super func(param1 PaintDeviceMetric) int, param1 PaintDeviceMetric) int) {
 	ok := C.QDialogButtonBox_override_virtual_metric(unsafe.Pointer(this.h), C.intptr_t(cgo.NewHandle(slot)))
 	if !ok {
 		panic("miqt: can only override virtual methods for directly constructed types")
@@ -1369,14 +1383,14 @@ func (this *QDialogButtonBox) OnMetric(slot func(super func(param1 QPaintDevice_
 }
 
 //export miqt_exec_callback_QDialogButtonBox_metric
-func miqt_exec_callback_QDialogButtonBox_metric(self *C.QDialogButtonBox, cb C.intptr_t, param1 C.int) C.int {
-	gofunc, ok := cgo.Handle(cb).Value().(func(super func(param1 QPaintDevice__PaintDeviceMetric) int, param1 QPaintDevice__PaintDeviceMetric) int)
+func miqt_exec_callback_QDialogButtonBox_metric(self *C.QDialogButtonBox, cb C.intptr_t, param1 C.PaintDeviceMetric) C.int {
+	gofunc, ok := cgo.Handle(cb).Value().(func(super func(param1 PaintDeviceMetric) int, param1 PaintDeviceMetric) int)
 	if !ok {
 		panic("miqt: callback of non-callback type (heap corruption?)")
 	}
 
 	// Convert all CABI parameters to Go parameters
-	slotval1 := (QPaintDevice__PaintDeviceMetric)(param1)
+	int /* TODO  */
 
 	virtualReturn := gofunc((&QDialogButtonBox{h: self}).callVirtualBase_Metric, slotval1)
 

@@ -49,6 +49,7 @@ type QRegularExpression__WildcardConversionOption int
 const (
 	QRegularExpression__DefaultWildcardConversion    QRegularExpression__WildcardConversionOption = 0
 	QRegularExpression__UnanchoredWildcardConversion QRegularExpression__WildcardConversionOption = 1
+	QRegularExpression__NonPathWildcardConversion    QRegularExpression__WildcardConversionOption = 2
 )
 
 type QRegularExpression struct {
@@ -106,21 +107,21 @@ func NewQRegularExpression3(re *QRegularExpression) *QRegularExpression {
 }
 
 // NewQRegularExpression4 constructs a new QRegularExpression object.
-func NewQRegularExpression4(pattern string, options QRegularExpression__PatternOption) *QRegularExpression {
+func NewQRegularExpression4(pattern string, options PatternOptions) *QRegularExpression {
 	pattern_ms := C.struct_miqt_string{}
 	pattern_ms.data = C.CString(pattern)
 	pattern_ms.len = C.size_t(len(pattern))
 	defer C.free(unsafe.Pointer(pattern_ms.data))
 
-	return newQRegularExpression(C.QRegularExpression_new4(pattern_ms, (C.int)(options)))
+	return newQRegularExpression(C.QRegularExpression_new4(pattern_ms, options))
 }
 
-func (this *QRegularExpression) PatternOptions() QRegularExpression__PatternOption {
-	return (QRegularExpression__PatternOption)(C.QRegularExpression_patternOptions(this.h))
+func (this *QRegularExpression) PatternOptions() PatternOptions {
+	int /* TODO  */
 }
 
-func (this *QRegularExpression) SetPatternOptions(options QRegularExpression__PatternOption) {
-	C.QRegularExpression_setPatternOptions(this.h, (C.int)(options))
+func (this *QRegularExpression) SetPatternOptions(options PatternOptions) {
+	C.QRegularExpression_setPatternOptions(this.h, options)
 }
 
 func (this *QRegularExpression) OperatorAssign(re *QRegularExpression) {
@@ -235,14 +236,6 @@ func QRegularExpression_AnchoredPattern(expression string) string {
 	return _ret
 }
 
-func (this *QRegularExpression) OperatorEqual(re *QRegularExpression) bool {
-	return (bool)(C.QRegularExpression_operatorEqual(this.h, re.cPointer()))
-}
-
-func (this *QRegularExpression) OperatorNotEqual(re *QRegularExpression) bool {
-	return (bool)(C.QRegularExpression_operatorNotEqual(this.h, re.cPointer()))
-}
-
 func (this *QRegularExpression) Match2(subject string, offset int64) *QRegularExpressionMatch {
 	subject_ms := C.struct_miqt_string{}
 	subject_ms.data = C.CString(subject)
@@ -253,22 +246,22 @@ func (this *QRegularExpression) Match2(subject string, offset int64) *QRegularEx
 	return _goptr
 }
 
-func (this *QRegularExpression) Match3(subject string, offset int64, matchType QRegularExpression__MatchType) *QRegularExpressionMatch {
+func (this *QRegularExpression) Match3(subject string, offset int64, matchType MatchType) *QRegularExpressionMatch {
 	subject_ms := C.struct_miqt_string{}
 	subject_ms.data = C.CString(subject)
 	subject_ms.len = C.size_t(len(subject))
 	defer C.free(unsafe.Pointer(subject_ms.data))
-	_goptr := newQRegularExpressionMatch(C.QRegularExpression_match3(this.h, subject_ms, (C.ptrdiff_t)(offset), (C.int)(matchType)))
+	_goptr := newQRegularExpressionMatch(C.QRegularExpression_match3(this.h, subject_ms, (C.ptrdiff_t)(offset), matchType))
 	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
 	return _goptr
 }
 
-func (this *QRegularExpression) Match4(subject string, offset int64, matchType QRegularExpression__MatchType, matchOptions QRegularExpression__MatchOption) *QRegularExpressionMatch {
+func (this *QRegularExpression) Match4(subject string, offset int64, matchType MatchType, matchOptions MatchOptions) *QRegularExpressionMatch {
 	subject_ms := C.struct_miqt_string{}
 	subject_ms.data = C.CString(subject)
 	subject_ms.len = C.size_t(len(subject))
 	defer C.free(unsafe.Pointer(subject_ms.data))
-	_goptr := newQRegularExpressionMatch(C.QRegularExpression_match4(this.h, subject_ms, (C.ptrdiff_t)(offset), (C.int)(matchType), (C.int)(matchOptions)))
+	_goptr := newQRegularExpressionMatch(C.QRegularExpression_match4(this.h, subject_ms, (C.ptrdiff_t)(offset), matchType, matchOptions))
 	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
 	return _goptr
 }
@@ -283,32 +276,32 @@ func (this *QRegularExpression) GlobalMatch2(subject string, offset int64) *QReg
 	return _goptr
 }
 
-func (this *QRegularExpression) GlobalMatch3(subject string, offset int64, matchType QRegularExpression__MatchType) *QRegularExpressionMatchIterator {
+func (this *QRegularExpression) GlobalMatch3(subject string, offset int64, matchType MatchType) *QRegularExpressionMatchIterator {
 	subject_ms := C.struct_miqt_string{}
 	subject_ms.data = C.CString(subject)
 	subject_ms.len = C.size_t(len(subject))
 	defer C.free(unsafe.Pointer(subject_ms.data))
-	_goptr := newQRegularExpressionMatchIterator(C.QRegularExpression_globalMatch3(this.h, subject_ms, (C.ptrdiff_t)(offset), (C.int)(matchType)))
+	_goptr := newQRegularExpressionMatchIterator(C.QRegularExpression_globalMatch3(this.h, subject_ms, (C.ptrdiff_t)(offset), matchType))
 	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
 	return _goptr
 }
 
-func (this *QRegularExpression) GlobalMatch4(subject string, offset int64, matchType QRegularExpression__MatchType, matchOptions QRegularExpression__MatchOption) *QRegularExpressionMatchIterator {
+func (this *QRegularExpression) GlobalMatch4(subject string, offset int64, matchType MatchType, matchOptions MatchOptions) *QRegularExpressionMatchIterator {
 	subject_ms := C.struct_miqt_string{}
 	subject_ms.data = C.CString(subject)
 	subject_ms.len = C.size_t(len(subject))
 	defer C.free(unsafe.Pointer(subject_ms.data))
-	_goptr := newQRegularExpressionMatchIterator(C.QRegularExpression_globalMatch4(this.h, subject_ms, (C.ptrdiff_t)(offset), (C.int)(matchType), (C.int)(matchOptions)))
+	_goptr := newQRegularExpressionMatchIterator(C.QRegularExpression_globalMatch4(this.h, subject_ms, (C.ptrdiff_t)(offset), matchType, matchOptions))
 	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
 	return _goptr
 }
 
-func QRegularExpression_WildcardToRegularExpression2(str string, options QRegularExpression__WildcardConversionOption) string {
+func QRegularExpression_WildcardToRegularExpression2(str string, options WildcardConversionOptions) string {
 	str_ms := C.struct_miqt_string{}
 	str_ms.data = C.CString(str)
 	str_ms.len = C.size_t(len(str))
 	defer C.free(unsafe.Pointer(str_ms.data))
-	var _ms C.struct_miqt_string = C.QRegularExpression_wildcardToRegularExpression2(str_ms, (C.int)(options))
+	var _ms C.struct_miqt_string = C.QRegularExpression_wildcardToRegularExpression2(str_ms, options)
 	_ret := C.GoStringN(_ms.data, C.int(int64(_ms.len)))
 	C.free(unsafe.Pointer(_ms.data))
 	return _ret
@@ -390,8 +383,8 @@ func (this *QRegularExpressionMatch) MatchType() QRegularExpression__MatchType {
 	return (QRegularExpression__MatchType)(C.QRegularExpressionMatch_matchType(this.h))
 }
 
-func (this *QRegularExpressionMatch) MatchOptions() QRegularExpression__MatchOption {
-	return (QRegularExpression__MatchOption)(C.QRegularExpressionMatch_matchOptions(this.h))
+func (this *QRegularExpressionMatch) MatchOptions() MatchOption {
+	return (MatchOption)(C.QRegularExpressionMatch_matchOptions(this.h))
 }
 
 func (this *QRegularExpressionMatch) HasMatch() bool {
@@ -410,12 +403,8 @@ func (this *QRegularExpressionMatch) LastCapturedIndex() int {
 	return (int)(C.QRegularExpressionMatch_lastCapturedIndex(this.h))
 }
 
-func (this *QRegularExpressionMatch) HasCaptured(name string) bool {
-	name_ms := C.struct_miqt_string{}
-	name_ms.data = C.CString(name)
-	name_ms.len = C.size_t(len(name))
-	defer C.free(unsafe.Pointer(name_ms.data))
-	return (bool)(C.QRegularExpressionMatch_hasCaptured(this.h, name_ms))
+func (this *QRegularExpressionMatch) HasCaptured(name QAnyStringView) bool {
+	return (bool)(C.QRegularExpressionMatch_hasCaptured(this.h, name.cPointer()))
 }
 
 func (this *QRegularExpressionMatch) HasCapturedWithNth(nth int) bool {
@@ -429,12 +418,8 @@ func (this *QRegularExpressionMatch) Captured() string {
 	return _ret
 }
 
-func (this *QRegularExpressionMatch) CapturedWithName(name string) string {
-	name_ms := C.struct_miqt_string{}
-	name_ms.data = C.CString(name)
-	name_ms.len = C.size_t(len(name))
-	defer C.free(unsafe.Pointer(name_ms.data))
-	var _ms C.struct_miqt_string = C.QRegularExpressionMatch_capturedWithName(this.h, name_ms)
+func (this *QRegularExpressionMatch) CapturedWithName(name QAnyStringView) string {
+	var _ms C.struct_miqt_string = C.QRegularExpressionMatch_capturedWithName(this.h, name.cPointer())
 	_ret := C.GoStringN(_ms.data, C.int(int64(_ms.len)))
 	C.free(unsafe.Pointer(_ms.data))
 	return _ret
@@ -465,28 +450,16 @@ func (this *QRegularExpressionMatch) CapturedEnd() int64 {
 	return (int64)(C.QRegularExpressionMatch_capturedEnd(this.h))
 }
 
-func (this *QRegularExpressionMatch) CapturedStartWithName(name string) int64 {
-	name_ms := C.struct_miqt_string{}
-	name_ms.data = C.CString(name)
-	name_ms.len = C.size_t(len(name))
-	defer C.free(unsafe.Pointer(name_ms.data))
-	return (int64)(C.QRegularExpressionMatch_capturedStartWithName(this.h, name_ms))
+func (this *QRegularExpressionMatch) CapturedStartWithName(name QAnyStringView) int64 {
+	return (int64)(C.QRegularExpressionMatch_capturedStartWithName(this.h, name.cPointer()))
 }
 
-func (this *QRegularExpressionMatch) CapturedLengthWithName(name string) int64 {
-	name_ms := C.struct_miqt_string{}
-	name_ms.data = C.CString(name)
-	name_ms.len = C.size_t(len(name))
-	defer C.free(unsafe.Pointer(name_ms.data))
-	return (int64)(C.QRegularExpressionMatch_capturedLengthWithName(this.h, name_ms))
+func (this *QRegularExpressionMatch) CapturedLengthWithName(name QAnyStringView) int64 {
+	return (int64)(C.QRegularExpressionMatch_capturedLengthWithName(this.h, name.cPointer()))
 }
 
-func (this *QRegularExpressionMatch) CapturedEndWithName(name string) int64 {
-	name_ms := C.struct_miqt_string{}
-	name_ms.data = C.CString(name)
-	name_ms.len = C.size_t(len(name))
-	defer C.free(unsafe.Pointer(name_ms.data))
-	return (int64)(C.QRegularExpressionMatch_capturedEndWithName(this.h, name_ms))
+func (this *QRegularExpressionMatch) CapturedEndWithName(name QAnyStringView) int64 {
+	return (int64)(C.QRegularExpressionMatch_capturedEndWithName(this.h, name.cPointer()))
 }
 
 func (this *QRegularExpressionMatch) CapturedWithNth(nth int) string {
@@ -604,8 +577,8 @@ func (this *QRegularExpressionMatchIterator) MatchType() QRegularExpression__Mat
 	return (QRegularExpression__MatchType)(C.QRegularExpressionMatchIterator_matchType(this.h))
 }
 
-func (this *QRegularExpressionMatchIterator) MatchOptions() QRegularExpression__MatchOption {
-	return (QRegularExpression__MatchOption)(C.QRegularExpressionMatchIterator_matchOptions(this.h))
+func (this *QRegularExpressionMatchIterator) MatchOptions() MatchOption {
+	return (MatchOption)(C.QRegularExpressionMatchIterator_matchOptions(this.h))
 }
 
 // Delete this object from C++ memory.

@@ -82,6 +82,10 @@ func QQmlPropertyMap_Tr(s string) string {
 	return _ret
 }
 
+func QQmlPropertyMap_Create() *QQmlPropertyMap {
+	return newQQmlPropertyMap(C.QQmlPropertyMap_create())
+}
+
 func (this *QQmlPropertyMap) Value(key string) *qt6.QVariant {
 	key_ms := C.struct_miqt_string{}
 	key_ms.data = C.CString(key)
@@ -234,6 +238,10 @@ func QQmlPropertyMap_Tr3(s string, c string, n int) string {
 	_ret := C.GoStringN(_ms.data, C.int(int64(_ms.len)))
 	C.free(unsafe.Pointer(_ms.data))
 	return _ret
+}
+
+func QQmlPropertyMap_CreateWithParent(parent *qt6.QObject) *QQmlPropertyMap {
+	return newQQmlPropertyMap(C.QQmlPropertyMap_createWithParent((*C.QObject)(parent.UnsafePointer())))
 }
 
 // Sender can only be called from a QQmlPropertyMap that was directly constructed.

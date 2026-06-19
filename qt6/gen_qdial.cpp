@@ -52,7 +52,7 @@ void miqt_exec_callback_QDial_paintEvent(QDial*, intptr_t, QPaintEvent*);
 void miqt_exec_callback_QDial_mousePressEvent(QDial*, intptr_t, QMouseEvent*);
 void miqt_exec_callback_QDial_mouseReleaseEvent(QDial*, intptr_t, QMouseEvent*);
 void miqt_exec_callback_QDial_mouseMoveEvent(QDial*, intptr_t, QMouseEvent*);
-void miqt_exec_callback_QDial_sliderChange(QDial*, intptr_t, int);
+void miqt_exec_callback_QDial_sliderChange(QDial*, intptr_t, SliderChange);
 void miqt_exec_callback_QDial_initStyleOption(const QDial*, intptr_t, QStyleOptionSlider*);
 void miqt_exec_callback_QDial_keyPressEvent(QDial*, intptr_t, QKeyEvent*);
 void miqt_exec_callback_QDial_timerEvent(QDial*, intptr_t, QTimerEvent*);
@@ -81,7 +81,7 @@ void miqt_exec_callback_QDial_dropEvent(QDial*, intptr_t, QDropEvent*);
 void miqt_exec_callback_QDial_showEvent(QDial*, intptr_t, QShowEvent*);
 void miqt_exec_callback_QDial_hideEvent(QDial*, intptr_t, QHideEvent*);
 bool miqt_exec_callback_QDial_nativeEvent(QDial*, intptr_t, struct miqt_string, void*, intptr_t*);
-int miqt_exec_callback_QDial_metric(const QDial*, intptr_t, int);
+int miqt_exec_callback_QDial_metric(const QDial*, intptr_t, PaintDeviceMetric);
 void miqt_exec_callback_QDial_initPainter(const QDial*, intptr_t, QPainter*);
 QPaintDevice* miqt_exec_callback_QDial_redirected(const QDial*, intptr_t, QPoint*);
 QPainter* miqt_exec_callback_QDial_sharedPainter(const QDial*, intptr_t);
@@ -240,19 +240,18 @@ public:
 	intptr_t handle__sliderChange = 0;
 
 	// Subclass to allow providing a Go implementation
-	virtual void sliderChange(QAbstractSlider::SliderChange change) override {
+	virtual void sliderChange(SliderChange change) override {
 		if (handle__sliderChange == 0) {
 			QDial::sliderChange(change);
 			return;
 		}
 
-		QAbstractSlider::SliderChange change_ret = change;
-		int sigval1 = static_cast<int>(change_ret);
+		SliderChange sigval1 = change;
 		miqt_exec_callback_QDial_sliderChange(this, handle__sliderChange, sigval1);
 
 	}
 
-	friend void QDial_virtualbase_sliderChange(void* self, int change);
+	friend void QDial_virtualbase_sliderChange(void* self, SliderChange change);
 
 	// cgo.Handle value for overwritten implementation
 	intptr_t handle__initStyleOption = 0;
@@ -734,18 +733,17 @@ public:
 	intptr_t handle__metric = 0;
 
 	// Subclass to allow providing a Go implementation
-	virtual int metric(QPaintDevice::PaintDeviceMetric param1) const override {
+	virtual int metric(PaintDeviceMetric param1) const override {
 		if (handle__metric == 0) {
 			return QDial::metric(param1);
 		}
 
-		QPaintDevice::PaintDeviceMetric param1_ret = param1;
-		int sigval1 = static_cast<int>(param1_ret);
+		PaintDeviceMetric sigval1 = param1;
 		int callback_return_value = miqt_exec_callback_QDial_metric(this, handle__metric, sigval1);
 		return static_cast<int>(callback_return_value);
 	}
 
-	friend int QDial_virtualbase_metric(const void* self, int param1);
+	friend int QDial_virtualbase_metric(const void* self, PaintDeviceMetric param1);
 
 	// cgo.Handle value for overwritten implementation
 	intptr_t handle__initPainter = 0;
@@ -935,8 +933,8 @@ public:
 	friend void QDial_virtualbase_disconnectNotify(void* self, QMetaMethod* signal);
 
 	// Wrappers to allow calling protected methods:
-	friend void QDial_protectedbase_setRepeatAction(bool* _dynamic_cast_ok, void* self, int action);
-	friend int QDial_protectedbase_repeatAction(bool* _dynamic_cast_ok, const void* self);
+	friend void QDial_protectedbase_setRepeatAction(bool* _dynamic_cast_ok, void* self, SliderAction action);
+	friend SliderAction QDial_protectedbase_repeatAction(bool* _dynamic_cast_ok, const void* self);
 	friend void QDial_protectedbase_updateMicroFocus(bool* _dynamic_cast_ok, void* self);
 	friend void QDial_protectedbase_create(bool* _dynamic_cast_ok, void* self);
 	friend void QDial_protectedbase_destroy(bool* _dynamic_cast_ok, void* self);
@@ -946,6 +944,7 @@ public:
 	friend int QDial_protectedbase_senderSignalIndex(bool* _dynamic_cast_ok, const void* self);
 	friend int QDial_protectedbase_receivers(bool* _dynamic_cast_ok, const void* self, const char* signal);
 	friend bool QDial_protectedbase_isSignalConnected(bool* _dynamic_cast_ok, const void* self, QMetaMethod* signal);
+	friend double QDial_protectedbase_getDecodedMetricF(bool* _dynamic_cast_ok, const void* self, PaintDeviceMetric metricA, PaintDeviceMetric metricB);
 };
 
 QDial* QDial_new(QWidget* parent) {
@@ -1160,8 +1159,8 @@ bool QDial_override_virtual_sliderChange(void* self, intptr_t slot) {
 	return true;
 }
 
-void QDial_virtualbase_sliderChange(void* self, int change) {
-	static_cast<MiqtVirtualQDial*>(self)->QDial::sliderChange(static_cast<MiqtVirtualQDial::SliderChange>(change));
+void QDial_virtualbase_sliderChange(void* self, SliderChange change) {
+	static_cast<MiqtVirtualQDial*>(self)->QDial::sliderChange(change);
 }
 
 bool QDial_override_virtual_initStyleOption(void* self, intptr_t slot) {
@@ -1567,8 +1566,8 @@ bool QDial_override_virtual_metric(void* self, intptr_t slot) {
 	return true;
 }
 
-int QDial_virtualbase_metric(const void* self, int param1) {
-	return static_cast<const MiqtVirtualQDial*>(self)->QDial::metric(static_cast<MiqtVirtualQDial::PaintDeviceMetric>(param1));
+int QDial_virtualbase_metric(const void* self, PaintDeviceMetric param1) {
+	return static_cast<const MiqtVirtualQDial*>(self)->QDial::metric(param1);
 }
 
 bool QDial_override_virtual_initPainter(void* self, intptr_t slot) {
@@ -1725,7 +1724,7 @@ void QDial_virtualbase_disconnectNotify(void* self, QMetaMethod* signal) {
 	static_cast<MiqtVirtualQDial*>(self)->QDial::disconnectNotify(*signal);
 }
 
-void QDial_protectedbase_setRepeatAction(bool* _dynamic_cast_ok, void* self, int action) {
+void QDial_protectedbase_setRepeatAction(bool* _dynamic_cast_ok, void* self, SliderAction action) {
 	MiqtVirtualQDial* self_cast = dynamic_cast<MiqtVirtualQDial*>( (QDial*)(self) );
 	if (self_cast == nullptr) {
 		*_dynamic_cast_ok = false;
@@ -1733,19 +1732,18 @@ void QDial_protectedbase_setRepeatAction(bool* _dynamic_cast_ok, void* self, int
 	}
 
 	*_dynamic_cast_ok = true;
-	self_cast->setRepeatAction(static_cast<MiqtVirtualQDial::SliderAction>(action));
+	self_cast->setRepeatAction(action);
 }
 
-int QDial_protectedbase_repeatAction(bool* _dynamic_cast_ok, const void* self) {
+SliderAction QDial_protectedbase_repeatAction(bool* _dynamic_cast_ok, const void* self) {
 	MiqtVirtualQDial* self_cast = dynamic_cast<MiqtVirtualQDial*>( (QDial*)(self) );
 	if (self_cast == nullptr) {
 		*_dynamic_cast_ok = false;
-		return (int)(0);
+		return nullptr;
 	}
 
 	*_dynamic_cast_ok = true;
-	MiqtVirtualQDial::SliderAction _ret = self_cast->repeatAction();
-	return static_cast<int>(_ret);
+	return self_cast->repeatAction();
 }
 
 void QDial_protectedbase_updateMicroFocus(bool* _dynamic_cast_ok, void* self) {
@@ -1845,6 +1843,17 @@ bool QDial_protectedbase_isSignalConnected(bool* _dynamic_cast_ok, const void* s
 
 	*_dynamic_cast_ok = true;
 	return self_cast->isSignalConnected(*signal);
+}
+
+double QDial_protectedbase_getDecodedMetricF(bool* _dynamic_cast_ok, const void* self, PaintDeviceMetric metricA, PaintDeviceMetric metricB) {
+	MiqtVirtualQDial* self_cast = dynamic_cast<MiqtVirtualQDial*>( (QDial*)(self) );
+	if (self_cast == nullptr) {
+		*_dynamic_cast_ok = false;
+		return 0;
+	}
+
+	*_dynamic_cast_ok = true;
+	return self_cast->getDecodedMetricF(metricA, metricB);
 }
 
 void QDial_delete(QDial* self) {

@@ -15,12 +15,14 @@ extern "C" {
 #endif
 
 #ifdef __cplusplus
+class QBasicTimer;
 class QChildEvent;
 class QDynamicPropertyChangeEvent;
 class QEvent;
 class QObject;
 class QTimerEvent;
 #else
+typedef struct QBasicTimer QBasicTimer;
 typedef struct QChildEvent QChildEvent;
 typedef struct QDynamicPropertyChangeEvent QDynamicPropertyChangeEvent;
 typedef struct QEvent QEvent;
@@ -28,8 +30,8 @@ typedef struct QObject QObject;
 typedef struct QTimerEvent QTimerEvent;
 #endif
 
-QEvent* QEvent_new(int type);
-int QEvent_type(const QEvent* self);
+QEvent* QEvent_new(Type type);
+Type QEvent_type(const QEvent* self);
 bool QEvent_spontaneous(const QEvent* self);
 void QEvent_setAccepted(QEvent* self, bool accepted);
 bool QEvent_isAccepted(const QEvent* self);
@@ -50,9 +52,12 @@ QEvent* QEvent_virtualbase_clone(const void* self);
 void QEvent_delete(QEvent* self);
 
 QTimerEvent* QTimerEvent_new(int timerId);
+QTimerEvent* QTimerEvent_new2(int timerId);
 void QTimerEvent_virtbase(QTimerEvent* src, QEvent** outptr_QEvent);
 QTimerEvent* QTimerEvent_clone(const QTimerEvent* self);
 int QTimerEvent_timerId(const QTimerEvent* self);
+int QTimerEvent_id(const QTimerEvent* self);
+bool QTimerEvent_matches(const QTimerEvent* self, QBasicTimer* timer);
 
 bool QTimerEvent_override_virtual_clone(void* self, intptr_t slot);
 QTimerEvent* QTimerEvent_virtualbase_clone(const void* self);
@@ -61,7 +66,7 @@ void QTimerEvent_virtualbase_setAccepted(void* self, bool accepted);
 
 void QTimerEvent_delete(QTimerEvent* self);
 
-QChildEvent* QChildEvent_new(int type, QObject* child);
+QChildEvent* QChildEvent_new(Type type, QObject* child);
 void QChildEvent_virtbase(QChildEvent* src, QEvent** outptr_QEvent);
 QChildEvent* QChildEvent_clone(const QChildEvent* self);
 QObject* QChildEvent_child(const QChildEvent* self);

@@ -203,7 +203,7 @@ void QPushButton_virtualbase_hideEvent(void* self, QHideEvent* event);
 bool QPushButton_override_virtual_nativeEvent(void* self, intptr_t slot);
 bool QPushButton_virtualbase_nativeEvent(void* self, struct miqt_string eventType, void* message, intptr_t* result);
 bool QPushButton_override_virtual_metric(void* self, intptr_t slot);
-int QPushButton_virtualbase_metric(const void* self, int param1);
+int QPushButton_virtualbase_metric(const void* self, PaintDeviceMetric param1);
 bool QPushButton_override_virtual_initPainter(void* self, intptr_t slot);
 void QPushButton_virtualbase_initPainter(const void* self, QPainter* painter);
 bool QPushButton_override_virtual_redirected(void* self, intptr_t slot);
@@ -236,6 +236,7 @@ QObject* QPushButton_protectedbase_sender(bool* _dynamic_cast_ok, const void* se
 int QPushButton_protectedbase_senderSignalIndex(bool* _dynamic_cast_ok, const void* self);
 int QPushButton_protectedbase_receivers(bool* _dynamic_cast_ok, const void* self, const char* signal);
 bool QPushButton_protectedbase_isSignalConnected(bool* _dynamic_cast_ok, const void* self, QMetaMethod* signal);
+double QPushButton_protectedbase_getDecodedMetricF(bool* _dynamic_cast_ok, const void* self, PaintDeviceMetric metricA, PaintDeviceMetric metricB);
 
 void QPushButton_delete(QPushButton* self);
 

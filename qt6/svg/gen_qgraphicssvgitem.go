@@ -1313,14 +1313,14 @@ func miqt_exec_callback_QGraphicsSvgItem_inputMethodQuery(self *C.QGraphicsSvgIt
 
 }
 
-func (this *QGraphicsSvgItem) callVirtualBase_ItemChange(change qt6.QGraphicsItem__GraphicsItemChange, value *qt6.QVariant) *qt6.QVariant {
+func (this *QGraphicsSvgItem) callVirtualBase_ItemChange(change GraphicsItemChange, value *qt6.QVariant) *qt6.QVariant {
 
-	_goptr := qt6.UnsafeNewQVariant(unsafe.Pointer(C.QGraphicsSvgItem_virtualbase_itemChange(unsafe.Pointer(this.h), (C.int)(change), (*C.QVariant)(value.UnsafePointer()))))
+	_goptr := qt6.UnsafeNewQVariant(unsafe.Pointer(C.QGraphicsSvgItem_virtualbase_itemChange(unsafe.Pointer(this.h), change, (*C.QVariant)(value.UnsafePointer()))))
 	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
 	return _goptr
 
 }
-func (this *QGraphicsSvgItem) OnItemChange(slot func(super func(change qt6.QGraphicsItem__GraphicsItemChange, value *qt6.QVariant) *qt6.QVariant, change qt6.QGraphicsItem__GraphicsItemChange, value *qt6.QVariant) *qt6.QVariant) {
+func (this *QGraphicsSvgItem) OnItemChange(slot func(super func(change GraphicsItemChange, value *qt6.QVariant) *qt6.QVariant, change GraphicsItemChange, value *qt6.QVariant) *qt6.QVariant) {
 	ok := C.QGraphicsSvgItem_override_virtual_itemChange(unsafe.Pointer(this.h), C.intptr_t(cgo.NewHandle(slot)))
 	if !ok {
 		panic("miqt: can only override virtual methods for directly constructed types")
@@ -1328,15 +1328,14 @@ func (this *QGraphicsSvgItem) OnItemChange(slot func(super func(change qt6.QGrap
 }
 
 //export miqt_exec_callback_QGraphicsSvgItem_itemChange
-func miqt_exec_callback_QGraphicsSvgItem_itemChange(self *C.QGraphicsSvgItem, cb C.intptr_t, change C.int, value *C.QVariant) *C.QVariant {
-	gofunc, ok := cgo.Handle(cb).Value().(func(super func(change qt6.QGraphicsItem__GraphicsItemChange, value *qt6.QVariant) *qt6.QVariant, change qt6.QGraphicsItem__GraphicsItemChange, value *qt6.QVariant) *qt6.QVariant)
+func miqt_exec_callback_QGraphicsSvgItem_itemChange(self *C.QGraphicsSvgItem, cb C.intptr_t, change C.GraphicsItemChange, value *C.QVariant) *C.QVariant {
+	gofunc, ok := cgo.Handle(cb).Value().(func(super func(change GraphicsItemChange, value *qt6.QVariant) *qt6.QVariant, change GraphicsItemChange, value *qt6.QVariant) *qt6.QVariant)
 	if !ok {
 		panic("miqt: callback of non-callback type (heap corruption?)")
 	}
 
 	// Convert all CABI parameters to Go parameters
-	slotval1 := (qt6.QGraphicsItem__GraphicsItemChange)(change)
-
+	int /* TODO  */
 	slotval2 := qt6.UnsafeNewQVariant(unsafe.Pointer(value))
 
 	virtualReturn := gofunc((&QGraphicsSvgItem{h: self}).callVirtualBase_ItemChange, slotval1, slotval2)
@@ -1345,12 +1344,12 @@ func miqt_exec_callback_QGraphicsSvgItem_itemChange(self *C.QGraphicsSvgItem, cb
 
 }
 
-func (this *QGraphicsSvgItem) callVirtualBase_SupportsExtension(extension qt6.QGraphicsItem__Extension) bool {
+func (this *QGraphicsSvgItem) callVirtualBase_SupportsExtension(extension Extension) bool {
 
-	return (bool)(C.QGraphicsSvgItem_virtualbase_supportsExtension(unsafe.Pointer(this.h), (C.int)(extension)))
+	return (bool)(C.QGraphicsSvgItem_virtualbase_supportsExtension(unsafe.Pointer(this.h), extension))
 
 }
-func (this *QGraphicsSvgItem) OnSupportsExtension(slot func(super func(extension qt6.QGraphicsItem__Extension) bool, extension qt6.QGraphicsItem__Extension) bool) {
+func (this *QGraphicsSvgItem) OnSupportsExtension(slot func(super func(extension Extension) bool, extension Extension) bool) {
 	ok := C.QGraphicsSvgItem_override_virtual_supportsExtension(unsafe.Pointer(this.h), C.intptr_t(cgo.NewHandle(slot)))
 	if !ok {
 		panic("miqt: can only override virtual methods for directly constructed types")
@@ -1358,14 +1357,14 @@ func (this *QGraphicsSvgItem) OnSupportsExtension(slot func(super func(extension
 }
 
 //export miqt_exec_callback_QGraphicsSvgItem_supportsExtension
-func miqt_exec_callback_QGraphicsSvgItem_supportsExtension(self *C.QGraphicsSvgItem, cb C.intptr_t, extension C.int) C.bool {
-	gofunc, ok := cgo.Handle(cb).Value().(func(super func(extension qt6.QGraphicsItem__Extension) bool, extension qt6.QGraphicsItem__Extension) bool)
+func miqt_exec_callback_QGraphicsSvgItem_supportsExtension(self *C.QGraphicsSvgItem, cb C.intptr_t, extension C.Extension) C.bool {
+	gofunc, ok := cgo.Handle(cb).Value().(func(super func(extension Extension) bool, extension Extension) bool)
 	if !ok {
 		panic("miqt: callback of non-callback type (heap corruption?)")
 	}
 
 	// Convert all CABI parameters to Go parameters
-	slotval1 := (qt6.QGraphicsItem__Extension)(extension)
+	int /* TODO  */
 
 	virtualReturn := gofunc((&QGraphicsSvgItem{h: self}).callVirtualBase_SupportsExtension, slotval1)
 
@@ -1373,12 +1372,12 @@ func miqt_exec_callback_QGraphicsSvgItem_supportsExtension(self *C.QGraphicsSvgI
 
 }
 
-func (this *QGraphicsSvgItem) callVirtualBase_SetExtension(extension qt6.QGraphicsItem__Extension, variant *qt6.QVariant) {
+func (this *QGraphicsSvgItem) callVirtualBase_SetExtension(extension Extension, variant *qt6.QVariant) {
 
-	C.QGraphicsSvgItem_virtualbase_setExtension(unsafe.Pointer(this.h), (C.int)(extension), (*C.QVariant)(variant.UnsafePointer()))
+	C.QGraphicsSvgItem_virtualbase_setExtension(unsafe.Pointer(this.h), extension, (*C.QVariant)(variant.UnsafePointer()))
 
 }
-func (this *QGraphicsSvgItem) OnSetExtension(slot func(super func(extension qt6.QGraphicsItem__Extension, variant *qt6.QVariant), extension qt6.QGraphicsItem__Extension, variant *qt6.QVariant)) {
+func (this *QGraphicsSvgItem) OnSetExtension(slot func(super func(extension Extension, variant *qt6.QVariant), extension Extension, variant *qt6.QVariant)) {
 	ok := C.QGraphicsSvgItem_override_virtual_setExtension(unsafe.Pointer(this.h), C.intptr_t(cgo.NewHandle(slot)))
 	if !ok {
 		panic("miqt: can only override virtual methods for directly constructed types")
@@ -1386,15 +1385,14 @@ func (this *QGraphicsSvgItem) OnSetExtension(slot func(super func(extension qt6.
 }
 
 //export miqt_exec_callback_QGraphicsSvgItem_setExtension
-func miqt_exec_callback_QGraphicsSvgItem_setExtension(self *C.QGraphicsSvgItem, cb C.intptr_t, extension C.int, variant *C.QVariant) {
-	gofunc, ok := cgo.Handle(cb).Value().(func(super func(extension qt6.QGraphicsItem__Extension, variant *qt6.QVariant), extension qt6.QGraphicsItem__Extension, variant *qt6.QVariant))
+func miqt_exec_callback_QGraphicsSvgItem_setExtension(self *C.QGraphicsSvgItem, cb C.intptr_t, extension C.Extension, variant *C.QVariant) {
+	gofunc, ok := cgo.Handle(cb).Value().(func(super func(extension Extension, variant *qt6.QVariant), extension Extension, variant *qt6.QVariant))
 	if !ok {
 		panic("miqt: callback of non-callback type (heap corruption?)")
 	}
 
 	// Convert all CABI parameters to Go parameters
-	slotval1 := (qt6.QGraphicsItem__Extension)(extension)
-
+	int /* TODO  */
 	slotval2 := qt6.UnsafeNewQVariant(unsafe.Pointer(variant))
 
 	gofunc((&QGraphicsSvgItem{h: self}).callVirtualBase_SetExtension, slotval1, slotval2)

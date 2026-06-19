@@ -27,12 +27,25 @@ int QBasicTimer_timerId(const QBasicTimer* self) {
 	return self->timerId();
 }
 
+int QBasicTimer_id(const QBasicTimer* self) {
+	Qt::TimerId _ret = self->id();
+	return static_cast<int>(_ret);
+}
+
 void QBasicTimer_start(QBasicTimer* self, int msec, QObject* obj) {
 	self->start(static_cast<int>(msec), obj);
 }
 
 void QBasicTimer_start2(QBasicTimer* self, int msec, int timerType, QObject* obj) {
 	self->start(static_cast<int>(msec), static_cast<Qt::TimerType>(timerType), obj);
+}
+
+void QBasicTimer_start3(QBasicTimer* self, Duration duration, QObject* obj) {
+	self->start(duration, obj);
+}
+
+void QBasicTimer_start4(QBasicTimer* self, Duration duration, int timerType, QObject* obj) {
+	self->start(duration, static_cast<Qt::TimerType>(timerType), obj);
 }
 
 void QBasicTimer_stop(QBasicTimer* self) {

@@ -53,7 +53,8 @@ void QPicture_swap(QPicture* self, QPicture* other);
 void QPicture_detach(QPicture* self);
 bool QPicture_isDetached(const QPicture* self);
 QPaintEngine* QPicture_paintEngine(const QPicture* self);
-int QPicture_metric(const QPicture* self, int m);
+int QPicture_metric(const QPicture* self, PaintDeviceMetric m);
+DataPtr* QPicture_dataPtr(QPicture* self);
 
 bool QPicture_override_virtual_devType(void* self, intptr_t slot);
 int QPicture_virtualbase_devType(const void* self);
@@ -62,13 +63,15 @@ void QPicture_virtualbase_setData(void* self, const char* data, unsigned int siz
 bool QPicture_override_virtual_paintEngine(void* self, intptr_t slot);
 QPaintEngine* QPicture_virtualbase_paintEngine(const void* self);
 bool QPicture_override_virtual_metric(void* self, intptr_t slot);
-int QPicture_virtualbase_metric(const void* self, int m);
+int QPicture_virtualbase_metric(const void* self, PaintDeviceMetric m);
 bool QPicture_override_virtual_initPainter(void* self, intptr_t slot);
 void QPicture_virtualbase_initPainter(const void* self, QPainter* painter);
 bool QPicture_override_virtual_redirected(void* self, intptr_t slot);
 QPaintDevice* QPicture_virtualbase_redirected(const void* self, QPoint* offset);
 bool QPicture_override_virtual_sharedPainter(void* self, intptr_t slot);
 QPainter* QPicture_virtualbase_sharedPainter(const void* self);
+
+double QPicture_protectedbase_getDecodedMetricF(bool* _dynamic_cast_ok, const void* self, PaintDeviceMetric metricA, PaintDeviceMetric metricB);
 
 void QPicture_delete(QPicture* self);
 

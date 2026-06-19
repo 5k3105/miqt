@@ -81,29 +81,41 @@ func NewQSharedMemory() *QSharedMemory {
 }
 
 // NewQSharedMemory2 constructs a new QSharedMemory object.
-func NewQSharedMemory2(key string) *QSharedMemory {
-	key_ms := C.struct_miqt_string{}
-	key_ms.data = C.CString(key)
-	key_ms.len = C.size_t(len(key))
-	defer C.free(unsafe.Pointer(key_ms.data))
+func NewQSharedMemory2(key *QNativeIpcKey) *QSharedMemory {
 
-	return newQSharedMemory(C.QSharedMemory_new2(key_ms))
+	return newQSharedMemory(C.QSharedMemory_new2(key.cPointer()))
 }
 
 // NewQSharedMemory3 constructs a new QSharedMemory object.
-func NewQSharedMemory3(parent *QObject) *QSharedMemory {
-
-	return newQSharedMemory(C.QSharedMemory_new3(parent.cPointer()))
-}
-
-// NewQSharedMemory4 constructs a new QSharedMemory object.
-func NewQSharedMemory4(key string, parent *QObject) *QSharedMemory {
+func NewQSharedMemory3(key string) *QSharedMemory {
 	key_ms := C.struct_miqt_string{}
 	key_ms.data = C.CString(key)
 	key_ms.len = C.size_t(len(key))
 	defer C.free(unsafe.Pointer(key_ms.data))
 
-	return newQSharedMemory(C.QSharedMemory_new4(key_ms, parent.cPointer()))
+	return newQSharedMemory(C.QSharedMemory_new3(key_ms))
+}
+
+// NewQSharedMemory4 constructs a new QSharedMemory object.
+func NewQSharedMemory4(parent *QObject) *QSharedMemory {
+
+	return newQSharedMemory(C.QSharedMemory_new4(parent.cPointer()))
+}
+
+// NewQSharedMemory5 constructs a new QSharedMemory object.
+func NewQSharedMemory5(key *QNativeIpcKey, parent *QObject) *QSharedMemory {
+
+	return newQSharedMemory(C.QSharedMemory_new5(key.cPointer(), parent.cPointer()))
+}
+
+// NewQSharedMemory6 constructs a new QSharedMemory object.
+func NewQSharedMemory6(key string, parent *QObject) *QSharedMemory {
+	key_ms := C.struct_miqt_string{}
+	key_ms.data = C.CString(key)
+	key_ms.len = C.size_t(len(key))
+	defer C.free(unsafe.Pointer(key_ms.data))
+
+	return newQSharedMemory(C.QSharedMemory_new6(key_ms, parent.cPointer()))
 }
 
 func (this *QSharedMemory) MetaObject() *QMetaObject {
@@ -140,12 +152,16 @@ func (this *QSharedMemory) Key() string {
 	return _ret
 }
 
-func (this *QSharedMemory) SetNativeKey(key string) {
+func (this *QSharedMemory) SetNativeKey(key *QNativeIpcKey) {
+	C.QSharedMemory_setNativeKey(this.h, key.cPointer())
+}
+
+func (this *QSharedMemory) SetNativeKeyWithKey(key string) {
 	key_ms := C.struct_miqt_string{}
 	key_ms.data = C.CString(key)
 	key_ms.len = C.size_t(len(key))
 	defer C.free(unsafe.Pointer(key_ms.data))
-	C.QSharedMemory_setNativeKey(this.h, key_ms)
+	C.QSharedMemory_setNativeKeyWithKey(this.h, key_ms)
 }
 
 func (this *QSharedMemory) NativeKey() string {
@@ -153,6 +169,12 @@ func (this *QSharedMemory) NativeKey() string {
 	_ret := C.GoStringN(_ms.data, C.int(int64(_ms.len)))
 	C.free(unsafe.Pointer(_ms.data))
 	return _ret
+}
+
+func (this *QSharedMemory) NativeIpcKey() *QNativeIpcKey {
+	_goptr := newQNativeIpcKey(C.QSharedMemory_nativeIpcKey(this.h))
+	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
+	return _goptr
 }
 
 func (this *QSharedMemory) Create(size int64) bool {
@@ -195,8 +217,8 @@ func (this *QSharedMemory) Unlock() bool {
 	return (bool)(C.QSharedMemory_unlock(this.h))
 }
 
-func (this *QSharedMemory) Error() QSharedMemory__SharedMemoryError {
-	return (QSharedMemory__SharedMemoryError)(C.QSharedMemory_error(this.h))
+func (this *QSharedMemory) Error() SharedMemoryError {
+	int /* TODO  */
 }
 
 func (this *QSharedMemory) ErrorString() string {
@@ -204,6 +226,30 @@ func (this *QSharedMemory) ErrorString() string {
 	_ret := C.GoStringN(_ms.data, C.int(int64(_ms.len)))
 	C.free(unsafe.Pointer(_ms.data))
 	return _ret
+}
+
+func QSharedMemory_IsKeyTypeSupported(typeVal QNativeIpcKey__Type) bool {
+	return (bool)(C.QSharedMemory_isKeyTypeSupported((C.uint16_t)(typeVal)))
+}
+
+func QSharedMemory_PlatformSafeKey(key string) *QNativeIpcKey {
+	key_ms := C.struct_miqt_string{}
+	key_ms.data = C.CString(key)
+	key_ms.len = C.size_t(len(key))
+	defer C.free(unsafe.Pointer(key_ms.data))
+	_goptr := newQNativeIpcKey(C.QSharedMemory_platformSafeKey(key_ms))
+	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
+	return _goptr
+}
+
+func QSharedMemory_LegacyNativeKey(key string) *QNativeIpcKey {
+	key_ms := C.struct_miqt_string{}
+	key_ms.data = C.CString(key)
+	key_ms.len = C.size_t(len(key))
+	defer C.free(unsafe.Pointer(key_ms.data))
+	_goptr := newQNativeIpcKey(C.QSharedMemory_legacyNativeKey(key_ms))
+	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
+	return _goptr
 }
 
 func QSharedMemory_Tr2(s string, c string) string {
@@ -228,12 +274,40 @@ func QSharedMemory_Tr3(s string, c string, n int) string {
 	return _ret
 }
 
-func (this *QSharedMemory) Create2(size int64, mode QSharedMemory__AccessMode) bool {
-	return (bool)(C.QSharedMemory_create2(this.h, (C.ptrdiff_t)(size), (C.int)(mode)))
+func (this *QSharedMemory) SetNativeKey2(key string, typeVal QNativeIpcKey__Type) {
+	key_ms := C.struct_miqt_string{}
+	key_ms.data = C.CString(key)
+	key_ms.len = C.size_t(len(key))
+	defer C.free(unsafe.Pointer(key_ms.data))
+	C.QSharedMemory_setNativeKey2(this.h, key_ms, (C.uint16_t)(typeVal))
 }
 
-func (this *QSharedMemory) AttachWithMode(mode QSharedMemory__AccessMode) bool {
-	return (bool)(C.QSharedMemory_attachWithMode(this.h, (C.int)(mode)))
+func (this *QSharedMemory) Create2(size int64, mode AccessMode) bool {
+	return (bool)(C.QSharedMemory_create2(this.h, (C.ptrdiff_t)(size), mode))
+}
+
+func (this *QSharedMemory) AttachWithMode(mode AccessMode) bool {
+	return (bool)(C.QSharedMemory_attachWithMode(this.h, mode))
+}
+
+func QSharedMemory_PlatformSafeKey2(key string, typeVal QNativeIpcKey__Type) *QNativeIpcKey {
+	key_ms := C.struct_miqt_string{}
+	key_ms.data = C.CString(key)
+	key_ms.len = C.size_t(len(key))
+	defer C.free(unsafe.Pointer(key_ms.data))
+	_goptr := newQNativeIpcKey(C.QSharedMemory_platformSafeKey2(key_ms, (C.uint16_t)(typeVal)))
+	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
+	return _goptr
+}
+
+func QSharedMemory_LegacyNativeKey2(key string, typeVal QNativeIpcKey__Type) *QNativeIpcKey {
+	key_ms := C.struct_miqt_string{}
+	key_ms.data = C.CString(key)
+	key_ms.len = C.size_t(len(key))
+	defer C.free(unsafe.Pointer(key_ms.data))
+	_goptr := newQNativeIpcKey(C.QSharedMemory_legacyNativeKey2(key_ms, (C.uint16_t)(typeVal)))
+	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
+	return _goptr
 }
 
 // Sender can only be called from a QSharedMemory that was directly constructed.

@@ -48,14 +48,14 @@ typedef struct QVBoxLayout QVBoxLayout;
 typedef struct QWidget QWidget;
 #endif
 
-QBoxLayout* QBoxLayout_new(int param1);
-QBoxLayout* QBoxLayout_new2(int param1, QWidget* parent);
+QBoxLayout* QBoxLayout_new(Direction param1);
+QBoxLayout* QBoxLayout_new2(Direction param1, QWidget* parent);
 void QBoxLayout_virtbase(QBoxLayout* src, QLayout** outptr_QLayout);
 QMetaObject* QBoxLayout_metaObject(const QBoxLayout* self);
 void* QBoxLayout_metacast(QBoxLayout* self, const char* param1);
 struct miqt_string QBoxLayout_tr(const char* s);
-int QBoxLayout_direction(const QBoxLayout* self);
-void QBoxLayout_setDirection(QBoxLayout* self, int direction);
+Direction QBoxLayout_direction(const QBoxLayout* self);
+void QBoxLayout_setDirection(QBoxLayout* self, Direction direction);
 void QBoxLayout_addSpacing(QBoxLayout* self, int size);
 void QBoxLayout_addStretch(QBoxLayout* self);
 void QBoxLayout_addSpacerItem(QBoxLayout* self, QSpacerItem* spacerItem);

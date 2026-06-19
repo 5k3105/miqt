@@ -75,15 +75,73 @@ func NewQAnyStringView3(str string) *QAnyStringView {
 }
 
 // NewQAnyStringView4 constructs a new QAnyStringView object.
-func NewQAnyStringView4(c *QChar) *QAnyStringView {
+func NewQAnyStringView4(param1 *QAnyStringView) *QAnyStringView {
 
-	return newQAnyStringView(C.QAnyStringView_new4(c.cPointer()))
+	return newQAnyStringView(C.QAnyStringView_new4(param1.cPointer()))
 }
 
-// NewQAnyStringView5 constructs a new QAnyStringView object.
-func NewQAnyStringView5(param1 *QAnyStringView) *QAnyStringView {
+func (this *QAnyStringView) Mid(pos int64) *QAnyStringView {
+	_goptr := newQAnyStringView(C.QAnyStringView_mid(this.h, (C.ptrdiff_t)(pos)))
+	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
+	return _goptr
+}
 
-	return newQAnyStringView(C.QAnyStringView_new5(param1.cPointer()))
+func (this *QAnyStringView) Left(n int64) *QAnyStringView {
+	_goptr := newQAnyStringView(C.QAnyStringView_left(this.h, (C.ptrdiff_t)(n)))
+	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
+	return _goptr
+}
+
+func (this *QAnyStringView) Right(n int64) *QAnyStringView {
+	_goptr := newQAnyStringView(C.QAnyStringView_right(this.h, (C.ptrdiff_t)(n)))
+	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
+	return _goptr
+}
+
+func (this *QAnyStringView) Sliced(pos int64) *QAnyStringView {
+	_goptr := newQAnyStringView(C.QAnyStringView_sliced(this.h, (C.ptrdiff_t)(pos)))
+	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
+	return _goptr
+}
+
+func (this *QAnyStringView) Sliced2(pos int64, n int64) *QAnyStringView {
+	_goptr := newQAnyStringView(C.QAnyStringView_sliced2(this.h, (C.ptrdiff_t)(pos), (C.ptrdiff_t)(n)))
+	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
+	return _goptr
+}
+
+func (this *QAnyStringView) First(n int64) *QAnyStringView {
+	_goptr := newQAnyStringView(C.QAnyStringView_first(this.h, (C.ptrdiff_t)(n)))
+	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
+	return _goptr
+}
+
+func (this *QAnyStringView) Last(n int64) *QAnyStringView {
+	_goptr := newQAnyStringView(C.QAnyStringView_last(this.h, (C.ptrdiff_t)(n)))
+	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
+	return _goptr
+}
+
+func (this *QAnyStringView) Chopped(n int64) *QAnyStringView {
+	_goptr := newQAnyStringView(C.QAnyStringView_chopped(this.h, (C.ptrdiff_t)(n)))
+	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
+	return _goptr
+}
+
+func (this *QAnyStringView) Slice(pos int64) *QAnyStringView {
+	return newQAnyStringView(C.QAnyStringView_slice(this.h, (C.ptrdiff_t)(pos)))
+}
+
+func (this *QAnyStringView) Slice2(pos int64, n int64) *QAnyStringView {
+	return newQAnyStringView(C.QAnyStringView_slice2(this.h, (C.ptrdiff_t)(pos), (C.ptrdiff_t)(n)))
+}
+
+func (this *QAnyStringView) Truncate(n int64) {
+	C.QAnyStringView_truncate(this.h, (C.ptrdiff_t)(n))
+}
+
+func (this *QAnyStringView) Chop(n int64) {
+	C.QAnyStringView_chop(this.h, (C.ptrdiff_t)(n))
 }
 
 func (this *QAnyStringView) ToString() string {
@@ -129,6 +187,10 @@ func (this *QAnyStringView) SizeBytes() int64 {
 	return (int64)(C.QAnyStringView_sizeBytes(this.h))
 }
 
+func (this *QAnyStringView) MaxSize() int64 {
+	return (int64)(C.QAnyStringView_maxSize(this.h))
+}
+
 func (this *QAnyStringView) IsNull() bool {
 	return (bool)(C.QAnyStringView_isNull(this.h))
 }
@@ -139,6 +201,16 @@ func (this *QAnyStringView) IsEmpty() bool {
 
 func (this *QAnyStringView) Length() int64 {
 	return (int64)(C.QAnyStringView_length(this.h))
+}
+
+func (this *QAnyStringView) OperatorAssign(param1 *QAnyStringView) {
+	C.QAnyStringView_operatorAssign(this.h, param1.cPointer())
+}
+
+func (this *QAnyStringView) Mid2(pos int64, n int64) *QAnyStringView {
+	_goptr := newQAnyStringView(C.QAnyStringView_mid2(this.h, (C.ptrdiff_t)(pos), (C.ptrdiff_t)(n)))
+	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
+	return _goptr
 }
 
 func QAnyStringView_Compare2(lhs QAnyStringView, rhs QAnyStringView, cs CaseSensitivity) int {

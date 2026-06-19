@@ -90,8 +90,8 @@ func QOffscreenSurface_Tr(s string) string {
 	return _ret
 }
 
-func (this *QOffscreenSurface) SurfaceType() QSurface__SurfaceType {
-	return (QSurface__SurfaceType)(C.QOffscreenSurface_surfaceType(this.h))
+func (this *QOffscreenSurface) SurfaceType() SurfaceType {
+	int /* TODO  */
 }
 
 func (this *QOffscreenSurface) Create() {
@@ -252,12 +252,11 @@ func (this *QOffscreenSurface) IsSignalConnected(signal *QMetaMethod) bool {
 
 }
 
-func (this *QOffscreenSurface) callVirtualBase_SurfaceType() QSurface__SurfaceType {
+func (this *QOffscreenSurface) callVirtualBase_SurfaceType() SurfaceType {
 
-	return (QSurface__SurfaceType)(C.QOffscreenSurface_virtualbase_surfaceType(unsafe.Pointer(this.h)))
-
+	int /* TODO  */
 }
-func (this *QOffscreenSurface) OnSurfaceType(slot func(super func() QSurface__SurfaceType) QSurface__SurfaceType) {
+func (this *QOffscreenSurface) OnSurfaceType(slot func(super func() SurfaceType) SurfaceType) {
 	ok := C.QOffscreenSurface_override_virtual_surfaceType(unsafe.Pointer(this.h), C.intptr_t(cgo.NewHandle(slot)))
 	if !ok {
 		panic("miqt: can only override virtual methods for directly constructed types")
@@ -265,15 +264,15 @@ func (this *QOffscreenSurface) OnSurfaceType(slot func(super func() QSurface__Su
 }
 
 //export miqt_exec_callback_QOffscreenSurface_surfaceType
-func miqt_exec_callback_QOffscreenSurface_surfaceType(self *C.QOffscreenSurface, cb C.intptr_t) C.int {
-	gofunc, ok := cgo.Handle(cb).Value().(func(super func() QSurface__SurfaceType) QSurface__SurfaceType)
+func miqt_exec_callback_QOffscreenSurface_surfaceType(self *C.QOffscreenSurface, cb C.intptr_t) C.SurfaceType {
+	gofunc, ok := cgo.Handle(cb).Value().(func(super func() SurfaceType) SurfaceType)
 	if !ok {
 		panic("miqt: callback of non-callback type (heap corruption?)")
 	}
 
 	virtualReturn := gofunc((&QOffscreenSurface{h: self}).callVirtualBase_SurfaceType)
 
-	return (C.int)(virtualReturn)
+	return virtualReturn
 
 }
 

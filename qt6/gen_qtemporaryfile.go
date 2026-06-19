@@ -143,6 +143,14 @@ func (this *QTemporaryFile) Rename(newName string) bool {
 	return (bool)(C.QTemporaryFile_rename(this.h, newName_ms))
 }
 
+func (this *QTemporaryFile) RenameOverwrite(newName string) bool {
+	newName_ms := C.struct_miqt_string{}
+	newName_ms.data = C.CString(newName)
+	newName_ms.len = C.size_t(len(newName))
+	defer C.free(unsafe.Pointer(newName_ms.data))
+	return (bool)(C.QTemporaryFile_renameOverwrite(this.h, newName_ms))
+}
+
 func QTemporaryFile_CreateNativeFile(fileName string) *QTemporaryFile {
 	fileName_ms := C.struct_miqt_string{}
 	fileName_ms.data = C.CString(fileName)
@@ -178,7 +186,7 @@ func QTemporaryFile_Tr3(s string, c string, n int) string {
 }
 
 // SetOpenMode can only be called from a QTemporaryFile that was directly constructed.
-func (this *QTemporaryFile) SetOpenMode(openMode QIODeviceBase__OpenModeFlag) {
+func (this *QTemporaryFile) SetOpenMode(openMode OpenModeFlag) {
 
 	var _dynamic_cast_ok C.bool = false
 	C.QTemporaryFile_protectedbase_setOpenMode(&_dynamic_cast_ok, unsafe.Pointer(this.h), (C.int)(openMode))
@@ -293,12 +301,12 @@ func miqt_exec_callback_QTemporaryFile_fileName(self *C.QTemporaryFile, cb C.int
 
 }
 
-func (this *QTemporaryFile) callVirtualBase_OpenWithFlags(flags QIODeviceBase__OpenModeFlag) bool {
+func (this *QTemporaryFile) callVirtualBase_OpenWithFlags(flags OpenMode) bool {
 
-	return (bool)(C.QTemporaryFile_virtualbase_openWithFlags(unsafe.Pointer(this.h), (C.int)(flags)))
+	return (bool)(C.QTemporaryFile_virtualbase_openWithFlags(unsafe.Pointer(this.h), flags))
 
 }
-func (this *QTemporaryFile) OnOpenWithFlags(slot func(super func(flags QIODeviceBase__OpenModeFlag) bool, flags QIODeviceBase__OpenModeFlag) bool) {
+func (this *QTemporaryFile) OnOpenWithFlags(slot func(super func(flags OpenMode) bool, flags OpenMode) bool) {
 	ok := C.QTemporaryFile_override_virtual_openWithFlags(unsafe.Pointer(this.h), C.intptr_t(cgo.NewHandle(slot)))
 	if !ok {
 		panic("miqt: can only override virtual methods for directly constructed types")
@@ -306,14 +314,14 @@ func (this *QTemporaryFile) OnOpenWithFlags(slot func(super func(flags QIODevice
 }
 
 //export miqt_exec_callback_QTemporaryFile_openWithFlags
-func miqt_exec_callback_QTemporaryFile_openWithFlags(self *C.QTemporaryFile, cb C.intptr_t, flags C.int) C.bool {
-	gofunc, ok := cgo.Handle(cb).Value().(func(super func(flags QIODeviceBase__OpenModeFlag) bool, flags QIODeviceBase__OpenModeFlag) bool)
+func miqt_exec_callback_QTemporaryFile_openWithFlags(self *C.QTemporaryFile, cb C.intptr_t, flags C.OpenMode) C.bool {
+	gofunc, ok := cgo.Handle(cb).Value().(func(super func(flags OpenMode) bool, flags OpenMode) bool)
 	if !ok {
 		panic("miqt: callback of non-callback type (heap corruption?)")
 	}
 
 	// Convert all CABI parameters to Go parameters
-	slotval1 := (QIODeviceBase__OpenModeFlag)(flags)
+	int /* TODO  */
 
 	virtualReturn := gofunc((&QTemporaryFile{h: self}).callVirtualBase_OpenWithFlags, slotval1)
 
@@ -374,12 +382,11 @@ func miqt_exec_callback_QTemporaryFile_resize(self *C.QTemporaryFile, cb C.intpt
 
 }
 
-func (this *QTemporaryFile) callVirtualBase_Permissions() QFileDevice__Permission {
+func (this *QTemporaryFile) callVirtualBase_Permissions() Permissions {
 
-	return (QFileDevice__Permission)(C.QTemporaryFile_virtualbase_permissions(unsafe.Pointer(this.h)))
-
+	int /* TODO  */
 }
-func (this *QTemporaryFile) OnPermissions(slot func(super func() QFileDevice__Permission) QFileDevice__Permission) {
+func (this *QTemporaryFile) OnPermissions(slot func(super func() Permissions) Permissions) {
 	ok := C.QTemporaryFile_override_virtual_permissions(unsafe.Pointer(this.h), C.intptr_t(cgo.NewHandle(slot)))
 	if !ok {
 		panic("miqt: can only override virtual methods for directly constructed types")
@@ -387,24 +394,24 @@ func (this *QTemporaryFile) OnPermissions(slot func(super func() QFileDevice__Pe
 }
 
 //export miqt_exec_callback_QTemporaryFile_permissions
-func miqt_exec_callback_QTemporaryFile_permissions(self *C.QTemporaryFile, cb C.intptr_t) C.int {
-	gofunc, ok := cgo.Handle(cb).Value().(func(super func() QFileDevice__Permission) QFileDevice__Permission)
+func miqt_exec_callback_QTemporaryFile_permissions(self *C.QTemporaryFile, cb C.intptr_t) C.Permissions {
+	gofunc, ok := cgo.Handle(cb).Value().(func(super func() Permissions) Permissions)
 	if !ok {
 		panic("miqt: callback of non-callback type (heap corruption?)")
 	}
 
 	virtualReturn := gofunc((&QTemporaryFile{h: self}).callVirtualBase_Permissions)
 
-	return (C.int)(virtualReturn)
+	return virtualReturn
 
 }
 
-func (this *QTemporaryFile) callVirtualBase_SetPermissions(permissionSpec QFileDevice__Permission) bool {
+func (this *QTemporaryFile) callVirtualBase_SetPermissions(permissionSpec Permissions) bool {
 
-	return (bool)(C.QTemporaryFile_virtualbase_setPermissions(unsafe.Pointer(this.h), (C.int)(permissionSpec)))
+	return (bool)(C.QTemporaryFile_virtualbase_setPermissions(unsafe.Pointer(this.h), permissionSpec))
 
 }
-func (this *QTemporaryFile) OnSetPermissions(slot func(super func(permissionSpec QFileDevice__Permission) bool, permissionSpec QFileDevice__Permission) bool) {
+func (this *QTemporaryFile) OnSetPermissions(slot func(super func(permissionSpec Permissions) bool, permissionSpec Permissions) bool) {
 	ok := C.QTemporaryFile_override_virtual_setPermissions(unsafe.Pointer(this.h), C.intptr_t(cgo.NewHandle(slot)))
 	if !ok {
 		panic("miqt: can only override virtual methods for directly constructed types")
@@ -412,14 +419,14 @@ func (this *QTemporaryFile) OnSetPermissions(slot func(super func(permissionSpec
 }
 
 //export miqt_exec_callback_QTemporaryFile_setPermissions
-func miqt_exec_callback_QTemporaryFile_setPermissions(self *C.QTemporaryFile, cb C.intptr_t, permissionSpec C.int) C.bool {
-	gofunc, ok := cgo.Handle(cb).Value().(func(super func(permissionSpec QFileDevice__Permission) bool, permissionSpec QFileDevice__Permission) bool)
+func miqt_exec_callback_QTemporaryFile_setPermissions(self *C.QTemporaryFile, cb C.intptr_t, permissionSpec C.Permissions) C.bool {
+	gofunc, ok := cgo.Handle(cb).Value().(func(super func(permissionSpec Permissions) bool, permissionSpec Permissions) bool)
 	if !ok {
 		panic("miqt: callback of non-callback type (heap corruption?)")
 	}
 
 	// Convert all CABI parameters to Go parameters
-	slotval1 := (QFileDevice__Permission)(permissionSpec)
+	int /* TODO  */
 
 	virtualReturn := gofunc((&QTemporaryFile{h: self}).callVirtualBase_SetPermissions, slotval1)
 

@@ -87,7 +87,7 @@ void miqt_exec_callback_QCalendarWidget_showEvent(QCalendarWidget*, intptr_t, QS
 void miqt_exec_callback_QCalendarWidget_hideEvent(QCalendarWidget*, intptr_t, QHideEvent*);
 bool miqt_exec_callback_QCalendarWidget_nativeEvent(QCalendarWidget*, intptr_t, struct miqt_string, void*, intptr_t*);
 void miqt_exec_callback_QCalendarWidget_changeEvent(QCalendarWidget*, intptr_t, QEvent*);
-int miqt_exec_callback_QCalendarWidget_metric(const QCalendarWidget*, intptr_t, int);
+int miqt_exec_callback_QCalendarWidget_metric(const QCalendarWidget*, intptr_t, PaintDeviceMetric);
 void miqt_exec_callback_QCalendarWidget_initPainter(const QCalendarWidget*, intptr_t, QPainter*);
 QPaintDevice* miqt_exec_callback_QCalendarWidget_redirected(const QCalendarWidget*, intptr_t, QPoint*);
 QPainter* miqt_exec_callback_QCalendarWidget_sharedPainter(const QCalendarWidget*, intptr_t);
@@ -726,18 +726,17 @@ public:
 	intptr_t handle__metric = 0;
 
 	// Subclass to allow providing a Go implementation
-	virtual int metric(QPaintDevice::PaintDeviceMetric param1) const override {
+	virtual int metric(PaintDeviceMetric param1) const override {
 		if (handle__metric == 0) {
 			return QCalendarWidget::metric(param1);
 		}
 
-		QPaintDevice::PaintDeviceMetric param1_ret = param1;
-		int sigval1 = static_cast<int>(param1_ret);
+		PaintDeviceMetric sigval1 = param1;
 		int callback_return_value = miqt_exec_callback_QCalendarWidget_metric(this, handle__metric, sigval1);
 		return static_cast<int>(callback_return_value);
 	}
 
-	friend int QCalendarWidget_virtualbase_metric(const void* self, int param1);
+	friend int QCalendarWidget_virtualbase_metric(const void* self, PaintDeviceMetric param1);
 
 	// cgo.Handle value for overwritten implementation
 	intptr_t handle__initPainter = 0;
@@ -938,6 +937,7 @@ public:
 	friend int QCalendarWidget_protectedbase_senderSignalIndex(bool* _dynamic_cast_ok, const void* self);
 	friend int QCalendarWidget_protectedbase_receivers(bool* _dynamic_cast_ok, const void* self, const char* signal);
 	friend bool QCalendarWidget_protectedbase_isSignalConnected(bool* _dynamic_cast_ok, const void* self, QMetaMethod* signal);
+	friend double QCalendarWidget_protectedbase_getDecodedMetricF(bool* _dynamic_cast_ok, const void* self, PaintDeviceMetric metricA, PaintDeviceMetric metricB);
 };
 
 QCalendarWidget* QCalendarWidget_new(QWidget* parent) {
@@ -999,12 +999,20 @@ void QCalendarWidget_setMinimumDate(QCalendarWidget* self, QDate* date) {
 	self->setMinimumDate(*date);
 }
 
+void QCalendarWidget_clearMinimumDate(QCalendarWidget* self) {
+	self->clearMinimumDate();
+}
+
 QDate* QCalendarWidget_maximumDate(const QCalendarWidget* self) {
 	return new QDate(self->maximumDate());
 }
 
 void QCalendarWidget_setMaximumDate(QCalendarWidget* self, QDate* date) {
 	self->setMaximumDate(*date);
+}
+
+void QCalendarWidget_clearMaximumDate(QCalendarWidget* self) {
+	self->clearMaximumDate();
 }
 
 int QCalendarWidget_firstDayOfWeek(const QCalendarWidget* self) {
@@ -1032,31 +1040,28 @@ void QCalendarWidget_setCalendar(QCalendarWidget* self, QCalendar* calendar) {
 	self->setCalendar(*calendar);
 }
 
-int QCalendarWidget_selectionMode(const QCalendarWidget* self) {
-	QCalendarWidget::SelectionMode _ret = self->selectionMode();
-	return static_cast<int>(_ret);
+SelectionMode QCalendarWidget_selectionMode(const QCalendarWidget* self) {
+	return self->selectionMode();
 }
 
-void QCalendarWidget_setSelectionMode(QCalendarWidget* self, int mode) {
-	self->setSelectionMode(static_cast<QCalendarWidget::SelectionMode>(mode));
+void QCalendarWidget_setSelectionMode(QCalendarWidget* self, SelectionMode mode) {
+	self->setSelectionMode(mode);
 }
 
-int QCalendarWidget_horizontalHeaderFormat(const QCalendarWidget* self) {
-	QCalendarWidget::HorizontalHeaderFormat _ret = self->horizontalHeaderFormat();
-	return static_cast<int>(_ret);
+HorizontalHeaderFormat QCalendarWidget_horizontalHeaderFormat(const QCalendarWidget* self) {
+	return self->horizontalHeaderFormat();
 }
 
-void QCalendarWidget_setHorizontalHeaderFormat(QCalendarWidget* self, int format) {
-	self->setHorizontalHeaderFormat(static_cast<QCalendarWidget::HorizontalHeaderFormat>(format));
+void QCalendarWidget_setHorizontalHeaderFormat(QCalendarWidget* self, HorizontalHeaderFormat format) {
+	self->setHorizontalHeaderFormat(format);
 }
 
-int QCalendarWidget_verticalHeaderFormat(const QCalendarWidget* self) {
-	QCalendarWidget::VerticalHeaderFormat _ret = self->verticalHeaderFormat();
-	return static_cast<int>(_ret);
+VerticalHeaderFormat QCalendarWidget_verticalHeaderFormat(const QCalendarWidget* self) {
+	return self->verticalHeaderFormat();
 }
 
-void QCalendarWidget_setVerticalHeaderFormat(QCalendarWidget* self, int format) {
-	self->setVerticalHeaderFormat(static_cast<QCalendarWidget::VerticalHeaderFormat>(format));
+void QCalendarWidget_setVerticalHeaderFormat(QCalendarWidget* self, VerticalHeaderFormat format) {
+	self->setVerticalHeaderFormat(format);
 }
 
 QTextCharFormat* QCalendarWidget_headerTextFormat(const QCalendarWidget* self) {
@@ -1742,8 +1747,8 @@ bool QCalendarWidget_override_virtual_metric(void* self, intptr_t slot) {
 	return true;
 }
 
-int QCalendarWidget_virtualbase_metric(const void* self, int param1) {
-	return static_cast<const MiqtVirtualQCalendarWidget*>(self)->QCalendarWidget::metric(static_cast<MiqtVirtualQCalendarWidget::PaintDeviceMetric>(param1));
+int QCalendarWidget_virtualbase_metric(const void* self, PaintDeviceMetric param1) {
+	return static_cast<const MiqtVirtualQCalendarWidget*>(self)->QCalendarWidget::metric(param1);
 }
 
 bool QCalendarWidget_override_virtual_initPainter(void* self, intptr_t slot) {
@@ -2019,6 +2024,17 @@ bool QCalendarWidget_protectedbase_isSignalConnected(bool* _dynamic_cast_ok, con
 
 	*_dynamic_cast_ok = true;
 	return self_cast->isSignalConnected(*signal);
+}
+
+double QCalendarWidget_protectedbase_getDecodedMetricF(bool* _dynamic_cast_ok, const void* self, PaintDeviceMetric metricA, PaintDeviceMetric metricB) {
+	MiqtVirtualQCalendarWidget* self_cast = dynamic_cast<MiqtVirtualQCalendarWidget*>( (QCalendarWidget*)(self) );
+	if (self_cast == nullptr) {
+		*_dynamic_cast_ok = false;
+		return 0;
+	}
+
+	*_dynamic_cast_ok = true;
+	return self_cast->getDecodedMetricF(metricA, metricB);
 }
 
 void QCalendarWidget_delete(QCalendarWidget* self) {

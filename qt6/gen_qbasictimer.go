@@ -63,12 +63,24 @@ func (this *QBasicTimer) TimerId() int {
 	return (int)(C.QBasicTimer_timerId(this.h))
 }
 
+func (this *QBasicTimer) Id() TimerId {
+	return (TimerId)(C.QBasicTimer_id(this.h))
+}
+
 func (this *QBasicTimer) Start(msec int, obj *QObject) {
 	C.QBasicTimer_start(this.h, (C.int)(msec), obj.cPointer())
 }
 
 func (this *QBasicTimer) Start2(msec int, timerType TimerType, obj *QObject) {
 	C.QBasicTimer_start2(this.h, (C.int)(msec), (C.int)(timerType), obj.cPointer())
+}
+
+func (this *QBasicTimer) Start3(duration Duration, obj *QObject) {
+	C.QBasicTimer_start3(this.h, duration, obj.cPointer())
+}
+
+func (this *QBasicTimer) Start4(duration Duration, timerType TimerType, obj *QObject) {
+	C.QBasicTimer_start4(this.h, duration, (C.int)(timerType), obj.cPointer())
 }
 
 func (this *QBasicTimer) Stop() {

@@ -124,9 +124,9 @@ func NewQJsonValue10(other *QJsonValue) *QJsonValue {
 }
 
 // NewQJsonValue11 constructs a new QJsonValue object.
-func NewQJsonValue11(param1 QJsonValue__Type) *QJsonValue {
+func NewQJsonValue11(param1 Type) *QJsonValue {
 
-	return newQJsonValue(C.QJsonValue_new11((C.int)(param1)))
+	return newQJsonValue(C.QJsonValue_new11(param1))
 }
 
 func (this *QJsonValue) OperatorAssign(other *QJsonValue) {
@@ -149,8 +149,21 @@ func (this *QJsonValue) ToVariant() *QVariant {
 	return _goptr
 }
 
-func (this *QJsonValue) Type() QJsonValue__Type {
-	return (QJsonValue__Type)(C.QJsonValue_type(this.h))
+func QJsonValue_FromJson(json QByteArrayView) *QJsonValue {
+	_goptr := newQJsonValue(C.QJsonValue_fromJson(json.cPointer()))
+	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
+	return _goptr
+}
+
+func (this *QJsonValue) ToJson() []byte {
+	var _bytearray C.struct_miqt_string = C.QJsonValue_toJson(this.h)
+	_ret := C.GoBytes(unsafe.Pointer(_bytearray.data), C.int(int64(_bytearray.len)))
+	C.free(unsafe.Pointer(_bytearray.data))
+	return _ret
+}
+
+func (this *QJsonValue) Type() Type {
+	int /* TODO  */
 }
 
 func (this *QJsonValue) IsNull() bool {
@@ -215,6 +228,12 @@ func (this *QJsonValue) ToStringWithDefaultValue(defaultValue string) string {
 	return _ret
 }
 
+func (this *QJsonValue) ToStringView() *QAnyStringView {
+	_goptr := newQAnyStringView(C.QJsonValue_toStringView(this.h))
+	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
+	return _goptr
+}
+
 func (this *QJsonValue) ToArray() *QJsonArray {
 	_goptr := newQJsonArray(C.QJsonValue_toArray(this.h))
 	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
@@ -255,12 +274,17 @@ func (this *QJsonValue) OperatorSubscriptWithQsizetype(i int64) *QJsonValue {
 	return _goptr
 }
 
-func (this *QJsonValue) OperatorEqual(other *QJsonValue) bool {
-	return (bool)(C.QJsonValue_operatorEqual(this.h, other.cPointer()))
+func QJsonValue_FromJson2(json QByteArrayView, error *QJsonParseError) *QJsonValue {
+	_goptr := newQJsonValue(C.QJsonValue_fromJson2(json.cPointer(), error.cPointer()))
+	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
+	return _goptr
 }
 
-func (this *QJsonValue) OperatorNotEqual(other *QJsonValue) bool {
-	return (bool)(C.QJsonValue_operatorNotEqual(this.h, other.cPointer()))
+func (this *QJsonValue) ToJsonWithFormat(format JsonFormat) []byte {
+	var _bytearray C.struct_miqt_string = C.QJsonValue_toJsonWithFormat(this.h, format)
+	_ret := C.GoBytes(unsafe.Pointer(_bytearray.data), C.int(int64(_bytearray.len)))
+	C.free(unsafe.Pointer(_bytearray.data))
+	return _ret
 }
 
 func (this *QJsonValue) ToBoolWithDefaultValue(defaultValue bool) bool {
@@ -277,6 +301,12 @@ func (this *QJsonValue) ToIntegerWithDefaultValue(defaultValue int64) int64 {
 
 func (this *QJsonValue) ToDoubleWithDefaultValue(defaultValue float64) float64 {
 	return (float64)(C.QJsonValue_toDoubleWithDefaultValue(this.h, (C.double)(defaultValue)))
+}
+
+func (this *QJsonValue) ToStringViewWithDefaultValue(defaultValue QAnyStringView) *QAnyStringView {
+	_goptr := newQAnyStringView(C.QJsonValue_toStringViewWithDefaultValue(this.h, defaultValue.cPointer()))
+	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
+	return _goptr
 }
 
 // Delete this object from C++ memory.
@@ -398,6 +428,12 @@ func (this *QJsonValueConstRef) ToString() string {
 	return _ret
 }
 
+func (this *QJsonValueConstRef) ToStringView() *QAnyStringView {
+	_goptr := newQAnyStringView(C.QJsonValueConstRef_toStringView(this.h))
+	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
+	return _goptr
+}
+
 func (this *QJsonValueConstRef) ToArray() *QJsonArray {
 	_goptr := newQJsonArray(C.QJsonValueConstRef_toArray(this.h))
 	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
@@ -414,14 +450,6 @@ func (this *QJsonValueConstRef) OperatorSubscriptWithQsizetype(i int64) *QJsonVa
 	_goptr := newQJsonValue(C.QJsonValueConstRef_operatorSubscriptWithQsizetype(this.h, (C.ptrdiff_t)(i)))
 	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
 	return _goptr
-}
-
-func (this *QJsonValueConstRef) OperatorEqual(other *QJsonValue) bool {
-	return (bool)(C.QJsonValueConstRef_operatorEqual(this.h, other.cPointer()))
-}
-
-func (this *QJsonValueConstRef) OperatorNotEqual(other *QJsonValue) bool {
-	return (bool)(C.QJsonValueConstRef_operatorNotEqual(this.h, other.cPointer()))
 }
 
 func (this *QJsonValueConstRef) ToBoolWithDefaultValue(defaultValue bool) bool {
@@ -449,6 +477,12 @@ func (this *QJsonValueConstRef) ToStringWithDefaultValue(defaultValue string) st
 	_ret := C.GoStringN(_ms.data, C.int(int64(_ms.len)))
 	C.free(unsafe.Pointer(_ms.data))
 	return _ret
+}
+
+func (this *QJsonValueConstRef) ToStringViewWithDefaultValue(defaultValue QAnyStringView) *QAnyStringView {
+	_goptr := newQAnyStringView(C.QJsonValueConstRef_toStringViewWithDefaultValue(this.h, defaultValue.cPointer()))
+	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
+	return _goptr
 }
 
 // Delete this object from C++ memory.
@@ -594,6 +628,12 @@ func (this *QJsonValueRef) ToString() string {
 	return _ret
 }
 
+func (this *QJsonValueRef) ToStringView() *QAnyStringView {
+	_goptr := newQAnyStringView(C.QJsonValueRef_toStringView(this.h))
+	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
+	return _goptr
+}
+
 func (this *QJsonValueRef) ToArray() *QJsonArray {
 	_goptr := newQJsonArray(C.QJsonValueRef_toArray(this.h))
 	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
@@ -610,14 +650,6 @@ func (this *QJsonValueRef) OperatorSubscriptWithQsizetype(i int64) *QJsonValue {
 	_goptr := newQJsonValue(C.QJsonValueRef_operatorSubscriptWithQsizetype(this.h, (C.ptrdiff_t)(i)))
 	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
 	return _goptr
-}
-
-func (this *QJsonValueRef) OperatorEqual(other *QJsonValue) bool {
-	return (bool)(C.QJsonValueRef_operatorEqual(this.h, other.cPointer()))
-}
-
-func (this *QJsonValueRef) OperatorNotEqual(other *QJsonValue) bool {
-	return (bool)(C.QJsonValueRef_operatorNotEqual(this.h, other.cPointer()))
 }
 
 func (this *QJsonValueRef) ToBoolWithDefaultValue(defaultValue bool) bool {
@@ -645,6 +677,12 @@ func (this *QJsonValueRef) ToStringWithDefaultValue(defaultValue string) string 
 	_ret := C.GoStringN(_ms.data, C.int(int64(_ms.len)))
 	C.free(unsafe.Pointer(_ms.data))
 	return _ret
+}
+
+func (this *QJsonValueRef) ToStringViewWithDefaultValue(defaultValue QAnyStringView) *QAnyStringView {
+	_goptr := newQAnyStringView(C.QJsonValueRef_toStringViewWithDefaultValue(this.h, defaultValue.cPointer()))
+	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
+	return _goptr
 }
 
 // Delete this object from C++ memory.

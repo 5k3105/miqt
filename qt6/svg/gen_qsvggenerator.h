@@ -37,6 +37,7 @@ typedef struct QSvgGenerator QSvgGenerator;
 #endif
 
 QSvgGenerator* QSvgGenerator_new();
+QSvgGenerator* QSvgGenerator_new2(SvgVersion version);
 void QSvgGenerator_virtbase(QSvgGenerator* src, QPaintDevice** outptr_QPaintDevice);
 struct miqt_string QSvgGenerator_title(const QSvgGenerator* self);
 void QSvgGenerator_setTitle(QSvgGenerator* self, struct miqt_string title);
@@ -54,21 +55,25 @@ QIODevice* QSvgGenerator_outputDevice(const QSvgGenerator* self);
 void QSvgGenerator_setOutputDevice(QSvgGenerator* self, QIODevice* outputDevice);
 void QSvgGenerator_setResolution(QSvgGenerator* self, int dpi);
 int QSvgGenerator_resolution(const QSvgGenerator* self);
+SvgVersion QSvgGenerator_svgVersion(const QSvgGenerator* self);
 QPaintEngine* QSvgGenerator_paintEngine(const QSvgGenerator* self);
 int QSvgGenerator_metric(const QSvgGenerator* self, int metric);
+void QSvgGenerator_initPainter(const QSvgGenerator* self, QPainter* param1);
 
 bool QSvgGenerator_override_virtual_paintEngine(void* self, intptr_t slot);
 QPaintEngine* QSvgGenerator_virtualbase_paintEngine(const void* self);
 bool QSvgGenerator_override_virtual_metric(void* self, intptr_t slot);
 int QSvgGenerator_virtualbase_metric(const void* self, int metric);
+bool QSvgGenerator_override_virtual_initPainter(void* self, intptr_t slot);
+void QSvgGenerator_virtualbase_initPainter(const void* self, QPainter* param1);
 bool QSvgGenerator_override_virtual_devType(void* self, intptr_t slot);
 int QSvgGenerator_virtualbase_devType(const void* self);
-bool QSvgGenerator_override_virtual_initPainter(void* self, intptr_t slot);
-void QSvgGenerator_virtualbase_initPainter(const void* self, QPainter* painter);
 bool QSvgGenerator_override_virtual_redirected(void* self, intptr_t slot);
 QPaintDevice* QSvgGenerator_virtualbase_redirected(const void* self, QPoint* offset);
 bool QSvgGenerator_override_virtual_sharedPainter(void* self, intptr_t slot);
 QPainter* QSvgGenerator_virtualbase_sharedPainter(const void* self);
+
+double QSvgGenerator_protectedbase_getDecodedMetricF(bool* _dynamic_cast_ok, const void* self, PaintDeviceMetric metricA, PaintDeviceMetric metricB);
 
 void QSvgGenerator_delete(QSvgGenerator* self);
 

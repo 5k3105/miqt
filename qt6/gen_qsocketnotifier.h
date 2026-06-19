@@ -34,17 +34,17 @@ typedef struct QSocketNotifier QSocketNotifier;
 typedef struct QTimerEvent QTimerEvent;
 #endif
 
-QSocketNotifier* QSocketNotifier_new(int param1);
-QSocketNotifier* QSocketNotifier_new2(intptr_t socket, int param2);
-QSocketNotifier* QSocketNotifier_new3(int param1, QObject* parent);
-QSocketNotifier* QSocketNotifier_new4(intptr_t socket, int param2, QObject* parent);
+QSocketNotifier* QSocketNotifier_new(Type param1);
+QSocketNotifier* QSocketNotifier_new2(intptr_t socket, Type param2);
+QSocketNotifier* QSocketNotifier_new3(Type param1, QObject* parent);
+QSocketNotifier* QSocketNotifier_new4(intptr_t socket, Type param2, QObject* parent);
 void QSocketNotifier_virtbase(QSocketNotifier* src, QObject** outptr_QObject);
 QMetaObject* QSocketNotifier_metaObject(const QSocketNotifier* self);
 void* QSocketNotifier_metacast(QSocketNotifier* self, const char* param1);
 struct miqt_string QSocketNotifier_tr(const char* s);
 void QSocketNotifier_setSocket(QSocketNotifier* self, intptr_t socket);
 intptr_t QSocketNotifier_socket(const QSocketNotifier* self);
-int QSocketNotifier_type(const QSocketNotifier* self);
+Type QSocketNotifier_type(const QSocketNotifier* self);
 bool QSocketNotifier_isValid(const QSocketNotifier* self);
 bool QSocketNotifier_isEnabled(const QSocketNotifier* self);
 void QSocketNotifier_setEnabled(QSocketNotifier* self, bool enabled);
@@ -72,14 +72,12 @@ int QSocketNotifier_protectedbase_senderSignalIndex(bool* _dynamic_cast_ok, cons
 int QSocketNotifier_protectedbase_receivers(bool* _dynamic_cast_ok, const void* self, const char* signal);
 bool QSocketNotifier_protectedbase_isSignalConnected(bool* _dynamic_cast_ok, const void* self, QMetaMethod* signal);
 
-void QSocketNotifier_connect_activated(QSocketNotifier* self, intptr_t slot);
-
 void QSocketNotifier_delete(QSocketNotifier* self);
 
 QSocketDescriptor* QSocketDescriptor_new();
 QSocketDescriptor* QSocketDescriptor_new2(QSocketDescriptor* param1);
-QSocketDescriptor* QSocketDescriptor_new3(int descriptor);
-int QSocketDescriptor_ToInt(const QSocketDescriptor* self);
+QSocketDescriptor* QSocketDescriptor_new3(DescriptorType descriptor);
+DescriptorType QSocketDescriptor_ToInt(const QSocketDescriptor* self);
 bool QSocketDescriptor_isValid(const QSocketDescriptor* self);
 
 void QSocketDescriptor_delete(QSocketDescriptor* self);

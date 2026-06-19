@@ -341,13 +341,12 @@ struct miqt_string QAction_whatsThis(const QAction* self) {
 	return _ms;
 }
 
-void QAction_setPriority(QAction* self, int priority) {
-	self->setPriority(static_cast<QAction::Priority>(priority));
+void QAction_setPriority(QAction* self, Priority priority) {
+	self->setPriority(priority);
 }
 
-int QAction_priority(const QAction* self) {
-	QAction::Priority _ret = self->priority();
-	return static_cast<int>(_ret);
+Priority QAction_priority(const QAction* self) {
+	return self->priority();
 }
 
 void QAction_setSeparator(QAction* self, bool b) {
@@ -446,17 +445,16 @@ bool QAction_isVisible(const QAction* self) {
 	return self->isVisible();
 }
 
-void QAction_activate(QAction* self, int event) {
-	self->activate(static_cast<QAction::ActionEvent>(event));
+void QAction_activate(QAction* self, ActionEvent event) {
+	self->activate(event);
 }
 
-void QAction_setMenuRole(QAction* self, int menuRole) {
-	self->setMenuRole(static_cast<QAction::MenuRole>(menuRole));
+void QAction_setMenuRole(QAction* self, MenuRole menuRole) {
+	self->setMenuRole(menuRole);
 }
 
-int QAction_menuRole(const QAction* self) {
-	QAction::MenuRole _ret = self->menuRole();
-	return static_cast<int>(_ret);
+MenuRole QAction_menuRole(const QAction* self) {
+	return self->menuRole();
 }
 
 void QAction_setIconVisibleInMenu(QAction* self, bool visible) {

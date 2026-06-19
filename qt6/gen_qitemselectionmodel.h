@@ -61,8 +61,6 @@ bool QItemSelectionRange_contains(const QItemSelectionRange* self, QModelIndex* 
 bool QItemSelectionRange_contains2(const QItemSelectionRange* self, int row, int column, QModelIndex* parentIndex);
 bool QItemSelectionRange_intersects(const QItemSelectionRange* self, QItemSelectionRange* other);
 QItemSelectionRange* QItemSelectionRange_intersected(const QItemSelectionRange* self, QItemSelectionRange* other);
-bool QItemSelectionRange_operatorEqual(const QItemSelectionRange* self, QItemSelectionRange* other);
-bool QItemSelectionRange_operatorNotEqual(const QItemSelectionRange* self, QItemSelectionRange* other);
 bool QItemSelectionRange_isValid(const QItemSelectionRange* self);
 bool QItemSelectionRange_isEmpty(const QItemSelectionRange* self);
 struct miqt_array /* of QModelIndex* */  QItemSelectionRange_indexes(const QItemSelectionRange* self);

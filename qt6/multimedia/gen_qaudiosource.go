@@ -148,8 +148,20 @@ func (this *QAudioSource) BufferSize() int64 {
 	return (int64)(C.QAudioSource_bufferSize(this.h))
 }
 
+func (this *QAudioSource) SetBufferFrameCount(frames int64) {
+	C.QAudioSource_setBufferFrameCount(this.h, (C.ptrdiff_t)(frames))
+}
+
+func (this *QAudioSource) BufferFrameCount() int64 {
+	return (int64)(C.QAudioSource_bufferFrameCount(this.h))
+}
+
 func (this *QAudioSource) BytesAvailable() int64 {
 	return (int64)(C.QAudioSource_bytesAvailable(this.h))
+}
+
+func (this *QAudioSource) FramesAvailable() int64 {
+	return (int64)(C.QAudioSource_framesAvailable(this.h))
 }
 
 func (this *QAudioSource) SetVolume(volume float64) {

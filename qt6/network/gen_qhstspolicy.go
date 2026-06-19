@@ -59,13 +59,13 @@ func NewQHstsPolicy() *QHstsPolicy {
 }
 
 // NewQHstsPolicy2 constructs a new QHstsPolicy object.
-func NewQHstsPolicy2(expiry *qt6.QDateTime, flags QHstsPolicy__PolicyFlag, host string) *QHstsPolicy {
+func NewQHstsPolicy2(expiry *qt6.QDateTime, flags PolicyFlags, host string) *QHstsPolicy {
 	host_ms := C.struct_miqt_string{}
 	host_ms.data = C.CString(host)
 	host_ms.len = C.size_t(len(host))
 	defer C.free(unsafe.Pointer(host_ms.data))
 
-	return newQHstsPolicy(C.QHstsPolicy_new2((*C.QDateTime)(expiry.UnsafePointer()), (C.int)(flags), host_ms))
+	return newQHstsPolicy(C.QHstsPolicy_new2((*C.QDateTime)(expiry.UnsafePointer()), flags, host_ms))
 }
 
 // NewQHstsPolicy3 constructs a new QHstsPolicy object.
@@ -75,13 +75,13 @@ func NewQHstsPolicy3(rhs *QHstsPolicy) *QHstsPolicy {
 }
 
 // NewQHstsPolicy4 constructs a new QHstsPolicy object.
-func NewQHstsPolicy4(expiry *qt6.QDateTime, flags QHstsPolicy__PolicyFlag, host string, mode qt6.QUrl__ParsingMode) *QHstsPolicy {
+func NewQHstsPolicy4(expiry *qt6.QDateTime, flags PolicyFlags, host string, mode qt6.QUrl__ParsingMode) *QHstsPolicy {
 	host_ms := C.struct_miqt_string{}
 	host_ms.data = C.CString(host)
 	host_ms.len = C.size_t(len(host))
 	defer C.free(unsafe.Pointer(host_ms.data))
 
-	return newQHstsPolicy(C.QHstsPolicy_new4((*C.QDateTime)(expiry.UnsafePointer()), (C.int)(flags), host_ms, (C.int)(mode)))
+	return newQHstsPolicy(C.QHstsPolicy_new4((*C.QDateTime)(expiry.UnsafePointer()), flags, host_ms, (C.int)(mode)))
 }
 
 func (this *QHstsPolicy) OperatorAssign(rhs *QHstsPolicy) {
@@ -137,8 +137,8 @@ func (this *QHstsPolicy) SetHost2(host string, mode qt6.QUrl__ParsingMode) {
 	C.QHstsPolicy_setHost2(this.h, host_ms, (C.int)(mode))
 }
 
-func (this *QHstsPolicy) HostWithOptions(options qt6.QUrl__ComponentFormattingOption) string {
-	var _ms C.struct_miqt_string = C.QHstsPolicy_hostWithOptions(this.h, (C.uint)(options))
+func (this *QHstsPolicy) HostWithOptions(options ComponentFormattingOption) string {
+	var _ms C.struct_miqt_string = C.QHstsPolicy_hostWithOptions(this.h, (C.int)(options))
 	_ret := C.GoStringN(_ms.data, C.int(int64(_ms.len)))
 	C.free(unsafe.Pointer(_ms.data))
 	return _ret

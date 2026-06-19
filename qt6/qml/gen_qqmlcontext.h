@@ -57,14 +57,17 @@ struct miqt_string QQmlContext_tr(const char* s);
 bool QQmlContext_isValid(const QQmlContext* self);
 QQmlEngine* QQmlContext_engine(const QQmlContext* self);
 QQmlContext* QQmlContext_parentContext(const QQmlContext* self);
+struct miqt_array /* of QQmlContext* */  QQmlContext_childContexts(const QQmlContext* self);
 QObject* QQmlContext_contextObject(const QQmlContext* self);
 void QQmlContext_setContextObject(QQmlContext* self, QObject* contextObject);
 QVariant* QQmlContext_contextProperty(const QQmlContext* self, struct miqt_string param1);
 void QQmlContext_setContextProperty(QQmlContext* self, struct miqt_string param1, QObject* param2);
 void QQmlContext_setContextProperty2(QQmlContext* self, struct miqt_string param1, QVariant* param2);
-void QQmlContext_setContextProperties(QQmlContext* self, struct miqt_array /* of QQmlContext__PropertyPair* */  properties);
+void QQmlContext_setContextProperties(QQmlContext* self, struct miqt_array /* of PropertyPair */  properties);
 struct miqt_string QQmlContext_nameForObject(const QQmlContext* self, QObject* param1);
 QObject* QQmlContext_objectForName(const QQmlContext* self, struct miqt_string param1);
+QObject* QQmlContext_findObjectRecursively(const QQmlContext* self, struct miqt_string id);
+struct miqt_array /* of QObject* */  QQmlContext_findObjectsRecursively(const QQmlContext* self, struct miqt_string id);
 QUrl* QQmlContext_resolvedUrl(const QQmlContext* self, QUrl* param1);
 void QQmlContext_setBaseUrl(QQmlContext* self, QUrl* baseUrl);
 QUrl* QQmlContext_baseUrl(const QQmlContext* self);
@@ -94,12 +97,12 @@ bool QQmlContext_protectedbase_isSignalConnected(bool* _dynamic_cast_ok, const v
 
 void QQmlContext_delete(QQmlContext* self);
 
-QQmlContext__PropertyPair* QQmlContext__PropertyPair_new(QQmlContext__PropertyPair* param1);
+QQmlContext__PropertyPair* QQmlContext__PropertyPair_new(const PropertyPair* param1);
 struct miqt_string QQmlContext__PropertyPair_name(const QQmlContext__PropertyPair* self);
 void QQmlContext__PropertyPair_setName(QQmlContext__PropertyPair* self, struct miqt_string name);
 QVariant* QQmlContext__PropertyPair_value(const QQmlContext__PropertyPair* self);
 void QQmlContext__PropertyPair_setValue(QQmlContext__PropertyPair* self, QVariant* value);
-void QQmlContext__PropertyPair_operatorAssign(QQmlContext__PropertyPair* self, QQmlContext__PropertyPair* param1);
+void QQmlContext__PropertyPair_operatorAssign(QQmlContext__PropertyPair* self, const PropertyPair* param1);
 
 void QQmlContext__PropertyPair_delete(QQmlContext__PropertyPair* self);
 

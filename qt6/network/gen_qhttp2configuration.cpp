@@ -62,6 +62,14 @@ unsigned int QHttp2Configuration_maxFrameSize(const QHttp2Configuration* self) {
 	return self->maxFrameSize();
 }
 
+void QHttp2Configuration_setMaxConcurrentStreams(QHttp2Configuration* self, unsigned int value) {
+	self->setMaxConcurrentStreams(static_cast<unsigned int>(value));
+}
+
+unsigned int QHttp2Configuration_maxConcurrentStreams(const QHttp2Configuration* self) {
+	return self->maxConcurrentStreams();
+}
+
 void QHttp2Configuration_swap(QHttp2Configuration* self, QHttp2Configuration* other) {
 	self->swap(*other);
 }

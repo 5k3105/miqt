@@ -226,19 +226,43 @@ func NewQJSPrimitiveValue8(typeVal qt6.QMetaType, value unsafe.Pointer) *QJSPrim
 }
 
 // NewQJSPrimitiveValue9 constructs a new QJSPrimitiveValue object.
-func NewQJSPrimitiveValue9(variant *qt6.QVariant) *QJSPrimitiveValue {
+func NewQJSPrimitiveValue9(typeVal qt6.QMetaType) *QJSPrimitiveValue {
 
-	return newQJSPrimitiveValue(C.QJSPrimitiveValue_new9((*C.QVariant)(variant.UnsafePointer())))
+	return newQJSPrimitiveValue(C.QJSPrimitiveValue_new9((*C.QMetaType)(typeVal.UnsafePointer())))
 }
 
 // NewQJSPrimitiveValue10 constructs a new QJSPrimitiveValue object.
-func NewQJSPrimitiveValue10(param1 *QJSPrimitiveValue) *QJSPrimitiveValue {
+func NewQJSPrimitiveValue10(variant *qt6.QVariant) *QJSPrimitiveValue {
 
-	return newQJSPrimitiveValue(C.QJSPrimitiveValue_new10(param1.cPointer()))
+	return newQJSPrimitiveValue(C.QJSPrimitiveValue_new10((*C.QVariant)(variant.UnsafePointer())))
 }
 
-func (this *QJSPrimitiveValue) Type() QJSPrimitiveValue__Type {
-	return (QJSPrimitiveValue__Type)(C.QJSPrimitiveValue_type(this.h))
+// NewQJSPrimitiveValue11 constructs a new QJSPrimitiveValue object.
+func NewQJSPrimitiveValue11(param1 *QJSPrimitiveValue) *QJSPrimitiveValue {
+
+	return newQJSPrimitiveValue(C.QJSPrimitiveValue_new11(param1.cPointer()))
+}
+
+func (this *QJSPrimitiveValue) Type() Type {
+	int /* TODO  */
+}
+
+func (this *QJSPrimitiveValue) MetaType() *qt6.QMetaType {
+	_goptr := qt6.UnsafeNewQMetaType(unsafe.Pointer(C.QJSPrimitiveValue_metaType(this.h)))
+	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
+	return _goptr
+}
+
+func (this *QJSPrimitiveValue) Data() unsafe.Pointer {
+	return (unsafe.Pointer)(C.QJSPrimitiveValue_data(this.h))
+}
+
+func (this *QJSPrimitiveValue) Data2() unsafe.Pointer {
+	return (unsafe.Pointer)(C.QJSPrimitiveValue_data2(this.h))
+}
+
+func (this *QJSPrimitiveValue) ConstData() unsafe.Pointer {
+	return (unsafe.Pointer)(C.QJSPrimitiveValue_constData(this.h))
 }
 
 func (this *QJSPrimitiveValue) ToBoolean() bool {

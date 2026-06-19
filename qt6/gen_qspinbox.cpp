@@ -75,7 +75,7 @@ void miqt_exec_callback_QSpinBox_timerEvent(QSpinBox*, intptr_t, QTimerEvent*);
 void miqt_exec_callback_QSpinBox_paintEvent(QSpinBox*, intptr_t, QPaintEvent*);
 void miqt_exec_callback_QSpinBox_showEvent(QSpinBox*, intptr_t, QShowEvent*);
 void miqt_exec_callback_QSpinBox_initStyleOption(const QSpinBox*, intptr_t, QStyleOptionSpinBox*);
-int miqt_exec_callback_QSpinBox_stepEnabled(const QSpinBox*, intptr_t);
+StepEnabled miqt_exec_callback_QSpinBox_stepEnabled(const QSpinBox*, intptr_t);
 int miqt_exec_callback_QSpinBox_devType(const QSpinBox*, intptr_t);
 void miqt_exec_callback_QSpinBox_setVisible(QSpinBox*, intptr_t, bool);
 int miqt_exec_callback_QSpinBox_heightForWidth(const QSpinBox*, intptr_t, int);
@@ -92,7 +92,7 @@ void miqt_exec_callback_QSpinBox_dragMoveEvent(QSpinBox*, intptr_t, QDragMoveEve
 void miqt_exec_callback_QSpinBox_dragLeaveEvent(QSpinBox*, intptr_t, QDragLeaveEvent*);
 void miqt_exec_callback_QSpinBox_dropEvent(QSpinBox*, intptr_t, QDropEvent*);
 bool miqt_exec_callback_QSpinBox_nativeEvent(QSpinBox*, intptr_t, struct miqt_string, void*, intptr_t*);
-int miqt_exec_callback_QSpinBox_metric(const QSpinBox*, intptr_t, int);
+int miqt_exec_callback_QSpinBox_metric(const QSpinBox*, intptr_t, PaintDeviceMetric);
 void miqt_exec_callback_QSpinBox_initPainter(const QSpinBox*, intptr_t, QPainter*);
 QPaintDevice* miqt_exec_callback_QSpinBox_redirected(const QSpinBox*, intptr_t, QPoint*);
 QPainter* miqt_exec_callback_QSpinBox_sharedPainter(const QSpinBox*, intptr_t);
@@ -132,7 +132,7 @@ void miqt_exec_callback_QDoubleSpinBox_timerEvent(QDoubleSpinBox*, intptr_t, QTi
 void miqt_exec_callback_QDoubleSpinBox_paintEvent(QDoubleSpinBox*, intptr_t, QPaintEvent*);
 void miqt_exec_callback_QDoubleSpinBox_showEvent(QDoubleSpinBox*, intptr_t, QShowEvent*);
 void miqt_exec_callback_QDoubleSpinBox_initStyleOption(const QDoubleSpinBox*, intptr_t, QStyleOptionSpinBox*);
-int miqt_exec_callback_QDoubleSpinBox_stepEnabled(const QDoubleSpinBox*, intptr_t);
+StepEnabled miqt_exec_callback_QDoubleSpinBox_stepEnabled(const QDoubleSpinBox*, intptr_t);
 int miqt_exec_callback_QDoubleSpinBox_devType(const QDoubleSpinBox*, intptr_t);
 void miqt_exec_callback_QDoubleSpinBox_setVisible(QDoubleSpinBox*, intptr_t, bool);
 int miqt_exec_callback_QDoubleSpinBox_heightForWidth(const QDoubleSpinBox*, intptr_t, int);
@@ -149,7 +149,7 @@ void miqt_exec_callback_QDoubleSpinBox_dragMoveEvent(QDoubleSpinBox*, intptr_t, 
 void miqt_exec_callback_QDoubleSpinBox_dragLeaveEvent(QDoubleSpinBox*, intptr_t, QDragLeaveEvent*);
 void miqt_exec_callback_QDoubleSpinBox_dropEvent(QDoubleSpinBox*, intptr_t, QDropEvent*);
 bool miqt_exec_callback_QDoubleSpinBox_nativeEvent(QDoubleSpinBox*, intptr_t, struct miqt_string, void*, intptr_t*);
-int miqt_exec_callback_QDoubleSpinBox_metric(const QDoubleSpinBox*, intptr_t, int);
+int miqt_exec_callback_QDoubleSpinBox_metric(const QDoubleSpinBox*, intptr_t, PaintDeviceMetric);
 void miqt_exec_callback_QDoubleSpinBox_initPainter(const QDoubleSpinBox*, intptr_t, QPainter*);
 QPaintDevice* miqt_exec_callback_QDoubleSpinBox_redirected(const QDoubleSpinBox*, intptr_t, QPoint*);
 QPainter* miqt_exec_callback_QDoubleSpinBox_sharedPainter(const QDoubleSpinBox*, intptr_t);
@@ -650,16 +650,16 @@ public:
 	intptr_t handle__stepEnabled = 0;
 
 	// Subclass to allow providing a Go implementation
-	virtual QAbstractSpinBox::StepEnabled stepEnabled() const override {
+	virtual StepEnabled stepEnabled() const override {
 		if (handle__stepEnabled == 0) {
 			return QSpinBox::stepEnabled();
 		}
 
-		int callback_return_value = miqt_exec_callback_QSpinBox_stepEnabled(this, handle__stepEnabled);
-		return static_cast<QAbstractSpinBox::StepEnabled>(callback_return_value);
+		StepEnabled callback_return_value = miqt_exec_callback_QSpinBox_stepEnabled(this, handle__stepEnabled);
+		return callback_return_value;
 	}
 
-	friend int QSpinBox_virtualbase_stepEnabled(const void* self);
+	friend StepEnabled QSpinBox_virtualbase_stepEnabled(const void* self);
 
 	// cgo.Handle value for overwritten implementation
 	intptr_t handle__devType = 0;
@@ -937,18 +937,17 @@ public:
 	intptr_t handle__metric = 0;
 
 	// Subclass to allow providing a Go implementation
-	virtual int metric(QPaintDevice::PaintDeviceMetric param1) const override {
+	virtual int metric(PaintDeviceMetric param1) const override {
 		if (handle__metric == 0) {
 			return QSpinBox::metric(param1);
 		}
 
-		QPaintDevice::PaintDeviceMetric param1_ret = param1;
-		int sigval1 = static_cast<int>(param1_ret);
+		PaintDeviceMetric sigval1 = param1;
 		int callback_return_value = miqt_exec_callback_QSpinBox_metric(this, handle__metric, sigval1);
 		return static_cast<int>(callback_return_value);
 	}
 
-	friend int QSpinBox_virtualbase_metric(const void* self, int param1);
+	friend int QSpinBox_virtualbase_metric(const void* self, PaintDeviceMetric param1);
 
 	// cgo.Handle value for overwritten implementation
 	intptr_t handle__initPainter = 0;
@@ -1132,6 +1131,7 @@ public:
 	friend int QSpinBox_protectedbase_senderSignalIndex(bool* _dynamic_cast_ok, const void* self);
 	friend int QSpinBox_protectedbase_receivers(bool* _dynamic_cast_ok, const void* self, const char* signal);
 	friend bool QSpinBox_protectedbase_isSignalConnected(bool* _dynamic_cast_ok, const void* self, QMetaMethod* signal);
+	friend double QSpinBox_protectedbase_getDecodedMetricF(bool* _dynamic_cast_ok, const void* self, PaintDeviceMetric metricA, PaintDeviceMetric metricB);
 };
 
 QSpinBox* QSpinBox_new(QWidget* parent) {
@@ -1240,13 +1240,12 @@ void QSpinBox_setRange(QSpinBox* self, int min, int max) {
 	self->setRange(static_cast<int>(min), static_cast<int>(max));
 }
 
-int QSpinBox_stepType(const QSpinBox* self) {
-	QAbstractSpinBox::StepType _ret = self->stepType();
-	return static_cast<int>(_ret);
+StepType QSpinBox_stepType(const QSpinBox* self) {
+	return self->stepType();
 }
 
-void QSpinBox_setStepType(QSpinBox* self, int stepType) {
-	self->setStepType(static_cast<QAbstractSpinBox::StepType>(stepType));
+void QSpinBox_setStepType(QSpinBox* self, StepType stepType) {
+	self->setStepType(stepType);
 }
 
 int QSpinBox_displayIntegerBase(const QSpinBox* self) {
@@ -1712,9 +1711,8 @@ bool QSpinBox_override_virtual_stepEnabled(void* self, intptr_t slot) {
 	return true;
 }
 
-int QSpinBox_virtualbase_stepEnabled(const void* self) {
-	MiqtVirtualQSpinBox::StepEnabled _ret = static_cast<const MiqtVirtualQSpinBox*>(self)->QSpinBox::stepEnabled();
-	return static_cast<int>(_ret);
+StepEnabled QSpinBox_virtualbase_stepEnabled(const void* self) {
+	return static_cast<const MiqtVirtualQSpinBox*>(self)->QSpinBox::stepEnabled();
 }
 
 bool QSpinBox_override_virtual_devType(void* self, intptr_t slot) {
@@ -1952,8 +1950,8 @@ bool QSpinBox_override_virtual_metric(void* self, intptr_t slot) {
 	return true;
 }
 
-int QSpinBox_virtualbase_metric(const void* self, int param1) {
-	return static_cast<const MiqtVirtualQSpinBox*>(self)->QSpinBox::metric(static_cast<MiqtVirtualQSpinBox::PaintDeviceMetric>(param1));
+int QSpinBox_virtualbase_metric(const void* self, PaintDeviceMetric param1) {
+	return static_cast<const MiqtVirtualQSpinBox*>(self)->QSpinBox::metric(param1);
 }
 
 bool QSpinBox_override_virtual_initPainter(void* self, intptr_t slot) {
@@ -2215,6 +2213,17 @@ bool QSpinBox_protectedbase_isSignalConnected(bool* _dynamic_cast_ok, const void
 
 	*_dynamic_cast_ok = true;
 	return self_cast->isSignalConnected(*signal);
+}
+
+double QSpinBox_protectedbase_getDecodedMetricF(bool* _dynamic_cast_ok, const void* self, PaintDeviceMetric metricA, PaintDeviceMetric metricB) {
+	MiqtVirtualQSpinBox* self_cast = dynamic_cast<MiqtVirtualQSpinBox*>( (QSpinBox*)(self) );
+	if (self_cast == nullptr) {
+		*_dynamic_cast_ok = false;
+		return 0;
+	}
+
+	*_dynamic_cast_ok = true;
+	return self_cast->getDecodedMetricF(metricA, metricB);
 }
 
 void QSpinBox_delete(QSpinBox* self) {
@@ -2707,16 +2716,16 @@ public:
 	intptr_t handle__stepEnabled = 0;
 
 	// Subclass to allow providing a Go implementation
-	virtual QAbstractSpinBox::StepEnabled stepEnabled() const override {
+	virtual StepEnabled stepEnabled() const override {
 		if (handle__stepEnabled == 0) {
 			return QDoubleSpinBox::stepEnabled();
 		}
 
-		int callback_return_value = miqt_exec_callback_QDoubleSpinBox_stepEnabled(this, handle__stepEnabled);
-		return static_cast<QAbstractSpinBox::StepEnabled>(callback_return_value);
+		StepEnabled callback_return_value = miqt_exec_callback_QDoubleSpinBox_stepEnabled(this, handle__stepEnabled);
+		return callback_return_value;
 	}
 
-	friend int QDoubleSpinBox_virtualbase_stepEnabled(const void* self);
+	friend StepEnabled QDoubleSpinBox_virtualbase_stepEnabled(const void* self);
 
 	// cgo.Handle value for overwritten implementation
 	intptr_t handle__devType = 0;
@@ -2994,18 +3003,17 @@ public:
 	intptr_t handle__metric = 0;
 
 	// Subclass to allow providing a Go implementation
-	virtual int metric(QPaintDevice::PaintDeviceMetric param1) const override {
+	virtual int metric(PaintDeviceMetric param1) const override {
 		if (handle__metric == 0) {
 			return QDoubleSpinBox::metric(param1);
 		}
 
-		QPaintDevice::PaintDeviceMetric param1_ret = param1;
-		int sigval1 = static_cast<int>(param1_ret);
+		PaintDeviceMetric sigval1 = param1;
 		int callback_return_value = miqt_exec_callback_QDoubleSpinBox_metric(this, handle__metric, sigval1);
 		return static_cast<int>(callback_return_value);
 	}
 
-	friend int QDoubleSpinBox_virtualbase_metric(const void* self, int param1);
+	friend int QDoubleSpinBox_virtualbase_metric(const void* self, PaintDeviceMetric param1);
 
 	// cgo.Handle value for overwritten implementation
 	intptr_t handle__initPainter = 0;
@@ -3189,6 +3197,7 @@ public:
 	friend int QDoubleSpinBox_protectedbase_senderSignalIndex(bool* _dynamic_cast_ok, const void* self);
 	friend int QDoubleSpinBox_protectedbase_receivers(bool* _dynamic_cast_ok, const void* self, const char* signal);
 	friend bool QDoubleSpinBox_protectedbase_isSignalConnected(bool* _dynamic_cast_ok, const void* self, QMetaMethod* signal);
+	friend double QDoubleSpinBox_protectedbase_getDecodedMetricF(bool* _dynamic_cast_ok, const void* self, PaintDeviceMetric metricA, PaintDeviceMetric metricB);
 };
 
 QDoubleSpinBox* QDoubleSpinBox_new(QWidget* parent) {
@@ -3297,13 +3306,12 @@ void QDoubleSpinBox_setRange(QDoubleSpinBox* self, double min, double max) {
 	self->setRange(static_cast<double>(min), static_cast<double>(max));
 }
 
-int QDoubleSpinBox_stepType(const QDoubleSpinBox* self) {
-	QAbstractSpinBox::StepType _ret = self->stepType();
-	return static_cast<int>(_ret);
+StepType QDoubleSpinBox_stepType(const QDoubleSpinBox* self) {
+	return self->stepType();
 }
 
-void QDoubleSpinBox_setStepType(QDoubleSpinBox* self, int stepType) {
-	self->setStepType(static_cast<QAbstractSpinBox::StepType>(stepType));
+void QDoubleSpinBox_setStepType(QDoubleSpinBox* self, StepType stepType) {
+	self->setStepType(stepType);
 }
 
 int QDoubleSpinBox_decimals(const QDoubleSpinBox* self) {
@@ -3796,9 +3804,8 @@ bool QDoubleSpinBox_override_virtual_stepEnabled(void* self, intptr_t slot) {
 	return true;
 }
 
-int QDoubleSpinBox_virtualbase_stepEnabled(const void* self) {
-	MiqtVirtualQDoubleSpinBox::StepEnabled _ret = static_cast<const MiqtVirtualQDoubleSpinBox*>(self)->QDoubleSpinBox::stepEnabled();
-	return static_cast<int>(_ret);
+StepEnabled QDoubleSpinBox_virtualbase_stepEnabled(const void* self) {
+	return static_cast<const MiqtVirtualQDoubleSpinBox*>(self)->QDoubleSpinBox::stepEnabled();
 }
 
 bool QDoubleSpinBox_override_virtual_devType(void* self, intptr_t slot) {
@@ -4036,8 +4043,8 @@ bool QDoubleSpinBox_override_virtual_metric(void* self, intptr_t slot) {
 	return true;
 }
 
-int QDoubleSpinBox_virtualbase_metric(const void* self, int param1) {
-	return static_cast<const MiqtVirtualQDoubleSpinBox*>(self)->QDoubleSpinBox::metric(static_cast<MiqtVirtualQDoubleSpinBox::PaintDeviceMetric>(param1));
+int QDoubleSpinBox_virtualbase_metric(const void* self, PaintDeviceMetric param1) {
+	return static_cast<const MiqtVirtualQDoubleSpinBox*>(self)->QDoubleSpinBox::metric(param1);
 }
 
 bool QDoubleSpinBox_override_virtual_initPainter(void* self, intptr_t slot) {
@@ -4299,6 +4306,17 @@ bool QDoubleSpinBox_protectedbase_isSignalConnected(bool* _dynamic_cast_ok, cons
 
 	*_dynamic_cast_ok = true;
 	return self_cast->isSignalConnected(*signal);
+}
+
+double QDoubleSpinBox_protectedbase_getDecodedMetricF(bool* _dynamic_cast_ok, const void* self, PaintDeviceMetric metricA, PaintDeviceMetric metricB) {
+	MiqtVirtualQDoubleSpinBox* self_cast = dynamic_cast<MiqtVirtualQDoubleSpinBox*>( (QDoubleSpinBox*)(self) );
+	if (self_cast == nullptr) {
+		*_dynamic_cast_ok = false;
+		return 0;
+	}
+
+	*_dynamic_cast_ok = true;
+	return self_cast->getDecodedMetricF(metricA, metricB);
 }
 
 void QDoubleSpinBox_delete(QDoubleSpinBox* self) {

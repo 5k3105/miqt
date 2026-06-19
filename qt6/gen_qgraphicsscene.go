@@ -147,12 +147,12 @@ func (this *QGraphicsScene) Render(painter *QPainter) {
 	C.QGraphicsScene_render(this.h, painter.cPointer())
 }
 
-func (this *QGraphicsScene) ItemIndexMethod() QGraphicsScene__ItemIndexMethod {
-	return (QGraphicsScene__ItemIndexMethod)(C.QGraphicsScene_itemIndexMethod(this.h))
+func (this *QGraphicsScene) ItemIndexMethod() ItemIndexMethod {
+	int /* TODO  */
 }
 
-func (this *QGraphicsScene) SetItemIndexMethod(method QGraphicsScene__ItemIndexMethod) {
-	C.QGraphicsScene_setItemIndexMethod(this.h, (C.int)(method))
+func (this *QGraphicsScene) SetItemIndexMethod(method ItemIndexMethod) {
+	C.QGraphicsScene_setItemIndexMethod(this.h, method)
 }
 
 func (this *QGraphicsScene) BspTreeDepth() int {
@@ -836,8 +836,8 @@ func (this *QGraphicsScene) SetFocusWithFocusReason(focusReason FocusReason) {
 	C.QGraphicsScene_setFocusWithFocusReason(this.h, (C.int)(focusReason))
 }
 
-func (this *QGraphicsScene) Invalidate3(x float64, y float64, w float64, h float64, layers QGraphicsScene__SceneLayer) {
-	C.QGraphicsScene_invalidate3(this.h, (C.double)(x), (C.double)(y), (C.double)(w), (C.double)(h), (C.int)(layers))
+func (this *QGraphicsScene) Invalidate3(x float64, y float64, w float64, h float64, layers SceneLayers) {
+	C.QGraphicsScene_invalidate3(this.h, (C.double)(x), (C.double)(y), (C.double)(w), (C.double)(h), layers)
 }
 
 func (this *QGraphicsScene) UpdateWithRect(rect *QRectF) {
@@ -848,8 +848,8 @@ func (this *QGraphicsScene) InvalidateWithRect(rect *QRectF) {
 	C.QGraphicsScene_invalidateWithRect(this.h, rect.cPointer())
 }
 
-func (this *QGraphicsScene) Invalidate4(rect *QRectF, layers QGraphicsScene__SceneLayer) {
-	C.QGraphicsScene_invalidate4(this.h, rect.cPointer(), (C.int)(layers))
+func (this *QGraphicsScene) Invalidate4(rect *QRectF, layers SceneLayers) {
+	C.QGraphicsScene_invalidate4(this.h, rect.cPointer(), layers)
 }
 
 // Sender can only be called from a QGraphicsScene that was directly constructed.

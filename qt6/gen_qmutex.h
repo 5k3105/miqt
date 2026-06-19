@@ -16,10 +16,12 @@ extern "C" {
 
 #ifdef __cplusplus
 class QBasicMutex;
+class QDeadlineTimer;
 class QMutex;
 class QRecursiveMutex;
 #else
 typedef struct QBasicMutex QBasicMutex;
+typedef struct QDeadlineTimer QDeadlineTimer;
 typedef struct QMutex QMutex;
 typedef struct QRecursiveMutex QRecursiveMutex;
 #endif
@@ -36,15 +38,17 @@ QMutex* QMutex_new();
 void QMutex_virtbase(QMutex* src, QBasicMutex** outptr_QBasicMutex);
 bool QMutex_tryLock(QMutex* self);
 bool QMutex_tryLockWithTimeout(QMutex* self, int timeout);
+bool QMutex_tryLock2(QMutex* self, QDeadlineTimer* timeout);
 
 void QMutex_delete(QMutex* self);
 
 QRecursiveMutex* QRecursiveMutex_new();
 void QRecursiveMutex_lock(QRecursiveMutex* self);
-bool QRecursiveMutex_tryLock(QRecursiveMutex* self);
-void QRecursiveMutex_unlock(QRecursiveMutex* self);
+bool QRecursiveMutex_tryLock(QRecursiveMutex* self, int timeout);
 bool QRecursiveMutex_tryLock2(QRecursiveMutex* self);
-bool QRecursiveMutex_tryLockWithTimeout(QRecursiveMutex* self, int timeout);
+void QRecursiveMutex_unlock(QRecursiveMutex* self);
+bool QRecursiveMutex_tryLock3(QRecursiveMutex* self);
+bool QRecursiveMutex_tryLockWithTimer(QRecursiveMutex* self, QDeadlineTimer* timer);
 
 void QRecursiveMutex_delete(QRecursiveMutex* self);
 

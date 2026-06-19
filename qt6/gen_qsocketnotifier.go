@@ -59,27 +59,27 @@ func UnsafeNewQSocketNotifier(h unsafe.Pointer) *QSocketNotifier {
 }
 
 // NewQSocketNotifier constructs a new QSocketNotifier object.
-func NewQSocketNotifier(param1 QSocketNotifier__Type) *QSocketNotifier {
+func NewQSocketNotifier(param1 Type) *QSocketNotifier {
 
-	return newQSocketNotifier(C.QSocketNotifier_new((C.int)(param1)))
+	return newQSocketNotifier(C.QSocketNotifier_new(param1))
 }
 
 // NewQSocketNotifier2 constructs a new QSocketNotifier object.
-func NewQSocketNotifier2(socket uintptr, param2 QSocketNotifier__Type) *QSocketNotifier {
+func NewQSocketNotifier2(socket uintptr, param2 Type) *QSocketNotifier {
 
-	return newQSocketNotifier(C.QSocketNotifier_new2((C.intptr_t)(socket), (C.int)(param2)))
+	return newQSocketNotifier(C.QSocketNotifier_new2((C.intptr_t)(socket), param2))
 }
 
 // NewQSocketNotifier3 constructs a new QSocketNotifier object.
-func NewQSocketNotifier3(param1 QSocketNotifier__Type, parent *QObject) *QSocketNotifier {
+func NewQSocketNotifier3(param1 Type, parent *QObject) *QSocketNotifier {
 
-	return newQSocketNotifier(C.QSocketNotifier_new3((C.int)(param1), parent.cPointer()))
+	return newQSocketNotifier(C.QSocketNotifier_new3(param1, parent.cPointer()))
 }
 
 // NewQSocketNotifier4 constructs a new QSocketNotifier object.
-func NewQSocketNotifier4(socket uintptr, param2 QSocketNotifier__Type, parent *QObject) *QSocketNotifier {
+func NewQSocketNotifier4(socket uintptr, param2 Type, parent *QObject) *QSocketNotifier {
 
-	return newQSocketNotifier(C.QSocketNotifier_new4((C.intptr_t)(socket), (C.int)(param2), parent.cPointer()))
+	return newQSocketNotifier(C.QSocketNotifier_new4((C.intptr_t)(socket), param2, parent.cPointer()))
 }
 
 func (this *QSocketNotifier) MetaObject() *QMetaObject {
@@ -109,8 +109,8 @@ func (this *QSocketNotifier) Socket() uintptr {
 	return (uintptr)(C.QSocketNotifier_socket(this.h))
 }
 
-func (this *QSocketNotifier) Type() QSocketNotifier__Type {
-	return (QSocketNotifier__Type)(C.QSocketNotifier_type(this.h))
+func (this *QSocketNotifier) Type() Type {
+	int /* TODO  */
 }
 
 func (this *QSocketNotifier) IsValid() bool {
@@ -392,26 +392,6 @@ func miqt_exec_callback_QSocketNotifier_disconnectNotify(self *C.QSocketNotifier
 	gofunc((&QSocketNotifier{h: self}).callVirtualBase_DisconnectNotify, slotval1)
 
 }
-func (this *QSocketNotifier) OnActivated(slot func(socket QSocketDescriptor, activationEvent QSocketNotifier__Type)) {
-	C.QSocketNotifier_connect_activated(this.h, C.intptr_t(cgo.NewHandle(slot)))
-}
-
-//export miqt_exec_callback_QSocketNotifier_activated
-func miqt_exec_callback_QSocketNotifier_activated(cb C.intptr_t, socket *C.QSocketDescriptor, activationEvent C.int) {
-	gofunc, ok := cgo.Handle(cb).Value().(func(socket QSocketDescriptor, activationEvent QSocketNotifier__Type))
-	if !ok {
-		panic("miqt: callback of non-callback type (heap corruption?)")
-	}
-
-	// Convert all CABI parameters to Go parameters
-	socket_goptr := newQSocketDescriptor(socket)
-	socket_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
-	slotval1 := *socket_goptr
-
-	slotval2 := (QSocketNotifier__Type)(activationEvent)
-
-	gofunc(slotval1, slotval2)
-}
 
 // Delete this object from C++ memory.
 func (this *QSocketNotifier) Delete() {
@@ -462,10 +442,6 @@ func UnsafeNewQSocketDescriptor(h unsafe.Pointer) *QSocketDescriptor {
 // NewQSocketDescriptor constructs a new QSocketDescriptor object.
 func NewQSocketDescriptor() *QSocketDescriptor {
 
-	if runtime.GOOS != "linux" {
-		panic("Unsupported OS")
-	}
-
 	return newQSocketDescriptor(C.QSocketDescriptor_new())
 }
 
@@ -476,21 +452,13 @@ func NewQSocketDescriptor2(param1 *QSocketDescriptor) *QSocketDescriptor {
 }
 
 // NewQSocketDescriptor3 constructs a new QSocketDescriptor object.
-func NewQSocketDescriptor3(descriptor int) *QSocketDescriptor {
+func NewQSocketDescriptor3(descriptor DescriptorType) *QSocketDescriptor {
 
-	if runtime.GOOS != "linux" {
-		panic("Unsupported OS")
-	}
-
-	return newQSocketDescriptor(C.QSocketDescriptor_new3((C.int)(descriptor)))
+	return newQSocketDescriptor(C.QSocketDescriptor_new3(descriptor))
 }
 
-func (this *QSocketDescriptor) ToInt() int {
-	if runtime.GOOS != "linux" {
-		panic("Unsupported OS")
-	}
-
-	return (int)(C.QSocketDescriptor_ToInt(this.h))
+func (this *QSocketDescriptor) ToInt() DescriptorType {
+	int /* TODO  */
 }
 
 func (this *QSocketDescriptor) IsValid() bool {

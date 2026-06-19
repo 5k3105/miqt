@@ -116,8 +116,8 @@ QSize* QAbstractScrollArea_maximumViewportSize(const QAbstractScrollArea* self);
 QSize* QAbstractScrollArea_minimumSizeHint(const QAbstractScrollArea* self);
 QSize* QAbstractScrollArea_sizeHint(const QAbstractScrollArea* self);
 void QAbstractScrollArea_setupViewport(QAbstractScrollArea* self, QWidget* viewport);
-int QAbstractScrollArea_sizeAdjustPolicy(const QAbstractScrollArea* self);
-void QAbstractScrollArea_setSizeAdjustPolicy(QAbstractScrollArea* self, int policy);
+SizeAdjustPolicy QAbstractScrollArea_sizeAdjustPolicy(const QAbstractScrollArea* self);
+void QAbstractScrollArea_setSizeAdjustPolicy(QAbstractScrollArea* self, SizeAdjustPolicy policy);
 bool QAbstractScrollArea_eventFilter(QAbstractScrollArea* self, QObject* param1, QEvent* param2);
 bool QAbstractScrollArea_event(QAbstractScrollArea* self, QEvent* param1);
 bool QAbstractScrollArea_viewportEvent(QAbstractScrollArea* self, QEvent* param1);
@@ -220,7 +220,7 @@ void QAbstractScrollArea_virtualbase_hideEvent(void* self, QHideEvent* event);
 bool QAbstractScrollArea_override_virtual_nativeEvent(void* self, intptr_t slot);
 bool QAbstractScrollArea_virtualbase_nativeEvent(void* self, struct miqt_string eventType, void* message, intptr_t* result);
 bool QAbstractScrollArea_override_virtual_metric(void* self, intptr_t slot);
-int QAbstractScrollArea_virtualbase_metric(const void* self, int param1);
+int QAbstractScrollArea_virtualbase_metric(const void* self, PaintDeviceMetric param1);
 bool QAbstractScrollArea_override_virtual_initPainter(void* self, intptr_t slot);
 void QAbstractScrollArea_virtualbase_initPainter(const void* self, QPainter* painter);
 bool QAbstractScrollArea_override_virtual_redirected(void* self, intptr_t slot);
@@ -257,6 +257,7 @@ QObject* QAbstractScrollArea_protectedbase_sender(bool* _dynamic_cast_ok, const 
 int QAbstractScrollArea_protectedbase_senderSignalIndex(bool* _dynamic_cast_ok, const void* self);
 int QAbstractScrollArea_protectedbase_receivers(bool* _dynamic_cast_ok, const void* self, const char* signal);
 bool QAbstractScrollArea_protectedbase_isSignalConnected(bool* _dynamic_cast_ok, const void* self, QMetaMethod* signal);
+double QAbstractScrollArea_protectedbase_getDecodedMetricF(bool* _dynamic_cast_ok, const void* self, PaintDeviceMetric metricA, PaintDeviceMetric metricB);
 
 void QAbstractScrollArea_delete(QAbstractScrollArea* self);
 

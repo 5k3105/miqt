@@ -108,6 +108,8 @@ void QStackedWidget_currentChanged(QStackedWidget* self, int param1);
 void QStackedWidget_connect_currentChanged(QStackedWidget* self, intptr_t slot);
 void QStackedWidget_widgetRemoved(QStackedWidget* self, int index);
 void QStackedWidget_connect_widgetRemoved(QStackedWidget* self, intptr_t slot);
+void QStackedWidget_widgetAdded(QStackedWidget* self, int index);
+void QStackedWidget_connect_widgetAdded(QStackedWidget* self, intptr_t slot);
 bool QStackedWidget_event(QStackedWidget* self, QEvent* e);
 struct miqt_string QStackedWidget_tr2(const char* s, const char* c);
 struct miqt_string QStackedWidget_tr3(const char* s, const char* c, int n);
@@ -183,7 +185,7 @@ void QStackedWidget_virtualbase_hideEvent(void* self, QHideEvent* event);
 bool QStackedWidget_override_virtual_nativeEvent(void* self, intptr_t slot);
 bool QStackedWidget_virtualbase_nativeEvent(void* self, struct miqt_string eventType, void* message, intptr_t* result);
 bool QStackedWidget_override_virtual_metric(void* self, intptr_t slot);
-int QStackedWidget_virtualbase_metric(const void* self, int param1);
+int QStackedWidget_virtualbase_metric(const void* self, PaintDeviceMetric param1);
 bool QStackedWidget_override_virtual_initPainter(void* self, intptr_t slot);
 void QStackedWidget_virtualbase_initPainter(const void* self, QPainter* painter);
 bool QStackedWidget_override_virtual_redirected(void* self, intptr_t slot);
@@ -219,6 +221,7 @@ QObject* QStackedWidget_protectedbase_sender(bool* _dynamic_cast_ok, const void*
 int QStackedWidget_protectedbase_senderSignalIndex(bool* _dynamic_cast_ok, const void* self);
 int QStackedWidget_protectedbase_receivers(bool* _dynamic_cast_ok, const void* self, const char* signal);
 bool QStackedWidget_protectedbase_isSignalConnected(bool* _dynamic_cast_ok, const void* self, QMetaMethod* signal);
+double QStackedWidget_protectedbase_getDecodedMetricF(bool* _dynamic_cast_ok, const void* self, PaintDeviceMetric metricA, PaintDeviceMetric metricB);
 
 void QStackedWidget_delete(QStackedWidget* self);
 

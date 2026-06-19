@@ -133,8 +133,8 @@ func (this *QActionGroup) IsVisible() bool {
 	return (bool)(C.QActionGroup_isVisible(this.h))
 }
 
-func (this *QActionGroup) ExclusionPolicy() QActionGroup__ExclusionPolicy {
-	return (QActionGroup__ExclusionPolicy)(C.QActionGroup_exclusionPolicy(this.h))
+func (this *QActionGroup) ExclusionPolicy() ExclusionPolicy {
+	int /* TODO  */
 }
 
 func (this *QActionGroup) SetEnabled(enabled bool) {
@@ -153,8 +153,8 @@ func (this *QActionGroup) SetExclusive(exclusive bool) {
 	C.QActionGroup_setExclusive(this.h, (C.bool)(exclusive))
 }
 
-func (this *QActionGroup) SetExclusionPolicy(policy QActionGroup__ExclusionPolicy) {
-	C.QActionGroup_setExclusionPolicy(this.h, (C.int)(policy))
+func (this *QActionGroup) SetExclusionPolicy(policy ExclusionPolicy) {
+	C.QActionGroup_setExclusionPolicy(this.h, policy)
 }
 
 func (this *QActionGroup) Triggered(param1 *QAction) {

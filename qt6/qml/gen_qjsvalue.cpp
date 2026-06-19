@@ -52,8 +52,8 @@ QJSValue* QJSValue_new8(const char* str) {
 	return new (std::nothrow) QJSValue(str);
 }
 
-QJSValue* QJSValue_new9(int value) {
-	return new (std::nothrow) QJSValue(static_cast<QJSValue::SpecialValue>(value));
+QJSValue* QJSValue_new9(SpecialValue value) {
+	return new (std::nothrow) QJSValue(value);
 }
 
 void QJSValue_operatorAssign(QJSValue* self, QJSValue* other) {
@@ -149,8 +149,8 @@ QVariant* QJSValue_toVariant(const QJSValue* self) {
 	return new QVariant(self->toVariant());
 }
 
-QVariant* QJSValue_toVariantWithBehavior(const QJSValue* self, int behavior) {
-	return new QVariant(self->toVariant(static_cast<QJSValue::ObjectConversionBehavior>(behavior)));
+QVariant* QJSValue_toVariantWithBehavior(const QJSValue* self, ObjectConversionBehavior behavior) {
+	return new QVariant(self->toVariant(behavior));
 }
 
 QJSPrimitiveValue* QJSValue_toPrimitive(const QJSValue* self) {
@@ -234,9 +234,8 @@ QJSValue* QJSValue_callAsConstructor(const QJSValue* self) {
 	return new QJSValue(self->callAsConstructor());
 }
 
-int QJSValue_errorType(const QJSValue* self) {
-	QJSValue::ErrorType _ret = self->errorType();
-	return static_cast<int>(_ret);
+ErrorType QJSValue_errorType(const QJSValue* self) {
+	return self->errorType();
 }
 
 QJSValue* QJSValue_callWithArgs(const QJSValue* self, struct miqt_array /* of QJSValue* */  args) {

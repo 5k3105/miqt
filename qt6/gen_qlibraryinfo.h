@@ -24,9 +24,11 @@ typedef struct QVersionNumber QVersionNumber;
 
 const char* QLibraryInfo_build();
 bool QLibraryInfo_isDebugBuild();
+bool QLibraryInfo_isSharedBuild();
 QVersionNumber* QLibraryInfo_version();
-struct miqt_string QLibraryInfo_path(int p);
-struct miqt_string QLibraryInfo_location(int location);
+struct miqt_string QLibraryInfo_path(LibraryPath p);
+struct miqt_array /* of struct miqt_string */  QLibraryInfo_paths(LibraryPath p);
+struct miqt_string QLibraryInfo_location(LibraryLocation location);
 struct miqt_array /* of struct miqt_string */  QLibraryInfo_platformPluginArguments(struct miqt_string platformName);
 
 void QLibraryInfo_delete(QLibraryInfo* self);

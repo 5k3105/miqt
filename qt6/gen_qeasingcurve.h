@@ -24,11 +24,9 @@ typedef struct QPointF QPointF;
 
 QEasingCurve* QEasingCurve_new();
 QEasingCurve* QEasingCurve_new2(QEasingCurve* other);
-QEasingCurve* QEasingCurve_new3(int type);
+QEasingCurve* QEasingCurve_new3(Type type);
 void QEasingCurve_operatorAssign(QEasingCurve* self, QEasingCurve* other);
 void QEasingCurve_swap(QEasingCurve* self, QEasingCurve* other);
-bool QEasingCurve_operatorEqual(const QEasingCurve* self, QEasingCurve* other);
-bool QEasingCurve_operatorNotEqual(const QEasingCurve* self, QEasingCurve* other);
 double QEasingCurve_amplitude(const QEasingCurve* self);
 void QEasingCurve_setAmplitude(QEasingCurve* self, double amplitude);
 double QEasingCurve_period(const QEasingCurve* self);
@@ -38,8 +36,10 @@ void QEasingCurve_setOvershoot(QEasingCurve* self, double overshoot);
 void QEasingCurve_addCubicBezierSegment(QEasingCurve* self, QPointF* c1, QPointF* c2, QPointF* endPoint);
 void QEasingCurve_addTCBSegment(QEasingCurve* self, QPointF* nextPoint, double t, double c, double b);
 struct miqt_array /* of QPointF* */  QEasingCurve_toCubicSpline(const QEasingCurve* self);
-int QEasingCurve_type(const QEasingCurve* self);
-void QEasingCurve_setType(QEasingCurve* self, int type);
+Type QEasingCurve_type(const QEasingCurve* self);
+void QEasingCurve_setType(QEasingCurve* self, Type type);
+void QEasingCurve_setCustomType(QEasingCurve* self, EasingFunction func);
+EasingFunction QEasingCurve_customType(const QEasingCurve* self);
 double QEasingCurve_valueForProgress(const QEasingCurve* self, double progress);
 
 void QEasingCurve_delete(QEasingCurve* self);

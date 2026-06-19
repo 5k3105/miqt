@@ -18,12 +18,12 @@ QSslError* QSslError_new() {
 	return new (std::nothrow) QSslError();
 }
 
-QSslError* QSslError_new2(int error) {
-	return new (std::nothrow) QSslError(static_cast<QSslError::SslError>(error));
+QSslError* QSslError_new2(SslError error) {
+	return new (std::nothrow) QSslError(error);
 }
 
-QSslError* QSslError_new3(int error, QSslCertificate* certificate) {
-	return new (std::nothrow) QSslError(static_cast<QSslError::SslError>(error), *certificate);
+QSslError* QSslError_new3(SslError error, QSslCertificate* certificate) {
+	return new (std::nothrow) QSslError(error, *certificate);
 }
 
 QSslError* QSslError_new4(QSslError* other) {
@@ -46,9 +46,8 @@ bool QSslError_operatorNotEqual(const QSslError* self, QSslError* other) {
 	return (*self != *other);
 }
 
-int QSslError_error(const QSslError* self) {
-	QSslError::SslError _ret = self->error();
-	return static_cast<int>(_ret);
+SslError QSslError_error(const QSslError* self) {
+	return self->error();
 }
 
 struct miqt_string QSslError_errorString(const QSslError* self) {

@@ -116,12 +116,12 @@ func (this *QHostInfo) SetAddresses(addresses []QHostAddress) {
 	C.QHostInfo_setAddresses(this.h, addresses_ma)
 }
 
-func (this *QHostInfo) Error() QHostInfo__HostInfoError {
-	return (QHostInfo__HostInfoError)(C.QHostInfo_error(this.h))
+func (this *QHostInfo) Error() HostInfoError {
+	int /* TODO  */
 }
 
-func (this *QHostInfo) SetError(error QHostInfo__HostInfoError) {
-	C.QHostInfo_setError(this.h, (C.int)(error))
+func (this *QHostInfo) SetError(error HostInfoError) {
+	C.QHostInfo_setError(this.h, error)
 }
 
 func (this *QHostInfo) ErrorString() string {

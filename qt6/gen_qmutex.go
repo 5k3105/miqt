@@ -131,6 +131,10 @@ func (this *QMutex) TryLockWithTimeout(timeout int) bool {
 	return (bool)(C.QMutex_tryLockWithTimeout(this.h, (C.int)(timeout)))
 }
 
+func (this *QMutex) TryLock2(timeout QDeadlineTimer) bool {
+	return (bool)(C.QMutex_tryLock2(this.h, timeout.cPointer()))
+}
+
 // Delete this object from C++ memory.
 func (this *QMutex) Delete() {
 	C.QMutex_delete(this.h)
@@ -187,20 +191,24 @@ func (this *QRecursiveMutex) Lock() {
 	C.QRecursiveMutex_lock(this.h)
 }
 
-func (this *QRecursiveMutex) TryLock() bool {
-	return (bool)(C.QRecursiveMutex_tryLock(this.h))
-}
-
-func (this *QRecursiveMutex) Unlock() {
-	C.QRecursiveMutex_unlock(this.h)
+func (this *QRecursiveMutex) TryLock(timeout int) bool {
+	return (bool)(C.QRecursiveMutex_tryLock(this.h, (C.int)(timeout)))
 }
 
 func (this *QRecursiveMutex) TryLock2() bool {
 	return (bool)(C.QRecursiveMutex_tryLock2(this.h))
 }
 
-func (this *QRecursiveMutex) TryLockWithTimeout(timeout int) bool {
-	return (bool)(C.QRecursiveMutex_tryLockWithTimeout(this.h, (C.int)(timeout)))
+func (this *QRecursiveMutex) Unlock() {
+	C.QRecursiveMutex_unlock(this.h)
+}
+
+func (this *QRecursiveMutex) TryLock3() bool {
+	return (bool)(C.QRecursiveMutex_tryLock3(this.h))
+}
+
+func (this *QRecursiveMutex) TryLockWithTimer(timer QDeadlineTimer) bool {
+	return (bool)(C.QRecursiveMutex_tryLockWithTimer(this.h, timer.cPointer()))
 }
 
 // Delete this object from C++ memory.

@@ -87,7 +87,7 @@ void miqt_exec_callback_QFontComboBox_dragMoveEvent(QFontComboBox*, intptr_t, QD
 void miqt_exec_callback_QFontComboBox_dragLeaveEvent(QFontComboBox*, intptr_t, QDragLeaveEvent*);
 void miqt_exec_callback_QFontComboBox_dropEvent(QFontComboBox*, intptr_t, QDropEvent*);
 bool miqt_exec_callback_QFontComboBox_nativeEvent(QFontComboBox*, intptr_t, struct miqt_string, void*, intptr_t*);
-int miqt_exec_callback_QFontComboBox_metric(const QFontComboBox*, intptr_t, int);
+int miqt_exec_callback_QFontComboBox_metric(const QFontComboBox*, intptr_t, PaintDeviceMetric);
 void miqt_exec_callback_QFontComboBox_initPainter(const QFontComboBox*, intptr_t, QPainter*);
 QPaintDevice* miqt_exec_callback_QFontComboBox_redirected(const QFontComboBox*, intptr_t, QPoint*);
 QPainter* miqt_exec_callback_QFontComboBox_sharedPainter(const QFontComboBox*, intptr_t);
@@ -787,18 +787,17 @@ public:
 	intptr_t handle__metric = 0;
 
 	// Subclass to allow providing a Go implementation
-	virtual int metric(QPaintDevice::PaintDeviceMetric param1) const override {
+	virtual int metric(PaintDeviceMetric param1) const override {
 		if (handle__metric == 0) {
 			return QFontComboBox::metric(param1);
 		}
 
-		QPaintDevice::PaintDeviceMetric param1_ret = param1;
-		int sigval1 = static_cast<int>(param1_ret);
+		PaintDeviceMetric sigval1 = param1;
 		int callback_return_value = miqt_exec_callback_QFontComboBox_metric(this, handle__metric, sigval1);
 		return static_cast<int>(callback_return_value);
 	}
 
-	friend int QFontComboBox_virtualbase_metric(const void* self, int param1);
+	friend int QFontComboBox_virtualbase_metric(const void* self, PaintDeviceMetric param1);
 
 	// cgo.Handle value for overwritten implementation
 	intptr_t handle__initPainter = 0;
@@ -980,6 +979,7 @@ public:
 	friend int QFontComboBox_protectedbase_senderSignalIndex(bool* _dynamic_cast_ok, const void* self);
 	friend int QFontComboBox_protectedbase_receivers(bool* _dynamic_cast_ok, const void* self, const char* signal);
 	friend bool QFontComboBox_protectedbase_isSignalConnected(bool* _dynamic_cast_ok, const void* self, QMetaMethod* signal);
+	friend double QFontComboBox_protectedbase_getDecodedMetricF(bool* _dynamic_cast_ok, const void* self, PaintDeviceMetric metricA, PaintDeviceMetric metricB);
 };
 
 QFontComboBox* QFontComboBox_new(QWidget* parent) {
@@ -1022,13 +1022,12 @@ int QFontComboBox_writingSystem(const QFontComboBox* self) {
 	return static_cast<int>(_ret);
 }
 
-void QFontComboBox_setFontFilters(QFontComboBox* self, int filters) {
-	self->setFontFilters(static_cast<QFontComboBox::FontFilters>(filters));
+void QFontComboBox_setFontFilters(QFontComboBox* self, FontFilters filters) {
+	self->setFontFilters(filters);
 }
 
-int QFontComboBox_fontFilters(const QFontComboBox* self) {
-	QFontComboBox::FontFilters _ret = self->fontFilters();
-	return static_cast<int>(_ret);
+FontFilters QFontComboBox_fontFilters(const QFontComboBox* self) {
+	return self->fontFilters();
 }
 
 QFont* QFontComboBox_currentFont(const QFontComboBox* self) {
@@ -1688,8 +1687,8 @@ bool QFontComboBox_override_virtual_metric(void* self, intptr_t slot) {
 	return true;
 }
 
-int QFontComboBox_virtualbase_metric(const void* self, int param1) {
-	return static_cast<const MiqtVirtualQFontComboBox*>(self)->QFontComboBox::metric(static_cast<MiqtVirtualQFontComboBox::PaintDeviceMetric>(param1));
+int QFontComboBox_virtualbase_metric(const void* self, PaintDeviceMetric param1) {
+	return static_cast<const MiqtVirtualQFontComboBox*>(self)->QFontComboBox::metric(param1);
 }
 
 bool QFontComboBox_override_virtual_initPainter(void* self, intptr_t slot) {
@@ -1929,6 +1928,17 @@ bool QFontComboBox_protectedbase_isSignalConnected(bool* _dynamic_cast_ok, const
 
 	*_dynamic_cast_ok = true;
 	return self_cast->isSignalConnected(*signal);
+}
+
+double QFontComboBox_protectedbase_getDecodedMetricF(bool* _dynamic_cast_ok, const void* self, PaintDeviceMetric metricA, PaintDeviceMetric metricB) {
+	MiqtVirtualQFontComboBox* self_cast = dynamic_cast<MiqtVirtualQFontComboBox*>( (QFontComboBox*)(self) );
+	if (self_cast == nullptr) {
+		*_dynamic_cast_ok = false;
+		return 0;
+	}
+
+	*_dynamic_cast_ok = true;
+	return self_cast->getDecodedMetricF(metricA, metricB);
 }
 
 void QFontComboBox_delete(QFontComboBox* self) {

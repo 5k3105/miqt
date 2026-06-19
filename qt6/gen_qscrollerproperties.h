@@ -29,8 +29,8 @@ bool QScrollerProperties_operatorEqual(const QScrollerProperties* self, QScrolle
 bool QScrollerProperties_operatorNotEqual(const QScrollerProperties* self, QScrollerProperties* sp);
 void QScrollerProperties_setDefaultScrollerProperties(QScrollerProperties* sp);
 void QScrollerProperties_unsetDefaultScrollerProperties();
-QVariant* QScrollerProperties_scrollMetric(const QScrollerProperties* self, int metric);
-void QScrollerProperties_setScrollMetric(QScrollerProperties* self, int metric, QVariant* value);
+QVariant* QScrollerProperties_scrollMetric(const QScrollerProperties* self, ScrollMetric metric);
+void QScrollerProperties_setScrollMetric(QScrollerProperties* self, ScrollMetric metric, QVariant* value);
 
 void QScrollerProperties_delete(QScrollerProperties* self);
 

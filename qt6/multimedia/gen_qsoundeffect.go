@@ -178,8 +178,8 @@ func (this *QSoundEffect) IsPlaying() bool {
 	return (bool)(C.QSoundEffect_isPlaying(this.h))
 }
 
-func (this *QSoundEffect) Status() QSoundEffect__Status {
-	return (QSoundEffect__Status)(C.QSoundEffect_status(this.h))
+func (this *QSoundEffect) Status() Status {
+	int /* TODO  */
 }
 
 func (this *QSoundEffect) SourceChanged() {

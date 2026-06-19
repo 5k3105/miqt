@@ -62,19 +62,19 @@ func NewQQmlFile() *QQmlFile {
 }
 
 // NewQQmlFile2 constructs a new QQmlFile object.
-func NewQQmlFile2(param1 *QQmlEngine, param2 *qt6.QUrl) *QQmlFile {
+func NewQQmlFile2(engine *QQmlEngine, url *qt6.QUrl) *QQmlFile {
 
-	return newQQmlFile(C.QQmlFile_new2(param1.cPointer(), (*C.QUrl)(param2.UnsafePointer())))
+	return newQQmlFile(C.QQmlFile_new2(engine.cPointer(), (*C.QUrl)(url.UnsafePointer())))
 }
 
 // NewQQmlFile3 constructs a new QQmlFile object.
-func NewQQmlFile3(param1 *QQmlEngine, param2 string) *QQmlFile {
-	param2_ms := C.struct_miqt_string{}
-	param2_ms.data = C.CString(param2)
-	param2_ms.len = C.size_t(len(param2))
-	defer C.free(unsafe.Pointer(param2_ms.data))
+func NewQQmlFile3(engine *QQmlEngine, url string) *QQmlFile {
+	url_ms := C.struct_miqt_string{}
+	url_ms.data = C.CString(url)
+	url_ms.len = C.size_t(len(url))
+	defer C.free(unsafe.Pointer(url_ms.data))
 
-	return newQQmlFile(C.QQmlFile_new3(param1.cPointer(), param2_ms))
+	return newQQmlFile(C.QQmlFile_new3(engine.cPointer(), url_ms))
 }
 
 func (this *QQmlFile) IsNull() bool {
@@ -99,8 +99,8 @@ func (this *QQmlFile) Url() *qt6.QUrl {
 	return _goptr
 }
 
-func (this *QQmlFile) Status() QQmlFile__Status {
-	return (QQmlFile__Status)(C.QQmlFile_status(this.h))
+func (this *QQmlFile) Status() Status {
+	int /* TODO  */
 }
 
 func (this *QQmlFile) Error() string {
@@ -142,8 +142,8 @@ func (this *QQmlFile) Clear() {
 	C.QQmlFile_clear(this.h)
 }
 
-func (this *QQmlFile) ClearWithQObject(param1 *qt6.QObject) {
-	C.QQmlFile_clearWithQObject(this.h, (*C.QObject)(param1.UnsafePointer()))
+func (this *QQmlFile) ClearWithObject(object *qt6.QObject) {
+	C.QQmlFile_clearWithObject(this.h, (*C.QObject)(object.UnsafePointer()))
 }
 
 func (this *QQmlFile) ConnectFinished(param1 *qt6.QObject, param2 string) bool {

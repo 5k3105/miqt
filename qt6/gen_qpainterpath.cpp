@@ -224,13 +224,21 @@ void QPainterPath_setElementPositionAt(QPainterPath* self, int i, double x, doub
 	self->setElementPositionAt(static_cast<int>(i), static_cast<qreal>(x), static_cast<qreal>(y));
 }
 
+bool QPainterPath_isCachingEnabled(const QPainterPath* self) {
+	return self->isCachingEnabled();
+}
+
+void QPainterPath_setCachingEnabled(QPainterPath* self, bool enabled) {
+	self->setCachingEnabled(enabled);
+}
+
 double QPainterPath_length(const QPainterPath* self) {
 	qreal _ret = self->length();
 	return static_cast<double>(_ret);
 }
 
-double QPainterPath_percentAtLength(const QPainterPath* self, double t) {
-	qreal _ret = self->percentAtLength(static_cast<qreal>(t));
+double QPainterPath_percentAtLength(const QPainterPath* self, double len) {
+	qreal _ret = self->percentAtLength(static_cast<qreal>(len));
 	return static_cast<double>(_ret);
 }
 
@@ -246,6 +254,10 @@ double QPainterPath_angleAtPercent(const QPainterPath* self, double t) {
 double QPainterPath_slopeAtPercent(const QPainterPath* self, double t) {
 	qreal _ret = self->slopeAtPercent(static_cast<qreal>(t));
 	return static_cast<double>(_ret);
+}
+
+QPainterPath* QPainterPath_trimmed(const QPainterPath* self, double fromFraction, double toFraction) {
+	return new QPainterPath(self->trimmed(static_cast<qreal>(fromFraction), static_cast<qreal>(toFraction)));
 }
 
 bool QPainterPath_intersectsWithQPainterPath(const QPainterPath* self, QPainterPath* p) {
@@ -322,6 +334,10 @@ void QPainterPath_addRoundedRect3(QPainterPath* self, QRectF* rect, double xRadi
 
 void QPainterPath_addRoundedRect4(QPainterPath* self, double x, double y, double w, double h, double xRadius, double yRadius, int mode) {
 	self->addRoundedRect(static_cast<qreal>(x), static_cast<qreal>(y), static_cast<qreal>(w), static_cast<qreal>(h), static_cast<qreal>(xRadius), static_cast<qreal>(yRadius), static_cast<Qt::SizeMode>(mode));
+}
+
+QPainterPath* QPainterPath_trimmed2(const QPainterPath* self, double fromFraction, double toFraction, double offset) {
+	return new QPainterPath(self->trimmed(static_cast<qreal>(fromFraction), static_cast<qreal>(toFraction), static_cast<qreal>(offset)));
 }
 
 void QPainterPath_delete(QPainterPath* self) {
@@ -425,6 +441,14 @@ void QPainterPathStroker_delete(QPainterPathStroker* self) {
 	delete self;
 }
 
+QPainterPath__Element* QPainterPath__Element_new() {
+	return new (std::nothrow) QPainterPath::Element();
+}
+
+QPainterPath__Element* QPainterPath__Element_new2(const Element* param1) {
+	return new (std::nothrow) QPainterPath::Element(*param1);
+}
+
 double QPainterPath__Element_x(const QPainterPath__Element* self) {
 	qreal x_ret = self->x;
 	return static_cast<double>(x_ret);
@@ -443,13 +467,12 @@ void QPainterPath__Element_setY(QPainterPath__Element* self, double y) {
 	self->y = static_cast<qreal>(y);
 }
 
-int QPainterPath__Element_type(const QPainterPath__Element* self) {
-	QPainterPath::ElementType type_ret = self->type;
-	return static_cast<int>(type_ret);
+ElementType QPainterPath__Element_type(const QPainterPath__Element* self) {
+	return self->type;
 }
 
-void QPainterPath__Element_setType(QPainterPath__Element* self, int type) {
-	self->type = static_cast<QPainterPath::ElementType>(type);
+void QPainterPath__Element_setType(QPainterPath__Element* self, ElementType type) {
+	self->type = type;
 }
 
 bool QPainterPath__Element_isMoveTo(const QPainterPath__Element* self) {
@@ -468,11 +491,11 @@ QPointF* QPainterPath__Element_ToQPointF(const QPainterPath__Element* self) {
 	return new QPointF(self->operator QPointF());
 }
 
-bool QPainterPath__Element_operatorEqual(const QPainterPath__Element* self, QPainterPath__Element* e) {
+bool QPainterPath__Element_operatorEqual(const QPainterPath__Element* self, const Element* e) {
 	return (*self == *e);
 }
 
-bool QPainterPath__Element_operatorNotEqual(const QPainterPath__Element* self, QPainterPath__Element* e) {
+bool QPainterPath__Element_operatorNotEqual(const QPainterPath__Element* self, const Element* e) {
 	return (*self != *e);
 }
 

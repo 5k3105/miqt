@@ -73,14 +73,12 @@ func (this *QPageRanges) AddRange(from int, to int) {
 	C.QPageRanges_addRange(this.h, (C.int)(from), (C.int)(to))
 }
 
-func (this *QPageRanges) ToRangeList() []QPageRanges__Range {
+func (this *QPageRanges) ToRangeList() []Range {
 	var _ma C.struct_miqt_array = C.QPageRanges_toRangeList(this.h)
-	_ret := make([]QPageRanges__Range, int(_ma.len))
-	_outCast := (*[0xffff]*C.QPageRanges__Range)(unsafe.Pointer(_ma.data)) // hey ya
+	_ret := make([]Range, int(_ma.len))
+	_outCast := (*[0xffff]C.Range)(unsafe.Pointer(_ma.data)) // hey ya
 	for i := 0; i < int(_ma.len); i++ {
-		_lv_goptr := newQPageRanges__Range(_outCast[i])
-		_lv_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
-		_ret[i] = *_lv_goptr
+		int /* TODO  */
 	}
 	return _ret
 }
@@ -179,9 +177,9 @@ func NewQPageRanges__Range() *QPageRanges__Range {
 }
 
 // NewQPageRanges__Range2 constructs a new QPageRanges::Range object.
-func NewQPageRanges__Range2(param1 *QPageRanges__Range) *QPageRanges__Range {
+func NewQPageRanges__Range2(param1 *Range) *QPageRanges__Range {
 
-	return newQPageRanges__Range(C.QPageRanges__Range_new2(param1.cPointer()))
+	return newQPageRanges__Range(C.QPageRanges__Range_new2(param1))
 }
 
 func (this *QPageRanges__Range) From() int {

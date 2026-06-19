@@ -52,9 +52,8 @@ bool QSslDiffieHellmanParameters_isValid(const QSslDiffieHellmanParameters* self
 	return self->isValid();
 }
 
-int QSslDiffieHellmanParameters_error(const QSslDiffieHellmanParameters* self) {
-	QSslDiffieHellmanParameters::Error _ret = self->error();
-	return static_cast<int>(_ret);
+Error QSslDiffieHellmanParameters_error(const QSslDiffieHellmanParameters* self) {
+	return self->error();
 }
 
 struct miqt_string QSslDiffieHellmanParameters_errorString(const QSslDiffieHellmanParameters* self) {

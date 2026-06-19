@@ -14,6 +14,14 @@ import (
 	"unsafe"
 )
 
+type QSortFilterProxyModel__Direction int
+
+const (
+	QSortFilterProxyModel__Rows    QSortFilterProxyModel__Direction = 1
+	QSortFilterProxyModel__Columns QSortFilterProxyModel__Direction = 2
+	QSortFilterProxyModel__Both    QSortFilterProxyModel__Direction = 3
+)
+
 type QSortFilterProxyModel struct {
 	h *C.QSortFilterProxyModel
 	*QAbstractProxyModel
@@ -546,6 +554,30 @@ func QSortFilterProxyModel_Tr3(s string, c string, n int) string {
 	return _ret
 }
 
+// BeginFilterChange can only be called from a QSortFilterProxyModel that was directly constructed.
+func (this *QSortFilterProxyModel) BeginFilterChange() {
+
+	var _dynamic_cast_ok C.bool = false
+	C.QSortFilterProxyModel_protectedbase_beginFilterChange(&_dynamic_cast_ok, unsafe.Pointer(this.h))
+
+	if !_dynamic_cast_ok {
+		panic("miqt: can only call protected methods for directly constructed types")
+	}
+
+}
+
+// EndFilterChange can only be called from a QSortFilterProxyModel that was directly constructed.
+func (this *QSortFilterProxyModel) EndFilterChange() {
+
+	var _dynamic_cast_ok C.bool = false
+	C.QSortFilterProxyModel_protectedbase_endFilterChange(&_dynamic_cast_ok, unsafe.Pointer(this.h))
+
+	if !_dynamic_cast_ok {
+		panic("miqt: can only call protected methods for directly constructed types")
+	}
+
+}
+
 // InvalidateFilter can only be called from a QSortFilterProxyModel that was directly constructed.
 func (this *QSortFilterProxyModel) InvalidateFilter() {
 
@@ -575,6 +607,18 @@ func (this *QSortFilterProxyModel) InvalidateColumnsFilter() {
 
 	var _dynamic_cast_ok C.bool = false
 	C.QSortFilterProxyModel_protectedbase_invalidateColumnsFilter(&_dynamic_cast_ok, unsafe.Pointer(this.h))
+
+	if !_dynamic_cast_ok {
+		panic("miqt: can only call protected methods for directly constructed types")
+	}
+
+}
+
+// EndFilterChangeWithDirections can only be called from a QSortFilterProxyModel that was directly constructed.
+func (this *QSortFilterProxyModel) EndFilterChangeWithDirections(directions Directions) {
+
+	var _dynamic_cast_ok C.bool = false
+	C.QSortFilterProxyModel_protectedbase_endFilterChangeWithDirections(&_dynamic_cast_ok, unsafe.Pointer(this.h), directions)
 
 	if !_dynamic_cast_ok {
 		panic("miqt: can only call protected methods for directly constructed types")

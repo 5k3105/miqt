@@ -51,7 +51,7 @@ void QImageWriter_setTransformation(QImageWriter* self, int orientation);
 void QImageWriter_setText(QImageWriter* self, struct miqt_string key, struct miqt_string text);
 bool QImageWriter_canWrite(const QImageWriter* self);
 bool QImageWriter_write(QImageWriter* self, QImage* image);
-int QImageWriter_error(const QImageWriter* self);
+ImageWriterError QImageWriter_error(const QImageWriter* self);
 struct miqt_string QImageWriter_errorString(const QImageWriter* self);
 bool QImageWriter_supportsOption(const QImageWriter* self, int option);
 struct miqt_array /* of struct miqt_string */  QImageWriter_supportedImageFormats();

@@ -25,22 +25,22 @@ typedef struct QIcon QIcon;
 #endif
 
 QAbstractFileIconProvider* QAbstractFileIconProvider_new();
-QIcon* QAbstractFileIconProvider_icon(const QAbstractFileIconProvider* self, int param1);
+QIcon* QAbstractFileIconProvider_icon(const QAbstractFileIconProvider* self, IconType param1);
 QIcon* QAbstractFileIconProvider_iconWithQFileInfo(const QAbstractFileIconProvider* self, QFileInfo* param1);
 struct miqt_string QAbstractFileIconProvider_type(const QAbstractFileIconProvider* self, QFileInfo* param1);
-void QAbstractFileIconProvider_setOptions(QAbstractFileIconProvider* self, int options);
-int QAbstractFileIconProvider_options(const QAbstractFileIconProvider* self);
+void QAbstractFileIconProvider_setOptions(QAbstractFileIconProvider* self, Options options);
+Options QAbstractFileIconProvider_options(const QAbstractFileIconProvider* self);
 
 bool QAbstractFileIconProvider_override_virtual_icon(void* self, intptr_t slot);
-QIcon* QAbstractFileIconProvider_virtualbase_icon(const void* self, int param1);
+QIcon* QAbstractFileIconProvider_virtualbase_icon(const void* self, IconType param1);
 bool QAbstractFileIconProvider_override_virtual_iconWithQFileInfo(void* self, intptr_t slot);
 QIcon* QAbstractFileIconProvider_virtualbase_iconWithQFileInfo(const void* self, QFileInfo* param1);
 bool QAbstractFileIconProvider_override_virtual_type(void* self, intptr_t slot);
 struct miqt_string QAbstractFileIconProvider_virtualbase_type(const void* self, QFileInfo* param1);
 bool QAbstractFileIconProvider_override_virtual_setOptions(void* self, intptr_t slot);
-void QAbstractFileIconProvider_virtualbase_setOptions(void* self, int options);
+void QAbstractFileIconProvider_virtualbase_setOptions(void* self, Options options);
 bool QAbstractFileIconProvider_override_virtual_options(void* self, intptr_t slot);
-int QAbstractFileIconProvider_virtualbase_options(const void* self);
+Options QAbstractFileIconProvider_virtualbase_options(const void* self);
 
 void QAbstractFileIconProvider_delete(QAbstractFileIconProvider* self);
 

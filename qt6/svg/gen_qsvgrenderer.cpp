@@ -269,6 +269,15 @@ void QSvgRenderer_setAspectRatioMode(QSvgRenderer* self, int mode) {
 	self->setAspectRatioMode(static_cast<Qt::AspectRatioMode>(mode));
 }
 
+int QSvgRenderer_options(const QSvgRenderer* self) {
+	QtSvg::Options _ret = self->options();
+	return static_cast<int>(_ret);
+}
+
+void QSvgRenderer_setOptions(QSvgRenderer* self, int flags) {
+	self->setOptions(static_cast<QtSvg::Options>(flags));
+}
+
 bool QSvgRenderer_animated(const QSvgRenderer* self) {
 	return self->animated();
 }
@@ -293,6 +302,14 @@ int QSvgRenderer_animationDuration(const QSvgRenderer* self) {
 	return self->animationDuration();
 }
 
+bool QSvgRenderer_isAnimationEnabled(const QSvgRenderer* self) {
+	return self->isAnimationEnabled();
+}
+
+void QSvgRenderer_setAnimationEnabled(QSvgRenderer* self, bool enable) {
+	self->setAnimationEnabled(enable);
+}
+
 QRectF* QSvgRenderer_boundsOnElement(const QSvgRenderer* self, struct miqt_string id) {
 	QString id_QString = QString::fromUtf8(id.data, id.len);
 	return new QRectF(self->boundsOnElement(id_QString));
@@ -306,6 +323,10 @@ bool QSvgRenderer_elementExists(const QSvgRenderer* self, struct miqt_string id)
 QTransform* QSvgRenderer_transformForElement(const QSvgRenderer* self, struct miqt_string id) {
 	QString id_QString = QString::fromUtf8(id.data, id.len);
 	return new QTransform(self->transformForElement(id_QString));
+}
+
+void QSvgRenderer_setDefaultOptions(int flags) {
+	QSvgRenderer::setDefaultOptions(static_cast<QtSvg::Options>(flags));
 }
 
 bool QSvgRenderer_load(QSvgRenderer* self, struct miqt_string filename) {

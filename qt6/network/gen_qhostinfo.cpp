@@ -74,13 +74,12 @@ void QHostInfo_setAddresses(QHostInfo* self, struct miqt_array /* of QHostAddres
 	self->setAddresses(addresses_QList);
 }
 
-int QHostInfo_error(const QHostInfo* self) {
-	QHostInfo::HostInfoError _ret = self->error();
-	return static_cast<int>(_ret);
+HostInfoError QHostInfo_error(const QHostInfo* self) {
+	return self->error();
 }
 
-void QHostInfo_setError(QHostInfo* self, int error) {
-	self->setError(static_cast<QHostInfo::HostInfoError>(error));
+void QHostInfo_setError(QHostInfo* self, HostInfoError error) {
+	self->setError(error);
 }
 
 struct miqt_string QHostInfo_errorString(const QHostInfo* self) {

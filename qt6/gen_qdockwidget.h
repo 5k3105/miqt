@@ -100,14 +100,16 @@ void* QDockWidget_metacast(QDockWidget* self, const char* param1);
 struct miqt_string QDockWidget_tr(const char* s);
 QWidget* QDockWidget_widget(const QDockWidget* self);
 void QDockWidget_setWidget(QDockWidget* self, QWidget* widget);
-void QDockWidget_setFeatures(QDockWidget* self, int features);
-int QDockWidget_features(const QDockWidget* self);
+void QDockWidget_setFeatures(QDockWidget* self, DockWidgetFeatures features);
+DockWidgetFeatures QDockWidget_features(const QDockWidget* self);
 void QDockWidget_setFloating(QDockWidget* self, bool floating);
 bool QDockWidget_isFloating(const QDockWidget* self);
 void QDockWidget_setAllowedAreas(QDockWidget* self, int areas);
 int QDockWidget_allowedAreas(const QDockWidget* self);
 void QDockWidget_setTitleBarWidget(QDockWidget* self, QWidget* widget);
 QWidget* QDockWidget_titleBarWidget(const QDockWidget* self);
+void QDockWidget_setDockLocation(QDockWidget* self, int area);
+int QDockWidget_dockLocation(const QDockWidget* self);
 bool QDockWidget_isAreaAllowed(const QDockWidget* self, int area);
 QAction* QDockWidget_toggleViewAction(const QDockWidget* self);
 void QDockWidget_featuresChanged(QDockWidget* self, int features);
@@ -199,7 +201,7 @@ void QDockWidget_virtualbase_hideEvent(void* self, QHideEvent* event);
 bool QDockWidget_override_virtual_nativeEvent(void* self, intptr_t slot);
 bool QDockWidget_virtualbase_nativeEvent(void* self, struct miqt_string eventType, void* message, intptr_t* result);
 bool QDockWidget_override_virtual_metric(void* self, intptr_t slot);
-int QDockWidget_virtualbase_metric(const void* self, int param1);
+int QDockWidget_virtualbase_metric(const void* self, PaintDeviceMetric param1);
 bool QDockWidget_override_virtual_initPainter(void* self, intptr_t slot);
 void QDockWidget_virtualbase_initPainter(const void* self, QPainter* painter);
 bool QDockWidget_override_virtual_redirected(void* self, intptr_t slot);
@@ -234,6 +236,7 @@ QObject* QDockWidget_protectedbase_sender(bool* _dynamic_cast_ok, const void* se
 int QDockWidget_protectedbase_senderSignalIndex(bool* _dynamic_cast_ok, const void* self);
 int QDockWidget_protectedbase_receivers(bool* _dynamic_cast_ok, const void* self, const char* signal);
 bool QDockWidget_protectedbase_isSignalConnected(bool* _dynamic_cast_ok, const void* self, QMetaMethod* signal);
+double QDockWidget_protectedbase_getDecodedMetricF(bool* _dynamic_cast_ok, const void* self, PaintDeviceMetric metricA, PaintDeviceMetric metricB);
 
 void QDockWidget_delete(QDockWidget* self);
 

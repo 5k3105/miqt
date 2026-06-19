@@ -106,16 +106,16 @@ func UnsafeNewQCborError(h unsafe.Pointer) *QCborError {
 	return newQCborError((*C.QCborError)(h))
 }
 
-func (this *QCborError) C() QCborError__Code {
-	return (QCborError__Code)(C.QCborError_c(this.h))
+func (this *QCborError) C() Code {
+	int /* TODO  */
 }
 
-func (this *QCborError) SetC(c QCborError__Code) {
-	C.QCborError_setC(this.h, (C.int)(c))
+func (this *QCborError) SetC(c Code) {
+	C.QCborError_setC(this.h, c)
 }
 
-func (this *QCborError) ToQCborError__Code() QCborError__Code {
-	return (QCborError__Code)(C.QCborError_ToQCborError__Code(this.h))
+func (this *QCborError) ToQCborError__Code() Code {
+	int /* TODO  */
 }
 
 func (this *QCborError) ToString() string {

@@ -170,12 +170,12 @@ func (this *QLineEdit) IsClearButtonEnabled() bool {
 	return (bool)(C.QLineEdit_isClearButtonEnabled(this.h))
 }
 
-func (this *QLineEdit) EchoMode() QLineEdit__EchoMode {
-	return (QLineEdit__EchoMode)(C.QLineEdit_echoMode(this.h))
+func (this *QLineEdit) EchoMode() EchoMode {
+	int /* TODO  */
 }
 
-func (this *QLineEdit) SetEchoMode(echoMode QLineEdit__EchoMode) {
-	C.QLineEdit_setEchoMode(this.h, (C.int)(echoMode))
+func (this *QLineEdit) SetEchoMode(echoMode EchoMode) {
+	C.QLineEdit_setEchoMode(this.h, echoMode)
 }
 
 func (this *QLineEdit) IsReadOnly() bool {
@@ -358,12 +358,12 @@ func (this *QLineEdit) TextMargins() *QMargins {
 	return _goptr
 }
 
-func (this *QLineEdit) AddAction(action *QAction, position QLineEdit__ActionPosition) {
-	C.QLineEdit_addAction(this.h, action.cPointer(), (C.int)(position))
+func (this *QLineEdit) AddAction(action *QAction, position ActionPosition) {
+	C.QLineEdit_addAction(this.h, action.cPointer(), position)
 }
 
-func (this *QLineEdit) AddAction2(icon *QIcon, position QLineEdit__ActionPosition) *QAction {
-	return newQAction(C.QLineEdit_addAction2(this.h, icon.cPointer(), (C.int)(position)))
+func (this *QLineEdit) AddAction2(icon *QIcon, position ActionPosition) *QAction {
+	return newQAction(C.QLineEdit_addAction2(this.h, icon.cPointer(), position))
 }
 
 func (this *QLineEdit) SetText(text string) {
@@ -741,6 +741,20 @@ func (this *QLineEdit) IsSignalConnected(signal *QMetaMethod) bool {
 
 	var _dynamic_cast_ok C.bool = false
 	_method_ret := (bool)(C.QLineEdit_protectedbase_isSignalConnected(&_dynamic_cast_ok, unsafe.Pointer(this.h), signal.cPointer()))
+
+	if !_dynamic_cast_ok {
+		panic("miqt: can only call protected methods for directly constructed types")
+	}
+
+	return _method_ret
+
+}
+
+// GetDecodedMetricF can only be called from a QLineEdit that was directly constructed.
+func (this *QLineEdit) GetDecodedMetricF(metricA PaintDeviceMetric, metricB PaintDeviceMetric) float64 {
+
+	var _dynamic_cast_ok C.bool = false
+	_method_ret := (float64)(C.QLineEdit_protectedbase_getDecodedMetricF(&_dynamic_cast_ok, unsafe.Pointer(this.h), metricA, metricB))
 
 	if !_dynamic_cast_ok {
 		panic("miqt: can only call protected methods for directly constructed types")
@@ -1760,12 +1774,12 @@ func miqt_exec_callback_QLineEdit_nativeEvent(self *C.QLineEdit, cb C.intptr_t, 
 
 }
 
-func (this *QLineEdit) callVirtualBase_Metric(param1 QPaintDevice__PaintDeviceMetric) int {
+func (this *QLineEdit) callVirtualBase_Metric(param1 PaintDeviceMetric) int {
 
-	return (int)(C.QLineEdit_virtualbase_metric(unsafe.Pointer(this.h), (C.int)(param1)))
+	return (int)(C.QLineEdit_virtualbase_metric(unsafe.Pointer(this.h), param1))
 
 }
-func (this *QLineEdit) OnMetric(slot func(super func(param1 QPaintDevice__PaintDeviceMetric) int, param1 QPaintDevice__PaintDeviceMetric) int) {
+func (this *QLineEdit) OnMetric(slot func(super func(param1 PaintDeviceMetric) int, param1 PaintDeviceMetric) int) {
 	ok := C.QLineEdit_override_virtual_metric(unsafe.Pointer(this.h), C.intptr_t(cgo.NewHandle(slot)))
 	if !ok {
 		panic("miqt: can only override virtual methods for directly constructed types")
@@ -1773,14 +1787,14 @@ func (this *QLineEdit) OnMetric(slot func(super func(param1 QPaintDevice__PaintD
 }
 
 //export miqt_exec_callback_QLineEdit_metric
-func miqt_exec_callback_QLineEdit_metric(self *C.QLineEdit, cb C.intptr_t, param1 C.int) C.int {
-	gofunc, ok := cgo.Handle(cb).Value().(func(super func(param1 QPaintDevice__PaintDeviceMetric) int, param1 QPaintDevice__PaintDeviceMetric) int)
+func miqt_exec_callback_QLineEdit_metric(self *C.QLineEdit, cb C.intptr_t, param1 C.PaintDeviceMetric) C.int {
+	gofunc, ok := cgo.Handle(cb).Value().(func(super func(param1 PaintDeviceMetric) int, param1 PaintDeviceMetric) int)
 	if !ok {
 		panic("miqt: callback of non-callback type (heap corruption?)")
 	}
 
 	// Convert all CABI parameters to Go parameters
-	slotval1 := (QPaintDevice__PaintDeviceMetric)(param1)
+	int /* TODO  */
 
 	virtualReturn := gofunc((&QLineEdit{h: self}).callVirtualBase_Metric, slotval1)
 

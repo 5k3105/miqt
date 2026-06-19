@@ -94,7 +94,7 @@ void miqt_exec_callback_QTableWidget_setRootIndex(QTableWidget*, intptr_t, QMode
 void miqt_exec_callback_QTableWidget_setSelectionModel(QTableWidget*, intptr_t, QItemSelectionModel*);
 void miqt_exec_callback_QTableWidget_doItemsLayout(QTableWidget*, intptr_t);
 QRect* miqt_exec_callback_QTableWidget_visualRect(const QTableWidget*, intptr_t, QModelIndex*);
-void miqt_exec_callback_QTableWidget_scrollTo(QTableWidget*, intptr_t, QModelIndex*, int);
+void miqt_exec_callback_QTableWidget_scrollTo(QTableWidget*, intptr_t, QModelIndex*, ScrollHint);
 QModelIndex* miqt_exec_callback_QTableWidget_indexAt(const QTableWidget*, intptr_t, QPoint*);
 void miqt_exec_callback_QTableWidget_scrollContentsBy(QTableWidget*, intptr_t, int, int);
 void miqt_exec_callback_QTableWidget_initViewItemOption(const QTableWidget*, intptr_t, QStyleOptionViewItem*);
@@ -102,7 +102,7 @@ void miqt_exec_callback_QTableWidget_paintEvent(QTableWidget*, intptr_t, QPaintE
 void miqt_exec_callback_QTableWidget_timerEvent(QTableWidget*, intptr_t, QTimerEvent*);
 int miqt_exec_callback_QTableWidget_horizontalOffset(const QTableWidget*, intptr_t);
 int miqt_exec_callback_QTableWidget_verticalOffset(const QTableWidget*, intptr_t);
-QModelIndex* miqt_exec_callback_QTableWidget_moveCursor(QTableWidget*, intptr_t, int, int);
+QModelIndex* miqt_exec_callback_QTableWidget_moveCursor(QTableWidget*, intptr_t, CursorAction, int);
 void miqt_exec_callback_QTableWidget_setSelection(QTableWidget*, intptr_t, QRect*, int);
 QRegion* miqt_exec_callback_QTableWidget_visualRegionForSelection(const QTableWidget*, intptr_t, QItemSelection*);
 struct miqt_array /* of QModelIndex* */  miqt_exec_callback_QTableWidget_selectedIndexes(const QTableWidget*, intptr_t);
@@ -130,7 +130,7 @@ void miqt_exec_callback_QTableWidget_horizontalScrollbarValueChanged(QTableWidge
 void miqt_exec_callback_QTableWidget_closeEditor(QTableWidget*, intptr_t, QWidget*, int);
 void miqt_exec_callback_QTableWidget_commitData(QTableWidget*, intptr_t, QWidget*);
 void miqt_exec_callback_QTableWidget_editorDestroyed(QTableWidget*, intptr_t, QObject*);
-bool miqt_exec_callback_QTableWidget_edit2(QTableWidget*, intptr_t, QModelIndex*, int, QEvent*);
+bool miqt_exec_callback_QTableWidget_edit2(QTableWidget*, intptr_t, QModelIndex*, EditTrigger, QEvent*);
 int miqt_exec_callback_QTableWidget_selectionCommand(const QTableWidget*, intptr_t, QModelIndex*, QEvent*);
 void miqt_exec_callback_QTableWidget_startDrag(QTableWidget*, intptr_t, int);
 bool miqt_exec_callback_QTableWidget_focusNextPrevChild(QTableWidget*, intptr_t, bool);
@@ -170,7 +170,7 @@ void miqt_exec_callback_QTableWidget_actionEvent(QTableWidget*, intptr_t, QActio
 void miqt_exec_callback_QTableWidget_showEvent(QTableWidget*, intptr_t, QShowEvent*);
 void miqt_exec_callback_QTableWidget_hideEvent(QTableWidget*, intptr_t, QHideEvent*);
 bool miqt_exec_callback_QTableWidget_nativeEvent(QTableWidget*, intptr_t, struct miqt_string, void*, intptr_t*);
-int miqt_exec_callback_QTableWidget_metric(const QTableWidget*, intptr_t, int);
+int miqt_exec_callback_QTableWidget_metric(const QTableWidget*, intptr_t, PaintDeviceMetric);
 void miqt_exec_callback_QTableWidget_initPainter(const QTableWidget*, intptr_t, QPainter*);
 QPaintDevice* miqt_exec_callback_QTableWidget_redirected(const QTableWidget*, intptr_t, QPoint*);
 QPainter* miqt_exec_callback_QTableWidget_sharedPainter(const QTableWidget*, intptr_t);
@@ -854,7 +854,7 @@ public:
 	intptr_t handle__scrollTo = 0;
 
 	// Subclass to allow providing a Go implementation
-	virtual void scrollTo(const QModelIndex& index, QAbstractItemView::ScrollHint hint) override {
+	virtual void scrollTo(const QModelIndex& index, ScrollHint hint) override {
 		if (handle__scrollTo == 0) {
 			QTableWidget::scrollTo(index, hint);
 			return;
@@ -863,13 +863,12 @@ public:
 		const QModelIndex& index_ret = index;
 		// Cast returned reference into pointer
 		QModelIndex* sigval1 = const_cast<QModelIndex*>(&index_ret);
-		QAbstractItemView::ScrollHint hint_ret = hint;
-		int sigval2 = static_cast<int>(hint_ret);
+		ScrollHint sigval2 = hint;
 		miqt_exec_callback_QTableWidget_scrollTo(this, handle__scrollTo, sigval1, sigval2);
 
 	}
 
-	friend void QTableWidget_virtualbase_scrollTo(void* self, QModelIndex* index, int hint);
+	friend void QTableWidget_virtualbase_scrollTo(void* self, QModelIndex* index, ScrollHint hint);
 
 	// cgo.Handle value for overwritten implementation
 	intptr_t handle__indexAt = 0;
@@ -992,20 +991,19 @@ public:
 	intptr_t handle__moveCursor = 0;
 
 	// Subclass to allow providing a Go implementation
-	virtual QModelIndex moveCursor(QAbstractItemView::CursorAction cursorAction, Qt::KeyboardModifiers modifiers) override {
+	virtual QModelIndex moveCursor(CursorAction cursorAction, Qt::KeyboardModifiers modifiers) override {
 		if (handle__moveCursor == 0) {
 			return QTableWidget::moveCursor(cursorAction, modifiers);
 		}
 
-		QAbstractItemView::CursorAction cursorAction_ret = cursorAction;
-		int sigval1 = static_cast<int>(cursorAction_ret);
+		CursorAction sigval1 = cursorAction;
 		Qt::KeyboardModifiers modifiers_ret = modifiers;
 		int sigval2 = static_cast<int>(modifiers_ret);
 		QModelIndex* callback_return_value = miqt_exec_callback_QTableWidget_moveCursor(this, handle__moveCursor, sigval1, sigval2);
 		return *callback_return_value;
 	}
 
-	friend QModelIndex* QTableWidget_virtualbase_moveCursor(void* self, int cursorAction, int modifiers);
+	friend QModelIndex* QTableWidget_virtualbase_moveCursor(void* self, CursorAction cursorAction, int modifiers);
 
 	// cgo.Handle value for overwritten implementation
 	intptr_t handle__setSelection = 0;
@@ -1515,7 +1513,7 @@ public:
 	intptr_t handle__edit2 = 0;
 
 	// Subclass to allow providing a Go implementation
-	virtual bool edit(const QModelIndex& index, QAbstractItemView::EditTrigger trigger, QEvent* event) override {
+	virtual bool edit(const QModelIndex& index, EditTrigger trigger, QEvent* event) override {
 		if (handle__edit2 == 0) {
 			return QTableWidget::edit(index, trigger, event);
 		}
@@ -1523,14 +1521,13 @@ public:
 		const QModelIndex& index_ret = index;
 		// Cast returned reference into pointer
 		QModelIndex* sigval1 = const_cast<QModelIndex*>(&index_ret);
-		QAbstractItemView::EditTrigger trigger_ret = trigger;
-		int sigval2 = static_cast<int>(trigger_ret);
+		EditTrigger sigval2 = trigger;
 		QEvent* sigval3 = event;
 		bool callback_return_value = miqt_exec_callback_QTableWidget_edit2(this, handle__edit2, sigval1, sigval2, sigval3);
 		return callback_return_value;
 	}
 
-	friend bool QTableWidget_virtualbase_edit2(void* self, QModelIndex* index, int trigger, QEvent* event);
+	friend bool QTableWidget_virtualbase_edit2(void* self, QModelIndex* index, EditTrigger trigger, QEvent* event);
 
 	// cgo.Handle value for overwritten implementation
 	intptr_t handle__selectionCommand = 0;
@@ -2196,18 +2193,17 @@ public:
 	intptr_t handle__metric = 0;
 
 	// Subclass to allow providing a Go implementation
-	virtual int metric(QPaintDevice::PaintDeviceMetric param1) const override {
+	virtual int metric(PaintDeviceMetric param1) const override {
 		if (handle__metric == 0) {
 			return QTableWidget::metric(param1);
 		}
 
-		QPaintDevice::PaintDeviceMetric param1_ret = param1;
-		int sigval1 = static_cast<int>(param1_ret);
+		PaintDeviceMetric sigval1 = param1;
 		int callback_return_value = miqt_exec_callback_QTableWidget_metric(this, handle__metric, sigval1);
 		return static_cast<int>(callback_return_value);
 	}
 
-	friend int QTableWidget_virtualbase_metric(const void* self, int param1);
+	friend int QTableWidget_virtualbase_metric(const void* self, PaintDeviceMetric param1);
 
 	// cgo.Handle value for overwritten implementation
 	intptr_t handle__initPainter = 0;
@@ -2336,8 +2332,8 @@ public:
 	friend void QTableWidget_protectedbase_columnResized(bool* _dynamic_cast_ok, void* self, int column, int oldWidth, int newWidth);
 	friend void QTableWidget_protectedbase_rowCountChanged(bool* _dynamic_cast_ok, void* self, int oldCount, int newCount);
 	friend void QTableWidget_protectedbase_columnCountChanged(bool* _dynamic_cast_ok, void* self, int oldCount, int newCount);
-	friend int QTableWidget_protectedbase_state(bool* _dynamic_cast_ok, const void* self);
-	friend void QTableWidget_protectedbase_setState(bool* _dynamic_cast_ok, void* self, int state);
+	friend State QTableWidget_protectedbase_state(bool* _dynamic_cast_ok, const void* self);
+	friend void QTableWidget_protectedbase_setState(bool* _dynamic_cast_ok, void* self, State state);
 	friend void QTableWidget_protectedbase_scheduleDelayedItemsLayout(bool* _dynamic_cast_ok, void* self);
 	friend void QTableWidget_protectedbase_executeDelayedItemsLayout(bool* _dynamic_cast_ok, void* self);
 	friend void QTableWidget_protectedbase_setDirtyRegion(bool* _dynamic_cast_ok, void* self, QRegion* region);
@@ -2346,7 +2342,7 @@ public:
 	friend void QTableWidget_protectedbase_startAutoScroll(bool* _dynamic_cast_ok, void* self);
 	friend void QTableWidget_protectedbase_stopAutoScroll(bool* _dynamic_cast_ok, void* self);
 	friend void QTableWidget_protectedbase_doAutoScroll(bool* _dynamic_cast_ok, void* self);
-	friend int QTableWidget_protectedbase_dropIndicatorPosition(bool* _dynamic_cast_ok, const void* self);
+	friend DropIndicatorPosition QTableWidget_protectedbase_dropIndicatorPosition(bool* _dynamic_cast_ok, const void* self);
 	friend void QTableWidget_protectedbase_setViewportMargins(bool* _dynamic_cast_ok, void* self, int left, int top, int right, int bottom);
 	friend QMargins* QTableWidget_protectedbase_viewportMargins(bool* _dynamic_cast_ok, const void* self);
 	friend void QTableWidget_protectedbase_drawFrame(bool* _dynamic_cast_ok, void* self, QPainter* param1);
@@ -2359,6 +2355,7 @@ public:
 	friend int QTableWidget_protectedbase_senderSignalIndex(bool* _dynamic_cast_ok, const void* self);
 	friend int QTableWidget_protectedbase_receivers(bool* _dynamic_cast_ok, const void* self, const char* signal);
 	friend bool QTableWidget_protectedbase_isSignalConnected(bool* _dynamic_cast_ok, const void* self, QMetaMethod* signal);
+	friend double QTableWidget_protectedbase_getDecodedMetricF(bool* _dynamic_cast_ok, const void* self, PaintDeviceMetric metricA, PaintDeviceMetric metricB);
 };
 
 QTableWidget* QTableWidget_new(QWidget* parent) {
@@ -2641,6 +2638,15 @@ QTableWidgetItem* QTableWidget_itemPrototype(const QTableWidget* self) {
 
 void QTableWidget_setItemPrototype(QTableWidget* self, QTableWidgetItem* item) {
 	self->setItemPrototype(item);
+}
+
+int QTableWidget_supportedDragActions(const QTableWidget* self) {
+	Qt::DropActions _ret = self->supportedDragActions();
+	return static_cast<int>(_ret);
+}
+
+void QTableWidget_setSupportedDragActions(QTableWidget* self, int actions) {
+	self->setSupportedDragActions(static_cast<Qt::DropActions>(actions));
 }
 
 void QTableWidget_scrollToItem(QTableWidget* self, QTableWidgetItem* item) {
@@ -3048,8 +3054,8 @@ bool QTableWidget_override_virtual_scrollTo(void* self, intptr_t slot) {
 	return true;
 }
 
-void QTableWidget_virtualbase_scrollTo(void* self, QModelIndex* index, int hint) {
-	static_cast<MiqtVirtualQTableWidget*>(self)->QTableWidget::scrollTo(*index, static_cast<MiqtVirtualQTableWidget::ScrollHint>(hint));
+void QTableWidget_virtualbase_scrollTo(void* self, QModelIndex* index, ScrollHint hint) {
+	static_cast<MiqtVirtualQTableWidget*>(self)->QTableWidget::scrollTo(*index, hint);
 }
 
 bool QTableWidget_override_virtual_indexAt(void* self, intptr_t slot) {
@@ -3160,8 +3166,8 @@ bool QTableWidget_override_virtual_moveCursor(void* self, intptr_t slot) {
 	return true;
 }
 
-QModelIndex* QTableWidget_virtualbase_moveCursor(void* self, int cursorAction, int modifiers) {
-	return new QModelIndex(static_cast<MiqtVirtualQTableWidget*>(self)->QTableWidget::moveCursor(static_cast<MiqtVirtualQTableWidget::CursorAction>(cursorAction), static_cast<Qt::KeyboardModifiers>(modifiers)));
+QModelIndex* QTableWidget_virtualbase_moveCursor(void* self, CursorAction cursorAction, int modifiers) {
+	return new QModelIndex(static_cast<MiqtVirtualQTableWidget*>(self)->QTableWidget::moveCursor(cursorAction, static_cast<Qt::KeyboardModifiers>(modifiers)));
 }
 
 bool QTableWidget_override_virtual_setSelection(void* self, intptr_t slot) {
@@ -3568,8 +3574,8 @@ bool QTableWidget_override_virtual_edit2(void* self, intptr_t slot) {
 	return true;
 }
 
-bool QTableWidget_virtualbase_edit2(void* self, QModelIndex* index, int trigger, QEvent* event) {
-	return static_cast<MiqtVirtualQTableWidget*>(self)->QTableWidget::edit(*index, static_cast<MiqtVirtualQTableWidget::EditTrigger>(trigger), event);
+bool QTableWidget_virtualbase_edit2(void* self, QModelIndex* index, EditTrigger trigger, QEvent* event) {
+	return static_cast<MiqtVirtualQTableWidget*>(self)->QTableWidget::edit(*index, trigger, event);
 }
 
 bool QTableWidget_override_virtual_selectionCommand(void* self, intptr_t slot) {
@@ -4130,8 +4136,8 @@ bool QTableWidget_override_virtual_metric(void* self, intptr_t slot) {
 	return true;
 }
 
-int QTableWidget_virtualbase_metric(const void* self, int param1) {
-	return static_cast<const MiqtVirtualQTableWidget*>(self)->QTableWidget::metric(static_cast<MiqtVirtualQTableWidget::PaintDeviceMetric>(param1));
+int QTableWidget_virtualbase_metric(const void* self, PaintDeviceMetric param1) {
+	return static_cast<const MiqtVirtualQTableWidget*>(self)->QTableWidget::metric(param1);
 }
 
 bool QTableWidget_override_virtual_initPainter(void* self, intptr_t slot) {
@@ -4298,19 +4304,18 @@ void QTableWidget_protectedbase_columnCountChanged(bool* _dynamic_cast_ok, void*
 	self_cast->columnCountChanged(static_cast<int>(oldCount), static_cast<int>(newCount));
 }
 
-int QTableWidget_protectedbase_state(bool* _dynamic_cast_ok, const void* self) {
+State QTableWidget_protectedbase_state(bool* _dynamic_cast_ok, const void* self) {
 	MiqtVirtualQTableWidget* self_cast = dynamic_cast<MiqtVirtualQTableWidget*>( (QTableWidget*)(self) );
 	if (self_cast == nullptr) {
 		*_dynamic_cast_ok = false;
-		return (int)(0);
+		return nullptr;
 	}
 
 	*_dynamic_cast_ok = true;
-	MiqtVirtualQTableWidget::State _ret = self_cast->state();
-	return static_cast<int>(_ret);
+	return self_cast->state();
 }
 
-void QTableWidget_protectedbase_setState(bool* _dynamic_cast_ok, void* self, int state) {
+void QTableWidget_protectedbase_setState(bool* _dynamic_cast_ok, void* self, State state) {
 	MiqtVirtualQTableWidget* self_cast = dynamic_cast<MiqtVirtualQTableWidget*>( (QTableWidget*)(self) );
 	if (self_cast == nullptr) {
 		*_dynamic_cast_ok = false;
@@ -4318,7 +4323,7 @@ void QTableWidget_protectedbase_setState(bool* _dynamic_cast_ok, void* self, int
 	}
 
 	*_dynamic_cast_ok = true;
-	self_cast->setState(static_cast<MiqtVirtualQTableWidget::State>(state));
+	self_cast->setState(state);
 }
 
 void QTableWidget_protectedbase_scheduleDelayedItemsLayout(bool* _dynamic_cast_ok, void* self) {
@@ -4409,16 +4414,15 @@ void QTableWidget_protectedbase_doAutoScroll(bool* _dynamic_cast_ok, void* self)
 	self_cast->doAutoScroll();
 }
 
-int QTableWidget_protectedbase_dropIndicatorPosition(bool* _dynamic_cast_ok, const void* self) {
+DropIndicatorPosition QTableWidget_protectedbase_dropIndicatorPosition(bool* _dynamic_cast_ok, const void* self) {
 	MiqtVirtualQTableWidget* self_cast = dynamic_cast<MiqtVirtualQTableWidget*>( (QTableWidget*)(self) );
 	if (self_cast == nullptr) {
 		*_dynamic_cast_ok = false;
-		return (int)(0);
+		return nullptr;
 	}
 
 	*_dynamic_cast_ok = true;
-	MiqtVirtualQTableWidget::DropIndicatorPosition _ret = self_cast->dropIndicatorPosition();
-	return static_cast<int>(_ret);
+	return self_cast->dropIndicatorPosition();
 }
 
 void QTableWidget_protectedbase_setViewportMargins(bool* _dynamic_cast_ok, void* self, int left, int top, int right, int bottom) {
@@ -4551,6 +4555,17 @@ bool QTableWidget_protectedbase_isSignalConnected(bool* _dynamic_cast_ok, const 
 
 	*_dynamic_cast_ok = true;
 	return self_cast->isSignalConnected(*signal);
+}
+
+double QTableWidget_protectedbase_getDecodedMetricF(bool* _dynamic_cast_ok, const void* self, PaintDeviceMetric metricA, PaintDeviceMetric metricB) {
+	MiqtVirtualQTableWidget* self_cast = dynamic_cast<MiqtVirtualQTableWidget*>( (QTableWidget*)(self) );
+	if (self_cast == nullptr) {
+		*_dynamic_cast_ok = false;
+		return 0;
+	}
+
+	*_dynamic_cast_ok = true;
+	return self_cast->getDecodedMetricF(metricA, metricB);
 }
 
 void QTableWidget_delete(QTableWidget* self) {

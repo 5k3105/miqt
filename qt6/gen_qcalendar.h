@@ -39,9 +39,9 @@ typedef struct QLocale QLocale;
 #endif
 
 QCalendar* QCalendar_new();
-QCalendar* QCalendar_new2(int system);
+QCalendar* QCalendar_new2(System system);
 QCalendar* QCalendar_new3(QAnyStringView* name);
-QCalendar* QCalendar_new4(QCalendar__SystemId* id);
+QCalendar* QCalendar_new4(SystemId id);
 bool QCalendar_isValid(const QCalendar* self);
 int QCalendar_daysInMonth(const QCalendar* self, int month);
 int QCalendar_daysInYear(const QCalendar* self, int year);
@@ -59,8 +59,9 @@ int QCalendar_minimumDaysInMonth(const QCalendar* self);
 int QCalendar_maximumMonthsInYear(const QCalendar* self);
 struct miqt_string QCalendar_name(const QCalendar* self);
 QDate* QCalendar_dateFromParts(const QCalendar* self, int year, int month, int day);
-QDate* QCalendar_dateFromPartsWithParts(const QCalendar* self, QCalendar__YearMonthDay* parts);
-QCalendar__YearMonthDay* QCalendar_partsFromDate(const QCalendar* self, QDate* date);
+QDate* QCalendar_dateFromPartsWithParts(const QCalendar* self, const YearMonthDay* parts);
+QDate* QCalendar_matchCenturyToWeekday(const QCalendar* self, const YearMonthDay* parts, int dow);
+YearMonthDay QCalendar_partsFromDate(const QCalendar* self, QDate* date);
 int QCalendar_dayOfWeek(const QCalendar* self, QDate* date);
 struct miqt_string QCalendar_monthName(const QCalendar* self, QLocale* locale, int month);
 struct miqt_string QCalendar_standaloneMonthName(const QCalendar* self, QLocale* locale, int month);

@@ -15,6 +15,7 @@ extern "C" {
 #endif
 
 #ifdef __cplusplus
+class QAudioBufferInput;
 class QAudioInput;
 class QAudioOutput;
 class QCamera;
@@ -26,9 +27,13 @@ class QMediaRecorder;
 class QMetaMethod;
 class QMetaObject;
 class QObject;
+class QScreenCapture;
 class QTimerEvent;
+class QVideoFrameInput;
 class QVideoSink;
+class QWindowCapture;
 #else
+typedef struct QAudioBufferInput QAudioBufferInput;
 typedef struct QAudioInput QAudioInput;
 typedef struct QAudioOutput QAudioOutput;
 typedef struct QCamera QCamera;
@@ -40,8 +45,11 @@ typedef struct QMediaRecorder QMediaRecorder;
 typedef struct QMetaMethod QMetaMethod;
 typedef struct QMetaObject QMetaObject;
 typedef struct QObject QObject;
+typedef struct QScreenCapture QScreenCapture;
 typedef struct QTimerEvent QTimerEvent;
+typedef struct QVideoFrameInput QVideoFrameInput;
 typedef struct QVideoSink QVideoSink;
+typedef struct QWindowCapture QWindowCapture;
 #endif
 
 QMediaCaptureSession* QMediaCaptureSession_new();
@@ -52,10 +60,18 @@ void* QMediaCaptureSession_metacast(QMediaCaptureSession* self, const char* para
 struct miqt_string QMediaCaptureSession_tr(const char* s);
 QAudioInput* QMediaCaptureSession_audioInput(const QMediaCaptureSession* self);
 void QMediaCaptureSession_setAudioInput(QMediaCaptureSession* self, QAudioInput* input);
+QAudioBufferInput* QMediaCaptureSession_audioBufferInput(const QMediaCaptureSession* self);
+void QMediaCaptureSession_setAudioBufferInput(QMediaCaptureSession* self, QAudioBufferInput* input);
 QCamera* QMediaCaptureSession_camera(const QMediaCaptureSession* self);
 void QMediaCaptureSession_setCamera(QMediaCaptureSession* self, QCamera* camera);
 QImageCapture* QMediaCaptureSession_imageCapture(QMediaCaptureSession* self);
 void QMediaCaptureSession_setImageCapture(QMediaCaptureSession* self, QImageCapture* imageCapture);
+QScreenCapture* QMediaCaptureSession_screenCapture(QMediaCaptureSession* self);
+void QMediaCaptureSession_setScreenCapture(QMediaCaptureSession* self, QScreenCapture* screenCapture);
+QWindowCapture* QMediaCaptureSession_windowCapture(QMediaCaptureSession* self);
+void QMediaCaptureSession_setWindowCapture(QMediaCaptureSession* self, QWindowCapture* windowCapture);
+QVideoFrameInput* QMediaCaptureSession_videoFrameInput(const QMediaCaptureSession* self);
+void QMediaCaptureSession_setVideoFrameInput(QMediaCaptureSession* self, QVideoFrameInput* input);
 QMediaRecorder* QMediaCaptureSession_recorder(QMediaCaptureSession* self);
 void QMediaCaptureSession_setRecorder(QMediaCaptureSession* self, QMediaRecorder* recorder);
 void QMediaCaptureSession_setVideoOutput(QMediaCaptureSession* self, QObject* output);
@@ -66,8 +82,16 @@ void QMediaCaptureSession_setAudioOutput(QMediaCaptureSession* self, QAudioOutpu
 QAudioOutput* QMediaCaptureSession_audioOutput(const QMediaCaptureSession* self);
 void QMediaCaptureSession_audioInputChanged(QMediaCaptureSession* self);
 void QMediaCaptureSession_connect_audioInputChanged(QMediaCaptureSession* self, intptr_t slot);
+void QMediaCaptureSession_audioBufferInputChanged(QMediaCaptureSession* self);
+void QMediaCaptureSession_connect_audioBufferInputChanged(QMediaCaptureSession* self, intptr_t slot);
 void QMediaCaptureSession_cameraChanged(QMediaCaptureSession* self);
 void QMediaCaptureSession_connect_cameraChanged(QMediaCaptureSession* self, intptr_t slot);
+void QMediaCaptureSession_screenCaptureChanged(QMediaCaptureSession* self);
+void QMediaCaptureSession_connect_screenCaptureChanged(QMediaCaptureSession* self, intptr_t slot);
+void QMediaCaptureSession_windowCaptureChanged(QMediaCaptureSession* self);
+void QMediaCaptureSession_connect_windowCaptureChanged(QMediaCaptureSession* self, intptr_t slot);
+void QMediaCaptureSession_videoFrameInputChanged(QMediaCaptureSession* self);
+void QMediaCaptureSession_connect_videoFrameInputChanged(QMediaCaptureSession* self, intptr_t slot);
 void QMediaCaptureSession_imageCaptureChanged(QMediaCaptureSession* self);
 void QMediaCaptureSession_connect_imageCaptureChanged(QMediaCaptureSession* self, intptr_t slot);
 void QMediaCaptureSession_recorderChanged(QMediaCaptureSession* self);

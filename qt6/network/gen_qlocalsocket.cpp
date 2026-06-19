@@ -25,7 +25,7 @@ bool miqt_exec_callback_QLocalSocket_isSequential(const QLocalSocket*, intptr_t)
 long long miqt_exec_callback_QLocalSocket_bytesAvailable(const QLocalSocket*, intptr_t);
 long long miqt_exec_callback_QLocalSocket_bytesToWrite(const QLocalSocket*, intptr_t);
 bool miqt_exec_callback_QLocalSocket_canReadLine(const QLocalSocket*, intptr_t);
-bool miqt_exec_callback_QLocalSocket_open(QLocalSocket*, intptr_t, int);
+bool miqt_exec_callback_QLocalSocket_open(QLocalSocket*, intptr_t, OpenMode);
 void miqt_exec_callback_QLocalSocket_close(QLocalSocket*, intptr_t);
 bool miqt_exec_callback_QLocalSocket_waitForBytesWritten(QLocalSocket*, intptr_t, int);
 bool miqt_exec_callback_QLocalSocket_waitForReadyRead(QLocalSocket*, intptr_t, int);
@@ -121,18 +121,17 @@ public:
 	intptr_t handle__open = 0;
 
 	// Subclass to allow providing a Go implementation
-	virtual bool open(QIODeviceBase::OpenMode openMode) override {
+	virtual bool open(OpenMode openMode) override {
 		if (handle__open == 0) {
 			return QLocalSocket::open(openMode);
 		}
 
-		QIODeviceBase::OpenMode openMode_ret = openMode;
-		int sigval1 = static_cast<int>(openMode_ret);
+		OpenMode sigval1 = openMode;
 		bool callback_return_value = miqt_exec_callback_QLocalSocket_open(this, handle__open, sigval1);
 		return callback_return_value;
 	}
 
-	friend bool QLocalSocket_virtualbase_open(void* self, int openMode);
+	friend bool QLocalSocket_virtualbase_open(void* self, OpenMode openMode);
 
 	// cgo.Handle value for overwritten implementation
 	intptr_t handle__close = 0;
@@ -554,17 +553,16 @@ bool QLocalSocket_canReadLine(const QLocalSocket* self) {
 	return self->canReadLine();
 }
 
-bool QLocalSocket_open(QLocalSocket* self, int openMode) {
-	return self->open(static_cast<QIODeviceBase::OpenMode>(openMode));
+bool QLocalSocket_open(QLocalSocket* self, OpenMode openMode) {
+	return self->open(openMode);
 }
 
 void QLocalSocket_close(QLocalSocket* self) {
 	self->close();
 }
 
-int QLocalSocket_error(const QLocalSocket* self) {
-	QLocalSocket::LocalSocketError _ret = self->error();
-	return static_cast<int>(_ret);
+LocalSocketError QLocalSocket_error(const QLocalSocket* self) {
+	return self->error();
 }
 
 bool QLocalSocket_flush(QLocalSocket* self) {
@@ -593,18 +591,16 @@ intptr_t QLocalSocket_socketDescriptor(const QLocalSocket* self) {
 	return (intptr_t)(_ret);
 }
 
-void QLocalSocket_setSocketOptions(QLocalSocket* self, int option) {
-	self->setSocketOptions(static_cast<QLocalSocket::SocketOptions>(option));
+void QLocalSocket_setSocketOptions(QLocalSocket* self, SocketOptions option) {
+	self->setSocketOptions(option);
 }
 
-int QLocalSocket_socketOptions(const QLocalSocket* self) {
-	QLocalSocket::SocketOptions _ret = self->socketOptions();
-	return static_cast<int>(_ret);
+SocketOptions QLocalSocket_socketOptions(const QLocalSocket* self) {
+	return self->socketOptions();
 }
 
-int QLocalSocket_state(const QLocalSocket* self) {
-	QLocalSocket::LocalSocketState _ret = self->state();
-	return static_cast<int>(_ret);
+LocalSocketState QLocalSocket_state(const QLocalSocket* self) {
+	return self->state();
 }
 
 bool QLocalSocket_waitForBytesWritten(QLocalSocket* self, int msecs) {
@@ -689,21 +685,21 @@ struct miqt_string QLocalSocket_tr3(const char* s, const char* c, int n) {
 	return _ms;
 }
 
-void QLocalSocket_connectToServerWithOpenMode(QLocalSocket* self, int openMode) {
-	self->connectToServer(static_cast<QIODeviceBase::OpenMode>(openMode));
+void QLocalSocket_connectToServerWithOpenMode(QLocalSocket* self, OpenMode openMode) {
+	self->connectToServer(openMode);
 }
 
-void QLocalSocket_connectToServer2(QLocalSocket* self, struct miqt_string name, int openMode) {
+void QLocalSocket_connectToServer2(QLocalSocket* self, struct miqt_string name, OpenMode openMode) {
 	QString name_QString = QString::fromUtf8(name.data, name.len);
-	self->connectToServer(name_QString, static_cast<QIODeviceBase::OpenMode>(openMode));
+	self->connectToServer(name_QString, openMode);
 }
 
-bool QLocalSocket_setSocketDescriptor2(QLocalSocket* self, intptr_t socketDescriptor, int socketState) {
-	return self->setSocketDescriptor((qintptr)(socketDescriptor), static_cast<QLocalSocket::LocalSocketState>(socketState));
+bool QLocalSocket_setSocketDescriptor2(QLocalSocket* self, intptr_t socketDescriptor, LocalSocketState socketState) {
+	return self->setSocketDescriptor((qintptr)(socketDescriptor), socketState);
 }
 
-bool QLocalSocket_setSocketDescriptor3(QLocalSocket* self, intptr_t socketDescriptor, int socketState, int openMode) {
-	return self->setSocketDescriptor((qintptr)(socketDescriptor), static_cast<QLocalSocket::LocalSocketState>(socketState), static_cast<QIODeviceBase::OpenMode>(openMode));
+bool QLocalSocket_setSocketDescriptor3(QLocalSocket* self, intptr_t socketDescriptor, LocalSocketState socketState, OpenMode openMode) {
+	return self->setSocketDescriptor((qintptr)(socketDescriptor), socketState, openMode);
 }
 
 bool QLocalSocket_waitForConnectedWithMsecs(QLocalSocket* self, int msecs) {
@@ -782,8 +778,8 @@ bool QLocalSocket_override_virtual_open(void* self, intptr_t slot) {
 	return true;
 }
 
-bool QLocalSocket_virtualbase_open(void* self, int openMode) {
-	return static_cast<MiqtVirtualQLocalSocket*>(self)->QLocalSocket::open(static_cast<MiqtVirtualQLocalSocket::OpenMode>(openMode));
+bool QLocalSocket_virtualbase_open(void* self, OpenMode openMode) {
+	return static_cast<MiqtVirtualQLocalSocket*>(self)->QLocalSocket::open(openMode);
 }
 
 bool QLocalSocket_override_virtual_close(void* self, intptr_t slot) {

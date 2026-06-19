@@ -15,6 +15,7 @@ extern "C" {
 #endif
 
 #ifdef __cplusplus
+class QAnyStringView;
 class QChildEvent;
 class QEvent;
 class QJSEngine;
@@ -27,6 +28,7 @@ class QTimerEvent;
 class QUrl;
 class QVariant;
 #else
+typedef struct QAnyStringView QAnyStringView;
 typedef struct QChildEvent QChildEvent;
 typedef struct QEvent QEvent;
 typedef struct QJSEngine QJSEngine;
@@ -42,10 +44,12 @@ typedef struct QVariant QVariant;
 
 QQmlApplicationEngine* QQmlApplicationEngine_new();
 QQmlApplicationEngine* QQmlApplicationEngine_new2(QUrl* url);
-QQmlApplicationEngine* QQmlApplicationEngine_new3(struct miqt_string filePath);
-QQmlApplicationEngine* QQmlApplicationEngine_new4(QObject* parent);
-QQmlApplicationEngine* QQmlApplicationEngine_new5(QUrl* url, QObject* parent);
-QQmlApplicationEngine* QQmlApplicationEngine_new6(struct miqt_string filePath, QObject* parent);
+QQmlApplicationEngine* QQmlApplicationEngine_new3(QAnyStringView* uri, QAnyStringView* typeName);
+QQmlApplicationEngine* QQmlApplicationEngine_new4(struct miqt_string filePath);
+QQmlApplicationEngine* QQmlApplicationEngine_new5(QObject* parent);
+QQmlApplicationEngine* QQmlApplicationEngine_new6(QUrl* url, QObject* parent);
+QQmlApplicationEngine* QQmlApplicationEngine_new7(QAnyStringView* uri, QAnyStringView* typeName, QObject* parent);
+QQmlApplicationEngine* QQmlApplicationEngine_new8(struct miqt_string filePath, QObject* parent);
 void QQmlApplicationEngine_virtbase(QQmlApplicationEngine* src, QQmlEngine** outptr_QQmlEngine);
 QMetaObject* QQmlApplicationEngine_metaObject(const QQmlApplicationEngine* self);
 void* QQmlApplicationEngine_metacast(QQmlApplicationEngine* self, const char* param1);
@@ -53,6 +57,7 @@ struct miqt_string QQmlApplicationEngine_tr(const char* s);
 struct miqt_array /* of QObject* */  QQmlApplicationEngine_rootObjects(const QQmlApplicationEngine* self);
 void QQmlApplicationEngine_load(QQmlApplicationEngine* self, QUrl* url);
 void QQmlApplicationEngine_loadWithFilePath(QQmlApplicationEngine* self, struct miqt_string filePath);
+void QQmlApplicationEngine_loadFromModule(QQmlApplicationEngine* self, QAnyStringView* uri, QAnyStringView* typeName);
 void QQmlApplicationEngine_setInitialProperties(QQmlApplicationEngine* self, struct miqt_map /* of struct miqt_string to QVariant* */  initialProperties);
 void QQmlApplicationEngine_setExtraFileSelectors(QQmlApplicationEngine* self, struct miqt_array /* of struct miqt_string */  extraFileSelectors);
 void QQmlApplicationEngine_loadData(QQmlApplicationEngine* self, struct miqt_string data);

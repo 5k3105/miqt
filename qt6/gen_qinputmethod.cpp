@@ -128,8 +128,8 @@ void QInputMethod_commit(QInputMethod* self) {
 	self->commit();
 }
 
-void QInputMethod_invokeAction(QInputMethod* self, int a, int cursorPosition) {
-	self->invokeAction(static_cast<QInputMethod::Action>(a), static_cast<int>(cursorPosition));
+void QInputMethod_invokeAction(QInputMethod* self, Action a, int cursorPosition) {
+	self->invokeAction(a, static_cast<int>(cursorPosition));
 }
 
 void QInputMethod_cursorRectangleChanged(QInputMethod* self) {

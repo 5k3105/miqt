@@ -146,12 +146,12 @@ func (this *QAudioRoom) Rotation() *qt6.QQuaternion {
 	return _goptr
 }
 
-func (this *QAudioRoom) SetWallMaterial(wall QAudioRoom__Wall, material QAudioRoom__Material) {
-	C.QAudioRoom_setWallMaterial(this.h, (C.int)(wall), (C.int)(material))
+func (this *QAudioRoom) SetWallMaterial(wall Wall, material Material) {
+	C.QAudioRoom_setWallMaterial(this.h, wall, material)
 }
 
-func (this *QAudioRoom) WallMaterial(wall QAudioRoom__Wall) QAudioRoom__Material {
-	return (QAudioRoom__Material)(C.QAudioRoom_wallMaterial(this.h, (C.int)(wall)))
+func (this *QAudioRoom) WallMaterial(wall Wall) Material {
+	int /* TODO  */
 }
 
 func (this *QAudioRoom) SetReflectionGain(factor float32) {

@@ -331,36 +331,36 @@ func (this *QFileDialog) SelectMimeTypeFilter(filter string) {
 	C.QFileDialog_selectMimeTypeFilter(this.h, filter_ms)
 }
 
-func (this *QFileDialog) Filter() QDir__Filter {
-	return (QDir__Filter)(C.QFileDialog_filter(this.h))
+func (this *QFileDialog) Filter() Filter {
+	return (Filter)(C.QFileDialog_filter(this.h))
 }
 
-func (this *QFileDialog) SetFilter(filters QDir__Filter) {
+func (this *QFileDialog) SetFilter(filters Filter) {
 	C.QFileDialog_setFilter(this.h, (C.int)(filters))
 }
 
-func (this *QFileDialog) SetViewMode(mode QFileDialog__ViewMode) {
-	C.QFileDialog_setViewMode(this.h, (C.int)(mode))
+func (this *QFileDialog) SetViewMode(mode ViewMode) {
+	C.QFileDialog_setViewMode(this.h, mode)
 }
 
-func (this *QFileDialog) ViewMode() QFileDialog__ViewMode {
-	return (QFileDialog__ViewMode)(C.QFileDialog_viewMode(this.h))
+func (this *QFileDialog) ViewMode() ViewMode {
+	int /* TODO  */
 }
 
-func (this *QFileDialog) SetFileMode(mode QFileDialog__FileMode) {
-	C.QFileDialog_setFileMode(this.h, (C.int)(mode))
+func (this *QFileDialog) SetFileMode(mode FileMode) {
+	C.QFileDialog_setFileMode(this.h, mode)
 }
 
-func (this *QFileDialog) FileMode() QFileDialog__FileMode {
-	return (QFileDialog__FileMode)(C.QFileDialog_fileMode(this.h))
+func (this *QFileDialog) FileMode() FileMode {
+	int /* TODO  */
 }
 
-func (this *QFileDialog) SetAcceptMode(mode QFileDialog__AcceptMode) {
-	C.QFileDialog_setAcceptMode(this.h, (C.int)(mode))
+func (this *QFileDialog) SetAcceptMode(mode AcceptMode) {
+	C.QFileDialog_setAcceptMode(this.h, mode)
 }
 
-func (this *QFileDialog) AcceptMode() QFileDialog__AcceptMode {
-	return (QFileDialog__AcceptMode)(C.QFileDialog_acceptMode(this.h))
+func (this *QFileDialog) AcceptMode() AcceptMode {
+	int /* TODO  */
 }
 
 func (this *QFileDialog) SetSidebarUrls(urls []QUrl) {
@@ -461,16 +461,16 @@ func (this *QFileDialog) IconProvider() *QAbstractFileIconProvider {
 	return newQAbstractFileIconProvider(C.QFileDialog_iconProvider(this.h))
 }
 
-func (this *QFileDialog) SetLabelText(label QFileDialog__DialogLabel, text string) {
+func (this *QFileDialog) SetLabelText(label DialogLabel, text string) {
 	text_ms := C.struct_miqt_string{}
 	text_ms.data = C.CString(text)
 	text_ms.len = C.size_t(len(text))
 	defer C.free(unsafe.Pointer(text_ms.data))
-	C.QFileDialog_setLabelText(this.h, (C.int)(label), text_ms)
+	C.QFileDialog_setLabelText(this.h, label, text_ms)
 }
 
-func (this *QFileDialog) LabelText(label QFileDialog__DialogLabel) string {
-	var _ms C.struct_miqt_string = C.QFileDialog_labelText(this.h, (C.int)(label))
+func (this *QFileDialog) LabelText(label DialogLabel) string {
+	var _ms C.struct_miqt_string = C.QFileDialog_labelText(this.h, label)
 	_ret := C.GoStringN(_ms.data, C.int(int64(_ms.len)))
 	C.free(unsafe.Pointer(_ms.data))
 	return _ret
@@ -511,20 +511,20 @@ func (this *QFileDialog) ProxyModel() *QAbstractProxyModel {
 	return newQAbstractProxyModel(C.QFileDialog_proxyModel(this.h))
 }
 
-func (this *QFileDialog) SetOption(option QFileDialog__Option) {
-	C.QFileDialog_setOption(this.h, (C.int)(option))
+func (this *QFileDialog) SetOption(option Option) {
+	C.QFileDialog_setOption(this.h, option)
 }
 
-func (this *QFileDialog) TestOption(option QFileDialog__Option) bool {
-	return (bool)(C.QFileDialog_testOption(this.h, (C.int)(option)))
+func (this *QFileDialog) TestOption(option Option) bool {
+	return (bool)(C.QFileDialog_testOption(this.h, option))
 }
 
-func (this *QFileDialog) SetOptions(options QFileDialog__Option) {
-	C.QFileDialog_setOptions(this.h, (C.int)(options))
+func (this *QFileDialog) SetOptions(options Options) {
+	C.QFileDialog_setOptions(this.h, options)
 }
 
-func (this *QFileDialog) Options() QFileDialog__Option {
-	return (QFileDialog__Option)(C.QFileDialog_options(this.h))
+func (this *QFileDialog) Options() Options {
+	int /* TODO  */
 }
 
 func (this *QFileDialog) SetVisible(visible bool) {
@@ -873,8 +873,8 @@ func QFileDialog_Tr3(s string, c string, n int) string {
 	return _ret
 }
 
-func (this *QFileDialog) SetOption2(option QFileDialog__Option, on bool) {
-	C.QFileDialog_setOption2(this.h, (C.int)(option), (C.bool)(on))
+func (this *QFileDialog) SetOption2(option Option, on bool) {
+	C.QFileDialog_setOption2(this.h, option, (C.bool)(on))
 }
 
 func QFileDialog_GetOpenFileNameWithParent(parent *QWidget) string {
@@ -1094,7 +1094,7 @@ func QFileDialog_GetExistingDirectory3(parent *QWidget, caption string, dir stri
 	return _ret
 }
 
-func QFileDialog_GetExistingDirectory4(parent *QWidget, caption string, dir string, options QFileDialog__Option) string {
+func QFileDialog_GetExistingDirectory4(parent *QWidget, caption string, dir string, options Options) string {
 	caption_ms := C.struct_miqt_string{}
 	caption_ms.data = C.CString(caption)
 	caption_ms.len = C.size_t(len(caption))
@@ -1103,7 +1103,7 @@ func QFileDialog_GetExistingDirectory4(parent *QWidget, caption string, dir stri
 	dir_ms.data = C.CString(dir)
 	dir_ms.len = C.size_t(len(dir))
 	defer C.free(unsafe.Pointer(dir_ms.data))
-	var _ms C.struct_miqt_string = C.QFileDialog_getExistingDirectory4(parent.cPointer(), caption_ms, dir_ms, (C.int)(options))
+	var _ms C.struct_miqt_string = C.QFileDialog_getExistingDirectory4(parent.cPointer(), caption_ms, dir_ms, options)
 	_ret := C.GoStringN(_ms.data, C.int(int64(_ms.len)))
 	C.free(unsafe.Pointer(_ms.data))
 	return _ret
@@ -1135,17 +1135,17 @@ func QFileDialog_GetExistingDirectoryUrl3(parent *QWidget, caption string, dir *
 	return _goptr
 }
 
-func QFileDialog_GetExistingDirectoryUrl4(parent *QWidget, caption string, dir *QUrl, options QFileDialog__Option) *QUrl {
+func QFileDialog_GetExistingDirectoryUrl4(parent *QWidget, caption string, dir *QUrl, options Options) *QUrl {
 	caption_ms := C.struct_miqt_string{}
 	caption_ms.data = C.CString(caption)
 	caption_ms.len = C.size_t(len(caption))
 	defer C.free(unsafe.Pointer(caption_ms.data))
-	_goptr := newQUrl(C.QFileDialog_getExistingDirectoryUrl4(parent.cPointer(), caption_ms, dir.cPointer(), (C.int)(options)))
+	_goptr := newQUrl(C.QFileDialog_getExistingDirectoryUrl4(parent.cPointer(), caption_ms, dir.cPointer(), options))
 	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
 	return _goptr
 }
 
-func QFileDialog_GetExistingDirectoryUrl5(parent *QWidget, caption string, dir *QUrl, options QFileDialog__Option, supportedSchemes []string) *QUrl {
+func QFileDialog_GetExistingDirectoryUrl5(parent *QWidget, caption string, dir *QUrl, options Options, supportedSchemes []string) *QUrl {
 	caption_ms := C.struct_miqt_string{}
 	caption_ms.data = C.CString(caption)
 	caption_ms.len = C.size_t(len(caption))
@@ -1160,7 +1160,7 @@ func QFileDialog_GetExistingDirectoryUrl5(parent *QWidget, caption string, dir *
 		supportedSchemes_CArray[i] = supportedSchemes_i_ms
 	}
 	supportedSchemes_ma := C.struct_miqt_array{len: C.size_t(len(supportedSchemes)), data: unsafe.Pointer(supportedSchemes_CArray)}
-	_goptr := newQUrl(C.QFileDialog_getExistingDirectoryUrl5(parent.cPointer(), caption_ms, dir.cPointer(), (C.int)(options), supportedSchemes_ma))
+	_goptr := newQUrl(C.QFileDialog_getExistingDirectoryUrl5(parent.cPointer(), caption_ms, dir.cPointer(), options, supportedSchemes_ma))
 	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
 	return _goptr
 }
@@ -1305,6 +1305,21 @@ func QFileDialog_GetOpenFileUrls4(parent *QWidget, caption string, dir *QUrl, fi
 	return _ret
 }
 
+func QFileDialog_SaveFileContent2(fileContent []byte, fileNameHint string, parent *QWidget) {
+	fileContent_alias := C.struct_miqt_string{}
+	if len(fileContent) > 0 {
+		fileContent_alias.data = (*C.char)(unsafe.Pointer(&fileContent[0]))
+	} else {
+		fileContent_alias.data = (*C.char)(unsafe.Pointer(nil))
+	}
+	fileContent_alias.len = C.size_t(len(fileContent))
+	fileNameHint_ms := C.struct_miqt_string{}
+	fileNameHint_ms.data = C.CString(fileNameHint)
+	fileNameHint_ms.len = C.size_t(len(fileNameHint))
+	defer C.free(unsafe.Pointer(fileNameHint_ms.data))
+	C.QFileDialog_saveFileContent2(fileContent_alias, fileNameHint_ms, parent.cPointer())
+}
+
 // AdjustPosition can only be called from a QFileDialog that was directly constructed.
 func (this *QFileDialog) AdjustPosition(param1 *QWidget) {
 
@@ -1430,6 +1445,20 @@ func (this *QFileDialog) IsSignalConnected(signal *QMetaMethod) bool {
 
 	var _dynamic_cast_ok C.bool = false
 	_method_ret := (bool)(C.QFileDialog_protectedbase_isSignalConnected(&_dynamic_cast_ok, unsafe.Pointer(this.h), signal.cPointer()))
+
+	if !_dynamic_cast_ok {
+		panic("miqt: can only call protected methods for directly constructed types")
+	}
+
+	return _method_ret
+
+}
+
+// GetDecodedMetricF can only be called from a QFileDialog that was directly constructed.
+func (this *QFileDialog) GetDecodedMetricF(metricA PaintDeviceMetric, metricB PaintDeviceMetric) float64 {
+
+	var _dynamic_cast_ok C.bool = false
+	_method_ret := (float64)(C.QFileDialog_protectedbase_getDecodedMetricF(&_dynamic_cast_ok, unsafe.Pointer(this.h), metricA, metricB))
 
 	if !_dynamic_cast_ok {
 		panic("miqt: can only call protected methods for directly constructed types")
@@ -2491,12 +2520,12 @@ func miqt_exec_callback_QFileDialog_nativeEvent(self *C.QFileDialog, cb C.intptr
 
 }
 
-func (this *QFileDialog) callVirtualBase_Metric(param1 QPaintDevice__PaintDeviceMetric) int {
+func (this *QFileDialog) callVirtualBase_Metric(param1 PaintDeviceMetric) int {
 
-	return (int)(C.QFileDialog_virtualbase_metric(unsafe.Pointer(this.h), (C.int)(param1)))
+	return (int)(C.QFileDialog_virtualbase_metric(unsafe.Pointer(this.h), param1))
 
 }
-func (this *QFileDialog) OnMetric(slot func(super func(param1 QPaintDevice__PaintDeviceMetric) int, param1 QPaintDevice__PaintDeviceMetric) int) {
+func (this *QFileDialog) OnMetric(slot func(super func(param1 PaintDeviceMetric) int, param1 PaintDeviceMetric) int) {
 	ok := C.QFileDialog_override_virtual_metric(unsafe.Pointer(this.h), C.intptr_t(cgo.NewHandle(slot)))
 	if !ok {
 		panic("miqt: can only override virtual methods for directly constructed types")
@@ -2504,14 +2533,14 @@ func (this *QFileDialog) OnMetric(slot func(super func(param1 QPaintDevice__Pain
 }
 
 //export miqt_exec_callback_QFileDialog_metric
-func miqt_exec_callback_QFileDialog_metric(self *C.QFileDialog, cb C.intptr_t, param1 C.int) C.int {
-	gofunc, ok := cgo.Handle(cb).Value().(func(super func(param1 QPaintDevice__PaintDeviceMetric) int, param1 QPaintDevice__PaintDeviceMetric) int)
+func miqt_exec_callback_QFileDialog_metric(self *C.QFileDialog, cb C.intptr_t, param1 C.PaintDeviceMetric) C.int {
+	gofunc, ok := cgo.Handle(cb).Value().(func(super func(param1 PaintDeviceMetric) int, param1 PaintDeviceMetric) int)
 	if !ok {
 		panic("miqt: callback of non-callback type (heap corruption?)")
 	}
 
 	// Convert all CABI parameters to Go parameters
-	slotval1 := (QPaintDevice__PaintDeviceMetric)(param1)
+	int /* TODO  */
 
 	virtualReturn := gofunc((&QFileDialog{h: self}).callVirtualBase_Metric, slotval1)
 

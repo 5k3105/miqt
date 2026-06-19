@@ -274,9 +274,8 @@ void QCamera_setCameraFormat(QCamera* self, QCameraFormat* format) {
 	self->setCameraFormat(*format);
 }
 
-int QCamera_error(const QCamera* self) {
-	QCamera::Error _ret = self->error();
-	return static_cast<int>(_ret);
+Error QCamera_error(const QCamera* self) {
+	return self->error();
 }
 
 struct miqt_string QCamera_errorString(const QCamera* self) {
@@ -290,22 +289,20 @@ struct miqt_string QCamera_errorString(const QCamera* self) {
 	return _ms;
 }
 
-int QCamera_supportedFeatures(const QCamera* self) {
-	QCamera::Features _ret = self->supportedFeatures();
-	return static_cast<int>(_ret);
+Features QCamera_supportedFeatures(const QCamera* self) {
+	return self->supportedFeatures();
 }
 
-int QCamera_focusMode(const QCamera* self) {
-	QCamera::FocusMode _ret = self->focusMode();
-	return static_cast<int>(_ret);
+FocusMode QCamera_focusMode(const QCamera* self) {
+	return self->focusMode();
 }
 
-void QCamera_setFocusMode(QCamera* self, int mode) {
-	self->setFocusMode(static_cast<QCamera::FocusMode>(mode));
+void QCamera_setFocusMode(QCamera* self, FocusMode mode) {
+	self->setFocusMode(mode);
 }
 
-bool QCamera_isFocusModeSupported(const QCamera* self, int mode) {
-	return self->isFocusModeSupported(static_cast<QCamera::FocusMode>(mode));
+bool QCamera_isFocusModeSupported(const QCamera* self, FocusMode mode) {
+	return self->isFocusModeSupported(mode);
 }
 
 QPointF* QCamera_focusPoint(const QCamera* self) {
@@ -344,35 +341,32 @@ void QCamera_setZoomFactor(QCamera* self, float factor) {
 	self->setZoomFactor(static_cast<float>(factor));
 }
 
-int QCamera_flashMode(const QCamera* self) {
-	QCamera::FlashMode _ret = self->flashMode();
-	return static_cast<int>(_ret);
+FlashMode QCamera_flashMode(const QCamera* self) {
+	return self->flashMode();
 }
 
-bool QCamera_isFlashModeSupported(const QCamera* self, int mode) {
-	return self->isFlashModeSupported(static_cast<QCamera::FlashMode>(mode));
+bool QCamera_isFlashModeSupported(const QCamera* self, FlashMode mode) {
+	return self->isFlashModeSupported(mode);
 }
 
 bool QCamera_isFlashReady(const QCamera* self) {
 	return self->isFlashReady();
 }
 
-int QCamera_torchMode(const QCamera* self) {
-	QCamera::TorchMode _ret = self->torchMode();
-	return static_cast<int>(_ret);
+TorchMode QCamera_torchMode(const QCamera* self) {
+	return self->torchMode();
 }
 
-bool QCamera_isTorchModeSupported(const QCamera* self, int mode) {
-	return self->isTorchModeSupported(static_cast<QCamera::TorchMode>(mode));
+bool QCamera_isTorchModeSupported(const QCamera* self, TorchMode mode) {
+	return self->isTorchModeSupported(mode);
 }
 
-int QCamera_exposureMode(const QCamera* self) {
-	QCamera::ExposureMode _ret = self->exposureMode();
-	return static_cast<int>(_ret);
+ExposureMode QCamera_exposureMode(const QCamera* self) {
+	return self->exposureMode();
 }
 
-bool QCamera_isExposureModeSupported(const QCamera* self, int mode) {
-	return self->isExposureModeSupported(static_cast<QCamera::ExposureMode>(mode));
+bool QCamera_isExposureModeSupported(const QCamera* self, ExposureMode mode) {
+	return self->isExposureModeSupported(mode);
 }
 
 float QCamera_exposureCompensation(const QCamera* self) {
@@ -411,13 +405,12 @@ float QCamera_maximumExposureTime(const QCamera* self) {
 	return self->maximumExposureTime();
 }
 
-int QCamera_whiteBalanceMode(const QCamera* self) {
-	QCamera::WhiteBalanceMode _ret = self->whiteBalanceMode();
-	return static_cast<int>(_ret);
+WhiteBalanceMode QCamera_whiteBalanceMode(const QCamera* self) {
+	return self->whiteBalanceMode();
 }
 
-bool QCamera_isWhiteBalanceModeSupported(const QCamera* self, int mode) {
-	return self->isWhiteBalanceModeSupported(static_cast<QCamera::WhiteBalanceMode>(mode));
+bool QCamera_isWhiteBalanceModeSupported(const QCamera* self, WhiteBalanceMode mode) {
+	return self->isWhiteBalanceModeSupported(mode);
 }
 
 int QCamera_colorTemperature(const QCamera* self) {
@@ -440,16 +433,16 @@ void QCamera_zoomTo(QCamera* self, float zoom, float rate) {
 	self->zoomTo(static_cast<float>(zoom), static_cast<float>(rate));
 }
 
-void QCamera_setFlashMode(QCamera* self, int mode) {
-	self->setFlashMode(static_cast<QCamera::FlashMode>(mode));
+void QCamera_setFlashMode(QCamera* self, FlashMode mode) {
+	self->setFlashMode(mode);
 }
 
-void QCamera_setTorchMode(QCamera* self, int mode) {
-	self->setTorchMode(static_cast<QCamera::TorchMode>(mode));
+void QCamera_setTorchMode(QCamera* self, TorchMode mode) {
+	self->setTorchMode(mode);
 }
 
-void QCamera_setExposureMode(QCamera* self, int mode) {
-	self->setExposureMode(static_cast<QCamera::ExposureMode>(mode));
+void QCamera_setExposureMode(QCamera* self, ExposureMode mode) {
+	self->setExposureMode(mode);
 }
 
 void QCamera_setExposureCompensation(QCamera* self, float ev) {
@@ -472,8 +465,8 @@ void QCamera_setAutoExposureTime(QCamera* self) {
 	self->setAutoExposureTime();
 }
 
-void QCamera_setWhiteBalanceMode(QCamera* self, int mode) {
-	self->setWhiteBalanceMode(static_cast<QCamera::WhiteBalanceMode>(mode));
+void QCamera_setWhiteBalanceMode(QCamera* self, WhiteBalanceMode mode) {
+	self->setWhiteBalanceMode(mode);
 }
 
 void QCamera_setColorTemperature(QCamera* self, int colorTemperature) {

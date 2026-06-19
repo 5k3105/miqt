@@ -1,4 +1,6 @@
 #include <QQuaternion>
+#define WORKAROUND_INNER_CLASS_DEFINITION_QQuaternion__Axes
+#define WORKAROUND_INNER_CLASS_DEFINITION_QQuaternion__Axis
 #include <QVariant>
 #include <QVector3D>
 #include <QVector4D>
@@ -179,8 +181,12 @@ QVector3D* QQuaternion_toEulerAngles(const QQuaternion* self) {
 	return new QVector3D(self->toEulerAngles());
 }
 
-QQuaternion* QQuaternion_fromEulerAngles(QVector3D* eulerAngles) {
-	return new QQuaternion(QQuaternion::fromEulerAngles(*eulerAngles));
+EulerAngles<float> QQuaternion_eulerAngles(const QQuaternion* self) {
+	return self->eulerAngles();
+}
+
+QQuaternion* QQuaternion_fromEulerAngles(EulerAngles<float> angles) {
+	return new QQuaternion(QQuaternion::fromEulerAngles(angles));
 }
 
 void QQuaternion_getEulerAngles(const QQuaternion* self, float* pitch, float* yaw, float* roll) {
@@ -191,11 +197,19 @@ QQuaternion* QQuaternion_fromEulerAngles2(float pitch, float yaw, float roll) {
 	return new QQuaternion(QQuaternion::fromEulerAngles(static_cast<float>(pitch), static_cast<float>(yaw), static_cast<float>(roll)));
 }
 
+Axes QQuaternion_toAxes(const QQuaternion* self) {
+	return self->toAxes();
+}
+
+QQuaternion* QQuaternion_fromAxes(Axes axes) {
+	return new QQuaternion(QQuaternion::fromAxes(axes));
+}
+
 void QQuaternion_getAxes(const QQuaternion* self, QVector3D* xAxis, QVector3D* yAxis, QVector3D* zAxis) {
 	self->getAxes(xAxis, yAxis, zAxis);
 }
 
-QQuaternion* QQuaternion_fromAxes(QVector3D* xAxis, QVector3D* yAxis, QVector3D* zAxis) {
+QQuaternion* QQuaternion_fromAxes2(QVector3D* xAxis, QVector3D* yAxis, QVector3D* zAxis) {
 	return new QQuaternion(QQuaternion::fromAxes(*xAxis, *yAxis, *zAxis));
 }
 
@@ -220,6 +234,70 @@ void QQuaternion_operatorAssign(QQuaternion* self, QQuaternion* param1) {
 }
 
 void QQuaternion_delete(QQuaternion* self) {
+	delete self;
+}
+
+float QQuaternion__Axis_x(const QQuaternion__Axis* self) {
+	return self->x;
+}
+
+void QQuaternion__Axis_setX(QQuaternion__Axis* self, float x) {
+	self->x = static_cast<float>(x);
+}
+
+float QQuaternion__Axis_y(const QQuaternion__Axis* self) {
+	return self->y;
+}
+
+void QQuaternion__Axis_setY(QQuaternion__Axis* self, float y) {
+	self->y = static_cast<float>(y);
+}
+
+float QQuaternion__Axis_z(const QQuaternion__Axis* self) {
+	return self->z;
+}
+
+void QQuaternion__Axis_setZ(QQuaternion__Axis* self, float z) {
+	self->z = static_cast<float>(z);
+}
+
+Axis QQuaternion__Axis_fromVector3D(QVector3D* v) {
+	return QQuaternion::Axis::fromVector3D(*v);
+}
+
+QVector3D* QQuaternion__Axis_toVector3D(const QQuaternion__Axis* self) {
+	return new QVector3D(self->toVector3D());
+}
+
+void QQuaternion__Axis_delete(QQuaternion__Axis* self) {
+	delete self;
+}
+
+Axis QQuaternion__Axes_x(const QQuaternion__Axes* self) {
+	return self->x;
+}
+
+void QQuaternion__Axes_setX(QQuaternion__Axes* self, Axis x) {
+	self->x = x;
+}
+
+Axis QQuaternion__Axes_y(const QQuaternion__Axes* self) {
+	return self->y;
+}
+
+void QQuaternion__Axes_setY(QQuaternion__Axes* self, Axis y) {
+	self->y = y;
+}
+
+Axis QQuaternion__Axes_z(const QQuaternion__Axes* self) {
+	return self->z;
+}
+
+void QQuaternion__Axes_setZ(QQuaternion__Axes* self, Axis z) {
+	self->z = z;
+}
+
+void QQuaternion__Axes_delete(QQuaternion__Axes* self) {
 	delete self;
 }
 

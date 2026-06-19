@@ -157,12 +157,12 @@ func (this *QCompleter) Model() *QAbstractItemModel {
 	return newQAbstractItemModel(C.QCompleter_model(this.h))
 }
 
-func (this *QCompleter) SetCompletionMode(mode QCompleter__CompletionMode) {
-	C.QCompleter_setCompletionMode(this.h, (C.int)(mode))
+func (this *QCompleter) SetCompletionMode(mode CompletionMode) {
+	C.QCompleter_setCompletionMode(this.h, mode)
 }
 
-func (this *QCompleter) CompletionMode() QCompleter__CompletionMode {
-	return (QCompleter__CompletionMode)(C.QCompleter_completionMode(this.h))
+func (this *QCompleter) CompletionMode() CompletionMode {
+	int /* TODO  */
 }
 
 func (this *QCompleter) SetFilterMode(filterMode MatchFlag) {
@@ -189,12 +189,12 @@ func (this *QCompleter) CaseSensitivity() CaseSensitivity {
 	return (CaseSensitivity)(C.QCompleter_caseSensitivity(this.h))
 }
 
-func (this *QCompleter) SetModelSorting(sorting QCompleter__ModelSorting) {
-	C.QCompleter_setModelSorting(this.h, (C.int)(sorting))
+func (this *QCompleter) SetModelSorting(sorting ModelSorting) {
+	C.QCompleter_setModelSorting(this.h, sorting)
 }
 
-func (this *QCompleter) ModelSorting() QCompleter__ModelSorting {
-	return (QCompleter__ModelSorting)(C.QCompleter_modelSorting(this.h))
+func (this *QCompleter) ModelSorting() ModelSorting {
+	int /* TODO  */
 }
 
 func (this *QCompleter) SetCompletionColumn(column int) {

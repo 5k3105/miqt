@@ -259,8 +259,22 @@ ptrdiff_t QAudioSource_bufferSize(const QAudioSource* self) {
 	return static_cast<ptrdiff_t>(_ret);
 }
 
+void QAudioSource_setBufferFrameCount(QAudioSource* self, ptrdiff_t frames) {
+	self->setBufferFrameCount((qsizetype)(frames));
+}
+
+ptrdiff_t QAudioSource_bufferFrameCount(const QAudioSource* self) {
+	qsizetype _ret = self->bufferFrameCount();
+	return static_cast<ptrdiff_t>(_ret);
+}
+
 ptrdiff_t QAudioSource_bytesAvailable(const QAudioSource* self) {
 	qsizetype _ret = self->bytesAvailable();
+	return static_cast<ptrdiff_t>(_ret);
+}
+
+ptrdiff_t QAudioSource_framesAvailable(const QAudioSource* self) {
+	qsizetype _ret = self->framesAvailable();
 	return static_cast<ptrdiff_t>(_ret);
 }
 
@@ -284,12 +298,12 @@ long long QAudioSource_elapsedUSecs(const QAudioSource* self) {
 }
 
 int QAudioSource_error(const QAudioSource* self) {
-	QAudio::Error _ret = self->error();
+	QtAudio::Error _ret = self->error();
 	return static_cast<int>(_ret);
 }
 
 int QAudioSource_state(const QAudioSource* self) {
-	QAudio::State _ret = self->state();
+	QtAudio::State _ret = self->state();
 	return static_cast<int>(_ret);
 }
 

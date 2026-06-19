@@ -77,8 +77,8 @@ func (this *QColormap) OperatorAssign(colormap *QColormap) {
 	C.QColormap_operatorAssign(this.h, colormap.cPointer())
 }
 
-func (this *QColormap) Mode() QColormap__Mode {
-	return (QColormap__Mode)(C.QColormap_mode(this.h))
+func (this *QColormap) Mode() Mode {
+	int /* TODO  */
 }
 
 func (this *QColormap) Depth() int {

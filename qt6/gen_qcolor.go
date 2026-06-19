@@ -112,15 +112,15 @@ func NewQColor7(aname string) *QColor {
 }
 
 // NewQColor8 constructs a new QColor object.
-func NewQColor8(spec QColor__Spec) *QColor {
+func NewQColor8(spec Spec) *QColor {
 
-	return newQColor(C.QColor_new8((C.int)(spec)))
+	return newQColor(C.QColor_new8(spec))
 }
 
 // NewQColor9 constructs a new QColor object.
-func NewQColor9(spec QColor__Spec, a1 uint16, a2 uint16, a3 uint16, a4 uint16) *QColor {
+func NewQColor9(spec Spec, a1 uint16, a2 uint16, a3 uint16, a4 uint16) *QColor {
 
-	return newQColor(C.QColor_new9((C.int)(spec), (C.ushort)(a1), (C.ushort)(a2), (C.ushort)(a3), (C.ushort)(a4)))
+	return newQColor(C.QColor_new9(spec, (C.ushort)(a1), (C.ushort)(a2), (C.ushort)(a3), (C.ushort)(a4)))
 }
 
 // NewQColor10 constructs a new QColor object.
@@ -136,9 +136,9 @@ func NewQColor11(r int, g int, b int, a int) *QColor {
 }
 
 // NewQColor12 constructs a new QColor object.
-func NewQColor12(spec QColor__Spec, a1 uint16, a2 uint16, a3 uint16, a4 uint16, a5 uint16) *QColor {
+func NewQColor12(spec Spec, a1 uint16, a2 uint16, a3 uint16, a4 uint16, a5 uint16) *QColor {
 
-	return newQColor(C.QColor_new12((C.int)(spec), (C.ushort)(a1), (C.ushort)(a2), (C.ushort)(a3), (C.ushort)(a4), (C.ushort)(a5)))
+	return newQColor(C.QColor_new12(spec, (C.ushort)(a1), (C.ushort)(a2), (C.ushort)(a3), (C.ushort)(a4), (C.ushort)(a5)))
 }
 
 func QColor_FromString(name QAnyStringView) *QColor {
@@ -183,8 +183,8 @@ func QColor_ColorNames() []string {
 	return _ret
 }
 
-func (this *QColor) Spec() QColor__Spec {
-	return (QColor__Spec)(C.QColor_spec(this.h))
+func (this *QColor) Spec() Spec {
+	int /* TODO  */
 }
 
 func (this *QColor) Alpha() int {
@@ -467,8 +467,8 @@ func (this *QColor) ToExtendedRgb() *QColor {
 	return _goptr
 }
 
-func (this *QColor) ConvertTo(colorSpec QColor__Spec) *QColor {
-	_goptr := newQColor(C.QColor_convertTo(this.h, (C.int)(colorSpec)))
+func (this *QColor) ConvertTo(colorSpec Spec) *QColor {
+	_goptr := newQColor(C.QColor_convertTo(this.h, colorSpec))
 	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
 	return _goptr
 }
@@ -583,8 +583,8 @@ func QColor_IsValidColorName(param1 QAnyStringView) bool {
 	return (bool)(C.QColor_isValidColorName(param1.cPointer()))
 }
 
-func (this *QColor) NameWithFormat(format QColor__NameFormat) string {
-	var _ms C.struct_miqt_string = C.QColor_nameWithFormat(this.h, (C.int)(format))
+func (this *QColor) NameWithFormat(format NameFormat) string {
+	var _ms C.struct_miqt_string = C.QColor_nameWithFormat(this.h, format)
 	_ret := C.GoStringN(_ms.data, C.int(int64(_ms.len)))
 	C.free(unsafe.Pointer(_ms.data))
 	return _ret

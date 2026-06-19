@@ -44,8 +44,8 @@ int QScroller_grabbedGesture(QObject* target);
 void QScroller_ungrabGesture(QObject* target);
 struct miqt_array /* of QScroller* */  QScroller_activeScrollers();
 QObject* QScroller_target(const QScroller* self);
-int QScroller_state(const QScroller* self);
-bool QScroller_handleInput(QScroller* self, int input, QPointF* position);
+State QScroller_state(const QScroller* self);
+bool QScroller_handleInput(QScroller* self, Input input, QPointF* position);
 void QScroller_stop(QScroller* self);
 QPointF* QScroller_velocity(const QScroller* self);
 QPointF* QScroller_finalPosition(const QScroller* self);
@@ -67,8 +67,8 @@ void QScroller_scrollerPropertiesChanged(QScroller* self, QScrollerProperties* p
 void QScroller_connect_scrollerPropertiesChanged(QScroller* self, intptr_t slot);
 struct miqt_string QScroller_tr2(const char* s, const char* c);
 struct miqt_string QScroller_tr3(const char* s, const char* c, int n);
-int QScroller_grabGesture2(QObject* target, int gestureType);
-bool QScroller_handleInput2(QScroller* self, int input, QPointF* position, long long timestamp);
+int QScroller_grabGesture2(QObject* target, ScrollerGestureType gestureType);
+bool QScroller_handleInput2(QScroller* self, Input input, QPointF* position, long long timestamp);
 
 
 #ifdef __cplusplus

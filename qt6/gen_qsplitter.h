@@ -210,7 +210,7 @@ void QSplitter_virtualbase_hideEvent(void* self, QHideEvent* event);
 bool QSplitter_override_virtual_nativeEvent(void* self, intptr_t slot);
 bool QSplitter_virtualbase_nativeEvent(void* self, struct miqt_string eventType, void* message, intptr_t* result);
 bool QSplitter_override_virtual_metric(void* self, intptr_t slot);
-int QSplitter_virtualbase_metric(const void* self, int param1);
+int QSplitter_virtualbase_metric(const void* self, PaintDeviceMetric param1);
 bool QSplitter_override_virtual_initPainter(void* self, intptr_t slot);
 void QSplitter_virtualbase_initPainter(const void* self, QPainter* painter);
 bool QSplitter_override_virtual_redirected(void* self, intptr_t slot);
@@ -247,6 +247,7 @@ QObject* QSplitter_protectedbase_sender(bool* _dynamic_cast_ok, const void* self
 int QSplitter_protectedbase_senderSignalIndex(bool* _dynamic_cast_ok, const void* self);
 int QSplitter_protectedbase_receivers(bool* _dynamic_cast_ok, const void* self, const char* signal);
 bool QSplitter_protectedbase_isSignalConnected(bool* _dynamic_cast_ok, const void* self, QMetaMethod* signal);
+double QSplitter_protectedbase_getDecodedMetricF(bool* _dynamic_cast_ok, const void* self, PaintDeviceMetric metricA, PaintDeviceMetric metricB);
 
 void QSplitter_delete(QSplitter* self);
 
@@ -338,7 +339,7 @@ bool QSplitterHandle_virtualbase_nativeEvent(void* self, struct miqt_string even
 bool QSplitterHandle_override_virtual_changeEvent(void* self, intptr_t slot);
 void QSplitterHandle_virtualbase_changeEvent(void* self, QEvent* param1);
 bool QSplitterHandle_override_virtual_metric(void* self, intptr_t slot);
-int QSplitterHandle_virtualbase_metric(const void* self, int param1);
+int QSplitterHandle_virtualbase_metric(const void* self, PaintDeviceMetric param1);
 bool QSplitterHandle_override_virtual_initPainter(void* self, intptr_t slot);
 void QSplitterHandle_virtualbase_initPainter(const void* self, QPainter* painter);
 bool QSplitterHandle_override_virtual_redirected(void* self, intptr_t slot);
@@ -375,6 +376,7 @@ QObject* QSplitterHandle_protectedbase_sender(bool* _dynamic_cast_ok, const void
 int QSplitterHandle_protectedbase_senderSignalIndex(bool* _dynamic_cast_ok, const void* self);
 int QSplitterHandle_protectedbase_receivers(bool* _dynamic_cast_ok, const void* self, const char* signal);
 bool QSplitterHandle_protectedbase_isSignalConnected(bool* _dynamic_cast_ok, const void* self, QMetaMethod* signal);
+double QSplitterHandle_protectedbase_getDecodedMetricF(bool* _dynamic_cast_ok, const void* self, PaintDeviceMetric metricA, PaintDeviceMetric metricB);
 
 void QSplitterHandle_delete(QSplitterHandle* self);
 

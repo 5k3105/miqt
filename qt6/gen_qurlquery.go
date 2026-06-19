@@ -77,14 +77,6 @@ func (this *QUrlQuery) OperatorAssign(other *QUrlQuery) {
 	C.QUrlQuery_operatorAssign(this.h, other.cPointer())
 }
 
-func (this *QUrlQuery) OperatorEqual(other *QUrlQuery) bool {
-	return (bool)(C.QUrlQuery_operatorEqual(this.h, other.cPointer()))
-}
-
-func (this *QUrlQuery) OperatorNotEqual(other *QUrlQuery) bool {
-	return (bool)(C.QUrlQuery_operatorNotEqual(this.h, other.cPointer()))
-}
-
 func (this *QUrlQuery) Swap(other *QUrlQuery) {
 	C.QUrlQuery_swap(this.h, other.cPointer())
 }
@@ -137,68 +129,6 @@ func (this *QUrlQuery) QueryPairDelimiter() *QChar {
 	_goptr := newQChar(C.QUrlQuery_queryPairDelimiter(this.h))
 	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
 	return _goptr
-}
-
-func (this *QUrlQuery) SetQueryItems(query []struct {
-	First  string
-	Second string
-}) {
-	query_CArray := (*[0xffff]C.struct_miqt_map)(C.malloc(C.size_t(8 * len(query))))
-	defer C.free(unsafe.Pointer(query_CArray))
-	for i := range query {
-		query_i_First_CArray := (*[0xffff]C.struct_miqt_string)(C.malloc(C.size_t(int(unsafe.Sizeof(C.struct_miqt_string{})))))
-		defer C.free(unsafe.Pointer(query_i_First_CArray))
-		query_i_Second_CArray := (*[0xffff]C.struct_miqt_string)(C.malloc(C.size_t(int(unsafe.Sizeof(C.struct_miqt_string{})))))
-		defer C.free(unsafe.Pointer(query_i_Second_CArray))
-		query_i_First_ms := C.struct_miqt_string{}
-		query_i_First_ms.data = C.CString(query[i].First)
-		query_i_First_ms.len = C.size_t(len(query[i].First))
-		defer C.free(unsafe.Pointer(query_i_First_ms.data))
-		query_i_First_CArray[0] = query_i_First_ms
-		query_i_Second_ms := C.struct_miqt_string{}
-		query_i_Second_ms.data = C.CString(query[i].Second)
-		query_i_Second_ms.len = C.size_t(len(query[i].Second))
-		defer C.free(unsafe.Pointer(query_i_Second_ms.data))
-		query_i_Second_CArray[0] = query_i_Second_ms
-		query_i_pair := C.struct_miqt_map{
-			len:    1,
-			keys:   unsafe.Pointer(query_i_First_CArray),
-			values: unsafe.Pointer(query_i_Second_CArray),
-		}
-		query_CArray[i] = query_i_pair
-	}
-	query_ma := C.struct_miqt_array{len: C.size_t(len(query)), data: unsafe.Pointer(query_CArray)}
-	C.QUrlQuery_setQueryItems(this.h, query_ma)
-}
-
-func (this *QUrlQuery) QueryItems() []struct {
-	First  string
-	Second string
-} {
-	var _ma C.struct_miqt_array = C.QUrlQuery_queryItems(this.h)
-	_ret := make([]struct {
-		First  string
-		Second string
-	}, int(_ma.len))
-	_outCast := (*[0xffff]C.struct_miqt_map)(unsafe.Pointer(_ma.data)) // hey ya
-	for i := 0; i < int(_ma.len); i++ {
-		var _lv_mm C.struct_miqt_map = _outCast[i]
-		_lv_First_CArray := (*[0xffff]C.struct_miqt_string)(unsafe.Pointer(_lv_mm.keys))
-		_lv_Second_CArray := (*[0xffff]C.struct_miqt_string)(unsafe.Pointer(_lv_mm.values))
-		var _lv_first_ms C.struct_miqt_string = _lv_First_CArray[0]
-		_lv_first_ret := C.GoStringN(_lv_first_ms.data, C.int(int64(_lv_first_ms.len)))
-		C.free(unsafe.Pointer(_lv_first_ms.data))
-		_lv_entry_First := _lv_first_ret
-		var _lv_second_ms C.struct_miqt_string = _lv_Second_CArray[0]
-		_lv_second_ret := C.GoStringN(_lv_second_ms.data, C.int(int64(_lv_second_ms.len)))
-		C.free(unsafe.Pointer(_lv_second_ms.data))
-		_lv_entry_Second := _lv_second_ret
-		_ret[i] = struct {
-			First  string
-			Second string
-		}{First: _lv_entry_First, Second: _lv_entry_Second}
-	}
-	return _ret
 }
 
 func (this *QUrlQuery) HasQueryItem(key string) bool {
@@ -265,67 +195,41 @@ func (this *QUrlQuery) RemoveAllQueryItems(key string) {
 	C.QUrlQuery_removeAllQueryItems(this.h, key_ms)
 }
 
-func (this *QUrlQuery) QueryWithEncoding(encoding QUrl__ComponentFormattingOption) string {
-	var _ms C.struct_miqt_string = C.QUrlQuery_queryWithEncoding(this.h, (C.uint)(encoding))
+func (this *QUrlQuery) DataPtr() *DataPtr {
+	int /* TODO  */
+}
+
+func (this *QUrlQuery) QueryWithEncoding(encoding ComponentFormattingOption) string {
+	var _ms C.struct_miqt_string = C.QUrlQuery_queryWithEncoding(this.h, (C.int)(encoding))
 	_ret := C.GoStringN(_ms.data, C.int(int64(_ms.len)))
 	C.free(unsafe.Pointer(_ms.data))
 	return _ret
 }
 
-func (this *QUrlQuery) ToStringWithEncoding(encoding QUrl__ComponentFormattingOption) string {
-	var _ms C.struct_miqt_string = C.QUrlQuery_toStringWithEncoding(this.h, (C.uint)(encoding))
+func (this *QUrlQuery) ToStringWithEncoding(encoding ComponentFormattingOption) string {
+	var _ms C.struct_miqt_string = C.QUrlQuery_toStringWithEncoding(this.h, (C.int)(encoding))
 	_ret := C.GoStringN(_ms.data, C.int(int64(_ms.len)))
 	C.free(unsafe.Pointer(_ms.data))
 	return _ret
 }
 
-func (this *QUrlQuery) QueryItemsWithEncoding(encoding QUrl__ComponentFormattingOption) []struct {
-	First  string
-	Second string
-} {
-	var _ma C.struct_miqt_array = C.QUrlQuery_queryItemsWithEncoding(this.h, (C.uint)(encoding))
-	_ret := make([]struct {
-		First  string
-		Second string
-	}, int(_ma.len))
-	_outCast := (*[0xffff]C.struct_miqt_map)(unsafe.Pointer(_ma.data)) // hey ya
-	for i := 0; i < int(_ma.len); i++ {
-		var _lv_mm C.struct_miqt_map = _outCast[i]
-		_lv_First_CArray := (*[0xffff]C.struct_miqt_string)(unsafe.Pointer(_lv_mm.keys))
-		_lv_Second_CArray := (*[0xffff]C.struct_miqt_string)(unsafe.Pointer(_lv_mm.values))
-		var _lv_first_ms C.struct_miqt_string = _lv_First_CArray[0]
-		_lv_first_ret := C.GoStringN(_lv_first_ms.data, C.int(int64(_lv_first_ms.len)))
-		C.free(unsafe.Pointer(_lv_first_ms.data))
-		_lv_entry_First := _lv_first_ret
-		var _lv_second_ms C.struct_miqt_string = _lv_Second_CArray[0]
-		_lv_second_ret := C.GoStringN(_lv_second_ms.data, C.int(int64(_lv_second_ms.len)))
-		C.free(unsafe.Pointer(_lv_second_ms.data))
-		_lv_entry_Second := _lv_second_ret
-		_ret[i] = struct {
-			First  string
-			Second string
-		}{First: _lv_entry_First, Second: _lv_entry_Second}
-	}
-	return _ret
-}
-
-func (this *QUrlQuery) QueryItemValue2(key string, encoding QUrl__ComponentFormattingOption) string {
+func (this *QUrlQuery) QueryItemValue2(key string, encoding ComponentFormattingOption) string {
 	key_ms := C.struct_miqt_string{}
 	key_ms.data = C.CString(key)
 	key_ms.len = C.size_t(len(key))
 	defer C.free(unsafe.Pointer(key_ms.data))
-	var _ms C.struct_miqt_string = C.QUrlQuery_queryItemValue2(this.h, key_ms, (C.uint)(encoding))
+	var _ms C.struct_miqt_string = C.QUrlQuery_queryItemValue2(this.h, key_ms, (C.int)(encoding))
 	_ret := C.GoStringN(_ms.data, C.int(int64(_ms.len)))
 	C.free(unsafe.Pointer(_ms.data))
 	return _ret
 }
 
-func (this *QUrlQuery) AllQueryItemValues2(key string, encoding QUrl__ComponentFormattingOption) []string {
+func (this *QUrlQuery) AllQueryItemValues2(key string, encoding ComponentFormattingOption) []string {
 	key_ms := C.struct_miqt_string{}
 	key_ms.data = C.CString(key)
 	key_ms.len = C.size_t(len(key))
 	defer C.free(unsafe.Pointer(key_ms.data))
-	var _ma C.struct_miqt_array = C.QUrlQuery_allQueryItemValues2(this.h, key_ms, (C.uint)(encoding))
+	var _ma C.struct_miqt_array = C.QUrlQuery_allQueryItemValues2(this.h, key_ms, (C.int)(encoding))
 	_ret := make([]string, int(_ma.len))
 	_outCast := (*[0xffff]C.struct_miqt_string)(unsafe.Pointer(_ma.data)) // hey ya
 	for i := 0; i < int(_ma.len); i++ {

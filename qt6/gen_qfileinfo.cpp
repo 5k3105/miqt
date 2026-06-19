@@ -5,6 +5,7 @@
 #include <QString>
 #include <QByteArray>
 #include <cstring>
+#include <QTimeZone>
 #include <qfileinfo.h>
 #include "gen_qfileinfo.h"
 
@@ -44,14 +45,6 @@ void QFileInfo_operatorAssign(QFileInfo* self, QFileInfo* fileinfo) {
 
 void QFileInfo_swap(QFileInfo* self, QFileInfo* other) {
 	self->swap(*other);
-}
-
-bool QFileInfo_operatorEqual(const QFileInfo* self, QFileInfo* fileinfo) {
-	return (*self == *fileinfo);
-}
-
-bool QFileInfo_operatorNotEqual(const QFileInfo* self, QFileInfo* fileinfo) {
-	return (*self != *fileinfo);
 }
 
 void QFileInfo_setFile(QFileInfo* self, struct miqt_string file) {
@@ -269,6 +262,10 @@ bool QFileInfo_isSymbolicLink(const QFileInfo* self) {
 	return self->isSymbolicLink();
 }
 
+bool QFileInfo_isOther(const QFileInfo* self) {
+	return self->isOther();
+}
+
 bool QFileInfo_isShortcut(const QFileInfo* self) {
 	return self->isShortcut();
 }
@@ -291,6 +288,17 @@ bool QFileInfo_isBundle(const QFileInfo* self) {
 
 struct miqt_string QFileInfo_symLinkTarget(const QFileInfo* self) {
 	QString _ret = self->symLinkTarget();
+	// Convert QString from UTF-16 in C++ RAII memory to UTF-8 in manually-managed C memory
+	QByteArray _b = _ret.toUtf8();
+	struct miqt_string _ms;
+	_ms.len = _b.length();
+	_ms.data = static_cast<char*>(malloc(_ms.len));
+	memcpy(_ms.data, _b.data(), _ms.len);
+	return _ms;
+}
+
+struct miqt_string QFileInfo_readSymLink(const QFileInfo* self) {
+	QString _ret = self->readSymLink();
 	// Convert QString from UTF-16 in C++ RAII memory to UTF-8 in manually-managed C memory
 	QByteArray _b = _ret.toUtf8();
 	struct miqt_string _ms;
@@ -375,6 +383,26 @@ QDateTime* QFileInfo_lastRead(const QFileInfo* self) {
 
 QDateTime* QFileInfo_fileTime(const QFileInfo* self, int time) {
 	return new QDateTime(self->fileTime(static_cast<QFile::FileTime>(time)));
+}
+
+QDateTime* QFileInfo_birthTimeWithTz(const QFileInfo* self, QTimeZone* tz) {
+	return new QDateTime(self->birthTime(*tz));
+}
+
+QDateTime* QFileInfo_metadataChangeTimeWithTz(const QFileInfo* self, QTimeZone* tz) {
+	return new QDateTime(self->metadataChangeTime(*tz));
+}
+
+QDateTime* QFileInfo_lastModifiedWithTz(const QFileInfo* self, QTimeZone* tz) {
+	return new QDateTime(self->lastModified(*tz));
+}
+
+QDateTime* QFileInfo_lastReadWithTz(const QFileInfo* self, QTimeZone* tz) {
+	return new QDateTime(self->lastRead(*tz));
+}
+
+QDateTime* QFileInfo_fileTime2(const QFileInfo* self, int time, QTimeZone* tz) {
+	return new QDateTime(self->fileTime(static_cast<QFile::FileTime>(time), *tz));
 }
 
 bool QFileInfo_caching(const QFileInfo* self) {

@@ -63,13 +63,12 @@ bool QPainter_isActive(const QPainter* self) {
 	return self->isActive();
 }
 
-void QPainter_setCompositionMode(QPainter* self, int mode) {
-	self->setCompositionMode(static_cast<QPainter::CompositionMode>(mode));
+void QPainter_setCompositionMode(QPainter* self, CompositionMode mode) {
+	self->setCompositionMode(mode);
 }
 
-int QPainter_compositionMode(const QPainter* self) {
-	QPainter::CompositionMode _ret = self->compositionMode();
-	return static_cast<int>(_ret);
+CompositionMode QPainter_compositionMode(const QPainter* self) {
+	return self->compositionMode();
 }
 
 QFont* QPainter_font(const QPainter* self) {
@@ -116,6 +115,14 @@ void QPainter_setBrushWithStyle(QPainter* self, int style) {
 	self->setBrush(static_cast<Qt::BrushStyle>(style));
 }
 
+void QPainter_setBrushWithColor(QPainter* self, QColor* color) {
+	self->setBrush(*color);
+}
+
+void QPainter_setBrush2(QPainter* self, int color) {
+	self->setBrush(static_cast<Qt::GlobalColor>(color));
+}
+
 QBrush* QPainter_brush(const QPainter* self) {
 	const QBrush& _ret = self->brush();
 	// Cast returned reference into pointer
@@ -133,6 +140,10 @@ int QPainter_backgroundMode(const QPainter* self) {
 
 QPoint* QPainter_brushOrigin(const QPainter* self) {
 	return new QPoint(self->brushOrigin());
+}
+
+QPointF* QPainter_brushOriginF(const QPainter* self) {
+	return new QPointF(self->brushOriginF());
 }
 
 void QPainter_setBrushOrigin(QPainter* self, int x, int y) {
@@ -620,7 +631,7 @@ void QPainter_drawPixmap11(QPainter* self, int x, int y, int w, int h, QPixmap* 
 	self->drawPixmap(static_cast<int>(x), static_cast<int>(y), static_cast<int>(w), static_cast<int>(h), *pm);
 }
 
-void QPainter_drawPixmapFragments(QPainter* self, QPainter__PixmapFragment* fragments, int fragmentCount, QPixmap* pixmap) {
+void QPainter_drawPixmapFragments(QPainter* self, const PixmapFragment* fragments, int fragmentCount, QPixmap* pixmap) {
 	self->drawPixmapFragments(fragments, static_cast<int>(fragmentCount), *pixmap);
 }
 
@@ -829,21 +840,20 @@ void QPainter_eraseRectWithQRect(QPainter* self, QRect* param1) {
 	self->eraseRect(*param1);
 }
 
-void QPainter_setRenderHint(QPainter* self, int hint) {
-	self->setRenderHint(static_cast<QPainter::RenderHint>(hint));
+void QPainter_setRenderHint(QPainter* self, RenderHint hint) {
+	self->setRenderHint(hint);
 }
 
-void QPainter_setRenderHints(QPainter* self, int hints) {
-	self->setRenderHints(static_cast<QPainter::RenderHints>(hints));
+void QPainter_setRenderHints(QPainter* self, RenderHints hints) {
+	self->setRenderHints(hints);
 }
 
-int QPainter_renderHints(const QPainter* self) {
-	QPainter::RenderHints _ret = self->renderHints();
-	return static_cast<int>(_ret);
+RenderHints QPainter_renderHints(const QPainter* self) {
+	return self->renderHints();
 }
 
-bool QPainter_testRenderHint(const QPainter* self, int hint) {
-	return self->testRenderHint(static_cast<QPainter::RenderHint>(hint));
+bool QPainter_testRenderHint(const QPainter* self, RenderHint hint) {
+	return self->testRenderHint(hint);
 }
 
 QPaintEngine* QPainter_paintEngine(const QPainter* self) {
@@ -922,8 +932,8 @@ void QPainter_drawTiledPixmap7(QPainter* self, QRect* param1, QPixmap* param2, Q
 	self->drawTiledPixmap(*param1, *param2, *param3);
 }
 
-void QPainter_drawPixmapFragments2(QPainter* self, QPainter__PixmapFragment* fragments, int fragmentCount, QPixmap* pixmap, int hints) {
-	self->drawPixmapFragments(fragments, static_cast<int>(fragmentCount), *pixmap, static_cast<QPainter::PixmapFragmentHints>(hints));
+void QPainter_drawPixmapFragments2(QPainter* self, const PixmapFragment* fragments, int fragmentCount, QPixmap* pixmap, PixmapFragmentHints hints) {
+	self->drawPixmapFragments(fragments, static_cast<int>(fragmentCount), *pixmap, hints);
 }
 
 void QPainter_drawImage10(QPainter* self, QRectF* targetRect, QImage* image, QRectF* sourceRect, int flags) {
@@ -987,16 +997,24 @@ QRectF* QPainter_boundingRect5(QPainter* self, QRectF* rect, struct miqt_string 
 	return new QRectF(self->boundingRect(*rect, text_QString, *o));
 }
 
-void QPainter_setRenderHint2(QPainter* self, int hint, bool on) {
-	self->setRenderHint(static_cast<QPainter::RenderHint>(hint), on);
+void QPainter_setRenderHint2(QPainter* self, RenderHint hint, bool on) {
+	self->setRenderHint(hint, on);
 }
 
-void QPainter_setRenderHints2(QPainter* self, int hints, bool on) {
-	self->setRenderHints(static_cast<QPainter::RenderHints>(hints), on);
+void QPainter_setRenderHints2(QPainter* self, RenderHints hints, bool on) {
+	self->setRenderHints(hints, on);
 }
 
 void QPainter_delete(QPainter* self) {
 	delete self;
+}
+
+QPainter__PixmapFragment* QPainter__PixmapFragment_new() {
+	return new (std::nothrow) QPainter::PixmapFragment();
+}
+
+QPainter__PixmapFragment* QPainter__PixmapFragment_new2(const PixmapFragment* param1) {
+	return new (std::nothrow) QPainter::PixmapFragment(*param1);
 }
 
 double QPainter__PixmapFragment_x(const QPainter__PixmapFragment* self) {
@@ -1089,24 +1107,24 @@ void QPainter__PixmapFragment_setOpacity(QPainter__PixmapFragment* self, double 
 	self->opacity = static_cast<qreal>(opacity);
 }
 
-QPainter__PixmapFragment* QPainter__PixmapFragment_create(QPointF* pos, QRectF* sourceRect) {
-	return new QPainter::PixmapFragment(QPainter::PixmapFragment::create(*pos, *sourceRect));
+PixmapFragment QPainter__PixmapFragment_create(QPointF* pos, QRectF* sourceRect) {
+	return QPainter::PixmapFragment::create(*pos, *sourceRect);
 }
 
-QPainter__PixmapFragment* QPainter__PixmapFragment_create2(QPointF* pos, QRectF* sourceRect, double scaleX) {
-	return new QPainter::PixmapFragment(QPainter::PixmapFragment::create(*pos, *sourceRect, static_cast<qreal>(scaleX)));
+PixmapFragment QPainter__PixmapFragment_create2(QPointF* pos, QRectF* sourceRect, double scaleX) {
+	return QPainter::PixmapFragment::create(*pos, *sourceRect, static_cast<qreal>(scaleX));
 }
 
-QPainter__PixmapFragment* QPainter__PixmapFragment_create3(QPointF* pos, QRectF* sourceRect, double scaleX, double scaleY) {
-	return new QPainter::PixmapFragment(QPainter::PixmapFragment::create(*pos, *sourceRect, static_cast<qreal>(scaleX), static_cast<qreal>(scaleY)));
+PixmapFragment QPainter__PixmapFragment_create3(QPointF* pos, QRectF* sourceRect, double scaleX, double scaleY) {
+	return QPainter::PixmapFragment::create(*pos, *sourceRect, static_cast<qreal>(scaleX), static_cast<qreal>(scaleY));
 }
 
-QPainter__PixmapFragment* QPainter__PixmapFragment_create4(QPointF* pos, QRectF* sourceRect, double scaleX, double scaleY, double rotation) {
-	return new QPainter::PixmapFragment(QPainter::PixmapFragment::create(*pos, *sourceRect, static_cast<qreal>(scaleX), static_cast<qreal>(scaleY), static_cast<qreal>(rotation)));
+PixmapFragment QPainter__PixmapFragment_create4(QPointF* pos, QRectF* sourceRect, double scaleX, double scaleY, double rotation) {
+	return QPainter::PixmapFragment::create(*pos, *sourceRect, static_cast<qreal>(scaleX), static_cast<qreal>(scaleY), static_cast<qreal>(rotation));
 }
 
-QPainter__PixmapFragment* QPainter__PixmapFragment_create5(QPointF* pos, QRectF* sourceRect, double scaleX, double scaleY, double rotation, double opacity) {
-	return new QPainter::PixmapFragment(QPainter::PixmapFragment::create(*pos, *sourceRect, static_cast<qreal>(scaleX), static_cast<qreal>(scaleY), static_cast<qreal>(rotation), static_cast<qreal>(opacity)));
+PixmapFragment QPainter__PixmapFragment_create5(QPointF* pos, QRectF* sourceRect, double scaleX, double scaleY, double rotation, double opacity) {
+	return QPainter::PixmapFragment::create(*pos, *sourceRect, static_cast<qreal>(scaleX), static_cast<qreal>(scaleY), static_cast<qreal>(rotation), static_cast<qreal>(opacity));
 }
 
 void QPainter__PixmapFragment_delete(QPainter__PixmapFragment* self) {

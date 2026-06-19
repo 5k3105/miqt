@@ -11,12 +11,12 @@ extern "C" {
 } /* extern C */
 #endif
 
-void QPrintEngine_setProperty(QPrintEngine* self, int key, QVariant* value) {
-	self->setProperty(static_cast<QPrintEngine::PrintEnginePropertyKey>(key), *value);
+void QPrintEngine_setProperty(QPrintEngine* self, PrintEnginePropertyKey key, QVariant* value) {
+	self->setProperty(key, *value);
 }
 
-QVariant* QPrintEngine_property(const QPrintEngine* self, int key) {
-	return new QVariant(self->property(static_cast<QPrintEngine::PrintEnginePropertyKey>(key)));
+QVariant* QPrintEngine_property(const QPrintEngine* self, PrintEnginePropertyKey key) {
+	return new QVariant(self->property(key));
 }
 
 bool QPrintEngine_newPage(QPrintEngine* self) {

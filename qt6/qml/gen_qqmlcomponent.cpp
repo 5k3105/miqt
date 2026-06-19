@@ -1,3 +1,4 @@
+#include <QAnyStringView>
 #include <QByteArray>
 #include <QChildEvent>
 #include <QEvent>
@@ -46,15 +47,19 @@ public:
 	MiqtVirtualQQmlComponent(): QQmlComponent() {}
 	MiqtVirtualQQmlComponent(QQmlEngine* param1): QQmlComponent(param1) {}
 	MiqtVirtualQQmlComponent(QQmlEngine* param1, const QString& fileName): QQmlComponent(param1, fileName) {}
-	MiqtVirtualQQmlComponent(QQmlEngine* param1, const QString& fileName, QQmlComponent::CompilationMode mode): QQmlComponent(param1, fileName, mode) {}
+	MiqtVirtualQQmlComponent(QQmlEngine* param1, const QString& fileName, CompilationMode mode): QQmlComponent(param1, fileName, mode) {}
 	MiqtVirtualQQmlComponent(QQmlEngine* param1, const QUrl& url): QQmlComponent(param1, url) {}
-	MiqtVirtualQQmlComponent(QQmlEngine* param1, const QUrl& url, QQmlComponent::CompilationMode mode): QQmlComponent(param1, url, mode) {}
+	MiqtVirtualQQmlComponent(QQmlEngine* param1, const QUrl& url, CompilationMode mode): QQmlComponent(param1, url, mode) {}
+	MiqtVirtualQQmlComponent(QQmlEngine* engine, QAnyStringView uri, QAnyStringView typeName): QQmlComponent(engine, uri, typeName) {}
+	MiqtVirtualQQmlComponent(QQmlEngine* engine, QAnyStringView uri, QAnyStringView typeName, CompilationMode mode): QQmlComponent(engine, uri, typeName, mode) {}
 	MiqtVirtualQQmlComponent(QObject* parent): QQmlComponent(parent) {}
 	MiqtVirtualQQmlComponent(QQmlEngine* param1, QObject* parent): QQmlComponent(param1, parent) {}
 	MiqtVirtualQQmlComponent(QQmlEngine* param1, const QString& fileName, QObject* parent): QQmlComponent(param1, fileName, parent) {}
-	MiqtVirtualQQmlComponent(QQmlEngine* param1, const QString& fileName, QQmlComponent::CompilationMode mode, QObject* parent): QQmlComponent(param1, fileName, mode, parent) {}
+	MiqtVirtualQQmlComponent(QQmlEngine* param1, const QString& fileName, CompilationMode mode, QObject* parent): QQmlComponent(param1, fileName, mode, parent) {}
 	MiqtVirtualQQmlComponent(QQmlEngine* param1, const QUrl& url, QObject* parent): QQmlComponent(param1, url, parent) {}
-	MiqtVirtualQQmlComponent(QQmlEngine* param1, const QUrl& url, QQmlComponent::CompilationMode mode, QObject* parent): QQmlComponent(param1, url, mode, parent) {}
+	MiqtVirtualQQmlComponent(QQmlEngine* param1, const QUrl& url, CompilationMode mode, QObject* parent): QQmlComponent(param1, url, mode, parent) {}
+	MiqtVirtualQQmlComponent(QQmlEngine* engine, QAnyStringView uri, QAnyStringView typeName, QObject* parent): QQmlComponent(engine, uri, typeName, parent) {}
+	MiqtVirtualQQmlComponent(QQmlEngine* engine, QAnyStringView uri, QAnyStringView typeName, CompilationMode mode, QObject* parent): QQmlComponent(engine, uri, typeName, mode, parent) {}
 
 	virtual ~MiqtVirtualQQmlComponent() override = default;
 
@@ -251,43 +256,59 @@ QQmlComponent* QQmlComponent_new3(QQmlEngine* param1, struct miqt_string fileNam
 	return new (std::nothrow) MiqtVirtualQQmlComponent(param1, fileName_QString);
 }
 
-QQmlComponent* QQmlComponent_new4(QQmlEngine* param1, struct miqt_string fileName, int mode) {
+QQmlComponent* QQmlComponent_new4(QQmlEngine* param1, struct miqt_string fileName, CompilationMode mode) {
 	QString fileName_QString = QString::fromUtf8(fileName.data, fileName.len);
-	return new (std::nothrow) MiqtVirtualQQmlComponent(param1, fileName_QString, static_cast<QQmlComponent::CompilationMode>(mode));
+	return new (std::nothrow) MiqtVirtualQQmlComponent(param1, fileName_QString, mode);
 }
 
 QQmlComponent* QQmlComponent_new5(QQmlEngine* param1, QUrl* url) {
 	return new (std::nothrow) MiqtVirtualQQmlComponent(param1, *url);
 }
 
-QQmlComponent* QQmlComponent_new6(QQmlEngine* param1, QUrl* url, int mode) {
-	return new (std::nothrow) MiqtVirtualQQmlComponent(param1, *url, static_cast<QQmlComponent::CompilationMode>(mode));
+QQmlComponent* QQmlComponent_new6(QQmlEngine* param1, QUrl* url, CompilationMode mode) {
+	return new (std::nothrow) MiqtVirtualQQmlComponent(param1, *url, mode);
 }
 
-QQmlComponent* QQmlComponent_new7(QObject* parent) {
+QQmlComponent* QQmlComponent_new7(QQmlEngine* engine, QAnyStringView* uri, QAnyStringView* typeName) {
+	return new (std::nothrow) MiqtVirtualQQmlComponent(engine, *uri, *typeName);
+}
+
+QQmlComponent* QQmlComponent_new8(QQmlEngine* engine, QAnyStringView* uri, QAnyStringView* typeName, CompilationMode mode) {
+	return new (std::nothrow) MiqtVirtualQQmlComponent(engine, *uri, *typeName, mode);
+}
+
+QQmlComponent* QQmlComponent_new9(QObject* parent) {
 	return new (std::nothrow) MiqtVirtualQQmlComponent(parent);
 }
 
-QQmlComponent* QQmlComponent_new8(QQmlEngine* param1, QObject* parent) {
+QQmlComponent* QQmlComponent_new10(QQmlEngine* param1, QObject* parent) {
 	return new (std::nothrow) MiqtVirtualQQmlComponent(param1, parent);
 }
 
-QQmlComponent* QQmlComponent_new9(QQmlEngine* param1, struct miqt_string fileName, QObject* parent) {
+QQmlComponent* QQmlComponent_new11(QQmlEngine* param1, struct miqt_string fileName, QObject* parent) {
 	QString fileName_QString = QString::fromUtf8(fileName.data, fileName.len);
 	return new (std::nothrow) MiqtVirtualQQmlComponent(param1, fileName_QString, parent);
 }
 
-QQmlComponent* QQmlComponent_new10(QQmlEngine* param1, struct miqt_string fileName, int mode, QObject* parent) {
+QQmlComponent* QQmlComponent_new12(QQmlEngine* param1, struct miqt_string fileName, CompilationMode mode, QObject* parent) {
 	QString fileName_QString = QString::fromUtf8(fileName.data, fileName.len);
-	return new (std::nothrow) MiqtVirtualQQmlComponent(param1, fileName_QString, static_cast<QQmlComponent::CompilationMode>(mode), parent);
+	return new (std::nothrow) MiqtVirtualQQmlComponent(param1, fileName_QString, mode, parent);
 }
 
-QQmlComponent* QQmlComponent_new11(QQmlEngine* param1, QUrl* url, QObject* parent) {
+QQmlComponent* QQmlComponent_new13(QQmlEngine* param1, QUrl* url, QObject* parent) {
 	return new (std::nothrow) MiqtVirtualQQmlComponent(param1, *url, parent);
 }
 
-QQmlComponent* QQmlComponent_new12(QQmlEngine* param1, QUrl* url, int mode, QObject* parent) {
-	return new (std::nothrow) MiqtVirtualQQmlComponent(param1, *url, static_cast<QQmlComponent::CompilationMode>(mode), parent);
+QQmlComponent* QQmlComponent_new14(QQmlEngine* param1, QUrl* url, CompilationMode mode, QObject* parent) {
+	return new (std::nothrow) MiqtVirtualQQmlComponent(param1, *url, mode, parent);
+}
+
+QQmlComponent* QQmlComponent_new15(QQmlEngine* engine, QAnyStringView* uri, QAnyStringView* typeName, QObject* parent) {
+	return new (std::nothrow) MiqtVirtualQQmlComponent(engine, *uri, *typeName, parent);
+}
+
+QQmlComponent* QQmlComponent_new16(QQmlEngine* engine, QAnyStringView* uri, QAnyStringView* typeName, CompilationMode mode, QObject* parent) {
+	return new (std::nothrow) MiqtVirtualQQmlComponent(engine, *uri, *typeName, mode, parent);
 }
 
 void QQmlComponent_virtbase(QQmlComponent* src, QObject** outptr_QObject) {
@@ -313,9 +334,8 @@ struct miqt_string QQmlComponent_tr(const char* s) {
 	return _ms;
 }
 
-int QQmlComponent_status(const QQmlComponent* self) {
-	QQmlComponent::Status _ret = self->status();
-	return static_cast<int>(_ret);
+Status QQmlComponent_status(const QQmlComponent* self) {
+	return self->status();
 }
 
 bool QQmlComponent_isNull(const QQmlComponent* self) {
@@ -421,8 +441,12 @@ void QQmlComponent_loadUrl(QQmlComponent* self, QUrl* url) {
 	self->loadUrl(*url);
 }
 
-void QQmlComponent_loadUrl2(QQmlComponent* self, QUrl* url, int mode) {
-	self->loadUrl(*url, static_cast<QQmlComponent::CompilationMode>(mode));
+void QQmlComponent_loadUrl2(QQmlComponent* self, QUrl* url, CompilationMode mode) {
+	self->loadUrl(*url, mode);
+}
+
+void QQmlComponent_loadFromModule(QQmlComponent* self, QAnyStringView* uri, QAnyStringView* typeName) {
+	self->loadFromModule(*uri, *typeName);
 }
 
 void QQmlComponent_setData(QQmlComponent* self, struct miqt_string param1, QUrl* baseUrl) {
@@ -493,6 +517,10 @@ void QQmlComponent_create2(QQmlComponent* self, QQmlIncubator* param1, QQmlConte
 
 void QQmlComponent_create3(QQmlComponent* self, QQmlIncubator* param1, QQmlContext* context, QQmlContext* forContext) {
 	self->create(*param1, context, forContext);
+}
+
+void QQmlComponent_loadFromModule2(QQmlComponent* self, QAnyStringView* uri, QAnyStringView* typeName, int mode) {
+	self->loadFromModule(*uri, *typeName, static_cast<QQmlComponent::CompilationMode>(mode));
 }
 
 bool QQmlComponent_override_virtual_create(void* self, intptr_t slot) {

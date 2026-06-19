@@ -84,7 +84,7 @@ void miqt_exec_callback_QDockWidget_dropEvent(QDockWidget*, intptr_t, QDropEvent
 void miqt_exec_callback_QDockWidget_showEvent(QDockWidget*, intptr_t, QShowEvent*);
 void miqt_exec_callback_QDockWidget_hideEvent(QDockWidget*, intptr_t, QHideEvent*);
 bool miqt_exec_callback_QDockWidget_nativeEvent(QDockWidget*, intptr_t, struct miqt_string, void*, intptr_t*);
-int miqt_exec_callback_QDockWidget_metric(const QDockWidget*, intptr_t, int);
+int miqt_exec_callback_QDockWidget_metric(const QDockWidget*, intptr_t, PaintDeviceMetric);
 void miqt_exec_callback_QDockWidget_initPainter(const QDockWidget*, intptr_t, QPainter*);
 QPaintDevice* miqt_exec_callback_QDockWidget_redirected(const QDockWidget*, intptr_t, QPoint*);
 QPainter* miqt_exec_callback_QDockWidget_sharedPainter(const QDockWidget*, intptr_t);
@@ -707,18 +707,17 @@ public:
 	intptr_t handle__metric = 0;
 
 	// Subclass to allow providing a Go implementation
-	virtual int metric(QPaintDevice::PaintDeviceMetric param1) const override {
+	virtual int metric(PaintDeviceMetric param1) const override {
 		if (handle__metric == 0) {
 			return QDockWidget::metric(param1);
 		}
 
-		QPaintDevice::PaintDeviceMetric param1_ret = param1;
-		int sigval1 = static_cast<int>(param1_ret);
+		PaintDeviceMetric sigval1 = param1;
 		int callback_return_value = miqt_exec_callback_QDockWidget_metric(this, handle__metric, sigval1);
 		return static_cast<int>(callback_return_value);
 	}
 
-	friend int QDockWidget_virtualbase_metric(const void* self, int param1);
+	friend int QDockWidget_virtualbase_metric(const void* self, PaintDeviceMetric param1);
 
 	// cgo.Handle value for overwritten implementation
 	intptr_t handle__initPainter = 0;
@@ -934,6 +933,7 @@ public:
 	friend int QDockWidget_protectedbase_senderSignalIndex(bool* _dynamic_cast_ok, const void* self);
 	friend int QDockWidget_protectedbase_receivers(bool* _dynamic_cast_ok, const void* self, const char* signal);
 	friend bool QDockWidget_protectedbase_isSignalConnected(bool* _dynamic_cast_ok, const void* self, QMetaMethod* signal);
+	friend double QDockWidget_protectedbase_getDecodedMetricF(bool* _dynamic_cast_ok, const void* self, PaintDeviceMetric metricA, PaintDeviceMetric metricB);
 };
 
 QDockWidget* QDockWidget_new(QWidget* parent) {
@@ -994,13 +994,12 @@ void QDockWidget_setWidget(QDockWidget* self, QWidget* widget) {
 	self->setWidget(widget);
 }
 
-void QDockWidget_setFeatures(QDockWidget* self, int features) {
-	self->setFeatures(static_cast<QDockWidget::DockWidgetFeatures>(features));
+void QDockWidget_setFeatures(QDockWidget* self, DockWidgetFeatures features) {
+	self->setFeatures(features);
 }
 
-int QDockWidget_features(const QDockWidget* self) {
-	QDockWidget::DockWidgetFeatures _ret = self->features();
-	return static_cast<int>(_ret);
+DockWidgetFeatures QDockWidget_features(const QDockWidget* self) {
+	return self->features();
 }
 
 void QDockWidget_setFloating(QDockWidget* self, bool floating) {
@@ -1026,6 +1025,15 @@ void QDockWidget_setTitleBarWidget(QDockWidget* self, QWidget* widget) {
 
 QWidget* QDockWidget_titleBarWidget(const QDockWidget* self) {
 	return self->titleBarWidget();
+}
+
+void QDockWidget_setDockLocation(QDockWidget* self, int area) {
+	self->setDockLocation(static_cast<Qt::DockWidgetArea>(area));
+}
+
+int QDockWidget_dockLocation(const QDockWidget* self) {
+	Qt::DockWidgetArea _ret = self->dockLocation();
+	return static_cast<int>(_ret);
 }
 
 bool QDockWidget_isAreaAllowed(const QDockWidget* self, int area) {
@@ -1617,8 +1625,8 @@ bool QDockWidget_override_virtual_metric(void* self, intptr_t slot) {
 	return true;
 }
 
-int QDockWidget_virtualbase_metric(const void* self, int param1) {
-	return static_cast<const MiqtVirtualQDockWidget*>(self)->QDockWidget::metric(static_cast<MiqtVirtualQDockWidget::PaintDeviceMetric>(param1));
+int QDockWidget_virtualbase_metric(const void* self, PaintDeviceMetric param1) {
+	return static_cast<const MiqtVirtualQDockWidget*>(self)->QDockWidget::metric(param1);
 }
 
 bool QDockWidget_override_virtual_initPainter(void* self, intptr_t slot) {
@@ -1886,6 +1894,17 @@ bool QDockWidget_protectedbase_isSignalConnected(bool* _dynamic_cast_ok, const v
 
 	*_dynamic_cast_ok = true;
 	return self_cast->isSignalConnected(*signal);
+}
+
+double QDockWidget_protectedbase_getDecodedMetricF(bool* _dynamic_cast_ok, const void* self, PaintDeviceMetric metricA, PaintDeviceMetric metricB) {
+	MiqtVirtualQDockWidget* self_cast = dynamic_cast<MiqtVirtualQDockWidget*>( (QDockWidget*)(self) );
+	if (self_cast == nullptr) {
+		*_dynamic_cast_ok = false;
+		return 0;
+	}
+
+	*_dynamic_cast_ok = true;
+	return self_cast->getDecodedMetricF(metricA, metricB);
 }
 
 void QDockWidget_delete(QDockWidget* self) {

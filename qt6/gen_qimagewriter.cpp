@@ -173,9 +173,8 @@ bool QImageWriter_write(QImageWriter* self, QImage* image) {
 	return self->write(*image);
 }
 
-int QImageWriter_error(const QImageWriter* self) {
-	QImageWriter::ImageWriterError _ret = self->error();
-	return static_cast<int>(_ret);
+ImageWriterError QImageWriter_error(const QImageWriter* self) {
+	return self->error();
 }
 
 struct miqt_string QImageWriter_errorString(const QImageWriter* self) {

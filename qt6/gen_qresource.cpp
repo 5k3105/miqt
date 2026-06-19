@@ -70,9 +70,8 @@ bool QResource_isValid(const QResource* self) {
 	return self->isValid();
 }
 
-int QResource_compressionAlgorithm(const QResource* self) {
-	QResource::Compression _ret = self->compressionAlgorithm();
-	return static_cast<int>(_ret);
+Compression QResource_compressionAlgorithm(const QResource* self) {
+	return self->compressionAlgorithm();
 }
 
 long long QResource_size(const QResource* self) {

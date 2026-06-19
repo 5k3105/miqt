@@ -728,6 +728,21 @@ func (this *QWidget) SetAccessibleDescription(description string) {
 	C.QWidget_setAccessibleDescription(this.h, description_ms)
 }
 
+func (this *QWidget) AccessibleIdentifier() string {
+	var _ms C.struct_miqt_string = C.QWidget_accessibleIdentifier(this.h)
+	_ret := C.GoStringN(_ms.data, C.int(int64(_ms.len)))
+	C.free(unsafe.Pointer(_ms.data))
+	return _ret
+}
+
+func (this *QWidget) SetAccessibleIdentifier(identifier string) {
+	identifier_ms := C.struct_miqt_string{}
+	identifier_ms.data = C.CString(identifier)
+	identifier_ms.len = C.size_t(len(identifier))
+	defer C.free(unsafe.Pointer(identifier_ms.data))
+	C.QWidget_setAccessibleIdentifier(this.h, identifier_ms)
+}
+
 func (this *QWidget) SetLayoutDirection(direction LayoutDirection) {
 	C.QWidget_setLayoutDirection(this.h, (C.int)(direction))
 }
@@ -1250,6 +1265,10 @@ func (this *QWidget) ChildAtWithQPoint(p *QPoint) *QWidget {
 	return newQWidget(C.QWidget_childAtWithQPoint(this.h, p.cPointer()))
 }
 
+func (this *QWidget) ChildAtWithQPointF(p *QPointF) *QWidget {
+	return newQWidget(C.QWidget_childAtWithQPointF(this.h, p.cPointer()))
+}
+
 func (this *QWidget) SetAttribute(param1 WidgetAttribute) {
 	C.QWidget_setAttribute(this.h, (C.int)(param1))
 }
@@ -1436,8 +1455,8 @@ func (this *QWidget) Render3(target *QPaintDevice, targetOffset *QPoint, sourceR
 	C.QWidget_render3(this.h, target.cPointer(), targetOffset.cPointer(), sourceRegion.cPointer())
 }
 
-func (this *QWidget) Render4(target *QPaintDevice, targetOffset *QPoint, sourceRegion *QRegion, renderFlags QWidget__RenderFlag) {
-	C.QWidget_render4(this.h, target.cPointer(), targetOffset.cPointer(), sourceRegion.cPointer(), (C.int)(renderFlags))
+func (this *QWidget) Render4(target *QPaintDevice, targetOffset *QPoint, sourceRegion *QRegion, renderFlags RenderFlags) {
+	C.QWidget_render4(this.h, target.cPointer(), targetOffset.cPointer(), sourceRegion.cPointer(), renderFlags)
 }
 
 func (this *QWidget) Render5(painter *QPainter, targetOffset *QPoint) {
@@ -1448,8 +1467,8 @@ func (this *QWidget) Render6(painter *QPainter, targetOffset *QPoint, sourceRegi
 	C.QWidget_render6(this.h, painter.cPointer(), targetOffset.cPointer(), sourceRegion.cPointer())
 }
 
-func (this *QWidget) Render7(painter *QPainter, targetOffset *QPoint, sourceRegion *QRegion, renderFlags QWidget__RenderFlag) {
-	C.QWidget_render7(this.h, painter.cPointer(), targetOffset.cPointer(), sourceRegion.cPointer(), (C.int)(renderFlags))
+func (this *QWidget) Render7(painter *QPainter, targetOffset *QPoint, sourceRegion *QRegion, renderFlags RenderFlags) {
+	C.QWidget_render7(this.h, painter.cPointer(), targetOffset.cPointer(), sourceRegion.cPointer(), renderFlags)
 }
 
 func (this *QWidget) GrabWithRectangle(rectangle *QRect) *QPixmap {
@@ -1675,6 +1694,20 @@ func (this *QWidget) IsSignalConnected(signal *QMetaMethod) bool {
 
 	var _dynamic_cast_ok C.bool = false
 	_method_ret := (bool)(C.QWidget_protectedbase_isSignalConnected(&_dynamic_cast_ok, unsafe.Pointer(this.h), signal.cPointer()))
+
+	if !_dynamic_cast_ok {
+		panic("miqt: can only call protected methods for directly constructed types")
+	}
+
+	return _method_ret
+
+}
+
+// GetDecodedMetricF can only be called from a QWidget that was directly constructed.
+func (this *QWidget) GetDecodedMetricF(metricA PaintDeviceMetric, metricB PaintDeviceMetric) float64 {
+
+	var _dynamic_cast_ok C.bool = false
+	_method_ret := (float64)(C.QWidget_protectedbase_getDecodedMetricF(&_dynamic_cast_ok, unsafe.Pointer(this.h), metricA, metricB))
 
 	if !_dynamic_cast_ok {
 		panic("miqt: can only call protected methods for directly constructed types")
@@ -2586,12 +2619,12 @@ func miqt_exec_callback_QWidget_changeEvent(self *C.QWidget, cb C.intptr_t, para
 
 }
 
-func (this *QWidget) callVirtualBase_Metric(param1 QPaintDevice__PaintDeviceMetric) int {
+func (this *QWidget) callVirtualBase_Metric(param1 PaintDeviceMetric) int {
 
-	return (int)(C.QWidget_virtualbase_metric(unsafe.Pointer(this.h), (C.int)(param1)))
+	return (int)(C.QWidget_virtualbase_metric(unsafe.Pointer(this.h), param1))
 
 }
-func (this *QWidget) OnMetric(slot func(super func(param1 QPaintDevice__PaintDeviceMetric) int, param1 QPaintDevice__PaintDeviceMetric) int) {
+func (this *QWidget) OnMetric(slot func(super func(param1 PaintDeviceMetric) int, param1 PaintDeviceMetric) int) {
 	ok := C.QWidget_override_virtual_metric(unsafe.Pointer(this.h), C.intptr_t(cgo.NewHandle(slot)))
 	if !ok {
 		panic("miqt: can only override virtual methods for directly constructed types")
@@ -2599,14 +2632,14 @@ func (this *QWidget) OnMetric(slot func(super func(param1 QPaintDevice__PaintDev
 }
 
 //export miqt_exec_callback_QWidget_metric
-func miqt_exec_callback_QWidget_metric(self *C.QWidget, cb C.intptr_t, param1 C.int) C.int {
-	gofunc, ok := cgo.Handle(cb).Value().(func(super func(param1 QPaintDevice__PaintDeviceMetric) int, param1 QPaintDevice__PaintDeviceMetric) int)
+func miqt_exec_callback_QWidget_metric(self *C.QWidget, cb C.intptr_t, param1 C.PaintDeviceMetric) C.int {
+	gofunc, ok := cgo.Handle(cb).Value().(func(super func(param1 PaintDeviceMetric) int, param1 PaintDeviceMetric) int)
 	if !ok {
 		panic("miqt: callback of non-callback type (heap corruption?)")
 	}
 
 	// Convert all CABI parameters to Go parameters
-	slotval1 := (QPaintDevice__PaintDeviceMetric)(param1)
+	int /* TODO  */
 
 	virtualReturn := gofunc((&QWidget{h: self}).callVirtualBase_Metric, slotval1)
 

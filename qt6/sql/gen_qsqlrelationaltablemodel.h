@@ -30,7 +30,6 @@ class QSize;
 class QSqlDatabase;
 class QSqlError;
 class QSqlIndex;
-class QSqlQuery;
 class QSqlQueryModel;
 class QSqlRecord;
 class QSqlRelation;
@@ -54,7 +53,6 @@ typedef struct QSize QSize;
 typedef struct QSqlDatabase QSqlDatabase;
 typedef struct QSqlError QSqlError;
 typedef struct QSqlIndex QSqlIndex;
-typedef struct QSqlQuery QSqlQuery;
 typedef struct QSqlQueryModel QSqlQueryModel;
 typedef struct QSqlRecord QSqlRecord;
 typedef struct QSqlRelation QSqlRelation;
@@ -134,7 +132,7 @@ bool QSqlRelationalTableModel_virtualbase_clearItemData(void* self, QModelIndex*
 bool QSqlRelationalTableModel_override_virtual_headerData(void* self, intptr_t slot);
 QVariant* QSqlRelationalTableModel_virtualbase_headerData(const void* self, int section, int orientation, int role);
 bool QSqlRelationalTableModel_override_virtual_setEditStrategy(void* self, intptr_t slot);
-void QSqlRelationalTableModel_virtualbase_setEditStrategy(void* self, int strategy);
+void QSqlRelationalTableModel_virtualbase_setEditStrategy(void* self, EditStrategy strategy);
 bool QSqlRelationalTableModel_override_virtual_sort(void* self, intptr_t slot);
 void QSqlRelationalTableModel_virtualbase_sort(void* self, int column, int order);
 bool QSqlRelationalTableModel_override_virtual_setSort(void* self, intptr_t slot);
@@ -221,7 +219,6 @@ bool QSqlRelationalTableModel_override_virtual_disconnectNotify(void* self, intp
 void QSqlRelationalTableModel_virtualbase_disconnectNotify(void* self, QMetaMethod* signal);
 
 void QSqlRelationalTableModel_protectedbase_setPrimaryKey(bool* _dynamic_cast_ok, void* self, QSqlIndex* key);
-void QSqlRelationalTableModel_protectedbase_setQuery(bool* _dynamic_cast_ok, void* self, QSqlQuery* query);
 QSqlRecord* QSqlRelationalTableModel_protectedbase_primaryValues(bool* _dynamic_cast_ok, const void* self, int row);
 void QSqlRelationalTableModel_protectedbase_beginInsertRows(bool* _dynamic_cast_ok, void* self, QModelIndex* parent, int first, int last);
 void QSqlRelationalTableModel_protectedbase_endInsertRows(bool* _dynamic_cast_ok, void* self);

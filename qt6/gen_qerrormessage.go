@@ -261,6 +261,20 @@ func (this *QErrorMessage) IsSignalConnected(signal *QMetaMethod) bool {
 
 }
 
+// GetDecodedMetricF can only be called from a QErrorMessage that was directly constructed.
+func (this *QErrorMessage) GetDecodedMetricF(metricA PaintDeviceMetric, metricB PaintDeviceMetric) float64 {
+
+	var _dynamic_cast_ok C.bool = false
+	_method_ret := (float64)(C.QErrorMessage_protectedbase_getDecodedMetricF(&_dynamic_cast_ok, unsafe.Pointer(this.h), metricA, metricB))
+
+	if !_dynamic_cast_ok {
+		panic("miqt: can only call protected methods for directly constructed types")
+	}
+
+	return _method_ret
+
+}
+
 func (this *QErrorMessage) callVirtualBase_Done(param1 int) {
 
 	C.QErrorMessage_virtualbase_done(unsafe.Pointer(this.h), (C.int)(param1))
@@ -1313,12 +1327,12 @@ func miqt_exec_callback_QErrorMessage_nativeEvent(self *C.QErrorMessage, cb C.in
 
 }
 
-func (this *QErrorMessage) callVirtualBase_Metric(param1 QPaintDevice__PaintDeviceMetric) int {
+func (this *QErrorMessage) callVirtualBase_Metric(param1 PaintDeviceMetric) int {
 
-	return (int)(C.QErrorMessage_virtualbase_metric(unsafe.Pointer(this.h), (C.int)(param1)))
+	return (int)(C.QErrorMessage_virtualbase_metric(unsafe.Pointer(this.h), param1))
 
 }
-func (this *QErrorMessage) OnMetric(slot func(super func(param1 QPaintDevice__PaintDeviceMetric) int, param1 QPaintDevice__PaintDeviceMetric) int) {
+func (this *QErrorMessage) OnMetric(slot func(super func(param1 PaintDeviceMetric) int, param1 PaintDeviceMetric) int) {
 	ok := C.QErrorMessage_override_virtual_metric(unsafe.Pointer(this.h), C.intptr_t(cgo.NewHandle(slot)))
 	if !ok {
 		panic("miqt: can only override virtual methods for directly constructed types")
@@ -1326,14 +1340,14 @@ func (this *QErrorMessage) OnMetric(slot func(super func(param1 QPaintDevice__Pa
 }
 
 //export miqt_exec_callback_QErrorMessage_metric
-func miqt_exec_callback_QErrorMessage_metric(self *C.QErrorMessage, cb C.intptr_t, param1 C.int) C.int {
-	gofunc, ok := cgo.Handle(cb).Value().(func(super func(param1 QPaintDevice__PaintDeviceMetric) int, param1 QPaintDevice__PaintDeviceMetric) int)
+func miqt_exec_callback_QErrorMessage_metric(self *C.QErrorMessage, cb C.intptr_t, param1 C.PaintDeviceMetric) C.int {
+	gofunc, ok := cgo.Handle(cb).Value().(func(super func(param1 PaintDeviceMetric) int, param1 PaintDeviceMetric) int)
 	if !ok {
 		panic("miqt: callback of non-callback type (heap corruption?)")
 	}
 
 	// Convert all CABI parameters to Go parameters
-	slotval1 := (QPaintDevice__PaintDeviceMetric)(param1)
+	int /* TODO  */
 
 	virtualReturn := gofunc((&QErrorMessage{h: self}).callVirtualBase_Metric, slotval1)
 

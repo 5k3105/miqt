@@ -29,9 +29,11 @@ class QPagedPaintDevice;
 class QPaintDevice;
 class QPaintEngine;
 class QPainter;
+class QPdfOutputIntent;
 class QPdfWriter;
 class QPoint;
 class QTimerEvent;
+class QUuid;
 #else
 typedef struct QChildEvent QChildEvent;
 typedef struct QEvent QEvent;
@@ -47,9 +49,11 @@ typedef struct QPagedPaintDevice QPagedPaintDevice;
 typedef struct QPaintDevice QPaintDevice;
 typedef struct QPaintEngine QPaintEngine;
 typedef struct QPainter QPainter;
+typedef struct QPdfOutputIntent QPdfOutputIntent;
 typedef struct QPdfWriter QPdfWriter;
 typedef struct QPoint QPoint;
 typedef struct QTimerEvent QTimerEvent;
+typedef struct QUuid QUuid;
 #endif
 
 QPdfWriter* QPdfWriter_new(struct miqt_string filename);
@@ -58,20 +62,28 @@ void QPdfWriter_virtbase(QPdfWriter* src, QObject** outptr_QObject, QPagedPaintD
 QMetaObject* QPdfWriter_metaObject(const QPdfWriter* self);
 void* QPdfWriter_metacast(QPdfWriter* self, const char* param1);
 struct miqt_string QPdfWriter_tr(const char* s);
-void QPdfWriter_setPdfVersion(QPdfWriter* self, int version);
-int QPdfWriter_pdfVersion(const QPdfWriter* self);
+void QPdfWriter_setPdfVersion(QPdfWriter* self, PdfVersion version);
+PdfVersion QPdfWriter_pdfVersion(const QPdfWriter* self);
 struct miqt_string QPdfWriter_title(const QPdfWriter* self);
 void QPdfWriter_setTitle(QPdfWriter* self, struct miqt_string title);
 struct miqt_string QPdfWriter_creator(const QPdfWriter* self);
 void QPdfWriter_setCreator(QPdfWriter* self, struct miqt_string creator);
+QUuid* QPdfWriter_documentId(const QPdfWriter* self);
+void QPdfWriter_setDocumentId(QPdfWriter* self, QUuid* documentId);
+struct miqt_string QPdfWriter_author(const QPdfWriter* self);
+void QPdfWriter_setAuthor(QPdfWriter* self, struct miqt_string author);
 bool QPdfWriter_newPage(QPdfWriter* self);
 void QPdfWriter_setResolution(QPdfWriter* self, int resolution);
 int QPdfWriter_resolution(const QPdfWriter* self);
 void QPdfWriter_setDocumentXmpMetadata(QPdfWriter* self, struct miqt_string xmpMetadata);
 struct miqt_string QPdfWriter_documentXmpMetadata(const QPdfWriter* self);
 void QPdfWriter_addFileAttachment(QPdfWriter* self, struct miqt_string fileName, struct miqt_string data);
+ColorModel QPdfWriter_colorModel(const QPdfWriter* self);
+void QPdfWriter_setColorModel(QPdfWriter* self, ColorModel model);
+QPdfOutputIntent* QPdfWriter_outputIntent(const QPdfWriter* self);
+void QPdfWriter_setOutputIntent(QPdfWriter* self, QPdfOutputIntent* intent);
 QPaintEngine* QPdfWriter_paintEngine(const QPdfWriter* self);
-int QPdfWriter_metric(const QPdfWriter* self, int id);
+int QPdfWriter_metric(const QPdfWriter* self, PaintDeviceMetric id);
 struct miqt_string QPdfWriter_tr2(const char* s, const char* c);
 struct miqt_string QPdfWriter_tr3(const char* s, const char* c, int n);
 void QPdfWriter_addFileAttachment2(QPdfWriter* self, struct miqt_string fileName, struct miqt_string data, struct miqt_string mimeType);
@@ -81,7 +93,7 @@ bool QPdfWriter_virtualbase_newPage(void* self);
 bool QPdfWriter_override_virtual_paintEngine(void* self, intptr_t slot);
 QPaintEngine* QPdfWriter_virtualbase_paintEngine(const void* self);
 bool QPdfWriter_override_virtual_metric(void* self, intptr_t slot);
-int QPdfWriter_virtualbase_metric(const void* self, int id);
+int QPdfWriter_virtualbase_metric(const void* self, PaintDeviceMetric id);
 bool QPdfWriter_override_virtual_event(void* self, intptr_t slot);
 bool QPdfWriter_virtualbase_event(void* self, QEvent* event);
 bool QPdfWriter_override_virtual_eventFilter(void* self, intptr_t slot);
@@ -119,6 +131,7 @@ QObject* QPdfWriter_protectedbase_sender(bool* _dynamic_cast_ok, const void* sel
 int QPdfWriter_protectedbase_senderSignalIndex(bool* _dynamic_cast_ok, const void* self);
 int QPdfWriter_protectedbase_receivers(bool* _dynamic_cast_ok, const void* self, const char* signal);
 bool QPdfWriter_protectedbase_isSignalConnected(bool* _dynamic_cast_ok, const void* self, QMetaMethod* signal);
+double QPdfWriter_protectedbase_getDecodedMetricF(bool* _dynamic_cast_ok, const void* self, PaintDeviceMetric metricA, PaintDeviceMetric metricB);
 
 void QPdfWriter_delete(QPdfWriter* self);
 

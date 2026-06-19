@@ -24,7 +24,6 @@ extern "C" {
 
 void miqt_exec_callback_QObject_destroyed(intptr_t);
 void miqt_exec_callback_QObject_destroyedWithQObject(intptr_t, QObject*);
-void miqt_exec_callback_QObject_objectNameChanged(intptr_t, struct miqt_string);
 bool miqt_exec_callback_QObject_event(QObject*, intptr_t, QEvent*);
 bool miqt_exec_callback_QObject_eventFilter(QObject*, intptr_t, QObject*, QEvent*);
 void miqt_exec_callback_QObject_timerEvent(QObject*, intptr_t, QTimerEvent*);
@@ -235,6 +234,10 @@ bool QObject_isQuickItemType(const QObject* self) {
 	return self->isQuickItemType();
 }
 
+bool QObject_isQmlExposed(const QObject* self) {
+	return self->isQmlExposed();
+}
+
 bool QObject_signalsBlocked(const QObject* self) {
 	return self->signalsBlocked();
 }
@@ -247,8 +250,8 @@ QThread* QObject_thread(const QObject* self) {
 	return self->thread();
 }
 
-void QObject_moveToThread(QObject* self, QThread* thread) {
-	self->moveToThread(thread);
+bool QObject_moveToThread(QObject* self, QThread* thread) {
+	return self->moveToThread(thread);
 }
 
 int QObject_startTimer(QObject* self, int interval) {
@@ -257,6 +260,10 @@ int QObject_startTimer(QObject* self, int interval) {
 
 void QObject_killTimer(QObject* self, int id) {
 	self->killTimer(static_cast<int>(id));
+}
+
+void QObject_killTimerWithId(QObject* self, int id) {
+	self->killTimer(static_cast<Qt::TimerId>(id));
 }
 
 struct miqt_array /* of QObject* */  QObject_children(const QObject* self) {
@@ -551,20 +558,6 @@ bool QObject_protectedbase_isSignalConnected(bool* _dynamic_cast_ok, const void*
 	return self_cast->isSignalConnected(*signal);
 }
 
-void QObject_connect_objectNameChanged(QObject* self, intptr_t slot) {
-	QObject::connect(self, &QObject::objectNameChanged, self, [=](const QString& objectName) {
-		const QString objectName_ret = objectName;
-		// Convert QString from UTF-16 in C++ RAII memory to UTF-8 in manually-managed C memory
-		QByteArray objectName_b = objectName_ret.toUtf8();
-		struct miqt_string objectName_ms;
-		objectName_ms.len = objectName_b.length();
-		objectName_ms.data = static_cast<char*>(malloc(objectName_ms.len));
-		memcpy(objectName_ms.data, objectName_b.data(), objectName_ms.len);
-		struct miqt_string sigval1 = objectName_ms;
-		miqt_exec_callback_QObject_objectNameChanged(slot, sigval1);
-	});
-}
-
 void QObject_delete(QObject* self) {
 	delete self;
 }
@@ -583,6 +576,10 @@ void QSignalBlocker_reblock(QSignalBlocker* self) {
 
 void QSignalBlocker_unblock(QSignalBlocker* self) {
 	self->unblock();
+}
+
+void QSignalBlocker_dismiss(QSignalBlocker* self) {
+	self->dismiss();
 }
 
 void QSignalBlocker_delete(QSignalBlocker* self) {

@@ -15,15 +15,21 @@ extern "C" {
 #endif
 
 #ifdef __cplusplus
+class QAnyStringView;
+class QByteArrayView;
 class QJsonArray;
 class QJsonObject;
+class QJsonParseError;
 class QJsonValue;
 class QJsonValueConstRef;
 class QJsonValueRef;
 class QVariant;
 #else
+typedef struct QAnyStringView QAnyStringView;
+typedef struct QByteArrayView QByteArrayView;
 typedef struct QJsonArray QJsonArray;
 typedef struct QJsonObject QJsonObject;
+typedef struct QJsonParseError QJsonParseError;
 typedef struct QJsonValue QJsonValue;
 typedef struct QJsonValueConstRef QJsonValueConstRef;
 typedef struct QJsonValueRef QJsonValueRef;
@@ -40,12 +46,14 @@ QJsonValue* QJsonValue_new7(const char* s);
 QJsonValue* QJsonValue_new8(QJsonArray* a);
 QJsonValue* QJsonValue_new9(QJsonObject* o);
 QJsonValue* QJsonValue_new10(QJsonValue* other);
-QJsonValue* QJsonValue_new11(int param1);
+QJsonValue* QJsonValue_new11(Type param1);
 void QJsonValue_operatorAssign(QJsonValue* self, QJsonValue* other);
 void QJsonValue_swap(QJsonValue* self, QJsonValue* other);
 QJsonValue* QJsonValue_fromVariant(QVariant* variant);
 QVariant* QJsonValue_toVariant(const QJsonValue* self);
-int QJsonValue_type(const QJsonValue* self);
+QJsonValue* QJsonValue_fromJson(QByteArrayView* json);
+struct miqt_string QJsonValue_toJson(const QJsonValue* self);
+Type QJsonValue_type(const QJsonValue* self);
 bool QJsonValue_isNull(const QJsonValue* self);
 bool QJsonValue_isBool(const QJsonValue* self);
 bool QJsonValue_isDouble(const QJsonValue* self);
@@ -59,18 +67,20 @@ long long QJsonValue_toInteger(const QJsonValue* self);
 double QJsonValue_toDouble(const QJsonValue* self);
 struct miqt_string QJsonValue_toString(const QJsonValue* self);
 struct miqt_string QJsonValue_toStringWithDefaultValue(const QJsonValue* self, struct miqt_string defaultValue);
+QAnyStringView* QJsonValue_toStringView(const QJsonValue* self);
 QJsonArray* QJsonValue_toArray(const QJsonValue* self);
 QJsonArray* QJsonValue_toArrayWithDefaultValue(const QJsonValue* self, QJsonArray* defaultValue);
 QJsonObject* QJsonValue_toObject(const QJsonValue* self);
 QJsonObject* QJsonValue_toObjectWithDefaultValue(const QJsonValue* self, QJsonObject* defaultValue);
 QJsonValue* QJsonValue_operatorSubscript(const QJsonValue* self, struct miqt_string key);
 QJsonValue* QJsonValue_operatorSubscriptWithQsizetype(const QJsonValue* self, ptrdiff_t i);
-bool QJsonValue_operatorEqual(const QJsonValue* self, QJsonValue* other);
-bool QJsonValue_operatorNotEqual(const QJsonValue* self, QJsonValue* other);
+QJsonValue* QJsonValue_fromJson2(QByteArrayView* json, QJsonParseError* error);
+struct miqt_string QJsonValue_toJsonWithFormat(const QJsonValue* self, JsonFormat format);
 bool QJsonValue_toBoolWithDefaultValue(const QJsonValue* self, bool defaultValue);
 int QJsonValue_toIntWithDefaultValue(const QJsonValue* self, int defaultValue);
 long long QJsonValue_toIntegerWithDefaultValue(const QJsonValue* self, long long defaultValue);
 double QJsonValue_toDoubleWithDefaultValue(const QJsonValue* self, double defaultValue);
+QAnyStringView* QJsonValue_toStringViewWithDefaultValue(const QJsonValue* self, QAnyStringView* defaultValue);
 
 void QJsonValue_delete(QJsonValue* self);
 
@@ -90,16 +100,16 @@ int QJsonValueConstRef_toInt(const QJsonValueConstRef* self);
 long long QJsonValueConstRef_toInteger(const QJsonValueConstRef* self);
 double QJsonValueConstRef_toDouble(const QJsonValueConstRef* self);
 struct miqt_string QJsonValueConstRef_toString(const QJsonValueConstRef* self);
+QAnyStringView* QJsonValueConstRef_toStringView(const QJsonValueConstRef* self);
 QJsonArray* QJsonValueConstRef_toArray(const QJsonValueConstRef* self);
 QJsonObject* QJsonValueConstRef_toObject(const QJsonValueConstRef* self);
 QJsonValue* QJsonValueConstRef_operatorSubscriptWithQsizetype(const QJsonValueConstRef* self, ptrdiff_t i);
-bool QJsonValueConstRef_operatorEqual(const QJsonValueConstRef* self, QJsonValue* other);
-bool QJsonValueConstRef_operatorNotEqual(const QJsonValueConstRef* self, QJsonValue* other);
 bool QJsonValueConstRef_toBoolWithDefaultValue(const QJsonValueConstRef* self, bool defaultValue);
 int QJsonValueConstRef_toIntWithDefaultValue(const QJsonValueConstRef* self, int defaultValue);
 long long QJsonValueConstRef_toIntegerWithDefaultValue(const QJsonValueConstRef* self, long long defaultValue);
 double QJsonValueConstRef_toDoubleWithDefaultValue(const QJsonValueConstRef* self, double defaultValue);
 struct miqt_string QJsonValueConstRef_toStringWithDefaultValue(const QJsonValueConstRef* self, struct miqt_string defaultValue);
+QAnyStringView* QJsonValueConstRef_toStringViewWithDefaultValue(const QJsonValueConstRef* self, QAnyStringView* defaultValue);
 
 void QJsonValueConstRef_delete(QJsonValueConstRef* self);
 
@@ -124,16 +134,16 @@ int QJsonValueRef_toInt(const QJsonValueRef* self);
 long long QJsonValueRef_toInteger(const QJsonValueRef* self);
 double QJsonValueRef_toDouble(const QJsonValueRef* self);
 struct miqt_string QJsonValueRef_toString(const QJsonValueRef* self);
+QAnyStringView* QJsonValueRef_toStringView(const QJsonValueRef* self);
 QJsonArray* QJsonValueRef_toArray(const QJsonValueRef* self);
 QJsonObject* QJsonValueRef_toObject(const QJsonValueRef* self);
 QJsonValue* QJsonValueRef_operatorSubscriptWithQsizetype(const QJsonValueRef* self, ptrdiff_t i);
-bool QJsonValueRef_operatorEqual(const QJsonValueRef* self, QJsonValue* other);
-bool QJsonValueRef_operatorNotEqual(const QJsonValueRef* self, QJsonValue* other);
 bool QJsonValueRef_toBoolWithDefaultValue(const QJsonValueRef* self, bool defaultValue);
 int QJsonValueRef_toIntWithDefaultValue(const QJsonValueRef* self, int defaultValue);
 long long QJsonValueRef_toIntegerWithDefaultValue(const QJsonValueRef* self, long long defaultValue);
 double QJsonValueRef_toDoubleWithDefaultValue(const QJsonValueRef* self, double defaultValue);
 struct miqt_string QJsonValueRef_toStringWithDefaultValue(const QJsonValueRef* self, struct miqt_string defaultValue);
+QAnyStringView* QJsonValueRef_toStringViewWithDefaultValue(const QJsonValueRef* self, QAnyStringView* defaultValue);
 
 void QJsonValueRef_delete(QJsonValueRef* self);
 

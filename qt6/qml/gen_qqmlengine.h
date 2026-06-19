@@ -54,8 +54,8 @@ void QQmlImageProviderBase_virtbase(QQmlImageProviderBase* src, QObject** outptr
 QMetaObject* QQmlImageProviderBase_metaObject(const QQmlImageProviderBase* self);
 void* QQmlImageProviderBase_metacast(QQmlImageProviderBase* self, const char* param1);
 struct miqt_string QQmlImageProviderBase_tr(const char* s);
-int QQmlImageProviderBase_imageType(const QQmlImageProviderBase* self);
-int QQmlImageProviderBase_flags(const QQmlImageProviderBase* self);
+ImageType QQmlImageProviderBase_imageType(const QQmlImageProviderBase* self);
+Flags QQmlImageProviderBase_flags(const QQmlImageProviderBase* self);
 struct miqt_string QQmlImageProviderBase_tr2(const char* s, const char* c);
 struct miqt_string QQmlImageProviderBase_tr3(const char* s, const char* c, int n);
 
@@ -99,8 +99,11 @@ QUrl* QQmlEngine_baseUrl(const QQmlEngine* self);
 void QQmlEngine_setBaseUrl(QQmlEngine* self, QUrl* baseUrl);
 bool QQmlEngine_outputWarningsToStandardError(const QQmlEngine* self);
 void QQmlEngine_setOutputWarningsToStandardError(QQmlEngine* self, bool outputWarningsToStandardError);
+void QQmlEngine_markCurrentFunctionAsTranslationBinding(QQmlEngine* self);
 void QQmlEngine_captureProperty(const QQmlEngine* self, QObject* object, QMetaProperty* property);
 void QQmlEngine_retranslate(QQmlEngine* self);
+void QQmlEngine_offlineStoragePathChanged(QQmlEngine* self);
+void QQmlEngine_connect_offlineStoragePathChanged(QQmlEngine* self, intptr_t slot);
 QQmlContext* QQmlEngine_contextForObject(QObject* param1);
 void QQmlEngine_setContextForObject(QObject* param1, QQmlContext* param2);
 bool QQmlEngine_event(QQmlEngine* self, QEvent* param1);

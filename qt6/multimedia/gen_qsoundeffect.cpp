@@ -288,9 +288,8 @@ bool QSoundEffect_isPlaying(const QSoundEffect* self) {
 	return self->isPlaying();
 }
 
-int QSoundEffect_status(const QSoundEffect* self) {
-	QSoundEffect::Status _ret = self->status();
-	return static_cast<int>(_ret);
+Status QSoundEffect_status(const QSoundEffect* self) {
+	return self->status();
 }
 
 void QSoundEffect_sourceChanged(QSoundEffect* self) {

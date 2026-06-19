@@ -58,8 +58,8 @@ void QLocalServer_setMaxPendingConnections(QLocalServer* self, int numConnection
 bool QLocalServer_waitForNewConnection(QLocalServer* self);
 void QLocalServer_setListenBacklogSize(QLocalServer* self, int size);
 int QLocalServer_listenBacklogSize(const QLocalServer* self);
-void QLocalServer_setSocketOptions(QLocalServer* self, int options);
-int QLocalServer_socketOptions(const QLocalServer* self);
+void QLocalServer_setSocketOptions(QLocalServer* self, SocketOptions options);
+SocketOptions QLocalServer_socketOptions(const QLocalServer* self);
 intptr_t QLocalServer_socketDescriptor(const QLocalServer* self);
 void QLocalServer_incomingConnection(QLocalServer* self, uintptr_t socketDescriptor);
 struct miqt_string QLocalServer_tr2(const char* s, const char* c);
@@ -88,6 +88,7 @@ void QLocalServer_virtualbase_connectNotify(void* self, QMetaMethod* signal);
 bool QLocalServer_override_virtual_disconnectNotify(void* self, intptr_t slot);
 void QLocalServer_virtualbase_disconnectNotify(void* self, QMetaMethod* signal);
 
+void QLocalServer_protectedbase_addPendingConnection(bool* _dynamic_cast_ok, void* self, QLocalSocket* socket);
 QObject* QLocalServer_protectedbase_sender(bool* _dynamic_cast_ok, const void* self);
 int QLocalServer_protectedbase_senderSignalIndex(bool* _dynamic_cast_ok, const void* self);
 int QLocalServer_protectedbase_receivers(bool* _dynamic_cast_ok, const void* self, const char* signal);

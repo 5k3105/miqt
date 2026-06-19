@@ -51,9 +51,9 @@ QJSValue* QJSEngine_newQObject(QJSEngine* self, QObject* object);
 QJSValue* QJSEngine_newQMetaObject(QJSEngine* self, QMetaObject* metaObject);
 QJSValue* QJSEngine_newErrorObject(QJSEngine* self, int errorType);
 void QJSEngine_collectGarbage(QJSEngine* self);
-void QJSEngine_setObjectOwnership(QObject* param1, int param2);
-int QJSEngine_objectOwnership(QObject* param1);
-void QJSEngine_installExtensions(QJSEngine* self, int extensions);
+void QJSEngine_setObjectOwnership(QObject* param1, ObjectOwnership param2);
+ObjectOwnership QJSEngine_objectOwnership(QObject* param1);
+void QJSEngine_installExtensions(QJSEngine* self, Extensions extensions);
 void QJSEngine_setInterrupted(QJSEngine* self, bool interrupted);
 bool QJSEngine_isInterrupted(const QJSEngine* self);
 void QJSEngine_throwError(QJSEngine* self, struct miqt_string message);
@@ -72,7 +72,7 @@ QJSValue* QJSEngine_evaluate3(QJSEngine* self, struct miqt_string program, struc
 QJSValue* QJSEngine_evaluate4(QJSEngine* self, struct miqt_string program, struct miqt_string fileName, int lineNumber, struct miqt_array /* of struct miqt_string */  exceptionStackTrace);
 QJSValue* QJSEngine_newArrayWithLength(QJSEngine* self, unsigned int length);
 QJSValue* QJSEngine_newErrorObject2(QJSEngine* self, int errorType, struct miqt_string message);
-void QJSEngine_installExtensions2(QJSEngine* self, int extensions, QJSValue* object);
+void QJSEngine_installExtensions2(QJSEngine* self, Extensions extensions, QJSValue* object);
 void QJSEngine_throwError2(QJSEngine* self, int errorType, struct miqt_string message);
 
 bool QJSEngine_override_virtual_event(void* self, intptr_t slot);

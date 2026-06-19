@@ -103,7 +103,7 @@ void miqt_exec_callback_QWidget_showEvent(QWidget*, intptr_t, QShowEvent*);
 void miqt_exec_callback_QWidget_hideEvent(QWidget*, intptr_t, QHideEvent*);
 bool miqt_exec_callback_QWidget_nativeEvent(QWidget*, intptr_t, struct miqt_string, void*, intptr_t*);
 void miqt_exec_callback_QWidget_changeEvent(QWidget*, intptr_t, QEvent*);
-int miqt_exec_callback_QWidget_metric(const QWidget*, intptr_t, int);
+int miqt_exec_callback_QWidget_metric(const QWidget*, intptr_t, PaintDeviceMetric);
 void miqt_exec_callback_QWidget_initPainter(const QWidget*, intptr_t, QPainter*);
 QPaintDevice* miqt_exec_callback_QWidget_redirected(const QWidget*, intptr_t, QPoint*);
 QPainter* miqt_exec_callback_QWidget_sharedPainter(const QWidget*, intptr_t);
@@ -706,18 +706,17 @@ public:
 	intptr_t handle__metric = 0;
 
 	// Subclass to allow providing a Go implementation
-	virtual int metric(QPaintDevice::PaintDeviceMetric param1) const override {
+	virtual int metric(PaintDeviceMetric param1) const override {
 		if (handle__metric == 0) {
 			return QWidget::metric(param1);
 		}
 
-		QPaintDevice::PaintDeviceMetric param1_ret = param1;
-		int sigval1 = static_cast<int>(param1_ret);
+		PaintDeviceMetric sigval1 = param1;
 		int callback_return_value = miqt_exec_callback_QWidget_metric(this, handle__metric, sigval1);
 		return static_cast<int>(callback_return_value);
 	}
 
-	friend int QWidget_virtualbase_metric(const void* self, int param1);
+	friend int QWidget_virtualbase_metric(const void* self, PaintDeviceMetric param1);
 
 	// cgo.Handle value for overwritten implementation
 	intptr_t handle__initPainter = 0;
@@ -939,6 +938,7 @@ public:
 	friend int QWidget_protectedbase_senderSignalIndex(bool* _dynamic_cast_ok, const void* self);
 	friend int QWidget_protectedbase_receivers(bool* _dynamic_cast_ok, const void* self, const char* signal);
 	friend bool QWidget_protectedbase_isSignalConnected(bool* _dynamic_cast_ok, const void* self, QMetaMethod* signal);
+	friend double QWidget_protectedbase_getDecodedMetricF(bool* _dynamic_cast_ok, const void* self, PaintDeviceMetric metricA, PaintDeviceMetric metricB);
 };
 
 QWidget* QWidget_new(QWidget* parent) {
@@ -1570,6 +1570,22 @@ void QWidget_setAccessibleDescription(QWidget* self, struct miqt_string descript
 	self->setAccessibleDescription(description_QString);
 }
 
+struct miqt_string QWidget_accessibleIdentifier(const QWidget* self) {
+	QString _ret = self->accessibleIdentifier();
+	// Convert QString from UTF-16 in C++ RAII memory to UTF-8 in manually-managed C memory
+	QByteArray _b = _ret.toUtf8();
+	struct miqt_string _ms;
+	_ms.len = _b.length();
+	_ms.data = static_cast<char*>(malloc(_ms.len));
+	memcpy(_ms.data, _b.data(), _ms.len);
+	return _ms;
+}
+
+void QWidget_setAccessibleIdentifier(QWidget* self, struct miqt_string identifier) {
+	QString identifier_QString = QString::fromUtf8(identifier.data, identifier.len);
+	self->setAccessibleIdentifier(identifier_QString);
+}
+
 void QWidget_setLayoutDirection(QWidget* self, int direction) {
 	self->setLayoutDirection(static_cast<Qt::LayoutDirection>(direction));
 }
@@ -2071,6 +2087,10 @@ QWidget* QWidget_childAtWithQPoint(const QWidget* self, QPoint* p) {
 	return self->childAt(*p);
 }
 
+QWidget* QWidget_childAtWithQPointF(const QWidget* self, QPointF* p) {
+	return self->childAt(*p);
+}
+
 void QWidget_setAttribute(QWidget* self, int param1) {
 	self->setAttribute(static_cast<Qt::WidgetAttribute>(param1));
 }
@@ -2226,8 +2246,8 @@ void QWidget_render3(QWidget* self, QPaintDevice* target, QPoint* targetOffset, 
 	self->render(target, *targetOffset, *sourceRegion);
 }
 
-void QWidget_render4(QWidget* self, QPaintDevice* target, QPoint* targetOffset, QRegion* sourceRegion, int renderFlags) {
-	self->render(target, *targetOffset, *sourceRegion, static_cast<QWidget::RenderFlags>(renderFlags));
+void QWidget_render4(QWidget* self, QPaintDevice* target, QPoint* targetOffset, QRegion* sourceRegion, RenderFlags renderFlags) {
+	self->render(target, *targetOffset, *sourceRegion, renderFlags);
 }
 
 void QWidget_render5(QWidget* self, QPainter* painter, QPoint* targetOffset) {
@@ -2238,8 +2258,8 @@ void QWidget_render6(QWidget* self, QPainter* painter, QPoint* targetOffset, QRe
 	self->render(painter, *targetOffset, *sourceRegion);
 }
 
-void QWidget_render7(QWidget* self, QPainter* painter, QPoint* targetOffset, QRegion* sourceRegion, int renderFlags) {
-	self->render(painter, *targetOffset, *sourceRegion, static_cast<QWidget::RenderFlags>(renderFlags));
+void QWidget_render7(QWidget* self, QPainter* painter, QPoint* targetOffset, QRegion* sourceRegion, RenderFlags renderFlags) {
+	self->render(painter, *targetOffset, *sourceRegion, renderFlags);
 }
 
 QPixmap* QWidget_grabWithRectangle(QWidget* self, QRect* rectangle) {
@@ -2765,8 +2785,8 @@ bool QWidget_override_virtual_metric(void* self, intptr_t slot) {
 	return true;
 }
 
-int QWidget_virtualbase_metric(const void* self, int param1) {
-	return static_cast<const MiqtVirtualQWidget*>(self)->QWidget::metric(static_cast<MiqtVirtualQWidget::PaintDeviceMetric>(param1));
+int QWidget_virtualbase_metric(const void* self, PaintDeviceMetric param1) {
+	return static_cast<const MiqtVirtualQWidget*>(self)->QWidget::metric(param1);
 }
 
 bool QWidget_override_virtual_initPainter(void* self, intptr_t slot) {
@@ -3100,6 +3120,17 @@ bool QWidget_protectedbase_isSignalConnected(bool* _dynamic_cast_ok, const void*
 
 	*_dynamic_cast_ok = true;
 	return self_cast->isSignalConnected(*signal);
+}
+
+double QWidget_protectedbase_getDecodedMetricF(bool* _dynamic_cast_ok, const void* self, PaintDeviceMetric metricA, PaintDeviceMetric metricB) {
+	MiqtVirtualQWidget* self_cast = dynamic_cast<MiqtVirtualQWidget*>( (QWidget*)(self) );
+	if (self_cast == nullptr) {
+		*_dynamic_cast_ok = false;
+		return 0;
+	}
+
+	*_dynamic_cast_ok = true;
+	return self_cast->getDecodedMetricF(metricA, metricB);
 }
 
 void QWidget_delete(QWidget* self) {

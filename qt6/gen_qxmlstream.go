@@ -10,6 +10,7 @@ import "C"
 
 import (
 	"runtime"
+	"runtime/cgo"
 	"unsafe"
 )
 
@@ -45,6 +46,16 @@ const (
 	QXmlStreamReader__CustomError                 QXmlStreamReader__Error = 2
 	QXmlStreamReader__NotWellFormedError          QXmlStreamReader__Error = 3
 	QXmlStreamReader__PrematureEndOfDocumentError QXmlStreamReader__Error = 4
+)
+
+type QXmlStreamWriter__Error int
+
+const (
+	QXmlStreamWriter__None             QXmlStreamWriter__Error = 0
+	QXmlStreamWriter__IO               QXmlStreamWriter__Error = 1
+	QXmlStreamWriter__Encoding         QXmlStreamWriter__Error = 2
+	QXmlStreamWriter__InvalidCharacter QXmlStreamWriter__Error = 3
+	QXmlStreamWriter__Custom           QXmlStreamWriter__Error = 4
 )
 
 type QXmlStreamAttribute struct {
@@ -127,14 +138,6 @@ func (this *QXmlStreamAttribute) IsDefault() bool {
 	return (bool)(C.QXmlStreamAttribute_isDefault(this.h))
 }
 
-func (this *QXmlStreamAttribute) OperatorEqual(other *QXmlStreamAttribute) bool {
-	return (bool)(C.QXmlStreamAttribute_operatorEqual(this.h, other.cPointer()))
-}
-
-func (this *QXmlStreamAttribute) OperatorNotEqual(other *QXmlStreamAttribute) bool {
-	return (bool)(C.QXmlStreamAttribute_operatorNotEqual(this.h, other.cPointer()))
-}
-
 func (this *QXmlStreamAttribute) OperatorAssign(param1 *QXmlStreamAttribute) {
 	C.QXmlStreamAttribute_operatorAssign(this.h, param1.cPointer())
 }
@@ -205,12 +208,10 @@ func NewQXmlStreamNamespaceDeclaration2(prefix string, namespaceUri string) *QXm
 	return newQXmlStreamNamespaceDeclaration(C.QXmlStreamNamespaceDeclaration_new2(prefix_ms, namespaceUri_ms))
 }
 
-func (this *QXmlStreamNamespaceDeclaration) OperatorEqual(other *QXmlStreamNamespaceDeclaration) bool {
-	return (bool)(C.QXmlStreamNamespaceDeclaration_operatorEqual(this.h, other.cPointer()))
-}
+// NewQXmlStreamNamespaceDeclaration3 constructs a new QXmlStreamNamespaceDeclaration object.
+func NewQXmlStreamNamespaceDeclaration3(param1 *QXmlStreamNamespaceDeclaration) *QXmlStreamNamespaceDeclaration {
 
-func (this *QXmlStreamNamespaceDeclaration) OperatorNotEqual(other *QXmlStreamNamespaceDeclaration) bool {
-	return (bool)(C.QXmlStreamNamespaceDeclaration_operatorNotEqual(this.h, other.cPointer()))
+	return newQXmlStreamNamespaceDeclaration(C.QXmlStreamNamespaceDeclaration_new3(param1.cPointer()))
 }
 
 // Delete this object from C++ memory.
@@ -265,12 +266,10 @@ func NewQXmlStreamNotationDeclaration() *QXmlStreamNotationDeclaration {
 	return newQXmlStreamNotationDeclaration(C.QXmlStreamNotationDeclaration_new())
 }
 
-func (this *QXmlStreamNotationDeclaration) OperatorEqual(other *QXmlStreamNotationDeclaration) bool {
-	return (bool)(C.QXmlStreamNotationDeclaration_operatorEqual(this.h, other.cPointer()))
-}
+// NewQXmlStreamNotationDeclaration2 constructs a new QXmlStreamNotationDeclaration object.
+func NewQXmlStreamNotationDeclaration2(param1 *QXmlStreamNotationDeclaration) *QXmlStreamNotationDeclaration {
 
-func (this *QXmlStreamNotationDeclaration) OperatorNotEqual(other *QXmlStreamNotationDeclaration) bool {
-	return (bool)(C.QXmlStreamNotationDeclaration_operatorNotEqual(this.h, other.cPointer()))
+	return newQXmlStreamNotationDeclaration(C.QXmlStreamNotationDeclaration_new2(param1.cPointer()))
 }
 
 // Delete this object from C++ memory.
@@ -325,12 +324,10 @@ func NewQXmlStreamEntityDeclaration() *QXmlStreamEntityDeclaration {
 	return newQXmlStreamEntityDeclaration(C.QXmlStreamEntityDeclaration_new())
 }
 
-func (this *QXmlStreamEntityDeclaration) OperatorEqual(other *QXmlStreamEntityDeclaration) bool {
-	return (bool)(C.QXmlStreamEntityDeclaration_operatorEqual(this.h, other.cPointer()))
-}
+// NewQXmlStreamEntityDeclaration2 constructs a new QXmlStreamEntityDeclaration object.
+func NewQXmlStreamEntityDeclaration2(param1 *QXmlStreamEntityDeclaration) *QXmlStreamEntityDeclaration {
 
-func (this *QXmlStreamEntityDeclaration) OperatorNotEqual(other *QXmlStreamEntityDeclaration) bool {
-	return (bool)(C.QXmlStreamEntityDeclaration_operatorNotEqual(this.h, other.cPointer()))
+	return newQXmlStreamEntityDeclaration(C.QXmlStreamEntityDeclaration_new2(param1.cPointer()))
 }
 
 // Delete this object from C++ memory.
@@ -379,6 +376,12 @@ func UnsafeNewQXmlStreamEntityResolver(h unsafe.Pointer) *QXmlStreamEntityResolv
 	return newQXmlStreamEntityResolver((*C.QXmlStreamEntityResolver)(h))
 }
 
+// NewQXmlStreamEntityResolver constructs a new QXmlStreamEntityResolver object.
+func NewQXmlStreamEntityResolver() *QXmlStreamEntityResolver {
+
+	return newQXmlStreamEntityResolver(C.QXmlStreamEntityResolver_new())
+}
+
 func (this *QXmlStreamEntityResolver) ResolveEntity(publicId string, systemId string) string {
 	publicId_ms := C.struct_miqt_string{}
 	publicId_ms.data = C.CString(publicId)
@@ -403,6 +406,94 @@ func (this *QXmlStreamEntityResolver) ResolveUndeclaredEntity(name string) strin
 	_ret := C.GoStringN(_ms.data, C.int(int64(_ms.len)))
 	C.free(unsafe.Pointer(_ms.data))
 	return _ret
+}
+
+func (this *QXmlStreamEntityResolver) callVirtualBase_ResolveEntity(publicId string, systemId string) string {
+	publicId_ms := C.struct_miqt_string{}
+	publicId_ms.data = C.CString(publicId)
+	publicId_ms.len = C.size_t(len(publicId))
+	defer C.free(unsafe.Pointer(publicId_ms.data))
+	systemId_ms := C.struct_miqt_string{}
+	systemId_ms.data = C.CString(systemId)
+	systemId_ms.len = C.size_t(len(systemId))
+	defer C.free(unsafe.Pointer(systemId_ms.data))
+
+	var _ms C.struct_miqt_string = C.QXmlStreamEntityResolver_virtualbase_resolveEntity(unsafe.Pointer(this.h), publicId_ms, systemId_ms)
+	_ret := C.GoStringN(_ms.data, C.int(int64(_ms.len)))
+	C.free(unsafe.Pointer(_ms.data))
+	return _ret
+}
+func (this *QXmlStreamEntityResolver) OnResolveEntity(slot func(super func(publicId string, systemId string) string, publicId string, systemId string) string) {
+	ok := C.QXmlStreamEntityResolver_override_virtual_resolveEntity(unsafe.Pointer(this.h), C.intptr_t(cgo.NewHandle(slot)))
+	if !ok {
+		panic("miqt: can only override virtual methods for directly constructed types")
+	}
+}
+
+//export miqt_exec_callback_QXmlStreamEntityResolver_resolveEntity
+func miqt_exec_callback_QXmlStreamEntityResolver_resolveEntity(self *C.QXmlStreamEntityResolver, cb C.intptr_t, publicId C.struct_miqt_string, systemId C.struct_miqt_string) C.struct_miqt_string {
+	gofunc, ok := cgo.Handle(cb).Value().(func(super func(publicId string, systemId string) string, publicId string, systemId string) string)
+	if !ok {
+		panic("miqt: callback of non-callback type (heap corruption?)")
+	}
+
+	// Convert all CABI parameters to Go parameters
+	var publicId_ms C.struct_miqt_string = publicId
+	publicId_ret := C.GoStringN(publicId_ms.data, C.int(int64(publicId_ms.len)))
+	C.free(unsafe.Pointer(publicId_ms.data))
+	slotval1 := publicId_ret
+	var systemId_ms C.struct_miqt_string = systemId
+	systemId_ret := C.GoStringN(systemId_ms.data, C.int(int64(systemId_ms.len)))
+	C.free(unsafe.Pointer(systemId_ms.data))
+	slotval2 := systemId_ret
+
+	virtualReturn := gofunc((&QXmlStreamEntityResolver{h: self}).callVirtualBase_ResolveEntity, slotval1, slotval2)
+	virtualReturn_ms := C.struct_miqt_string{}
+	virtualReturn_ms.data = C.CString(virtualReturn)
+	virtualReturn_ms.len = C.size_t(len(virtualReturn))
+
+	return virtualReturn_ms
+
+}
+
+func (this *QXmlStreamEntityResolver) callVirtualBase_ResolveUndeclaredEntity(name string) string {
+	name_ms := C.struct_miqt_string{}
+	name_ms.data = C.CString(name)
+	name_ms.len = C.size_t(len(name))
+	defer C.free(unsafe.Pointer(name_ms.data))
+
+	var _ms C.struct_miqt_string = C.QXmlStreamEntityResolver_virtualbase_resolveUndeclaredEntity(unsafe.Pointer(this.h), name_ms)
+	_ret := C.GoStringN(_ms.data, C.int(int64(_ms.len)))
+	C.free(unsafe.Pointer(_ms.data))
+	return _ret
+}
+func (this *QXmlStreamEntityResolver) OnResolveUndeclaredEntity(slot func(super func(name string) string, name string) string) {
+	ok := C.QXmlStreamEntityResolver_override_virtual_resolveUndeclaredEntity(unsafe.Pointer(this.h), C.intptr_t(cgo.NewHandle(slot)))
+	if !ok {
+		panic("miqt: can only override virtual methods for directly constructed types")
+	}
+}
+
+//export miqt_exec_callback_QXmlStreamEntityResolver_resolveUndeclaredEntity
+func miqt_exec_callback_QXmlStreamEntityResolver_resolveUndeclaredEntity(self *C.QXmlStreamEntityResolver, cb C.intptr_t, name C.struct_miqt_string) C.struct_miqt_string {
+	gofunc, ok := cgo.Handle(cb).Value().(func(super func(name string) string, name string) string)
+	if !ok {
+		panic("miqt: callback of non-callback type (heap corruption?)")
+	}
+
+	// Convert all CABI parameters to Go parameters
+	var name_ms C.struct_miqt_string = name
+	name_ret := C.GoStringN(name_ms.data, C.int(int64(name_ms.len)))
+	C.free(unsafe.Pointer(name_ms.data))
+	slotval1 := name_ret
+
+	virtualReturn := gofunc((&QXmlStreamEntityResolver{h: self}).callVirtualBase_ResolveUndeclaredEntity, slotval1)
+	virtualReturn_ms := C.struct_miqt_string{}
+	virtualReturn_ms.data = C.CString(virtualReturn)
+	virtualReturn_ms.len = C.size_t(len(virtualReturn))
+
+	return virtualReturn_ms
+
 }
 
 // Delete this object from C++ memory.
@@ -464,34 +555,9 @@ func NewQXmlStreamReader2(device *QIODevice) *QXmlStreamReader {
 }
 
 // NewQXmlStreamReader3 constructs a new QXmlStreamReader object.
-func NewQXmlStreamReader3(data []byte) *QXmlStreamReader {
-	data_alias := C.struct_miqt_string{}
-	if len(data) > 0 {
-		data_alias.data = (*C.char)(unsafe.Pointer(&data[0]))
-	} else {
-		data_alias.data = (*C.char)(unsafe.Pointer(nil))
-	}
-	data_alias.len = C.size_t(len(data))
+func NewQXmlStreamReader3(data QAnyStringView) *QXmlStreamReader {
 
-	return newQXmlStreamReader(C.QXmlStreamReader_new3(data_alias))
-}
-
-// NewQXmlStreamReader4 constructs a new QXmlStreamReader object.
-func NewQXmlStreamReader4(data string) *QXmlStreamReader {
-	data_ms := C.struct_miqt_string{}
-	data_ms.data = C.CString(data)
-	data_ms.len = C.size_t(len(data))
-	defer C.free(unsafe.Pointer(data_ms.data))
-
-	return newQXmlStreamReader(C.QXmlStreamReader_new4(data_ms))
-}
-
-// NewQXmlStreamReader5 constructs a new QXmlStreamReader object.
-func NewQXmlStreamReader5(data string) *QXmlStreamReader {
-	data_Cstring := C.CString(data)
-	defer C.free(unsafe.Pointer(data_Cstring))
-
-	return newQXmlStreamReader(C.QXmlStreamReader_new5(data_Cstring))
+	return newQXmlStreamReader(C.QXmlStreamReader_new3(data.cPointer()))
 }
 
 func (this *QXmlStreamReader) SetDevice(device *QIODevice) {
@@ -502,29 +568,8 @@ func (this *QXmlStreamReader) Device() *QIODevice {
 	return newQIODevice(C.QXmlStreamReader_device(this.h))
 }
 
-func (this *QXmlStreamReader) AddData(data []byte) {
-	data_alias := C.struct_miqt_string{}
-	if len(data) > 0 {
-		data_alias.data = (*C.char)(unsafe.Pointer(&data[0]))
-	} else {
-		data_alias.data = (*C.char)(unsafe.Pointer(nil))
-	}
-	data_alias.len = C.size_t(len(data))
-	C.QXmlStreamReader_addData(this.h, data_alias)
-}
-
-func (this *QXmlStreamReader) AddDataWithData(data string) {
-	data_ms := C.struct_miqt_string{}
-	data_ms.data = C.CString(data)
-	data_ms.len = C.size_t(len(data))
-	defer C.free(unsafe.Pointer(data_ms.data))
-	C.QXmlStreamReader_addDataWithData(this.h, data_ms)
-}
-
-func (this *QXmlStreamReader) AddData2(data string) {
-	data_Cstring := C.CString(data)
-	defer C.free(unsafe.Pointer(data_Cstring))
-	C.QXmlStreamReader_addData2(this.h, data_Cstring)
+func (this *QXmlStreamReader) AddData(data QAnyStringView) {
+	C.QXmlStreamReader_addData(this.h, data.cPointer())
 }
 
 func (this *QXmlStreamReader) Clear() {
@@ -535,8 +580,8 @@ func (this *QXmlStreamReader) AtEnd() bool {
 	return (bool)(C.QXmlStreamReader_atEnd(this.h))
 }
 
-func (this *QXmlStreamReader) ReadNext() QXmlStreamReader__TokenType {
-	return (QXmlStreamReader__TokenType)(C.QXmlStreamReader_readNext(this.h))
+func (this *QXmlStreamReader) ReadNext() TokenType {
+	int /* TODO  */
 }
 
 func (this *QXmlStreamReader) ReadNextStartElement() bool {
@@ -547,8 +592,15 @@ func (this *QXmlStreamReader) SkipCurrentElement() {
 	C.QXmlStreamReader_skipCurrentElement(this.h)
 }
 
-func (this *QXmlStreamReader) TokenType() QXmlStreamReader__TokenType {
-	return (QXmlStreamReader__TokenType)(C.QXmlStreamReader_tokenType(this.h))
+func (this *QXmlStreamReader) ReadRawInnerData() string {
+	var _ms C.struct_miqt_string = C.QXmlStreamReader_readRawInnerData(this.h)
+	_ret := C.GoStringN(_ms.data, C.int(int64(_ms.len)))
+	C.free(unsafe.Pointer(_ms.data))
+	return _ret
+}
+
+func (this *QXmlStreamReader) TokenType() TokenType {
+	int /* TODO  */
 }
 
 func (this *QXmlStreamReader) TokenString() string {
@@ -612,6 +664,10 @@ func (this *QXmlStreamReader) IsProcessingInstruction() bool {
 
 func (this *QXmlStreamReader) IsStandaloneDocument() bool {
 	return (bool)(C.QXmlStreamReader_isStandaloneDocument(this.h))
+}
+
+func (this *QXmlStreamReader) HasStandaloneDeclaration() bool {
+	return (bool)(C.QXmlStreamReader_hasStandaloneDeclaration(this.h))
 }
 
 func (this *QXmlStreamReader) LineNumber() int64 {
@@ -702,8 +758,8 @@ func (this *QXmlStreamReader) ErrorString() string {
 	return _ret
 }
 
-func (this *QXmlStreamReader) Error() QXmlStreamReader__Error {
-	return (QXmlStreamReader__Error)(C.QXmlStreamReader_error(this.h))
+func (this *QXmlStreamReader) Error() Error {
+	int /* TODO  */
 }
 
 func (this *QXmlStreamReader) HasError() bool {
@@ -718,8 +774,8 @@ func (this *QXmlStreamReader) EntityResolver() *QXmlStreamEntityResolver {
 	return newQXmlStreamEntityResolver(C.QXmlStreamReader_entityResolver(this.h))
 }
 
-func (this *QXmlStreamReader) ReadElementTextWithBehaviour(behaviour QXmlStreamReader__ReadElementTextBehaviour) string {
-	var _ms C.struct_miqt_string = C.QXmlStreamReader_readElementTextWithBehaviour(this.h, (C.int)(behaviour))
+func (this *QXmlStreamReader) ReadElementTextWithBehaviour(behaviour ReadElementTextBehaviour) string {
+	var _ms C.struct_miqt_string = C.QXmlStreamReader_readElementTextWithBehaviour(this.h, behaviour)
 	_ret := C.GoStringN(_ms.data, C.int(int64(_ms.len)))
 	C.free(unsafe.Pointer(_ms.data))
 	return _ret
@@ -815,116 +871,56 @@ func (this *QXmlStreamWriter) AutoFormattingIndent() int {
 	return (int)(C.QXmlStreamWriter_autoFormattingIndent(this.h))
 }
 
-func (this *QXmlStreamWriter) WriteAttribute(qualifiedName string, value string) {
-	qualifiedName_ms := C.struct_miqt_string{}
-	qualifiedName_ms.data = C.CString(qualifiedName)
-	qualifiedName_ms.len = C.size_t(len(qualifiedName))
-	defer C.free(unsafe.Pointer(qualifiedName_ms.data))
-	value_ms := C.struct_miqt_string{}
-	value_ms.data = C.CString(value)
-	value_ms.len = C.size_t(len(value))
-	defer C.free(unsafe.Pointer(value_ms.data))
-	C.QXmlStreamWriter_writeAttribute(this.h, qualifiedName_ms, value_ms)
+func (this *QXmlStreamWriter) SetStopWritingOnError(stop bool) {
+	C.QXmlStreamWriter_setStopWritingOnError(this.h, (C.bool)(stop))
 }
 
-func (this *QXmlStreamWriter) WriteAttribute2(namespaceUri string, name string, value string) {
-	namespaceUri_ms := C.struct_miqt_string{}
-	namespaceUri_ms.data = C.CString(namespaceUri)
-	namespaceUri_ms.len = C.size_t(len(namespaceUri))
-	defer C.free(unsafe.Pointer(namespaceUri_ms.data))
-	name_ms := C.struct_miqt_string{}
-	name_ms.data = C.CString(name)
-	name_ms.len = C.size_t(len(name))
-	defer C.free(unsafe.Pointer(name_ms.data))
-	value_ms := C.struct_miqt_string{}
-	value_ms.data = C.CString(value)
-	value_ms.len = C.size_t(len(value))
-	defer C.free(unsafe.Pointer(value_ms.data))
-	C.QXmlStreamWriter_writeAttribute2(this.h, namespaceUri_ms, name_ms, value_ms)
+func (this *QXmlStreamWriter) StopWritingOnError() bool {
+	return (bool)(C.QXmlStreamWriter_stopWritingOnError(this.h))
+}
+
+func (this *QXmlStreamWriter) WriteAttribute(qualifiedName QAnyStringView, value QAnyStringView) {
+	C.QXmlStreamWriter_writeAttribute(this.h, qualifiedName.cPointer(), value.cPointer())
+}
+
+func (this *QXmlStreamWriter) WriteAttribute2(namespaceUri QAnyStringView, name QAnyStringView, value QAnyStringView) {
+	C.QXmlStreamWriter_writeAttribute2(this.h, namespaceUri.cPointer(), name.cPointer(), value.cPointer())
 }
 
 func (this *QXmlStreamWriter) WriteAttributeWithAttribute(attribute *QXmlStreamAttribute) {
 	C.QXmlStreamWriter_writeAttributeWithAttribute(this.h, attribute.cPointer())
 }
 
-func (this *QXmlStreamWriter) WriteCDATA(text string) {
-	text_ms := C.struct_miqt_string{}
-	text_ms.data = C.CString(text)
-	text_ms.len = C.size_t(len(text))
-	defer C.free(unsafe.Pointer(text_ms.data))
-	C.QXmlStreamWriter_writeCDATA(this.h, text_ms)
+func (this *QXmlStreamWriter) WriteCDATA(text QAnyStringView) {
+	C.QXmlStreamWriter_writeCDATA(this.h, text.cPointer())
 }
 
-func (this *QXmlStreamWriter) WriteCharacters(text string) {
-	text_ms := C.struct_miqt_string{}
-	text_ms.data = C.CString(text)
-	text_ms.len = C.size_t(len(text))
-	defer C.free(unsafe.Pointer(text_ms.data))
-	C.QXmlStreamWriter_writeCharacters(this.h, text_ms)
+func (this *QXmlStreamWriter) WriteCharacters(text QAnyStringView) {
+	C.QXmlStreamWriter_writeCharacters(this.h, text.cPointer())
 }
 
-func (this *QXmlStreamWriter) WriteComment(text string) {
-	text_ms := C.struct_miqt_string{}
-	text_ms.data = C.CString(text)
-	text_ms.len = C.size_t(len(text))
-	defer C.free(unsafe.Pointer(text_ms.data))
-	C.QXmlStreamWriter_writeComment(this.h, text_ms)
+func (this *QXmlStreamWriter) WriteComment(text QAnyStringView) {
+	C.QXmlStreamWriter_writeComment(this.h, text.cPointer())
 }
 
-func (this *QXmlStreamWriter) WriteDTD(dtd string) {
-	dtd_ms := C.struct_miqt_string{}
-	dtd_ms.data = C.CString(dtd)
-	dtd_ms.len = C.size_t(len(dtd))
-	defer C.free(unsafe.Pointer(dtd_ms.data))
-	C.QXmlStreamWriter_writeDTD(this.h, dtd_ms)
+func (this *QXmlStreamWriter) WriteDTD(dtd QAnyStringView) {
+	C.QXmlStreamWriter_writeDTD(this.h, dtd.cPointer())
 }
 
-func (this *QXmlStreamWriter) WriteEmptyElement(qualifiedName string) {
-	qualifiedName_ms := C.struct_miqt_string{}
-	qualifiedName_ms.data = C.CString(qualifiedName)
-	qualifiedName_ms.len = C.size_t(len(qualifiedName))
-	defer C.free(unsafe.Pointer(qualifiedName_ms.data))
-	C.QXmlStreamWriter_writeEmptyElement(this.h, qualifiedName_ms)
+func (this *QXmlStreamWriter) WriteEmptyElement(qualifiedName QAnyStringView) {
+	C.QXmlStreamWriter_writeEmptyElement(this.h, qualifiedName.cPointer())
 }
 
-func (this *QXmlStreamWriter) WriteEmptyElement2(namespaceUri string, name string) {
-	namespaceUri_ms := C.struct_miqt_string{}
-	namespaceUri_ms.data = C.CString(namespaceUri)
-	namespaceUri_ms.len = C.size_t(len(namespaceUri))
-	defer C.free(unsafe.Pointer(namespaceUri_ms.data))
-	name_ms := C.struct_miqt_string{}
-	name_ms.data = C.CString(name)
-	name_ms.len = C.size_t(len(name))
-	defer C.free(unsafe.Pointer(name_ms.data))
-	C.QXmlStreamWriter_writeEmptyElement2(this.h, namespaceUri_ms, name_ms)
+func (this *QXmlStreamWriter) WriteEmptyElement2(namespaceUri QAnyStringView, name QAnyStringView) {
+	C.QXmlStreamWriter_writeEmptyElement2(this.h, namespaceUri.cPointer(), name.cPointer())
 }
 
-func (this *QXmlStreamWriter) WriteTextElement(qualifiedName string, text string) {
-	qualifiedName_ms := C.struct_miqt_string{}
-	qualifiedName_ms.data = C.CString(qualifiedName)
-	qualifiedName_ms.len = C.size_t(len(qualifiedName))
-	defer C.free(unsafe.Pointer(qualifiedName_ms.data))
-	text_ms := C.struct_miqt_string{}
-	text_ms.data = C.CString(text)
-	text_ms.len = C.size_t(len(text))
-	defer C.free(unsafe.Pointer(text_ms.data))
-	C.QXmlStreamWriter_writeTextElement(this.h, qualifiedName_ms, text_ms)
+func (this *QXmlStreamWriter) WriteTextElement(qualifiedName QAnyStringView, text QAnyStringView) {
+	C.QXmlStreamWriter_writeTextElement(this.h, qualifiedName.cPointer(), text.cPointer())
 }
 
-func (this *QXmlStreamWriter) WriteTextElement2(namespaceUri string, name string, text string) {
-	namespaceUri_ms := C.struct_miqt_string{}
-	namespaceUri_ms.data = C.CString(namespaceUri)
-	namespaceUri_ms.len = C.size_t(len(namespaceUri))
-	defer C.free(unsafe.Pointer(namespaceUri_ms.data))
-	name_ms := C.struct_miqt_string{}
-	name_ms.data = C.CString(name)
-	name_ms.len = C.size_t(len(name))
-	defer C.free(unsafe.Pointer(name_ms.data))
-	text_ms := C.struct_miqt_string{}
-	text_ms.data = C.CString(text)
-	text_ms.len = C.size_t(len(text))
-	defer C.free(unsafe.Pointer(text_ms.data))
-	C.QXmlStreamWriter_writeTextElement2(this.h, namespaceUri_ms, name_ms, text_ms)
+func (this *QXmlStreamWriter) WriteTextElement2(namespaceUri QAnyStringView, name QAnyStringView, text QAnyStringView) {
+	C.QXmlStreamWriter_writeTextElement2(this.h, namespaceUri.cPointer(), name.cPointer(), text.cPointer())
 }
 
 func (this *QXmlStreamWriter) WriteEndDocument() {
@@ -935,108 +931,71 @@ func (this *QXmlStreamWriter) WriteEndElement() {
 	C.QXmlStreamWriter_writeEndElement(this.h)
 }
 
-func (this *QXmlStreamWriter) WriteEntityReference(name string) {
-	name_ms := C.struct_miqt_string{}
-	name_ms.data = C.CString(name)
-	name_ms.len = C.size_t(len(name))
-	defer C.free(unsafe.Pointer(name_ms.data))
-	C.QXmlStreamWriter_writeEntityReference(this.h, name_ms)
+func (this *QXmlStreamWriter) WriteEntityReference(name QAnyStringView) {
+	C.QXmlStreamWriter_writeEntityReference(this.h, name.cPointer())
 }
 
-func (this *QXmlStreamWriter) WriteNamespace(namespaceUri string) {
-	namespaceUri_ms := C.struct_miqt_string{}
-	namespaceUri_ms.data = C.CString(namespaceUri)
-	namespaceUri_ms.len = C.size_t(len(namespaceUri))
-	defer C.free(unsafe.Pointer(namespaceUri_ms.data))
-	C.QXmlStreamWriter_writeNamespace(this.h, namespaceUri_ms)
+func (this *QXmlStreamWriter) WriteNamespace(namespaceUri QAnyStringView) {
+	C.QXmlStreamWriter_writeNamespace(this.h, namespaceUri.cPointer())
 }
 
-func (this *QXmlStreamWriter) WriteDefaultNamespace(namespaceUri string) {
-	namespaceUri_ms := C.struct_miqt_string{}
-	namespaceUri_ms.data = C.CString(namespaceUri)
-	namespaceUri_ms.len = C.size_t(len(namespaceUri))
-	defer C.free(unsafe.Pointer(namespaceUri_ms.data))
-	C.QXmlStreamWriter_writeDefaultNamespace(this.h, namespaceUri_ms)
+func (this *QXmlStreamWriter) WriteDefaultNamespace(namespaceUri QAnyStringView) {
+	C.QXmlStreamWriter_writeDefaultNamespace(this.h, namespaceUri.cPointer())
 }
 
-func (this *QXmlStreamWriter) WriteProcessingInstruction(target string) {
-	target_ms := C.struct_miqt_string{}
-	target_ms.data = C.CString(target)
-	target_ms.len = C.size_t(len(target))
-	defer C.free(unsafe.Pointer(target_ms.data))
-	C.QXmlStreamWriter_writeProcessingInstruction(this.h, target_ms)
+func (this *QXmlStreamWriter) WriteProcessingInstruction(target QAnyStringView) {
+	C.QXmlStreamWriter_writeProcessingInstruction(this.h, target.cPointer())
 }
 
 func (this *QXmlStreamWriter) WriteStartDocument() {
 	C.QXmlStreamWriter_writeStartDocument(this.h)
 }
 
-func (this *QXmlStreamWriter) WriteStartDocumentWithVersion(version string) {
-	version_ms := C.struct_miqt_string{}
-	version_ms.data = C.CString(version)
-	version_ms.len = C.size_t(len(version))
-	defer C.free(unsafe.Pointer(version_ms.data))
-	C.QXmlStreamWriter_writeStartDocumentWithVersion(this.h, version_ms)
+func (this *QXmlStreamWriter) WriteStartDocumentWithVersion(version QAnyStringView) {
+	C.QXmlStreamWriter_writeStartDocumentWithVersion(this.h, version.cPointer())
 }
 
-func (this *QXmlStreamWriter) WriteStartDocument2(version string, standalone bool) {
-	version_ms := C.struct_miqt_string{}
-	version_ms.data = C.CString(version)
-	version_ms.len = C.size_t(len(version))
-	defer C.free(unsafe.Pointer(version_ms.data))
-	C.QXmlStreamWriter_writeStartDocument2(this.h, version_ms, (C.bool)(standalone))
+func (this *QXmlStreamWriter) WriteStartDocument2(version QAnyStringView, standalone bool) {
+	C.QXmlStreamWriter_writeStartDocument2(this.h, version.cPointer(), (C.bool)(standalone))
 }
 
-func (this *QXmlStreamWriter) WriteStartElement(qualifiedName string) {
-	qualifiedName_ms := C.struct_miqt_string{}
-	qualifiedName_ms.data = C.CString(qualifiedName)
-	qualifiedName_ms.len = C.size_t(len(qualifiedName))
-	defer C.free(unsafe.Pointer(qualifiedName_ms.data))
-	C.QXmlStreamWriter_writeStartElement(this.h, qualifiedName_ms)
+func (this *QXmlStreamWriter) WriteStartElement(qualifiedName QAnyStringView) {
+	C.QXmlStreamWriter_writeStartElement(this.h, qualifiedName.cPointer())
 }
 
-func (this *QXmlStreamWriter) WriteStartElement2(namespaceUri string, name string) {
-	namespaceUri_ms := C.struct_miqt_string{}
-	namespaceUri_ms.data = C.CString(namespaceUri)
-	namespaceUri_ms.len = C.size_t(len(namespaceUri))
-	defer C.free(unsafe.Pointer(namespaceUri_ms.data))
-	name_ms := C.struct_miqt_string{}
-	name_ms.data = C.CString(name)
-	name_ms.len = C.size_t(len(name))
-	defer C.free(unsafe.Pointer(name_ms.data))
-	C.QXmlStreamWriter_writeStartElement2(this.h, namespaceUri_ms, name_ms)
+func (this *QXmlStreamWriter) WriteStartElement2(namespaceUri QAnyStringView, name QAnyStringView) {
+	C.QXmlStreamWriter_writeStartElement2(this.h, namespaceUri.cPointer(), name.cPointer())
 }
 
 func (this *QXmlStreamWriter) WriteCurrentToken(reader *QXmlStreamReader) {
 	C.QXmlStreamWriter_writeCurrentToken(this.h, reader.cPointer())
 }
 
+func (this *QXmlStreamWriter) RaiseError(message QAnyStringView) {
+	C.QXmlStreamWriter_raiseError(this.h, message.cPointer())
+}
+
+func (this *QXmlStreamWriter) ErrorString() string {
+	var _ms C.struct_miqt_string = C.QXmlStreamWriter_errorString(this.h)
+	_ret := C.GoStringN(_ms.data, C.int(int64(_ms.len)))
+	C.free(unsafe.Pointer(_ms.data))
+	return _ret
+}
+
+func (this *QXmlStreamWriter) Error() Error {
+	int /* TODO  */
+}
+
 func (this *QXmlStreamWriter) HasError() bool {
 	return (bool)(C.QXmlStreamWriter_hasError(this.h))
 }
 
-func (this *QXmlStreamWriter) WriteNamespace2(namespaceUri string, prefix string) {
-	namespaceUri_ms := C.struct_miqt_string{}
-	namespaceUri_ms.data = C.CString(namespaceUri)
-	namespaceUri_ms.len = C.size_t(len(namespaceUri))
-	defer C.free(unsafe.Pointer(namespaceUri_ms.data))
-	prefix_ms := C.struct_miqt_string{}
-	prefix_ms.data = C.CString(prefix)
-	prefix_ms.len = C.size_t(len(prefix))
-	defer C.free(unsafe.Pointer(prefix_ms.data))
-	C.QXmlStreamWriter_writeNamespace2(this.h, namespaceUri_ms, prefix_ms)
+func (this *QXmlStreamWriter) WriteNamespace2(namespaceUri QAnyStringView, prefix QAnyStringView) {
+	C.QXmlStreamWriter_writeNamespace2(this.h, namespaceUri.cPointer(), prefix.cPointer())
 }
 
-func (this *QXmlStreamWriter) WriteProcessingInstruction2(target string, data string) {
-	target_ms := C.struct_miqt_string{}
-	target_ms.data = C.CString(target)
-	target_ms.len = C.size_t(len(target))
-	defer C.free(unsafe.Pointer(target_ms.data))
-	data_ms := C.struct_miqt_string{}
-	data_ms.data = C.CString(data)
-	data_ms.len = C.size_t(len(data))
-	defer C.free(unsafe.Pointer(data_ms.data))
-	C.QXmlStreamWriter_writeProcessingInstruction2(this.h, target_ms, data_ms)
+func (this *QXmlStreamWriter) WriteProcessingInstruction2(target QAnyStringView, data QAnyStringView) {
+	C.QXmlStreamWriter_writeProcessingInstruction2(this.h, target.cPointer(), data.cPointer())
 }
 
 // Delete this object from C++ memory.

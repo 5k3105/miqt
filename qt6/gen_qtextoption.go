@@ -40,6 +40,8 @@ const (
 	QTextOption__AddSpaceForLineAndParagraphSeparators QTextOption__Flag = 4
 	QTextOption__SuppressColors                        QTextOption__Flag = 8
 	QTextOption__ShowDocumentTerminator                QTextOption__Flag = 16
+	QTextOption__ShowDefaultIgnorables                 QTextOption__Flag = 32
+	QTextOption__DisableEmojiParsing                   QTextOption__Flag = 64
 )
 
 type QTextOption struct {
@@ -112,20 +114,20 @@ func (this *QTextOption) TextDirection() LayoutDirection {
 	return (LayoutDirection)(C.QTextOption_textDirection(this.h))
 }
 
-func (this *QTextOption) SetWrapMode(wrap QTextOption__WrapMode) {
-	C.QTextOption_setWrapMode(this.h, (C.int)(wrap))
+func (this *QTextOption) SetWrapMode(wrap WrapMode) {
+	C.QTextOption_setWrapMode(this.h, wrap)
 }
 
-func (this *QTextOption) WrapMode() QTextOption__WrapMode {
-	return (QTextOption__WrapMode)(C.QTextOption_wrapMode(this.h))
+func (this *QTextOption) WrapMode() WrapMode {
+	int /* TODO  */
 }
 
-func (this *QTextOption) SetFlags(flags QTextOption__Flag) {
-	C.QTextOption_setFlags(this.h, (C.int)(flags))
+func (this *QTextOption) SetFlags(flags Flags) {
+	C.QTextOption_setFlags(this.h, flags)
 }
 
-func (this *QTextOption) Flags() QTextOption__Flag {
-	return (QTextOption__Flag)(C.QTextOption_flags(this.h))
+func (this *QTextOption) Flags() Flags {
+	int /* TODO  */
 }
 
 func (this *QTextOption) SetTabStopDistance(tabStopDistance float64) {
@@ -156,24 +158,22 @@ func (this *QTextOption) TabArray() []float64 {
 	return _ret
 }
 
-func (this *QTextOption) SetTabs(tabStops []QTextOption__Tab) {
-	tabStops_CArray := (*[0xffff]*C.QTextOption__Tab)(C.malloc(C.size_t(8 * len(tabStops))))
+func (this *QTextOption) SetTabs(tabStops []Tab) {
+	tabStops_CArray := (*[0xffff]C.Tab)(C.malloc(C.size_t(8 * len(tabStops))))
 	defer C.free(unsafe.Pointer(tabStops_CArray))
 	for i := range tabStops {
-		tabStops_CArray[i] = tabStops[i].cPointer()
+		tabStops_CArray[i] = tabStops[i]
 	}
 	tabStops_ma := C.struct_miqt_array{len: C.size_t(len(tabStops)), data: unsafe.Pointer(tabStops_CArray)}
 	C.QTextOption_setTabs(this.h, tabStops_ma)
 }
 
-func (this *QTextOption) Tabs() []QTextOption__Tab {
+func (this *QTextOption) Tabs() []Tab {
 	var _ma C.struct_miqt_array = C.QTextOption_tabs(this.h)
-	_ret := make([]QTextOption__Tab, int(_ma.len))
-	_outCast := (*[0xffff]*C.QTextOption__Tab)(unsafe.Pointer(_ma.data)) // hey ya
+	_ret := make([]Tab, int(_ma.len))
+	_outCast := (*[0xffff]C.Tab)(unsafe.Pointer(_ma.data)) // hey ya
 	for i := 0; i < int(_ma.len); i++ {
-		_lv_goptr := newQTextOption__Tab(_outCast[i])
-		_lv_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
-		_ret[i] = *_lv_goptr
+		int /* TODO  */
 	}
 	return _ret
 }
@@ -239,23 +239,23 @@ func NewQTextOption__Tab() *QTextOption__Tab {
 }
 
 // NewQTextOption__Tab2 constructs a new QTextOption::Tab object.
-func NewQTextOption__Tab2(pos float64, tabType QTextOption__TabType) *QTextOption__Tab {
+func NewQTextOption__Tab2(pos float64, tabType TabType) *QTextOption__Tab {
 
-	return newQTextOption__Tab(C.QTextOption__Tab_new2((C.double)(pos), (C.int)(tabType)))
+	return newQTextOption__Tab(C.QTextOption__Tab_new2((C.double)(pos), tabType))
 }
 
 // NewQTextOption__Tab3 constructs a new QTextOption::Tab object.
-func NewQTextOption__Tab3(pos float64, tabType QTextOption__TabType, delim QChar) *QTextOption__Tab {
+func NewQTextOption__Tab3(pos float64, tabType TabType, delim QChar) *QTextOption__Tab {
 
-	return newQTextOption__Tab(C.QTextOption__Tab_new3((C.double)(pos), (C.int)(tabType), delim.cPointer()))
+	return newQTextOption__Tab(C.QTextOption__Tab_new3((C.double)(pos), tabType, delim.cPointer()))
 }
 
-func (this *QTextOption__Tab) OperatorEqual(other *QTextOption__Tab) bool {
-	return (bool)(C.QTextOption__Tab_operatorEqual(this.h, other.cPointer()))
+func (this *QTextOption__Tab) OperatorEqual(other *Tab) bool {
+	return (bool)(C.QTextOption__Tab_operatorEqual(this.h, other))
 }
 
-func (this *QTextOption__Tab) OperatorNotEqual(other *QTextOption__Tab) bool {
-	return (bool)(C.QTextOption__Tab_operatorNotEqual(this.h, other.cPointer()))
+func (this *QTextOption__Tab) OperatorNotEqual(other *Tab) bool {
+	return (bool)(C.QTextOption__Tab_operatorNotEqual(this.h, other))
 }
 
 func (this *QTextOption__Tab) Position() float64 {
@@ -266,12 +266,12 @@ func (this *QTextOption__Tab) SetPosition(position float64) {
 	C.QTextOption__Tab_setPosition(this.h, (C.double)(position))
 }
 
-func (this *QTextOption__Tab) Type() QTextOption__TabType {
-	return (QTextOption__TabType)(C.QTextOption__Tab_type(this.h))
+func (this *QTextOption__Tab) Type() TabType {
+	int /* TODO  */
 }
 
-func (this *QTextOption__Tab) SetType(typeVal QTextOption__TabType) {
-	C.QTextOption__Tab_setType(this.h, (C.int)(typeVal))
+func (this *QTextOption__Tab) SetType(typeVal TabType) {
+	C.QTextOption__Tab_setType(this.h, typeVal)
 }
 
 func (this *QTextOption__Tab) Delimiter() *QChar {

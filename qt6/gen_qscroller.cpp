@@ -88,13 +88,12 @@ QObject* QScroller_target(const QScroller* self) {
 	return self->target();
 }
 
-int QScroller_state(const QScroller* self) {
-	QScroller::State _ret = self->state();
-	return static_cast<int>(_ret);
+State QScroller_state(const QScroller* self) {
+	return self->state();
 }
 
-bool QScroller_handleInput(QScroller* self, int input, QPointF* position) {
-	return self->handleInput(static_cast<QScroller::Input>(input), *position);
+bool QScroller_handleInput(QScroller* self, Input input, QPointF* position) {
+	return self->handleInput(input, *position);
 }
 
 void QScroller_stop(QScroller* self) {
@@ -216,12 +215,12 @@ struct miqt_string QScroller_tr3(const char* s, const char* c, int n) {
 	return _ms;
 }
 
-int QScroller_grabGesture2(QObject* target, int gestureType) {
-	Qt::GestureType _ret = QScroller::grabGesture(target, static_cast<QScroller::ScrollerGestureType>(gestureType));
+int QScroller_grabGesture2(QObject* target, ScrollerGestureType gestureType) {
+	Qt::GestureType _ret = QScroller::grabGesture(target, gestureType);
 	return static_cast<int>(_ret);
 }
 
-bool QScroller_handleInput2(QScroller* self, int input, QPointF* position, long long timestamp) {
-	return self->handleInput(static_cast<QScroller::Input>(input), *position, static_cast<qint64>(timestamp));
+bool QScroller_handleInput2(QScroller* self, Input input, QPointF* position, long long timestamp) {
+	return self->handleInput(input, *position, static_cast<qint64>(timestamp));
 }
 

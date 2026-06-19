@@ -18,7 +18,7 @@ extern "C" {
 int miqt_exec_callback_QPicture_devType(const QPicture*, intptr_t);
 void miqt_exec_callback_QPicture_setData(QPicture*, intptr_t, const char*, unsigned int);
 QPaintEngine* miqt_exec_callback_QPicture_paintEngine(const QPicture*, intptr_t);
-int miqt_exec_callback_QPicture_metric(const QPicture*, intptr_t, int);
+int miqt_exec_callback_QPicture_metric(const QPicture*, intptr_t, PaintDeviceMetric);
 void miqt_exec_callback_QPicture_initPainter(const QPicture*, intptr_t, QPainter*);
 QPaintDevice* miqt_exec_callback_QPicture_redirected(const QPicture*, intptr_t, QPoint*);
 QPainter* miqt_exec_callback_QPicture_sharedPainter(const QPicture*, intptr_t);
@@ -88,18 +88,17 @@ public:
 	intptr_t handle__metric = 0;
 
 	// Subclass to allow providing a Go implementation
-	virtual int metric(QPaintDevice::PaintDeviceMetric m) const override {
+	virtual int metric(PaintDeviceMetric m) const override {
 		if (handle__metric == 0) {
 			return QPicture::metric(m);
 		}
 
-		QPaintDevice::PaintDeviceMetric m_ret = m;
-		int sigval1 = static_cast<int>(m_ret);
+		PaintDeviceMetric sigval1 = m;
 		int callback_return_value = miqt_exec_callback_QPicture_metric(this, handle__metric, sigval1);
 		return static_cast<int>(callback_return_value);
 	}
 
-	friend int QPicture_virtualbase_metric(const void* self, int m);
+	friend int QPicture_virtualbase_metric(const void* self, PaintDeviceMetric m);
 
 	// cgo.Handle value for overwritten implementation
 	intptr_t handle__initPainter = 0;
@@ -149,6 +148,8 @@ public:
 
 	friend QPainter* QPicture_virtualbase_sharedPainter(const void* self);
 
+	// Wrappers to allow calling protected methods:
+	friend double QPicture_protectedbase_getDecodedMetricF(bool* _dynamic_cast_ok, const void* self, PaintDeviceMetric metricA, PaintDeviceMetric metricB);
 };
 
 QPicture* QPicture_new() {
@@ -238,6 +239,10 @@ QPaintEngine* QPicture_paintEngine(const QPicture* self) {
 	return self->paintEngine();
 }
 
+DataPtr* QPicture_dataPtr(QPicture* self) {
+	return &self->data_ptr();
+}
+
 bool QPicture_override_virtual_devType(void* self, intptr_t slot) {
 	MiqtVirtualQPicture* self_cast = dynamic_cast<MiqtVirtualQPicture*>( (QPicture*)(self) );
 	if (self_cast == nullptr) {
@@ -290,8 +295,8 @@ bool QPicture_override_virtual_metric(void* self, intptr_t slot) {
 	return true;
 }
 
-int QPicture_virtualbase_metric(const void* self, int m) {
-	return static_cast<const MiqtVirtualQPicture*>(self)->QPicture::metric(static_cast<MiqtVirtualQPicture::PaintDeviceMetric>(m));
+int QPicture_virtualbase_metric(const void* self, PaintDeviceMetric m) {
+	return static_cast<const MiqtVirtualQPicture*>(self)->QPicture::metric(m);
 }
 
 bool QPicture_override_virtual_initPainter(void* self, intptr_t slot) {
@@ -334,6 +339,17 @@ bool QPicture_override_virtual_sharedPainter(void* self, intptr_t slot) {
 
 QPainter* QPicture_virtualbase_sharedPainter(const void* self) {
 	return static_cast<const MiqtVirtualQPicture*>(self)->QPicture::sharedPainter();
+}
+
+double QPicture_protectedbase_getDecodedMetricF(bool* _dynamic_cast_ok, const void* self, PaintDeviceMetric metricA, PaintDeviceMetric metricB) {
+	MiqtVirtualQPicture* self_cast = dynamic_cast<MiqtVirtualQPicture*>( (QPicture*)(self) );
+	if (self_cast == nullptr) {
+		*_dynamic_cast_ok = false;
+		return 0;
+	}
+
+	*_dynamic_cast_ok = true;
+	return self_cast->getDecodedMetricF(metricA, metricB);
 }
 
 void QPicture_delete(QPicture* self) {

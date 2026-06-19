@@ -86,12 +86,12 @@ func QQmlImageProviderBase_Tr(s string) string {
 	return _ret
 }
 
-func (this *QQmlImageProviderBase) ImageType() QQmlImageProviderBase__ImageType {
-	return (QQmlImageProviderBase__ImageType)(C.QQmlImageProviderBase_imageType(this.h))
+func (this *QQmlImageProviderBase) ImageType() ImageType {
+	int /* TODO  */
 }
 
-func (this *QQmlImageProviderBase) Flags() QQmlImageProviderBase__Flag {
-	return (QQmlImageProviderBase__Flag)(C.QQmlImageProviderBase_flags(this.h))
+func (this *QQmlImageProviderBase) Flags() Flags {
+	int /* TODO  */
 }
 
 func QQmlImageProviderBase_Tr2(s string, c string) string {
@@ -429,12 +429,33 @@ func (this *QQmlEngine) SetOutputWarningsToStandardError(outputWarningsToStandar
 	C.QQmlEngine_setOutputWarningsToStandardError(this.h, (C.bool)(outputWarningsToStandardError))
 }
 
+func (this *QQmlEngine) MarkCurrentFunctionAsTranslationBinding() {
+	C.QQmlEngine_markCurrentFunctionAsTranslationBinding(this.h)
+}
+
 func (this *QQmlEngine) CaptureProperty(object *qt6.QObject, property *qt6.QMetaProperty) {
 	C.QQmlEngine_captureProperty(this.h, (*C.QObject)(object.UnsafePointer()), (*C.QMetaProperty)(property.UnsafePointer()))
 }
 
 func (this *QQmlEngine) Retranslate() {
 	C.QQmlEngine_retranslate(this.h)
+}
+
+func (this *QQmlEngine) OfflineStoragePathChanged() {
+	C.QQmlEngine_offlineStoragePathChanged(this.h)
+}
+func (this *QQmlEngine) OnOfflineStoragePathChanged(slot func()) {
+	C.QQmlEngine_connect_offlineStoragePathChanged(this.h, C.intptr_t(cgo.NewHandle(slot)))
+}
+
+//export miqt_exec_callback_QQmlEngine_offlineStoragePathChanged
+func miqt_exec_callback_QQmlEngine_offlineStoragePathChanged(cb C.intptr_t) {
+	gofunc, ok := cgo.Handle(cb).Value().(func())
+	if !ok {
+		panic("miqt: callback of non-callback type (heap corruption?)")
+	}
+
+	gofunc()
 }
 
 func QQmlEngine_ContextForObject(param1 *qt6.QObject) *QQmlContext {

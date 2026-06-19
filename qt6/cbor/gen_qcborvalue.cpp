@@ -1,3 +1,4 @@
+#include <QAnyStringView>
 #include <QByteArray>
 #include <QCborArray>
 #include <QCborError>
@@ -64,8 +65,8 @@ QCborValue* QCborValue_new() {
 	return new (std::nothrow) QCborValue();
 }
 
-QCborValue* QCborValue_new2(int t_) {
-	return new (std::nothrow) QCborValue(static_cast<QCborValue::Type>(t_));
+QCborValue* QCborValue_new2(Type t_) {
+	return new (std::nothrow) QCborValue(t_);
 }
 
 QCborValue* QCborValue_new3(bool b_) {
@@ -158,9 +159,8 @@ void QCborValue_swap(QCborValue* self, QCborValue* other) {
 	self->swap(*other);
 }
 
-int QCborValue_type(const QCborValue* self) {
-	QCborValue::Type _ret = self->type();
-	return static_cast<int>(_ret);
+Type QCborValue_type(const QCborValue* self) {
+	return self->type();
 }
 
 bool QCborValue_isInteger(const QCborValue* self) {
@@ -290,6 +290,10 @@ struct miqt_string QCborValue_toString(const QCborValue* self) {
 	return _ms;
 }
 
+QAnyStringView* QCborValue_toStringView(const QCborValue* self) {
+	return new QAnyStringView(self->toStringView());
+}
+
 QDateTime* QCborValue_toDateTime(const QCborValue* self) {
 	return new QDateTime(self->toDateTime());
 }
@@ -342,18 +346,6 @@ QCborValueRef* QCborValue_operatorSubscript5(QCborValue* self, struct miqt_strin
 
 int QCborValue_compare(const QCborValue* self, QCborValue* other) {
 	return self->compare(*other);
-}
-
-bool QCborValue_operatorEqual(const QCborValue* self, QCborValue* other) {
-	return (*self == *other);
-}
-
-bool QCborValue_operatorNotEqual(const QCborValue* self, QCborValue* other) {
-	return (*self != *other);
-}
-
-bool QCborValue_operatorLesser(const QCborValue* self, QCborValue* other) {
-	return (*self < *other);
 }
 
 QCborValue* QCborValue_fromVariant(QVariant* variant) {
@@ -462,6 +454,10 @@ struct miqt_string QCborValue_toStringWithDefaultValue(const QCborValue* self, s
 	return _ms;
 }
 
+QAnyStringView* QCborValue_toStringViewWithDefaultValue(const QCborValue* self, QAnyStringView* defaultValue) {
+	return new QAnyStringView(self->toStringView(*defaultValue));
+}
+
 QDateTime* QCborValue_toDateTimeWithDefaultValue(const QCborValue* self, QDateTime* defaultValue) {
 	return new QDateTime(self->toDateTime(*defaultValue));
 }
@@ -491,8 +487,8 @@ QCborValue* QCborValue_fromCbor6(const unsigned char* data, ptrdiff_t len, QCbor
 	return new QCborValue(QCborValue::fromCbor(static_cast<const quint8*>(data), (qsizetype)(len), error));
 }
 
-struct miqt_string QCborValue_toCborWithOpt(const QCborValue* self, int opt) {
-	QByteArray _qb = self->toCbor(static_cast<QCborValue::EncodingOptions>(opt));
+struct miqt_string QCborValue_toCborWithOpt(const QCborValue* self, EncodingOptions opt) {
+	QByteArray _qb = self->toCbor(opt);
 	struct miqt_string _ms;
 	_ms.len = _qb.length();
 	_ms.data = static_cast<char*>(malloc(_ms.len));
@@ -500,12 +496,12 @@ struct miqt_string QCborValue_toCborWithOpt(const QCborValue* self, int opt) {
 	return _ms;
 }
 
-void QCborValue_toCbor2(const QCborValue* self, QCborStreamWriter* writer, int opt) {
-	self->toCbor(*writer, static_cast<QCborValue::EncodingOptions>(opt));
+void QCborValue_toCbor2(const QCborValue* self, QCborStreamWriter* writer, EncodingOptions opt) {
+	self->toCbor(*writer, opt);
 }
 
-struct miqt_string QCborValue_toDiagnosticNotationWithOpts(const QCborValue* self, int opts) {
-	QString _ret = self->toDiagnosticNotation(static_cast<QCborValue::DiagnosticNotationOptions>(opts));
+struct miqt_string QCborValue_toDiagnosticNotationWithOpts(const QCborValue* self, DiagnosticNotationOptions opts) {
+	QString _ret = self->toDiagnosticNotation(opts);
 	// Convert QString from UTF-16 in C++ RAII memory to UTF-8 in manually-managed C memory
 	QByteArray _b = _ret.toUtf8();
 	struct miqt_string _ms;
@@ -659,6 +655,10 @@ struct miqt_string QCborValueConstRef_toString(const QCborValueConstRef* self) {
 	return _ms;
 }
 
+QAnyStringView* QCborValueConstRef_toStringView(const QCborValueConstRef* self) {
+	return new QAnyStringView(self->toStringView());
+}
+
 QDateTime* QCborValueConstRef_toDateTime(const QCborValueConstRef* self) {
 	return new QDateTime(self->toDateTime());
 }
@@ -702,18 +702,6 @@ QCborValue* QCborValueConstRef_operatorSubscript2(const QCborValueConstRef* self
 
 int QCborValueConstRef_compare(const QCborValueConstRef* self, QCborValue* other) {
 	return self->compare(*other);
-}
-
-bool QCborValueConstRef_operatorEqual(const QCborValueConstRef* self, QCborValue* other) {
-	return (*self == *other);
-}
-
-bool QCborValueConstRef_operatorNotEqual(const QCborValueConstRef* self, QCborValue* other) {
-	return (*self != *other);
-}
-
-bool QCborValueConstRef_operatorLesser(const QCborValueConstRef* self, QCborValue* other) {
-	return (*self < *other);
 }
 
 QVariant* QCborValueConstRef_toVariant(const QCborValueConstRef* self) {
@@ -795,6 +783,10 @@ struct miqt_string QCborValueConstRef_toStringWithDefaultValue(const QCborValueC
 	_ms.data = static_cast<char*>(malloc(_ms.len));
 	memcpy(_ms.data, _b.data(), _ms.len);
 	return _ms;
+}
+
+QAnyStringView* QCborValueConstRef_toStringViewWithDefaultValue(const QCborValueConstRef* self, QAnyStringView* defaultValue) {
+	return new QAnyStringView(self->toStringView(*defaultValue));
 }
 
 QDateTime* QCborValueConstRef_toDateTimeWithDefaultValue(const QCborValueConstRef* self, QDateTime* defaultValue) {
@@ -1045,18 +1037,6 @@ QCborValue* QCborValueRef_operatorSubscript5(const QCborValueRef* self, long lon
 
 int QCborValueRef_compare(const QCborValueRef* self, QCborValue* other) {
 	return self->compare(*other);
-}
-
-bool QCborValueRef_operatorEqual(const QCborValueRef* self, QCborValue* other) {
-	return (*self == *other);
-}
-
-bool QCborValueRef_operatorNotEqual(const QCborValueRef* self, QCborValue* other) {
-	return (*self != *other);
-}
-
-bool QCborValueRef_operatorLesser(const QCborValueRef* self, QCborValue* other) {
-	return (*self < *other);
 }
 
 QVariant* QCborValueRef_toVariant(const QCborValueRef* self) {

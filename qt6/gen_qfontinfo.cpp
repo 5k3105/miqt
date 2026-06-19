@@ -1,5 +1,7 @@
 #include <QFont>
 #include <QFontInfo>
+#include <QFontVariableAxis>
+#include <QList>
 #include <QString>
 #include <QByteArray>
 #include <cstring>
@@ -101,6 +103,19 @@ bool QFontInfo_fixedPitch(const QFontInfo* self) {
 int QFontInfo_styleHint(const QFontInfo* self) {
 	QFont::StyleHint _ret = self->styleHint();
 	return static_cast<int>(_ret);
+}
+
+struct miqt_array /* of QFontVariableAxis* */  QFontInfo_variableAxes(const QFontInfo* self) {
+	QList<QFontVariableAxis> _ret = self->variableAxes();
+	// Convert QList<> from C++ memory to manually-managed C memory
+	QFontVariableAxis** _arr = static_cast<QFontVariableAxis**>(malloc(sizeof(QFontVariableAxis*) * _ret.length()));
+	for (size_t i = 0, e = _ret.length(); i < e; ++i) {
+		_arr[i] = new QFontVariableAxis(_ret[i]);
+	}
+	struct miqt_array _out;
+	_out.len = _ret.length();
+	_out.data = static_cast<void*>(_arr);
+	return _out;
 }
 
 int QFontInfo_legacyWeight(const QFontInfo* self) {

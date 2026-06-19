@@ -210,6 +210,7 @@ public:
 	friend void QLocalServer_virtualbase_disconnectNotify(void* self, QMetaMethod* signal);
 
 	// Wrappers to allow calling protected methods:
+	friend void QLocalServer_protectedbase_addPendingConnection(bool* _dynamic_cast_ok, void* self, QLocalSocket* socket);
 	friend QObject* QLocalServer_protectedbase_sender(bool* _dynamic_cast_ok, const void* self);
 	friend int QLocalServer_protectedbase_senderSignalIndex(bool* _dynamic_cast_ok, const void* self);
 	friend int QLocalServer_protectedbase_receivers(bool* _dynamic_cast_ok, const void* self, const char* signal);
@@ -345,13 +346,12 @@ int QLocalServer_listenBacklogSize(const QLocalServer* self) {
 	return self->listenBacklogSize();
 }
 
-void QLocalServer_setSocketOptions(QLocalServer* self, int options) {
-	self->setSocketOptions(static_cast<QLocalServer::SocketOptions>(options));
+void QLocalServer_setSocketOptions(QLocalServer* self, SocketOptions options) {
+	self->setSocketOptions(options);
 }
 
-int QLocalServer_socketOptions(const QLocalServer* self) {
-	QLocalServer::SocketOptions _ret = self->socketOptions();
-	return static_cast<int>(_ret);
+SocketOptions QLocalServer_socketOptions(const QLocalServer* self) {
+	return self->socketOptions();
 }
 
 intptr_t QLocalServer_socketDescriptor(const QLocalServer* self) {
@@ -527,6 +527,17 @@ bool QLocalServer_override_virtual_disconnectNotify(void* self, intptr_t slot) {
 
 void QLocalServer_virtualbase_disconnectNotify(void* self, QMetaMethod* signal) {
 	static_cast<MiqtVirtualQLocalServer*>(self)->QLocalServer::disconnectNotify(*signal);
+}
+
+void QLocalServer_protectedbase_addPendingConnection(bool* _dynamic_cast_ok, void* self, QLocalSocket* socket) {
+	MiqtVirtualQLocalServer* self_cast = dynamic_cast<MiqtVirtualQLocalServer*>( (QLocalServer*)(self) );
+	if (self_cast == nullptr) {
+		*_dynamic_cast_ok = false;
+		return ;
+	}
+
+	*_dynamic_cast_ok = true;
+	self_cast->addPendingConnection(socket);
 }
 
 QObject* QLocalServer_protectedbase_sender(bool* _dynamic_cast_ok, const void* self) {

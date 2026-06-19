@@ -93,14 +93,14 @@ void QInputDialog_virtbase(QInputDialog* src, QDialog** outptr_QDialog);
 QMetaObject* QInputDialog_metaObject(const QInputDialog* self);
 void* QInputDialog_metacast(QInputDialog* self, const char* param1);
 struct miqt_string QInputDialog_tr(const char* s);
-void QInputDialog_setInputMode(QInputDialog* self, int mode);
-int QInputDialog_inputMode(const QInputDialog* self);
+void QInputDialog_setInputMode(QInputDialog* self, InputMode mode);
+InputMode QInputDialog_inputMode(const QInputDialog* self);
 void QInputDialog_setLabelText(QInputDialog* self, struct miqt_string text);
 struct miqt_string QInputDialog_labelText(const QInputDialog* self);
-void QInputDialog_setOption(QInputDialog* self, int option);
-bool QInputDialog_testOption(const QInputDialog* self, int option);
-void QInputDialog_setOptions(QInputDialog* self, int options);
-int QInputDialog_options(const QInputDialog* self);
+void QInputDialog_setOption(QInputDialog* self, InputDialogOption option);
+bool QInputDialog_testOption(const QInputDialog* self, InputDialogOption option);
+void QInputDialog_setOptions(QInputDialog* self, InputDialogOptions options);
+InputDialogOptions QInputDialog_options(const QInputDialog* self);
 void QInputDialog_setTextValue(QInputDialog* self, struct miqt_string text);
 struct miqt_string QInputDialog_textValue(const QInputDialog* self);
 void QInputDialog_setTextEchoMode(QInputDialog* self, int mode);
@@ -156,7 +156,7 @@ void QInputDialog_connect_doubleValueSelected(QInputDialog* self, intptr_t slot)
 void QInputDialog_done(QInputDialog* self, int result);
 struct miqt_string QInputDialog_tr2(const char* s, const char* c);
 struct miqt_string QInputDialog_tr3(const char* s, const char* c, int n);
-void QInputDialog_setOption2(QInputDialog* self, int option, bool on);
+void QInputDialog_setOption2(QInputDialog* self, InputDialogOption option, bool on);
 struct miqt_string QInputDialog_getText2(QWidget* parent, struct miqt_string title, struct miqt_string label, int echo);
 struct miqt_string QInputDialog_getText3(QWidget* parent, struct miqt_string title, struct miqt_string label, int echo, struct miqt_string text);
 struct miqt_string QInputDialog_getText4(QWidget* parent, struct miqt_string title, struct miqt_string label, int echo, struct miqt_string text, bool* ok);
@@ -266,7 +266,7 @@ bool QInputDialog_virtualbase_nativeEvent(void* self, struct miqt_string eventTy
 bool QInputDialog_override_virtual_changeEvent(void* self, intptr_t slot);
 void QInputDialog_virtualbase_changeEvent(void* self, QEvent* param1);
 bool QInputDialog_override_virtual_metric(void* self, intptr_t slot);
-int QInputDialog_virtualbase_metric(const void* self, int param1);
+int QInputDialog_virtualbase_metric(const void* self, PaintDeviceMetric param1);
 bool QInputDialog_override_virtual_initPainter(void* self, intptr_t slot);
 void QInputDialog_virtualbase_initPainter(const void* self, QPainter* painter);
 bool QInputDialog_override_virtual_redirected(void* self, intptr_t slot);
@@ -300,6 +300,7 @@ QObject* QInputDialog_protectedbase_sender(bool* _dynamic_cast_ok, const void* s
 int QInputDialog_protectedbase_senderSignalIndex(bool* _dynamic_cast_ok, const void* self);
 int QInputDialog_protectedbase_receivers(bool* _dynamic_cast_ok, const void* self, const char* signal);
 bool QInputDialog_protectedbase_isSignalConnected(bool* _dynamic_cast_ok, const void* self, QMetaMethod* signal);
+double QInputDialog_protectedbase_getDecodedMetricF(bool* _dynamic_cast_ok, const void* self, PaintDeviceMetric metricA, PaintDeviceMetric metricB);
 
 void QInputDialog_delete(QInputDialog* self);
 

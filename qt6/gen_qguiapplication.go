@@ -114,6 +114,10 @@ func QGuiApplication_ApplicationDisplayName() string {
 	return _ret
 }
 
+func (this *QGuiApplication) SetBadgeNumber(number int64) {
+	C.QGuiApplication_setBadgeNumber(this.h, (C.longlong)(number))
+}
+
 func QGuiApplication_SetDesktopFileName(name string) {
 	name_ms := C.struct_miqt_string{}
 	name_ms.data = C.CString(name)

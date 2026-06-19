@@ -106,6 +106,16 @@ func (this *QQmlContext) ParentContext() *QQmlContext {
 	return newQQmlContext(C.QQmlContext_parentContext(this.h))
 }
 
+func (this *QQmlContext) ChildContexts() []*QQmlContext {
+	var _ma C.struct_miqt_array = C.QQmlContext_childContexts(this.h)
+	_ret := make([]*QQmlContext, int(_ma.len))
+	_outCast := (*[0xffff]*C.QQmlContext)(unsafe.Pointer(_ma.data)) // hey ya
+	for i := 0; i < int(_ma.len); i++ {
+		_ret[i] = newQQmlContext(_outCast[i])
+	}
+	return _ret
+}
+
 func (this *QQmlContext) ContextObject() *qt6.QObject {
 	return qt6.UnsafeNewQObject(unsafe.Pointer(C.QQmlContext_contextObject(this.h)))
 }
@@ -140,11 +150,11 @@ func (this *QQmlContext) SetContextProperty2(param1 string, param2 *qt6.QVariant
 	C.QQmlContext_setContextProperty2(this.h, param1_ms, (*C.QVariant)(param2.UnsafePointer()))
 }
 
-func (this *QQmlContext) SetContextProperties(properties []QQmlContext__PropertyPair) {
-	properties_CArray := (*[0xffff]*C.QQmlContext__PropertyPair)(C.malloc(C.size_t(8 * len(properties))))
+func (this *QQmlContext) SetContextProperties(properties []PropertyPair) {
+	properties_CArray := (*[0xffff]C.PropertyPair)(C.malloc(C.size_t(8 * len(properties))))
 	defer C.free(unsafe.Pointer(properties_CArray))
 	for i := range properties {
-		properties_CArray[i] = properties[i].cPointer()
+		properties_CArray[i] = properties[i]
 	}
 	properties_ma := C.struct_miqt_array{len: C.size_t(len(properties)), data: unsafe.Pointer(properties_CArray)}
 	C.QQmlContext_setContextProperties(this.h, properties_ma)
@@ -163,6 +173,28 @@ func (this *QQmlContext) ObjectForName(param1 string) *qt6.QObject {
 	param1_ms.len = C.size_t(len(param1))
 	defer C.free(unsafe.Pointer(param1_ms.data))
 	return qt6.UnsafeNewQObject(unsafe.Pointer(C.QQmlContext_objectForName(this.h, param1_ms)))
+}
+
+func (this *QQmlContext) FindObjectRecursively(id string) *qt6.QObject {
+	id_ms := C.struct_miqt_string{}
+	id_ms.data = C.CString(id)
+	id_ms.len = C.size_t(len(id))
+	defer C.free(unsafe.Pointer(id_ms.data))
+	return qt6.UnsafeNewQObject(unsafe.Pointer(C.QQmlContext_findObjectRecursively(this.h, id_ms)))
+}
+
+func (this *QQmlContext) FindObjectsRecursively(id string) []*qt6.QObject {
+	id_ms := C.struct_miqt_string{}
+	id_ms.data = C.CString(id)
+	id_ms.len = C.size_t(len(id))
+	defer C.free(unsafe.Pointer(id_ms.data))
+	var _ma C.struct_miqt_array = C.QQmlContext_findObjectsRecursively(this.h, id_ms)
+	_ret := make([]*qt6.QObject, int(_ma.len))
+	_outCast := (*[0xffff]*C.QObject)(unsafe.Pointer(_ma.data)) // hey ya
+	for i := 0; i < int(_ma.len); i++ {
+		_ret[i] = qt6.UnsafeNewQObject(unsafe.Pointer(_outCast[i]))
+	}
+	return _ret
 }
 
 func (this *QQmlContext) ResolvedUrl(param1 *qt6.QUrl) *qt6.QUrl {
@@ -506,9 +538,9 @@ func UnsafeNewQQmlContext__PropertyPair(h unsafe.Pointer) *QQmlContext__Property
 }
 
 // NewQQmlContext__PropertyPair constructs a new QQmlContext::PropertyPair object.
-func NewQQmlContext__PropertyPair(param1 *QQmlContext__PropertyPair) *QQmlContext__PropertyPair {
+func NewQQmlContext__PropertyPair(param1 *PropertyPair) *QQmlContext__PropertyPair {
 
-	return newQQmlContext__PropertyPair(C.QQmlContext__PropertyPair_new(param1.cPointer()))
+	return newQQmlContext__PropertyPair(C.QQmlContext__PropertyPair_new(param1))
 }
 
 func (this *QQmlContext__PropertyPair) Name() string {
@@ -536,8 +568,8 @@ func (this *QQmlContext__PropertyPair) SetValue(value qt6.QVariant) {
 	C.QQmlContext__PropertyPair_setValue(this.h, (*C.QVariant)(value.UnsafePointer()))
 }
 
-func (this *QQmlContext__PropertyPair) OperatorAssign(param1 *QQmlContext__PropertyPair) {
-	C.QQmlContext__PropertyPair_operatorAssign(this.h, param1.cPointer())
+func (this *QQmlContext__PropertyPair) OperatorAssign(param1 *PropertyPair) {
+	C.QQmlContext__PropertyPair_operatorAssign(this.h, param1)
 }
 
 // Delete this object from C++ memory.

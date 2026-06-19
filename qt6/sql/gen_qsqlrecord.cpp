@@ -1,3 +1,4 @@
+#include <QAnyStringView>
 #include <QSqlField>
 #include <QSqlRecord>
 #include <QString>
@@ -27,6 +28,10 @@ void QSqlRecord_operatorAssign(QSqlRecord* self, QSqlRecord* other) {
 	self->operator=(*other);
 }
 
+void QSqlRecord_swap(QSqlRecord* self, QSqlRecord* other) {
+	self->swap(*other);
+}
+
 bool QSqlRecord_operatorEqual(const QSqlRecord* self, QSqlRecord* other) {
 	return (*self == *other);
 }
@@ -39,41 +44,36 @@ QVariant* QSqlRecord_value(const QSqlRecord* self, int i) {
 	return new QVariant(self->value(static_cast<int>(i)));
 }
 
-QVariant* QSqlRecord_valueWithName(const QSqlRecord* self, struct miqt_string name) {
-	QString name_QString = QString::fromUtf8(name.data, name.len);
-	return new QVariant(self->value(name_QString));
+QVariant* QSqlRecord_valueWithName(const QSqlRecord* self, QAnyStringView* name) {
+	return new QVariant(self->value(*name));
 }
 
 void QSqlRecord_setValue(QSqlRecord* self, int i, QVariant* val) {
 	self->setValue(static_cast<int>(i), *val);
 }
 
-void QSqlRecord_setValue2(QSqlRecord* self, struct miqt_string name, QVariant* val) {
-	QString name_QString = QString::fromUtf8(name.data, name.len);
-	self->setValue(name_QString, *val);
+void QSqlRecord_setValue2(QSqlRecord* self, QAnyStringView* name, QVariant* val) {
+	self->setValue(*name, *val);
 }
 
 void QSqlRecord_setNull(QSqlRecord* self, int i) {
 	self->setNull(static_cast<int>(i));
 }
 
-void QSqlRecord_setNullWithName(QSqlRecord* self, struct miqt_string name) {
-	QString name_QString = QString::fromUtf8(name.data, name.len);
-	self->setNull(name_QString);
+void QSqlRecord_setNullWithName(QSqlRecord* self, QAnyStringView* name) {
+	self->setNull(*name);
 }
 
 bool QSqlRecord_isNull(const QSqlRecord* self, int i) {
 	return self->isNull(static_cast<int>(i));
 }
 
-bool QSqlRecord_isNullWithName(const QSqlRecord* self, struct miqt_string name) {
-	QString name_QString = QString::fromUtf8(name.data, name.len);
-	return self->isNull(name_QString);
+bool QSqlRecord_isNullWithName(const QSqlRecord* self, QAnyStringView* name) {
+	return self->isNull(*name);
 }
 
-int QSqlRecord_indexOf(const QSqlRecord* self, struct miqt_string name) {
-	QString name_QString = QString::fromUtf8(name.data, name.len);
-	return self->indexOf(name_QString);
+int QSqlRecord_indexOf(const QSqlRecord* self, QAnyStringView* name) {
+	return self->indexOf(*name);
 }
 
 struct miqt_string QSqlRecord_fieldName(const QSqlRecord* self, int i) {
@@ -91,23 +91,20 @@ QSqlField* QSqlRecord_field(const QSqlRecord* self, int i) {
 	return new QSqlField(self->field(static_cast<int>(i)));
 }
 
-QSqlField* QSqlRecord_fieldWithName(const QSqlRecord* self, struct miqt_string name) {
-	QString name_QString = QString::fromUtf8(name.data, name.len);
-	return new QSqlField(self->field(name_QString));
+QSqlField* QSqlRecord_fieldWithName(const QSqlRecord* self, QAnyStringView* name) {
+	return new QSqlField(self->field(*name));
 }
 
 bool QSqlRecord_isGenerated(const QSqlRecord* self, int i) {
 	return self->isGenerated(static_cast<int>(i));
 }
 
-bool QSqlRecord_isGeneratedWithName(const QSqlRecord* self, struct miqt_string name) {
-	QString name_QString = QString::fromUtf8(name.data, name.len);
-	return self->isGenerated(name_QString);
+bool QSqlRecord_isGeneratedWithName(const QSqlRecord* self, QAnyStringView* name) {
+	return self->isGenerated(*name);
 }
 
-void QSqlRecord_setGenerated(QSqlRecord* self, struct miqt_string name, bool generated) {
-	QString name_QString = QString::fromUtf8(name.data, name.len);
-	self->setGenerated(name_QString, generated);
+void QSqlRecord_setGenerated(QSqlRecord* self, QAnyStringView* name, bool generated) {
+	self->setGenerated(*name, generated);
 }
 
 void QSqlRecord_setGenerated2(QSqlRecord* self, int i, bool generated) {
@@ -134,9 +131,8 @@ bool QSqlRecord_isEmpty(const QSqlRecord* self) {
 	return self->isEmpty();
 }
 
-bool QSqlRecord_contains(const QSqlRecord* self, struct miqt_string name) {
-	QString name_QString = QString::fromUtf8(name.data, name.len);
-	return self->contains(name_QString);
+bool QSqlRecord_contains(const QSqlRecord* self, QAnyStringView* name) {
+	return self->contains(*name);
 }
 
 void QSqlRecord_clear(QSqlRecord* self) {

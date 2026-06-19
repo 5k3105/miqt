@@ -92,7 +92,7 @@ func NewQSqlError4(driverText string, databaseText string) *QSqlError {
 }
 
 // NewQSqlError5 constructs a new QSqlError object.
-func NewQSqlError5(driverText string, databaseText string, typeVal QSqlError__ErrorType) *QSqlError {
+func NewQSqlError5(driverText string, databaseText string, typeVal ErrorType) *QSqlError {
 	driverText_ms := C.struct_miqt_string{}
 	driverText_ms.data = C.CString(driverText)
 	driverText_ms.len = C.size_t(len(driverText))
@@ -102,11 +102,11 @@ func NewQSqlError5(driverText string, databaseText string, typeVal QSqlError__Er
 	databaseText_ms.len = C.size_t(len(databaseText))
 	defer C.free(unsafe.Pointer(databaseText_ms.data))
 
-	return newQSqlError(C.QSqlError_new5(driverText_ms, databaseText_ms, (C.int)(typeVal)))
+	return newQSqlError(C.QSqlError_new5(driverText_ms, databaseText_ms, typeVal))
 }
 
 // NewQSqlError6 constructs a new QSqlError object.
-func NewQSqlError6(driverText string, databaseText string, typeVal QSqlError__ErrorType, errorCode string) *QSqlError {
+func NewQSqlError6(driverText string, databaseText string, typeVal ErrorType, nativeErrorCode string) *QSqlError {
 	driverText_ms := C.struct_miqt_string{}
 	driverText_ms.data = C.CString(driverText)
 	driverText_ms.len = C.size_t(len(driverText))
@@ -115,12 +115,12 @@ func NewQSqlError6(driverText string, databaseText string, typeVal QSqlError__Er
 	databaseText_ms.data = C.CString(databaseText)
 	databaseText_ms.len = C.size_t(len(databaseText))
 	defer C.free(unsafe.Pointer(databaseText_ms.data))
-	errorCode_ms := C.struct_miqt_string{}
-	errorCode_ms.data = C.CString(errorCode)
-	errorCode_ms.len = C.size_t(len(errorCode))
-	defer C.free(unsafe.Pointer(errorCode_ms.data))
+	nativeErrorCode_ms := C.struct_miqt_string{}
+	nativeErrorCode_ms.data = C.CString(nativeErrorCode)
+	nativeErrorCode_ms.len = C.size_t(len(nativeErrorCode))
+	defer C.free(unsafe.Pointer(nativeErrorCode_ms.data))
 
-	return newQSqlError(C.QSqlError_new6(driverText_ms, databaseText_ms, (C.int)(typeVal), errorCode_ms))
+	return newQSqlError(C.QSqlError_new6(driverText_ms, databaseText_ms, typeVal, nativeErrorCode_ms))
 }
 
 func (this *QSqlError) OperatorAssign(other *QSqlError) {
@@ -153,8 +153,8 @@ func (this *QSqlError) DatabaseText() string {
 	return _ret
 }
 
-func (this *QSqlError) Type() QSqlError__ErrorType {
-	return (QSqlError__ErrorType)(C.QSqlError_type(this.h))
+func (this *QSqlError) Type() ErrorType {
+	int /* TODO  */
 }
 
 func (this *QSqlError) NativeErrorCode() string {

@@ -178,7 +178,7 @@ bool QVideoWidget_virtualbase_nativeEvent(void* self, struct miqt_string eventTy
 bool QVideoWidget_override_virtual_changeEvent(void* self, intptr_t slot);
 void QVideoWidget_virtualbase_changeEvent(void* self, QEvent* param1);
 bool QVideoWidget_override_virtual_metric(void* self, intptr_t slot);
-int QVideoWidget_virtualbase_metric(const void* self, int param1);
+int QVideoWidget_virtualbase_metric(const void* self, PaintDeviceMetric param1);
 bool QVideoWidget_override_virtual_initPainter(void* self, intptr_t slot);
 void QVideoWidget_virtualbase_initPainter(const void* self, QPainter* painter);
 bool QVideoWidget_override_virtual_redirected(void* self, intptr_t slot);
@@ -213,6 +213,7 @@ QObject* QVideoWidget_protectedbase_sender(bool* _dynamic_cast_ok, const void* s
 int QVideoWidget_protectedbase_senderSignalIndex(bool* _dynamic_cast_ok, const void* self);
 int QVideoWidget_protectedbase_receivers(bool* _dynamic_cast_ok, const void* self, const char* signal);
 bool QVideoWidget_protectedbase_isSignalConnected(bool* _dynamic_cast_ok, const void* self, QMetaMethod* signal);
+double QVideoWidget_protectedbase_getDecodedMetricF(bool* _dynamic_cast_ok, const void* self, PaintDeviceMetric metricA, PaintDeviceMetric metricB);
 
 void QVideoWidget_delete(QVideoWidget* self);
 

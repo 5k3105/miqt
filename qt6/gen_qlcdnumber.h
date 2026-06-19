@@ -101,10 +101,10 @@ int QLCDNumber_digitCount(const QLCDNumber* self);
 void QLCDNumber_setDigitCount(QLCDNumber* self, int nDigits);
 bool QLCDNumber_checkOverflow(const QLCDNumber* self, double num);
 bool QLCDNumber_checkOverflowWithNum(const QLCDNumber* self, int num);
-int QLCDNumber_mode(const QLCDNumber* self);
-void QLCDNumber_setMode(QLCDNumber* self, int mode);
-int QLCDNumber_segmentStyle(const QLCDNumber* self);
-void QLCDNumber_setSegmentStyle(QLCDNumber* self, int segmentStyle);
+Mode QLCDNumber_mode(const QLCDNumber* self);
+void QLCDNumber_setMode(QLCDNumber* self, Mode mode);
+SegmentStyle QLCDNumber_segmentStyle(const QLCDNumber* self);
+void QLCDNumber_setSegmentStyle(QLCDNumber* self, SegmentStyle segmentStyle);
 double QLCDNumber_value(const QLCDNumber* self);
 int QLCDNumber_intValue(const QLCDNumber* self);
 QSize* QLCDNumber_sizeHint(const QLCDNumber* self);
@@ -194,7 +194,7 @@ void QLCDNumber_virtualbase_hideEvent(void* self, QHideEvent* event);
 bool QLCDNumber_override_virtual_nativeEvent(void* self, intptr_t slot);
 bool QLCDNumber_virtualbase_nativeEvent(void* self, struct miqt_string eventType, void* message, intptr_t* result);
 bool QLCDNumber_override_virtual_metric(void* self, intptr_t slot);
-int QLCDNumber_virtualbase_metric(const void* self, int param1);
+int QLCDNumber_virtualbase_metric(const void* self, PaintDeviceMetric param1);
 bool QLCDNumber_override_virtual_initPainter(void* self, intptr_t slot);
 void QLCDNumber_virtualbase_initPainter(const void* self, QPainter* painter);
 bool QLCDNumber_override_virtual_redirected(void* self, intptr_t slot);
@@ -230,6 +230,7 @@ QObject* QLCDNumber_protectedbase_sender(bool* _dynamic_cast_ok, const void* sel
 int QLCDNumber_protectedbase_senderSignalIndex(bool* _dynamic_cast_ok, const void* self);
 int QLCDNumber_protectedbase_receivers(bool* _dynamic_cast_ok, const void* self, const char* signal);
 bool QLCDNumber_protectedbase_isSignalConnected(bool* _dynamic_cast_ok, const void* self, QMetaMethod* signal);
+double QLCDNumber_protectedbase_getDecodedMetricF(bool* _dynamic_cast_ok, const void* self, PaintDeviceMetric metricA, PaintDeviceMetric metricB);
 
 void QLCDNumber_delete(QLCDNumber* self);
 

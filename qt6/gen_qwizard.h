@@ -114,23 +114,23 @@ bool QWizard_validateCurrentPage(QWizard* self);
 int QWizard_nextId(const QWizard* self);
 void QWizard_setField(QWizard* self, struct miqt_string name, QVariant* value);
 QVariant* QWizard_field(const QWizard* self, struct miqt_string name);
-void QWizard_setWizardStyle(QWizard* self, int style);
-int QWizard_wizardStyle(const QWizard* self);
-void QWizard_setOption(QWizard* self, int option);
-bool QWizard_testOption(const QWizard* self, int option);
-void QWizard_setOptions(QWizard* self, int options);
-int QWizard_options(const QWizard* self);
-void QWizard_setButtonText(QWizard* self, int which, struct miqt_string text);
-struct miqt_string QWizard_buttonText(const QWizard* self, int which);
-void QWizard_setButtonLayout(QWizard* self, struct miqt_array /* of int */  layout);
-void QWizard_setButton(QWizard* self, int which, QAbstractButton* button);
-QAbstractButton* QWizard_button(const QWizard* self, int which);
+void QWizard_setWizardStyle(QWizard* self, WizardStyle style);
+WizardStyle QWizard_wizardStyle(const QWizard* self);
+void QWizard_setOption(QWizard* self, WizardOption option);
+bool QWizard_testOption(const QWizard* self, WizardOption option);
+void QWizard_setOptions(QWizard* self, WizardOptions options);
+WizardOptions QWizard_options(const QWizard* self);
+void QWizard_setButtonText(QWizard* self, WizardButton which, struct miqt_string text);
+struct miqt_string QWizard_buttonText(const QWizard* self, WizardButton which);
+void QWizard_setButtonLayout(QWizard* self, struct miqt_array /* of WizardButton */  layout);
+void QWizard_setButton(QWizard* self, WizardButton which, QAbstractButton* button);
+QAbstractButton* QWizard_button(const QWizard* self, WizardButton which);
 void QWizard_setTitleFormat(QWizard* self, int format);
 int QWizard_titleFormat(const QWizard* self);
 void QWizard_setSubTitleFormat(QWizard* self, int format);
 int QWizard_subTitleFormat(const QWizard* self);
-void QWizard_setPixmap(QWizard* self, int which, QPixmap* pixmap);
-QPixmap* QWizard_pixmap(const QWizard* self, int which);
+void QWizard_setPixmap(QWizard* self, WizardPixmap which, QPixmap* pixmap);
+QPixmap* QWizard_pixmap(const QWizard* self, WizardPixmap which);
 void QWizard_setSideWidget(QWizard* self, QWidget* widget);
 QWidget* QWizard_sideWidget(const QWizard* self);
 void QWizard_setDefaultProperty(QWizard* self, const char* className, const char* property, const char* changedSignal);
@@ -158,7 +158,7 @@ void QWizard_initializePage(QWizard* self, int id);
 void QWizard_cleanupPage(QWizard* self, int id);
 struct miqt_string QWizard_tr2(const char* s, const char* c);
 struct miqt_string QWizard_tr3(const char* s, const char* c, int n);
-void QWizard_setOption2(QWizard* self, int option, bool on);
+void QWizard_setOption2(QWizard* self, WizardOption option, bool on);
 
 bool QWizard_override_virtual_validateCurrentPage(void* self, intptr_t slot);
 bool QWizard_virtualbase_validateCurrentPage(void* self);
@@ -249,7 +249,7 @@ bool QWizard_virtualbase_nativeEvent(void* self, struct miqt_string eventType, v
 bool QWizard_override_virtual_changeEvent(void* self, intptr_t slot);
 void QWizard_virtualbase_changeEvent(void* self, QEvent* param1);
 bool QWizard_override_virtual_metric(void* self, intptr_t slot);
-int QWizard_virtualbase_metric(const void* self, int param1);
+int QWizard_virtualbase_metric(const void* self, PaintDeviceMetric param1);
 bool QWizard_override_virtual_initPainter(void* self, intptr_t slot);
 void QWizard_virtualbase_initPainter(const void* self, QPainter* painter);
 bool QWizard_override_virtual_redirected(void* self, intptr_t slot);
@@ -283,6 +283,7 @@ QObject* QWizard_protectedbase_sender(bool* _dynamic_cast_ok, const void* self);
 int QWizard_protectedbase_senderSignalIndex(bool* _dynamic_cast_ok, const void* self);
 int QWizard_protectedbase_receivers(bool* _dynamic_cast_ok, const void* self, const char* signal);
 bool QWizard_protectedbase_isSignalConnected(bool* _dynamic_cast_ok, const void* self, QMetaMethod* signal);
+double QWizard_protectedbase_getDecodedMetricF(bool* _dynamic_cast_ok, const void* self, PaintDeviceMetric metricA, PaintDeviceMetric metricB);
 
 void QWizard_delete(QWizard* self);
 
@@ -393,7 +394,7 @@ bool QWizardPage_virtualbase_nativeEvent(void* self, struct miqt_string eventTyp
 bool QWizardPage_override_virtual_changeEvent(void* self, intptr_t slot);
 void QWizardPage_virtualbase_changeEvent(void* self, QEvent* param1);
 bool QWizardPage_override_virtual_metric(void* self, intptr_t slot);
-int QWizardPage_virtualbase_metric(const void* self, int param1);
+int QWizardPage_virtualbase_metric(const void* self, PaintDeviceMetric param1);
 bool QWizardPage_override_virtual_initPainter(void* self, intptr_t slot);
 void QWizardPage_virtualbase_initPainter(const void* self, QPainter* painter);
 bool QWizardPage_override_virtual_redirected(void* self, intptr_t slot);
@@ -434,6 +435,7 @@ QObject* QWizardPage_protectedbase_sender(bool* _dynamic_cast_ok, const void* se
 int QWizardPage_protectedbase_senderSignalIndex(bool* _dynamic_cast_ok, const void* self);
 int QWizardPage_protectedbase_receivers(bool* _dynamic_cast_ok, const void* self, const char* signal);
 bool QWizardPage_protectedbase_isSignalConnected(bool* _dynamic_cast_ok, const void* self, QMetaMethod* signal);
+double QWizardPage_protectedbase_getDecodedMetricF(bool* _dynamic_cast_ok, const void* self, PaintDeviceMetric metricA, PaintDeviceMetric metricB);
 
 void QWizardPage_delete(QWizardPage* self);
 

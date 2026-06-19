@@ -226,7 +226,7 @@ void QAbstractButton_virtualbase_hideEvent(void* self, QHideEvent* event);
 bool QAbstractButton_override_virtual_nativeEvent(void* self, intptr_t slot);
 bool QAbstractButton_virtualbase_nativeEvent(void* self, struct miqt_string eventType, void* message, intptr_t* result);
 bool QAbstractButton_override_virtual_metric(void* self, intptr_t slot);
-int QAbstractButton_virtualbase_metric(const void* self, int param1);
+int QAbstractButton_virtualbase_metric(const void* self, PaintDeviceMetric param1);
 bool QAbstractButton_override_virtual_initPainter(void* self, intptr_t slot);
 void QAbstractButton_virtualbase_initPainter(const void* self, QPainter* painter);
 bool QAbstractButton_override_virtual_redirected(void* self, intptr_t slot);
@@ -259,6 +259,7 @@ QObject* QAbstractButton_protectedbase_sender(bool* _dynamic_cast_ok, const void
 int QAbstractButton_protectedbase_senderSignalIndex(bool* _dynamic_cast_ok, const void* self);
 int QAbstractButton_protectedbase_receivers(bool* _dynamic_cast_ok, const void* self, const char* signal);
 bool QAbstractButton_protectedbase_isSignalConnected(bool* _dynamic_cast_ok, const void* self, QMetaMethod* signal);
+double QAbstractButton_protectedbase_getDecodedMetricF(bool* _dynamic_cast_ok, const void* self, PaintDeviceMetric metricA, PaintDeviceMetric metricB);
 
 void QAbstractButton_delete(QAbstractButton* self);
 

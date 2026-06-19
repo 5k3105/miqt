@@ -95,7 +95,7 @@ void miqt_exec_callback_QLineEdit_actionEvent(QLineEdit*, intptr_t, QActionEvent
 void miqt_exec_callback_QLineEdit_showEvent(QLineEdit*, intptr_t, QShowEvent*);
 void miqt_exec_callback_QLineEdit_hideEvent(QLineEdit*, intptr_t, QHideEvent*);
 bool miqt_exec_callback_QLineEdit_nativeEvent(QLineEdit*, intptr_t, struct miqt_string, void*, intptr_t*);
-int miqt_exec_callback_QLineEdit_metric(const QLineEdit*, intptr_t, int);
+int miqt_exec_callback_QLineEdit_metric(const QLineEdit*, intptr_t, PaintDeviceMetric);
 void miqt_exec_callback_QLineEdit_initPainter(const QLineEdit*, intptr_t, QPainter*);
 QPaintDevice* miqt_exec_callback_QLineEdit_redirected(const QLineEdit*, intptr_t, QPoint*);
 QPainter* miqt_exec_callback_QLineEdit_sharedPainter(const QLineEdit*, intptr_t);
@@ -764,18 +764,17 @@ public:
 	intptr_t handle__metric = 0;
 
 	// Subclass to allow providing a Go implementation
-	virtual int metric(QPaintDevice::PaintDeviceMetric param1) const override {
+	virtual int metric(PaintDeviceMetric param1) const override {
 		if (handle__metric == 0) {
 			return QLineEdit::metric(param1);
 		}
 
-		QPaintDevice::PaintDeviceMetric param1_ret = param1;
-		int sigval1 = static_cast<int>(param1_ret);
+		PaintDeviceMetric sigval1 = param1;
 		int callback_return_value = miqt_exec_callback_QLineEdit_metric(this, handle__metric, sigval1);
 		return static_cast<int>(callback_return_value);
 	}
 
-	friend int QLineEdit_virtualbase_metric(const void* self, int param1);
+	friend int QLineEdit_virtualbase_metric(const void* self, PaintDeviceMetric param1);
 
 	// cgo.Handle value for overwritten implementation
 	intptr_t handle__initPainter = 0;
@@ -941,6 +940,7 @@ public:
 	friend int QLineEdit_protectedbase_senderSignalIndex(bool* _dynamic_cast_ok, const void* self);
 	friend int QLineEdit_protectedbase_receivers(bool* _dynamic_cast_ok, const void* self, const char* signal);
 	friend bool QLineEdit_protectedbase_isSignalConnected(bool* _dynamic_cast_ok, const void* self, QMetaMethod* signal);
+	friend double QLineEdit_protectedbase_getDecodedMetricF(bool* _dynamic_cast_ok, const void* self, PaintDeviceMetric metricA, PaintDeviceMetric metricB);
 };
 
 QLineEdit* QLineEdit_new(QWidget* parent) {
@@ -1046,13 +1046,12 @@ bool QLineEdit_isClearButtonEnabled(const QLineEdit* self) {
 	return self->isClearButtonEnabled();
 }
 
-int QLineEdit_echoMode(const QLineEdit* self) {
-	QLineEdit::EchoMode _ret = self->echoMode();
-	return static_cast<int>(_ret);
+EchoMode QLineEdit_echoMode(const QLineEdit* self) {
+	return self->echoMode();
 }
 
-void QLineEdit_setEchoMode(QLineEdit* self, int echoMode) {
-	self->setEchoMode(static_cast<QLineEdit::EchoMode>(echoMode));
+void QLineEdit_setEchoMode(QLineEdit* self, EchoMode echoMode) {
+	self->setEchoMode(echoMode);
 }
 
 bool QLineEdit_isReadOnly(const QLineEdit* self) {
@@ -1236,12 +1235,12 @@ QMargins* QLineEdit_textMargins(const QLineEdit* self) {
 	return new QMargins(self->textMargins());
 }
 
-void QLineEdit_addAction(QLineEdit* self, QAction* action, int position) {
-	self->addAction(action, static_cast<QLineEdit::ActionPosition>(position));
+void QLineEdit_addAction(QLineEdit* self, QAction* action, ActionPosition position) {
+	self->addAction(action, position);
 }
 
-QAction* QLineEdit_addAction2(QLineEdit* self, QIcon* icon, int position) {
-	return self->addAction(*icon, static_cast<QLineEdit::ActionPosition>(position));
+QAction* QLineEdit_addAction2(QLineEdit* self, QIcon* icon, ActionPosition position) {
+	return self->addAction(*icon, position);
 }
 
 void QLineEdit_setText(QLineEdit* self, struct miqt_string text) {
@@ -1969,8 +1968,8 @@ bool QLineEdit_override_virtual_metric(void* self, intptr_t slot) {
 	return true;
 }
 
-int QLineEdit_virtualbase_metric(const void* self, int param1) {
-	return static_cast<const MiqtVirtualQLineEdit*>(self)->QLineEdit::metric(static_cast<MiqtVirtualQLineEdit::PaintDeviceMetric>(param1));
+int QLineEdit_virtualbase_metric(const void* self, PaintDeviceMetric param1) {
+	return static_cast<const MiqtVirtualQLineEdit*>(self)->QLineEdit::metric(param1);
 }
 
 bool QLineEdit_override_virtual_initPainter(void* self, intptr_t slot) {
@@ -2207,6 +2206,17 @@ bool QLineEdit_protectedbase_isSignalConnected(bool* _dynamic_cast_ok, const voi
 
 	*_dynamic_cast_ok = true;
 	return self_cast->isSignalConnected(*signal);
+}
+
+double QLineEdit_protectedbase_getDecodedMetricF(bool* _dynamic_cast_ok, const void* self, PaintDeviceMetric metricA, PaintDeviceMetric metricB) {
+	MiqtVirtualQLineEdit* self_cast = dynamic_cast<MiqtVirtualQLineEdit*>( (QLineEdit*)(self) );
+	if (self_cast == nullptr) {
+		*_dynamic_cast_ok = false;
+		return 0;
+	}
+
+	*_dynamic_cast_ok = true;
+	return self_cast->getDecodedMetricF(metricA, metricB);
 }
 
 void QLineEdit_delete(QLineEdit* self) {

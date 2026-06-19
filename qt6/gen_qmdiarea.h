@@ -111,12 +111,12 @@ QMdiSubWindow* QMdiArea_addSubWindow(QMdiArea* self, QWidget* widget);
 void QMdiArea_removeSubWindow(QMdiArea* self, QWidget* widget);
 QBrush* QMdiArea_background(const QMdiArea* self);
 void QMdiArea_setBackground(QMdiArea* self, QBrush* background);
-int QMdiArea_activationOrder(const QMdiArea* self);
-void QMdiArea_setActivationOrder(QMdiArea* self, int order);
-void QMdiArea_setOption(QMdiArea* self, int option);
-bool QMdiArea_testOption(const QMdiArea* self, int opton);
-void QMdiArea_setViewMode(QMdiArea* self, int mode);
-int QMdiArea_viewMode(const QMdiArea* self);
+WindowOrder QMdiArea_activationOrder(const QMdiArea* self);
+void QMdiArea_setActivationOrder(QMdiArea* self, WindowOrder order);
+void QMdiArea_setOption(QMdiArea* self, AreaOption option);
+bool QMdiArea_testOption(const QMdiArea* self, AreaOption opton);
+void QMdiArea_setViewMode(QMdiArea* self, ViewMode mode);
+ViewMode QMdiArea_viewMode(const QMdiArea* self);
 bool QMdiArea_documentMode(const QMdiArea* self);
 void QMdiArea_setDocumentMode(QMdiArea* self, bool enabled);
 void QMdiArea_setTabsClosable(QMdiArea* self, bool closable);
@@ -148,9 +148,9 @@ bool QMdiArea_viewportEvent(QMdiArea* self, QEvent* event);
 void QMdiArea_scrollContentsBy(QMdiArea* self, int dx, int dy);
 struct miqt_string QMdiArea_tr2(const char* s, const char* c);
 struct miqt_string QMdiArea_tr3(const char* s, const char* c, int n);
-struct miqt_array /* of QMdiSubWindow* */  QMdiArea_subWindowListWithOrder(const QMdiArea* self, int order);
+struct miqt_array /* of QMdiSubWindow* */  QMdiArea_subWindowListWithOrder(const QMdiArea* self, WindowOrder order);
 QMdiSubWindow* QMdiArea_addSubWindow2(QMdiArea* self, QWidget* widget, int flags);
-void QMdiArea_setOption2(QMdiArea* self, int option, bool on);
+void QMdiArea_setOption2(QMdiArea* self, AreaOption option, bool on);
 
 bool QMdiArea_override_virtual_sizeHint(void* self, intptr_t slot);
 QSize* QMdiArea_virtualbase_sizeHint(const void* self);
@@ -237,7 +237,7 @@ void QMdiArea_virtualbase_hideEvent(void* self, QHideEvent* event);
 bool QMdiArea_override_virtual_nativeEvent(void* self, intptr_t slot);
 bool QMdiArea_virtualbase_nativeEvent(void* self, struct miqt_string eventType, void* message, intptr_t* result);
 bool QMdiArea_override_virtual_metric(void* self, intptr_t slot);
-int QMdiArea_virtualbase_metric(const void* self, int param1);
+int QMdiArea_virtualbase_metric(const void* self, PaintDeviceMetric param1);
 bool QMdiArea_override_virtual_initPainter(void* self, intptr_t slot);
 void QMdiArea_virtualbase_initPainter(const void* self, QPainter* painter);
 bool QMdiArea_override_virtual_redirected(void* self, intptr_t slot);
@@ -269,6 +269,7 @@ QObject* QMdiArea_protectedbase_sender(bool* _dynamic_cast_ok, const void* self)
 int QMdiArea_protectedbase_senderSignalIndex(bool* _dynamic_cast_ok, const void* self);
 int QMdiArea_protectedbase_receivers(bool* _dynamic_cast_ok, const void* self, const char* signal);
 bool QMdiArea_protectedbase_isSignalConnected(bool* _dynamic_cast_ok, const void* self, QMetaMethod* signal);
+double QMdiArea_protectedbase_getDecodedMetricF(bool* _dynamic_cast_ok, const void* self, PaintDeviceMetric metricA, PaintDeviceMetric metricB);
 
 void QMdiArea_delete(QMdiArea* self);
 

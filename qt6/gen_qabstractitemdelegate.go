@@ -125,6 +125,10 @@ func (this *QAbstractItemDelegate) EditorEvent(event *QEvent, model *QAbstractIt
 	return (bool)(C.QAbstractItemDelegate_editorEvent(this.h, event.cPointer(), model.cPointer(), option.cPointer(), index.cPointer()))
 }
 
+func (this *QAbstractItemDelegate) HandleEditorEvent(object *QObject, event *QEvent) bool {
+	return (bool)(C.QAbstractItemDelegate_handleEditorEvent(this.h, object.cPointer(), event.cPointer()))
+}
+
 func (this *QAbstractItemDelegate) HelpEvent(event *QHelpEvent, view *QAbstractItemView, option *QStyleOptionViewItem, index *QModelIndex) bool {
 	return (bool)(C.QAbstractItemDelegate_helpEvent(this.h, event.cPointer(), view.cPointer(), option.cPointer(), index.cPointer()))
 }

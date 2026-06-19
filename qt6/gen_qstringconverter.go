@@ -56,35 +56,41 @@ func NewQStringEncoder() *QStringEncoder {
 }
 
 // NewQStringEncoder2 constructs a new QStringEncoder object.
-func NewQStringEncoder2(encoding QStringConverter__Encoding) *QStringEncoder {
+func NewQStringEncoder2(encoding Encoding) *QStringEncoder {
 
-	return newQStringEncoder(C.QStringEncoder_new2((C.int)(encoding)))
+	return newQStringEncoder(C.QStringEncoder_new2(encoding))
 }
 
 // NewQStringEncoder3 constructs a new QStringEncoder object.
-func NewQStringEncoder3(name string) *QStringEncoder {
-	name_Cstring := C.CString(name)
-	defer C.free(unsafe.Pointer(name_Cstring))
+func NewQStringEncoder3(name QAnyStringView) *QStringEncoder {
 
-	return newQStringEncoder(C.QStringEncoder_new3(name_Cstring))
+	return newQStringEncoder(C.QStringEncoder_new3(name.cPointer()))
 }
 
 // NewQStringEncoder4 constructs a new QStringEncoder object.
-func NewQStringEncoder4(encoding QStringConverter__Encoding, flags QStringConverterBase__Flag) *QStringEncoder {
+func NewQStringEncoder4(encoding Encoding, flags Flags) *QStringEncoder {
 
-	return newQStringEncoder(C.QStringEncoder_new4((C.int)(encoding), (C.int)(flags)))
+	return newQStringEncoder(C.QStringEncoder_new4(encoding, flags))
 }
 
 // NewQStringEncoder5 constructs a new QStringEncoder object.
-func NewQStringEncoder5(name string, flags QStringConverterBase__Flag) *QStringEncoder {
-	name_Cstring := C.CString(name)
-	defer C.free(unsafe.Pointer(name_Cstring))
+func NewQStringEncoder5(name QAnyStringView, flags Flags) *QStringEncoder {
 
-	return newQStringEncoder(C.QStringEncoder_new5(name_Cstring, (C.int)(flags)))
+	return newQStringEncoder(C.QStringEncoder_new5(name.cPointer(), flags))
 }
 
 func (this *QStringEncoder) RequiredSpace(inputLength int64) int64 {
 	return (int64)(C.QStringEncoder_requiredSpace(this.h, (C.ptrdiff_t)(inputLength)))
+}
+
+func (this *QStringEncoder) Finalize(out string, maxlen int64) FinalizeResult {
+	out_Cstring := C.CString(out)
+	defer C.free(unsafe.Pointer(out_Cstring))
+	int /* TODO  */
+}
+
+func (this *QStringEncoder) Finalize2() FinalizeResult {
+	int /* TODO  */
 }
 
 // Delete this object from C++ memory.
@@ -138,9 +144,9 @@ func UnsafeNewQStringDecoder(h unsafe.Pointer) *QStringDecoder {
 }
 
 // NewQStringDecoder constructs a new QStringDecoder object.
-func NewQStringDecoder(encoding QStringConverter__Encoding) *QStringDecoder {
+func NewQStringDecoder(encoding Encoding) *QStringDecoder {
 
-	return newQStringDecoder(C.QStringDecoder_new((C.int)(encoding)))
+	return newQStringDecoder(C.QStringDecoder_new(encoding))
 }
 
 // NewQStringDecoder2 constructs a new QStringDecoder object.
@@ -150,25 +156,21 @@ func NewQStringDecoder2() *QStringDecoder {
 }
 
 // NewQStringDecoder3 constructs a new QStringDecoder object.
-func NewQStringDecoder3(name string) *QStringDecoder {
-	name_Cstring := C.CString(name)
-	defer C.free(unsafe.Pointer(name_Cstring))
+func NewQStringDecoder3(name QAnyStringView) *QStringDecoder {
 
-	return newQStringDecoder(C.QStringDecoder_new3(name_Cstring))
+	return newQStringDecoder(C.QStringDecoder_new3(name.cPointer()))
 }
 
 // NewQStringDecoder4 constructs a new QStringDecoder object.
-func NewQStringDecoder4(encoding QStringConverter__Encoding, flags QStringConverterBase__Flag) *QStringDecoder {
+func NewQStringDecoder4(encoding Encoding, flags Flags) *QStringDecoder {
 
-	return newQStringDecoder(C.QStringDecoder_new4((C.int)(encoding), (C.int)(flags)))
+	return newQStringDecoder(C.QStringDecoder_new4(encoding, flags))
 }
 
 // NewQStringDecoder5 constructs a new QStringDecoder object.
-func NewQStringDecoder5(name string, f QStringConverterBase__Flag) *QStringDecoder {
-	name_Cstring := C.CString(name)
-	defer C.free(unsafe.Pointer(name_Cstring))
+func NewQStringDecoder5(name QAnyStringView, f Flags) *QStringDecoder {
 
-	return newQStringDecoder(C.QStringDecoder_new5(name_Cstring, (C.int)(f)))
+	return newQStringDecoder(C.QStringDecoder_new5(name.cPointer(), f))
 }
 
 func (this *QStringDecoder) RequiredSpace(inputLength int64) int64 {
@@ -177,6 +179,14 @@ func (this *QStringDecoder) RequiredSpace(inputLength int64) int64 {
 
 func (this *QStringDecoder) AppendToBuffer(out *QChar, ba QByteArrayView) *QChar {
 	return newQChar(C.QStringDecoder_appendToBuffer(this.h, out.cPointer(), ba.cPointer()))
+}
+
+func (this *QStringDecoder) Finalize(out *QChar, maxlen int64) FinalizeResultQChar {
+	int /* TODO  */
+}
+
+func (this *QStringDecoder) Finalize3() FinalizeResult {
+	int /* TODO  */
 }
 
 func QStringDecoder_DecoderForHtml(data QByteArrayView) *QStringDecoder {

@@ -30,13 +30,12 @@ int QAudioFormat_sampleRate(const QAudioFormat* self) {
 	return self->sampleRate();
 }
 
-void QAudioFormat_setChannelConfig(QAudioFormat* self, uint32_t config) {
-	self->setChannelConfig(static_cast<QAudioFormat::ChannelConfig>(config));
+void QAudioFormat_setChannelConfig(QAudioFormat* self, ChannelConfig config) {
+	self->setChannelConfig(config);
 }
 
-uint32_t QAudioFormat_channelConfig(const QAudioFormat* self) {
-	QAudioFormat::ChannelConfig _ret = self->channelConfig();
-	return static_cast<uint32_t>(_ret);
+ChannelConfig QAudioFormat_channelConfig(const QAudioFormat* self) {
+	return self->channelConfig();
 }
 
 void QAudioFormat_setChannelCount(QAudioFormat* self, int channelCount) {
@@ -47,17 +46,16 @@ int QAudioFormat_channelCount(const QAudioFormat* self) {
 	return self->channelCount();
 }
 
-int QAudioFormat_channelOffset(const QAudioFormat* self, int channel) {
-	return self->channelOffset(static_cast<QAudioFormat::AudioChannelPosition>(channel));
+int QAudioFormat_channelOffset(const QAudioFormat* self, AudioChannelPosition channel) {
+	return self->channelOffset(channel);
 }
 
-void QAudioFormat_setSampleFormat(QAudioFormat* self, uint16_t f) {
-	self->setSampleFormat(static_cast<QAudioFormat::SampleFormat>(f));
+void QAudioFormat_setSampleFormat(QAudioFormat* self, SampleFormat f) {
+	self->setSampleFormat(f);
 }
 
-uint16_t QAudioFormat_sampleFormat(const QAudioFormat* self) {
-	QAudioFormat::SampleFormat _ret = self->sampleFormat();
-	return static_cast<uint16_t>(_ret);
+SampleFormat QAudioFormat_sampleFormat(const QAudioFormat* self) {
+	return self->sampleFormat();
 }
 
 int QAudioFormat_bytesForDuration(const QAudioFormat* self, long long microseconds) {
@@ -102,9 +100,8 @@ float QAudioFormat_normalizedSampleValue(const QAudioFormat* self, const void* s
 	return self->normalizedSampleValue(sample);
 }
 
-uint32_t QAudioFormat_defaultChannelConfigForChannelCount(int channelCount) {
-	QAudioFormat::ChannelConfig _ret = QAudioFormat::defaultChannelConfigForChannelCount(static_cast<int>(channelCount));
-	return static_cast<uint32_t>(_ret);
+ChannelConfig QAudioFormat_defaultChannelConfigForChannelCount(int channelCount) {
+	return QAudioFormat::defaultChannelConfigForChannelCount(static_cast<int>(channelCount));
 }
 
 void QAudioFormat_delete(QAudioFormat* self) {

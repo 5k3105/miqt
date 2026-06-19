@@ -62,15 +62,15 @@ func UnsafeNewQBoxLayout(h unsafe.Pointer) *QBoxLayout {
 }
 
 // NewQBoxLayout constructs a new QBoxLayout object.
-func NewQBoxLayout(param1 QBoxLayout__Direction) *QBoxLayout {
+func NewQBoxLayout(param1 Direction) *QBoxLayout {
 
-	return newQBoxLayout(C.QBoxLayout_new((C.int)(param1)))
+	return newQBoxLayout(C.QBoxLayout_new(param1))
 }
 
 // NewQBoxLayout2 constructs a new QBoxLayout object.
-func NewQBoxLayout2(param1 QBoxLayout__Direction, parent *QWidget) *QBoxLayout {
+func NewQBoxLayout2(param1 Direction, parent *QWidget) *QBoxLayout {
 
-	return newQBoxLayout(C.QBoxLayout_new2((C.int)(param1), parent.cPointer()))
+	return newQBoxLayout(C.QBoxLayout_new2(param1, parent.cPointer()))
 }
 
 func (this *QBoxLayout) MetaObject() *QMetaObject {
@@ -92,12 +92,12 @@ func QBoxLayout_Tr(s string) string {
 	return _ret
 }
 
-func (this *QBoxLayout) Direction() QBoxLayout__Direction {
-	return (QBoxLayout__Direction)(C.QBoxLayout_direction(this.h))
+func (this *QBoxLayout) Direction() Direction {
+	int /* TODO  */
 }
 
-func (this *QBoxLayout) SetDirection(direction QBoxLayout__Direction) {
-	C.QBoxLayout_setDirection(this.h, (C.int)(direction))
+func (this *QBoxLayout) SetDirection(direction Direction) {
+	C.QBoxLayout_setDirection(this.h, direction)
 }
 
 func (this *QBoxLayout) AddSpacing(size int) {
@@ -882,12 +882,12 @@ func miqt_exec_callback_QBoxLayout_isEmpty(self *C.QBoxLayout, cb C.intptr_t) C.
 
 }
 
-func (this *QBoxLayout) callVirtualBase_ControlTypes() QSizePolicy__ControlType {
+func (this *QBoxLayout) callVirtualBase_ControlTypes() ControlType {
 
-	return (QSizePolicy__ControlType)(C.QBoxLayout_virtualbase_controlTypes(unsafe.Pointer(this.h)))
+	return (ControlType)(C.QBoxLayout_virtualbase_controlTypes(unsafe.Pointer(this.h)))
 
 }
-func (this *QBoxLayout) OnControlTypes(slot func(super func() QSizePolicy__ControlType) QSizePolicy__ControlType) {
+func (this *QBoxLayout) OnControlTypes(slot func(super func() ControlType) ControlType) {
 	ok := C.QBoxLayout_override_virtual_controlTypes(unsafe.Pointer(this.h), C.intptr_t(cgo.NewHandle(slot)))
 	if !ok {
 		panic("miqt: can only override virtual methods for directly constructed types")
@@ -896,7 +896,7 @@ func (this *QBoxLayout) OnControlTypes(slot func(super func() QSizePolicy__Contr
 
 //export miqt_exec_callback_QBoxLayout_controlTypes
 func miqt_exec_callback_QBoxLayout_controlTypes(self *C.QBoxLayout, cb C.intptr_t) C.int {
-	gofunc, ok := cgo.Handle(cb).Value().(func(super func() QSizePolicy__ControlType) QSizePolicy__ControlType)
+	gofunc, ok := cgo.Handle(cb).Value().(func(super func() ControlType) ControlType)
 	if !ok {
 		panic("miqt: callback of non-callback type (heap corruption?)")
 	}
@@ -1903,12 +1903,12 @@ func miqt_exec_callback_QHBoxLayout_isEmpty(self *C.QHBoxLayout, cb C.intptr_t) 
 
 }
 
-func (this *QHBoxLayout) callVirtualBase_ControlTypes() QSizePolicy__ControlType {
+func (this *QHBoxLayout) callVirtualBase_ControlTypes() ControlType {
 
-	return (QSizePolicy__ControlType)(C.QHBoxLayout_virtualbase_controlTypes(unsafe.Pointer(this.h)))
+	return (ControlType)(C.QHBoxLayout_virtualbase_controlTypes(unsafe.Pointer(this.h)))
 
 }
-func (this *QHBoxLayout) OnControlTypes(slot func(super func() QSizePolicy__ControlType) QSizePolicy__ControlType) {
+func (this *QHBoxLayout) OnControlTypes(slot func(super func() ControlType) ControlType) {
 	ok := C.QHBoxLayout_override_virtual_controlTypes(unsafe.Pointer(this.h), C.intptr_t(cgo.NewHandle(slot)))
 	if !ok {
 		panic("miqt: can only override virtual methods for directly constructed types")
@@ -1917,7 +1917,7 @@ func (this *QHBoxLayout) OnControlTypes(slot func(super func() QSizePolicy__Cont
 
 //export miqt_exec_callback_QHBoxLayout_controlTypes
 func miqt_exec_callback_QHBoxLayout_controlTypes(self *C.QHBoxLayout, cb C.intptr_t) C.int {
-	gofunc, ok := cgo.Handle(cb).Value().(func(super func() QSizePolicy__ControlType) QSizePolicy__ControlType)
+	gofunc, ok := cgo.Handle(cb).Value().(func(super func() ControlType) ControlType)
 	if !ok {
 		panic("miqt: callback of non-callback type (heap corruption?)")
 	}
@@ -2924,12 +2924,12 @@ func miqt_exec_callback_QVBoxLayout_isEmpty(self *C.QVBoxLayout, cb C.intptr_t) 
 
 }
 
-func (this *QVBoxLayout) callVirtualBase_ControlTypes() QSizePolicy__ControlType {
+func (this *QVBoxLayout) callVirtualBase_ControlTypes() ControlType {
 
-	return (QSizePolicy__ControlType)(C.QVBoxLayout_virtualbase_controlTypes(unsafe.Pointer(this.h)))
+	return (ControlType)(C.QVBoxLayout_virtualbase_controlTypes(unsafe.Pointer(this.h)))
 
 }
-func (this *QVBoxLayout) OnControlTypes(slot func(super func() QSizePolicy__ControlType) QSizePolicy__ControlType) {
+func (this *QVBoxLayout) OnControlTypes(slot func(super func() ControlType) ControlType) {
 	ok := C.QVBoxLayout_override_virtual_controlTypes(unsafe.Pointer(this.h), C.intptr_t(cgo.NewHandle(slot)))
 	if !ok {
 		panic("miqt: can only override virtual methods for directly constructed types")
@@ -2938,7 +2938,7 @@ func (this *QVBoxLayout) OnControlTypes(slot func(super func() QSizePolicy__Cont
 
 //export miqt_exec_callback_QVBoxLayout_controlTypes
 func miqt_exec_callback_QVBoxLayout_controlTypes(self *C.QVBoxLayout, cb C.intptr_t) C.int {
-	gofunc, ok := cgo.Handle(cb).Value().(func(super func() QSizePolicy__ControlType) QSizePolicy__ControlType)
+	gofunc, ok := cgo.Handle(cb).Value().(func(super func() ControlType) ControlType)
 	if !ok {
 		panic("miqt: callback of non-callback type (heap corruption?)")
 	}

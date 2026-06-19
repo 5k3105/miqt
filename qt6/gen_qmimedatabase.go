@@ -176,18 +176,18 @@ func (this *QMimeDatabase) AllMimeTypes() []QMimeType {
 	return _ret
 }
 
-func (this *QMimeDatabase) MimeTypeForFile2(fileName string, mode QMimeDatabase__MatchMode) *QMimeType {
+func (this *QMimeDatabase) MimeTypeForFile2(fileName string, mode MatchMode) *QMimeType {
 	fileName_ms := C.struct_miqt_string{}
 	fileName_ms.data = C.CString(fileName)
 	fileName_ms.len = C.size_t(len(fileName))
 	defer C.free(unsafe.Pointer(fileName_ms.data))
-	_goptr := newQMimeType(C.QMimeDatabase_mimeTypeForFile2(this.h, fileName_ms, (C.int)(mode)))
+	_goptr := newQMimeType(C.QMimeDatabase_mimeTypeForFile2(this.h, fileName_ms, mode))
 	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
 	return _goptr
 }
 
-func (this *QMimeDatabase) MimeTypeForFile3(fileInfo *QFileInfo, mode QMimeDatabase__MatchMode) *QMimeType {
-	_goptr := newQMimeType(C.QMimeDatabase_mimeTypeForFile3(this.h, fileInfo.cPointer(), (C.int)(mode)))
+func (this *QMimeDatabase) MimeTypeForFile3(fileInfo *QFileInfo, mode MatchMode) *QMimeType {
+	_goptr := newQMimeType(C.QMimeDatabase_mimeTypeForFile3(this.h, fileInfo.cPointer(), mode))
 	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
 	return _goptr
 }

@@ -84,7 +84,7 @@ void miqt_exec_callback_QSplitter_dropEvent(QSplitter*, intptr_t, QDropEvent*);
 void miqt_exec_callback_QSplitter_showEvent(QSplitter*, intptr_t, QShowEvent*);
 void miqt_exec_callback_QSplitter_hideEvent(QSplitter*, intptr_t, QHideEvent*);
 bool miqt_exec_callback_QSplitter_nativeEvent(QSplitter*, intptr_t, struct miqt_string, void*, intptr_t*);
-int miqt_exec_callback_QSplitter_metric(const QSplitter*, intptr_t, int);
+int miqt_exec_callback_QSplitter_metric(const QSplitter*, intptr_t, PaintDeviceMetric);
 void miqt_exec_callback_QSplitter_initPainter(const QSplitter*, intptr_t, QPainter*);
 QPaintDevice* miqt_exec_callback_QSplitter_redirected(const QSplitter*, intptr_t, QPoint*);
 QPainter* miqt_exec_callback_QSplitter_sharedPainter(const QSplitter*, intptr_t);
@@ -130,7 +130,7 @@ void miqt_exec_callback_QSplitterHandle_showEvent(QSplitterHandle*, intptr_t, QS
 void miqt_exec_callback_QSplitterHandle_hideEvent(QSplitterHandle*, intptr_t, QHideEvent*);
 bool miqt_exec_callback_QSplitterHandle_nativeEvent(QSplitterHandle*, intptr_t, struct miqt_string, void*, intptr_t*);
 void miqt_exec_callback_QSplitterHandle_changeEvent(QSplitterHandle*, intptr_t, QEvent*);
-int miqt_exec_callback_QSplitterHandle_metric(const QSplitterHandle*, intptr_t, int);
+int miqt_exec_callback_QSplitterHandle_metric(const QSplitterHandle*, intptr_t, PaintDeviceMetric);
 void miqt_exec_callback_QSplitterHandle_initPainter(const QSplitterHandle*, intptr_t, QPainter*);
 QPaintDevice* miqt_exec_callback_QSplitterHandle_redirected(const QSplitterHandle*, intptr_t, QPoint*);
 QPainter* miqt_exec_callback_QSplitterHandle_sharedPainter(const QSplitterHandle*, intptr_t);
@@ -783,18 +783,17 @@ public:
 	intptr_t handle__metric = 0;
 
 	// Subclass to allow providing a Go implementation
-	virtual int metric(QPaintDevice::PaintDeviceMetric param1) const override {
+	virtual int metric(PaintDeviceMetric param1) const override {
 		if (handle__metric == 0) {
 			return QSplitter::metric(param1);
 		}
 
-		QPaintDevice::PaintDeviceMetric param1_ret = param1;
-		int sigval1 = static_cast<int>(param1_ret);
+		PaintDeviceMetric sigval1 = param1;
 		int callback_return_value = miqt_exec_callback_QSplitter_metric(this, handle__metric, sigval1);
 		return static_cast<int>(callback_return_value);
 	}
 
-	friend int QSplitter_virtualbase_metric(const void* self, int param1);
+	friend int QSplitter_virtualbase_metric(const void* self, PaintDeviceMetric param1);
 
 	// cgo.Handle value for overwritten implementation
 	intptr_t handle__initPainter = 0;
@@ -997,6 +996,7 @@ public:
 	friend int QSplitter_protectedbase_senderSignalIndex(bool* _dynamic_cast_ok, const void* self);
 	friend int QSplitter_protectedbase_receivers(bool* _dynamic_cast_ok, const void* self, const char* signal);
 	friend bool QSplitter_protectedbase_isSignalConnected(bool* _dynamic_cast_ok, const void* self, QMetaMethod* signal);
+	friend double QSplitter_protectedbase_getDecodedMetricF(bool* _dynamic_cast_ok, const void* self, PaintDeviceMetric metricA, PaintDeviceMetric metricB);
 };
 
 QSplitter* QSplitter_new(QWidget* parent) {
@@ -1731,8 +1731,8 @@ bool QSplitter_override_virtual_metric(void* self, intptr_t slot) {
 	return true;
 }
 
-int QSplitter_virtualbase_metric(const void* self, int param1) {
-	return static_cast<const MiqtVirtualQSplitter*>(self)->QSplitter::metric(static_cast<MiqtVirtualQSplitter::PaintDeviceMetric>(param1));
+int QSplitter_virtualbase_metric(const void* self, PaintDeviceMetric param1) {
+	return static_cast<const MiqtVirtualQSplitter*>(self)->QSplitter::metric(param1);
 }
 
 bool QSplitter_override_virtual_initPainter(void* self, intptr_t slot) {
@@ -2030,6 +2030,17 @@ bool QSplitter_protectedbase_isSignalConnected(bool* _dynamic_cast_ok, const voi
 
 	*_dynamic_cast_ok = true;
 	return self_cast->isSignalConnected(*signal);
+}
+
+double QSplitter_protectedbase_getDecodedMetricF(bool* _dynamic_cast_ok, const void* self, PaintDeviceMetric metricA, PaintDeviceMetric metricB) {
+	MiqtVirtualQSplitter* self_cast = dynamic_cast<MiqtVirtualQSplitter*>( (QSplitter*)(self) );
+	if (self_cast == nullptr) {
+		*_dynamic_cast_ok = false;
+		return 0;
+	}
+
+	*_dynamic_cast_ok = true;
+	return self_cast->getDecodedMetricF(metricA, metricB);
 }
 
 void QSplitter_delete(QSplitter* self) {
@@ -2620,18 +2631,17 @@ public:
 	intptr_t handle__metric = 0;
 
 	// Subclass to allow providing a Go implementation
-	virtual int metric(QPaintDevice::PaintDeviceMetric param1) const override {
+	virtual int metric(PaintDeviceMetric param1) const override {
 		if (handle__metric == 0) {
 			return QSplitterHandle::metric(param1);
 		}
 
-		QPaintDevice::PaintDeviceMetric param1_ret = param1;
-		int sigval1 = static_cast<int>(param1_ret);
+		PaintDeviceMetric sigval1 = param1;
 		int callback_return_value = miqt_exec_callback_QSplitterHandle_metric(this, handle__metric, sigval1);
 		return static_cast<int>(callback_return_value);
 	}
 
-	friend int QSplitterHandle_virtualbase_metric(const void* self, int param1);
+	friend int QSplitterHandle_virtualbase_metric(const void* self, PaintDeviceMetric param1);
 
 	// cgo.Handle value for overwritten implementation
 	intptr_t handle__initPainter = 0;
@@ -2849,6 +2859,7 @@ public:
 	friend int QSplitterHandle_protectedbase_senderSignalIndex(bool* _dynamic_cast_ok, const void* self);
 	friend int QSplitterHandle_protectedbase_receivers(bool* _dynamic_cast_ok, const void* self, const char* signal);
 	friend bool QSplitterHandle_protectedbase_isSignalConnected(bool* _dynamic_cast_ok, const void* self, QMetaMethod* signal);
+	friend double QSplitterHandle_protectedbase_getDecodedMetricF(bool* _dynamic_cast_ok, const void* self, PaintDeviceMetric metricA, PaintDeviceMetric metricB);
 };
 
 QSplitterHandle* QSplitterHandle_new(int o, QSplitter* parent) {
@@ -3408,8 +3419,8 @@ bool QSplitterHandle_override_virtual_metric(void* self, intptr_t slot) {
 	return true;
 }
 
-int QSplitterHandle_virtualbase_metric(const void* self, int param1) {
-	return static_cast<const MiqtVirtualQSplitterHandle*>(self)->QSplitterHandle::metric(static_cast<MiqtVirtualQSplitterHandle::PaintDeviceMetric>(param1));
+int QSplitterHandle_virtualbase_metric(const void* self, PaintDeviceMetric param1) {
+	return static_cast<const MiqtVirtualQSplitterHandle*>(self)->QSplitterHandle::metric(param1);
 }
 
 bool QSplitterHandle_override_virtual_initPainter(void* self, intptr_t slot) {
@@ -3699,6 +3710,17 @@ bool QSplitterHandle_protectedbase_isSignalConnected(bool* _dynamic_cast_ok, con
 
 	*_dynamic_cast_ok = true;
 	return self_cast->isSignalConnected(*signal);
+}
+
+double QSplitterHandle_protectedbase_getDecodedMetricF(bool* _dynamic_cast_ok, const void* self, PaintDeviceMetric metricA, PaintDeviceMetric metricB) {
+	MiqtVirtualQSplitterHandle* self_cast = dynamic_cast<MiqtVirtualQSplitterHandle*>( (QSplitterHandle*)(self) );
+	if (self_cast == nullptr) {
+		*_dynamic_cast_ok = false;
+		return 0;
+	}
+
+	*_dynamic_cast_ok = true;
+	return self_cast->getDecodedMetricF(metricA, metricB);
 }
 
 void QSplitterHandle_delete(QSplitterHandle* self) {

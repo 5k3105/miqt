@@ -31,9 +31,9 @@ QTextStream* QTextStream_new3(struct miqt_string array) {
 	return new (std::nothrow) QTextStream(array_QByteArray);
 }
 
-QTextStream* QTextStream_new4(struct miqt_string array, int openMode) {
+QTextStream* QTextStream_new4(struct miqt_string array, OpenMode openMode) {
 	QByteArray array_QByteArray(array.data, array.len);
-	return new (std::nothrow) QTextStream(array_QByteArray, static_cast<QIODeviceBase::OpenMode>(openMode));
+	return new (std::nothrow) QTextStream(array_QByteArray, openMode);
 }
 
 void QTextStream_virtbase(QTextStream* src, QIODeviceBase** outptr_QIODeviceBase) {
@@ -92,13 +92,12 @@ struct miqt_string QTextStream_string(const QTextStream* self) {
 	return _ms;
 }
 
-int QTextStream_status(const QTextStream* self) {
-	QTextStream::Status _ret = self->status();
-	return static_cast<int>(_ret);
+Status QTextStream_status(const QTextStream* self) {
+	return self->status();
 }
 
-void QTextStream_setStatus(QTextStream* self, int status) {
-	self->setStatus(static_cast<QTextStream::Status>(status));
+void QTextStream_setStatus(QTextStream* self, Status status) {
+	self->setStatus(status);
 }
 
 void QTextStream_resetStatus(QTextStream* self) {
@@ -163,13 +162,12 @@ struct miqt_string QTextStream_read(QTextStream* self, long long maxlen) {
 	return _ms;
 }
 
-void QTextStream_setFieldAlignment(QTextStream* self, int alignment) {
-	self->setFieldAlignment(static_cast<QTextStream::FieldAlignment>(alignment));
+void QTextStream_setFieldAlignment(QTextStream* self, FieldAlignment alignment) {
+	self->setFieldAlignment(alignment);
 }
 
-int QTextStream_fieldAlignment(const QTextStream* self) {
-	QTextStream::FieldAlignment _ret = self->fieldAlignment();
-	return static_cast<int>(_ret);
+FieldAlignment QTextStream_fieldAlignment(const QTextStream* self) {
+	return self->fieldAlignment();
 }
 
 void QTextStream_setPadChar(QTextStream* self, QChar* ch) {
@@ -188,13 +186,12 @@ int QTextStream_fieldWidth(const QTextStream* self) {
 	return self->fieldWidth();
 }
 
-void QTextStream_setNumberFlags(QTextStream* self, int flags) {
-	self->setNumberFlags(static_cast<QTextStream::NumberFlags>(flags));
+void QTextStream_setNumberFlags(QTextStream* self, NumberFlags flags) {
+	self->setNumberFlags(flags);
 }
 
-int QTextStream_numberFlags(const QTextStream* self) {
-	QTextStream::NumberFlags _ret = self->numberFlags();
-	return static_cast<int>(_ret);
+NumberFlags QTextStream_numberFlags(const QTextStream* self) {
+	return self->numberFlags();
 }
 
 void QTextStream_setIntegerBase(QTextStream* self, int base) {
@@ -205,13 +202,12 @@ int QTextStream_integerBase(const QTextStream* self) {
 	return self->integerBase();
 }
 
-void QTextStream_setRealNumberNotation(QTextStream* self, int notation) {
-	self->setRealNumberNotation(static_cast<QTextStream::RealNumberNotation>(notation));
+void QTextStream_setRealNumberNotation(QTextStream* self, RealNumberNotation notation) {
+	self->setRealNumberNotation(notation);
 }
 
-int QTextStream_realNumberNotation(const QTextStream* self) {
-	QTextStream::RealNumberNotation _ret = self->realNumberNotation();
-	return static_cast<int>(_ret);
+RealNumberNotation QTextStream_realNumberNotation(const QTextStream* self) {
+	return self->realNumberNotation();
 }
 
 void QTextStream_setRealNumberPrecision(QTextStream* self, int precision) {
@@ -410,6 +406,10 @@ QTextStream* QTextStream_operatorShiftLeftWithPtr(QTextStream* self, const void*
 	QTextStream& _ret = self->operator<<(ptr);
 	// Cast returned reference into pointer
 	return &_ret;
+}
+
+bool QTextStream_ToBool(const QTextStream* self) {
+	return self->operator bool();
 }
 
 struct miqt_string QTextStream_readLineWithMaxlen(QTextStream* self, long long maxlen) {

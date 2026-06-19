@@ -122,12 +122,12 @@ func (this *QDataWidgetMapper) Orientation() Orientation {
 	return (Orientation)(C.QDataWidgetMapper_orientation(this.h))
 }
 
-func (this *QDataWidgetMapper) SetSubmitPolicy(policy QDataWidgetMapper__SubmitPolicy) {
-	C.QDataWidgetMapper_setSubmitPolicy(this.h, (C.int)(policy))
+func (this *QDataWidgetMapper) SetSubmitPolicy(policy SubmitPolicy) {
+	C.QDataWidgetMapper_setSubmitPolicy(this.h, policy)
 }
 
-func (this *QDataWidgetMapper) SubmitPolicy() QDataWidgetMapper__SubmitPolicy {
-	return (QDataWidgetMapper__SubmitPolicy)(C.QDataWidgetMapper_submitPolicy(this.h))
+func (this *QDataWidgetMapper) SubmitPolicy() SubmitPolicy {
+	int /* TODO  */
 }
 
 func (this *QDataWidgetMapper) AddMapping(widget *QWidget, section int) {

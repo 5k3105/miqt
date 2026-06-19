@@ -88,11 +88,14 @@ QPainterPath* QPainterPath_toReversed(const QPainterPath* self);
 int QPainterPath_elementCount(const QPainterPath* self);
 QPainterPath__Element* QPainterPath_elementAt(const QPainterPath* self, int i);
 void QPainterPath_setElementPositionAt(QPainterPath* self, int i, double x, double y);
+bool QPainterPath_isCachingEnabled(const QPainterPath* self);
+void QPainterPath_setCachingEnabled(QPainterPath* self, bool enabled);
 double QPainterPath_length(const QPainterPath* self);
-double QPainterPath_percentAtLength(const QPainterPath* self, double t);
+double QPainterPath_percentAtLength(const QPainterPath* self, double len);
 QPointF* QPainterPath_pointAtPercent(const QPainterPath* self, double t);
 double QPainterPath_angleAtPercent(const QPainterPath* self, double t);
 double QPainterPath_slopeAtPercent(const QPainterPath* self, double t);
+QPainterPath* QPainterPath_trimmed(const QPainterPath* self, double fromFraction, double toFraction);
 bool QPainterPath_intersectsWithQPainterPath(const QPainterPath* self, QPainterPath* p);
 bool QPainterPath_containsWithQPainterPath(const QPainterPath* self, QPainterPath* p);
 QPainterPath* QPainterPath_united(const QPainterPath* self, QPainterPath* r);
@@ -111,6 +114,7 @@ QPainterPath* QPainterPath_operatorPlusAssign(QPainterPath* self, QPainterPath* 
 QPainterPath* QPainterPath_operatorMinusAssign(QPainterPath* self, QPainterPath* other);
 void QPainterPath_addRoundedRect3(QPainterPath* self, QRectF* rect, double xRadius, double yRadius, int mode);
 void QPainterPath_addRoundedRect4(QPainterPath* self, double x, double y, double w, double h, double xRadius, double yRadius, int mode);
+QPainterPath* QPainterPath_trimmed2(const QPainterPath* self, double fromFraction, double toFraction, double offset);
 
 void QPainterPath_delete(QPainterPath* self);
 
@@ -135,18 +139,20 @@ QPainterPath* QPainterPathStroker_createStroke(const QPainterPathStroker* self, 
 
 void QPainterPathStroker_delete(QPainterPathStroker* self);
 
+QPainterPath__Element* QPainterPath__Element_new();
+QPainterPath__Element* QPainterPath__Element_new2(const Element* param1);
 double QPainterPath__Element_x(const QPainterPath__Element* self);
 void QPainterPath__Element_setX(QPainterPath__Element* self, double x);
 double QPainterPath__Element_y(const QPainterPath__Element* self);
 void QPainterPath__Element_setY(QPainterPath__Element* self, double y);
-int QPainterPath__Element_type(const QPainterPath__Element* self);
-void QPainterPath__Element_setType(QPainterPath__Element* self, int type);
+ElementType QPainterPath__Element_type(const QPainterPath__Element* self);
+void QPainterPath__Element_setType(QPainterPath__Element* self, ElementType type);
 bool QPainterPath__Element_isMoveTo(const QPainterPath__Element* self);
 bool QPainterPath__Element_isLineTo(const QPainterPath__Element* self);
 bool QPainterPath__Element_isCurveTo(const QPainterPath__Element* self);
 QPointF* QPainterPath__Element_ToQPointF(const QPainterPath__Element* self);
-bool QPainterPath__Element_operatorEqual(const QPainterPath__Element* self, QPainterPath__Element* e);
-bool QPainterPath__Element_operatorNotEqual(const QPainterPath__Element* self, QPainterPath__Element* e);
+bool QPainterPath__Element_operatorEqual(const QPainterPath__Element* self, const Element* e);
+bool QPainterPath__Element_operatorNotEqual(const QPainterPath__Element* self, const Element* e);
 
 void QPainterPath__Element_delete(QPainterPath__Element* self);
 

@@ -51,35 +51,35 @@ func UnsafeNewQSaveFile(h unsafe.Pointer) *QSaveFile {
 }
 
 // NewQSaveFile constructs a new QSaveFile object.
-func NewQSaveFile(name string) *QSaveFile {
-	name_ms := C.struct_miqt_string{}
-	name_ms.data = C.CString(name)
-	name_ms.len = C.size_t(len(name))
-	defer C.free(unsafe.Pointer(name_ms.data))
+func NewQSaveFile() *QSaveFile {
 
-	return newQSaveFile(C.QSaveFile_new(name_ms))
+	return newQSaveFile(C.QSaveFile_new())
 }
 
 // NewQSaveFile2 constructs a new QSaveFile object.
-func NewQSaveFile2() *QSaveFile {
-
-	return newQSaveFile(C.QSaveFile_new2())
-}
-
-// NewQSaveFile3 constructs a new QSaveFile object.
-func NewQSaveFile3(name string, parent *QObject) *QSaveFile {
+func NewQSaveFile2(name string) *QSaveFile {
 	name_ms := C.struct_miqt_string{}
 	name_ms.data = C.CString(name)
 	name_ms.len = C.size_t(len(name))
 	defer C.free(unsafe.Pointer(name_ms.data))
 
-	return newQSaveFile(C.QSaveFile_new3(name_ms, parent.cPointer()))
+	return newQSaveFile(C.QSaveFile_new2(name_ms))
+}
+
+// NewQSaveFile3 constructs a new QSaveFile object.
+func NewQSaveFile3(parent *QObject) *QSaveFile {
+
+	return newQSaveFile(C.QSaveFile_new3(parent.cPointer()))
 }
 
 // NewQSaveFile4 constructs a new QSaveFile object.
-func NewQSaveFile4(parent *QObject) *QSaveFile {
+func NewQSaveFile4(name string, parent *QObject) *QSaveFile {
+	name_ms := C.struct_miqt_string{}
+	name_ms.data = C.CString(name)
+	name_ms.len = C.size_t(len(name))
+	defer C.free(unsafe.Pointer(name_ms.data))
 
-	return newQSaveFile(C.QSaveFile_new4(parent.cPointer()))
+	return newQSaveFile(C.QSaveFile_new4(name_ms, parent.cPointer()))
 }
 
 func (this *QSaveFile) MetaObject() *QMetaObject {
@@ -116,8 +116,8 @@ func (this *QSaveFile) SetFileName(name string) {
 	C.QSaveFile_setFileName(this.h, name_ms)
 }
 
-func (this *QSaveFile) Open(flags QIODeviceBase__OpenModeFlag) bool {
-	return (bool)(C.QSaveFile_open(this.h, (C.int)(flags)))
+func (this *QSaveFile) Open(flags OpenMode) bool {
+	return (bool)(C.QSaveFile_open(this.h, flags))
 }
 
 func (this *QSaveFile) Commit() bool {
@@ -159,7 +159,7 @@ func QSaveFile_Tr3(s string, c string, n int) string {
 }
 
 // SetOpenMode can only be called from a QSaveFile that was directly constructed.
-func (this *QSaveFile) SetOpenMode(openMode QIODeviceBase__OpenModeFlag) {
+func (this *QSaveFile) SetOpenMode(openMode OpenModeFlag) {
 
 	var _dynamic_cast_ok C.bool = false
 	C.QSaveFile_protectedbase_setOpenMode(&_dynamic_cast_ok, unsafe.Pointer(this.h), (C.int)(openMode))
@@ -274,12 +274,12 @@ func miqt_exec_callback_QSaveFile_fileName(self *C.QSaveFile, cb C.intptr_t) C.s
 
 }
 
-func (this *QSaveFile) callVirtualBase_Open(flags QIODeviceBase__OpenModeFlag) bool {
+func (this *QSaveFile) callVirtualBase_Open(flags OpenMode) bool {
 
-	return (bool)(C.QSaveFile_virtualbase_open(unsafe.Pointer(this.h), (C.int)(flags)))
+	return (bool)(C.QSaveFile_virtualbase_open(unsafe.Pointer(this.h), flags))
 
 }
-func (this *QSaveFile) OnOpen(slot func(super func(flags QIODeviceBase__OpenModeFlag) bool, flags QIODeviceBase__OpenModeFlag) bool) {
+func (this *QSaveFile) OnOpen(slot func(super func(flags OpenMode) bool, flags OpenMode) bool) {
 	ok := C.QSaveFile_override_virtual_open(unsafe.Pointer(this.h), C.intptr_t(cgo.NewHandle(slot)))
 	if !ok {
 		panic("miqt: can only override virtual methods for directly constructed types")
@@ -287,14 +287,14 @@ func (this *QSaveFile) OnOpen(slot func(super func(flags QIODeviceBase__OpenMode
 }
 
 //export miqt_exec_callback_QSaveFile_open
-func miqt_exec_callback_QSaveFile_open(self *C.QSaveFile, cb C.intptr_t, flags C.int) C.bool {
-	gofunc, ok := cgo.Handle(cb).Value().(func(super func(flags QIODeviceBase__OpenModeFlag) bool, flags QIODeviceBase__OpenModeFlag) bool)
+func miqt_exec_callback_QSaveFile_open(self *C.QSaveFile, cb C.intptr_t, flags C.OpenMode) C.bool {
+	gofunc, ok := cgo.Handle(cb).Value().(func(super func(flags OpenMode) bool, flags OpenMode) bool)
 	if !ok {
 		panic("miqt: callback of non-callback type (heap corruption?)")
 	}
 
 	// Convert all CABI parameters to Go parameters
-	slotval1 := (QIODeviceBase__OpenModeFlag)(flags)
+	int /* TODO  */
 
 	virtualReturn := gofunc((&QSaveFile{h: self}).callVirtualBase_Open, slotval1)
 
@@ -491,12 +491,11 @@ func miqt_exec_callback_QSaveFile_resize(self *C.QSaveFile, cb C.intptr_t, sz C.
 
 }
 
-func (this *QSaveFile) callVirtualBase_Permissions() QFileDevice__Permission {
+func (this *QSaveFile) callVirtualBase_Permissions() Permissions {
 
-	return (QFileDevice__Permission)(C.QSaveFile_virtualbase_permissions(unsafe.Pointer(this.h)))
-
+	int /* TODO  */
 }
-func (this *QSaveFile) OnPermissions(slot func(super func() QFileDevice__Permission) QFileDevice__Permission) {
+func (this *QSaveFile) OnPermissions(slot func(super func() Permissions) Permissions) {
 	ok := C.QSaveFile_override_virtual_permissions(unsafe.Pointer(this.h), C.intptr_t(cgo.NewHandle(slot)))
 	if !ok {
 		panic("miqt: can only override virtual methods for directly constructed types")
@@ -504,24 +503,24 @@ func (this *QSaveFile) OnPermissions(slot func(super func() QFileDevice__Permiss
 }
 
 //export miqt_exec_callback_QSaveFile_permissions
-func miqt_exec_callback_QSaveFile_permissions(self *C.QSaveFile, cb C.intptr_t) C.int {
-	gofunc, ok := cgo.Handle(cb).Value().(func(super func() QFileDevice__Permission) QFileDevice__Permission)
+func miqt_exec_callback_QSaveFile_permissions(self *C.QSaveFile, cb C.intptr_t) C.Permissions {
+	gofunc, ok := cgo.Handle(cb).Value().(func(super func() Permissions) Permissions)
 	if !ok {
 		panic("miqt: callback of non-callback type (heap corruption?)")
 	}
 
 	virtualReturn := gofunc((&QSaveFile{h: self}).callVirtualBase_Permissions)
 
-	return (C.int)(virtualReturn)
+	return virtualReturn
 
 }
 
-func (this *QSaveFile) callVirtualBase_SetPermissions(permissionSpec QFileDevice__Permission) bool {
+func (this *QSaveFile) callVirtualBase_SetPermissions(permissionSpec Permissions) bool {
 
-	return (bool)(C.QSaveFile_virtualbase_setPermissions(unsafe.Pointer(this.h), (C.int)(permissionSpec)))
+	return (bool)(C.QSaveFile_virtualbase_setPermissions(unsafe.Pointer(this.h), permissionSpec))
 
 }
-func (this *QSaveFile) OnSetPermissions(slot func(super func(permissionSpec QFileDevice__Permission) bool, permissionSpec QFileDevice__Permission) bool) {
+func (this *QSaveFile) OnSetPermissions(slot func(super func(permissionSpec Permissions) bool, permissionSpec Permissions) bool) {
 	ok := C.QSaveFile_override_virtual_setPermissions(unsafe.Pointer(this.h), C.intptr_t(cgo.NewHandle(slot)))
 	if !ok {
 		panic("miqt: can only override virtual methods for directly constructed types")
@@ -529,14 +528,14 @@ func (this *QSaveFile) OnSetPermissions(slot func(super func(permissionSpec QFil
 }
 
 //export miqt_exec_callback_QSaveFile_setPermissions
-func miqt_exec_callback_QSaveFile_setPermissions(self *C.QSaveFile, cb C.intptr_t, permissionSpec C.int) C.bool {
-	gofunc, ok := cgo.Handle(cb).Value().(func(super func(permissionSpec QFileDevice__Permission) bool, permissionSpec QFileDevice__Permission) bool)
+func miqt_exec_callback_QSaveFile_setPermissions(self *C.QSaveFile, cb C.intptr_t, permissionSpec C.Permissions) C.bool {
+	gofunc, ok := cgo.Handle(cb).Value().(func(super func(permissionSpec Permissions) bool, permissionSpec Permissions) bool)
 	if !ok {
 		panic("miqt: callback of non-callback type (heap corruption?)")
 	}
 
 	// Convert all CABI parameters to Go parameters
-	slotval1 := (QFileDevice__Permission)(permissionSpec)
+	int /* TODO  */
 
 	virtualReturn := gofunc((&QSaveFile{h: self}).callVirtualBase_SetPermissions, slotval1)
 

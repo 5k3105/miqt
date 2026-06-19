@@ -80,7 +80,7 @@ void miqt_exec_callback_QLCDNumber_dropEvent(QLCDNumber*, intptr_t, QDropEvent*)
 void miqt_exec_callback_QLCDNumber_showEvent(QLCDNumber*, intptr_t, QShowEvent*);
 void miqt_exec_callback_QLCDNumber_hideEvent(QLCDNumber*, intptr_t, QHideEvent*);
 bool miqt_exec_callback_QLCDNumber_nativeEvent(QLCDNumber*, intptr_t, struct miqt_string, void*, intptr_t*);
-int miqt_exec_callback_QLCDNumber_metric(const QLCDNumber*, intptr_t, int);
+int miqt_exec_callback_QLCDNumber_metric(const QLCDNumber*, intptr_t, PaintDeviceMetric);
 void miqt_exec_callback_QLCDNumber_initPainter(const QLCDNumber*, intptr_t, QPainter*);
 QPaintDevice* miqt_exec_callback_QLCDNumber_redirected(const QLCDNumber*, intptr_t, QPoint*);
 QPainter* miqt_exec_callback_QLCDNumber_sharedPainter(const QLCDNumber*, intptr_t);
@@ -701,18 +701,17 @@ public:
 	intptr_t handle__metric = 0;
 
 	// Subclass to allow providing a Go implementation
-	virtual int metric(QPaintDevice::PaintDeviceMetric param1) const override {
+	virtual int metric(PaintDeviceMetric param1) const override {
 		if (handle__metric == 0) {
 			return QLCDNumber::metric(param1);
 		}
 
-		QPaintDevice::PaintDeviceMetric param1_ret = param1;
-		int sigval1 = static_cast<int>(param1_ret);
+		PaintDeviceMetric sigval1 = param1;
 		int callback_return_value = miqt_exec_callback_QLCDNumber_metric(this, handle__metric, sigval1);
 		return static_cast<int>(callback_return_value);
 	}
 
-	friend int QLCDNumber_virtualbase_metric(const void* self, int param1);
+	friend int QLCDNumber_virtualbase_metric(const void* self, PaintDeviceMetric param1);
 
 	// cgo.Handle value for overwritten implementation
 	intptr_t handle__initPainter = 0;
@@ -929,6 +928,7 @@ public:
 	friend int QLCDNumber_protectedbase_senderSignalIndex(bool* _dynamic_cast_ok, const void* self);
 	friend int QLCDNumber_protectedbase_receivers(bool* _dynamic_cast_ok, const void* self, const char* signal);
 	friend bool QLCDNumber_protectedbase_isSignalConnected(bool* _dynamic_cast_ok, const void* self, QMetaMethod* signal);
+	friend double QLCDNumber_protectedbase_getDecodedMetricF(bool* _dynamic_cast_ok, const void* self, PaintDeviceMetric metricA, PaintDeviceMetric metricB);
 };
 
 QLCDNumber* QLCDNumber_new(QWidget* parent) {
@@ -990,22 +990,20 @@ bool QLCDNumber_checkOverflowWithNum(const QLCDNumber* self, int num) {
 	return self->checkOverflow(static_cast<int>(num));
 }
 
-int QLCDNumber_mode(const QLCDNumber* self) {
-	QLCDNumber::Mode _ret = self->mode();
-	return static_cast<int>(_ret);
+Mode QLCDNumber_mode(const QLCDNumber* self) {
+	return self->mode();
 }
 
-void QLCDNumber_setMode(QLCDNumber* self, int mode) {
-	self->setMode(static_cast<QLCDNumber::Mode>(mode));
+void QLCDNumber_setMode(QLCDNumber* self, Mode mode) {
+	self->setMode(mode);
 }
 
-int QLCDNumber_segmentStyle(const QLCDNumber* self) {
-	QLCDNumber::SegmentStyle _ret = self->segmentStyle();
-	return static_cast<int>(_ret);
+SegmentStyle QLCDNumber_segmentStyle(const QLCDNumber* self) {
+	return self->segmentStyle();
 }
 
-void QLCDNumber_setSegmentStyle(QLCDNumber* self, int segmentStyle) {
-	self->setSegmentStyle(static_cast<QLCDNumber::SegmentStyle>(segmentStyle));
+void QLCDNumber_setSegmentStyle(QLCDNumber* self, SegmentStyle segmentStyle) {
+	self->setSegmentStyle(segmentStyle);
 }
 
 double QLCDNumber_value(const QLCDNumber* self) {
@@ -1586,8 +1584,8 @@ bool QLCDNumber_override_virtual_metric(void* self, intptr_t slot) {
 	return true;
 }
 
-int QLCDNumber_virtualbase_metric(const void* self, int param1) {
-	return static_cast<const MiqtVirtualQLCDNumber*>(self)->QLCDNumber::metric(static_cast<MiqtVirtualQLCDNumber::PaintDeviceMetric>(param1));
+int QLCDNumber_virtualbase_metric(const void* self, PaintDeviceMetric param1) {
+	return static_cast<const MiqtVirtualQLCDNumber*>(self)->QLCDNumber::metric(param1);
 }
 
 bool QLCDNumber_override_virtual_initPainter(void* self, intptr_t slot) {
@@ -1866,6 +1864,17 @@ bool QLCDNumber_protectedbase_isSignalConnected(bool* _dynamic_cast_ok, const vo
 
 	*_dynamic_cast_ok = true;
 	return self_cast->isSignalConnected(*signal);
+}
+
+double QLCDNumber_protectedbase_getDecodedMetricF(bool* _dynamic_cast_ok, const void* self, PaintDeviceMetric metricA, PaintDeviceMetric metricB) {
+	MiqtVirtualQLCDNumber* self_cast = dynamic_cast<MiqtVirtualQLCDNumber*>( (QLCDNumber*)(self) );
+	if (self_cast == nullptr) {
+		*_dynamic_cast_ok = false;
+		return 0;
+	}
+
+	*_dynamic_cast_ok = true;
+	return self_cast->getDecodedMetricF(metricA, metricB);
 }
 
 void QLCDNumber_delete(QLCDNumber* self) {

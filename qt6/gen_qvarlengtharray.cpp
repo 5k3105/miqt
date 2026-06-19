@@ -9,14 +9,12 @@ extern "C" {
 } /* extern C */
 #endif
 
-ptrdiff_t QVLABaseBase_capacity(const QVLABaseBase* self) {
-	QVLABaseBase::size_type _ret = self->capacity();
-	return static_cast<ptrdiff_t>(_ret);
+size_type QVLABaseBase_capacity(const QVLABaseBase* self) {
+	return self->capacity();
 }
 
-ptrdiff_t QVLABaseBase_size(const QVLABaseBase* self) {
-	QVLABaseBase::size_type _ret = self->size();
-	return static_cast<ptrdiff_t>(_ret);
+size_type QVLABaseBase_size(const QVLABaseBase* self) {
+	return self->size();
 }
 
 bool QVLABaseBase_empty(const QVLABaseBase* self) {

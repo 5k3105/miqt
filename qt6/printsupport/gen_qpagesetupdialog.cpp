@@ -84,7 +84,7 @@ void miqt_exec_callback_QPageSetupDialog_dropEvent(QPageSetupDialog*, intptr_t, 
 void miqt_exec_callback_QPageSetupDialog_hideEvent(QPageSetupDialog*, intptr_t, QHideEvent*);
 bool miqt_exec_callback_QPageSetupDialog_nativeEvent(QPageSetupDialog*, intptr_t, struct miqt_string, void*, intptr_t*);
 void miqt_exec_callback_QPageSetupDialog_changeEvent(QPageSetupDialog*, intptr_t, QEvent*);
-int miqt_exec_callback_QPageSetupDialog_metric(const QPageSetupDialog*, intptr_t, int);
+int miqt_exec_callback_QPageSetupDialog_metric(const QPageSetupDialog*, intptr_t, PaintDeviceMetric);
 void miqt_exec_callback_QPageSetupDialog_initPainter(const QPageSetupDialog*, intptr_t, QPainter*);
 QPaintDevice* miqt_exec_callback_QPageSetupDialog_redirected(const QPageSetupDialog*, intptr_t, QPoint*);
 QPainter* miqt_exec_callback_QPageSetupDialog_sharedPainter(const QPageSetupDialog*, intptr_t);
@@ -784,18 +784,17 @@ public:
 	intptr_t handle__metric = 0;
 
 	// Subclass to allow providing a Go implementation
-	virtual int metric(QPaintDevice::PaintDeviceMetric param1) const override {
+	virtual int metric(PaintDeviceMetric param1) const override {
 		if (handle__metric == 0) {
 			return QPageSetupDialog::metric(param1);
 		}
 
-		QPaintDevice::PaintDeviceMetric param1_ret = param1;
-		int sigval1 = static_cast<int>(param1_ret);
+		PaintDeviceMetric sigval1 = param1;
 		int callback_return_value = miqt_exec_callback_QPageSetupDialog_metric(this, handle__metric, sigval1);
 		return static_cast<int>(callback_return_value);
 	}
 
-	friend int QPageSetupDialog_virtualbase_metric(const void* self, int param1);
+	friend int QPageSetupDialog_virtualbase_metric(const void* self, PaintDeviceMetric param1);
 
 	// cgo.Handle value for overwritten implementation
 	intptr_t handle__initPainter = 0;
@@ -995,6 +994,7 @@ public:
 	friend int QPageSetupDialog_protectedbase_senderSignalIndex(bool* _dynamic_cast_ok, const void* self);
 	friend int QPageSetupDialog_protectedbase_receivers(bool* _dynamic_cast_ok, const void* self, const char* signal);
 	friend bool QPageSetupDialog_protectedbase_isSignalConnected(bool* _dynamic_cast_ok, const void* self, QMetaMethod* signal);
+	friend double QPageSetupDialog_protectedbase_getDecodedMetricF(bool* _dynamic_cast_ok, const void* self, PaintDeviceMetric metricA, PaintDeviceMetric metricB);
 };
 
 QPageSetupDialog* QPageSetupDialog_new(QWidget* parent) {
@@ -1641,8 +1641,8 @@ bool QPageSetupDialog_override_virtual_metric(void* self, intptr_t slot) {
 	return true;
 }
 
-int QPageSetupDialog_virtualbase_metric(const void* self, int param1) {
-	return static_cast<const MiqtVirtualQPageSetupDialog*>(self)->QPageSetupDialog::metric(static_cast<MiqtVirtualQPageSetupDialog::PaintDeviceMetric>(param1));
+int QPageSetupDialog_virtualbase_metric(const void* self, PaintDeviceMetric param1) {
+	return static_cast<const MiqtVirtualQPageSetupDialog*>(self)->QPageSetupDialog::metric(param1);
 }
 
 bool QPageSetupDialog_override_virtual_initPainter(void* self, intptr_t slot) {
@@ -1907,6 +1907,17 @@ bool QPageSetupDialog_protectedbase_isSignalConnected(bool* _dynamic_cast_ok, co
 
 	*_dynamic_cast_ok = true;
 	return self_cast->isSignalConnected(*signal);
+}
+
+double QPageSetupDialog_protectedbase_getDecodedMetricF(bool* _dynamic_cast_ok, const void* self, PaintDeviceMetric metricA, PaintDeviceMetric metricB) {
+	MiqtVirtualQPageSetupDialog* self_cast = dynamic_cast<MiqtVirtualQPageSetupDialog*>( (QPageSetupDialog*)(self) );
+	if (self_cast == nullptr) {
+		*_dynamic_cast_ok = false;
+		return 0;
+	}
+
+	*_dynamic_cast_ok = true;
+	return self_cast->getDecodedMetricF(metricA, metricB);
 }
 
 void QPageSetupDialog_delete(QPageSetupDialog* self) {

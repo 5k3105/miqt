@@ -128,9 +128,9 @@ func NewQJSValue8(str string) *QJSValue {
 }
 
 // NewQJSValue9 constructs a new QJSValue object.
-func NewQJSValue9(value QJSValue__SpecialValue) *QJSValue {
+func NewQJSValue9(value SpecialValue) *QJSValue {
 
-	return newQJSValue(C.QJSValue_new9((C.int)(value)))
+	return newQJSValue(C.QJSValue_new9(value))
 }
 
 func (this *QJSValue) OperatorAssign(other *QJSValue) {
@@ -222,8 +222,8 @@ func (this *QJSValue) ToVariant() *qt6.QVariant {
 	return _goptr
 }
 
-func (this *QJSValue) ToVariantWithBehavior(behavior QJSValue__ObjectConversionBehavior) *qt6.QVariant {
-	_goptr := qt6.UnsafeNewQVariant(unsafe.Pointer(C.QJSValue_toVariantWithBehavior(this.h, (C.int)(behavior))))
+func (this *QJSValue) ToVariantWithBehavior(behavior ObjectConversionBehavior) *qt6.QVariant {
+	_goptr := qt6.UnsafeNewQVariant(unsafe.Pointer(C.QJSValue_toVariantWithBehavior(this.h, behavior)))
 	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
 	return _goptr
 }
@@ -340,8 +340,8 @@ func (this *QJSValue) CallAsConstructor() *QJSValue {
 	return _goptr
 }
 
-func (this *QJSValue) ErrorType() QJSValue__ErrorType {
-	return (QJSValue__ErrorType)(C.QJSValue_errorType(this.h))
+func (this *QJSValue) ErrorType() ErrorType {
+	int /* TODO  */
 }
 
 func (this *QJSValue) CallWithArgs(args []QJSValue) *QJSValue {

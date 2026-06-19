@@ -17,9 +17,11 @@ extern "C" {
 #ifdef __cplusplus
 class QFont;
 class QFontInfo;
+class QFontVariableAxis;
 #else
 typedef struct QFont QFont;
 typedef struct QFontInfo QFontInfo;
+typedef struct QFontVariableAxis QFontVariableAxis;
 #endif
 
 QFontInfo* QFontInfo_new(QFont* param1);
@@ -40,6 +42,7 @@ bool QFontInfo_overline(const QFontInfo* self);
 bool QFontInfo_strikeOut(const QFontInfo* self);
 bool QFontInfo_fixedPitch(const QFontInfo* self);
 int QFontInfo_styleHint(const QFontInfo* self);
+struct miqt_array /* of QFontVariableAxis* */  QFontInfo_variableAxes(const QFontInfo* self);
 int QFontInfo_legacyWeight(const QFontInfo* self);
 bool QFontInfo_exactMatch(const QFontInfo* self);
 

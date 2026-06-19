@@ -1,4 +1,5 @@
 #include <QChildEvent>
+#include <QDeadlineTimer>
 #include <QEvent>
 #include <QMetaMethod>
 #include <QMetaObject>
@@ -258,7 +259,20 @@ void QThreadPool_releaseThread(QThreadPool* self) {
 	self->releaseThread();
 }
 
-bool QThreadPool_waitForDone(QThreadPool* self) {
+void QThreadPool_setServiceLevel(QThreadPool* self, int serviceLevel) {
+	self->setServiceLevel(static_cast<QThread::QualityOfService>(serviceLevel));
+}
+
+int QThreadPool_serviceLevel(const QThreadPool* self) {
+	QThread::QualityOfService _ret = self->serviceLevel();
+	return static_cast<int>(_ret);
+}
+
+bool QThreadPool_waitForDone(QThreadPool* self, int msecs) {
+	return self->waitForDone(static_cast<int>(msecs));
+}
+
+bool QThreadPool_waitForDone2(QThreadPool* self) {
 	return self->waitForDone();
 }
 
@@ -300,8 +314,8 @@ void QThreadPool_start2(QThreadPool* self, QRunnable* runnable, int priority) {
 	self->start(runnable, static_cast<int>(priority));
 }
 
-bool QThreadPool_waitForDoneWithMsecs(QThreadPool* self, int msecs) {
-	return self->waitForDone(static_cast<int>(msecs));
+bool QThreadPool_waitForDoneWithDeadline(QThreadPool* self, QDeadlineTimer* deadline) {
+	return self->waitForDone(*deadline);
 }
 
 bool QThreadPool_override_virtual_event(void* self, intptr_t slot) {

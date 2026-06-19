@@ -83,7 +83,7 @@ void miqt_exec_callback_QMdiSubWindow_dragMoveEvent(QMdiSubWindow*, intptr_t, QD
 void miqt_exec_callback_QMdiSubWindow_dragLeaveEvent(QMdiSubWindow*, intptr_t, QDragLeaveEvent*);
 void miqt_exec_callback_QMdiSubWindow_dropEvent(QMdiSubWindow*, intptr_t, QDropEvent*);
 bool miqt_exec_callback_QMdiSubWindow_nativeEvent(QMdiSubWindow*, intptr_t, struct miqt_string, void*, intptr_t*);
-int miqt_exec_callback_QMdiSubWindow_metric(const QMdiSubWindow*, intptr_t, int);
+int miqt_exec_callback_QMdiSubWindow_metric(const QMdiSubWindow*, intptr_t, PaintDeviceMetric);
 void miqt_exec_callback_QMdiSubWindow_initPainter(const QMdiSubWindow*, intptr_t, QPainter*);
 QPaintDevice* miqt_exec_callback_QMdiSubWindow_redirected(const QMdiSubWindow*, intptr_t, QPoint*);
 QPainter* miqt_exec_callback_QMdiSubWindow_sharedPainter(const QMdiSubWindow*, intptr_t);
@@ -734,18 +734,17 @@ public:
 	intptr_t handle__metric = 0;
 
 	// Subclass to allow providing a Go implementation
-	virtual int metric(QPaintDevice::PaintDeviceMetric param1) const override {
+	virtual int metric(PaintDeviceMetric param1) const override {
 		if (handle__metric == 0) {
 			return QMdiSubWindow::metric(param1);
 		}
 
-		QPaintDevice::PaintDeviceMetric param1_ret = param1;
-		int sigval1 = static_cast<int>(param1_ret);
+		PaintDeviceMetric sigval1 = param1;
 		int callback_return_value = miqt_exec_callback_QMdiSubWindow_metric(this, handle__metric, sigval1);
 		return static_cast<int>(callback_return_value);
 	}
 
-	friend int QMdiSubWindow_virtualbase_metric(const void* self, int param1);
+	friend int QMdiSubWindow_virtualbase_metric(const void* self, PaintDeviceMetric param1);
 
 	// cgo.Handle value for overwritten implementation
 	intptr_t handle__initPainter = 0;
@@ -910,6 +909,7 @@ public:
 	friend int QMdiSubWindow_protectedbase_senderSignalIndex(bool* _dynamic_cast_ok, const void* self);
 	friend int QMdiSubWindow_protectedbase_receivers(bool* _dynamic_cast_ok, const void* self, const char* signal);
 	friend bool QMdiSubWindow_protectedbase_isSignalConnected(bool* _dynamic_cast_ok, const void* self, QMetaMethod* signal);
+	friend double QMdiSubWindow_protectedbase_getDecodedMetricF(bool* _dynamic_cast_ok, const void* self, PaintDeviceMetric metricA, PaintDeviceMetric metricB);
 };
 
 QMdiSubWindow* QMdiSubWindow_new(QWidget* parent) {
@@ -975,12 +975,12 @@ bool QMdiSubWindow_isShaded(const QMdiSubWindow* self) {
 	return self->isShaded();
 }
 
-void QMdiSubWindow_setOption(QMdiSubWindow* self, int option) {
-	self->setOption(static_cast<QMdiSubWindow::SubWindowOption>(option));
+void QMdiSubWindow_setOption(QMdiSubWindow* self, SubWindowOption option) {
+	self->setOption(option);
 }
 
-bool QMdiSubWindow_testOption(const QMdiSubWindow* self, int param1) {
-	return self->testOption(static_cast<QMdiSubWindow::SubWindowOption>(param1));
+bool QMdiSubWindow_testOption(const QMdiSubWindow* self, SubWindowOption param1) {
+	return self->testOption(param1);
 }
 
 void QMdiSubWindow_setKeyboardSingleStep(QMdiSubWindow* self, int step) {
@@ -1065,8 +1065,8 @@ struct miqt_string QMdiSubWindow_tr3(const char* s, const char* c, int n) {
 	return _ms;
 }
 
-void QMdiSubWindow_setOption2(QMdiSubWindow* self, int option, bool on) {
-	self->setOption(static_cast<QMdiSubWindow::SubWindowOption>(option), on);
+void QMdiSubWindow_setOption2(QMdiSubWindow* self, SubWindowOption option, bool on) {
+	self->setOption(option, on);
 }
 
 bool QMdiSubWindow_override_virtual_sizeHint(void* self, intptr_t slot) {
@@ -1598,8 +1598,8 @@ bool QMdiSubWindow_override_virtual_metric(void* self, intptr_t slot) {
 	return true;
 }
 
-int QMdiSubWindow_virtualbase_metric(const void* self, int param1) {
-	return static_cast<const MiqtVirtualQMdiSubWindow*>(self)->QMdiSubWindow::metric(static_cast<MiqtVirtualQMdiSubWindow::PaintDeviceMetric>(param1));
+int QMdiSubWindow_virtualbase_metric(const void* self, PaintDeviceMetric param1) {
+	return static_cast<const MiqtVirtualQMdiSubWindow*>(self)->QMdiSubWindow::metric(param1);
 }
 
 bool QMdiSubWindow_override_virtual_initPainter(void* self, intptr_t slot) {
@@ -1825,6 +1825,17 @@ bool QMdiSubWindow_protectedbase_isSignalConnected(bool* _dynamic_cast_ok, const
 
 	*_dynamic_cast_ok = true;
 	return self_cast->isSignalConnected(*signal);
+}
+
+double QMdiSubWindow_protectedbase_getDecodedMetricF(bool* _dynamic_cast_ok, const void* self, PaintDeviceMetric metricA, PaintDeviceMetric metricB) {
+	MiqtVirtualQMdiSubWindow* self_cast = dynamic_cast<MiqtVirtualQMdiSubWindow*>( (QMdiSubWindow*)(self) );
+	if (self_cast == nullptr) {
+		*_dynamic_cast_ok = false;
+		return 0;
+	}
+
+	*_dynamic_cast_ok = true;
+	return self_cast->getDecodedMetricF(metricA, metricB);
 }
 
 void QMdiSubWindow_delete(QMdiSubWindow* self) {

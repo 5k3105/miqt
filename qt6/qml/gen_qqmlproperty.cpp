@@ -67,9 +67,8 @@ bool QQmlProperty_operatorEqual(const QQmlProperty* self, QQmlProperty* param1) 
 	return (*self == *param1);
 }
 
-int QQmlProperty_type(const QQmlProperty* self) {
-	QQmlProperty::Type _ret = self->type();
-	return static_cast<int>(_ret);
+Type QQmlProperty_type(const QQmlProperty* self) {
+	return self->type();
 }
 
 bool QQmlProperty_isValid(const QQmlProperty* self) {
@@ -92,9 +91,8 @@ QMetaType* QQmlProperty_propertyMetaType(const QQmlProperty* self) {
 	return new QMetaType(self->propertyMetaType());
 }
 
-int QQmlProperty_propertyTypeCategory(const QQmlProperty* self) {
-	QQmlProperty::PropertyTypeCategory _ret = self->propertyTypeCategory();
-	return static_cast<int>(_ret);
+PropertyTypeCategory QQmlProperty_propertyTypeCategory(const QQmlProperty* self) {
+	return self->propertyTypeCategory();
 }
 
 const char* QQmlProperty_propertyTypeName(const QQmlProperty* self) {

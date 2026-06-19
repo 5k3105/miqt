@@ -88,13 +88,12 @@ void QStaticText_prepare(QStaticText* self) {
 	self->prepare();
 }
 
-void QStaticText_setPerformanceHint(QStaticText* self, int performanceHint) {
-	self->setPerformanceHint(static_cast<QStaticText::PerformanceHint>(performanceHint));
+void QStaticText_setPerformanceHint(QStaticText* self, PerformanceHint performanceHint) {
+	self->setPerformanceHint(performanceHint);
 }
 
-int QStaticText_performanceHint(const QStaticText* self) {
-	QStaticText::PerformanceHint _ret = self->performanceHint();
-	return static_cast<int>(_ret);
+PerformanceHint QStaticText_performanceHint(const QStaticText* self) {
+	return self->performanceHint();
 }
 
 bool QStaticText_operatorEqual(const QStaticText* self, QStaticText* param1) {

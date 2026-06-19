@@ -257,20 +257,20 @@ func (this *QDateTimeEdit) SetTimeRange(min QTime, max QTime) {
 	C.QDateTimeEdit_setTimeRange(this.h, min.cPointer(), max.cPointer())
 }
 
-func (this *QDateTimeEdit) DisplayedSections() QDateTimeEdit__Section {
-	return (QDateTimeEdit__Section)(C.QDateTimeEdit_displayedSections(this.h))
+func (this *QDateTimeEdit) DisplayedSections() Sections {
+	int /* TODO  */
 }
 
-func (this *QDateTimeEdit) CurrentSection() QDateTimeEdit__Section {
-	return (QDateTimeEdit__Section)(C.QDateTimeEdit_currentSection(this.h))
+func (this *QDateTimeEdit) CurrentSection() Section {
+	int /* TODO  */
 }
 
-func (this *QDateTimeEdit) SectionAt(index int) QDateTimeEdit__Section {
-	return (QDateTimeEdit__Section)(C.QDateTimeEdit_sectionAt(this.h, (C.int)(index)))
+func (this *QDateTimeEdit) SectionAt(index int) Section {
+	int /* TODO  */
 }
 
-func (this *QDateTimeEdit) SetCurrentSection(section QDateTimeEdit__Section) {
-	C.QDateTimeEdit_setCurrentSection(this.h, (C.int)(section))
+func (this *QDateTimeEdit) SetCurrentSection(section Section) {
+	C.QDateTimeEdit_setCurrentSection(this.h, section)
 }
 
 func (this *QDateTimeEdit) CurrentSectionIndex() int {
@@ -293,12 +293,12 @@ func (this *QDateTimeEdit) SectionCount() int {
 	return (int)(C.QDateTimeEdit_sectionCount(this.h))
 }
 
-func (this *QDateTimeEdit) SetSelectedSection(section QDateTimeEdit__Section) {
-	C.QDateTimeEdit_setSelectedSection(this.h, (C.int)(section))
+func (this *QDateTimeEdit) SetSelectedSection(section Section) {
+	C.QDateTimeEdit_setSelectedSection(this.h, section)
 }
 
-func (this *QDateTimeEdit) SectionText(section QDateTimeEdit__Section) string {
-	var _ms C.struct_miqt_string = C.QDateTimeEdit_sectionText(this.h, (C.int)(section))
+func (this *QDateTimeEdit) SectionText(section Section) string {
+	var _ms C.struct_miqt_string = C.QDateTimeEdit_sectionText(this.h, section)
 	_ret := C.GoStringN(_ms.data, C.int(int64(_ms.len)))
 	C.free(unsafe.Pointer(_ms.data))
 	return _ret
@@ -333,6 +333,16 @@ func (this *QDateTimeEdit) TimeSpec() TimeSpec {
 
 func (this *QDateTimeEdit) SetTimeSpec(spec TimeSpec) {
 	C.QDateTimeEdit_setTimeSpec(this.h, (C.int)(spec))
+}
+
+func (this *QDateTimeEdit) TimeZone() *QTimeZone {
+	_goptr := newQTimeZone(C.QDateTimeEdit_timeZone(this.h))
+	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
+	return _goptr
+}
+
+func (this *QDateTimeEdit) SetTimeZone(zone *QTimeZone) {
+	C.QDateTimeEdit_setTimeZone(this.h, zone.cPointer())
 }
 
 func (this *QDateTimeEdit) SizeHint() *QSize {
@@ -590,6 +600,20 @@ func (this *QDateTimeEdit) IsSignalConnected(signal *QMetaMethod) bool {
 
 	var _dynamic_cast_ok C.bool = false
 	_method_ret := (bool)(C.QDateTimeEdit_protectedbase_isSignalConnected(&_dynamic_cast_ok, unsafe.Pointer(this.h), signal.cPointer()))
+
+	if !_dynamic_cast_ok {
+		panic("miqt: can only call protected methods for directly constructed types")
+	}
+
+	return _method_ret
+
+}
+
+// GetDecodedMetricF can only be called from a QDateTimeEdit that was directly constructed.
+func (this *QDateTimeEdit) GetDecodedMetricF(metricA PaintDeviceMetric, metricB PaintDeviceMetric) float64 {
+
+	var _dynamic_cast_ok C.bool = false
+	_method_ret := (float64)(C.QDateTimeEdit_protectedbase_getDecodedMetricF(&_dynamic_cast_ok, unsafe.Pointer(this.h), metricA, metricB))
 
 	if !_dynamic_cast_ok {
 		panic("miqt: can only call protected methods for directly constructed types")
@@ -948,12 +972,11 @@ func miqt_exec_callback_QDateTimeEdit_textFromDateTime(self *C.QDateTimeEdit, cb
 
 }
 
-func (this *QDateTimeEdit) callVirtualBase_StepEnabled() QAbstractSpinBox__StepEnabledFlag {
+func (this *QDateTimeEdit) callVirtualBase_StepEnabled() StepEnabled {
 
-	return (QAbstractSpinBox__StepEnabledFlag)(C.QDateTimeEdit_virtualbase_stepEnabled(unsafe.Pointer(this.h)))
-
+	int /* TODO  */
 }
-func (this *QDateTimeEdit) OnStepEnabled(slot func(super func() QAbstractSpinBox__StepEnabledFlag) QAbstractSpinBox__StepEnabledFlag) {
+func (this *QDateTimeEdit) OnStepEnabled(slot func(super func() StepEnabled) StepEnabled) {
 	ok := C.QDateTimeEdit_override_virtual_stepEnabled(unsafe.Pointer(this.h), C.intptr_t(cgo.NewHandle(slot)))
 	if !ok {
 		panic("miqt: can only override virtual methods for directly constructed types")
@@ -961,15 +984,15 @@ func (this *QDateTimeEdit) OnStepEnabled(slot func(super func() QAbstractSpinBox
 }
 
 //export miqt_exec_callback_QDateTimeEdit_stepEnabled
-func miqt_exec_callback_QDateTimeEdit_stepEnabled(self *C.QDateTimeEdit, cb C.intptr_t) C.int {
-	gofunc, ok := cgo.Handle(cb).Value().(func(super func() QAbstractSpinBox__StepEnabledFlag) QAbstractSpinBox__StepEnabledFlag)
+func miqt_exec_callback_QDateTimeEdit_stepEnabled(self *C.QDateTimeEdit, cb C.intptr_t) C.StepEnabled {
+	gofunc, ok := cgo.Handle(cb).Value().(func(super func() StepEnabled) StepEnabled)
 	if !ok {
 		panic("miqt: callback of non-callback type (heap corruption?)")
 	}
 
 	virtualReturn := gofunc((&QDateTimeEdit{h: self}).callVirtualBase_StepEnabled)
 
-	return (C.int)(virtualReturn)
+	return virtualReturn
 
 }
 
@@ -1824,12 +1847,12 @@ func miqt_exec_callback_QDateTimeEdit_nativeEvent(self *C.QDateTimeEdit, cb C.in
 
 }
 
-func (this *QDateTimeEdit) callVirtualBase_Metric(param1 QPaintDevice__PaintDeviceMetric) int {
+func (this *QDateTimeEdit) callVirtualBase_Metric(param1 PaintDeviceMetric) int {
 
-	return (int)(C.QDateTimeEdit_virtualbase_metric(unsafe.Pointer(this.h), (C.int)(param1)))
+	return (int)(C.QDateTimeEdit_virtualbase_metric(unsafe.Pointer(this.h), param1))
 
 }
-func (this *QDateTimeEdit) OnMetric(slot func(super func(param1 QPaintDevice__PaintDeviceMetric) int, param1 QPaintDevice__PaintDeviceMetric) int) {
+func (this *QDateTimeEdit) OnMetric(slot func(super func(param1 PaintDeviceMetric) int, param1 PaintDeviceMetric) int) {
 	ok := C.QDateTimeEdit_override_virtual_metric(unsafe.Pointer(this.h), C.intptr_t(cgo.NewHandle(slot)))
 	if !ok {
 		panic("miqt: can only override virtual methods for directly constructed types")
@@ -1837,14 +1860,14 @@ func (this *QDateTimeEdit) OnMetric(slot func(super func(param1 QPaintDevice__Pa
 }
 
 //export miqt_exec_callback_QDateTimeEdit_metric
-func miqt_exec_callback_QDateTimeEdit_metric(self *C.QDateTimeEdit, cb C.intptr_t, param1 C.int) C.int {
-	gofunc, ok := cgo.Handle(cb).Value().(func(super func(param1 QPaintDevice__PaintDeviceMetric) int, param1 QPaintDevice__PaintDeviceMetric) int)
+func miqt_exec_callback_QDateTimeEdit_metric(self *C.QDateTimeEdit, cb C.intptr_t, param1 C.PaintDeviceMetric) C.int {
+	gofunc, ok := cgo.Handle(cb).Value().(func(super func(param1 PaintDeviceMetric) int, param1 PaintDeviceMetric) int)
 	if !ok {
 		panic("miqt: callback of non-callback type (heap corruption?)")
 	}
 
 	// Convert all CABI parameters to Go parameters
-	slotval1 := (QPaintDevice__PaintDeviceMetric)(param1)
+	int /* TODO  */
 
 	virtualReturn := gofunc((&QDateTimeEdit{h: self}).callVirtualBase_Metric, slotval1)
 
@@ -2376,6 +2399,20 @@ func (this *QTimeEdit) IsSignalConnected(signal *QMetaMethod) bool {
 
 }
 
+// GetDecodedMetricF can only be called from a QTimeEdit that was directly constructed.
+func (this *QTimeEdit) GetDecodedMetricF(metricA PaintDeviceMetric, metricB PaintDeviceMetric) float64 {
+
+	var _dynamic_cast_ok C.bool = false
+	_method_ret := (float64)(C.QTimeEdit_protectedbase_getDecodedMetricF(&_dynamic_cast_ok, unsafe.Pointer(this.h), metricA, metricB))
+
+	if !_dynamic_cast_ok {
+		panic("miqt: can only call protected methods for directly constructed types")
+	}
+
+	return _method_ret
+
+}
+
 func (this *QTimeEdit) callVirtualBase_SizeHint() *QSize {
 
 	_goptr := newQSize(C.QTimeEdit_virtualbase_sizeHint(unsafe.Pointer(this.h)))
@@ -2725,12 +2762,11 @@ func miqt_exec_callback_QTimeEdit_textFromDateTime(self *C.QTimeEdit, cb C.intpt
 
 }
 
-func (this *QTimeEdit) callVirtualBase_StepEnabled() QAbstractSpinBox__StepEnabledFlag {
+func (this *QTimeEdit) callVirtualBase_StepEnabled() StepEnabled {
 
-	return (QAbstractSpinBox__StepEnabledFlag)(C.QTimeEdit_virtualbase_stepEnabled(unsafe.Pointer(this.h)))
-
+	int /* TODO  */
 }
-func (this *QTimeEdit) OnStepEnabled(slot func(super func() QAbstractSpinBox__StepEnabledFlag) QAbstractSpinBox__StepEnabledFlag) {
+func (this *QTimeEdit) OnStepEnabled(slot func(super func() StepEnabled) StepEnabled) {
 	ok := C.QTimeEdit_override_virtual_stepEnabled(unsafe.Pointer(this.h), C.intptr_t(cgo.NewHandle(slot)))
 	if !ok {
 		panic("miqt: can only override virtual methods for directly constructed types")
@@ -2738,15 +2774,15 @@ func (this *QTimeEdit) OnStepEnabled(slot func(super func() QAbstractSpinBox__St
 }
 
 //export miqt_exec_callback_QTimeEdit_stepEnabled
-func miqt_exec_callback_QTimeEdit_stepEnabled(self *C.QTimeEdit, cb C.intptr_t) C.int {
-	gofunc, ok := cgo.Handle(cb).Value().(func(super func() QAbstractSpinBox__StepEnabledFlag) QAbstractSpinBox__StepEnabledFlag)
+func miqt_exec_callback_QTimeEdit_stepEnabled(self *C.QTimeEdit, cb C.intptr_t) C.StepEnabled {
+	gofunc, ok := cgo.Handle(cb).Value().(func(super func() StepEnabled) StepEnabled)
 	if !ok {
 		panic("miqt: callback of non-callback type (heap corruption?)")
 	}
 
 	virtualReturn := gofunc((&QTimeEdit{h: self}).callVirtualBase_StepEnabled)
 
-	return (C.int)(virtualReturn)
+	return virtualReturn
 
 }
 
@@ -3601,12 +3637,12 @@ func miqt_exec_callback_QTimeEdit_nativeEvent(self *C.QTimeEdit, cb C.intptr_t, 
 
 }
 
-func (this *QTimeEdit) callVirtualBase_Metric(param1 QPaintDevice__PaintDeviceMetric) int {
+func (this *QTimeEdit) callVirtualBase_Metric(param1 PaintDeviceMetric) int {
 
-	return (int)(C.QTimeEdit_virtualbase_metric(unsafe.Pointer(this.h), (C.int)(param1)))
+	return (int)(C.QTimeEdit_virtualbase_metric(unsafe.Pointer(this.h), param1))
 
 }
-func (this *QTimeEdit) OnMetric(slot func(super func(param1 QPaintDevice__PaintDeviceMetric) int, param1 QPaintDevice__PaintDeviceMetric) int) {
+func (this *QTimeEdit) OnMetric(slot func(super func(param1 PaintDeviceMetric) int, param1 PaintDeviceMetric) int) {
 	ok := C.QTimeEdit_override_virtual_metric(unsafe.Pointer(this.h), C.intptr_t(cgo.NewHandle(slot)))
 	if !ok {
 		panic("miqt: can only override virtual methods for directly constructed types")
@@ -3614,14 +3650,14 @@ func (this *QTimeEdit) OnMetric(slot func(super func(param1 QPaintDevice__PaintD
 }
 
 //export miqt_exec_callback_QTimeEdit_metric
-func miqt_exec_callback_QTimeEdit_metric(self *C.QTimeEdit, cb C.intptr_t, param1 C.int) C.int {
-	gofunc, ok := cgo.Handle(cb).Value().(func(super func(param1 QPaintDevice__PaintDeviceMetric) int, param1 QPaintDevice__PaintDeviceMetric) int)
+func miqt_exec_callback_QTimeEdit_metric(self *C.QTimeEdit, cb C.intptr_t, param1 C.PaintDeviceMetric) C.int {
+	gofunc, ok := cgo.Handle(cb).Value().(func(super func(param1 PaintDeviceMetric) int, param1 PaintDeviceMetric) int)
 	if !ok {
 		panic("miqt: callback of non-callback type (heap corruption?)")
 	}
 
 	// Convert all CABI parameters to Go parameters
-	slotval1 := (QPaintDevice__PaintDeviceMetric)(param1)
+	int /* TODO  */
 
 	virtualReturn := gofunc((&QTimeEdit{h: self}).callVirtualBase_Metric, slotval1)
 
@@ -4153,6 +4189,20 @@ func (this *QDateEdit) IsSignalConnected(signal *QMetaMethod) bool {
 
 }
 
+// GetDecodedMetricF can only be called from a QDateEdit that was directly constructed.
+func (this *QDateEdit) GetDecodedMetricF(metricA PaintDeviceMetric, metricB PaintDeviceMetric) float64 {
+
+	var _dynamic_cast_ok C.bool = false
+	_method_ret := (float64)(C.QDateEdit_protectedbase_getDecodedMetricF(&_dynamic_cast_ok, unsafe.Pointer(this.h), metricA, metricB))
+
+	if !_dynamic_cast_ok {
+		panic("miqt: can only call protected methods for directly constructed types")
+	}
+
+	return _method_ret
+
+}
+
 func (this *QDateEdit) callVirtualBase_SizeHint() *QSize {
 
 	_goptr := newQSize(C.QDateEdit_virtualbase_sizeHint(unsafe.Pointer(this.h)))
@@ -4502,12 +4552,11 @@ func miqt_exec_callback_QDateEdit_textFromDateTime(self *C.QDateEdit, cb C.intpt
 
 }
 
-func (this *QDateEdit) callVirtualBase_StepEnabled() QAbstractSpinBox__StepEnabledFlag {
+func (this *QDateEdit) callVirtualBase_StepEnabled() StepEnabled {
 
-	return (QAbstractSpinBox__StepEnabledFlag)(C.QDateEdit_virtualbase_stepEnabled(unsafe.Pointer(this.h)))
-
+	int /* TODO  */
 }
-func (this *QDateEdit) OnStepEnabled(slot func(super func() QAbstractSpinBox__StepEnabledFlag) QAbstractSpinBox__StepEnabledFlag) {
+func (this *QDateEdit) OnStepEnabled(slot func(super func() StepEnabled) StepEnabled) {
 	ok := C.QDateEdit_override_virtual_stepEnabled(unsafe.Pointer(this.h), C.intptr_t(cgo.NewHandle(slot)))
 	if !ok {
 		panic("miqt: can only override virtual methods for directly constructed types")
@@ -4515,15 +4564,15 @@ func (this *QDateEdit) OnStepEnabled(slot func(super func() QAbstractSpinBox__St
 }
 
 //export miqt_exec_callback_QDateEdit_stepEnabled
-func miqt_exec_callback_QDateEdit_stepEnabled(self *C.QDateEdit, cb C.intptr_t) C.int {
-	gofunc, ok := cgo.Handle(cb).Value().(func(super func() QAbstractSpinBox__StepEnabledFlag) QAbstractSpinBox__StepEnabledFlag)
+func miqt_exec_callback_QDateEdit_stepEnabled(self *C.QDateEdit, cb C.intptr_t) C.StepEnabled {
+	gofunc, ok := cgo.Handle(cb).Value().(func(super func() StepEnabled) StepEnabled)
 	if !ok {
 		panic("miqt: callback of non-callback type (heap corruption?)")
 	}
 
 	virtualReturn := gofunc((&QDateEdit{h: self}).callVirtualBase_StepEnabled)
 
-	return (C.int)(virtualReturn)
+	return virtualReturn
 
 }
 
@@ -5378,12 +5427,12 @@ func miqt_exec_callback_QDateEdit_nativeEvent(self *C.QDateEdit, cb C.intptr_t, 
 
 }
 
-func (this *QDateEdit) callVirtualBase_Metric(param1 QPaintDevice__PaintDeviceMetric) int {
+func (this *QDateEdit) callVirtualBase_Metric(param1 PaintDeviceMetric) int {
 
-	return (int)(C.QDateEdit_virtualbase_metric(unsafe.Pointer(this.h), (C.int)(param1)))
+	return (int)(C.QDateEdit_virtualbase_metric(unsafe.Pointer(this.h), param1))
 
 }
-func (this *QDateEdit) OnMetric(slot func(super func(param1 QPaintDevice__PaintDeviceMetric) int, param1 QPaintDevice__PaintDeviceMetric) int) {
+func (this *QDateEdit) OnMetric(slot func(super func(param1 PaintDeviceMetric) int, param1 PaintDeviceMetric) int) {
 	ok := C.QDateEdit_override_virtual_metric(unsafe.Pointer(this.h), C.intptr_t(cgo.NewHandle(slot)))
 	if !ok {
 		panic("miqt: can only override virtual methods for directly constructed types")
@@ -5391,14 +5440,14 @@ func (this *QDateEdit) OnMetric(slot func(super func(param1 QPaintDevice__PaintD
 }
 
 //export miqt_exec_callback_QDateEdit_metric
-func miqt_exec_callback_QDateEdit_metric(self *C.QDateEdit, cb C.intptr_t, param1 C.int) C.int {
-	gofunc, ok := cgo.Handle(cb).Value().(func(super func(param1 QPaintDevice__PaintDeviceMetric) int, param1 QPaintDevice__PaintDeviceMetric) int)
+func miqt_exec_callback_QDateEdit_metric(self *C.QDateEdit, cb C.intptr_t, param1 C.PaintDeviceMetric) C.int {
+	gofunc, ok := cgo.Handle(cb).Value().(func(super func(param1 PaintDeviceMetric) int, param1 PaintDeviceMetric) int)
 	if !ok {
 		panic("miqt: callback of non-callback type (heap corruption?)")
 	}
 
 	// Convert all CABI parameters to Go parameters
-	slotval1 := (QPaintDevice__PaintDeviceMetric)(param1)
+	int /* TODO  */
 
 	virtualReturn := gofunc((&QDateEdit{h: self}).callVirtualBase_Metric, slotval1)
 

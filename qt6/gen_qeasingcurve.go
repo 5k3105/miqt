@@ -112,9 +112,9 @@ func NewQEasingCurve2(other *QEasingCurve) *QEasingCurve {
 }
 
 // NewQEasingCurve3 constructs a new QEasingCurve object.
-func NewQEasingCurve3(typeVal QEasingCurve__Type) *QEasingCurve {
+func NewQEasingCurve3(typeVal Type) *QEasingCurve {
 
-	return newQEasingCurve(C.QEasingCurve_new3((C.int)(typeVal)))
+	return newQEasingCurve(C.QEasingCurve_new3(typeVal))
 }
 
 func (this *QEasingCurve) OperatorAssign(other *QEasingCurve) {
@@ -123,14 +123,6 @@ func (this *QEasingCurve) OperatorAssign(other *QEasingCurve) {
 
 func (this *QEasingCurve) Swap(other *QEasingCurve) {
 	C.QEasingCurve_swap(this.h, other.cPointer())
-}
-
-func (this *QEasingCurve) OperatorEqual(other *QEasingCurve) bool {
-	return (bool)(C.QEasingCurve_operatorEqual(this.h, other.cPointer()))
-}
-
-func (this *QEasingCurve) OperatorNotEqual(other *QEasingCurve) bool {
-	return (bool)(C.QEasingCurve_operatorNotEqual(this.h, other.cPointer()))
 }
 
 func (this *QEasingCurve) Amplitude() float64 {
@@ -177,12 +169,20 @@ func (this *QEasingCurve) ToCubicSpline() []QPointF {
 	return _ret
 }
 
-func (this *QEasingCurve) Type() QEasingCurve__Type {
-	return (QEasingCurve__Type)(C.QEasingCurve_type(this.h))
+func (this *QEasingCurve) Type() Type {
+	int /* TODO  */
 }
 
-func (this *QEasingCurve) SetType(typeVal QEasingCurve__Type) {
-	C.QEasingCurve_setType(this.h, (C.int)(typeVal))
+func (this *QEasingCurve) SetType(typeVal Type) {
+	C.QEasingCurve_setType(this.h, typeVal)
+}
+
+func (this *QEasingCurve) SetCustomType(funcVal EasingFunction) {
+	C.QEasingCurve_setCustomType(this.h, funcVal)
+}
+
+func (this *QEasingCurve) CustomType() EasingFunction {
+	int /* TODO  */
 }
 
 func (this *QEasingCurve) ValueForProgress(progress float64) float64 {

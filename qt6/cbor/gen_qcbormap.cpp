@@ -8,7 +8,6 @@
 #include <QJsonObject>
 #include <QList>
 #include <QMap>
-#include <QPair>
 #include <QString>
 #include <QByteArray>
 #include <cstring>
@@ -152,129 +151,136 @@ int QCborMap_compare(const QCborMap* self, QCborMap* other) {
 	return self->compare(*other);
 }
 
-bool QCborMap_operatorEqual(const QCborMap* self, QCborMap* other) {
-	return (*self == *other);
+iterator QCborMap_begin(QCborMap* self) {
+	return self->begin();
 }
 
-bool QCborMap_operatorNotEqual(const QCborMap* self, QCborMap* other) {
-	return (*self != *other);
+const_iterator QCborMap_constBegin(const QCborMap* self) {
+	return self->constBegin();
 }
 
-bool QCborMap_operatorLesser(const QCborMap* self, QCborMap* other) {
-	return (*self < *other);
+const_iterator QCborMap_begin2(const QCborMap* self) {
+	return self->begin();
 }
 
-QCborMap__Iterator* QCborMap_begin(QCborMap* self) {
-	return new QCborMap::Iterator(self->begin());
+const_iterator QCborMap_cbegin(const QCborMap* self) {
+	return self->cbegin();
 }
 
-QCborMap__ConstIterator* QCborMap_constBegin(const QCborMap* self) {
-	return new QCborMap::ConstIterator(self->constBegin());
+iterator QCborMap_end(QCborMap* self) {
+	return self->end();
 }
 
-QCborMap__ConstIterator* QCborMap_begin2(const QCborMap* self) {
-	return new QCborMap::ConstIterator(self->begin());
+const_iterator QCborMap_constEnd(const QCborMap* self) {
+	return self->constEnd();
 }
 
-QCborMap__ConstIterator* QCborMap_cbegin(const QCborMap* self) {
-	return new QCborMap::ConstIterator(self->cbegin());
+const_iterator QCborMap_end2(const QCborMap* self) {
+	return self->end();
 }
 
-QCborMap__Iterator* QCborMap_end(QCborMap* self) {
-	return new QCborMap::Iterator(self->end());
+const_iterator QCborMap_cend(const QCborMap* self) {
+	return self->cend();
 }
 
-QCborMap__ConstIterator* QCborMap_constEnd(const QCborMap* self) {
-	return new QCborMap::ConstIterator(self->constEnd());
+iterator QCborMap_erase(QCborMap* self, iterator it) {
+	return self->erase(it);
 }
 
-QCborMap__ConstIterator* QCborMap_end2(const QCborMap* self) {
-	return new QCborMap::ConstIterator(self->end());
+iterator QCborMap_eraseWithIt(QCborMap* self, const_iterator it) {
+	return self->erase(it);
 }
 
-QCborMap__ConstIterator* QCborMap_cend(const QCborMap* self) {
-	return new QCborMap::ConstIterator(self->cend());
+QCborValue* QCborMap_extract(QCborMap* self, iterator it) {
+	return new QCborValue(self->extract(it));
 }
 
-QCborMap__Iterator* QCborMap_erase(QCborMap* self, QCborMap__Iterator* it) {
-	return new QCborMap::Iterator(self->erase(*it));
-}
-
-QCborMap__Iterator* QCborMap_eraseWithIt(QCborMap* self, QCborMap__ConstIterator* it) {
-	return new QCborMap::Iterator(self->erase(*it));
-}
-
-QCborValue* QCborMap_extract(QCborMap* self, QCborMap__Iterator* it) {
-	return new QCborValue(self->extract(*it));
-}
-
-QCborValue* QCborMap_extractWithIt(QCborMap* self, QCborMap__ConstIterator* it) {
-	return new QCborValue(self->extract(*it));
+QCborValue* QCborMap_extractWithIt(QCborMap* self, const_iterator it) {
+	return new QCborValue(self->extract(it));
 }
 
 bool QCborMap_empty(const QCborMap* self) {
 	return self->empty();
 }
 
-QCborMap__Iterator* QCborMap_find(QCborMap* self, long long key) {
-	return new QCborMap::Iterator(self->find(static_cast<qint64>(key)));
+key_value_iterator QCborMap_keyValueBegin(QCborMap* self) {
+	return self->keyValueBegin();
 }
 
-QCborMap__Iterator* QCborMap_find2(QCborMap* self, struct miqt_string key) {
+key_value_iterator QCborMap_keyValueEnd(QCborMap* self) {
+	return self->keyValueEnd();
+}
+
+const_key_value_iterator QCborMap_keyValueBegin2(const QCborMap* self) {
+	return self->keyValueBegin();
+}
+
+const_key_value_iterator QCborMap_constKeyValueBegin(const QCborMap* self) {
+	return self->constKeyValueBegin();
+}
+
+const_key_value_iterator QCborMap_keyValueEnd2(const QCborMap* self) {
+	return self->keyValueEnd();
+}
+
+const_key_value_iterator QCborMap_constKeyValueEnd(const QCborMap* self) {
+	return self->constKeyValueEnd();
+}
+
+iterator QCborMap_find(QCborMap* self, long long key) {
+	return self->find(static_cast<qint64>(key));
+}
+
+iterator QCborMap_find2(QCborMap* self, struct miqt_string key) {
 	QString key_QString = QString::fromUtf8(key.data, key.len);
-	return new QCborMap::Iterator(self->find(key_QString));
+	return self->find(key_QString);
 }
 
-QCborMap__Iterator* QCborMap_find3(QCborMap* self, QCborValue* key) {
-	return new QCborMap::Iterator(self->find(*key));
+iterator QCborMap_find3(QCborMap* self, QCborValue* key) {
+	return self->find(*key);
 }
 
-QCborMap__ConstIterator* QCborMap_constFind(const QCborMap* self, long long key) {
-	return new QCborMap::ConstIterator(self->constFind(static_cast<qint64>(key)));
+const_iterator QCborMap_constFind(const QCborMap* self, long long key) {
+	return self->constFind(static_cast<qint64>(key));
 }
 
-QCborMap__ConstIterator* QCborMap_constFind2(const QCborMap* self, struct miqt_string key) {
+const_iterator QCborMap_constFind2(const QCborMap* self, struct miqt_string key) {
 	QString key_QString = QString::fromUtf8(key.data, key.len);
-	return new QCborMap::ConstIterator(self->constFind(key_QString));
+	return self->constFind(key_QString);
 }
 
-QCborMap__ConstIterator* QCborMap_constFind3(const QCborMap* self, QCborValue* key) {
-	return new QCborMap::ConstIterator(self->constFind(*key));
+const_iterator QCborMap_constFind3(const QCborMap* self, QCborValue* key) {
+	return self->constFind(*key);
 }
 
-QCborMap__ConstIterator* QCborMap_find4(const QCborMap* self, long long key) {
-	return new QCborMap::ConstIterator(self->find(static_cast<qint64>(key)));
+const_iterator QCborMap_find4(const QCborMap* self, long long key) {
+	return self->find(static_cast<qint64>(key));
 }
 
-QCborMap__ConstIterator* QCborMap_find6(const QCborMap* self, struct miqt_string key) {
+const_iterator QCborMap_find6(const QCborMap* self, struct miqt_string key) {
 	QString key_QString = QString::fromUtf8(key.data, key.len);
-	return new QCborMap::ConstIterator(self->find(key_QString));
+	return self->find(key_QString);
 }
 
-QCborMap__ConstIterator* QCborMap_find7(const QCborMap* self, QCborValue* key) {
-	return new QCborMap::ConstIterator(self->find(*key));
+const_iterator QCborMap_find7(const QCborMap* self, QCborValue* key) {
+	return self->find(*key);
 }
 
-QCborMap__Iterator* QCborMap_insert(QCborMap* self, long long key, QCborValue* value_) {
-	return new QCborMap::Iterator(self->insert(static_cast<qint64>(key), *value_));
+iterator QCborMap_insert(QCborMap* self, long long key, QCborValue* value_) {
+	return self->insert(static_cast<qint64>(key), *value_);
 }
 
-QCborMap__Iterator* QCborMap_insert3(QCborMap* self, struct miqt_string key, QCborValue* value_) {
+iterator QCborMap_insert3(QCborMap* self, struct miqt_string key, QCborValue* value_) {
 	QString key_QString = QString::fromUtf8(key.data, key.len);
-	return new QCborMap::Iterator(self->insert(key_QString, *value_));
+	return self->insert(key_QString, *value_);
 }
 
-QCborMap__Iterator* QCborMap_insert4(QCborMap* self, QCborValue* key, QCborValue* value_) {
-	return new QCborMap::Iterator(self->insert(*key, *value_));
+iterator QCborMap_insert4(QCborMap* self, QCborValue* key, QCborValue* value_) {
+	return self->insert(*key, *value_);
 }
 
-QCborMap__Iterator* QCborMap_insertWithQCborMapvalueType(QCborMap* self, struct miqt_map /* tuple of QCborValue* and QCborValue* */  v) {
-	QCborMap::value_type v_QPair;
-	QCborValue** v_first_arr = static_cast<QCborValue**>(v.keys);
-	QCborValue** v_second_arr = static_cast<QCborValue**>(v.values);
-	v_QPair.first = *(v_first_arr[0]);
-	v_QPair.second = *(v_second_arr[0]);
-	return new QCborMap::Iterator(self->insert(v_QPair));
+iterator QCborMap_insertWithValueType(QCborMap* self, value_type v) {
+	return self->insert(v);
 }
 
 QCborMap* QCborMap_fromVariantMap(struct miqt_map /* of struct miqt_string to QVariant* */  map) {
@@ -366,40 +372,20 @@ QCborMap__Iterator* QCborMap__Iterator_new() {
 	return new (std::nothrow) QCborMap::Iterator();
 }
 
-QCborMap__Iterator* QCborMap__Iterator_new2(QCborMap__Iterator* param1) {
+QCborMap__Iterator* QCborMap__Iterator_new2(const Iterator* param1) {
 	return new (std::nothrow) QCborMap::Iterator(*param1);
 }
 
-void QCborMap__Iterator_operatorAssign(QCborMap__Iterator* self, QCborMap__Iterator* other) {
+void QCborMap__Iterator_operatorAssign(QCborMap__Iterator* self, const Iterator* other) {
 	self->operator=(*other);
 }
 
-struct miqt_map /* tuple of QCborValueConstRef* and QCborValueRef* */  QCborMap__Iterator_operatorMultiply(const QCborMap__Iterator* self) {
-	QCborMap::Iterator::value_type _ret = self->operator*();
-	// Convert QPair<> from C++ memory to manually-managed C memory
-	QCborValueConstRef** _first_arr = static_cast<QCborValueConstRef**>(malloc(sizeof(QCborValueConstRef*)));
-	QCborValueRef** _second_arr = static_cast<QCborValueRef**>(malloc(sizeof(QCborValueRef*)));
-	_first_arr[0] = new QCborValueConstRef(_ret.first);
-	_second_arr[0] = new QCborValueRef(_ret.second);
-	struct miqt_map _out;
-	_out.len = 1;
-	_out.keys = static_cast<void*>(_first_arr);
-	_out.values = static_cast<void*>(_second_arr);
-	return _out;
+value_type QCborMap__Iterator_operatorMultiply(const QCborMap__Iterator* self) {
+	return self->operator*();
 }
 
-struct miqt_map /* tuple of QCborValueConstRef* and QCborValueRef* */  QCborMap__Iterator_operatorSubscript(const QCborMap__Iterator* self, ptrdiff_t j) {
-	QCborMap::Iterator::value_type _ret = self->operator[]((qsizetype)(j));
-	// Convert QPair<> from C++ memory to manually-managed C memory
-	QCborValueConstRef** _first_arr = static_cast<QCborValueConstRef**>(malloc(sizeof(QCborValueConstRef*)));
-	QCborValueRef** _second_arr = static_cast<QCborValueRef**>(malloc(sizeof(QCborValueRef*)));
-	_first_arr[0] = new QCborValueConstRef(_ret.first);
-	_second_arr[0] = new QCborValueRef(_ret.second);
-	struct miqt_map _out;
-	_out.len = 1;
-	_out.keys = static_cast<void*>(_first_arr);
-	_out.values = static_cast<void*>(_second_arr);
-	return _out;
+value_type QCborMap__Iterator_operatorSubscript(const QCborMap__Iterator* self, ptrdiff_t j) {
+	return self->operator[]((qsizetype)(j));
 }
 
 QCborValueRef* QCborMap__Iterator_operatorMinusGreater(QCborMap__Iterator* self) {
@@ -414,100 +400,48 @@ QCborValue* QCborMap__Iterator_key(const QCborMap__Iterator* self) {
 	return new QCborValue(self->key());
 }
 
+QCborValueConstRef* QCborMap__Iterator_keyRef(const QCborMap__Iterator* self) {
+	return new QCborValueConstRef(self->keyRef());
+}
+
 QCborValueRef* QCborMap__Iterator_value(const QCborMap__Iterator* self) {
 	return new QCborValueRef(self->value());
 }
 
-bool QCborMap__Iterator_operatorEqual(const QCborMap__Iterator* self, QCborMap__Iterator* o) {
-	return (*self == *o);
+Iterator* QCborMap__Iterator_operatorPlusPlus(QCborMap__Iterator* self) {
+	return &self->operator++();
 }
 
-bool QCborMap__Iterator_operatorNotEqual(const QCborMap__Iterator* self, QCborMap__Iterator* o) {
-	return (*self != *o);
+Iterator QCborMap__Iterator_operatorPlusPlusWithInt(QCborMap__Iterator* self, int param1) {
+	return self->operator++(static_cast<int>(param1));
 }
 
-bool QCborMap__Iterator_operatorLesser(const QCborMap__Iterator* self, QCborMap__Iterator* other) {
-	return (*self < *other);
+Iterator* QCborMap__Iterator_operatorMinusMinus(QCborMap__Iterator* self) {
+	return &self->operator--();
 }
 
-bool QCborMap__Iterator_operatorLesserOrEqual(const QCborMap__Iterator* self, QCborMap__Iterator* other) {
-	return (*self <= *other);
+Iterator QCborMap__Iterator_operatorMinusMinusWithInt(QCborMap__Iterator* self, int param1) {
+	return self->operator--(static_cast<int>(param1));
 }
 
-bool QCborMap__Iterator_operatorGreater(const QCborMap__Iterator* self, QCborMap__Iterator* other) {
-	return (*self > *other);
+Iterator* QCborMap__Iterator_operatorPlusAssign(QCborMap__Iterator* self, ptrdiff_t j) {
+	return &self->operator+=((qsizetype)(j));
 }
 
-bool QCborMap__Iterator_operatorGreaterOrEqual(const QCborMap__Iterator* self, QCborMap__Iterator* other) {
-	return (*self >= *other);
+Iterator* QCborMap__Iterator_operatorMinusAssign(QCborMap__Iterator* self, ptrdiff_t j) {
+	return &self->operator-=((qsizetype)(j));
 }
 
-bool QCborMap__Iterator_operatorEqualWithQCborMapConstIterator(const QCborMap__Iterator* self, QCborMap__ConstIterator* o) {
-	return (*self == *o);
+Iterator QCborMap__Iterator_operatorPlus(const QCborMap__Iterator* self, ptrdiff_t j) {
+	return self->operator+((qsizetype)(j));
 }
 
-bool QCborMap__Iterator_operatorNotEqualWithQCborMapConstIterator(const QCborMap__Iterator* self, QCborMap__ConstIterator* o) {
-	return (*self != *o);
+Iterator QCborMap__Iterator_operatorMinus(const QCborMap__Iterator* self, ptrdiff_t j) {
+	return self->operator-((qsizetype)(j));
 }
 
-bool QCborMap__Iterator_operatorLesserWithOther(const QCborMap__Iterator* self, QCborMap__ConstIterator* other) {
-	return (*self < *other);
-}
-
-bool QCborMap__Iterator_operatorLesserOrEqualWithOther(const QCborMap__Iterator* self, QCborMap__ConstIterator* other) {
-	return (*self <= *other);
-}
-
-bool QCborMap__Iterator_operatorGreaterWithOther(const QCborMap__Iterator* self, QCborMap__ConstIterator* other) {
-	return (*self > *other);
-}
-
-bool QCborMap__Iterator_operatorGreaterOrEqualWithOther(const QCborMap__Iterator* self, QCborMap__ConstIterator* other) {
-	return (*self >= *other);
-}
-
-QCborMap__Iterator* QCborMap__Iterator_operatorPlusPlus(QCborMap__Iterator* self) {
-	QCborMap::Iterator& _ret = self->operator++();
-	// Cast returned reference into pointer
-	return &_ret;
-}
-
-QCborMap__Iterator* QCborMap__Iterator_operatorPlusPlusWithInt(QCborMap__Iterator* self, int param1) {
-	return new QCborMap::Iterator(self->operator++(static_cast<int>(param1)));
-}
-
-QCborMap__Iterator* QCborMap__Iterator_operatorMinusMinus(QCborMap__Iterator* self) {
-	QCborMap::Iterator& _ret = self->operator--();
-	// Cast returned reference into pointer
-	return &_ret;
-}
-
-QCborMap__Iterator* QCborMap__Iterator_operatorMinusMinusWithInt(QCborMap__Iterator* self, int param1) {
-	return new QCborMap::Iterator(self->operator--(static_cast<int>(param1)));
-}
-
-QCborMap__Iterator* QCborMap__Iterator_operatorPlusAssign(QCborMap__Iterator* self, ptrdiff_t j) {
-	QCborMap::Iterator& _ret = self->operator+=((qsizetype)(j));
-	// Cast returned reference into pointer
-	return &_ret;
-}
-
-QCborMap__Iterator* QCborMap__Iterator_operatorMinusAssign(QCborMap__Iterator* self, ptrdiff_t j) {
-	QCborMap::Iterator& _ret = self->operator-=((qsizetype)(j));
-	// Cast returned reference into pointer
-	return &_ret;
-}
-
-QCborMap__Iterator* QCborMap__Iterator_operatorPlus(const QCborMap__Iterator* self, ptrdiff_t j) {
-	return new QCborMap::Iterator(self->operator+((qsizetype)(j)));
-}
-
-QCborMap__Iterator* QCborMap__Iterator_operatorMinus(const QCborMap__Iterator* self, ptrdiff_t j) {
-	return new QCborMap::Iterator(self->operator-((qsizetype)(j)));
-}
-
-ptrdiff_t QCborMap__Iterator_operatorMinusWithQCborMapIterator(const QCborMap__Iterator* self, QCborMap__Iterator* j) {
-	qsizetype _ret = self->operator-(*j);
+ptrdiff_t QCborMap__Iterator_operatorMinusWithIterator(const QCborMap__Iterator* self, Iterator j) {
+	qsizetype _ret = self->operator-(j);
 	return static_cast<ptrdiff_t>(_ret);
 }
 
@@ -519,40 +453,20 @@ QCborMap__ConstIterator* QCborMap__ConstIterator_new() {
 	return new (std::nothrow) QCborMap::ConstIterator();
 }
 
-QCborMap__ConstIterator* QCborMap__ConstIterator_new2(QCborMap__ConstIterator* param1) {
+QCborMap__ConstIterator* QCborMap__ConstIterator_new2(const ConstIterator* param1) {
 	return new (std::nothrow) QCborMap::ConstIterator(*param1);
 }
 
-void QCborMap__ConstIterator_operatorAssign(QCborMap__ConstIterator* self, QCborMap__ConstIterator* other) {
+void QCborMap__ConstIterator_operatorAssign(QCborMap__ConstIterator* self, const ConstIterator* other) {
 	self->operator=(*other);
 }
 
-struct miqt_map /* tuple of QCborValueConstRef* and QCborValueConstRef* */  QCborMap__ConstIterator_operatorMultiply(const QCborMap__ConstIterator* self) {
-	QCborMap::ConstIterator::value_type _ret = self->operator*();
-	// Convert QPair<> from C++ memory to manually-managed C memory
-	QCborValueConstRef** _first_arr = static_cast<QCborValueConstRef**>(malloc(sizeof(QCborValueConstRef*)));
-	QCborValueConstRef** _second_arr = static_cast<QCborValueConstRef**>(malloc(sizeof(QCborValueConstRef*)));
-	_first_arr[0] = new QCborValueConstRef(_ret.first);
-	_second_arr[0] = new QCborValueConstRef(_ret.second);
-	struct miqt_map _out;
-	_out.len = 1;
-	_out.keys = static_cast<void*>(_first_arr);
-	_out.values = static_cast<void*>(_second_arr);
-	return _out;
+value_type QCborMap__ConstIterator_operatorMultiply(const QCborMap__ConstIterator* self) {
+	return self->operator*();
 }
 
-struct miqt_map /* tuple of QCborValueConstRef* and QCborValueConstRef* */  QCborMap__ConstIterator_operatorSubscript(const QCborMap__ConstIterator* self, ptrdiff_t j) {
-	QCborMap::ConstIterator::value_type _ret = self->operator[]((qsizetype)(j));
-	// Convert QPair<> from C++ memory to manually-managed C memory
-	QCborValueConstRef** _first_arr = static_cast<QCborValueConstRef**>(malloc(sizeof(QCborValueConstRef*)));
-	QCborValueConstRef** _second_arr = static_cast<QCborValueConstRef**>(malloc(sizeof(QCborValueConstRef*)));
-	_first_arr[0] = new QCborValueConstRef(_ret.first);
-	_second_arr[0] = new QCborValueConstRef(_ret.second);
-	struct miqt_map _out;
-	_out.len = 1;
-	_out.keys = static_cast<void*>(_first_arr);
-	_out.values = static_cast<void*>(_second_arr);
-	return _out;
+value_type QCborMap__ConstIterator_operatorSubscript(const QCborMap__ConstIterator* self, ptrdiff_t j) {
+	return self->operator[]((qsizetype)(j));
 }
 
 QCborValueConstRef* QCborMap__ConstIterator_operatorMinusGreater(const QCborMap__ConstIterator* self) {
@@ -563,100 +477,48 @@ QCborValue* QCborMap__ConstIterator_key(const QCborMap__ConstIterator* self) {
 	return new QCborValue(self->key());
 }
 
+QCborValueConstRef* QCborMap__ConstIterator_keyRef(const QCborMap__ConstIterator* self) {
+	return new QCborValueConstRef(self->keyRef());
+}
+
 QCborValueConstRef* QCborMap__ConstIterator_value(const QCborMap__ConstIterator* self) {
 	return new QCborValueConstRef(self->value());
 }
 
-bool QCborMap__ConstIterator_operatorEqual(const QCborMap__ConstIterator* self, QCborMap__Iterator* o) {
-	return (*self == *o);
+ConstIterator* QCborMap__ConstIterator_operatorPlusPlus(QCborMap__ConstIterator* self) {
+	return &self->operator++();
 }
 
-bool QCborMap__ConstIterator_operatorNotEqual(const QCborMap__ConstIterator* self, QCborMap__Iterator* o) {
-	return (*self != *o);
+ConstIterator QCborMap__ConstIterator_operatorPlusPlusWithInt(QCborMap__ConstIterator* self, int param1) {
+	return self->operator++(static_cast<int>(param1));
 }
 
-bool QCborMap__ConstIterator_operatorLesser(const QCborMap__ConstIterator* self, QCborMap__Iterator* other) {
-	return (*self < *other);
+ConstIterator* QCborMap__ConstIterator_operatorMinusMinus(QCborMap__ConstIterator* self) {
+	return &self->operator--();
 }
 
-bool QCborMap__ConstIterator_operatorLesserOrEqual(const QCborMap__ConstIterator* self, QCborMap__Iterator* other) {
-	return (*self <= *other);
+ConstIterator QCborMap__ConstIterator_operatorMinusMinusWithInt(QCborMap__ConstIterator* self, int param1) {
+	return self->operator--(static_cast<int>(param1));
 }
 
-bool QCborMap__ConstIterator_operatorGreater(const QCborMap__ConstIterator* self, QCborMap__Iterator* other) {
-	return (*self > *other);
+ConstIterator* QCborMap__ConstIterator_operatorPlusAssign(QCborMap__ConstIterator* self, ptrdiff_t j) {
+	return &self->operator+=((qsizetype)(j));
 }
 
-bool QCborMap__ConstIterator_operatorGreaterOrEqual(const QCborMap__ConstIterator* self, QCborMap__Iterator* other) {
-	return (*self >= *other);
+ConstIterator* QCborMap__ConstIterator_operatorMinusAssign(QCborMap__ConstIterator* self, ptrdiff_t j) {
+	return &self->operator-=((qsizetype)(j));
 }
 
-bool QCborMap__ConstIterator_operatorEqualWithQCborMapConstIterator(const QCborMap__ConstIterator* self, QCborMap__ConstIterator* o) {
-	return (*self == *o);
+ConstIterator QCborMap__ConstIterator_operatorPlus(const QCborMap__ConstIterator* self, ptrdiff_t j) {
+	return self->operator+((qsizetype)(j));
 }
 
-bool QCborMap__ConstIterator_operatorNotEqualWithQCborMapConstIterator(const QCborMap__ConstIterator* self, QCborMap__ConstIterator* o) {
-	return (*self != *o);
+ConstIterator QCborMap__ConstIterator_operatorMinus(const QCborMap__ConstIterator* self, ptrdiff_t j) {
+	return self->operator-((qsizetype)(j));
 }
 
-bool QCborMap__ConstIterator_operatorLesserWithOther(const QCborMap__ConstIterator* self, QCborMap__ConstIterator* other) {
-	return (*self < *other);
-}
-
-bool QCborMap__ConstIterator_operatorLesserOrEqualWithOther(const QCborMap__ConstIterator* self, QCborMap__ConstIterator* other) {
-	return (*self <= *other);
-}
-
-bool QCborMap__ConstIterator_operatorGreaterWithOther(const QCborMap__ConstIterator* self, QCborMap__ConstIterator* other) {
-	return (*self > *other);
-}
-
-bool QCborMap__ConstIterator_operatorGreaterOrEqualWithOther(const QCborMap__ConstIterator* self, QCborMap__ConstIterator* other) {
-	return (*self >= *other);
-}
-
-QCborMap__ConstIterator* QCborMap__ConstIterator_operatorPlusPlus(QCborMap__ConstIterator* self) {
-	QCborMap::ConstIterator& _ret = self->operator++();
-	// Cast returned reference into pointer
-	return &_ret;
-}
-
-QCborMap__ConstIterator* QCborMap__ConstIterator_operatorPlusPlusWithInt(QCborMap__ConstIterator* self, int param1) {
-	return new QCborMap::ConstIterator(self->operator++(static_cast<int>(param1)));
-}
-
-QCborMap__ConstIterator* QCborMap__ConstIterator_operatorMinusMinus(QCborMap__ConstIterator* self) {
-	QCborMap::ConstIterator& _ret = self->operator--();
-	// Cast returned reference into pointer
-	return &_ret;
-}
-
-QCborMap__ConstIterator* QCborMap__ConstIterator_operatorMinusMinusWithInt(QCborMap__ConstIterator* self, int param1) {
-	return new QCborMap::ConstIterator(self->operator--(static_cast<int>(param1)));
-}
-
-QCborMap__ConstIterator* QCborMap__ConstIterator_operatorPlusAssign(QCborMap__ConstIterator* self, ptrdiff_t j) {
-	QCborMap::ConstIterator& _ret = self->operator+=((qsizetype)(j));
-	// Cast returned reference into pointer
-	return &_ret;
-}
-
-QCborMap__ConstIterator* QCborMap__ConstIterator_operatorMinusAssign(QCborMap__ConstIterator* self, ptrdiff_t j) {
-	QCborMap::ConstIterator& _ret = self->operator-=((qsizetype)(j));
-	// Cast returned reference into pointer
-	return &_ret;
-}
-
-QCborMap__ConstIterator* QCborMap__ConstIterator_operatorPlus(const QCborMap__ConstIterator* self, ptrdiff_t j) {
-	return new QCborMap::ConstIterator(self->operator+((qsizetype)(j)));
-}
-
-QCborMap__ConstIterator* QCborMap__ConstIterator_operatorMinus(const QCborMap__ConstIterator* self, ptrdiff_t j) {
-	return new QCborMap::ConstIterator(self->operator-((qsizetype)(j)));
-}
-
-ptrdiff_t QCborMap__ConstIterator_operatorMinusWithQCborMapConstIterator(const QCborMap__ConstIterator* self, QCborMap__ConstIterator* j) {
-	qsizetype _ret = self->operator-(*j);
+ptrdiff_t QCborMap__ConstIterator_operatorMinusWithConstIterator(const QCborMap__ConstIterator* self, ConstIterator j) {
+	qsizetype _ret = self->operator-(j);
 	return static_cast<ptrdiff_t>(_ret);
 }
 

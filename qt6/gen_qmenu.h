@@ -245,7 +245,7 @@ void QMenu_virtualbase_showEvent(void* self, QShowEvent* event);
 bool QMenu_override_virtual_nativeEvent(void* self, intptr_t slot);
 bool QMenu_virtualbase_nativeEvent(void* self, struct miqt_string eventType, void* message, intptr_t* result);
 bool QMenu_override_virtual_metric(void* self, intptr_t slot);
-int QMenu_virtualbase_metric(const void* self, int param1);
+int QMenu_virtualbase_metric(const void* self, PaintDeviceMetric param1);
 bool QMenu_override_virtual_initPainter(void* self, intptr_t slot);
 void QMenu_virtualbase_initPainter(const void* self, QPainter* painter);
 bool QMenu_override_virtual_redirected(void* self, intptr_t slot);
@@ -277,6 +277,7 @@ QObject* QMenu_protectedbase_sender(bool* _dynamic_cast_ok, const void* self);
 int QMenu_protectedbase_senderSignalIndex(bool* _dynamic_cast_ok, const void* self);
 int QMenu_protectedbase_receivers(bool* _dynamic_cast_ok, const void* self, const char* signal);
 bool QMenu_protectedbase_isSignalConnected(bool* _dynamic_cast_ok, const void* self, QMetaMethod* signal);
+double QMenu_protectedbase_getDecodedMetricF(bool* _dynamic_cast_ok, const void* self, PaintDeviceMetric metricA, PaintDeviceMetric metricB);
 
 void QMenu_delete(QMenu* self);
 

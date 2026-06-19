@@ -183,7 +183,7 @@ bool QStatusBar_virtualbase_nativeEvent(void* self, struct miqt_string eventType
 bool QStatusBar_override_virtual_changeEvent(void* self, intptr_t slot);
 void QStatusBar_virtualbase_changeEvent(void* self, QEvent* param1);
 bool QStatusBar_override_virtual_metric(void* self, intptr_t slot);
-int QStatusBar_virtualbase_metric(const void* self, int param1);
+int QStatusBar_virtualbase_metric(const void* self, PaintDeviceMetric param1);
 bool QStatusBar_override_virtual_initPainter(void* self, intptr_t slot);
 void QStatusBar_virtualbase_initPainter(const void* self, QPainter* painter);
 bool QStatusBar_override_virtual_redirected(void* self, intptr_t slot);
@@ -220,6 +220,7 @@ QObject* QStatusBar_protectedbase_sender(bool* _dynamic_cast_ok, const void* sel
 int QStatusBar_protectedbase_senderSignalIndex(bool* _dynamic_cast_ok, const void* self);
 int QStatusBar_protectedbase_receivers(bool* _dynamic_cast_ok, const void* self, const char* signal);
 bool QStatusBar_protectedbase_isSignalConnected(bool* _dynamic_cast_ok, const void* self, QMetaMethod* signal);
+double QStatusBar_protectedbase_getDecodedMetricF(bool* _dynamic_cast_ok, const void* self, PaintDeviceMetric metricA, PaintDeviceMetric metricB);
 
 void QStatusBar_delete(QStatusBar* self);
 

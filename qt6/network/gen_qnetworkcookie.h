@@ -15,10 +15,12 @@ extern "C" {
 #endif
 
 #ifdef __cplusplus
+class QByteArrayView;
 class QDateTime;
 class QNetworkCookie;
 class QUrl;
 #else
+typedef struct QByteArrayView QByteArrayView;
 typedef struct QDateTime QDateTime;
 typedef struct QNetworkCookie QNetworkCookie;
 typedef struct QUrl QUrl;
@@ -36,8 +38,8 @@ bool QNetworkCookie_isSecure(const QNetworkCookie* self);
 void QNetworkCookie_setSecure(QNetworkCookie* self, bool enable);
 bool QNetworkCookie_isHttpOnly(const QNetworkCookie* self);
 void QNetworkCookie_setHttpOnly(QNetworkCookie* self, bool enable);
-int QNetworkCookie_sameSitePolicy(const QNetworkCookie* self);
-void QNetworkCookie_setSameSitePolicy(QNetworkCookie* self, int sameSite);
+SameSite QNetworkCookie_sameSitePolicy(const QNetworkCookie* self);
+void QNetworkCookie_setSameSitePolicy(QNetworkCookie* self, SameSite sameSite);
 bool QNetworkCookie_isSessionCookie(const QNetworkCookie* self);
 QDateTime* QNetworkCookie_expirationDate(const QNetworkCookie* self);
 void QNetworkCookie_setExpirationDate(QNetworkCookie* self, QDateTime* date);
@@ -52,8 +54,8 @@ void QNetworkCookie_setValue(QNetworkCookie* self, struct miqt_string value);
 struct miqt_string QNetworkCookie_toRawForm(const QNetworkCookie* self);
 bool QNetworkCookie_hasSameIdentifier(const QNetworkCookie* self, QNetworkCookie* other);
 void QNetworkCookie_normalize(QNetworkCookie* self, QUrl* url);
-struct miqt_array /* of QNetworkCookie* */  QNetworkCookie_parseCookies(struct miqt_string cookieString);
-struct miqt_string QNetworkCookie_toRawFormWithForm(const QNetworkCookie* self, int form);
+struct miqt_array /* of QNetworkCookie* */  QNetworkCookie_parseCookies(QByteArrayView* cookieString);
+struct miqt_string QNetworkCookie_toRawFormWithForm(const QNetworkCookie* self, RawForm form);
 
 void QNetworkCookie_delete(QNetworkCookie* self);
 

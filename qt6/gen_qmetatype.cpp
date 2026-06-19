@@ -50,9 +50,8 @@ int QMetaType_sizeOf(int type) {
 	return QMetaType::sizeOf(static_cast<int>(type));
 }
 
-int QMetaType_typeFlags(int type) {
-	QMetaType::TypeFlags _ret = QMetaType::typeFlags(static_cast<int>(type));
-	return static_cast<int>(_ret);
+TypeFlags QMetaType_typeFlags(int type) {
+	return QMetaType::typeFlags(static_cast<int>(type));
 }
 
 QMetaObject* QMetaType_metaObjectForType(int type) {
@@ -87,6 +86,10 @@ bool QMetaType_isRegistered2(const QMetaType* self) {
 	return self->isRegistered();
 }
 
+void QMetaType_registerType(const QMetaType* self) {
+	self->registerType();
+}
+
 int QMetaType_id(const QMetaType* self) {
 	return self->id();
 }
@@ -101,9 +104,8 @@ ptrdiff_t QMetaType_alignOf(const QMetaType* self) {
 	return static_cast<ptrdiff_t>(_ret);
 }
 
-int QMetaType_flags(const QMetaType* self) {
-	QMetaType::TypeFlags _ret = self->flags();
-	return static_cast<int>(_ret);
+TypeFlags QMetaType_flags(const QMetaType* self) {
+	return self->flags();
 }
 
 QMetaObject* QMetaType_metaObject(const QMetaType* self) {
@@ -138,6 +140,22 @@ bool QMetaType_equals(const QMetaType* self, const void* lhs, const void* rhs) {
 	return self->equals(lhs, rhs);
 }
 
+bool QMetaType_isDefaultConstructible(const QMetaType* self) {
+	return self->isDefaultConstructible();
+}
+
+bool QMetaType_isCopyConstructible(const QMetaType* self) {
+	return self->isCopyConstructible();
+}
+
+bool QMetaType_isMoveConstructible(const QMetaType* self) {
+	return self->isMoveConstructible();
+}
+
+bool QMetaType_isDestructible(const QMetaType* self) {
+	return self->isDestructible();
+}
+
 bool QMetaType_isEqualityComparable(const QMetaType* self) {
 	return self->isEqualityComparable();
 }
@@ -164,6 +182,10 @@ bool QMetaType_save2(QDataStream* stream, int type, const void* data) {
 
 bool QMetaType_load2(QDataStream* stream, int type, void* data) {
 	return QMetaType::load(*stream, static_cast<int>(type), data);
+}
+
+QMetaType* QMetaType_underlyingType(const QMetaType* self) {
+	return new QMetaType(self->underlyingType());
 }
 
 QMetaType* QMetaType_fromName(QByteArrayView* name) {
@@ -222,8 +244,16 @@ bool QMetaType_hasRegisteredMutableViewFunction(QMetaType* fromType, QMetaType* 
 	return QMetaType::hasRegisteredMutableViewFunction(*fromType, *toType);
 }
 
+bool QMetaType_registerConverterFunction(const ConverterFunction* f, QMetaType* from, QMetaType* to) {
+	return QMetaType::registerConverterFunction(*f, *from, *to);
+}
+
 void QMetaType_unregisterConverterFunction(QMetaType* from, QMetaType* to) {
 	QMetaType::unregisterConverterFunction(*from, *to);
+}
+
+bool QMetaType_registerMutableViewFunction(const MutableViewFunction* f, QMetaType* from, QMetaType* to) {
+	return QMetaType::registerMutableViewFunction(*f, *from, *to);
 }
 
 void QMetaType_unregisterMutableViewFunction(QMetaType* from, QMetaType* to) {

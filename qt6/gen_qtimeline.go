@@ -102,8 +102,8 @@ func QTimeLine_Tr(s string) string {
 	return _ret
 }
 
-func (this *QTimeLine) State() QTimeLine__State {
-	return (QTimeLine__State)(C.QTimeLine_state(this.h))
+func (this *QTimeLine) State() State {
+	int /* TODO  */
 }
 
 func (this *QTimeLine) LoopCount() int {
@@ -114,12 +114,12 @@ func (this *QTimeLine) SetLoopCount(count int) {
 	C.QTimeLine_setLoopCount(this.h, (C.int)(count))
 }
 
-func (this *QTimeLine) Direction() QTimeLine__Direction {
-	return (QTimeLine__Direction)(C.QTimeLine_direction(this.h))
+func (this *QTimeLine) Direction() Direction {
+	int /* TODO  */
 }
 
-func (this *QTimeLine) SetDirection(direction QTimeLine__Direction) {
-	C.QTimeLine_setDirection(this.h, (C.int)(direction))
+func (this *QTimeLine) SetDirection(direction Direction) {
+	C.QTimeLine_setDirection(this.h, direction)
 }
 
 func (this *QTimeLine) Duration() int {
@@ -506,70 +506,6 @@ func miqt_exec_callback_QTimeLine_disconnectNotify(self *C.QTimeLine, cb C.intpt
 
 	gofunc((&QTimeLine{h: self}).callVirtualBase_DisconnectNotify, slotval1)
 
-}
-func (this *QTimeLine) OnValueChanged(slot func(x float64)) {
-	C.QTimeLine_connect_valueChanged(this.h, C.intptr_t(cgo.NewHandle(slot)))
-}
-
-//export miqt_exec_callback_QTimeLine_valueChanged
-func miqt_exec_callback_QTimeLine_valueChanged(cb C.intptr_t, x C.double) {
-	gofunc, ok := cgo.Handle(cb).Value().(func(x float64))
-	if !ok {
-		panic("miqt: callback of non-callback type (heap corruption?)")
-	}
-
-	// Convert all CABI parameters to Go parameters
-	slotval1 := (float64)(x)
-
-	gofunc(slotval1)
-}
-
-func (this *QTimeLine) OnFrameChanged(slot func(param1 int)) {
-	C.QTimeLine_connect_frameChanged(this.h, C.intptr_t(cgo.NewHandle(slot)))
-}
-
-//export miqt_exec_callback_QTimeLine_frameChanged
-func miqt_exec_callback_QTimeLine_frameChanged(cb C.intptr_t, param1 C.int) {
-	gofunc, ok := cgo.Handle(cb).Value().(func(param1 int))
-	if !ok {
-		panic("miqt: callback of non-callback type (heap corruption?)")
-	}
-
-	// Convert all CABI parameters to Go parameters
-	slotval1 := (int)(param1)
-
-	gofunc(slotval1)
-}
-
-func (this *QTimeLine) OnStateChanged(slot func(newState QTimeLine__State)) {
-	C.QTimeLine_connect_stateChanged(this.h, C.intptr_t(cgo.NewHandle(slot)))
-}
-
-//export miqt_exec_callback_QTimeLine_stateChanged
-func miqt_exec_callback_QTimeLine_stateChanged(cb C.intptr_t, newState C.int) {
-	gofunc, ok := cgo.Handle(cb).Value().(func(newState QTimeLine__State))
-	if !ok {
-		panic("miqt: callback of non-callback type (heap corruption?)")
-	}
-
-	// Convert all CABI parameters to Go parameters
-	slotval1 := (QTimeLine__State)(newState)
-
-	gofunc(slotval1)
-}
-
-func (this *QTimeLine) OnFinished(slot func()) {
-	C.QTimeLine_connect_finished(this.h, C.intptr_t(cgo.NewHandle(slot)))
-}
-
-//export miqt_exec_callback_QTimeLine_finished
-func miqt_exec_callback_QTimeLine_finished(cb C.intptr_t) {
-	gofunc, ok := cgo.Handle(cb).Value().(func())
-	if !ok {
-		panic("miqt: callback of non-callback type (heap corruption?)")
-	}
-
-	gofunc()
 }
 
 // Delete this object from C++ memory.

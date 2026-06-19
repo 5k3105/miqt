@@ -23,16 +23,16 @@ QCalendar* QCalendar_new() {
 	return new (std::nothrow) QCalendar();
 }
 
-QCalendar* QCalendar_new2(int system) {
-	return new (std::nothrow) QCalendar(static_cast<QCalendar::System>(system));
+QCalendar* QCalendar_new2(System system) {
+	return new (std::nothrow) QCalendar(system);
 }
 
 QCalendar* QCalendar_new3(QAnyStringView* name) {
 	return new (std::nothrow) QCalendar(*name);
 }
 
-QCalendar* QCalendar_new4(QCalendar__SystemId* id) {
-	return new (std::nothrow) QCalendar(*id);
+QCalendar* QCalendar_new4(SystemId id) {
+	return new (std::nothrow) QCalendar(id);
 }
 
 bool QCalendar_isValid(const QCalendar* self) {
@@ -110,12 +110,16 @@ QDate* QCalendar_dateFromParts(const QCalendar* self, int year, int month, int d
 	return new QDate(self->dateFromParts(static_cast<int>(year), static_cast<int>(month), static_cast<int>(day)));
 }
 
-QDate* QCalendar_dateFromPartsWithParts(const QCalendar* self, QCalendar__YearMonthDay* parts) {
+QDate* QCalendar_dateFromPartsWithParts(const QCalendar* self, const YearMonthDay* parts) {
 	return new QDate(self->dateFromParts(*parts));
 }
 
-QCalendar__YearMonthDay* QCalendar_partsFromDate(const QCalendar* self, QDate* date) {
-	return new QCalendar::YearMonthDay(self->partsFromDate(*date));
+QDate* QCalendar_matchCenturyToWeekday(const QCalendar* self, const YearMonthDay* parts, int dow) {
+	return new QDate(self->matchCenturyToWeekday(*parts, static_cast<int>(dow)));
+}
+
+YearMonthDay QCalendar_partsFromDate(const QCalendar* self, QDate* date) {
+	return self->partsFromDate(*date);
 }
 
 int QCalendar_dayOfWeek(const QCalendar* self, QDate* date) {

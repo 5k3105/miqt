@@ -27,7 +27,7 @@ extern "C" {
 
 int miqt_exec_callback_QPixmap_devType(const QPixmap*, intptr_t);
 QPaintEngine* miqt_exec_callback_QPixmap_paintEngine(const QPixmap*, intptr_t);
-int miqt_exec_callback_QPixmap_metric(const QPixmap*, intptr_t, int);
+int miqt_exec_callback_QPixmap_metric(const QPixmap*, intptr_t, PaintDeviceMetric);
 void miqt_exec_callback_QPixmap_initPainter(const QPixmap*, intptr_t, QPainter*);
 QPaintDevice* miqt_exec_callback_QPixmap_redirected(const QPixmap*, intptr_t, QPoint*);
 QPainter* miqt_exec_callback_QPixmap_sharedPainter(const QPixmap*, intptr_t);
@@ -82,18 +82,17 @@ public:
 	intptr_t handle__metric = 0;
 
 	// Subclass to allow providing a Go implementation
-	virtual int metric(QPaintDevice::PaintDeviceMetric param1) const override {
+	virtual int metric(PaintDeviceMetric param1) const override {
 		if (handle__metric == 0) {
 			return QPixmap::metric(param1);
 		}
 
-		QPaintDevice::PaintDeviceMetric param1_ret = param1;
-		int sigval1 = static_cast<int>(param1_ret);
+		PaintDeviceMetric sigval1 = param1;
 		int callback_return_value = miqt_exec_callback_QPixmap_metric(this, handle__metric, sigval1);
 		return static_cast<int>(callback_return_value);
 	}
 
-	friend int QPixmap_virtualbase_metric(const void* self, int param1);
+	friend int QPixmap_virtualbase_metric(const void* self, PaintDeviceMetric param1);
 
 	// cgo.Handle value for overwritten implementation
 	intptr_t handle__initPainter = 0;
@@ -143,6 +142,8 @@ public:
 
 	friend QPainter* QPixmap_virtualbase_sharedPainter(const void* self);
 
+	// Wrappers to allow calling protected methods:
+	friend double QPixmap_protectedbase_getDecodedMetricF(bool* _dynamic_cast_ok, const void* self, PaintDeviceMetric metricA, PaintDeviceMetric metricB);
 };
 
 QPixmap* QPixmap_new() {
@@ -369,6 +370,10 @@ bool QPixmap_operatorNot(const QPixmap* self) {
 	return self->operator!();
 }
 
+DataPtr* QPixmap_dataPtr(QPixmap* self) {
+	return &self->data_ptr();
+}
+
 void QPixmap_fillWithFillColor(QPixmap* self, QColor* fillColor) {
 	self->fill(*fillColor);
 }
@@ -517,8 +522,8 @@ bool QPixmap_override_virtual_metric(void* self, intptr_t slot) {
 	return true;
 }
 
-int QPixmap_virtualbase_metric(const void* self, int param1) {
-	return static_cast<const MiqtVirtualQPixmap*>(self)->QPixmap::metric(static_cast<MiqtVirtualQPixmap::PaintDeviceMetric>(param1));
+int QPixmap_virtualbase_metric(const void* self, PaintDeviceMetric param1) {
+	return static_cast<const MiqtVirtualQPixmap*>(self)->QPixmap::metric(param1);
 }
 
 bool QPixmap_override_virtual_initPainter(void* self, intptr_t slot) {
@@ -561,6 +566,17 @@ bool QPixmap_override_virtual_sharedPainter(void* self, intptr_t slot) {
 
 QPainter* QPixmap_virtualbase_sharedPainter(const void* self) {
 	return static_cast<const MiqtVirtualQPixmap*>(self)->QPixmap::sharedPainter();
+}
+
+double QPixmap_protectedbase_getDecodedMetricF(bool* _dynamic_cast_ok, const void* self, PaintDeviceMetric metricA, PaintDeviceMetric metricB) {
+	MiqtVirtualQPixmap* self_cast = dynamic_cast<MiqtVirtualQPixmap*>( (QPixmap*)(self) );
+	if (self_cast == nullptr) {
+		*_dynamic_cast_ok = false;
+		return 0;
+	}
+
+	*_dynamic_cast_ok = true;
+	return self_cast->getDecodedMetricF(metricA, metricB);
 }
 
 void QPixmap_delete(QPixmap* self) {

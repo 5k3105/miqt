@@ -48,7 +48,7 @@ bool QJSManagedValue_strictlyEquals(const QJSManagedValue* self, QJSManagedValue
 QJSEngine* QJSManagedValue_engine(const QJSManagedValue* self);
 QJSManagedValue* QJSManagedValue_prototype(const QJSManagedValue* self);
 void QJSManagedValue_setPrototype(QJSManagedValue* self, QJSManagedValue* prototype);
-int QJSManagedValue_type(const QJSManagedValue* self);
+Type QJSManagedValue_type(const QJSManagedValue* self);
 bool QJSManagedValue_isUndefined(const QJSManagedValue* self);
 bool QJSManagedValue_isBoolean(const QJSManagedValue* self);
 bool QJSManagedValue_isNumber(const QJSManagedValue* self);

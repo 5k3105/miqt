@@ -38,14 +38,16 @@ ptrdiff_t QStringView_size(const QStringView* self) {
 	return static_cast<ptrdiff_t>(_ret);
 }
 
-QChar* QStringView_data(const QStringView* self) {
-	QStringView::const_pointer _ret = self->data();
-	return const_cast<QChar*>(static_cast<const QChar*>(_ret));
+const_pointer QStringView_data(const QStringView* self) {
+	return self->data();
 }
 
-QChar* QStringView_constData(const QStringView* self) {
-	QStringView::const_pointer _ret = self->constData();
-	return const_cast<QChar*>(static_cast<const QChar*>(_ret));
+const_pointer QStringView_constData(const QStringView* self) {
+	return self->constData();
+}
+
+const storage_type* QStringView_utf16(const QStringView* self) {
+	return (const storage_type*) self->utf16();
 }
 
 QChar* QStringView_operatorSubscript(const QStringView* self, ptrdiff_t n) {
@@ -108,7 +110,7 @@ int QStringView_compareWithQChar(const QStringView* self, QChar* c) {
 	return self->compare(*c);
 }
 
-int QStringView_compare2(const QStringView* self, QChar* c, int cs) {
+int QStringView_compare3(const QStringView* self, QChar* c, int cs) {
 	return self->compare(*c, static_cast<Qt::CaseSensitivity>(cs));
 }
 
@@ -179,6 +181,14 @@ bool QStringView_isValidUtf16(const QStringView* self) {
 	return self->isValidUtf16();
 }
 
+bool QStringView_isUpper(const QStringView* self) {
+	return self->isUpper();
+}
+
+bool QStringView_isLower(const QStringView* self) {
+	return self->isLower();
+}
+
 short QStringView_toShort(const QStringView* self) {
 	return self->toShort();
 }
@@ -224,24 +234,36 @@ double QStringView_toDouble(const QStringView* self) {
 	return self->toDouble();
 }
 
-QChar* QStringView_begin(const QStringView* self) {
-	QStringView::const_iterator _ret = self->begin();
-	return const_cast<QChar*>(static_cast<const QChar*>(_ret));
+const_iterator QStringView_begin(const QStringView* self) {
+	return self->begin();
 }
 
-QChar* QStringView_end(const QStringView* self) {
-	QStringView::const_iterator _ret = self->end();
-	return const_cast<QChar*>(static_cast<const QChar*>(_ret));
+const_iterator QStringView_end(const QStringView* self) {
+	return self->end();
 }
 
-QChar* QStringView_cbegin(const QStringView* self) {
-	QStringView::const_iterator _ret = self->cbegin();
-	return const_cast<QChar*>(static_cast<const QChar*>(_ret));
+const_iterator QStringView_cbegin(const QStringView* self) {
+	return self->cbegin();
 }
 
-QChar* QStringView_cend(const QStringView* self) {
-	QStringView::const_iterator _ret = self->cend();
-	return const_cast<QChar*>(static_cast<const QChar*>(_ret));
+const_iterator QStringView_cend(const QStringView* self) {
+	return self->cend();
+}
+
+const_reverse_iterator QStringView_rbegin(const QStringView* self) {
+	return self->rbegin();
+}
+
+const_reverse_iterator QStringView_rend(const QStringView* self) {
+	return self->rend();
+}
+
+const_reverse_iterator QStringView_crbegin(const QStringView* self) {
+	return self->crbegin();
+}
+
+const_reverse_iterator QStringView_crend(const QStringView* self) {
+	return self->crend();
 }
 
 bool QStringView_empty(const QStringView* self) {
@@ -256,14 +278,17 @@ QChar* QStringView_back(const QStringView* self) {
 	return new QChar(self->back());
 }
 
-QChar* QStringView_constBegin(const QStringView* self) {
-	QStringView::const_iterator _ret = self->constBegin();
-	return const_cast<QChar*>(static_cast<const QChar*>(_ret));
+ptrdiff_t QStringView_maxSize(const QStringView* self) {
+	qsizetype _ret = self->max_size();
+	return static_cast<ptrdiff_t>(_ret);
 }
 
-QChar* QStringView_constEnd(const QStringView* self) {
-	QStringView::const_iterator _ret = self->constEnd();
-	return const_cast<QChar*>(static_cast<const QChar*>(_ret));
+const_iterator QStringView_constBegin(const QStringView* self) {
+	return self->constBegin();
+}
+
+const_iterator QStringView_constEnd(const QStringView* self) {
+	return self->constEnd();
 }
 
 bool QStringView_isNull(const QStringView* self) {
@@ -285,6 +310,11 @@ QChar* QStringView_first2(const QStringView* self) {
 
 QChar* QStringView_last2(const QStringView* self) {
 	return new QChar(self->last());
+}
+
+ptrdiff_t QStringView_maxSize2() {
+	qsizetype _ret = QStringView::maxSize();
+	return static_cast<ptrdiff_t>(_ret);
 }
 
 ptrdiff_t QStringView_indexOf2(const QStringView* self, QChar* c, ptrdiff_t from) {

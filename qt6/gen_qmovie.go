@@ -236,8 +236,8 @@ func (this *QMovie) BackgroundColor() *QColor {
 	return _goptr
 }
 
-func (this *QMovie) State() QMovie__MovieState {
-	return (QMovie__MovieState)(C.QMovie_state(this.h))
+func (this *QMovie) State() MovieState {
+	int /* TODO  */
 }
 
 func (this *QMovie) FrameRect() *QRect {
@@ -307,12 +307,12 @@ func (this *QMovie) SetScaledSize(size *QSize) {
 	C.QMovie_setScaledSize(this.h, size.cPointer())
 }
 
-func (this *QMovie) CacheMode() QMovie__CacheMode {
-	return (QMovie__CacheMode)(C.QMovie_cacheMode(this.h))
+func (this *QMovie) CacheMode() CacheMode {
+	int /* TODO  */
 }
 
-func (this *QMovie) SetCacheMode(mode QMovie__CacheMode) {
-	C.QMovie_setCacheMode(this.h, (C.int)(mode))
+func (this *QMovie) SetCacheMode(mode CacheMode) {
+	C.QMovie_setCacheMode(this.h, mode)
 }
 
 func (this *QMovie) Started() {

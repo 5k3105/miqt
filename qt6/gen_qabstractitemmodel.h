@@ -92,9 +92,6 @@ void QModelIndex_multiData(const QModelIndex* self, QModelRoleDataSpan* roleData
 int QModelIndex_flags(const QModelIndex* self);
 QAbstractItemModel* QModelIndex_model(const QModelIndex* self);
 bool QModelIndex_isValid(const QModelIndex* self);
-bool QModelIndex_operatorEqual(const QModelIndex* self, QModelIndex* other);
-bool QModelIndex_operatorNotEqual(const QModelIndex* self, QModelIndex* other);
-bool QModelIndex_operatorLesser(const QModelIndex* self, QModelIndex* other);
 QVariant* QModelIndex_dataWithRole(const QModelIndex* self, int role);
 
 void QModelIndex_delete(QModelIndex* self);
@@ -102,13 +99,8 @@ void QModelIndex_delete(QModelIndex* self);
 QPersistentModelIndex* QPersistentModelIndex_new();
 QPersistentModelIndex* QPersistentModelIndex_new2(QModelIndex* index);
 QPersistentModelIndex* QPersistentModelIndex_new3(QPersistentModelIndex* other);
-bool QPersistentModelIndex_operatorLesser(const QPersistentModelIndex* self, QPersistentModelIndex* other);
-bool QPersistentModelIndex_operatorEqual(const QPersistentModelIndex* self, QPersistentModelIndex* other);
-bool QPersistentModelIndex_operatorNotEqual(const QPersistentModelIndex* self, QPersistentModelIndex* other);
 void QPersistentModelIndex_operatorAssign(QPersistentModelIndex* self, QPersistentModelIndex* other);
 void QPersistentModelIndex_swap(QPersistentModelIndex* self, QPersistentModelIndex* other);
-bool QPersistentModelIndex_operatorEqualWithOther(const QPersistentModelIndex* self, QModelIndex* other);
-bool QPersistentModelIndex_operatorNotEqualWithOther(const QPersistentModelIndex* self, QModelIndex* other);
 void QPersistentModelIndex_operatorAssignWithOther(QPersistentModelIndex* self, QModelIndex* other);
 QModelIndex* QPersistentModelIndex_ToQModelIndex(const QPersistentModelIndex* self);
 int QPersistentModelIndex_row(const QPersistentModelIndex* self);
@@ -193,7 +185,7 @@ bool QAbstractItemModel_insertRow2(QAbstractItemModel* self, int row, QModelInde
 bool QAbstractItemModel_insertColumn2(QAbstractItemModel* self, int column, QModelIndex* parent);
 bool QAbstractItemModel_removeRow2(QAbstractItemModel* self, int row, QModelIndex* parent);
 bool QAbstractItemModel_removeColumn2(QAbstractItemModel* self, int column, QModelIndex* parent);
-bool QAbstractItemModel_checkIndex2(const QAbstractItemModel* self, QModelIndex* index, int options);
+bool QAbstractItemModel_checkIndex2(const QAbstractItemModel* self, QModelIndex* index, CheckIndexOptions options);
 void QAbstractItemModel_dataChanged2(QAbstractItemModel* self, QModelIndex* topLeft, QModelIndex* bottomRight, struct miqt_array /* of int */  roles);
 void QAbstractItemModel_connect_dataChanged2(QAbstractItemModel* self, intptr_t slot);
 void QAbstractItemModel_layoutChangedWithParents(QAbstractItemModel* self, struct miqt_array /* of QPersistentModelIndex* */  parents);
@@ -320,21 +312,6 @@ QObject* QAbstractItemModel_protectedbase_sender(bool* _dynamic_cast_ok, const v
 int QAbstractItemModel_protectedbase_senderSignalIndex(bool* _dynamic_cast_ok, const void* self);
 int QAbstractItemModel_protectedbase_receivers(bool* _dynamic_cast_ok, const void* self, const char* signal);
 bool QAbstractItemModel_protectedbase_isSignalConnected(bool* _dynamic_cast_ok, const void* self, QMetaMethod* signal);
-
-void QAbstractItemModel_connect_rowsAboutToBeInserted(QAbstractItemModel* self, intptr_t slot);
-void QAbstractItemModel_connect_rowsInserted(QAbstractItemModel* self, intptr_t slot);
-void QAbstractItemModel_connect_rowsAboutToBeRemoved(QAbstractItemModel* self, intptr_t slot);
-void QAbstractItemModel_connect_rowsRemoved(QAbstractItemModel* self, intptr_t slot);
-void QAbstractItemModel_connect_columnsAboutToBeInserted(QAbstractItemModel* self, intptr_t slot);
-void QAbstractItemModel_connect_columnsInserted(QAbstractItemModel* self, intptr_t slot);
-void QAbstractItemModel_connect_columnsAboutToBeRemoved(QAbstractItemModel* self, intptr_t slot);
-void QAbstractItemModel_connect_columnsRemoved(QAbstractItemModel* self, intptr_t slot);
-void QAbstractItemModel_connect_modelAboutToBeReset(QAbstractItemModel* self, intptr_t slot);
-void QAbstractItemModel_connect_modelReset(QAbstractItemModel* self, intptr_t slot);
-void QAbstractItemModel_connect_rowsAboutToBeMoved(QAbstractItemModel* self, intptr_t slot);
-void QAbstractItemModel_connect_rowsMoved(QAbstractItemModel* self, intptr_t slot);
-void QAbstractItemModel_connect_columnsAboutToBeMoved(QAbstractItemModel* self, intptr_t slot);
-void QAbstractItemModel_connect_columnsMoved(QAbstractItemModel* self, intptr_t slot);
 
 void QAbstractItemModel_delete(QAbstractItemModel* self);
 

@@ -101,14 +101,6 @@ void QLine_setLine(QLine* self, int x1, int y1, int x2, int y2) {
 	self->setLine(static_cast<int>(x1), static_cast<int>(y1), static_cast<int>(x2), static_cast<int>(y2));
 }
 
-bool QLine_operatorEqual(const QLine* self, QLine* d) {
-	return (*self == *d);
-}
-
-bool QLine_operatorNotEqual(const QLine* self, QLine* d) {
-	return (*self != *d);
-}
-
 QLineF* QLine_toLineF(const QLine* self) {
 	return new QLineF(self->toLineF());
 }
@@ -214,9 +206,8 @@ QLineF* QLineF_normalVector(const QLineF* self) {
 	return new QLineF(self->normalVector());
 }
 
-int QLineF_intersects(const QLineF* self, QLineF* l) {
-	QLineF::IntersectionType _ret = self->intersects(*l);
-	return static_cast<int>(_ret);
+IntersectionType QLineF_intersects(const QLineF* self, QLineF* l) {
+	return self->intersects(*l);
 }
 
 QPointF* QLineF_pointAt(const QLineF* self, double t) {
@@ -259,21 +250,12 @@ void QLineF_setLine(QLineF* self, double x1, double y1, double x2, double y2) {
 	self->setLine(static_cast<qreal>(x1), static_cast<qreal>(y1), static_cast<qreal>(x2), static_cast<qreal>(y2));
 }
 
-bool QLineF_operatorEqual(const QLineF* self, QLineF* d) {
-	return (*self == *d);
-}
-
-bool QLineF_operatorNotEqual(const QLineF* self, QLineF* d) {
-	return (*self != *d);
-}
-
 QLine* QLineF_toLine(const QLineF* self) {
 	return new QLine(self->toLine());
 }
 
-int QLineF_intersects2(const QLineF* self, QLineF* l, QPointF* intersectionPoint) {
-	QLineF::IntersectionType _ret = self->intersects(*l, intersectionPoint);
-	return static_cast<int>(_ret);
+IntersectionType QLineF_intersects2(const QLineF* self, QLineF* l, QPointF* intersectionPoint) {
+	return self->intersects(*l, intersectionPoint);
 }
 
 void QLineF_delete(QLineF* self) {

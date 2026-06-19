@@ -184,8 +184,8 @@ func (this *QCborStreamReader) Next() bool {
 	return (bool)(C.QCborStreamReader_next(this.h))
 }
 
-func (this *QCborStreamReader) Type() QCborStreamReader__Type {
-	return (QCborStreamReader__Type)(C.QCborStreamReader_type(this.h))
+func (this *QCborStreamReader) Type() Type {
+	int /* TODO  */
 }
 
 func (this *QCborStreamReader) IsUnsignedInteger() bool {
@@ -284,6 +284,36 @@ func (this *QCborStreamReader) LeaveContainer() bool {
 	return (bool)(C.QCborStreamReader_leaveContainer(this.h))
 }
 
+func (this *QCborStreamReader) ReadAndAppendToString(dst string) bool {
+	dst_ms := C.struct_miqt_string{}
+	dst_ms.data = C.CString(dst)
+	dst_ms.len = C.size_t(len(dst))
+	defer C.free(unsafe.Pointer(dst_ms.data))
+	return (bool)(C.QCborStreamReader_readAndAppendToString(this.h, dst_ms))
+}
+
+func (this *QCborStreamReader) ReadAndAppendToUtf8String(dst []byte) bool {
+	dst_alias := C.struct_miqt_string{}
+	if len(dst) > 0 {
+		dst_alias.data = (*C.char)(unsafe.Pointer(&dst[0]))
+	} else {
+		dst_alias.data = (*C.char)(unsafe.Pointer(nil))
+	}
+	dst_alias.len = C.size_t(len(dst))
+	return (bool)(C.QCborStreamReader_readAndAppendToUtf8String(this.h, dst_alias))
+}
+
+func (this *QCborStreamReader) ReadAndAppendToByteArray(dst []byte) bool {
+	dst_alias := C.struct_miqt_string{}
+	if len(dst) > 0 {
+		dst_alias.data = (*C.char)(unsafe.Pointer(&dst[0]))
+	} else {
+		dst_alias.data = (*C.char)(unsafe.Pointer(nil))
+	}
+	dst_alias.len = C.size_t(len(dst))
+	return (bool)(C.QCborStreamReader_readAndAppendToByteArray(this.h, dst_alias))
+}
+
 func (this *QCborStreamReader) CurrentStringChunkSize() int64 {
 	return (int64)(C.QCborStreamReader_currentStringChunkSize(this.h))
 }
@@ -318,6 +348,27 @@ func (this *QCborStreamReader) ToDouble() float64 {
 
 func (this *QCborStreamReader) ToInteger() int64 {
 	return (int64)(C.QCborStreamReader_toInteger(this.h))
+}
+
+func (this *QCborStreamReader) ReadAllString() string {
+	var _ms C.struct_miqt_string = C.QCborStreamReader_readAllString(this.h)
+	_ret := C.GoStringN(_ms.data, C.int(int64(_ms.len)))
+	C.free(unsafe.Pointer(_ms.data))
+	return _ret
+}
+
+func (this *QCborStreamReader) ReadAllUtf8String() []byte {
+	var _bytearray C.struct_miqt_string = C.QCborStreamReader_readAllUtf8String(this.h)
+	_ret := C.GoBytes(unsafe.Pointer(_bytearray.data), C.int(int64(_bytearray.len)))
+	C.free(unsafe.Pointer(_bytearray.data))
+	return _ret
+}
+
+func (this *QCborStreamReader) ReadAllByteArray() []byte {
+	var _bytearray C.struct_miqt_string = C.QCborStreamReader_readAllByteArray(this.h)
+	_ret := C.GoBytes(unsafe.Pointer(_bytearray.data), C.int(int64(_bytearray.len)))
+	C.free(unsafe.Pointer(_bytearray.data))
+	return _ret
 }
 
 func (this *QCborStreamReader) NextWithMaxRecursion(maxRecursion int) bool {

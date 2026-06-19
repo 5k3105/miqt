@@ -99,7 +99,7 @@ void miqt_exec_callback_QComboBox_dragMoveEvent(QComboBox*, intptr_t, QDragMoveE
 void miqt_exec_callback_QComboBox_dragLeaveEvent(QComboBox*, intptr_t, QDragLeaveEvent*);
 void miqt_exec_callback_QComboBox_dropEvent(QComboBox*, intptr_t, QDropEvent*);
 bool miqt_exec_callback_QComboBox_nativeEvent(QComboBox*, intptr_t, struct miqt_string, void*, intptr_t*);
-int miqt_exec_callback_QComboBox_metric(const QComboBox*, intptr_t, int);
+int miqt_exec_callback_QComboBox_metric(const QComboBox*, intptr_t, PaintDeviceMetric);
 void miqt_exec_callback_QComboBox_initPainter(const QComboBox*, intptr_t, QPainter*);
 QPaintDevice* miqt_exec_callback_QComboBox_redirected(const QComboBox*, intptr_t, QPoint*);
 QPainter* miqt_exec_callback_QComboBox_sharedPainter(const QComboBox*, intptr_t);
@@ -799,18 +799,17 @@ public:
 	intptr_t handle__metric = 0;
 
 	// Subclass to allow providing a Go implementation
-	virtual int metric(QPaintDevice::PaintDeviceMetric param1) const override {
+	virtual int metric(PaintDeviceMetric param1) const override {
 		if (handle__metric == 0) {
 			return QComboBox::metric(param1);
 		}
 
-		QPaintDevice::PaintDeviceMetric param1_ret = param1;
-		int sigval1 = static_cast<int>(param1_ret);
+		PaintDeviceMetric sigval1 = param1;
 		int callback_return_value = miqt_exec_callback_QComboBox_metric(this, handle__metric, sigval1);
 		return static_cast<int>(callback_return_value);
 	}
 
-	friend int QComboBox_virtualbase_metric(const void* self, int param1);
+	friend int QComboBox_virtualbase_metric(const void* self, PaintDeviceMetric param1);
 
 	// cgo.Handle value for overwritten implementation
 	intptr_t handle__initPainter = 0;
@@ -992,6 +991,7 @@ public:
 	friend int QComboBox_protectedbase_senderSignalIndex(bool* _dynamic_cast_ok, const void* self);
 	friend int QComboBox_protectedbase_receivers(bool* _dynamic_cast_ok, const void* self, const char* signal);
 	friend bool QComboBox_protectedbase_isSignalConnected(bool* _dynamic_cast_ok, const void* self, QMetaMethod* signal);
+	friend double QComboBox_protectedbase_getDecodedMetricF(bool* _dynamic_cast_ok, const void* self, PaintDeviceMetric metricA, PaintDeviceMetric metricB);
 };
 
 QComboBox* QComboBox_new(QWidget* parent) {
@@ -1070,22 +1070,20 @@ int QComboBox_findData(const QComboBox* self, QVariant* data) {
 	return self->findData(*data);
 }
 
-int QComboBox_insertPolicy(const QComboBox* self) {
-	QComboBox::InsertPolicy _ret = self->insertPolicy();
-	return static_cast<int>(_ret);
+InsertPolicy QComboBox_insertPolicy(const QComboBox* self) {
+	return self->insertPolicy();
 }
 
-void QComboBox_setInsertPolicy(QComboBox* self, int policy) {
-	self->setInsertPolicy(static_cast<QComboBox::InsertPolicy>(policy));
+void QComboBox_setInsertPolicy(QComboBox* self, InsertPolicy policy) {
+	self->setInsertPolicy(policy);
 }
 
-int QComboBox_sizeAdjustPolicy(const QComboBox* self) {
-	QComboBox::SizeAdjustPolicy _ret = self->sizeAdjustPolicy();
-	return static_cast<int>(_ret);
+SizeAdjustPolicy QComboBox_sizeAdjustPolicy(const QComboBox* self) {
+	return self->sizeAdjustPolicy();
 }
 
-void QComboBox_setSizeAdjustPolicy(QComboBox* self, int policy) {
-	self->setSizeAdjustPolicy(static_cast<QComboBox::SizeAdjustPolicy>(policy));
+void QComboBox_setSizeAdjustPolicy(QComboBox* self, SizeAdjustPolicy policy) {
+	self->setSizeAdjustPolicy(policy);
 }
 
 int QComboBox_minimumContentsLength(const QComboBox* self) {
@@ -1182,6 +1180,14 @@ int QComboBox_modelColumn(const QComboBox* self) {
 
 void QComboBox_setModelColumn(QComboBox* self, int visibleColumn) {
 	self->setModelColumn(static_cast<int>(visibleColumn));
+}
+
+LabelDrawingMode QComboBox_labelDrawingMode(const QComboBox* self) {
+	return self->labelDrawingMode();
+}
+
+void QComboBox_setLabelDrawingMode(QComboBox* self, LabelDrawingMode labelDrawing) {
+	self->setLabelDrawingMode(labelDrawing);
 }
 
 int QComboBox_currentIndex(const QComboBox* self) {
@@ -2090,8 +2096,8 @@ bool QComboBox_override_virtual_metric(void* self, intptr_t slot) {
 	return true;
 }
 
-int QComboBox_virtualbase_metric(const void* self, int param1) {
-	return static_cast<const MiqtVirtualQComboBox*>(self)->QComboBox::metric(static_cast<MiqtVirtualQComboBox::PaintDeviceMetric>(param1));
+int QComboBox_virtualbase_metric(const void* self, PaintDeviceMetric param1) {
+	return static_cast<const MiqtVirtualQComboBox*>(self)->QComboBox::metric(param1);
 }
 
 bool QComboBox_override_virtual_initPainter(void* self, intptr_t slot) {
@@ -2331,6 +2337,17 @@ bool QComboBox_protectedbase_isSignalConnected(bool* _dynamic_cast_ok, const voi
 
 	*_dynamic_cast_ok = true;
 	return self_cast->isSignalConnected(*signal);
+}
+
+double QComboBox_protectedbase_getDecodedMetricF(bool* _dynamic_cast_ok, const void* self, PaintDeviceMetric metricA, PaintDeviceMetric metricB) {
+	MiqtVirtualQComboBox* self_cast = dynamic_cast<MiqtVirtualQComboBox*>( (QComboBox*)(self) );
+	if (self_cast == nullptr) {
+		*_dynamic_cast_ok = false;
+		return 0;
+	}
+
+	*_dynamic_cast_ok = true;
+	return self_cast->getDecodedMetricF(metricA, metricB);
 }
 
 void QComboBox_delete(QComboBox* self) {

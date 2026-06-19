@@ -65,33 +65,51 @@ func UnsafeNewQSystemSemaphore(h unsafe.Pointer) *QSystemSemaphore {
 }
 
 // NewQSystemSemaphore constructs a new QSystemSemaphore object.
-func NewQSystemSemaphore(key string) *QSystemSemaphore {
-	key_ms := C.struct_miqt_string{}
-	key_ms.data = C.CString(key)
-	key_ms.len = C.size_t(len(key))
-	defer C.free(unsafe.Pointer(key_ms.data))
+func NewQSystemSemaphore(key *QNativeIpcKey) *QSystemSemaphore {
 
-	return newQSystemSemaphore(C.QSystemSemaphore_new(key_ms))
+	return newQSystemSemaphore(C.QSystemSemaphore_new(key.cPointer()))
 }
 
 // NewQSystemSemaphore2 constructs a new QSystemSemaphore object.
-func NewQSystemSemaphore2(key string, initialValue int) *QSystemSemaphore {
+func NewQSystemSemaphore2(key string) *QSystemSemaphore {
 	key_ms := C.struct_miqt_string{}
 	key_ms.data = C.CString(key)
 	key_ms.len = C.size_t(len(key))
 	defer C.free(unsafe.Pointer(key_ms.data))
 
-	return newQSystemSemaphore(C.QSystemSemaphore_new2(key_ms, (C.int)(initialValue)))
+	return newQSystemSemaphore(C.QSystemSemaphore_new2(key_ms))
 }
 
 // NewQSystemSemaphore3 constructs a new QSystemSemaphore object.
-func NewQSystemSemaphore3(key string, initialValue int, mode QSystemSemaphore__AccessMode) *QSystemSemaphore {
+func NewQSystemSemaphore3(key *QNativeIpcKey, initialValue int) *QSystemSemaphore {
+
+	return newQSystemSemaphore(C.QSystemSemaphore_new3(key.cPointer(), (C.int)(initialValue)))
+}
+
+// NewQSystemSemaphore4 constructs a new QSystemSemaphore object.
+func NewQSystemSemaphore4(key *QNativeIpcKey, initialValue int, param3 AccessMode) *QSystemSemaphore {
+
+	return newQSystemSemaphore(C.QSystemSemaphore_new4(key.cPointer(), (C.int)(initialValue), param3))
+}
+
+// NewQSystemSemaphore5 constructs a new QSystemSemaphore object.
+func NewQSystemSemaphore5(key string, initialValue int) *QSystemSemaphore {
 	key_ms := C.struct_miqt_string{}
 	key_ms.data = C.CString(key)
 	key_ms.len = C.size_t(len(key))
 	defer C.free(unsafe.Pointer(key_ms.data))
 
-	return newQSystemSemaphore(C.QSystemSemaphore_new3(key_ms, (C.int)(initialValue), (C.int)(mode)))
+	return newQSystemSemaphore(C.QSystemSemaphore_new5(key_ms, (C.int)(initialValue)))
+}
+
+// NewQSystemSemaphore6 constructs a new QSystemSemaphore object.
+func NewQSystemSemaphore6(key string, initialValue int, mode AccessMode) *QSystemSemaphore {
+	key_ms := C.struct_miqt_string{}
+	key_ms.data = C.CString(key)
+	key_ms.len = C.size_t(len(key))
+	defer C.free(unsafe.Pointer(key_ms.data))
+
+	return newQSystemSemaphore(C.QSystemSemaphore_new6(key_ms, (C.int)(initialValue), mode))
 }
 
 func QSystemSemaphore_Tr(sourceText string) string {
@@ -101,6 +119,24 @@ func QSystemSemaphore_Tr(sourceText string) string {
 	_ret := C.GoStringN(_ms.data, C.int(int64(_ms.len)))
 	C.free(unsafe.Pointer(_ms.data))
 	return _ret
+}
+
+func (this *QSystemSemaphore) SetNativeKey(key *QNativeIpcKey) {
+	C.QSystemSemaphore_setNativeKey(this.h, key.cPointer())
+}
+
+func (this *QSystemSemaphore) SetNativeKeyWithKey(key string) {
+	key_ms := C.struct_miqt_string{}
+	key_ms.data = C.CString(key)
+	key_ms.len = C.size_t(len(key))
+	defer C.free(unsafe.Pointer(key_ms.data))
+	C.QSystemSemaphore_setNativeKeyWithKey(this.h, key_ms)
+}
+
+func (this *QSystemSemaphore) NativeIpcKey() *QNativeIpcKey {
+	_goptr := newQNativeIpcKey(C.QSystemSemaphore_nativeIpcKey(this.h))
+	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
+	return _goptr
 }
 
 func (this *QSystemSemaphore) SetKey(key string) {
@@ -126,8 +162,8 @@ func (this *QSystemSemaphore) Release() bool {
 	return (bool)(C.QSystemSemaphore_release(this.h))
 }
 
-func (this *QSystemSemaphore) Error() QSystemSemaphore__SystemSemaphoreError {
-	return (QSystemSemaphore__SystemSemaphoreError)(C.QSystemSemaphore_error(this.h))
+func (this *QSystemSemaphore) Error() SystemSemaphoreError {
+	int /* TODO  */
 }
 
 func (this *QSystemSemaphore) ErrorString() string {
@@ -135,6 +171,30 @@ func (this *QSystemSemaphore) ErrorString() string {
 	_ret := C.GoStringN(_ms.data, C.int(int64(_ms.len)))
 	C.free(unsafe.Pointer(_ms.data))
 	return _ret
+}
+
+func QSystemSemaphore_IsKeyTypeSupported(typeVal QNativeIpcKey__Type) bool {
+	return (bool)(C.QSystemSemaphore_isKeyTypeSupported((C.uint16_t)(typeVal)))
+}
+
+func QSystemSemaphore_PlatformSafeKey(key string) *QNativeIpcKey {
+	key_ms := C.struct_miqt_string{}
+	key_ms.data = C.CString(key)
+	key_ms.len = C.size_t(len(key))
+	defer C.free(unsafe.Pointer(key_ms.data))
+	_goptr := newQNativeIpcKey(C.QSystemSemaphore_platformSafeKey(key_ms))
+	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
+	return _goptr
+}
+
+func QSystemSemaphore_LegacyNativeKey(key string) *QNativeIpcKey {
+	key_ms := C.struct_miqt_string{}
+	key_ms.data = C.CString(key)
+	key_ms.len = C.size_t(len(key))
+	defer C.free(unsafe.Pointer(key_ms.data))
+	_goptr := newQNativeIpcKey(C.QSystemSemaphore_legacyNativeKey(key_ms))
+	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
+	return _goptr
 }
 
 func QSystemSemaphore_Tr2(sourceText string, disambiguation string) string {
@@ -159,6 +219,38 @@ func QSystemSemaphore_Tr3(sourceText string, disambiguation string, n int) strin
 	return _ret
 }
 
+func (this *QSystemSemaphore) SetNativeKey2(key *QNativeIpcKey, initialValue int) {
+	C.QSystemSemaphore_setNativeKey2(this.h, key.cPointer(), (C.int)(initialValue))
+}
+
+func (this *QSystemSemaphore) SetNativeKey3(key *QNativeIpcKey, initialValue int, param3 AccessMode) {
+	C.QSystemSemaphore_setNativeKey3(this.h, key.cPointer(), (C.int)(initialValue), param3)
+}
+
+func (this *QSystemSemaphore) SetNativeKey4(key string, initialValue int) {
+	key_ms := C.struct_miqt_string{}
+	key_ms.data = C.CString(key)
+	key_ms.len = C.size_t(len(key))
+	defer C.free(unsafe.Pointer(key_ms.data))
+	C.QSystemSemaphore_setNativeKey4(this.h, key_ms, (C.int)(initialValue))
+}
+
+func (this *QSystemSemaphore) SetNativeKey5(key string, initialValue int, mode AccessMode) {
+	key_ms := C.struct_miqt_string{}
+	key_ms.data = C.CString(key)
+	key_ms.len = C.size_t(len(key))
+	defer C.free(unsafe.Pointer(key_ms.data))
+	C.QSystemSemaphore_setNativeKey5(this.h, key_ms, (C.int)(initialValue), mode)
+}
+
+func (this *QSystemSemaphore) SetNativeKey6(key string, initialValue int, mode AccessMode, typeVal QNativeIpcKey__Type) {
+	key_ms := C.struct_miqt_string{}
+	key_ms.data = C.CString(key)
+	key_ms.len = C.size_t(len(key))
+	defer C.free(unsafe.Pointer(key_ms.data))
+	C.QSystemSemaphore_setNativeKey6(this.h, key_ms, (C.int)(initialValue), mode, (C.uint16_t)(typeVal))
+}
+
 func (this *QSystemSemaphore) SetKey2(key string, initialValue int) {
 	key_ms := C.struct_miqt_string{}
 	key_ms.data = C.CString(key)
@@ -167,16 +259,36 @@ func (this *QSystemSemaphore) SetKey2(key string, initialValue int) {
 	C.QSystemSemaphore_setKey2(this.h, key_ms, (C.int)(initialValue))
 }
 
-func (this *QSystemSemaphore) SetKey3(key string, initialValue int, mode QSystemSemaphore__AccessMode) {
+func (this *QSystemSemaphore) SetKey3(key string, initialValue int, mode AccessMode) {
 	key_ms := C.struct_miqt_string{}
 	key_ms.data = C.CString(key)
 	key_ms.len = C.size_t(len(key))
 	defer C.free(unsafe.Pointer(key_ms.data))
-	C.QSystemSemaphore_setKey3(this.h, key_ms, (C.int)(initialValue), (C.int)(mode))
+	C.QSystemSemaphore_setKey3(this.h, key_ms, (C.int)(initialValue), mode)
 }
 
 func (this *QSystemSemaphore) ReleaseWithInt(n int) bool {
 	return (bool)(C.QSystemSemaphore_releaseWithInt(this.h, (C.int)(n)))
+}
+
+func QSystemSemaphore_PlatformSafeKey2(key string, typeVal QNativeIpcKey__Type) *QNativeIpcKey {
+	key_ms := C.struct_miqt_string{}
+	key_ms.data = C.CString(key)
+	key_ms.len = C.size_t(len(key))
+	defer C.free(unsafe.Pointer(key_ms.data))
+	_goptr := newQNativeIpcKey(C.QSystemSemaphore_platformSafeKey2(key_ms, (C.uint16_t)(typeVal)))
+	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
+	return _goptr
+}
+
+func QSystemSemaphore_LegacyNativeKey2(key string, typeVal QNativeIpcKey__Type) *QNativeIpcKey {
+	key_ms := C.struct_miqt_string{}
+	key_ms.data = C.CString(key)
+	key_ms.len = C.size_t(len(key))
+	defer C.free(unsafe.Pointer(key_ms.data))
+	_goptr := newQNativeIpcKey(C.QSystemSemaphore_legacyNativeKey2(key_ms, (C.uint16_t)(typeVal)))
+	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
+	return _goptr
 }
 
 // Delete this object from C++ memory.

@@ -38,17 +38,17 @@
 extern "C" {
 #endif
 
-int miqt_exec_callback_QRasterWindow_metric(const QRasterWindow*, intptr_t, int);
+int miqt_exec_callback_QRasterWindow_metric(const QRasterWindow*, intptr_t, PaintDeviceMetric);
 QPaintDevice* miqt_exec_callback_QRasterWindow_redirected(const QRasterWindow*, intptr_t, QPoint*);
+void miqt_exec_callback_QRasterWindow_resizeEvent(QRasterWindow*, intptr_t, QResizeEvent*);
 void miqt_exec_callback_QRasterWindow_exposeEvent(QRasterWindow*, intptr_t, QExposeEvent*);
 void miqt_exec_callback_QRasterWindow_paintEvent(QRasterWindow*, intptr_t, QPaintEvent*);
 bool miqt_exec_callback_QRasterWindow_event(QRasterWindow*, intptr_t, QEvent*);
-int miqt_exec_callback_QRasterWindow_surfaceType(const QRasterWindow*, intptr_t);
+SurfaceType miqt_exec_callback_QRasterWindow_surfaceType(const QRasterWindow*, intptr_t);
 QSurfaceFormat* miqt_exec_callback_QRasterWindow_format(const QRasterWindow*, intptr_t);
 QSize* miqt_exec_callback_QRasterWindow_size(const QRasterWindow*, intptr_t);
 QAccessibleInterface* miqt_exec_callback_QRasterWindow_accessibleRoot(const QRasterWindow*, intptr_t);
 QObject* miqt_exec_callback_QRasterWindow_focusObject(const QRasterWindow*, intptr_t);
-void miqt_exec_callback_QRasterWindow_resizeEvent(QRasterWindow*, intptr_t, QResizeEvent*);
 void miqt_exec_callback_QRasterWindow_moveEvent(QRasterWindow*, intptr_t, QMoveEvent*);
 void miqt_exec_callback_QRasterWindow_focusInEvent(QRasterWindow*, intptr_t, QFocusEvent*);
 void miqt_exec_callback_QRasterWindow_focusOutEvent(QRasterWindow*, intptr_t, QFocusEvent*);
@@ -90,18 +90,17 @@ public:
 	intptr_t handle__metric = 0;
 
 	// Subclass to allow providing a Go implementation
-	virtual int metric(QPaintDevice::PaintDeviceMetric metric) const override {
+	virtual int metric(PaintDeviceMetric metric) const override {
 		if (handle__metric == 0) {
 			return QRasterWindow::metric(metric);
 		}
 
-		QPaintDevice::PaintDeviceMetric metric_ret = metric;
-		int sigval1 = static_cast<int>(metric_ret);
+		PaintDeviceMetric sigval1 = metric;
 		int callback_return_value = miqt_exec_callback_QRasterWindow_metric(this, handle__metric, sigval1);
 		return static_cast<int>(callback_return_value);
 	}
 
-	friend int QRasterWindow_virtualbase_metric(const void* self, int metric);
+	friend int QRasterWindow_virtualbase_metric(const void* self, PaintDeviceMetric metric);
 
 	// cgo.Handle value for overwritten implementation
 	intptr_t handle__redirected = 0;
@@ -118,6 +117,23 @@ public:
 	}
 
 	friend QPaintDevice* QRasterWindow_virtualbase_redirected(const void* self, QPoint* param1);
+
+	// cgo.Handle value for overwritten implementation
+	intptr_t handle__resizeEvent = 0;
+
+	// Subclass to allow providing a Go implementation
+	virtual void resizeEvent(QResizeEvent* event) override {
+		if (handle__resizeEvent == 0) {
+			QRasterWindow::resizeEvent(event);
+			return;
+		}
+
+		QResizeEvent* sigval1 = event;
+		miqt_exec_callback_QRasterWindow_resizeEvent(this, handle__resizeEvent, sigval1);
+
+	}
+
+	friend void QRasterWindow_virtualbase_resizeEvent(void* self, QResizeEvent* event);
 
 	// cgo.Handle value for overwritten implementation
 	intptr_t handle__exposeEvent = 0;
@@ -173,16 +189,16 @@ public:
 	intptr_t handle__surfaceType = 0;
 
 	// Subclass to allow providing a Go implementation
-	virtual QSurface::SurfaceType surfaceType() const override {
+	virtual SurfaceType surfaceType() const override {
 		if (handle__surfaceType == 0) {
 			return QRasterWindow::surfaceType();
 		}
 
-		int callback_return_value = miqt_exec_callback_QRasterWindow_surfaceType(this, handle__surfaceType);
-		return static_cast<QSurface::SurfaceType>(callback_return_value);
+		SurfaceType callback_return_value = miqt_exec_callback_QRasterWindow_surfaceType(this, handle__surfaceType);
+		return callback_return_value;
 	}
 
-	friend int QRasterWindow_virtualbase_surfaceType(const void* self);
+	friend SurfaceType QRasterWindow_virtualbase_surfaceType(const void* self);
 
 	// cgo.Handle value for overwritten implementation
 	intptr_t handle__format = 0;
@@ -243,23 +259,6 @@ public:
 	}
 
 	friend QObject* QRasterWindow_virtualbase_focusObject(const void* self);
-
-	// cgo.Handle value for overwritten implementation
-	intptr_t handle__resizeEvent = 0;
-
-	// Subclass to allow providing a Go implementation
-	virtual void resizeEvent(QResizeEvent* param1) override {
-		if (handle__resizeEvent == 0) {
-			QRasterWindow::resizeEvent(param1);
-			return;
-		}
-
-		QResizeEvent* sigval1 = param1;
-		miqt_exec_callback_QRasterWindow_resizeEvent(this, handle__resizeEvent, sigval1);
-
-	}
-
-	friend void QRasterWindow_virtualbase_resizeEvent(void* self, QResizeEvent* param1);
 
 	// cgo.Handle value for overwritten implementation
 	intptr_t handle__moveEvent = 0;
@@ -699,6 +698,7 @@ public:
 	friend int QRasterWindow_protectedbase_senderSignalIndex(bool* _dynamic_cast_ok, const void* self);
 	friend int QRasterWindow_protectedbase_receivers(bool* _dynamic_cast_ok, const void* self, const char* signal);
 	friend bool QRasterWindow_protectedbase_isSignalConnected(bool* _dynamic_cast_ok, const void* self, QMetaMethod* signal);
+	friend double QRasterWindow_protectedbase_getDecodedMetricF(bool* _dynamic_cast_ok, const void* self, PaintDeviceMetric metricA, PaintDeviceMetric metricB);
 };
 
 QRasterWindow* QRasterWindow_new() {
@@ -764,8 +764,8 @@ bool QRasterWindow_override_virtual_metric(void* self, intptr_t slot) {
 	return true;
 }
 
-int QRasterWindow_virtualbase_metric(const void* self, int metric) {
-	return static_cast<const MiqtVirtualQRasterWindow*>(self)->QRasterWindow::metric(static_cast<MiqtVirtualQRasterWindow::PaintDeviceMetric>(metric));
+int QRasterWindow_virtualbase_metric(const void* self, PaintDeviceMetric metric) {
+	return static_cast<const MiqtVirtualQRasterWindow*>(self)->QRasterWindow::metric(metric);
 }
 
 bool QRasterWindow_override_virtual_redirected(void* self, intptr_t slot) {
@@ -780,6 +780,20 @@ bool QRasterWindow_override_virtual_redirected(void* self, intptr_t slot) {
 
 QPaintDevice* QRasterWindow_virtualbase_redirected(const void* self, QPoint* param1) {
 	return static_cast<const MiqtVirtualQRasterWindow*>(self)->QRasterWindow::redirected(param1);
+}
+
+bool QRasterWindow_override_virtual_resizeEvent(void* self, intptr_t slot) {
+	MiqtVirtualQRasterWindow* self_cast = dynamic_cast<MiqtVirtualQRasterWindow*>( (QRasterWindow*)(self) );
+	if (self_cast == nullptr) {
+		return false;
+	}
+
+	self_cast->handle__resizeEvent = slot;
+	return true;
+}
+
+void QRasterWindow_virtualbase_resizeEvent(void* self, QResizeEvent* event) {
+	static_cast<MiqtVirtualQRasterWindow*>(self)->QRasterWindow::resizeEvent(event);
 }
 
 bool QRasterWindow_override_virtual_exposeEvent(void* self, intptr_t slot) {
@@ -834,9 +848,8 @@ bool QRasterWindow_override_virtual_surfaceType(void* self, intptr_t slot) {
 	return true;
 }
 
-int QRasterWindow_virtualbase_surfaceType(const void* self) {
-	MiqtVirtualQRasterWindow::SurfaceType _ret = static_cast<const MiqtVirtualQRasterWindow*>(self)->QRasterWindow::surfaceType();
-	return static_cast<int>(_ret);
+SurfaceType QRasterWindow_virtualbase_surfaceType(const void* self) {
+	return static_cast<const MiqtVirtualQRasterWindow*>(self)->QRasterWindow::surfaceType();
 }
 
 bool QRasterWindow_override_virtual_format(void* self, intptr_t slot) {
@@ -893,20 +906,6 @@ bool QRasterWindow_override_virtual_focusObject(void* self, intptr_t slot) {
 
 QObject* QRasterWindow_virtualbase_focusObject(const void* self) {
 	return static_cast<const MiqtVirtualQRasterWindow*>(self)->QRasterWindow::focusObject();
-}
-
-bool QRasterWindow_override_virtual_resizeEvent(void* self, intptr_t slot) {
-	MiqtVirtualQRasterWindow* self_cast = dynamic_cast<MiqtVirtualQRasterWindow*>( (QRasterWindow*)(self) );
-	if (self_cast == nullptr) {
-		return false;
-	}
-
-	self_cast->handle__resizeEvent = slot;
-	return true;
-}
-
-void QRasterWindow_virtualbase_resizeEvent(void* self, QResizeEvent* param1) {
-	static_cast<MiqtVirtualQRasterWindow*>(self)->QRasterWindow::resizeEvent(param1);
 }
 
 bool QRasterWindow_override_virtual_moveEvent(void* self, intptr_t slot) {
@@ -1313,6 +1312,17 @@ bool QRasterWindow_protectedbase_isSignalConnected(bool* _dynamic_cast_ok, const
 
 	*_dynamic_cast_ok = true;
 	return self_cast->isSignalConnected(*signal);
+}
+
+double QRasterWindow_protectedbase_getDecodedMetricF(bool* _dynamic_cast_ok, const void* self, PaintDeviceMetric metricA, PaintDeviceMetric metricB) {
+	MiqtVirtualQRasterWindow* self_cast = dynamic_cast<MiqtVirtualQRasterWindow*>( (QRasterWindow*)(self) );
+	if (self_cast == nullptr) {
+		*_dynamic_cast_ok = false;
+		return 0;
+	}
+
+	*_dynamic_cast_ok = true;
+	return self_cast->getDecodedMetricF(metricA, metricB);
 }
 
 void QRasterWindow_delete(QRasterWindow* self) {

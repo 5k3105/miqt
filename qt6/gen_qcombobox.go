@@ -34,6 +34,13 @@ const (
 	QComboBox__AdjustToMinimumContentsLengthWithIcon QComboBox__SizeAdjustPolicy = 2
 )
 
+type QComboBox__LabelDrawingMode int
+
+const (
+	QComboBox__UseStyle    QComboBox__LabelDrawingMode = 0
+	QComboBox__UseDelegate QComboBox__LabelDrawingMode = 1
+)
+
 type QComboBox struct {
 	h *C.QComboBox
 	*QWidget
@@ -149,20 +156,20 @@ func (this *QComboBox) FindData(data *QVariant) int {
 	return (int)(C.QComboBox_findData(this.h, data.cPointer()))
 }
 
-func (this *QComboBox) InsertPolicy() QComboBox__InsertPolicy {
-	return (QComboBox__InsertPolicy)(C.QComboBox_insertPolicy(this.h))
+func (this *QComboBox) InsertPolicy() InsertPolicy {
+	int /* TODO  */
 }
 
-func (this *QComboBox) SetInsertPolicy(policy QComboBox__InsertPolicy) {
-	C.QComboBox_setInsertPolicy(this.h, (C.int)(policy))
+func (this *QComboBox) SetInsertPolicy(policy InsertPolicy) {
+	C.QComboBox_setInsertPolicy(this.h, policy)
 }
 
-func (this *QComboBox) SizeAdjustPolicy() QComboBox__SizeAdjustPolicy {
-	return (QComboBox__SizeAdjustPolicy)(C.QComboBox_sizeAdjustPolicy(this.h))
+func (this *QComboBox) SizeAdjustPolicy() SizeAdjustPolicy {
+	int /* TODO  */
 }
 
-func (this *QComboBox) SetSizeAdjustPolicy(policy QComboBox__SizeAdjustPolicy) {
-	C.QComboBox_setSizeAdjustPolicy(this.h, (C.int)(policy))
+func (this *QComboBox) SetSizeAdjustPolicy(policy SizeAdjustPolicy) {
+	C.QComboBox_setSizeAdjustPolicy(this.h, policy)
 }
 
 func (this *QComboBox) MinimumContentsLength() int {
@@ -262,6 +269,14 @@ func (this *QComboBox) ModelColumn() int {
 
 func (this *QComboBox) SetModelColumn(visibleColumn int) {
 	C.QComboBox_setModelColumn(this.h, (C.int)(visibleColumn))
+}
+
+func (this *QComboBox) LabelDrawingMode() LabelDrawingMode {
+	int /* TODO  */
+}
+
+func (this *QComboBox) SetLabelDrawingMode(labelDrawing LabelDrawingMode) {
+	C.QComboBox_setLabelDrawingMode(this.h, labelDrawing)
 }
 
 func (this *QComboBox) CurrentIndex() int {
@@ -823,6 +838,20 @@ func (this *QComboBox) IsSignalConnected(signal *QMetaMethod) bool {
 
 	var _dynamic_cast_ok C.bool = false
 	_method_ret := (bool)(C.QComboBox_protectedbase_isSignalConnected(&_dynamic_cast_ok, unsafe.Pointer(this.h), signal.cPointer()))
+
+	if !_dynamic_cast_ok {
+		panic("miqt: can only call protected methods for directly constructed types")
+	}
+
+	return _method_ret
+
+}
+
+// GetDecodedMetricF can only be called from a QComboBox that was directly constructed.
+func (this *QComboBox) GetDecodedMetricF(metricA PaintDeviceMetric, metricB PaintDeviceMetric) float64 {
+
+	var _dynamic_cast_ok C.bool = false
+	_method_ret := (float64)(C.QComboBox_protectedbase_getDecodedMetricF(&_dynamic_cast_ok, unsafe.Pointer(this.h), metricA, metricB))
 
 	if !_dynamic_cast_ok {
 		panic("miqt: can only call protected methods for directly constructed types")
@@ -1888,12 +1917,12 @@ func miqt_exec_callback_QComboBox_nativeEvent(self *C.QComboBox, cb C.intptr_t, 
 
 }
 
-func (this *QComboBox) callVirtualBase_Metric(param1 QPaintDevice__PaintDeviceMetric) int {
+func (this *QComboBox) callVirtualBase_Metric(param1 PaintDeviceMetric) int {
 
-	return (int)(C.QComboBox_virtualbase_metric(unsafe.Pointer(this.h), (C.int)(param1)))
+	return (int)(C.QComboBox_virtualbase_metric(unsafe.Pointer(this.h), param1))
 
 }
-func (this *QComboBox) OnMetric(slot func(super func(param1 QPaintDevice__PaintDeviceMetric) int, param1 QPaintDevice__PaintDeviceMetric) int) {
+func (this *QComboBox) OnMetric(slot func(super func(param1 PaintDeviceMetric) int, param1 PaintDeviceMetric) int) {
 	ok := C.QComboBox_override_virtual_metric(unsafe.Pointer(this.h), C.intptr_t(cgo.NewHandle(slot)))
 	if !ok {
 		panic("miqt: can only override virtual methods for directly constructed types")
@@ -1901,14 +1930,14 @@ func (this *QComboBox) OnMetric(slot func(super func(param1 QPaintDevice__PaintD
 }
 
 //export miqt_exec_callback_QComboBox_metric
-func miqt_exec_callback_QComboBox_metric(self *C.QComboBox, cb C.intptr_t, param1 C.int) C.int {
-	gofunc, ok := cgo.Handle(cb).Value().(func(super func(param1 QPaintDevice__PaintDeviceMetric) int, param1 QPaintDevice__PaintDeviceMetric) int)
+func miqt_exec_callback_QComboBox_metric(self *C.QComboBox, cb C.intptr_t, param1 C.PaintDeviceMetric) C.int {
+	gofunc, ok := cgo.Handle(cb).Value().(func(super func(param1 PaintDeviceMetric) int, param1 PaintDeviceMetric) int)
 	if !ok {
 		panic("miqt: callback of non-callback type (heap corruption?)")
 	}
 
 	// Convert all CABI parameters to Go parameters
-	slotval1 := (QPaintDevice__PaintDeviceMetric)(param1)
+	int /* TODO  */
 
 	virtualReturn := gofunc((&QComboBox{h: self}).callVirtualBase_Metric, slotval1)
 

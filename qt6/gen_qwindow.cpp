@@ -43,6 +43,7 @@ extern "C" {
 
 void miqt_exec_callback_QWindow_screenChanged(intptr_t, QScreen*);
 void miqt_exec_callback_QWindow_modalityChanged(intptr_t, int);
+void miqt_exec_callback_QWindow_flagsChanged(intptr_t, int);
 void miqt_exec_callback_QWindow_windowStateChanged(intptr_t, int);
 void miqt_exec_callback_QWindow_windowTitleChanged(intptr_t, struct miqt_string);
 void miqt_exec_callback_QWindow_xChanged(intptr_t, int);
@@ -53,6 +54,7 @@ void miqt_exec_callback_QWindow_minimumWidthChanged(intptr_t, int);
 void miqt_exec_callback_QWindow_minimumHeightChanged(intptr_t, int);
 void miqt_exec_callback_QWindow_maximumWidthChanged(intptr_t, int);
 void miqt_exec_callback_QWindow_maximumHeightChanged(intptr_t, int);
+void miqt_exec_callback_QWindow_safeAreaMarginsChanged(intptr_t, QMargins*);
 void miqt_exec_callback_QWindow_visibleChanged(intptr_t, bool);
 void miqt_exec_callback_QWindow_visibilityChanged(intptr_t, int);
 void miqt_exec_callback_QWindow_activeChanged(intptr_t);
@@ -60,7 +62,7 @@ void miqt_exec_callback_QWindow_contentOrientationChanged(intptr_t, int);
 void miqt_exec_callback_QWindow_focusObjectChanged(intptr_t, QObject*);
 void miqt_exec_callback_QWindow_opacityChanged(intptr_t, double);
 void miqt_exec_callback_QWindow_transientParentChanged(intptr_t, QWindow*);
-int miqt_exec_callback_QWindow_surfaceType(const QWindow*, intptr_t);
+SurfaceType miqt_exec_callback_QWindow_surfaceType(const QWindow*, intptr_t);
 QSurfaceFormat* miqt_exec_callback_QWindow_format(const QWindow*, intptr_t);
 QSize* miqt_exec_callback_QWindow_size(const QWindow*, intptr_t);
 QAccessibleInterface* miqt_exec_callback_QWindow_accessibleRoot(const QWindow*, intptr_t);
@@ -108,16 +110,16 @@ public:
 	intptr_t handle__surfaceType = 0;
 
 	// Subclass to allow providing a Go implementation
-	virtual QSurface::SurfaceType surfaceType() const override {
+	virtual SurfaceType surfaceType() const override {
 		if (handle__surfaceType == 0) {
 			return QWindow::surfaceType();
 		}
 
-		int callback_return_value = miqt_exec_callback_QWindow_surfaceType(this, handle__surfaceType);
-		return static_cast<QSurface::SurfaceType>(callback_return_value);
+		SurfaceType callback_return_value = miqt_exec_callback_QWindow_surfaceType(this, handle__surfaceType);
+		return callback_return_value;
 	}
 
-	friend int QWindow_virtualbase_surfaceType(const void* self);
+	friend SurfaceType QWindow_virtualbase_surfaceType(const void* self);
 
 	// cgo.Handle value for overwritten implementation
 	intptr_t handle__format = 0;
@@ -675,26 +677,24 @@ struct miqt_string QWindow_tr(const char* s) {
 	return _ms;
 }
 
-void QWindow_setSurfaceType(QWindow* self, int surfaceType) {
-	self->setSurfaceType(static_cast<QSurface::SurfaceType>(surfaceType));
+void QWindow_setSurfaceType(QWindow* self, SurfaceType surfaceType) {
+	self->setSurfaceType(surfaceType);
 }
 
-int QWindow_surfaceType(const QWindow* self) {
-	QSurface::SurfaceType _ret = self->surfaceType();
-	return static_cast<int>(_ret);
+SurfaceType QWindow_surfaceType(const QWindow* self) {
+	return self->surfaceType();
 }
 
 bool QWindow_isVisible(const QWindow* self) {
 	return self->isVisible();
 }
 
-int QWindow_visibility(const QWindow* self) {
-	QWindow::Visibility _ret = self->visibility();
-	return static_cast<int>(_ret);
+Visibility QWindow_visibility(const QWindow* self) {
+	return self->visibility();
 }
 
-void QWindow_setVisibility(QWindow* self, int v) {
-	self->setVisibility(static_cast<QWindow::Visibility>(v));
+void QWindow_setVisibility(QWindow* self, Visibility v) {
+	self->setVisibility(v);
 }
 
 void QWindow_create(QWindow* self) {
@@ -907,6 +907,10 @@ QPoint* QWindow_framePosition(const QWindow* self) {
 
 void QWindow_setFramePosition(QWindow* self, QPoint* point) {
 	self->setFramePosition(*point);
+}
+
+QMargins* QWindow_safeAreaMargins(const QWindow* self) {
+	return new QMargins(self->safeAreaMargins());
 }
 
 int QWindow_width(const QWindow* self) {
@@ -1161,6 +1165,18 @@ void QWindow_connect_modalityChanged(QWindow* self, intptr_t slot) {
 	});
 }
 
+void QWindow_flagsChanged(QWindow* self, int flags) {
+	self->flagsChanged(static_cast<Qt::WindowFlags>(flags));
+}
+
+void QWindow_connect_flagsChanged(QWindow* self, intptr_t slot) {
+	QWindow::connect(self, static_cast<void (QWindow::*)(Qt::WindowFlags)>(&QWindow::flagsChanged), self, [=](Qt::WindowFlags flags) {
+		Qt::WindowFlags flags_ret = flags;
+		int sigval1 = static_cast<int>(flags_ret);
+		miqt_exec_callback_QWindow_flagsChanged(slot, sigval1);
+	});
+}
+
 void QWindow_windowStateChanged(QWindow* self, int windowState) {
 	self->windowStateChanged(static_cast<Qt::WindowState>(windowState));
 }
@@ -1280,6 +1296,17 @@ void QWindow_connect_maximumHeightChanged(QWindow* self, intptr_t slot) {
 	});
 }
 
+void QWindow_safeAreaMarginsChanged(QWindow* self, QMargins* arg) {
+	self->safeAreaMarginsChanged(*arg);
+}
+
+void QWindow_connect_safeAreaMarginsChanged(QWindow* self, intptr_t slot) {
+	QWindow::connect(self, static_cast<void (QWindow::*)(QMargins)>(&QWindow::safeAreaMarginsChanged), self, [=](QMargins arg) {
+		QMargins* sigval1 = new QMargins(arg);
+		miqt_exec_callback_QWindow_safeAreaMarginsChanged(slot, sigval1);
+	});
+}
+
 void QWindow_visibleChanged(QWindow* self, bool arg) {
 	self->visibleChanged(arg);
 }
@@ -1381,16 +1408,16 @@ struct miqt_string QWindow_tr3(const char* s, const char* c, int n) {
 	return _ms;
 }
 
-QWindow* QWindow_parentWithMode(const QWindow* self, int mode) {
-	return self->parent(static_cast<QWindow::AncestorMode>(mode));
+QWindow* QWindow_parentWithMode(const QWindow* self, AncestorMode mode) {
+	return self->parent(mode);
 }
 
 void QWindow_setFlag2(QWindow* self, int param1, bool on) {
 	self->setFlag(static_cast<Qt::WindowType>(param1), on);
 }
 
-bool QWindow_isAncestorOf2(const QWindow* self, QWindow* child, int mode) {
-	return self->isAncestorOf(child, static_cast<QWindow::AncestorMode>(mode));
+bool QWindow_isAncestorOf2(const QWindow* self, QWindow* child, AncestorMode mode) {
+	return self->isAncestorOf(child, mode);
 }
 
 bool QWindow_override_virtual_surfaceType(void* self, intptr_t slot) {
@@ -1403,9 +1430,8 @@ bool QWindow_override_virtual_surfaceType(void* self, intptr_t slot) {
 	return true;
 }
 
-int QWindow_virtualbase_surfaceType(const void* self) {
-	MiqtVirtualQWindow::SurfaceType _ret = static_cast<const MiqtVirtualQWindow*>(self)->QWindow::surfaceType();
-	return static_cast<int>(_ret);
+SurfaceType QWindow_virtualbase_surfaceType(const void* self) {
+	return static_cast<const MiqtVirtualQWindow*>(self)->QWindow::surfaceType();
 }
 
 bool QWindow_override_virtual_format(void* self, intptr_t slot) {

@@ -167,8 +167,8 @@ func (this *QInputMethod) Commit() {
 	C.QInputMethod_commit(this.h)
 }
 
-func (this *QInputMethod) InvokeAction(a QInputMethod__Action, cursorPosition int) {
-	C.QInputMethod_invokeAction(this.h, (C.int)(a), (C.int)(cursorPosition))
+func (this *QInputMethod) InvokeAction(a Action, cursorPosition int) {
+	C.QInputMethod_invokeAction(this.h, a, (C.int)(cursorPosition))
 }
 
 func (this *QInputMethod) CursorRectangleChanged() {

@@ -16,11 +16,23 @@ extern "C" {
 
 #ifdef __cplusplus
 class QQuaternion;
+#if defined(WORKAROUND_INNER_CLASS_DEFINITION_QQuaternion__Axes)
+typedef QQuaternion::Axes QQuaternion__Axes;
+#else
+class QQuaternion__Axes;
+#endif
+#if defined(WORKAROUND_INNER_CLASS_DEFINITION_QQuaternion__Axis)
+typedef QQuaternion::Axis QQuaternion__Axis;
+#else
+class QQuaternion__Axis;
+#endif
 class QVariant;
 class QVector3D;
 class QVector4D;
 #else
 typedef struct QQuaternion QQuaternion;
+typedef struct QQuaternion__Axes QQuaternion__Axes;
+typedef struct QQuaternion__Axis QQuaternion__Axis;
 typedef struct QVariant QVariant;
 typedef struct QVector3D QVector3D;
 typedef struct QVector4D QVector4D;
@@ -65,11 +77,14 @@ QQuaternion* QQuaternion_fromAxisAndAngle(QVector3D* axis, float angle);
 void QQuaternion_getAxisAndAngle2(const QQuaternion* self, float* x, float* y, float* z, float* angle);
 QQuaternion* QQuaternion_fromAxisAndAngle2(float x, float y, float z, float angle);
 QVector3D* QQuaternion_toEulerAngles(const QQuaternion* self);
-QQuaternion* QQuaternion_fromEulerAngles(QVector3D* eulerAngles);
+EulerAngles<float> QQuaternion_eulerAngles(const QQuaternion* self);
+QQuaternion* QQuaternion_fromEulerAngles(EulerAngles<float> angles);
 void QQuaternion_getEulerAngles(const QQuaternion* self, float* pitch, float* yaw, float* roll);
 QQuaternion* QQuaternion_fromEulerAngles2(float pitch, float yaw, float roll);
+Axes QQuaternion_toAxes(const QQuaternion* self);
+QQuaternion* QQuaternion_fromAxes(Axes axes);
 void QQuaternion_getAxes(const QQuaternion* self, QVector3D* xAxis, QVector3D* yAxis, QVector3D* zAxis);
-QQuaternion* QQuaternion_fromAxes(QVector3D* xAxis, QVector3D* yAxis, QVector3D* zAxis);
+QQuaternion* QQuaternion_fromAxes2(QVector3D* xAxis, QVector3D* yAxis, QVector3D* zAxis);
 QQuaternion* QQuaternion_fromDirection(QVector3D* direction, QVector3D* up);
 QQuaternion* QQuaternion_rotationTo(QVector3D* from, QVector3D* to);
 QQuaternion* QQuaternion_slerp(QQuaternion* q1, QQuaternion* q2, float t);
@@ -77,6 +92,26 @@ QQuaternion* QQuaternion_nlerp(QQuaternion* q1, QQuaternion* q2, float t);
 void QQuaternion_operatorAssign(QQuaternion* self, QQuaternion* param1);
 
 void QQuaternion_delete(QQuaternion* self);
+
+float QQuaternion__Axis_x(const QQuaternion__Axis* self);
+void QQuaternion__Axis_setX(QQuaternion__Axis* self, float x);
+float QQuaternion__Axis_y(const QQuaternion__Axis* self);
+void QQuaternion__Axis_setY(QQuaternion__Axis* self, float y);
+float QQuaternion__Axis_z(const QQuaternion__Axis* self);
+void QQuaternion__Axis_setZ(QQuaternion__Axis* self, float z);
+Axis QQuaternion__Axis_fromVector3D(QVector3D* v);
+QVector3D* QQuaternion__Axis_toVector3D(const QQuaternion__Axis* self);
+
+void QQuaternion__Axis_delete(QQuaternion__Axis* self);
+
+Axis QQuaternion__Axes_x(const QQuaternion__Axes* self);
+void QQuaternion__Axes_setX(QQuaternion__Axes* self, Axis x);
+Axis QQuaternion__Axes_y(const QQuaternion__Axes* self);
+void QQuaternion__Axes_setY(QQuaternion__Axes* self, Axis y);
+Axis QQuaternion__Axes_z(const QQuaternion__Axes* self);
+void QQuaternion__Axes_setZ(QQuaternion__Axes* self, Axis z);
+
+void QQuaternion__Axes_delete(QQuaternion__Axes* self);
 
 #ifdef __cplusplus
 } /* extern C */

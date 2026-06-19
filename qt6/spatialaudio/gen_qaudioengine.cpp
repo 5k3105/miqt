@@ -210,13 +210,12 @@ struct miqt_string QAudioEngine_tr(const char* s) {
 	return _ms;
 }
 
-void QAudioEngine_setOutputMode(QAudioEngine* self, int mode) {
-	self->setOutputMode(static_cast<QAudioEngine::OutputMode>(mode));
+void QAudioEngine_setOutputMode(QAudioEngine* self, OutputMode mode) {
+	self->setOutputMode(mode);
 }
 
-int QAudioEngine_outputMode(const QAudioEngine* self) {
-	QAudioEngine::OutputMode _ret = self->outputMode();
-	return static_cast<int>(_ret);
+OutputMode QAudioEngine_outputMode(const QAudioEngine* self) {
+	return self->outputMode();
 }
 
 int QAudioEngine_sampleRate(const QAudioEngine* self) {

@@ -41,11 +41,11 @@ void QTimeLine_virtbase(QTimeLine* src, QObject** outptr_QObject);
 QMetaObject* QTimeLine_metaObject(const QTimeLine* self);
 void* QTimeLine_metacast(QTimeLine* self, const char* param1);
 struct miqt_string QTimeLine_tr(const char* s);
-int QTimeLine_state(const QTimeLine* self);
+State QTimeLine_state(const QTimeLine* self);
 int QTimeLine_loopCount(const QTimeLine* self);
 void QTimeLine_setLoopCount(QTimeLine* self, int count);
-int QTimeLine_direction(const QTimeLine* self);
-void QTimeLine_setDirection(QTimeLine* self, int direction);
+Direction QTimeLine_direction(const QTimeLine* self);
+void QTimeLine_setDirection(QTimeLine* self, Direction direction);
 int QTimeLine_duration(const QTimeLine* self);
 void QTimeLine_setDuration(QTimeLine* self, int duration);
 int QTimeLine_startFrame(const QTimeLine* self);
@@ -93,11 +93,6 @@ QObject* QTimeLine_protectedbase_sender(bool* _dynamic_cast_ok, const void* self
 int QTimeLine_protectedbase_senderSignalIndex(bool* _dynamic_cast_ok, const void* self);
 int QTimeLine_protectedbase_receivers(bool* _dynamic_cast_ok, const void* self, const char* signal);
 bool QTimeLine_protectedbase_isSignalConnected(bool* _dynamic_cast_ok, const void* self, QMetaMethod* signal);
-
-void QTimeLine_connect_valueChanged(QTimeLine* self, intptr_t slot);
-void QTimeLine_connect_frameChanged(QTimeLine* self, intptr_t slot);
-void QTimeLine_connect_stateChanged(QTimeLine* self, intptr_t slot);
-void QTimeLine_connect_finished(QTimeLine* self, intptr_t slot);
 
 void QTimeLine_delete(QTimeLine* self);
 

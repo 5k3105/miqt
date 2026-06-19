@@ -154,35 +154,35 @@ func NewQPrinter2(printer *QPrinterInfo) *QPrinter {
 }
 
 // NewQPrinter3 constructs a new QPrinter object.
-func NewQPrinter3(mode QPrinter__PrinterMode) *QPrinter {
+func NewQPrinter3(mode PrinterMode) *QPrinter {
 
-	return newQPrinter(C.QPrinter_new3((C.int)(mode)))
+	return newQPrinter(C.QPrinter_new3(mode))
 }
 
 // NewQPrinter4 constructs a new QPrinter object.
-func NewQPrinter4(printer *QPrinterInfo, mode QPrinter__PrinterMode) *QPrinter {
+func NewQPrinter4(printer *QPrinterInfo, mode PrinterMode) *QPrinter {
 
-	return newQPrinter(C.QPrinter_new4(printer.cPointer(), (C.int)(mode)))
+	return newQPrinter(C.QPrinter_new4(printer.cPointer(), mode))
 }
 
 func (this *QPrinter) DevType() int {
 	return (int)(C.QPrinter_devType(this.h))
 }
 
-func (this *QPrinter) SetOutputFormat(format QPrinter__OutputFormat) {
-	C.QPrinter_setOutputFormat(this.h, (C.int)(format))
+func (this *QPrinter) SetOutputFormat(format OutputFormat) {
+	C.QPrinter_setOutputFormat(this.h, format)
 }
 
-func (this *QPrinter) OutputFormat() QPrinter__OutputFormat {
-	return (QPrinter__OutputFormat)(C.QPrinter_outputFormat(this.h))
+func (this *QPrinter) OutputFormat() OutputFormat {
+	int /* TODO  */
 }
 
-func (this *QPrinter) SetPdfVersion(version qt6.QPagedPaintDevice__PdfVersion) {
-	C.QPrinter_setPdfVersion(this.h, (C.int)(version))
+func (this *QPrinter) SetPdfVersion(version PdfVersion) {
+	C.QPrinter_setPdfVersion(this.h, version)
 }
 
-func (this *QPrinter) PdfVersion() qt6.QPagedPaintDevice__PdfVersion {
-	return (qt6.QPagedPaintDevice__PdfVersion)(C.QPrinter_pdfVersion(this.h))
+func (this *QPrinter) PdfVersion() PdfVersion {
+	int /* TODO  */
 }
 
 func (this *QPrinter) SetPrinterName(printerName string) {
@@ -264,12 +264,12 @@ func (this *QPrinter) Creator() string {
 	return _ret
 }
 
-func (this *QPrinter) SetPageOrder(pageOrder QPrinter__PageOrder) {
-	C.QPrinter_setPageOrder(this.h, (C.int)(pageOrder))
+func (this *QPrinter) SetPageOrder(pageOrder PageOrder) {
+	C.QPrinter_setPageOrder(this.h, pageOrder)
 }
 
-func (this *QPrinter) PageOrder() QPrinter__PageOrder {
-	return (QPrinter__PageOrder)(C.QPrinter_pageOrder(this.h))
+func (this *QPrinter) PageOrder() PageOrder {
+	int /* TODO  */
 }
 
 func (this *QPrinter) SetResolution(resolution int) {
@@ -280,12 +280,12 @@ func (this *QPrinter) Resolution() int {
 	return (int)(C.QPrinter_resolution(this.h))
 }
 
-func (this *QPrinter) SetColorMode(colorMode QPrinter__ColorMode) {
-	C.QPrinter_setColorMode(this.h, (C.int)(colorMode))
+func (this *QPrinter) SetColorMode(colorMode ColorMode) {
+	C.QPrinter_setColorMode(this.h, colorMode)
 }
 
-func (this *QPrinter) ColorMode() QPrinter__ColorMode {
-	return (QPrinter__ColorMode)(C.QPrinter_colorMode(this.h))
+func (this *QPrinter) ColorMode() ColorMode {
+	int /* TODO  */
 }
 
 func (this *QPrinter) SetCollateCopies(collate bool) {
@@ -316,20 +316,20 @@ func (this *QPrinter) SupportsMultipleCopies() bool {
 	return (bool)(C.QPrinter_supportsMultipleCopies(this.h))
 }
 
-func (this *QPrinter) SetPaperSource(paperSource QPrinter__PaperSource) {
-	C.QPrinter_setPaperSource(this.h, (C.int)(paperSource))
+func (this *QPrinter) SetPaperSource(paperSource PaperSource) {
+	C.QPrinter_setPaperSource(this.h, paperSource)
 }
 
-func (this *QPrinter) PaperSource() QPrinter__PaperSource {
-	return (QPrinter__PaperSource)(C.QPrinter_paperSource(this.h))
+func (this *QPrinter) PaperSource() PaperSource {
+	int /* TODO  */
 }
 
-func (this *QPrinter) SetDuplex(duplex QPrinter__DuplexMode) {
-	C.QPrinter_setDuplex(this.h, (C.int)(duplex))
+func (this *QPrinter) SetDuplex(duplex DuplexMode) {
+	C.QPrinter_setDuplex(this.h, duplex)
 }
 
-func (this *QPrinter) Duplex() QPrinter__DuplexMode {
-	return (QPrinter__DuplexMode)(C.QPrinter_duplex(this.h))
+func (this *QPrinter) Duplex() DuplexMode {
+	int /* TODO  */
 }
 
 func (this *QPrinter) SupportedResolutions() []int {
@@ -350,14 +350,14 @@ func (this *QPrinter) FontEmbeddingEnabled() bool {
 	return (bool)(C.QPrinter_fontEmbeddingEnabled(this.h))
 }
 
-func (this *QPrinter) PaperRect(param1 QPrinter__Unit) *qt6.QRectF {
-	_goptr := qt6.UnsafeNewQRectF(unsafe.Pointer(C.QPrinter_paperRect(this.h, (C.int)(param1))))
+func (this *QPrinter) PaperRect(param1 Unit) *qt6.QRectF {
+	_goptr := qt6.UnsafeNewQRectF(unsafe.Pointer(C.QPrinter_paperRect(this.h, param1)))
 	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
 	return _goptr
 }
 
-func (this *QPrinter) PageRect(param1 QPrinter__Unit) *qt6.QRectF {
-	_goptr := qt6.UnsafeNewQRectF(unsafe.Pointer(C.QPrinter_pageRect(this.h, (C.int)(param1))))
+func (this *QPrinter) PageRect(param1 Unit) *qt6.QRectF {
+	_goptr := qt6.UnsafeNewQRectF(unsafe.Pointer(C.QPrinter_pageRect(this.h, param1)))
 	_goptr.GoGC() // Qt uses pass-by-value semantics for this type. Mimic with finalizer
 	return _goptr
 }
@@ -385,8 +385,8 @@ func (this *QPrinter) Abort() bool {
 	return (bool)(C.QPrinter_abort(this.h))
 }
 
-func (this *QPrinter) PrinterState() QPrinter__PrinterState {
-	return (QPrinter__PrinterState)(C.QPrinter_printerState(this.h))
+func (this *QPrinter) PrinterState() PrinterState {
+	int /* TODO  */
 }
 
 func (this *QPrinter) PaintEngine() *qt6.QPaintEngine {
@@ -409,12 +409,12 @@ func (this *QPrinter) ToPage() int {
 	return (int)(C.QPrinter_toPage(this.h))
 }
 
-func (this *QPrinter) SetPrintRange(rangeVal QPrinter__PrintRange) {
-	C.QPrinter_setPrintRange(this.h, (C.int)(rangeVal))
+func (this *QPrinter) SetPrintRange(rangeVal PrintRange) {
+	C.QPrinter_setPrintRange(this.h, rangeVal)
 }
 
-func (this *QPrinter) PrintRange() QPrinter__PrintRange {
-	return (QPrinter__PrintRange)(C.QPrinter_printRange(this.h))
+func (this *QPrinter) PrintRange() PrintRange {
+	int /* TODO  */
 }
 
 // SetEngines can only be called from a QPrinter that was directly constructed.
@@ -426,6 +426,20 @@ func (this *QPrinter) SetEngines(printEngine *QPrintEngine, paintEngine *qt6.QPa
 	if !_dynamic_cast_ok {
 		panic("miqt: can only call protected methods for directly constructed types")
 	}
+
+}
+
+// GetDecodedMetricF can only be called from a QPrinter that was directly constructed.
+func (this *QPrinter) GetDecodedMetricF(metricA PaintDeviceMetric, metricB PaintDeviceMetric) float64 {
+
+	var _dynamic_cast_ok C.bool = false
+	_method_ret := (float64)(C.QPrinter_protectedbase_getDecodedMetricF(&_dynamic_cast_ok, unsafe.Pointer(this.h), metricA, metricB))
+
+	if !_dynamic_cast_ok {
+		panic("miqt: can only call protected methods for directly constructed types")
+	}
+
+	return _method_ret
 
 }
 
@@ -504,12 +518,12 @@ func miqt_exec_callback_QPrinter_paintEngine(self *C.QPrinter, cb C.intptr_t) *C
 
 }
 
-func (this *QPrinter) callVirtualBase_Metric(param1 qt6.QPaintDevice__PaintDeviceMetric) int {
+func (this *QPrinter) callVirtualBase_Metric(param1 PaintDeviceMetric) int {
 
-	return (int)(C.QPrinter_virtualbase_metric(unsafe.Pointer(this.h), (C.int)(param1)))
+	return (int)(C.QPrinter_virtualbase_metric(unsafe.Pointer(this.h), param1))
 
 }
-func (this *QPrinter) OnMetric(slot func(super func(param1 qt6.QPaintDevice__PaintDeviceMetric) int, param1 qt6.QPaintDevice__PaintDeviceMetric) int) {
+func (this *QPrinter) OnMetric(slot func(super func(param1 PaintDeviceMetric) int, param1 PaintDeviceMetric) int) {
 	ok := C.QPrinter_override_virtual_metric(unsafe.Pointer(this.h), C.intptr_t(cgo.NewHandle(slot)))
 	if !ok {
 		panic("miqt: can only override virtual methods for directly constructed types")
@@ -517,14 +531,14 @@ func (this *QPrinter) OnMetric(slot func(super func(param1 qt6.QPaintDevice__Pai
 }
 
 //export miqt_exec_callback_QPrinter_metric
-func miqt_exec_callback_QPrinter_metric(self *C.QPrinter, cb C.intptr_t, param1 C.int) C.int {
-	gofunc, ok := cgo.Handle(cb).Value().(func(super func(param1 qt6.QPaintDevice__PaintDeviceMetric) int, param1 qt6.QPaintDevice__PaintDeviceMetric) int)
+func miqt_exec_callback_QPrinter_metric(self *C.QPrinter, cb C.intptr_t, param1 C.PaintDeviceMetric) C.int {
+	gofunc, ok := cgo.Handle(cb).Value().(func(super func(param1 PaintDeviceMetric) int, param1 PaintDeviceMetric) int)
 	if !ok {
 		panic("miqt: callback of non-callback type (heap corruption?)")
 	}
 
 	// Convert all CABI parameters to Go parameters
-	slotval1 := (qt6.QPaintDevice__PaintDeviceMetric)(param1)
+	int /* TODO  */
 
 	virtualReturn := gofunc((&QPrinter{h: self}).callVirtualBase_Metric, slotval1)
 

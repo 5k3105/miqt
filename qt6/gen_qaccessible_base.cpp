@@ -4,8 +4,6 @@
 #include <QAccessibleEvent>
 #include <QAccessibleInterface>
 #include <QObject>
-#include <QPair>
-#include <QTextCursor>
 #include <qaccessible_base.h>
 #include "gen_qaccessible_base.h"
 
@@ -17,11 +15,27 @@ extern "C" {
 } /* extern C */
 #endif
 
-void QAccessible_installActivationObserver(QAccessible__ActivationObserver* param1) {
+void QAccessible_installFactory(InterfaceFactory param1) {
+	QAccessible::installFactory(param1);
+}
+
+void QAccessible_removeFactory(InterfaceFactory param1) {
+	QAccessible::removeFactory(param1);
+}
+
+UpdateHandler QAccessible_installUpdateHandler(UpdateHandler param1) {
+	return QAccessible::installUpdateHandler(param1);
+}
+
+RootObjectHandler QAccessible_installRootObjectHandler(RootObjectHandler param1) {
+	return QAccessible::installRootObjectHandler(param1);
+}
+
+void QAccessible_installActivationObserver(ActivationObserver* param1) {
 	QAccessible::installActivationObserver(param1);
 }
 
-void QAccessible_removeActivationObserver(QAccessible__ActivationObserver* param1) {
+void QAccessible_removeActivationObserver(ActivationObserver* param1) {
 	QAccessible::removeActivationObserver(param1);
 }
 
@@ -29,22 +43,20 @@ QAccessibleInterface* QAccessible_queryAccessibleInterface(QObject* param1) {
 	return QAccessible::queryAccessibleInterface(param1);
 }
 
-unsigned int QAccessible_uniqueId(QAccessibleInterface* iface) {
-	QAccessible::Id _ret = QAccessible::uniqueId(iface);
-	return static_cast<unsigned int>(_ret);
+Id QAccessible_uniqueId(QAccessibleInterface* iface) {
+	return QAccessible::uniqueId(iface);
 }
 
-QAccessibleInterface* QAccessible_accessibleInterface(unsigned int uniqueId) {
-	return QAccessible::accessibleInterface(static_cast<QAccessible::Id>(uniqueId));
+QAccessibleInterface* QAccessible_accessibleInterface(Id uniqueId) {
+	return QAccessible::accessibleInterface(uniqueId);
 }
 
-unsigned int QAccessible_registerAccessibleInterface(QAccessibleInterface* iface) {
-	QAccessible::Id _ret = QAccessible::registerAccessibleInterface(iface);
-	return static_cast<unsigned int>(_ret);
+Id QAccessible_registerAccessibleInterface(QAccessibleInterface* iface) {
+	return QAccessible::registerAccessibleInterface(iface);
 }
 
-void QAccessible_deleteAccessibleInterface(unsigned int uniqueId) {
-	QAccessible::deleteAccessibleInterface(static_cast<QAccessible::Id>(uniqueId));
+void QAccessible_deleteAccessibleInterface(Id uniqueId) {
+	QAccessible::deleteAccessibleInterface(uniqueId);
 }
 
 void QAccessible_updateAccessibility(QAccessibleEvent* event) {
@@ -65,20 +77,6 @@ void QAccessible_setRootObject(QObject* object) {
 
 void QAccessible_cleanup() {
 	QAccessible::cleanup();
-}
-
-struct miqt_map /* tuple of int and int */  QAccessible_qAccessibleTextBoundaryHelper(QTextCursor* cursor, int boundaryType) {
-	QPair<int, int> _ret = QAccessible::qAccessibleTextBoundaryHelper(*cursor, static_cast<QAccessible::TextBoundaryType>(boundaryType));
-	// Convert QPair<> from C++ memory to manually-managed C memory
-	int* _first_arr = static_cast<int*>(malloc(sizeof(int)));
-	int* _second_arr = static_cast<int*>(malloc(sizeof(int)));
-	_first_arr[0] = _ret.first;
-	_second_arr[0] = _ret.second;
-	struct miqt_map _out;
-	_out.len = 1;
-	_out.keys = static_cast<void*>(_first_arr);
-	_out.values = static_cast<void*>(_second_arr);
-	return _out;
 }
 
 void QAccessible_delete(QAccessible* self) {
@@ -422,6 +420,15 @@ void QAccessible__State_setSearchEdit(QAccessible__State* self, unsigned long lo
 	self->searchEdit = static_cast<quint64>(searchEdit);
 }
 
+unsigned long long QAccessible__State_reserved(const QAccessible__State* self) {
+	quint64 qt_reserved_ret = self->qt_reserved;
+	return static_cast<unsigned long long>(qt_reserved_ret);
+}
+
+void QAccessible__State_setQtReserved(QAccessible__State* self, unsigned long long qt_reserved) {
+	self->qt_reserved = static_cast<quint64>(qt_reserved);
+}
+
 void QAccessible__State_delete(QAccessible__State* self) {
 	delete self;
 }
@@ -430,7 +437,7 @@ void QAccessible__ActivationObserver_accessibilityActiveChanged(QAccessible__Act
 	self->accessibilityActiveChanged(active);
 }
 
-void QAccessible__ActivationObserver_operatorAssign(QAccessible__ActivationObserver* self, QAccessible__ActivationObserver* param1) {
+void QAccessible__ActivationObserver_operatorAssign(QAccessible__ActivationObserver* self, const ActivationObserver* param1) {
 	self->operator=(*param1);
 }
 

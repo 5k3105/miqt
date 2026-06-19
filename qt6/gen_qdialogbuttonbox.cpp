@@ -83,7 +83,7 @@ void miqt_exec_callback_QDialogButtonBox_dropEvent(QDialogButtonBox*, intptr_t, 
 void miqt_exec_callback_QDialogButtonBox_showEvent(QDialogButtonBox*, intptr_t, QShowEvent*);
 void miqt_exec_callback_QDialogButtonBox_hideEvent(QDialogButtonBox*, intptr_t, QHideEvent*);
 bool miqt_exec_callback_QDialogButtonBox_nativeEvent(QDialogButtonBox*, intptr_t, struct miqt_string, void*, intptr_t*);
-int miqt_exec_callback_QDialogButtonBox_metric(const QDialogButtonBox*, intptr_t, int);
+int miqt_exec_callback_QDialogButtonBox_metric(const QDialogButtonBox*, intptr_t, PaintDeviceMetric);
 void miqt_exec_callback_QDialogButtonBox_initPainter(const QDialogButtonBox*, intptr_t, QPainter*);
 QPaintDevice* miqt_exec_callback_QDialogButtonBox_redirected(const QDialogButtonBox*, intptr_t, QPoint*);
 QPainter* miqt_exec_callback_QDialogButtonBox_sharedPainter(const QDialogButtonBox*, intptr_t);
@@ -106,11 +106,11 @@ public:
 	MiqtVirtualQDialogButtonBox(QWidget* parent): QDialogButtonBox(parent) {}
 	MiqtVirtualQDialogButtonBox(): QDialogButtonBox() {}
 	MiqtVirtualQDialogButtonBox(Qt::Orientation orientation): QDialogButtonBox(orientation) {}
-	MiqtVirtualQDialogButtonBox(QDialogButtonBox::StandardButtons buttons): QDialogButtonBox(buttons) {}
-	MiqtVirtualQDialogButtonBox(QDialogButtonBox::StandardButtons buttons, Qt::Orientation orientation): QDialogButtonBox(buttons, orientation) {}
+	MiqtVirtualQDialogButtonBox(StandardButtons buttons): QDialogButtonBox(buttons) {}
+	MiqtVirtualQDialogButtonBox(StandardButtons buttons, Qt::Orientation orientation): QDialogButtonBox(buttons, orientation) {}
 	MiqtVirtualQDialogButtonBox(Qt::Orientation orientation, QWidget* parent): QDialogButtonBox(orientation, parent) {}
-	MiqtVirtualQDialogButtonBox(QDialogButtonBox::StandardButtons buttons, QWidget* parent): QDialogButtonBox(buttons, parent) {}
-	MiqtVirtualQDialogButtonBox(QDialogButtonBox::StandardButtons buttons, Qt::Orientation orientation, QWidget* parent): QDialogButtonBox(buttons, orientation, parent) {}
+	MiqtVirtualQDialogButtonBox(StandardButtons buttons, QWidget* parent): QDialogButtonBox(buttons, parent) {}
+	MiqtVirtualQDialogButtonBox(StandardButtons buttons, Qt::Orientation orientation, QWidget* parent): QDialogButtonBox(buttons, orientation, parent) {}
 
 	virtual ~MiqtVirtualQDialogButtonBox() override = default;
 
@@ -691,18 +691,17 @@ public:
 	intptr_t handle__metric = 0;
 
 	// Subclass to allow providing a Go implementation
-	virtual int metric(QPaintDevice::PaintDeviceMetric param1) const override {
+	virtual int metric(PaintDeviceMetric param1) const override {
 		if (handle__metric == 0) {
 			return QDialogButtonBox::metric(param1);
 		}
 
-		QPaintDevice::PaintDeviceMetric param1_ret = param1;
-		int sigval1 = static_cast<int>(param1_ret);
+		PaintDeviceMetric sigval1 = param1;
 		int callback_return_value = miqt_exec_callback_QDialogButtonBox_metric(this, handle__metric, sigval1);
 		return static_cast<int>(callback_return_value);
 	}
 
-	friend int QDialogButtonBox_virtualbase_metric(const void* self, int param1);
+	friend int QDialogButtonBox_virtualbase_metric(const void* self, PaintDeviceMetric param1);
 
 	// cgo.Handle value for overwritten implementation
 	intptr_t handle__initPainter = 0;
@@ -918,6 +917,7 @@ public:
 	friend int QDialogButtonBox_protectedbase_senderSignalIndex(bool* _dynamic_cast_ok, const void* self);
 	friend int QDialogButtonBox_protectedbase_receivers(bool* _dynamic_cast_ok, const void* self, const char* signal);
 	friend bool QDialogButtonBox_protectedbase_isSignalConnected(bool* _dynamic_cast_ok, const void* self, QMetaMethod* signal);
+	friend double QDialogButtonBox_protectedbase_getDecodedMetricF(bool* _dynamic_cast_ok, const void* self, PaintDeviceMetric metricA, PaintDeviceMetric metricB);
 };
 
 QDialogButtonBox* QDialogButtonBox_new(QWidget* parent) {
@@ -932,24 +932,24 @@ QDialogButtonBox* QDialogButtonBox_new3(int orientation) {
 	return new (std::nothrow) MiqtVirtualQDialogButtonBox(static_cast<Qt::Orientation>(orientation));
 }
 
-QDialogButtonBox* QDialogButtonBox_new4(int buttons) {
-	return new (std::nothrow) MiqtVirtualQDialogButtonBox(static_cast<QDialogButtonBox::StandardButtons>(buttons));
+QDialogButtonBox* QDialogButtonBox_new4(StandardButtons buttons) {
+	return new (std::nothrow) MiqtVirtualQDialogButtonBox(buttons);
 }
 
-QDialogButtonBox* QDialogButtonBox_new5(int buttons, int orientation) {
-	return new (std::nothrow) MiqtVirtualQDialogButtonBox(static_cast<QDialogButtonBox::StandardButtons>(buttons), static_cast<Qt::Orientation>(orientation));
+QDialogButtonBox* QDialogButtonBox_new5(StandardButtons buttons, int orientation) {
+	return new (std::nothrow) MiqtVirtualQDialogButtonBox(buttons, static_cast<Qt::Orientation>(orientation));
 }
 
 QDialogButtonBox* QDialogButtonBox_new6(int orientation, QWidget* parent) {
 	return new (std::nothrow) MiqtVirtualQDialogButtonBox(static_cast<Qt::Orientation>(orientation), parent);
 }
 
-QDialogButtonBox* QDialogButtonBox_new7(int buttons, QWidget* parent) {
-	return new (std::nothrow) MiqtVirtualQDialogButtonBox(static_cast<QDialogButtonBox::StandardButtons>(buttons), parent);
+QDialogButtonBox* QDialogButtonBox_new7(StandardButtons buttons, QWidget* parent) {
+	return new (std::nothrow) MiqtVirtualQDialogButtonBox(buttons, parent);
 }
 
-QDialogButtonBox* QDialogButtonBox_new8(int buttons, int orientation, QWidget* parent) {
-	return new (std::nothrow) MiqtVirtualQDialogButtonBox(static_cast<QDialogButtonBox::StandardButtons>(buttons), static_cast<Qt::Orientation>(orientation), parent);
+QDialogButtonBox* QDialogButtonBox_new8(StandardButtons buttons, int orientation, QWidget* parent) {
+	return new (std::nothrow) MiqtVirtualQDialogButtonBox(buttons, static_cast<Qt::Orientation>(orientation), parent);
 }
 
 void QDialogButtonBox_virtbase(QDialogButtonBox* src, QWidget** outptr_QWidget) {
@@ -984,17 +984,17 @@ int QDialogButtonBox_orientation(const QDialogButtonBox* self) {
 	return static_cast<int>(_ret);
 }
 
-void QDialogButtonBox_addButton(QDialogButtonBox* self, QAbstractButton* button, int role) {
-	self->addButton(button, static_cast<QDialogButtonBox::ButtonRole>(role));
+void QDialogButtonBox_addButton(QDialogButtonBox* self, QAbstractButton* button, ButtonRole role) {
+	self->addButton(button, role);
 }
 
-QPushButton* QDialogButtonBox_addButton2(QDialogButtonBox* self, struct miqt_string text, int role) {
+QPushButton* QDialogButtonBox_addButton2(QDialogButtonBox* self, struct miqt_string text, ButtonRole role) {
 	QString text_QString = QString::fromUtf8(text.data, text.len);
-	return self->addButton(text_QString, static_cast<QDialogButtonBox::ButtonRole>(role));
+	return self->addButton(text_QString, role);
 }
 
-QPushButton* QDialogButtonBox_addButtonWithButton(QDialogButtonBox* self, int button) {
-	return self->addButton(static_cast<QDialogButtonBox::StandardButton>(button));
+QPushButton* QDialogButtonBox_addButtonWithButton(QDialogButtonBox* self, StandardButton button) {
+	return self->addButton(button);
 }
 
 void QDialogButtonBox_removeButton(QDialogButtonBox* self, QAbstractButton* button) {
@@ -1018,27 +1018,24 @@ struct miqt_array /* of QAbstractButton* */  QDialogButtonBox_buttons(const QDia
 	return _out;
 }
 
-int QDialogButtonBox_buttonRole(const QDialogButtonBox* self, QAbstractButton* button) {
-	QDialogButtonBox::ButtonRole _ret = self->buttonRole(button);
-	return static_cast<int>(_ret);
+ButtonRole QDialogButtonBox_buttonRole(const QDialogButtonBox* self, QAbstractButton* button) {
+	return self->buttonRole(button);
 }
 
-void QDialogButtonBox_setStandardButtons(QDialogButtonBox* self, int buttons) {
-	self->setStandardButtons(static_cast<QDialogButtonBox::StandardButtons>(buttons));
+void QDialogButtonBox_setStandardButtons(QDialogButtonBox* self, StandardButtons buttons) {
+	self->setStandardButtons(buttons);
 }
 
-int QDialogButtonBox_standardButtons(const QDialogButtonBox* self) {
-	QDialogButtonBox::StandardButtons _ret = self->standardButtons();
-	return static_cast<int>(_ret);
+StandardButtons QDialogButtonBox_standardButtons(const QDialogButtonBox* self) {
+	return self->standardButtons();
 }
 
-int QDialogButtonBox_standardButton(const QDialogButtonBox* self, QAbstractButton* button) {
-	QDialogButtonBox::StandardButton _ret = self->standardButton(button);
-	return static_cast<int>(_ret);
+StandardButton QDialogButtonBox_standardButton(const QDialogButtonBox* self, QAbstractButton* button) {
+	return self->standardButton(button);
 }
 
-QPushButton* QDialogButtonBox_button(const QDialogButtonBox* self, int which) {
-	return self->button(static_cast<QDialogButtonBox::StandardButton>(which));
+QPushButton* QDialogButtonBox_button(const QDialogButtonBox* self, StandardButton which) {
+	return self->button(which);
 }
 
 void QDialogButtonBox_setCenterButtons(QDialogButtonBox* self, bool center) {
@@ -1599,8 +1596,8 @@ bool QDialogButtonBox_override_virtual_metric(void* self, intptr_t slot) {
 	return true;
 }
 
-int QDialogButtonBox_virtualbase_metric(const void* self, int param1) {
-	return static_cast<const MiqtVirtualQDialogButtonBox*>(self)->QDialogButtonBox::metric(static_cast<MiqtVirtualQDialogButtonBox::PaintDeviceMetric>(param1));
+int QDialogButtonBox_virtualbase_metric(const void* self, PaintDeviceMetric param1) {
+	return static_cast<const MiqtVirtualQDialogButtonBox*>(self)->QDialogButtonBox::metric(param1);
 }
 
 bool QDialogButtonBox_override_virtual_initPainter(void* self, intptr_t slot) {
@@ -1868,6 +1865,17 @@ bool QDialogButtonBox_protectedbase_isSignalConnected(bool* _dynamic_cast_ok, co
 
 	*_dynamic_cast_ok = true;
 	return self_cast->isSignalConnected(*signal);
+}
+
+double QDialogButtonBox_protectedbase_getDecodedMetricF(bool* _dynamic_cast_ok, const void* self, PaintDeviceMetric metricA, PaintDeviceMetric metricB) {
+	MiqtVirtualQDialogButtonBox* self_cast = dynamic_cast<MiqtVirtualQDialogButtonBox*>( (QDialogButtonBox*)(self) );
+	if (self_cast == nullptr) {
+		*_dynamic_cast_ok = false;
+		return 0;
+	}
+
+	*_dynamic_cast_ok = true;
+	return self_cast->getDecodedMetricF(metricA, metricB);
 }
 
 void QDialogButtonBox_delete(QDialogButtonBox* self) {

@@ -90,9 +90,15 @@ func NewQVideoFrame2(format *QVideoFrameFormat) *QVideoFrame {
 }
 
 // NewQVideoFrame3 constructs a new QVideoFrame object.
-func NewQVideoFrame3(other *QVideoFrame) *QVideoFrame {
+func NewQVideoFrame3(image *qt6.QImage) *QVideoFrame {
 
-	return newQVideoFrame(C.QVideoFrame_new3(other.cPointer()))
+	return newQVideoFrame(C.QVideoFrame_new3((*C.QImage)(image.UnsafePointer())))
+}
+
+// NewQVideoFrame4 constructs a new QVideoFrame object.
+func NewQVideoFrame4(other *QVideoFrame) *QVideoFrame {
+
+	return newQVideoFrame(C.QVideoFrame_new4(other.cPointer()))
 }
 
 func (this *QVideoFrame) Swap(other *QVideoFrame) {
@@ -203,12 +209,20 @@ func (this *QVideoFrame) SetEndTime(time int64) {
 	C.QVideoFrame_setEndTime(this.h, (C.longlong)(time))
 }
 
-func (this *QVideoFrame) SetRotationAngle(rotationAngle QVideoFrame__RotationAngle) {
-	C.QVideoFrame_setRotationAngle(this.h, (C.int)(rotationAngle))
+func (this *QVideoFrame) SetRotationAngle(angle RotationAngle) {
+	C.QVideoFrame_setRotationAngle(this.h, angle)
 }
 
-func (this *QVideoFrame) RotationAngle() QVideoFrame__RotationAngle {
-	return (QVideoFrame__RotationAngle)(C.QVideoFrame_rotationAngle(this.h))
+func (this *QVideoFrame) RotationAngle() RotationAngle {
+	int /* TODO  */
+}
+
+func (this *QVideoFrame) SetRotation(angle QtVideo__Rotation) {
+	C.QVideoFrame_setRotation(this.h, (C.int)(angle))
+}
+
+func (this *QVideoFrame) Rotation() QtVideo__Rotation {
+	return (QtVideo__Rotation)(C.QVideoFrame_rotation(this.h))
 }
 
 func (this *QVideoFrame) SetMirrored(mirrored bool) {
@@ -217,6 +231,14 @@ func (this *QVideoFrame) SetMirrored(mirrored bool) {
 
 func (this *QVideoFrame) Mirrored() bool {
 	return (bool)(C.QVideoFrame_mirrored(this.h))
+}
+
+func (this *QVideoFrame) SetStreamFrameRate(rate float64) {
+	C.QVideoFrame_setStreamFrameRate(this.h, (C.double)(rate))
+}
+
+func (this *QVideoFrame) StreamFrameRate() float64 {
+	return (float64)(C.QVideoFrame_streamFrameRate(this.h))
 }
 
 func (this *QVideoFrame) ToImage() *qt6.QImage {
@@ -240,8 +262,8 @@ func (this *QVideoFrame) SetSubtitleText(text string) {
 	C.QVideoFrame_setSubtitleText(this.h, text_ms)
 }
 
-func (this *QVideoFrame) Paint(painter *qt6.QPainter, rect *qt6.QRectF, options *QVideoFrame__PaintOptions) {
-	C.QVideoFrame_paint(this.h, (*C.QPainter)(painter.UnsafePointer()), (*C.QRectF)(rect.UnsafePointer()), options.cPointer())
+func (this *QVideoFrame) Paint(painter *qt6.QPainter, rect *qt6.QRectF, options *PaintOptions) {
+	C.QVideoFrame_paint(this.h, (*C.QPainter)(painter.UnsafePointer()), (*C.QRectF)(rect.UnsafePointer()), options)
 }
 
 // Delete this object from C++ memory.
@@ -308,12 +330,12 @@ func (this *QVideoFrame__PaintOptions) SetAspectRatioMode(aspectRatioMode qt6.As
 	C.QVideoFrame__PaintOptions_setAspectRatioMode(this.h, (C.int)(aspectRatioMode))
 }
 
-func (this *QVideoFrame__PaintOptions) PaintFlags() QVideoFrame__PaintOptions__PaintFlag {
-	return (QVideoFrame__PaintOptions__PaintFlag)(C.QVideoFrame__PaintOptions_paintFlags(this.h))
+func (this *QVideoFrame__PaintOptions) PaintFlags() PaintFlags {
+	int /* TODO  */
 }
 
-func (this *QVideoFrame__PaintOptions) SetPaintFlags(paintFlags QVideoFrame__PaintOptions__PaintFlag) {
-	C.QVideoFrame__PaintOptions_setPaintFlags(this.h, (C.int)(paintFlags))
+func (this *QVideoFrame__PaintOptions) SetPaintFlags(paintFlags PaintFlags) {
+	C.QVideoFrame__PaintOptions_setPaintFlags(this.h, paintFlags)
 }
 
 // Delete this object from C++ memory.

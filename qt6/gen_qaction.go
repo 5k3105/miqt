@@ -251,12 +251,12 @@ func (this *QAction) WhatsThis() string {
 	return _ret
 }
 
-func (this *QAction) SetPriority(priority QAction__Priority) {
-	C.QAction_setPriority(this.h, (C.int)(priority))
+func (this *QAction) SetPriority(priority Priority) {
+	C.QAction_setPriority(this.h, priority)
 }
 
-func (this *QAction) Priority() QAction__Priority {
-	return (QAction__Priority)(C.QAction_priority(this.h))
+func (this *QAction) Priority() Priority {
+	int /* TODO  */
 }
 
 func (this *QAction) SetSeparator(b bool) {
@@ -359,16 +359,16 @@ func (this *QAction) IsVisible() bool {
 	return (bool)(C.QAction_isVisible(this.h))
 }
 
-func (this *QAction) Activate(event QAction__ActionEvent) {
-	C.QAction_activate(this.h, (C.int)(event))
+func (this *QAction) Activate(event ActionEvent) {
+	C.QAction_activate(this.h, event)
 }
 
-func (this *QAction) SetMenuRole(menuRole QAction__MenuRole) {
-	C.QAction_setMenuRole(this.h, (C.int)(menuRole))
+func (this *QAction) SetMenuRole(menuRole MenuRole) {
+	C.QAction_setMenuRole(this.h, menuRole)
 }
 
-func (this *QAction) MenuRole() QAction__MenuRole {
-	return (QAction__MenuRole)(C.QAction_menuRole(this.h))
+func (this *QAction) MenuRole() MenuRole {
+	int /* TODO  */
 }
 
 func (this *QAction) SetIconVisibleInMenu(visible bool) {

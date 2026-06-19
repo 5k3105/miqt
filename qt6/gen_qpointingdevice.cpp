@@ -19,7 +19,7 @@
 extern "C" {
 #endif
 
-void miqt_exec_callback_QPointingDevice_grabChanged(intptr_t, QObject*, int, QPointerEvent*, QEventPoint*);
+void miqt_exec_callback_QPointingDevice_grabChanged(intptr_t, QObject*, GrabTransition, QPointerEvent*, QEventPoint*);
 bool miqt_exec_callback_QPointingDevice_event(QPointingDevice*, intptr_t, QEvent*);
 bool miqt_exec_callback_QPointingDevice_eventFilter(QPointingDevice*, intptr_t, QObject*, QEvent*);
 void miqt_exec_callback_QPointingDevice_timerEvent(QPointingDevice*, intptr_t, QTimerEvent*);
@@ -60,11 +60,11 @@ class MiqtVirtualQPointingDevice final : public QPointingDevice {
 public:
 
 	MiqtVirtualQPointingDevice(): QPointingDevice() {}
-	MiqtVirtualQPointingDevice(const QString& name, qint64 systemId, QInputDevice::DeviceType devType, QPointingDevice::PointerType pType, QInputDevice::Capabilities caps, int maxPoints, int buttonCount): QPointingDevice(name, systemId, devType, pType, caps, maxPoints, buttonCount) {}
+	MiqtVirtualQPointingDevice(const QString& name, qint64 systemId, QInputDevice::DeviceType devType, PointerType pType, Capabilities caps, int maxPoints, int buttonCount): QPointingDevice(name, systemId, devType, pType, caps, maxPoints, buttonCount) {}
 	MiqtVirtualQPointingDevice(QObject* parent): QPointingDevice(parent) {}
-	MiqtVirtualQPointingDevice(const QString& name, qint64 systemId, QInputDevice::DeviceType devType, QPointingDevice::PointerType pType, QInputDevice::Capabilities caps, int maxPoints, int buttonCount, const QString& seatName): QPointingDevice(name, systemId, devType, pType, caps, maxPoints, buttonCount, seatName) {}
-	MiqtVirtualQPointingDevice(const QString& name, qint64 systemId, QInputDevice::DeviceType devType, QPointingDevice::PointerType pType, QInputDevice::Capabilities caps, int maxPoints, int buttonCount, const QString& seatName, QPointingDeviceUniqueId uniqueId): QPointingDevice(name, systemId, devType, pType, caps, maxPoints, buttonCount, seatName, uniqueId) {}
-	MiqtVirtualQPointingDevice(const QString& name, qint64 systemId, QInputDevice::DeviceType devType, QPointingDevice::PointerType pType, QInputDevice::Capabilities caps, int maxPoints, int buttonCount, const QString& seatName, QPointingDeviceUniqueId uniqueId, QObject* parent): QPointingDevice(name, systemId, devType, pType, caps, maxPoints, buttonCount, seatName, uniqueId, parent) {}
+	MiqtVirtualQPointingDevice(const QString& name, qint64 systemId, QInputDevice::DeviceType devType, PointerType pType, Capabilities caps, int maxPoints, int buttonCount, const QString& seatName): QPointingDevice(name, systemId, devType, pType, caps, maxPoints, buttonCount, seatName) {}
+	MiqtVirtualQPointingDevice(const QString& name, qint64 systemId, QInputDevice::DeviceType devType, PointerType pType, Capabilities caps, int maxPoints, int buttonCount, const QString& seatName, QPointingDeviceUniqueId uniqueId): QPointingDevice(name, systemId, devType, pType, caps, maxPoints, buttonCount, seatName, uniqueId) {}
+	MiqtVirtualQPointingDevice(const QString& name, qint64 systemId, QInputDevice::DeviceType devType, PointerType pType, Capabilities caps, int maxPoints, int buttonCount, const QString& seatName, QPointingDeviceUniqueId uniqueId, QObject* parent): QPointingDevice(name, systemId, devType, pType, caps, maxPoints, buttonCount, seatName, uniqueId, parent) {}
 
 	virtual ~MiqtVirtualQPointingDevice() override = default;
 
@@ -201,31 +201,31 @@ QPointingDevice* QPointingDevice_new() {
 	return new (std::nothrow) MiqtVirtualQPointingDevice();
 }
 
-QPointingDevice* QPointingDevice_new2(struct miqt_string name, long long systemId, int devType, int pType, int caps, int maxPoints, int buttonCount) {
+QPointingDevice* QPointingDevice_new2(struct miqt_string name, long long systemId, int devType, PointerType pType, Capabilities caps, int maxPoints, int buttonCount) {
 	QString name_QString = QString::fromUtf8(name.data, name.len);
-	return new (std::nothrow) MiqtVirtualQPointingDevice(name_QString, static_cast<qint64>(systemId), static_cast<QInputDevice::DeviceType>(devType), static_cast<QPointingDevice::PointerType>(pType), static_cast<QInputDevice::Capabilities>(caps), static_cast<int>(maxPoints), static_cast<int>(buttonCount));
+	return new (std::nothrow) MiqtVirtualQPointingDevice(name_QString, static_cast<qint64>(systemId), static_cast<QInputDevice::DeviceType>(devType), pType, caps, static_cast<int>(maxPoints), static_cast<int>(buttonCount));
 }
 
 QPointingDevice* QPointingDevice_new3(QObject* parent) {
 	return new (std::nothrow) MiqtVirtualQPointingDevice(parent);
 }
 
-QPointingDevice* QPointingDevice_new4(struct miqt_string name, long long systemId, int devType, int pType, int caps, int maxPoints, int buttonCount, struct miqt_string seatName) {
+QPointingDevice* QPointingDevice_new4(struct miqt_string name, long long systemId, int devType, PointerType pType, Capabilities caps, int maxPoints, int buttonCount, struct miqt_string seatName) {
 	QString name_QString = QString::fromUtf8(name.data, name.len);
 	QString seatName_QString = QString::fromUtf8(seatName.data, seatName.len);
-	return new (std::nothrow) MiqtVirtualQPointingDevice(name_QString, static_cast<qint64>(systemId), static_cast<QInputDevice::DeviceType>(devType), static_cast<QPointingDevice::PointerType>(pType), static_cast<QInputDevice::Capabilities>(caps), static_cast<int>(maxPoints), static_cast<int>(buttonCount), seatName_QString);
+	return new (std::nothrow) MiqtVirtualQPointingDevice(name_QString, static_cast<qint64>(systemId), static_cast<QInputDevice::DeviceType>(devType), pType, caps, static_cast<int>(maxPoints), static_cast<int>(buttonCount), seatName_QString);
 }
 
-QPointingDevice* QPointingDevice_new5(struct miqt_string name, long long systemId, int devType, int pType, int caps, int maxPoints, int buttonCount, struct miqt_string seatName, QPointingDeviceUniqueId* uniqueId) {
+QPointingDevice* QPointingDevice_new5(struct miqt_string name, long long systemId, int devType, PointerType pType, Capabilities caps, int maxPoints, int buttonCount, struct miqt_string seatName, QPointingDeviceUniqueId* uniqueId) {
 	QString name_QString = QString::fromUtf8(name.data, name.len);
 	QString seatName_QString = QString::fromUtf8(seatName.data, seatName.len);
-	return new (std::nothrow) MiqtVirtualQPointingDevice(name_QString, static_cast<qint64>(systemId), static_cast<QInputDevice::DeviceType>(devType), static_cast<QPointingDevice::PointerType>(pType), static_cast<QInputDevice::Capabilities>(caps), static_cast<int>(maxPoints), static_cast<int>(buttonCount), seatName_QString, *uniqueId);
+	return new (std::nothrow) MiqtVirtualQPointingDevice(name_QString, static_cast<qint64>(systemId), static_cast<QInputDevice::DeviceType>(devType), pType, caps, static_cast<int>(maxPoints), static_cast<int>(buttonCount), seatName_QString, *uniqueId);
 }
 
-QPointingDevice* QPointingDevice_new6(struct miqt_string name, long long systemId, int devType, int pType, int caps, int maxPoints, int buttonCount, struct miqt_string seatName, QPointingDeviceUniqueId* uniqueId, QObject* parent) {
+QPointingDevice* QPointingDevice_new6(struct miqt_string name, long long systemId, int devType, PointerType pType, Capabilities caps, int maxPoints, int buttonCount, struct miqt_string seatName, QPointingDeviceUniqueId* uniqueId, QObject* parent) {
 	QString name_QString = QString::fromUtf8(name.data, name.len);
 	QString seatName_QString = QString::fromUtf8(seatName.data, seatName.len);
-	return new (std::nothrow) MiqtVirtualQPointingDevice(name_QString, static_cast<qint64>(systemId), static_cast<QInputDevice::DeviceType>(devType), static_cast<QPointingDevice::PointerType>(pType), static_cast<QInputDevice::Capabilities>(caps), static_cast<int>(maxPoints), static_cast<int>(buttonCount), seatName_QString, *uniqueId, parent);
+	return new (std::nothrow) MiqtVirtualQPointingDevice(name_QString, static_cast<qint64>(systemId), static_cast<QInputDevice::DeviceType>(devType), pType, caps, static_cast<int>(maxPoints), static_cast<int>(buttonCount), seatName_QString, *uniqueId, parent);
 }
 
 void QPointingDevice_virtbase(QPointingDevice* src, QInputDevice** outptr_QInputDevice) {
@@ -251,8 +251,8 @@ struct miqt_string QPointingDevice_tr(const char* s) {
 	return _ms;
 }
 
-void QPointingDevice_setType(QPointingDevice* self, int devType) {
-	self->setType(static_cast<QInputDevice::DeviceType>(devType));
+void QPointingDevice_setType(QPointingDevice* self, DeviceType devType) {
+	self->setType(devType);
 }
 
 void QPointingDevice_setCapabilities(QPointingDevice* self, int caps) {
@@ -263,9 +263,8 @@ void QPointingDevice_setMaximumTouchPoints(QPointingDevice* self, int c) {
 	self->setMaximumTouchPoints(static_cast<int>(c));
 }
 
-int QPointingDevice_pointerType(const QPointingDevice* self) {
-	QPointingDevice::PointerType _ret = self->pointerType();
-	return static_cast<int>(_ret);
+PointerType QPointingDevice_pointerType(const QPointingDevice* self) {
+	return self->pointerType();
 }
 
 int QPointingDevice_maximumPoints(const QPointingDevice* self) {
@@ -288,15 +287,14 @@ bool QPointingDevice_operatorEqual(const QPointingDevice* self, QPointingDevice*
 	return (*self == *other);
 }
 
-void QPointingDevice_grabChanged(const QPointingDevice* self, QObject* grabber, int transition, QPointerEvent* event, QEventPoint* point) {
-	self->grabChanged(grabber, static_cast<QPointingDevice::GrabTransition>(transition), event, *point);
+void QPointingDevice_grabChanged(const QPointingDevice* self, QObject* grabber, GrabTransition transition, QPointerEvent* event, QEventPoint* point) {
+	self->grabChanged(grabber, transition, event, *point);
 }
 
 void QPointingDevice_connect_grabChanged(QPointingDevice* self, intptr_t slot) {
-	QPointingDevice::connect(self, static_cast<void (QPointingDevice::*)(QObject*, QPointingDevice::GrabTransition, const QPointerEvent*, const QEventPoint&) const>(&QPointingDevice::grabChanged), self, [=](QObject* grabber, QPointingDevice::GrabTransition transition, const QPointerEvent* event, const QEventPoint& point) {
+	QPointingDevice::connect(self, static_cast<void (QPointingDevice::*)(QObject*, GrabTransition, const QPointerEvent*, const QEventPoint&) const>(&QPointingDevice::grabChanged), self, [=](QObject* grabber, GrabTransition transition, const QPointerEvent* event, const QEventPoint& point) {
 		QObject* sigval1 = grabber;
-		QPointingDevice::GrabTransition transition_ret = transition;
-		int sigval2 = static_cast<int>(transition_ret);
+		GrabTransition sigval2 = transition;
 		QPointerEvent* sigval3 = (QPointerEvent*) event;
 		const QEventPoint& point_ret = point;
 		// Cast returned reference into pointer

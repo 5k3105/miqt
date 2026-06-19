@@ -15,6 +15,7 @@ extern "C" {
 #endif
 
 #ifdef __cplusplus
+class QAnyStringView;
 class QSqlDatabase;
 class QSqlDriver;
 class QSqlError;
@@ -23,6 +24,7 @@ class QSqlRecord;
 class QSqlResult;
 class QVariant;
 #else
+typedef struct QAnyStringView QAnyStringView;
 typedef struct QSqlDatabase QSqlDatabase;
 typedef struct QSqlDriver QSqlDriver;
 typedef struct QSqlError QSqlError;
@@ -43,7 +45,7 @@ void QSqlQuery_swap(QSqlQuery* self, QSqlQuery* other);
 bool QSqlQuery_isValid(const QSqlQuery* self);
 bool QSqlQuery_isActive(const QSqlQuery* self);
 bool QSqlQuery_isNull(const QSqlQuery* self, int field);
-bool QSqlQuery_isNullWithName(const QSqlQuery* self, struct miqt_string name);
+bool QSqlQuery_isNullWithName(const QSqlQuery* self, QAnyStringView* name);
 int QSqlQuery_at(const QSqlQuery* self);
 struct miqt_string QSqlQuery_lastQuery(const QSqlQuery* self);
 int QSqlQuery_numRowsAffected(const QSqlQuery* self);
@@ -57,9 +59,11 @@ QSqlRecord* QSqlQuery_record(const QSqlQuery* self);
 void QSqlQuery_setForwardOnly(QSqlQuery* self, bool forward);
 bool QSqlQuery_exec(QSqlQuery* self, struct miqt_string query);
 QVariant* QSqlQuery_value(const QSqlQuery* self, int i);
-QVariant* QSqlQuery_valueWithName(const QSqlQuery* self, struct miqt_string name);
+QVariant* QSqlQuery_valueWithName(const QSqlQuery* self, QAnyStringView* name);
 void QSqlQuery_setNumericalPrecisionPolicy(QSqlQuery* self, int precisionPolicy);
 int QSqlQuery_numericalPrecisionPolicy(const QSqlQuery* self);
+void QSqlQuery_setPositionalBindingEnabled(QSqlQuery* self, bool enable);
+bool QSqlQuery_isPositionalBindingEnabled(const QSqlQuery* self);
 bool QSqlQuery_seek(QSqlQuery* self, int i);
 bool QSqlQuery_next(QSqlQuery* self);
 bool QSqlQuery_previous(QSqlQuery* self);
@@ -75,12 +79,14 @@ void QSqlQuery_addBindValue(QSqlQuery* self, QVariant* val);
 QVariant* QSqlQuery_boundValue(const QSqlQuery* self, struct miqt_string placeholder);
 QVariant* QSqlQuery_boundValueWithPos(const QSqlQuery* self, int pos);
 struct miqt_array /* of QVariant* */  QSqlQuery_boundValues(const QSqlQuery* self);
+struct miqt_array /* of struct miqt_string */  QSqlQuery_boundValueNames(const QSqlQuery* self);
+struct miqt_string QSqlQuery_boundValueName(const QSqlQuery* self, int pos);
 struct miqt_string QSqlQuery_executedQuery(const QSqlQuery* self);
 QVariant* QSqlQuery_lastInsertId(const QSqlQuery* self);
 void QSqlQuery_finish(QSqlQuery* self);
 bool QSqlQuery_nextResult(QSqlQuery* self);
 bool QSqlQuery_seek2(QSqlQuery* self, int i, bool relative);
-bool QSqlQuery_execBatchWithMode(QSqlQuery* self, int mode);
+bool QSqlQuery_execBatchWithMode(QSqlQuery* self, BatchExecutionMode mode);
 void QSqlQuery_bindValue3(QSqlQuery* self, struct miqt_string placeholder, QVariant* val, int type);
 void QSqlQuery_bindValue4(QSqlQuery* self, int pos, QVariant* val, int type);
 void QSqlQuery_addBindValue2(QSqlQuery* self, QVariant* val, int type);

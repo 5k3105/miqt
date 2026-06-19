@@ -89,6 +89,10 @@ func (this *QSqlIndex) OperatorAssign(other *QSqlIndex) {
 	C.QSqlIndex_operatorAssign(this.h, other.cPointer())
 }
 
+func (this *QSqlIndex) Swap(other *QSqlIndex) {
+	C.QSqlIndex_swap(this.h, other.cPointer())
+}
+
 func (this *QSqlIndex) SetCursorName(cursorName string) {
 	cursorName_ms := C.struct_miqt_string{}
 	cursorName_ms.data = C.CString(cursorName)

@@ -99,12 +99,12 @@ func (this *QFontComboBox) WritingSystem() QFontDatabase__WritingSystem {
 	return (QFontDatabase__WritingSystem)(C.QFontComboBox_writingSystem(this.h))
 }
 
-func (this *QFontComboBox) SetFontFilters(filters QFontComboBox__FontFilter) {
-	C.QFontComboBox_setFontFilters(this.h, (C.int)(filters))
+func (this *QFontComboBox) SetFontFilters(filters FontFilters) {
+	C.QFontComboBox_setFontFilters(this.h, filters)
 }
 
-func (this *QFontComboBox) FontFilters() QFontComboBox__FontFilter {
-	return (QFontComboBox__FontFilter)(C.QFontComboBox_fontFilters(this.h))
+func (this *QFontComboBox) FontFilters() FontFilters {
+	int /* TODO  */
 }
 
 func (this *QFontComboBox) CurrentFont() *QFont {
@@ -324,6 +324,20 @@ func (this *QFontComboBox) IsSignalConnected(signal *QMetaMethod) bool {
 
 	var _dynamic_cast_ok C.bool = false
 	_method_ret := (bool)(C.QFontComboBox_protectedbase_isSignalConnected(&_dynamic_cast_ok, unsafe.Pointer(this.h), signal.cPointer()))
+
+	if !_dynamic_cast_ok {
+		panic("miqt: can only call protected methods for directly constructed types")
+	}
+
+	return _method_ret
+
+}
+
+// GetDecodedMetricF can only be called from a QFontComboBox that was directly constructed.
+func (this *QFontComboBox) GetDecodedMetricF(metricA PaintDeviceMetric, metricB PaintDeviceMetric) float64 {
+
+	var _dynamic_cast_ok C.bool = false
+	_method_ret := (float64)(C.QFontComboBox_protectedbase_getDecodedMetricF(&_dynamic_cast_ok, unsafe.Pointer(this.h), metricA, metricB))
 
 	if !_dynamic_cast_ok {
 		panic("miqt: can only call protected methods for directly constructed types")
@@ -1389,12 +1403,12 @@ func miqt_exec_callback_QFontComboBox_nativeEvent(self *C.QFontComboBox, cb C.in
 
 }
 
-func (this *QFontComboBox) callVirtualBase_Metric(param1 QPaintDevice__PaintDeviceMetric) int {
+func (this *QFontComboBox) callVirtualBase_Metric(param1 PaintDeviceMetric) int {
 
-	return (int)(C.QFontComboBox_virtualbase_metric(unsafe.Pointer(this.h), (C.int)(param1)))
+	return (int)(C.QFontComboBox_virtualbase_metric(unsafe.Pointer(this.h), param1))
 
 }
-func (this *QFontComboBox) OnMetric(slot func(super func(param1 QPaintDevice__PaintDeviceMetric) int, param1 QPaintDevice__PaintDeviceMetric) int) {
+func (this *QFontComboBox) OnMetric(slot func(super func(param1 PaintDeviceMetric) int, param1 PaintDeviceMetric) int) {
 	ok := C.QFontComboBox_override_virtual_metric(unsafe.Pointer(this.h), C.intptr_t(cgo.NewHandle(slot)))
 	if !ok {
 		panic("miqt: can only override virtual methods for directly constructed types")
@@ -1402,14 +1416,14 @@ func (this *QFontComboBox) OnMetric(slot func(super func(param1 QPaintDevice__Pa
 }
 
 //export miqt_exec_callback_QFontComboBox_metric
-func miqt_exec_callback_QFontComboBox_metric(self *C.QFontComboBox, cb C.intptr_t, param1 C.int) C.int {
-	gofunc, ok := cgo.Handle(cb).Value().(func(super func(param1 QPaintDevice__PaintDeviceMetric) int, param1 QPaintDevice__PaintDeviceMetric) int)
+func miqt_exec_callback_QFontComboBox_metric(self *C.QFontComboBox, cb C.intptr_t, param1 C.PaintDeviceMetric) C.int {
+	gofunc, ok := cgo.Handle(cb).Value().(func(super func(param1 PaintDeviceMetric) int, param1 PaintDeviceMetric) int)
 	if !ok {
 		panic("miqt: callback of non-callback type (heap corruption?)")
 	}
 
 	// Convert all CABI parameters to Go parameters
-	slotval1 := (QPaintDevice__PaintDeviceMetric)(param1)
+	int /* TODO  */
 
 	virtualReturn := gofunc((&QFontComboBox{h: self}).callVirtualBase_Metric, slotval1)
 

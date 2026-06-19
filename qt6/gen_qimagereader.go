@@ -259,8 +259,8 @@ func (this *QImageReader) SupportsAnimation() bool {
 	return (bool)(C.QImageReader_supportsAnimation(this.h))
 }
 
-func (this *QImageReader) Transformation() QImageIOHandler__Transformation {
-	return (QImageIOHandler__Transformation)(C.QImageReader_transformation(this.h))
+func (this *QImageReader) Transformation() Transformation {
+	return (Transformation)(C.QImageReader_transformation(this.h))
 }
 
 func (this *QImageReader) SetAutoTransform(enabled bool) {
@@ -335,8 +335,8 @@ func (this *QImageReader) CurrentImageRect() *QRect {
 	return _goptr
 }
 
-func (this *QImageReader) Error() QImageReader__ImageReaderError {
-	return (QImageReader__ImageReaderError)(C.QImageReader_error(this.h))
+func (this *QImageReader) Error() ImageReaderError {
+	int /* TODO  */
 }
 
 func (this *QImageReader) ErrorString() string {
